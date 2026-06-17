@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 from datetime import datetime
+from urllib.parse import urljoin
 
 quellen = {
     "Europa": [
@@ -60,11 +61,31 @@ for kontinent, feeds in quellen.items():
                 pubDate = entry.get('published', datetime.now().isoformat())
 
                 full_text = ""
+                image_url = ""
+
+                # 1. Versuche, ein Bild direkt aus dem RSS-Feed zu fischen
+                if 'media_content' in entry and len(entry.media_content) > 0:
+                    image_url = entry.media_content[0].get('url', '')
+
                 if link:
                     try:
-                        # Geht auf die echte Webseite und kratzt den vollen Text
+                        # Geht auf die echte Webseite und kratzt den vollen Text und das Bild
                         html = requests.get(link, headers=headers, timeout=10).text
                         soup = BeautifulSoup(html, 'html.parser')
+                        
+                        # BILD SUCHEN (Wenn der Feed kein Bild geliefert hat)
+                        if not image_url:
+                            # Methode A: Das unsichtbare Meta-Vorschaubild (oft das beste)
+                            og_img = soup.find('meta', property='og:image')
+                            if og_img and og_img.get('content'):
+                                image_url = og_img['content']
+                            else:
+                                # Methode B: Das allererste Bild im Artikel nehmen
+                                first_img = soup.find('img')
+                                if first_img and first_img.get('src'):
+                                    image_url = urljoin(link, first_img.get('src'))
+
+                        # TEXT SUCHEN
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
@@ -86,7 +107,8 @@ for kontinent, feeds in quellen.items():
                     "title": title,
                     "link": link,
                     "pubDate": pubDate,
-                    "content": clean_text
+                    "content": clean_text,
+                    "image": image_url  # Hier wird das gefundene Bild gespeichert!
                 })
         except:
             pass
