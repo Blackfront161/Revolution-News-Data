@@ -1,8 +1,11 @@
 name: Update News
 on:
   schedule:
-    - cron: '0 */4 * * *' # Startet automatisch alle 4 Stunden
-  workflow_dispatch: # Erlaubt uns, es manuell zu starten
+    - cron: '0 */4 * * *' 
+  workflow_dispatch: 
+
+permissions:
+  contents: write
 
 jobs:
   build:
