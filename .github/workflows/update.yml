@@ -1,0 +1,26 @@
+name: Update News
+on:
+  schedule:
+    - cron: '0 */4 * * *' # Startet automatisch alle 4 Stunden
+  workflow_dispatch: # Erlaubt uns, es manuell zu starten
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run script
+        run: python aggregate.py
+      - name: Commit and push
+        run: |
+          git config --global user.name "News-Bot"
+          git config --global user.email "bot@revolutionnews.net"
+          git add news.json
+          git commit -m "Automatische News-Aktualisierung" || exit 0
+          git push
