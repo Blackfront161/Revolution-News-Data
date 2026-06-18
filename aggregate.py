@@ -5,8 +5,9 @@ import json
 from datetime import datetime
 from urllib.parse import urljoin
 
+# Kontinente jetzt auf Englisch für die App-Struktur
 quellen = {
-    "Europa": [
+    "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
@@ -14,37 +15,43 @@ quellen = {
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"}
     ],
-    "Afrika": [
+    "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"}
     ],
-    "Nordamerika": [
+    "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"}
     ],
-    "Lateinamerika": [
+    "Latin America": [
         {"name": "El Libertario", "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default"},
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "Desinformémonos", "url": "https://desinformemonos.org/feed/"}
     ],
-    "Asien": [
+    "Asia": [
         {"name": "Lausan", "url": "https://lausan.hk/feed/"},
         {"name": "Chuang", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom", "url": "https://newbloommag.net/feed/"}
     ],
-    "Australien & NZ": [
+    "Australia & NZ": [
         {"name": "MACG", "url": "https://melbacg.wordpress.com/feed/"},
         {"name": "Slackbastard", "url": "https://slackbastard.anarchobase.com/?feed=rss2"},
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
         {"name": "AWSM", "url": "https://awsm.nz/feed/"}
     ],
-    "Bibliotheken": [
-        {"name": "Anarchistische Bibliothek", "url": "https://anarchistischebibliothek.org/feed"},
-        {"name": "The Anarchist Library", "url": "https://theanarchistlibrary.org/feed"}
+    "Libraries": [
+        {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
+        {"name": "The Anarchist Library (EN)", "url": "https://theanarchistlibrary.org/feed"},
+        {"name": "Biblioteca Anarquista (ES)", "url": "https://es.theanarchistlibrary.org/feed"},
+        {"name": "Bibliothèque Anarchiste (FR)", "url": "https://fr.theanarchistlibrary.org/feed"},
+        {"name": "Libreria Anarchica (IT)", "url": "https://it.theanarchistlibrary.org/feed"},
+        {"name": "Biblioteca Anarquista (PT)", "url": "https://pt.theanarchistlibrary.org/feed"},
+        {"name": "Zabalaza Books (Africa)", "url": "https://zabalazabooks.net/feed/"},
+        {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
     ]
 }
 
@@ -55,7 +62,8 @@ for kontinent, feeds in quellen.items():
     for feed in feeds:
         try:
             parsed = feedparser.parse(feed['url'])
-            for entry in parsed.entries[:4]: # Holt die 4 neuesten Artikel pro Quelle
+            # Limit erhöht auf 10, damit der Datums-Filter mehr Sinn macht!
+            for entry in parsed.entries[:10]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
@@ -63,29 +71,23 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = ""
 
-                # 1. Versuche, ein Bild direkt aus dem RSS-Feed zu fischen
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = entry.media_content[0].get('url', '')
 
                 if link:
                     try:
-                        # Geht auf die echte Webseite und kratzt den vollen Text und das Bild
                         html = requests.get(link, headers=headers, timeout=10).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
-                        # BILD SUCHEN (Wenn der Feed kein Bild geliefert hat)
                         if not image_url:
-                            # Methode A: Das unsichtbare Meta-Vorschaubild (oft das beste)
                             og_img = soup.find('meta', property='og:image')
                             if og_img and og_img.get('content'):
                                 image_url = og_img['content']
                             else:
-                                # Methode B: Das allererste Bild im Artikel nehmen
                                 first_img = soup.find('img')
                                 if first_img and first_img.get('src'):
                                     image_url = urljoin(link, first_img.get('src'))
 
-                        # TEXT SUCHEN
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
@@ -108,7 +110,7 @@ for kontinent, feeds in quellen.items():
                     "link": link,
                     "pubDate": pubDate,
                     "content": clean_text,
-                    "image": image_url  # Hier wird das gefundene Bild gespeichert!
+                    "image": image_url
                 })
         except:
             pass
