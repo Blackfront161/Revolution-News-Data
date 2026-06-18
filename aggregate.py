@@ -5,14 +5,15 @@ import json
 from datetime import datetime
 from urllib.parse import urljoin
 
-# Kontinente jetzt auf Englisch für die App-Struktur
 quellen = {
+    # --- ZEILE 1: KONTINENTE ---
     "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
+        {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
+        {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
+        {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
-        {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
-        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"}
     ],
     "Africa": [
@@ -24,7 +25,6 @@ quellen = {
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
-        {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"}
     ],
     "Latin America": [
@@ -43,6 +43,53 @@ quellen = {
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
         {"name": "AWSM", "url": "https://awsm.nz/feed/"}
     ],
+    
+    # --- ZEILE 2: THEMEN & KÄMPFE ---
+    "Antifascism": [
+        {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
+        {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
+        {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"}
+    ],
+    "Antisexism": [
+        {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"}
+    ],
+    "Queer-Feminism": [
+        {"name": "Queer Anarchism", "url": "https://queeranarchism.tumblr.com/rss"}
+    ],
+    "Antiracism": [
+        {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"}
+    ],
+    "Anticapitalism": [
+        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
+        {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"}
+    ],
+    "Anticolonialism": [
+        {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
+        {"name": "Lausan", "url": "https://lausan.hk/feed/"}
+    ],
+    "Anti-Imperialism": [
+        {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
+        {"name": "ROAPE", "url": "https://roape.net/feed/"}
+    ],
+    "Squatting": [
+        {"name": "Squat!net", "url": "https://de.squat.net/feed/"}
+    ],
+    "Demonstrations": [
+        {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"}
+    ],
+    "Anti-Repression": [
+        {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"}
+    ],
+    "Animal Liberation": [
+        {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
+        {"name": "Unoffensive Animal", "url": "https://unoffensiveanimal.is/feed/"}
+    ],
+    "Eco-Anarchism": [
+        {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
+        {"name": "Winter Oak", "url": "https://winteroak.org.uk/feed/"}
+    ],
+
+    # --- ZEILE 3: BIBLIOTHEKEN ---
     "Libraries": [
         {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
         {"name": "The Anarchist Library (EN)", "url": "https://theanarchistlibrary.org/feed"},
@@ -62,7 +109,6 @@ for kontinent, feeds in quellen.items():
     for feed in feeds:
         try:
             parsed = feedparser.parse(feed['url'])
-            # Limit erhöht auf 10, damit der Datums-Filter mehr Sinn macht!
             for entry in parsed.entries[:10]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
