@@ -164,7 +164,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
 image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
-# Absolut striktes Zeitlimit: 3 Sekunden für Verbindungsaufbau, 5 Sekunden für Datenfluss
+# 3 Sekunden für Verbindung, 5 Sekunden für Datenfluss
 STRICT_TIMEOUT = (3.05, 5.0)
 
 for kontinent, feeds in quellen.items():
@@ -172,11 +172,11 @@ for kontinent, feeds in quellen.items():
     for feed in feeds:
         print(f"-> Verarbeite Portal: {feed['name']}...")
         try:
-            # 🛑 NEU: Auch den Haupt-RSS-Feed über requests mit hartem Timeout absichern!
             feed_req = requests.get(feed['url'], headers=headers, timeout=STRICT_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:10]: 
+            # 🛑 OPTIMIERUNG: Nur noch die Top 4 statt 10 Artikel laden (Spart Handydaten & Serverzeit!)
+            for entry in parsed.entries[:4]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
@@ -236,14 +236,14 @@ for kontinent, feeds in quellen.items():
                     "image": image_url
                 })
         except Exception as e:
-            print(f"   [Warnung] Komplettes Portal übersprungen/fehlgeschlagen: {str(e)}")
+            print(f"   [Warnung] Portal übersprungen: {str(e)}")
             pass
 
-# REISSLEINE VOR DEM SPEICHERN
+# REISSLEINE
 if len(alle_artikel) >= 10:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
-    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel wurden sicher gespeichert.")
+    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel wurden gespeichert.")
 else:
-    print(f"\n[STOPP] Nur {len(alle_artikel)} Artikel extrahiert. Speichern blockiert!")
+    print(f"\n[STOPP] Speichern blockiert!")
     exit(1)
