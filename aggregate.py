@@ -6,49 +6,64 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 quellen = {
+    # --- NEUE STARTSEITE: GLOBAL ---
+    "Global": [
+        {"name": "CrimethInc. (Global)", "url": "https://crimethinc.com/feed"},
+        {"name": "Anarkismo (International)", "url": "http://www.anarkismo.net/backend?locale=en"},
+        {"name": "ZNet (International)", "url": "https://znetwork.org/feed/"},
+        {"name": "Libcom (Global News)", "url": "https://libcom.org/news/feed"},
+        {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"}
+    ],
+
     # --- ZEILE 1: KONTINENTE ---
     "Europe": [
-        {"name": "Barrikade.info", "url": "https://barrikade.info/feed"},
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
+        {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
+        {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
         {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
-        {"name": "Autonomies", "url": "https://autonomies.org/feed/"}
+        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
+        {"name": "Anarchist Federation (UK)", "url": "https://anarchistfederation.net/feed/"}
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
-        {"name": "ROAPE", "url": "https://roape.net/feed/"}
+        {"name": "ROAPE", "url": "https://roape.net/feed/"},
+        {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
+        {"name": "Amandla! Magazine (ZA)", "url": "https://aidc.org.za/category/amandla-magazine/feed/"}
     ],
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
-        {"name": "SubMedia", "url": "https://sub.media/feed/"},
-        {"name": "Ill Will", "url": "https://illwill.com/feed"},
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
-        {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"}
+        {"name": "SubMedia", "url": "https://sub.media/feed/"},
+        {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
+        {"name": "C4SS (Stateless Society)", "url": "https://c4ss.org/feed"}
     ],
     "Latin America": [
         {"name": "El Libertario", "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default"},
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "Desinformémonos", "url": "https://desinformemonos.org/feed/"},
-        {"name": "Facción Latina", "url": "https://faccionlatina.org/feed/"}
+        {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
+        {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"}
     ],
     "Asia": [
         {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"},
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
-        {"name": "Prachatai (TH)", "url": "https://prachatai.com/english/rss"},
-        {"name": "A-Infos (Global)", "url": "https://a-infos.ca/rss/en.rss"} 
+        {"name": "Mekong Review", "url": "https://mekongreview.com/feed/"},
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
     ],
     "Australia & NZ": [
         {"name": "MACG", "url": "https://melbacg.wordpress.com/feed/"},
         {"name": "Slackbastard", "url": "https://slackbastard.anarchobase.com/?feed=rss2"},
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
-        {"name": "AWSM", "url": "https://awsm.nz/feed/"}
+        {"name": "AWSM", "url": "https://awsm.nz/feed/"},
+        {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"}
     ],
     
     # --- ZEILE 2: THEMEN & KÄMPFE ---
@@ -56,44 +71,50 @@ quellen = {
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
-        {"name": "Barrikade.info", "url": "https://barrikade.info/feed"}
+        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"}
     ],
     "Antisexism": [
         {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
-        {"name": "Barrikade.info", "url": "https://barrikade.info/feed"}
+        {"name": "Anarkismo (Gender)", "url": "http://www.anarkismo.net/backend?topic=gender"}
     ],
     "Queer-Feminism": [
         {"name": "Queer Anarchism", "url": "https://queeranarchism.tumblr.com/rss"},
-        {"name": "Autonomies", "url": "https://autonomies.org/feed/"}
+        {"name": "Black Rose (Feminism)", "url": "https://blackrosefed.org/category/anarcha-feminism/feed/"}
     ],
     "Antiracism": [
         {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"},
-        {"name": "Barrikade.info", "url": "https://barrikade.info/feed"}
+        {"name": "Black Rose (Anti-Racism)", "url": "https://blackrosefed.org/category/anti-racism/feed/"},
+        {"name": "No One Is Illegal", "url": "https://noii-van.org/feed/"}
     ],
     "Anticapitalism": [
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"},
-        {"name": "Libcom News", "url": "https://libcom.org/news/feed"}
+        {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
+        {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"}
     ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
-        {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"}
+        {"name": "Lausan", "url": "https://lausan.hk/feed/"},
+        {"name": "Black Rose (Anti-Colonial)", "url": "https://blackrosefed.org/category/anti-colonialism/feed/"}
     ],
     "Anti-Imperialism": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
-        {"name": "ROAPE", "url": "https://roape.net/feed/"}
+        {"name": "ROAPE", "url": "https://roape.net/feed/"},
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
     ],
     "Squatting": [
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
-        {"name": "Barrikade.info", "url": "https://barrikade.info/feed"}
+        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"}
     ],
     "Demonstrations": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
-        {"name": "SubMedia", "url": "https://sub.media/feed/"}
+        {"name": "Athens Indymedia", "url": "https://athens.indymedia.org/rss/"},
+        {"name": "Kontrapolis", "url": "https://kontrapolis.info/feed/"}
     ],
     "Anti-Repression": [
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
-        {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"}
+        {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
+        {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"}
     ],
     "Animal Liberation": [
         {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
@@ -101,7 +122,8 @@ quellen = {
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
-        {"name": "Winter Oak", "url": "https://winteroak.org.uk/feed/"}
+        {"name": "Winter Oak", "url": "https://winteroak.org.uk/feed/"},
+        {"name": "SubMedia", "url": "https://sub.media/feed/"}
     ],
 
     # --- ZEILE 3: BIBLIOTHEKEN ---
