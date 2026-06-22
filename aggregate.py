@@ -56,6 +56,7 @@ quellen = {
         {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"}
     ],
     "Asia": [
+        {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
         {"name": "Rojava Info Center", "url": "https://rojavainformationcenter.org/feed/"},
         {"name": "ANF English (Kurdistan)", "url": "https://anfenglish.com/rss"},
         {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"},
@@ -66,6 +67,7 @@ quellen = {
         {"name": "CrimethInc. (Asia)", "url": "https://crimethinc.com/category/asia/feed"}
     ],
     "Australia & NZ": [
+        {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
         {"name": "MACG", "url": "https://melbacg.wordpress.com/feed/"},
         {"name": "Slackbastard", "url": "https://slackbastard.anarchobase.com/?feed=rss2"},
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
@@ -136,7 +138,9 @@ quellen = {
     "Indigenous Struggles": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
-        {"name": "IEN Earth", "url": "https://www.ienearth.org/feed/"}
+        {"name": "IEN Earth", "url": "https://www.ienearth.org/feed/"},
+        {"name": "IndigenousX", "url": "https://indigenousx.com.au/feed/"},
+        {"name": "Bulatlat (Indigenous)", "url": "https://www.bulatlat.com/feed/"}
     ],
 
     # --- BIBLIOTHEKEN ---
@@ -160,7 +164,6 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
 image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
-# Definiere strikten Verbindungs- und Lese-Timeout (3 Sekunden verbinden, 5 Sekunden Datenübertragung)
 STRICT_TIMEOUT = (3.05, 5.0)
 
 for kontinent, feeds in quellen.items():
@@ -184,7 +187,6 @@ for kontinent, feeds in quellen.items():
 
                 if link:
                     try:
-                        # Hier greift jetzt das extrem strikte Timeout-Paar
                         html = requests.get(link, headers=headers, timeout=STRICT_TIMEOUT).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
@@ -233,7 +235,6 @@ for kontinent, feeds in quellen.items():
             print(f"   [Warnung] Komplettes Portal fehlgeschlagen: {str(e)}")
             pass
 
-# REISSLEINE VOR DEM SPEICHERN
 if len(alle_artikel) >= 10:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
