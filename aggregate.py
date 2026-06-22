@@ -158,12 +158,15 @@ quellen = {
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
-
-# Filter gegen störende Webseiten-Logos
 image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
+# Definiere strikten Verbindungs- und Lese-Timeout (3 Sekunden verbinden, 5 Sekunden Datenübertragung)
+STRICT_TIMEOUT = (3.05, 5.0)
+
 for kontinent, feeds in quellen.items():
+    print(f"\n--- Starte Kategorie: {kontinent} ---")
     for feed in feeds:
+        print(f"-> Verarbeite Portal: {feed['name']}...")
         try:
             parsed = feedparser.parse(feed['url'])
             for entry in parsed.entries[:10]: 
@@ -181,7 +184,8 @@ for kontinent, feeds in quellen.items():
 
                 if link:
                     try:
-                        html = requests.get(link, headers=headers, timeout=10).text
+                        # Hier greift jetzt das extrem strikte Timeout-Paar
+                        html = requests.get(link, headers=headers, timeout=STRICT_TIMEOUT).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
                         if not image_url:
@@ -203,7 +207,8 @@ for kontinent, feeds in quellen.items():
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
-                    except:
+                    except Exception as e:
+                        print(f"   [Meldung] Fehler beim Laden des Einzelartikels: {str(e)}")
                         pass
                 
                 if not full_text or len(full_text) < 100:
@@ -224,14 +229,15 @@ for kontinent, feeds in quellen.items():
                     "content": clean_text,
                     "image": image_url
                 })
-        except:
+        except Exception as e:
+            print(f"   [Warnung] Komplettes Portal fehlgeschlagen: {str(e)}")
             pass
 
-# 🛑 REISSLEINE VOR DEM SPEICHERN
+# REISSLEINE VOR DEM SPEICHERN
 if len(alle_artikel) >= 10:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
-    print(f"Erfolgreich {len(alle_artikel)} Artikel gespeichert.")
+    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel wurden sicher gespeichert.")
 else:
-    print(f"Sicherheitsstopp: Nur {len(alle_artikel)} Artikel gefunden. Überschreiben abgebrochen!")
+    print(f"\n[STOPP] Nur {len(alle_artikel)} Artikel extrahiert. Speichern blockiert!")
     exit(1)
