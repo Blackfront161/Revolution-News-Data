@@ -159,6 +159,9 @@ quellen = {
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
 
+# Wörter, die in Logo- oder Design-Grafiken vorkommen
+image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
+
 for kontinent, feeds in quellen.items():
     for feed in feeds:
         try:
@@ -171,23 +174,37 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = ""
 
+                # 1. Bild aus dem RSS-Feed prüfen (falls vorhanden)
                 if 'media_content' in entry and len(entry.media_content) > 0:
-                    image_url = entry.media_content[0].get('url', '')
+                    temp_url = entry.media_content[0].get('url', '')
+                    if not any(word in temp_url.lower() for word in image_blacklist):
+                        image_url = temp_url
 
                 if link:
                     try:
                         html = requests.get(link, headers=headers, timeout=10).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
+                        # 2. Falls kein Feed-Bild da ist: Open-Graph-Bild (Social Media Meta) prüfen
                         if not image_url:
                             og_img = soup.find('meta', property='og:image')
                             if og_img and og_img.get('content'):
-                                image_url = og_img['content']
-                            else:
-                                first_img = soup.find('img')
-                                if first_img and first_img.get('src'):
-                                    image_url = urljoin(link, first_img.get('src'))
+                                temp_url = og_img['content']
+                                if not any(word in temp_url.lower() for word in image_blacklist):
+                                    image_url = temp_url
+                        
+                        # 3. Fallback: Die Seite nach dem ersten ECHTEN Artikelbild durchsuchen
+                        if not image_url:
+                            for img in soup.find_all('img'):
+                                src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
+                                if src:
+                                    full_src = urljoin(link, src)
+                                    # Überspringe Logos und winzige Tracker-Pixel
+                                    if not any(word in full_src.lower() for word in image_blacklist):
+                                        image_url = full_src
+                                        break # Erstes echtes Artikelbild gefunden, Schleife abbrechen
 
+                        # Text-Inhalte extrahieren
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
