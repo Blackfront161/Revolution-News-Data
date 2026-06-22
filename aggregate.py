@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 import re
 import time
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from urllib3.util import Retry # 🛑 HIER KORRIGIERT: Moderner und sicherer Import
 
 # --- KONFIGURATION & QUELLEN ---
 quellen = {
@@ -158,17 +158,14 @@ quellen = {
     ]
 }
 
-# --- KONSTANTEN & SETUP ---
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) WorldRevolutionNews/1.0'}
-AUTONOMOUS_TIMEOUT = (5.0, 15.0) # Etwas entspannter für langsame Server
-# Ein neutraler, ästhetischer Platzhalter (Solarpunk-Vibe)
+AUTONOMOUS_TIMEOUT = (5.0, 15.0)
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
 
-# Setup für automatische Wiederholungen (Retry) bei Fehlern
 retry_strategy = Retry(
-    total=2, # 2 Versuche insgesamt
-    backoff_factor=1, # Wartezeit zwischen Versuchen (1s, 2s)
-    status_forcelist=[429, 500, 502, 503, 504], # Wiederhole bei diesen HTTP-Fehlern
+    total=2,
+    backoff_factor=1,
+    status_forcelist=[429, 500, 502, 503, 504],
     allowed_methods=["GET"]
 )
 adapter = HTTPAdapter(max_retries=retry_strategy)
@@ -176,23 +173,16 @@ http = requests.Session()
 http.mount("https://", adapter)
 http.mount("http://", adapter)
 
-# Bilder, die wir definitiv NICHT wollen
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
-IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
 
 alle_artikel = []
 
 def clean_image_url(url, base_url):
-    """Bereinigt und validiert eine Bild-URL."""
     if not url: return None
     full_url = urljoin(base_url, url)
     filename = full_url.split('/')[-1].lower()
-    
-    # Check gegen Blacklist
     if any(kw in filename for kw in LAYOUT_FILES): return None
-    # Check ob Themes/Plugins Ordner (oft Layout-Assets)
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
-    
     return full_url
 
 for kontinent, feeds in quellen.items():
@@ -200,22 +190,19 @@ for kontinent, feeds in quellen.items():
     for feed in feeds:
         print(f"-> Portal: {feed['name']}...")
         try:
-            # RSS Feed laden (mit Retry)
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:4]: # Top 4 Artikel
+            for entry in parsed.entries[:4]:
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
                 full_text = ""
                 image_url = None
 
-                # --- BILDERSUCHE STUFE 1: RSS ENCLOSED MEDIA ---
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
-                # --- BILDERSUCHE STUFE 2: RSS DESCRIPTION INLINE ---
                 if not image_url:
                     for content_key in ['description', 'summary']:
                         if content_key in entry and isinstance(entry[content_key], str):
@@ -225,51 +212,42 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                # --- BILDERSUCHE STUFE 3: WEBSEITE SCRAPEN (mit Retry) ---
-                if not image_url and link:
+                if link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
                         
-                        # OpenGraph (Best Case)
                         og_img = soup.find('meta', property='og:image')
                         if og_img:
                             image_url = clean_image_url(og_img.get('content'), link)
                         
-                        # Erstes echtes Img-Tag im Body
                         if not image_url:
                             for img in soup.find_all('img'):
                                 src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                                 image_url = clean_image_url(src, link)
                                 if image_url: break
                                 
-                        # --- BILDERSUCHE STUFE 4: REGEX NOTFALL-SCAN ---
                         if not image_url:
-                            # Suche nach ALLEM was wie eine Bild-URL aussieht im rohen HTML
                             matches = re.findall(r'(https?://[^\s"<>]+\.(?:jpg|jpeg|png|webp))', html_req.text, re.IGNORECASE)
                             for match in matches:
                                 image_url = clean_image_url(match, link)
                                 if image_url: break
 
-                        # Text extrahieren
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                     except Exception as e:
-                        print(f"   [Meldung] Einzelartikel-Scraping fehlgeschlagen: {str(e)}")
+                        print(f"   [Meldung] Einzelartikel-Scraping übersprungen: {str(e)}")
                         pass
                 
-                # Fallback für Text
                 if not full_text or len(full_text) < 150:
                     if 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
-                # Text bereinigen und kürzen
                 clean_text = full_text.strip()
                 if len(clean_text) > 8000:
                     clean_text = clean_text[:8000] + "\n\n[... Text gekürzt ...]"
 
-                # --- STUFE 5: FINALER PLATZHALTER ---
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
@@ -286,9 +264,7 @@ for kontinent, feeds in quellen.items():
             print(f"   [Warnung] Portal komplett übersprungen: {str(e)}")
             pass
 
-# SICHERHEITS-REISSLEINE VOR DEM SPEICHERN
 if len(alle_artikel) >= 10:
-    # Sortieren: Neueste zuerst
     try:
         alle_artikel.sort(key=lambda x: x['pubDate'], reverse=True)
     except:
