@@ -22,6 +22,8 @@ quellen = {
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
+        {"name": "Avtonom (RU)", "url": "https://avtonom.org/rss.xml"},
+        {"name": "Pramen (BY)", "url": "https://pramen.io/feed/"},
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
         {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
@@ -40,7 +42,7 @@ quellen = {
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
-        {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
+        {"name": "Montreal Antifasciste", "info": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
         {"name": "C4SS", "url": "https://c4ss.org/feed"}
@@ -102,8 +104,7 @@ quellen = {
     "Anti-Imperialism": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
-        {"name": "ZNet (Anti-Imp)", "url": "https://znetwork.org/feed/"}
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
     ],
     "Squatting": [
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
@@ -117,6 +118,7 @@ quellen = {
     "Anti-Repression": [
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
         {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
+        {"name": "Avtonom (Repression)", "url": "https://avtonom.org/rss.xml"},
         {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"}
     ],
     "Animal Liberation": [
