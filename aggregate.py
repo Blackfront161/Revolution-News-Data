@@ -17,7 +17,7 @@ quellen = {
         {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"}
     ],
 
-    # --- ZEILE 1: KONTINENTE ---
+    # --- KONTINENTE ---
     "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
@@ -42,12 +42,13 @@ quellen = {
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
-        {"name": "Montreal Antifasciste", "info": "https://montreal-antifasciste.info/fr/feed/"},
+        {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
         {"name": "C4SS", "url": "https://c4ss.org/feed"}
     ],
     "Latin America": [
+        {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
         {"name": "El Libertario", "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default"},
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "Desinformémonos", "url": "https://desinformemonos.org/feed/"},
@@ -55,6 +56,8 @@ quellen = {
         {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"}
     ],
     "Asia": [
+        {"name": "Rojava Info Center", "url": "https://rojavainformationcenter.org/feed/"},
+        {"name": "ANF English (Kurdistan)", "url": "https://anfenglish.com/rss"},
         {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"},
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
@@ -70,7 +73,7 @@ quellen = {
         {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"}
     ],
     
-    # --- ZEILE 2: THEMEN & KÄMPFE ---
+    # --- THEMEN & KÄMPFE ---
     "Antifascism": [
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
@@ -130,8 +133,13 @@ quellen = {
         {"name": "Winter Oak", "url": "https://winteroak.org.uk/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"}
     ],
+    "Indigenous Struggles": [
+        {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
+        {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
+        {"name": "IEN Earth", "url": "https://www.ienearth.org/feed/"}
+    ],
 
-    # --- ZEILE 3: BIBLIOTHEKEN ---
+    # --- BIBLIOTHEKEN ---
     "Libraries": [
         {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
         {"name": "The Anarchist Library (EN)", "url": "https://theanarchistlibrary.org/feed"},
