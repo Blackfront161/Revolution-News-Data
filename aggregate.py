@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 import re
 import time
 from requests.adapters import HTTPAdapter
-from urllib3.util import Retry # 🛑 HIER KORRIGIERT: Moderner und sicherer Import
+from urllib3.util import Retry
 
 # --- KONFIGURATION & QUELLEN ---
 quellen = {
@@ -173,7 +173,9 @@ http = requests.Session()
 http.mount("https://", adapter)
 http.mount("http://", adapter)
 
+# Filter: Was darf KEIN Artikelbild sein?
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
+IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
 
 alle_artikel = []
 
@@ -200,9 +202,20 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = None
 
+                # --- BILDERSUCHE STUFE 1: Sichtbare RSS Medien ---
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
+                # --- BILDERSUCHE STUFE 2: Versteckte Dateianhänge (DAS FEHLTE FÜR BARRIKADE / INDYMEDIA!) ---
+                if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
+                    for enc in entry.enclosures:
+                        href = enc.get('href', '')
+                        # Wenn der Anhang ein Bild ist (MIME-Type oder Dateiendung)
+                        if enc.get('type', '').startswith('image/') or any(ext in href.lower() for ext in IMAGE_EXTENSIONS):
+                            image_url = clean_image_url(href, link)
+                            if image_url: break
+
+                # --- BILDERSUCHE STUFE 3: Versteckt im Beschreibungstext ---
                 if not image_url:
                     for content_key in ['description', 'summary']:
                         if content_key in entry and isinstance(entry[content_key], str):
@@ -212,7 +225,8 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                if link:
+                # --- BILDERSUCHE STUFE 4: Harter Webseiten-Besuch (Nur wenn bisher nichts gefunden) ---
+                if not image_url and link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
@@ -248,6 +262,7 @@ for kontinent, feeds in quellen.items():
                 if len(clean_text) > 8000:
                     clean_text = clean_text[:8000] + "\n\n[... Text gekürzt ...]"
 
+                # Fallback Platzhalter
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
