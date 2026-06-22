@@ -164,6 +164,7 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
 image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
+# Absolut striktes Zeitlimit: 3 Sekunden für Verbindungsaufbau, 5 Sekunden für Datenfluss
 STRICT_TIMEOUT = (3.05, 5.0)
 
 for kontinent, feeds in quellen.items():
@@ -171,7 +172,10 @@ for kontinent, feeds in quellen.items():
     for feed in feeds:
         print(f"-> Verarbeite Portal: {feed['name']}...")
         try:
-            parsed = feedparser.parse(feed['url'])
+            # 🛑 NEU: Auch den Haupt-RSS-Feed über requests mit hartem Timeout absichern!
+            feed_req = requests.get(feed['url'], headers=headers, timeout=STRICT_TIMEOUT)
+            parsed = feedparser.parse(feed_req.text)
+            
             for entry in parsed.entries[:10]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
@@ -232,9 +236,10 @@ for kontinent, feeds in quellen.items():
                     "image": image_url
                 })
         except Exception as e:
-            print(f"   [Warnung] Komplettes Portal fehlgeschlagen: {str(e)}")
+            print(f"   [Warnung] Komplettes Portal übersprungen/fehlgeschlagen: {str(e)}")
             pass
 
+# REISSLEINE VOR DEM SPEICHERN
 if len(alle_artikel) >= 10:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
