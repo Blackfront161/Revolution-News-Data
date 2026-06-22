@@ -162,20 +162,18 @@ quellen = {
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
-image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
-# 3 Sekunden für Verbindung, 5 Sekunden für Datenfluss
-STRICT_TIMEOUT = (3.05, 5.0)
+# Faires Zeitlimit für alternative Server: 4s Verbindungsaufbau, 10s Datenübertragung
+AUTONOMOUS_TIMEOUT = (4.0, 10.0)
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Starte Kategorie: {kontinent} ---")
     for feed in feeds:
         print(f"-> Verarbeite Portal: {feed['name']}...")
         try:
-            feed_req = requests.get(feed['url'], headers=headers, timeout=STRICT_TIMEOUT)
+            feed_req = requests.get(feed['url'], headers=headers, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            # 🛑 OPTIMIERUNG: Nur noch die Top 4 statt 10 Artikel laden (Spart Handydaten & Serverzeit!)
             for entry in parsed.entries[:4]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
@@ -184,29 +182,41 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = ""
 
+                # SCHRITT 1: Direktes Feed-Bild (media_content) prüfen
                 if 'media_content' in entry and len(entry.media_content) > 0:
-                    temp_url = entry.media_content[0].get('url', '')
-                    if not any(word in temp_url.lower() for word in image_blacklist):
-                        image_url = temp_url
+                    image_url = entry.media_content[0].get('url', '')
 
+                # SCHRITT 2: NEU & REVOLUTIONÄR - RSS-Beschreibung nach eingebetteten Beitragsbildern abscannen
+                if not image_url:
+                    for content_key in ['description', 'summary']:
+                        if content_key in entry and isinstance(entry[content_key], str):
+                            desc_soup = BeautifulSoup(entry[content_key], 'html.parser')
+                            img_tag = desc_soup.find('img')
+                            if img_tag and img_tag.get('src'):
+                                image_url = img_tag['src']
+                                break
+
+                # SCHRITT 3: Falls kein Bild im Feed war, die Webseite direkt laden (mit intelligentem Filter)
                 if link:
                     try:
-                        html = requests.get(link, headers=headers, timeout=STRICT_TIMEOUT).text
+                        html = requests.get(link, headers=headers, timeout=AUTONOMOUS_TIMEOUT).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
                         if not image_url:
                             og_img = soup.find('meta', property='og:image')
                             if og_img and og_img.get('content'):
-                                temp_url = og_img['content']
-                                if not any(word in temp_url.lower() for word in image_blacklist):
-                                    image_url = temp_url
+                                image_url = og_img['content']
                         
                         if not image_url:
                             for img in soup.find_all('img'):
                                 src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                                 if src:
                                     full_src = urljoin(link, src)
-                                    if not any(word in full_src.lower() for word in image_blacklist):
+                                    filename = full_src.split('/')[-1].lower()
+                                    
+                                    # Smarter Filter: Blockiert nur reine Design-Assets (wie logo.png), erlaubt aber Artikel-Bilder (wie logo_article.jpg)
+                                    layout_files = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_']
+                                    if not any(kw in filename for kw in layout_files) and not any(kw in full_src.lower() for kw in ['/themes/', '/plugins/']):
                                         image_url = full_src
                                         break
 
@@ -214,7 +224,7 @@ for kontinent, feeds in quellen.items():
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
                     except Exception as e:
-                        print(f"   [Meldung] Fehler beim Laden des Einzelartikels: {str(e)}")
+                        print(f"   [Meldung] Einzelartikel-Scraping übersprungen: {str(e)}")
                         pass
                 
                 if not full_text or len(full_text) < 100:
