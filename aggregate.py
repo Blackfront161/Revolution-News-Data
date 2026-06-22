@@ -6,13 +6,15 @@ from datetime import datetime
 from urllib.parse import urljoin
 
 quellen = {
-    # --- NEUE STARTSEITE: GLOBAL ---
+    # --- STARTSEITE: GLOBAL ---
     "Global": [
         {"name": "CrimethInc. (Global)", "url": "https://crimethinc.com/feed"},
         {"name": "Anarkismo (International)", "url": "http://www.anarkismo.net/backend?locale=en"},
         {"name": "ZNet (International)", "url": "https://znetwork.org/feed/"},
         {"name": "Libcom (Global News)", "url": "https://libcom.org/news/feed"},
-        {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"}
+        {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"},
+        {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
+        {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"}
     ],
 
     # --- ZEILE 1: KONTINENTE ---
@@ -26,15 +28,14 @@ quellen = {
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
-        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
-        {"name": "Anarchist Federation (UK)", "url": "https://anarchistfederation.net/feed/"}
+        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"}
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
-        {"name": "Amandla! Magazine (ZA)", "url": "https://aidc.org.za/category/amandla-magazine/feed/"}
+        {"name": "Amandla! Magazine", "url": "https://aidc.org.za/category/amandla-magazine/feed/"}
     ],
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
@@ -42,7 +43,7 @@ quellen = {
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
-        {"name": "C4SS (Stateless Society)", "url": "https://c4ss.org/feed"}
+        {"name": "C4SS", "url": "https://c4ss.org/feed"}
     ],
     "Latin America": [
         {"name": "El Libertario", "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default"},
@@ -56,7 +57,8 @@ quellen = {
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
         {"name": "Mekong Review", "url": "https://mekongreview.com/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
+        {"name": "CrimethInc. (Asia)", "url": "https://crimethinc.com/category/asia/feed"}
     ],
     "Australia & NZ": [
         {"name": "MACG", "url": "https://melbacg.wordpress.com/feed/"},
@@ -100,7 +102,8 @@ quellen = {
     "Anti-Imperialism": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
+        {"name": "ZNet (Anti-Imp)", "url": "https://znetwork.org/feed/"}
     ],
     "Squatting": [
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
@@ -134,6 +137,10 @@ quellen = {
         {"name": "Bibliothèque Anarchiste (FR)", "url": "https://fr.theanarchistlibrary.org/feed"},
         {"name": "Libreria Anarchica (IT)", "url": "https://it.theanarchistlibrary.org/feed"},
         {"name": "Biblioteca Anarquista (PT)", "url": "https://pt.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (RU)", "url": "https://ru.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (TR)", "url": "https://tr.theanarchistlibrary.org/feed"},
+        {"name": "Ill Will", "url": "https://illwill.com/feed"},
+        {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/feed/"},
         {"name": "Zabalaza Books (Africa)", "url": "https://zabalazabooks.net/feed/"},
         {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
     ]
