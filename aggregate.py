@@ -159,7 +159,7 @@ quellen = {
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 alle_artikel = []
 
-# Wörter, die in Logo- oder Design-Grafiken vorkommen
+# Filter gegen störende Webseiten-Logos
 image_blacklist = ['logo', 'banner', 'header', 'favicon', 'icon', 'avatar', 'sidebar', 'footer', 'theme', 'nav', 'default', 'brand', 'menu']
 
 for kontinent, feeds in quellen.items():
@@ -174,7 +174,6 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = ""
 
-                # 1. Bild aus dem RSS-Feed prüfen (falls vorhanden)
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     temp_url = entry.media_content[0].get('url', '')
                     if not any(word in temp_url.lower() for word in image_blacklist):
@@ -185,7 +184,6 @@ for kontinent, feeds in quellen.items():
                         html = requests.get(link, headers=headers, timeout=10).text
                         soup = BeautifulSoup(html, 'html.parser')
                         
-                        # 2. Falls kein Feed-Bild da ist: Open-Graph-Bild (Social Media Meta) prüfen
                         if not image_url:
                             og_img = soup.find('meta', property='og:image')
                             if og_img and og_img.get('content'):
@@ -193,18 +191,15 @@ for kontinent, feeds in quellen.items():
                                 if not any(word in temp_url.lower() for word in image_blacklist):
                                     image_url = temp_url
                         
-                        # 3. Fallback: Die Seite nach dem ersten ECHTEN Artikelbild durchsuchen
                         if not image_url:
                             for img in soup.find_all('img'):
                                 src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                                 if src:
                                     full_src = urljoin(link, src)
-                                    # Überspringe Logos und winzige Tracker-Pixel
                                     if not any(word in full_src.lower() for word in image_blacklist):
                                         image_url = full_src
-                                        break # Erstes echtes Artikelbild gefunden, Schleife abbrechen
+                                        break
 
-                        # Text-Inhalte extrahieren
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 20]
                         full_text = "\n\n".join(text_blocks)
@@ -232,5 +227,11 @@ for kontinent, feeds in quellen.items():
         except:
             pass
 
-with open('news.json', 'w', encoding='utf-8') as f:
-    json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
+# 🛑 REISSLEINE VOR DEM SPEICHERN
+if len(alle_artikel) >= 10:
+    with open('news.json', 'w', encoding='utf-8') as f:
+        json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
+    print(f"Erfolgreich {len(alle_artikel)} Artikel gespeichert.")
+else:
+    print(f"Sicherheitsstopp: Nur {len(alle_artikel)} Artikel gefunden. Überschreiben abgebrochen!")
+    exit(1)
