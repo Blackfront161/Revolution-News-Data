@@ -18,7 +18,9 @@ quellen = {
         {"name": "Libcom (Global News)", "url": "https://libcom.org/news/feed"},
         {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"},
         {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
-        {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"}
+        {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
+        {"name": "Anarchist News", "url": "https://anarchistnews.org/rss.xml"},
+        {"name": "Autonomies", "url": "https://autonomies.org/feed/"}
     ],
     "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
@@ -32,7 +34,10 @@ quellen = {
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
-        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"}
+        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
+        {"name": "A-Radio Berlin", "url": "https://www.aradio-berlin.org/feed/"},
+        {"name": "A Las Barricadas (ES)", "url": "https://www.alasbarricadas.org/noticias/rss.xml"},
+        {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"}
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
@@ -47,7 +52,8 @@ quellen = {
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
-        {"name": "C4SS", "url": "https://c4ss.org/feed"}
+        {"name": "C4SS", "url": "https://c4ss.org/feed"},
+        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"}
     ],
     "Latin America": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
@@ -65,8 +71,7 @@ quellen = {
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
         {"name": "Mekong Review", "url": "https://mekongreview.com/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
-        {"name": "CrimethInc. (Asia)", "url": "https://crimethinc.com/category/asia/feed"}
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
     ],
     "Australia & NZ": [
         {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
@@ -80,7 +85,9 @@ quellen = {
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
-        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"}
+        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
+        {"name": "Act for Freedom Now!", "url": "https://actforfree.noblogs.org/feed/"},
+        {"name": "Fajfa (Antifa)", "url": "https://fajfa.noblogs.org/feed/"}
     ],
     "Antisexism": [
         {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
@@ -100,6 +107,16 @@ quellen = {
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"},
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
         {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"}
+    ],
+    # NEUE KATEGORIE: Arbeitskämpfe (Syndikalismus & Basisgewerkschaften)
+    "Labor Struggles": [
+        {"name": "IWW (Global)", "url": "https://www.iww.org/feed/"},
+        {"name": "FAU (Deutschland)", "url": "https://www.fau.org/rss.xml"},
+        {"name": "CNT (Spanien)", "url": "https://www.cnt.es/feed/"},
+        {"name": "Labor Notes", "url": "https://labornotes.org/feed"},
+        {"name": "AngryWorkers", "url": "https://angryworkers.org/feed/"},
+        {"name": "LabourNet DE", "url": "https://www.labournet.de/feed/"},
+        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"}
     ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
@@ -124,7 +141,8 @@ quellen = {
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
         {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
         {"name": "Avtonom (Repression)", "url": "https://avtonom.org/rss.xml"},
-        {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"}
+        {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"},
+        {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"}
     ],
     "Animal Liberation": [
         {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
@@ -151,7 +169,9 @@ quellen = {
         {"name": "Biblioteca Anarquista (PT)", "url": "https://pt.theanarchistlibrary.org/feed"},
         {"name": "Anarchist Library (RU)", "url": "https://ru.theanarchistlibrary.org/feed"},
         {"name": "Anarchist Library (TR)", "url": "https://tr.theanarchistlibrary.org/feed"},
-        {"name": "Ill Will", "url": "https://illwill.com/feed"},
+        {"name": "Anarchist Library (PL)", "url": "https://pl.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (SV)", "url": "https://sv.theanarchistlibrary.org/feed"},
+        {"name": "RevoltLib", "url": "https://revoltlib.com/feed"},
         {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/feed/"},
         {"name": "Zabalaza Books (Africa)", "url": "https://zabalazabooks.net/feed/"},
         {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
@@ -199,6 +219,10 @@ for kontinent, feeds in quellen.items():
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
+                
+                # AUTOR EXTRAHIEREN FÜR DIE APP
+                author = entry.get('author', 'Unknown')
+                
                 full_text = ""
                 image_url = None
 
@@ -206,11 +230,10 @@ for kontinent, feeds in quellen.items():
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
-                # --- BILDERSUCHE STUFE 2: Versteckte Dateianhänge (DAS FEHLTE FÜR BARRIKADE / INDYMEDIA!) ---
+                # --- BILDERSUCHE STUFE 2: Versteckte Dateianhänge ---
                 if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
                     for enc in entry.enclosures:
                         href = enc.get('href', '')
-                        # Wenn der Anhang ein Bild ist (MIME-Type oder Dateiendung)
                         if enc.get('type', '').startswith('image/') or any(ext in href.lower() for ext in IMAGE_EXTENSIONS):
                             image_url = clean_image_url(href, link)
                             if image_url: break
@@ -225,7 +248,7 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                # --- BILDERSUCHE STUFE 4: Harter Webseiten-Besuch (Nur wenn bisher nichts gefunden) ---
+                # --- BILDERSUCHE STUFE 4: Harter Webseiten-Besuch ---
                 if not image_url and link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
@@ -262,13 +285,13 @@ for kontinent, feeds in quellen.items():
                 if len(clean_text) > 8000:
                     clean_text = clean_text[:8000] + "\n\n[... Text gekürzt ...]"
 
-                # Fallback Platzhalter
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
                 alle_artikel.append({
                     "kontinent": kontinent,
                     "quelleName": feed['name'],
+                    "author": author,  # WICHTIG: Autor wird jetzt mitgeliefert!
                     "title": title,
                     "link": link,
                     "pubDate": pubDate,
