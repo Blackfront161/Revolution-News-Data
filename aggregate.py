@@ -37,7 +37,9 @@ quellen = {
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "A-Radio Berlin", "url": "https://www.aradio-berlin.org/feed/"},
         {"name": "A Las Barricadas (ES)", "url": "https://www.alasbarricadas.org/noticias/rss.xml"},
-        {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"}
+        {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"},
+        {"name": "Federacja Anarchistyczna (PL)", "url": "https://federacja-anarchistyczna.pl/feed/"},
+        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"}
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
@@ -71,7 +73,12 @@ quellen = {
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
         {"name": "Mekong Review", "url": "https://mekongreview.com/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
+        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
+        {"name": "Thozhilalar Koodam (India)", "url": "https://tnlabor.in/feed/"},
+        {"name": "Radical Socialist (India)", "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss"},
+        {"name": "Palang Hitam (Indonesia)", "url": "https://palanghitam.noblogs.org/feed/"},
+        {"name": "Federation of Anarchism Era", "url": "https://asranarshism.com/feed/"},
+        {"name": "Fauda", "url": "https://fauda.noblogs.org/feed/"}
     ],
     "Australia & NZ": [
         {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
@@ -87,7 +94,8 @@ quellen = {
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Act for Freedom Now!", "url": "https://actforfree.noblogs.org/feed/"},
-        {"name": "Fajfa (Antifa)", "url": "https://fajfa.noblogs.org/feed/"}
+        {"name": "Fajfa (Antifa)", "url": "https://fajfa.noblogs.org/feed/"},
+        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"}
     ],
     "Antisexism": [
         {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
@@ -108,7 +116,6 @@ quellen = {
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
         {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"}
     ],
-    # NEUE KATEGORIE: Arbeitskämpfe (Syndikalismus & Basisgewerkschaften)
     "Labor Struggles": [
         {"name": "IWW (Global)", "url": "https://www.iww.org/feed/"},
         {"name": "FAU (Deutschland)", "url": "https://www.fau.org/rss.xml"},
@@ -116,7 +123,8 @@ quellen = {
         {"name": "Labor Notes", "url": "https://labornotes.org/feed"},
         {"name": "AngryWorkers", "url": "https://angryworkers.org/feed/"},
         {"name": "LabourNet DE", "url": "https://www.labournet.de/feed/"},
-        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"}
+        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"},
+        {"name": "Thozhilalar Koodam", "url": "https://tnlabor.in/feed/"}
     ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
@@ -291,7 +299,7 @@ for kontinent, feeds in quellen.items():
                 alle_artikel.append({
                     "kontinent": kontinent,
                     "quelleName": feed['name'],
-                    "author": author,  # WICHTIG: Autor wird jetzt mitgeliefert!
+                    "author": author,
                     "title": title,
                     "link": link,
                     "pubDate": pubDate,
