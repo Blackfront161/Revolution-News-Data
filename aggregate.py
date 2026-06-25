@@ -32,7 +32,6 @@ quellen = {
         {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
-        {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "A-Radio Berlin", "url": "https://www.aradio-berlin.org/feed/"},
@@ -88,6 +87,16 @@ quellen = {
         {"name": "AWSM", "url": "https://awsm.nz/feed/"},
         {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"}
     ],
+    "Labor Struggles": [
+        {"name": "IWW (Global)", "url": "https://www.iww.org/feed/"},
+        {"name": "FAU (Deutschland)", "url": "https://www.fau.org/rss.xml"},
+        {"name": "CNT (Spanien)", "url": "https://www.cnt.es/feed/"},
+        {"name": "Labor Notes", "url": "https://labornotes.org/feed"},
+        {"name": "AngryWorkers", "url": "https://angryworkers.org/feed/"},
+        {"name": "LabourNet DE", "url": "https://www.labournet.de/feed/"},
+        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"},
+        {"name": "Thozhilalar Koodam", "url": "https://tnlabor.in/feed/"}
+    ],
     "Antifascism": [
         {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
@@ -99,7 +108,10 @@ quellen = {
     ],
     "Antisexism": [
         {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
-        {"name": "Anarkismo (Gender)", "url": "http://www.anarkismo.net/backend?topic=gender"}
+        {"name": "Anarkismo (Gender)", "url": "http://www.anarkismo.net/backend?topic=gender"},
+        {"name": "Jineolojî Academy", "url": "https://jineoloji.org/en/feed/"},
+        {"name": "Ni Una Menos", "url": "https://niunamenos.org.ar/feed/"},
+        {"name": "Feministische Antifa", "url": "https://fantifa.noblogs.org/feed/"}
     ],
     "Queer-Feminism": [
         {"name": "Queer Anarchism", "url": "https://queeranarchism.tumblr.com/rss"},
@@ -116,16 +128,6 @@ quellen = {
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
         {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"}
     ],
-    "Labor Struggles": [
-        {"name": "IWW (Global)", "url": "https://www.iww.org/feed/"},
-        {"name": "FAU (Deutschland)", "url": "https://www.fau.org/rss.xml"},
-        {"name": "CNT (Spanien)", "url": "https://www.cnt.es/feed/"},
-        {"name": "Labor Notes", "url": "https://labornotes.org/feed"},
-        {"name": "AngryWorkers", "url": "https://angryworkers.org/feed/"},
-        {"name": "LabourNet DE", "url": "https://www.labournet.de/feed/"},
-        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"},
-        {"name": "Thozhilalar Koodam", "url": "https://tnlabor.in/feed/"}
-    ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "Lausan", "url": "https://lausan.hk/feed/"},
@@ -136,21 +138,36 @@ quellen = {
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
     ],
-    "Squatting": [
+    "Squatting & Housing": [
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
-        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"}
+        {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
+        {"name": "Mietergewerkschaft Berlin", "url": "https://mietergewerkschaft.berlin/feed/"},
+        {"name": "Housing Action", "url": "https://housingaction.noblogs.org/feed/"}
     ],
     "Demonstrations": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
         {"name": "Athens Indymedia", "url": "https://athens.indymedia.org/rss/"},
         {"name": "Kontrapolis", "url": "https://kontrapolis.info/feed/"}
     ],
-    "Anti-Repression": [
+    "Anti-Rep & Prisons": [
+        {"name": "IWOC (Incarcerated Workers)", "url": "https://incarceratedworkers.org/feed"},
+        {"name": "Kite Line Radio", "url": "https://kitelineradio.noblogs.org/feed/"},
+        {"name": "Critical Resistance", "url": "https://criticalresistance.org/feed/"},
+        {"name": "Rote Hilfe", "url": "https://www.rote-hilfe.de/rss.xml"},
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
         {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
-        {"name": "Avtonom (Repression)", "url": "https://avtonom.org/rss.xml"},
         {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"},
         {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"}
+    ],
+    "Cyberactivism": [
+        {"name": "Riseup Networks", "url": "https://riseup.net/en/feed"},
+        {"name": "Systemli", "url": "https://www.systemli.org/feed.xml"},
+        {"name": "Autistici/Inventati", "url": "https://www.autistici.org/feed/"}
+    ],
+    "No War": [
+        {"name": "War Resisters' International", "url": "https://wri-irg.org/en/feed"},
+        {"name": "Rheinmetall Entwaffnen", "url": "https://rheinmetallentwaffnen.noblogs.org/feed/"},
+        {"name": "Antimilitarismus", "url": "https://antimilitarismus.noblogs.org/feed/"}
     ],
     "Animal Liberation": [
         {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
