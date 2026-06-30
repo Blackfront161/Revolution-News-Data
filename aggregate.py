@@ -20,7 +20,10 @@ quellen = {
         {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
         {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
         {"name": "Anarchist News", "url": "https://anarchistnews.org/rss.xml"},
-        {"name": "Autonomies", "url": "https://autonomies.org/feed/"}
+        {"name": "Autonomies", "url": "https://autonomies.org/feed/"},
+        {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
+        {"name": "Abolition Media", "url": "https://www.abolitionmedia.noblogs.org/feed/"},
+        {"name": "Slingshot Collective", "url": "https://slingshotcollective.org/feed/"}
     ],
     "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
@@ -38,7 +41,10 @@ quellen = {
         {"name": "A Las Barricadas (ES)", "url": "https://www.alasbarricadas.org/noticias/rss.xml"},
         {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"},
         {"name": "Federacja Anarchistyczna (PL)", "url": "https://federacja-anarchistyczna.pl/feed/"},
-        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"}
+        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"},
+        {"name": "Lower Class Magazine", "url": "https://lowerclassmag.com/feed/"},
+        {"name": "Megafon Bern", "url": "https://megafon.ch/feed/"},
+        {"name": "Anarchist Communist Group", "url": "https://www.anarchistcommunism.org/feed/"}
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
@@ -77,7 +83,11 @@ quellen = {
         {"name": "Radical Socialist (India)", "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss"},
         {"name": "Palang Hitam (Indonesia)", "url": "https://palanghitam.noblogs.org/feed/"},
         {"name": "Federation of Anarchism Era", "url": "https://asranarshism.com/feed/"},
-        {"name": "Fauda", "url": "https://fauda.noblogs.org/feed/"}
+        {"name": "Fauda", "url": "https://fauda.noblogs.org/feed/"},
+        {"name": "Manila Today", "url": "https://manilatoday.net/feed/"},
+        {"name": "Kodao Productions", "url": "https://kodao.org/feed/"},
+        {"name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/"},
+        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
     ],
     "Australia & NZ": [
         {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
@@ -104,7 +114,8 @@ quellen = {
         {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Act for Freedom Now!", "url": "https://actforfree.noblogs.org/feed/"},
         {"name": "Fajfa (Antifa)", "url": "https://fajfa.noblogs.org/feed/"},
-        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"}
+        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"},
+        {"name": "Antifa Bern", "url": "https://antifa-bern.ch/feed/"}
     ],
     "Antisexism": [
         {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
@@ -115,7 +126,9 @@ quellen = {
     ],
     "Queer-Feminism": [
         {"name": "Queer Anarchism", "url": "https://queeranarchism.tumblr.com/rss"},
-        {"name": "Black Rose (Feminism)", "url": "https://blackrosefed.org/category/anarcha-feminism/feed/"}
+        {"name": "Black Rose (Feminism)", "url": "https://blackrosefed.org/category/anarcha-feminism/feed/"},
+        {"name": "GenderIT (Technofeminism)", "url": "https://www.genderit.org/rss.xml"},
+        {"name": "Transgender Europe (TGEU)", "url": "https://tgeu.org/feed/"}
     ],
     "Antiracism": [
         {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"},
@@ -157,12 +170,16 @@ quellen = {
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
         {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
         {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"},
-        {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"}
+        {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"},
+        {"name": "SoliNetz", "url": "https://solinetz.ch/feed/"}
     ],
     "Cyberactivism": [
         {"name": "Riseup Networks", "url": "https://riseup.net/en/feed"},
         {"name": "Systemli", "url": "https://www.systemli.org/feed.xml"},
-        {"name": "Autistici/Inventati", "url": "https://www.autistici.org/feed/"}
+        {"name": "Autistici/Inventati", "url": "https://www.autistici.org/feed/"},
+        {"name": "Nadir.org", "url": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml"},
+        {"name": "DDoSecrets", "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss"},
+        {"name": "Electronic Frontier Foundation", "url": "https://www.eff.org/rss/updates.xml"}
     ],
     "No War": [
         {"name": "War Resisters' International", "url": "https://wri-irg.org/en/feed"},
@@ -176,7 +193,10 @@ quellen = {
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
         {"name": "Winter Oak", "url": "https://winteroak.org.uk/feed/"},
-        {"name": "SubMedia", "url": "https://sub.media/feed/"}
+        {"name": "SubMedia", "url": "https://sub.media/feed/"},
+        {"name": "Solarpunk Magazine", "url": "https://solarpunkmagazine.com/feed/"},
+        {"name": "Defend the Atlanta Forest", "url": "https://defendtheatlantaforest.org/feed/"},
+        {"name": "Desmog", "url": "https://www.desmog.com/feed/"}
     ],
     "Indigenous Struggles": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
