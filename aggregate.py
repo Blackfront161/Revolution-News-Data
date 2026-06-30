@@ -20,7 +20,8 @@ quellen = {
         {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"},
         {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
         {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
-        {"name": "Anarchist News", "url": "https://anarchistnews.org/rss.xml"},
+        # HIER IST DER MORSS.IT HACK FÜR ANARCHIST NEWS:
+        {"name": "Anarchist News", "url": "https://morss.it/https://anarchistnews.org/rss.xml"},
         {"name": "Autonomies", "url": "https://autonomies.org/feed/"},
         {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
         {"name": "Abolition Media", "url": "https://www.abolitionmedia.noblogs.org/feed/"},
@@ -375,8 +376,7 @@ for kontinent, feeds in quellen.items():
 
                 clean_text = full_text.strip()
                 
-                # --- NEUER FILTER: Redundanten Müll entfernen ---
-                # Wenn die RSS-Zusammenfassung eigentlich nur der Titel ist, tauschen wir sie gegen einen Warnhinweis aus
+                # --- FILTER: Redundanten Müll entfernen ---
                 if title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
