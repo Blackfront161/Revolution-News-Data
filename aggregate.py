@@ -268,7 +268,6 @@ retry_strategy = Retry(
 )
 adapter = HTTPAdapter(max_retries=retry_strategy)
 
-# --- HIER IST DIE ÄNDERUNG: Cloudscraper statt requests.Session() ---
 http = cloudscraper.create_scraper(
     browser={
         'browser': 'chrome',
@@ -278,7 +277,6 @@ http = cloudscraper.create_scraper(
 )
 http.mount("https://", adapter)
 http.mount("http://", adapter)
-# ----------------------------------------------------------------------
 
 # Filter: Was darf KEIN Artikelbild sein?
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
@@ -307,17 +305,14 @@ for kontinent, feeds in quellen.items():
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
                 
-                # AUTOR EXTRAHIEREN FÜR DIE APP
                 author = entry.get('author', 'Unknown')
                 
                 full_text = ""
                 image_url = None
 
-                # --- BILDERSUCHE STUFE 1: Sichtbare RSS Medien ---
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
-                # --- BILDERSUCHE STUFE 2: Versteckte Dateianhänge ---
                 if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
                     for enc in entry.enclosures:
                         href = enc.get('href', '')
@@ -325,7 +320,6 @@ for kontinent, feeds in quellen.items():
                             image_url = clean_image_url(href, link)
                             if image_url: break
 
-                # --- BILDERSUCHE STUFE 3: Versteckt im Beschreibungstext ---
                 if not image_url:
                     for content_key in ['description', 'summary']:
                         if content_key in entry and isinstance(entry[content_key], str):
@@ -335,7 +329,6 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                # --- BILDERSUCHE STUFE 4: Harter Webseiten-Besuch ---
                 if not image_url and link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
@@ -360,10 +353,23 @@ for kontinent, feeds in quellen.items():
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
+                        
+                        # --- NEUER SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare) ---
+                        waf_phrases = [
+                            "Please wait a moment while we ensure the security", 
+                            "Protected by Anubis", 
+                            "Anubis From Techaro", 
+                            "Enable JavaScript and cookies"
+                        ]
+                        # Wenn einer dieser Sätze auftaucht, wird der Müll-Text gelöscht
+                        if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
+                            full_text = "" 
+                        # ---------------------------------------------------------------
+
                     except Exception as e:
-                        print(f"   [Meldung] Einzelartikel-Scraping übersprungen: {str(e)}")
                         pass
                 
+                # Wenn der full_text leer ist (weil die Firewall ihn blockiert hat), greift der Bot zur sicheren RSS-Beschreibung
                 if not full_text or len(full_text) < 150:
                     if 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
@@ -386,7 +392,6 @@ for kontinent, feeds in quellen.items():
                     "image": image_url
                 })
         except Exception as e:
-            print(f"   [Warnung] Portal komplett übersprungen: {str(e)}")
             pass
 
 if len(alle_artikel) >= 10:
