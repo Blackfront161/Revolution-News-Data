@@ -51,7 +51,9 @@ quellen = {
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
-        {"name": "Amandla! Magazine", "url": "https://aidc.org.za/category/amandla-magazine/feed/"}
+        {"name": "Amandla! Magazine", "url": "https://aidc.org.za/category/amandla-magazine/feed/"},
+        {"name": "Abahlali baseMjondolo (South Africa)", "url": "https://abahlali.org/feed/"},
+        {"name": "Black Agenda Report", "url": "https://www.blackagendareport.com/feed"}
     ],
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
@@ -68,7 +70,10 @@ quellen = {
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "Desinformémonos", "url": "https://desinformemonos.org/feed/"},
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
-        {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"}
+        {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"},
+        {"name": "ANRed (Argentina)", "url": "https://www.anred.org/feed/"},
+        {"name": "Pueblos en Camino", "url": "https://pueblosencamino.org/feed/"},
+        {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -95,7 +100,9 @@ quellen = {
         {"name": "Slackbastard", "url": "https://slackbastard.anarchobase.com/?feed=rss2"},
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
         {"name": "AWSM", "url": "https://awsm.nz/feed/"},
-        {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"}
+        {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"},
+        {"name": "Red Flag (Aus)", "url": "https://redflag.org.au/feed"},
+        {"name": "Overland", "url": "https://overland.org.au/feed/"}
     ],
     "Labor Struggles": [
         {"name": "IWW (Global)", "url": "https://www.iww.org/feed/"},
@@ -122,24 +129,35 @@ quellen = {
         {"name": "Anarkismo (Gender)", "url": "http://www.anarkismo.net/backend?topic=gender"},
         {"name": "Jineolojî Academy", "url": "https://jineoloji.org/en/feed/"},
         {"name": "Ni Una Menos", "url": "https://niunamenos.org.ar/feed/"},
-        {"name": "Feministische Antifa", "url": "https://fantifa.noblogs.org/feed/"}
+        {"name": "Feministische Antifa", "url": "https://fantifa.noblogs.org/feed/"},
+        {"name": "Missy Magazine (DE)", "url": "https://missy-magazine.de/feed/"}
     ],
     "Queer-Feminism": [
         {"name": "Queer Anarchism", "url": "https://queeranarchism.tumblr.com/rss"},
         {"name": "Black Rose (Feminism)", "url": "https://blackrosefed.org/category/anarcha-feminism/feed/"},
         {"name": "GenderIT (Technofeminism)", "url": "https://www.genderit.org/rss.xml"},
-        {"name": "Transgender Europe (TGEU)", "url": "https://tgeu.org/feed/"}
+        {"name": "Transgender Europe (TGEU)", "url": "https://tgeu.org/feed/"},
+        {"name": "Autostraddle", "url": "https://www.autostraddle.com/feed/"},
+        {"name": "Make Rojava Green Again", "url": "https://makerojavagreenagain.org/feed/"}
     ],
     "Antiracism": [
         {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"},
         {"name": "Black Rose (Anti-Racism)", "url": "https://blackrosefed.org/category/anti-racism/feed/"},
-        {"name": "No One Is Illegal", "url": "https://noii-van.org/feed/"}
+        {"name": "No One Is Illegal", "url": "https://noii-van.org/feed/"},
+        {"name": "Migrant Solidarity Network (CH)", "url": "https://migrant-solidarity-network.ch/feed/"},
+        {"name": "Colorlines", "url": "https://colorlines.com/feed/"},
+        {"name": "Abolition Journal", "url": "https://abolitionjournal.org/feed/"},
+        {"name": "Are You Syrious?", "url": "https://medium.com/feed/are-you-syrious"}
     ],
     "Anticapitalism": [
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"},
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
-        {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"}
+        {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"},
+        {"name": "Tricontinental: Institute for Social Research", "url": "https://thetricontinental.org/feed/"},
+        {"name": "Monthly Review", "url": "https://monthlyreview.org/feed/"},
+        {"name": "Novara Media (UK)", "url": "https://novaramedia.com/feed/"},
+        {"name": "The New Inquiry", "url": "https://thenewinquiry.com/feed/"}
     ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
@@ -155,7 +173,10 @@ quellen = {
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
         {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Mietergewerkschaft Berlin", "url": "https://mietergewerkschaft.berlin/feed/"},
-        {"name": "Housing Action", "url": "https://housingaction.noblogs.org/feed/"}
+        {"name": "Housing Action", "url": "https://housingaction.noblogs.org/feed/"},
+        {"name": "Recht auf Stadt (Hamburg)", "url": "https://www.rechtaufstadt.net/feed/"},
+        {"name": "Zwangsräumung Verhindern (Berlin)", "url": "https://zwangsraeumungverhindern.org/feed/"},
+        {"name": "Defend Council Housing (UK)", "url": "https://www.defendcouncilhousing.org.uk/feed/"}
     ],
     "Demonstrations": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
@@ -184,11 +205,19 @@ quellen = {
     "No War": [
         {"name": "War Resisters' International", "url": "https://wri-irg.org/en/feed"},
         {"name": "Rheinmetall Entwaffnen", "url": "https://rheinmetallentwaffnen.noblogs.org/feed/"},
-        {"name": "Antimilitarismus", "url": "https://antimilitarismus.noblogs.org/feed/"}
+        {"name": "Antimilitarismus", "url": "https://antimilitarismus.noblogs.org/feed/"},
+        {"name": "Democracy Now! (Global)", "url": "https://www.democracynow.org/democracynow.rss"},
+        {"name": "Stop the War Coalition", "url": "https://www.stopwar.org.uk/feed/"},
+        {"name": "Labor for Palestine", "url": "https://laborforpalestine.net/feed/"},
+        {"name": "World BEYOND War", "url": "https://worldbeyondwar.org/feed/"}
     ],
     "Animal Liberation": [
         {"name": "Tierbefreier", "url": "https://tierbefreier.org/feed/"},
-        {"name": "Unoffensive Animal", "url": "https://unoffensiveanimal.is/feed/"}
+        {"name": "Unoffensive Animal", "url": "https://unoffensiveanimal.is/feed/"},
+        {"name": "ALF Press Office (North America)", "url": "https://animalliberationpressoffice.org/NAALPO/feed/"},
+        {"name": "Hunt Saboteurs Association (UK)", "url": "https://www.huntsabs.org.uk/feed/"},
+        {"name": "VGT Schweiz", "url": "https://vgt.ch/news/rss.xml"},
+        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactioneverywhere.com/rss.xml"}
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
@@ -203,7 +232,10 @@ quellen = {
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
         {"name": "IEN Earth", "url": "https://www.ienearth.org/feed/"},
         {"name": "IndigenousX", "url": "https://indigenousx.com.au/feed/"},
-        {"name": "Bulatlat (Indigenous)", "url": "https://www.bulatlat.com/feed/"}
+        {"name": "Bulatlat (Indigenous)", "url": "https://www.bulatlat.com/feed/"},
+        {"name": "Cultural Survival", "url": "https://www.culturalsurvival.org/news/rss.xml"},
+        {"name": "Native News Online", "url": "https://nativenewsonline.net/?format=feed&type=rss"},
+        {"name": "Grist (Indigenous Affairs)", "url": "https://grist.org/indigenous/feed/"}
     ],
     "Libraries": [
         {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
