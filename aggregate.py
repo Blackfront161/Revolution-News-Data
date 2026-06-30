@@ -354,14 +354,13 @@ for kontinent, feeds in quellen.items():
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
-                        # --- NEUER SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare) ---
+                        # --- SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare) ---
                         waf_phrases = [
                             "Please wait a moment while we ensure the security", 
                             "Protected by Anubis", 
                             "Anubis From Techaro", 
                             "Enable JavaScript and cookies"
                         ]
-                        # Wenn einer dieser Sätze auftaucht, wird der Müll-Text gelöscht
                         if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                             full_text = "" 
                         # ---------------------------------------------------------------
@@ -369,12 +368,21 @@ for kontinent, feeds in quellen.items():
                     except Exception as e:
                         pass
                 
-                # Wenn der full_text leer ist (weil die Firewall ihn blockiert hat), greift der Bot zur sicheren RSS-Beschreibung
+                # Wenn der original-Text blockiert ist, greifen wir auf die RSS-Zusammenfassung zu
                 if not full_text or len(full_text) < 150:
                     if 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
                 clean_text = full_text.strip()
+                
+                # --- NEUER FILTER: Redundanten Müll entfernen ---
+                # Wenn die RSS-Zusammenfassung eigentlich nur der Titel ist, tauschen wir sie gegen einen Warnhinweis aus
+                if title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
+                    clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
+                elif clean_text == "":
+                    clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
+                # ------------------------------------------------
+
                 if len(clean_text) > 8000:
                     clean_text = clean_text[:8000] + "\n\n[... Text gekürzt ...]"
 
