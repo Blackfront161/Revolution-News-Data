@@ -1,5 +1,6 @@
 import feedparser
 import requests
+import cloudscraper
 from bs4 import BeautifulSoup
 import json
 from datetime import datetime
@@ -266,9 +267,18 @@ retry_strategy = Retry(
     allowed_methods=["GET"]
 )
 adapter = HTTPAdapter(max_retries=retry_strategy)
-http = requests.Session()
+
+# --- HIER IST DIE ÄNDERUNG: Cloudscraper statt requests.Session() ---
+http = cloudscraper.create_scraper(
+    browser={
+        'browser': 'chrome',
+        'platform': 'windows',
+        'desktop': True
+    }
+)
 http.mount("https://", adapter)
 http.mount("http://", adapter)
+# ----------------------------------------------------------------------
 
 # Filter: Was darf KEIN Artikelbild sein?
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
