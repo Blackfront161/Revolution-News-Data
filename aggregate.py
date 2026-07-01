@@ -20,7 +20,6 @@ quellen = {
         {"name": "IWA-AIT (Internationale)", "url": "https://iwa-ait.org/rss.xml"},
         {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
         {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
-        # HIER IST DER MORSS.IT HACK FÜR ANARCHIST NEWS:
         {"name": "Anarchist News", "url": "https://morss.it/https://anarchistnews.org/rss.xml"},
         {"name": "Autonomies", "url": "https://autonomies.org/feed/"},
         {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
@@ -257,8 +256,8 @@ quellen = {
     ]
 }
 
-HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) WorldRevolutionNews/1.0'}
-AUTONOMOUS_TIMEOUT = (5.0, 15.0)
+HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'}
+AUTONOMOUS_TIMEOUT = (7.0, 20.0) 
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
 
 retry_strategy = Retry(
@@ -301,7 +300,8 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:4]:
+            # HIER KORRIGIERT: 15 statt 4 Artikel laden
+            for entry in parsed.entries[:15]:
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
@@ -330,14 +330,17 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                if not image_url and link:
+                # HIER KORRIGIERT: Wir besuchen IMMER die Website, um den vollen Text zu holen, auch wenn es schon ein Bild gibt.
+                if link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
                         
-                        og_img = soup.find('meta', property='og:image')
-                        if og_img:
-                            image_url = clean_image_url(og_img.get('content'), link)
+                        # HIER KORRIGIERT: Die Twitter-Bild-Suche für CrimethInc ist wieder drin!
+                        if not image_url:
+                            og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
+                            if og_img:
+                                image_url = clean_image_url(og_img.get('content'), link)
                         
                         if not image_url:
                             for img in soup.find_all('img'):
@@ -351,11 +354,12 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(match, link)
                                 if image_url: break
 
+                        # VOLLTEXT EXTRAKTION
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
-                        # --- SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare) ---
+                        # SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare)
                         waf_phrases = [
                             "Please wait a moment while we ensure the security", 
                             "Protected by Anubis", 
@@ -369,22 +373,20 @@ for kontinent, feeds in quellen.items():
                     except Exception as e:
                         pass
                 
-                # Wenn der original-Text blockiert ist, greifen wir auf die RSS-Zusammenfassung zu
+                # Wenn der original-Text blockiert ist, greifen wir als Notnagel auf die RSS-Zusammenfassung zu
                 if not full_text or len(full_text) < 150:
                     if 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
                 clean_text = full_text.strip()
                 
-                # --- FILTER: Redundanten Müll entfernen ---
+                # FILTER: Redundanten Müll entfernen (wenn nur der Titel als Text geschickt wird)
                 if title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
-                # ------------------------------------------------
 
-                if len(clean_text) > 8000:
-                    clean_text = clean_text[:8000] + "\n\n[... Text gekürzt ...]"
+                # HIER KORRIGIERT: 8.000 Zeichen Bremse wurde dauerhaft entfernt!
 
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
