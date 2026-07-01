@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Revolution News</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-dark" id="app-body">
+
+    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="rbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="50%" stop-color="#FF0000" />
+                <stop offset="50%" stop-color="#000000" />
+            </linearGradient>
+        </defs>
+    </svg>
+
+    <div class="top-action-bar">
+        <button class="btn-micro" style="color:var(--color-accent); border-color:var(--color-accent);" onclick="openDonate()">
+            <svg viewBox="0 0 24 24" width="1.2em" height="1.2em" style="vertical-align: sub;"><path fill="url(#rbGrad)" stroke="currentColor" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <span id="txt-donate-btn">Donate</span>
+        </button>
+        <button class="btn-micro" style="color:var(--color-cyan); border-color:var(--color-cyan);" onclick="openInfo()" id="btn-open-info">ℹ️ Info</button>
+        <button class="btn-micro" style="color:#B026FF; border-color:#B026FF;" onclick="openFeedback()" id="btn-open-feedback">💬 Contact</button>
+    </div>
+
+    <header>
+        <div>
+            <h1 style="display: inline-block; vertical-align: middle;">World Revolution News</h1>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+            <div class="dropdown-container">
+                <span class="dropdown-label" id="txt-theme-label">Design</span>
+                <select class="theme-select" id="ui-theme" onchange="changeTheme(this.value)">
+                    <option value="theme-dark" id="opt-theme-dark" selected>Dunkel</option>
+                    <option value="theme-light" id="opt-theme-light">Hell</option>
+                </select>
+            </div>
+
+            <div class="dropdown-container">
+                <span class="dropdown-label" id="txt-lang-label">Translate to:</span>
+                <select class="lang-select" id="ui-language" onchange="changeLanguage()">
+                    <option value="en" selected>English</option>
+                    <option value="de">Deutsch</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="it">Italiano</option>
+                    <option value="pt">Português</option>
+                    <option value="ru">Русский</option>
+                    <option value="el">Ελληνικά</option>
+                    <option value="tr">Türkçe</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <details class="filter-dropdown">
+        <summary id="txt-region-summary">🌍 Region</summary>
+        <div class="nav-bar">
+            <button class="btn-nav active" id="btn-glob" onclick="ladeKontinentNews('Global')">Global</button>
+            <button class="btn-nav" id="btn-eur" onclick="ladeKontinentNews('Europe')">Europe</button>
+            <button class="btn-nav" id="btn-afr" onclick="ladeKontinentNews('Africa')">Africa</button>
+            <button class="btn-nav" id="btn-nam" onclick="ladeKontinentNews('North America')">North Am.</button>
+            <button class="btn-nav" id="btn-lam" onclick="ladeKontinentNews('Latin America')">Latin Am.</button>
+            <button class="btn-nav" id="btn-asi" onclick="ladeKontinentNews('Asia')">Asia</button>
+            <button class="btn-nav" id="btn-aus" onclick="ladeKontinentNews('Australia & NZ')">Australia</button>
+        </div>
+    </details>
+    
+    <details class="filter-dropdown">
+        <summary id="txt-topic-summary">🏷️ Thema</summary>
+        <div class="nav-bar">
+            <button class="btn-nav" id="cat-labor" onclick="ladeKontinentNews('Labor Struggles')">Labor</button>
+            <button class="btn-nav" id="cat-antifascism" onclick="ladeKontinentNews('Antifascism')">Antifa</button>
+            <button class="btn-nav" id="cat-antisexism" onclick="ladeKontinentNews('Antisexism')">Antisexism</button>
+            <button class="btn-nav" id="cat-queer" onclick="ladeKontinentNews('Queer-Feminism')">Queer</button>
+            <button class="btn-nav" id="cat-antiracism" onclick="ladeKontinentNews('Antiracism')">Antiracism</button>
+            <button class="btn-nav" id="cat-anticapitalism" onclick="ladeKontinentNews('Anticapitalism')">Anti-Cap</button>
+            <button class="btn-nav" id="cat-anticolonialism" onclick="ladeKontinentNews('Anticolonialism')">Anti-Col</button>
+            <button class="btn-nav" id="cat-antiimperialism" onclick="ladeKontinentNews('Anti-Imperialism')">Anti-Imp</button>
+            <button class="btn-nav" id="cat-squatting" onclick="ladeKontinentNews('Squatting & Housing')">Housing</button>
+            <button class="btn-nav" id="cat-demos" onclick="ladeKontinentNews('Demonstrations')">Demos</button>
+            <button class="btn-nav" id="cat-antirepression" onclick="ladeKontinentNews('Anti-Rep & Prisons')">Anti-Rep</button>
+            <button class="btn-nav" id="cat-cyber" onclick="ladeKontinentNews('Cyberactivism')">Cyber</button>
+            <button class="btn-nav" id="cat-nowar" onclick="ladeKontinentNews('No War')">No War</button>
+            <button class="btn-nav" id="cat-animal" onclick="ladeKontinentNews('Animal Liberation')">Animal Lib</button>
+            <button class="btn-nav" id="cat-eco" onclick="ladeKontinentNews('Eco-Anarchism')">Eco-Anarchy</button>
+            <button class="btn-nav" id="cat-indigenous" onclick="ladeKontinentNews('Indigenous Struggles')">Indigenous</button>
+            <button class="btn-nav" id="btn-lib" onclick="ladeKontinentNews('Libraries')">Libraries</button>
+        </div>
+    </details>
+
+    <div class="filter-bar">
+        <div class="search-container">
+            <input type="text" id="search-input" class="search-input" placeholder="Search articles..." oninput="applyFilters()">
+        </div>
+        <div style="flex: 1; min-width: 80px;">
+            <select class="portal-select" id="portal-select" style="width:100%; padding: 8px 4px; font-size: 0.75rem;" onchange="applyFilters()">
+                <option value="ALL">All Portals</option>
+            </select>
+        </div>
+        <div style="display: flex; gap: 4px; flex: 0.5; justify-content: flex-end;">
+            <button class="btn-micro" style="color:var(--text-main); border-color:var(--border-read); padding: 6px 12px;" onclick="changeFontSize(-1)">A-</button>
+            <button class="btn-micro" style="color:var(--text-main); border-color:var(--border-read); padding: 6px 12px;" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </div>
+
+    <div class="nav-bar" style="border-bottom: none; gap: 10px; margin-bottom: 25px;">
+        <button class="btn-nav" style="flex: 1; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
+            <span id="txt-top-bookmarks">Bookmarks</span>
+            <svg viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="url(#rbGrad)" stroke="#FF0000" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="btn-nav" style="flex: 1; border-color: var(--border-read); color: var(--text-muted);" id="btn-clear-cache" onclick="clearAllData()">Clear Cache 🗑️</button>
+    </div>
+
+    <div id="status-container" class="status-msg">Connecting to server...</div>
+    
+    <div id="feed-container"></div>
+    
+    <h2 class="archive-header" id="txt-archive-title">🗄️ Archive (> 3 Months)</h2>
+    <div id="archive-container"></div>
+
+    <div class="feedback-overlay" id="fb-overlay" onclick="closeAllModals()"></div>
+    
+    <div class="feedback-modal" id="fb-modal">
+        <h3 id="txt-fb-title">Contact</h3>
+        <textarea class="feedback-textarea" id="fb-text"></textarea>
+        
+        <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-muted); border-top: 1px dashed var(--color-cyan); padding-top: 10px;">
+            <strong style="color: var(--color-cyan);" id="txt-contact-label">Kontakt / Contact:</strong> <br>
+            <a href="mailto:worldrevnews@brief.li" style="color: #ffffff; text-decoration: underline;">worldrevnews@brief.li</a>
+        </div>
+
+        <div class="captcha-box">
+            <span id="txt-captcha-q">Captcha:</span> <span id="captcha-num1" style="color:var(--color-green); font-weight:bold;">0</span> + <span id="captcha-num2" style="color:var(--color-green); font-weight:bold;">0</span> ?
+            <input type="number" id="captcha-answer" class="captcha-input">
+        </div>
+        <div class="feedback-actions">
+            <button class="btn-cancel" id="btn-fb-cancel" onclick="closeAllModals()">Cancel</button>
+            <button class="btn-submit" id="btn-fb-send" onclick="submitFeedback()">Send via Mail</button>
+        </div>
+    </div>
+
+    <div class="feedback-modal" id="info-modal">
+        <h3 id="txt-info-title">App Info & Security</h3>
+        <div class="info-text-box" id="txt-info-body"></div>
+        <div class="feedback-actions"><button class="btn-submit" style="background:var(--color-cyan); color:#000;" onclick="closeAllModals()">Close</button></div>
+    </div>
+
+    <div class="feedback-modal" id="donate-modal">
+        <h3 id="txt-donate-title">Support Project</h3>
+        <div class="info-text-box">
+            <p id="txt-donate-body">Dieses Projekt läuft unabhängig. Spenden sind freiwillig.</p>
+            <p id="txt-donate-warning" style="color:var(--color-accent); font-weight:bold; margin-top:15px; border:1px dashed var(--color-accent); padding:10px;">
+                ⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet. PayPal erhebt eigene Daten.
+            </p>
+            <a href="https://www.paypal.com/ncp/payment/6FSV9FEN4X7VS" target="_blank" style="text-decoration:none;">
+                <button class="btn-submit" id="btn-paypal" style="margin-top:10px; margin-bottom:10px; width:100%;">Weiter zu PayPal</button>
+            </a>
+        </div>
+        <div class="feedback-actions"><button class="btn-cancel" id="btn-donate-cancel" onclick="closeAllModals()">Schließen</button></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
