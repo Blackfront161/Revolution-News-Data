@@ -321,7 +321,7 @@
         // Zentraler Aufruf des Rot-Schwarzen Sterns für alle Buttons
         const rbStar = `<svg viewBox="0 0 24 24" width="1.2em" height="1.2em" style="vertical-align: sub; margin-left: 4px;"><path fill="url(#rbGrad)" stroke="#FF0000" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
 
-        // UI WÖRTERBUCH (Deutsch aufgeräumt)
+        // UI WÖRTERBUCH (Perfekt gegendert, aber kurzes Navigations-Menü)
         const uiTexte = {
             en: {
                 init: "Fetching data...", error: "Error: Could not connect.", btnTranslate: "Translate", btnLoading: "Translating...", btnDone: "Translated",
@@ -343,15 +343,15 @@
                 btnReadMore: "Zum Original", btnExpand: "Weiterlesen ⬇️", btnCollapse: "Zuklappen ⬆️", filterAll: "Alle Quellen",
                 searchRegion: "🌍 Region", searchTopic: "🏷️ Thema", latestNews: "Aktuellste News:", translatingRest: "Übersetze Rest...",
                 topBookmarks: "Lesezeichen", btnDonateTop: "Spenden", donateTitle: "Projekt unterstützen", 
-                donateBody: "Dieses Projekt läuft unabhängig. Spenden sind freiwillig.", donateWarning: "⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet.",
+                donateBody: "Dieses Projekt läuft unabhängig. Spenden von Unterstützer*innen sind freiwillig.", donateWarning: "⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet.",
                 btnPaypal: "Weiter zu PayPal", btnDonateCancel: "Schließen", dateLabel: "DATUM:", langLabel: "Übersetzen in:",
                 searchPlace: "Artikel suchen...", bookmarkCat: "Lesezeichen", btnBookmark: "Merken" + rbStar, btnUnbookmark: "Gemerkt" + rbStar,
                 themeLabel: "Design:", themeDark: "Dunkel", themeLight: "Hell", clearBtn: "Cache löschen 🗑️",
                 catGlobal: "Global", catEurope: "Europa", catAfrica: "Afrika", catNorthAmerica: "Nordam.", catLatinAmerica: "Lateinam.", catAsia: "Asien", catAustralia: "Australien",
-                catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catAnticapitalism: "Antikapitalismus", catAntikolonialismus: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Öko-Anarchismus", catIndigenous: "Indigene Kämpfe", catLibraries: "Bibliotheken",
+                catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catAnticapitalism: "Antikapitalismus", catAnticolonialism: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Öko-Anarchismus", catIndigenous: "Indigene Kämpfe", catLibraries: "Bibliotheken",
                 fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
                 infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
-                infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist ein reiner RSS-Feed-Reader. Wir schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
+                infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist ein reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
             },
             es: {
                 init: "Cargando datos...", error: "Error de conexión.", btnTranslate: "Traducir", btnLoading: "Traduciendo...", btnDone: "Traducido",
@@ -671,6 +671,7 @@
             let filtered = (selPortal === "ALL") ? currentKontinentData : currentKontinentData.filter(a => a.quelleName === selPortal);
             if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery))); }
 
+            // HIER WIRD IMMER AUTOMATISCH NACH NEUESTEN SORTIERT! (Sortier-Menü wurde komplett gelöscht)
             filtered.sort((a, b) => {
                 let da = 0; let db = 0;
                 if(a.pubDate) da = new Date(a.pubDate).getTime(); if(b.pubDate) db = new Date(b.pubDate).getTime();
