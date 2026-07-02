@@ -300,8 +300,8 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            # HIER KORRIGIERT: 15 statt 4 Artikel laden
-            for entry in parsed.entries[:15]:
+            # 6 Artikel (statt 15) holen, um die Datei-Größe für die App handhabbar zu machen!
+            for entry in parsed.entries[:6]:
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
@@ -330,13 +330,11 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                # HIER KORRIGIERT: Wir besuchen IMMER die Website, um den vollen Text zu holen, auch wenn es schon ein Bild gibt.
                 if link:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
                         
-                        # HIER KORRIGIERT: Die Twitter-Bild-Suche für CrimethInc ist wieder drin!
                         if not image_url:
                             og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
                             if og_img:
@@ -354,12 +352,10 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(match, link)
                                 if image_url: break
 
-                        # VOLLTEXT EXTRAKTION
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
-                        # SCHUTZ GEGEN FIREWALL-TEXTE (Anubis / Cloudflare)
                         waf_phrases = [
                             "Please wait a moment while we ensure the security", 
                             "Protected by Anubis", 
@@ -368,25 +364,24 @@ for kontinent, feeds in quellen.items():
                         ]
                         if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                             full_text = "" 
-                        # ---------------------------------------------------------------
 
                     except Exception as e:
                         pass
                 
-                # Wenn der original-Text blockiert ist, greifen wir als Notnagel auf die RSS-Zusammenfassung zu
                 if not full_text or len(full_text) < 150:
                     if 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
                 clean_text = full_text.strip()
                 
-                # FILTER: Redundanten Müll entfernen (wenn nur der Titel als Text geschickt wird)
                 if title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-                # HIER KORRIGIERT: 8.000 Zeichen Bremse wurde dauerhaft entfernt!
+                # NEU: Das Sicherheitsnetz für extrem lange Artikel (über 12.000 Zeichen)
+                if len(clean_text) > 12000:
+                    clean_text = clean_text[:12000] + "\n\n[... Text gekürzt, um Ladezeiten zu schonen ...]"
 
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
