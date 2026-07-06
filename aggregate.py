@@ -401,10 +401,6 @@ for kontinent, feeds in quellen.items():
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-                # NEU: Das 12.000-Zeichen-Limit für die App-Stabilität
-                if len(clean_text) > 12000:
-                    clean_text = clean_text[:12000] + "\n\n[... Text gekürzt, um Ladezeiten zu schonen ...]"
-
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
