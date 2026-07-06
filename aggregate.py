@@ -10,7 +10,7 @@ import time
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-# --- KONFIGURATION & QUELLEN (INKL. NEUEN KATEGORIEN) ---
+# --- KONFIGURATION & QUELLEN ---
 quellen = {
     "Global": [
         {"name": "CrimethInc. (Global)", "url": "https://crimethinc.com/feed"},
@@ -320,7 +320,6 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            # 6 statt 15 Artikel laden (Schutz vor Absturz)
             for entry in parsed.entries[:6]:
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
@@ -372,12 +371,10 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(match, link)
                                 if image_url: break
 
-                        # VOLLTEXT EXTRAKTION
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
-                        # SCHUTZ GEGEN FIREWALL-TEXTE
                         waf_phrases = [
                             "Please wait a moment while we ensure the security", 
                             "Protected by Anubis", 
@@ -390,20 +387,21 @@ for kontinent, feeds in quellen.items():
                     except Exception as e:
                         pass
                 
- if not full_text or len(full_text) < 150:
-                    # NEU: Zuerst prüfen, ob der Volltext schon durch morss.it im RSS-Feed geliefert wurde!
+                # FIX: Holt den versteckten Text von Anarchist News aus dem Feed!
+                if not full_text or len(full_text) < 150:
                     if 'content' in entry and len(entry.content) > 0:
-                        full_text = BeautifulSoup(entry.content[0].value, 'html.parser').get_text().strip()
-                    elif 'description' in entry:
+                        full_text = BeautifulSoup(entry.content[0].get('value', ''), 'html.parser').get_text().strip()
+                    if not full_text and 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
                 clean_text = full_text.strip()
                 
-                # NEU: Ausnahme für Anarchist News (und extrem kurze Posts)
+                # FIX: Schaltet die "Firewall-Warnung" für Anarchist News aus
                 if "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
+
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
