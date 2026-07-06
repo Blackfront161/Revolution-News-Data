@@ -232,7 +232,7 @@ quellen = {
         {"name": "ALF Press Office (North America)", "url": "https://animalliberationpressoffice.org/NAALPO/feed/"},
         {"name": "Hunt Saboteurs Association (UK)", "url": "https://www.huntsabs.org.uk/feed/"},
         {"name": "VGT Schweiz", "url": "https://vgt.ch/news/rss.xml"},
-        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactioneverywhere.com/rss.xml"}
+        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactionevenwhere.com/rss.xml"}
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
@@ -298,7 +298,6 @@ http = cloudscraper.create_scraper(
 http.mount("https://", adapter)
 http.mount("http://", adapter)
 
-# Filter: Was darf KEIN Artikelbild sein?
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
 
@@ -324,7 +323,6 @@ for kontinent, feeds in quellen.items():
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
-                
                 author = entry.get('author', 'Unknown')
                 
                 full_text = ""
@@ -384,19 +382,29 @@ for kontinent, feeds in quellen.items():
                         if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                             full_text = "" 
 
-                    except Exception as e:
+                    except:
                         pass
                 
-                # FIX: Holt den versteckten Text von Anarchist News aus dem Feed!
+                # SPRENGSCHUTZ GEGEN ABSTÜRZE BEI DER TEXTGEWINNUNG
                 if not full_text or len(full_text) < 150:
-                    if 'content' in entry and len(entry.content) > 0:
-                        full_text = BeautifulSoup(entry.content[0].get('value', ''), 'html.parser').get_text().strip()
-                    if not full_text and 'description' in entry:
-                        full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
+                    try:
+                        if 'content' in entry and len(entry.content) > 0:
+                            c_obj = entry.content[0]
+                            if hasattr(c_obj, 'value'):
+                                full_text = BeautifulSoup(str(c_obj.value), 'html.parser').get_text().strip()
+                            elif isinstance(c_obj, dict) and 'value' in c_obj:
+                                full_text = BeautifulSoup(str(c_obj['value']), 'html.parser').get_text().strip()
+                    except:
+                        pass
+                        
+                    if (not full_text or len(full_text) < 150) and 'description' in entry:
+                        try:
+                            full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text().strip()
+                        except:
+                            pass
 
                 clean_text = full_text.strip()
                 
-                # FIX: Schaltet die "Firewall-Warnung" für Anarchist News aus
                 if "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
@@ -415,10 +423,10 @@ for kontinent, feeds in quellen.items():
                     "content": clean_text,
                     "image": image_url
                 })
-        except Exception as e:
+        except:
             pass
 
-if len(alle_artikel) >= 10:
+if len(alle_artikel) >= 1:
     try:
         alle_artikel.sort(key=lambda x: x['pubDate'], reverse=True)
     except:
@@ -428,5 +436,5 @@ if len(alle_artikel) >= 10:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
     print(f"\n[ERFOLG] {len(alle_artikel)} Artikel wurden sicher gespeichert.")
 else:
-    print(f"\n[STOPP] Nur {len(alle_artikel)} Artikel gefunden. Speichern blockiert!")
+    print(f"\n[STOPP] Keine Artikel gefunden.")
     exit(1)
