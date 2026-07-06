@@ -6,7 +6,7 @@ import json
 from datetime import datetime
 from urllib.parse import urljoin
 import re
-import time
+import os
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
@@ -232,7 +232,7 @@ quellen = {
         {"name": "ALF Press Office (North America)", "url": "https://animalliberationpressoffice.org/NAALPO/feed/"},
         {"name": "Hunt Saboteurs Association (UK)", "url": "https://www.huntsabs.org.uk/feed/"},
         {"name": "VGT Schweiz", "url": "https://vgt.ch/news/rss.xml"},
-        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactionevenwhere.com/rss.xml"}
+        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactioneverywhere.com/rss.xml"}
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
@@ -276,32 +276,20 @@ quellen = {
     ]
 }
 
+# --- SCHARFE TIMEOUTS GEGEN ABSTÜRZE ---
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'}
-AUTONOMOUS_TIMEOUT = (7.0, 20.0) 
+AUTONOMOUS_TIMEOUT = (5.0, 10.0) 
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
 
-retry_strategy = Retry(
-    total=2,
-    backoff_factor=1,
-    status_forcelist=[429, 500, 502, 503, 504],
-    allowed_methods=["GET"]
-)
+retry_strategy = Retry(total=1, backoff_factor=0.5, status_forcelist=[429, 500, 502, 503, 504], allowed_methods=["GET"])
 adapter = HTTPAdapter(max_retries=retry_strategy)
 
-http = cloudscraper.create_scraper(
-    browser={
-        'browser': 'chrome',
-        'platform': 'windows',
-        'desktop': True
-    }
-)
+http = cloudscraper.create_scraper(browser={'browser': 'chrome', 'platform': 'windows', 'desktop': True})
 http.mount("https://", adapter)
 http.mount("http://", adapter)
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
-
-alle_artikel = []
 
 def clean_image_url(url, base_url):
     if not url: return None
@@ -311,6 +299,19 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
+# --- DAS NEUE ARCHIV-GEDÄCHTNIS ---
+bekannte_artikel_dict = {}
+try:
+    if os.path.exists('news.json'):
+        with open('news.json', 'r', encoding='utf-8') as f:
+            alter_stand = json.load(f)
+            for art in alter_stand:
+                bekannte_artikel_dict[art['link']] = art
+except:
+    pass
+
+alle_artikel = []
+
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
     for feed in feeds:
@@ -319,8 +320,14 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:6]:
+            for entry in parsed.entries[:4]: # Nur die 4 neuesten prüfen (Reicht völlig!)
                 link = entry.get('link', '')
+                
+                # WENN WIR DEN ARTIKEL SCHON KENNEN -> ÜBERSPRINGEN! (Speed-Boost!)
+                if link in bekannte_artikel_dict:
+                    alle_artikel.append(bekannte_artikel_dict[link])
+                    continue
+                
                 title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
                 author = entry.get('author', 'Unknown')
@@ -373,19 +380,13 @@ for kontinent, feeds in quellen.items():
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
-                        waf_phrases = [
-                            "Please wait a moment while we ensure the security", 
-                            "Protected by Anubis", 
-                            "Anubis From Techaro", 
-                            "Enable JavaScript and cookies"
-                        ]
+                        waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
                         if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                             full_text = "" 
 
                     except:
                         pass
                 
-                # SPRENGSCHUTZ GEGEN ABSTÜRZE BEI DER TEXTGEWINNUNG
                 if not full_text or len(full_text) < 150:
                     try:
                         if 'content' in entry and len(entry.content) > 0:
@@ -426,15 +427,19 @@ for kontinent, feeds in quellen.items():
         except:
             pass
 
-if len(alle_artikel) >= 1:
+# --- ZUSAMMENFÜHREN & ARCHIV-LIMIT SETZEN (Max. 2000 Artikel) ---
+if len(alle_artikel) > 0:
     try:
-        alle_artikel.sort(key=lambda x: x['pubDate'], reverse=True)
+        alle_artikel.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
     except:
         pass
         
+    # Archiv-Limit greift hier: Die neuesten 2000 bleiben, der Rest wird gelöscht.
+    alle_artikel = alle_artikel[:2000]
+    
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
-    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel wurden sicher gespeichert.")
+    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel im Archiv gesichert.")
 else:
     print(f"\n[STOPP] Keine Artikel gefunden.")
     exit(1)
