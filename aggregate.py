@@ -390,17 +390,20 @@ for kontinent, feeds in quellen.items():
                     except Exception as e:
                         pass
                 
-                if not full_text or len(full_text) < 150:
-                    if 'description' in entry:
+ if not full_text or len(full_text) < 150:
+                    # NEU: Zuerst prüfen, ob der Volltext schon durch morss.it im RSS-Feed geliefert wurde!
+                    if 'content' in entry and len(entry.content) > 0:
+                        full_text = BeautifulSoup(entry.content[0].value, 'html.parser').get_text().strip()
+                    elif 'description' in entry:
                         full_text = BeautifulSoup(entry.description, 'html.parser').get_text().strip()
 
                 clean_text = full_text.strip()
                 
-                if title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
+                # NEU: Ausnahme für Anarchist News (und extrem kurze Posts)
+                if "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
-
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
