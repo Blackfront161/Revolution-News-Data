@@ -10,7 +10,7 @@ import time
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
-# --- KONFIGURATION & QUELLEN ---
+# --- KONFIGURATION & QUELLEN (INKL. NEUEN KATEGORIEN) ---
 quellen = {
     "Global": [
         {"name": "CrimethInc. (Global)", "url": "https://crimethinc.com/feed"},
@@ -28,6 +28,10 @@ quellen = {
     ],
     "Europe": [
         {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
+        {"name": "Paris-Luttes (FR)", "url": "https://paris-luttes.info/spip.php?page=backend"},
+        {"name": "Lundi Matin (FR)", "url": "https://lundi.am/spip.php?page=backend"},
+        {"name": "Rebellyon (FR)", "url": "https://rebellyon.info/spip.php?page=backend"},
+        {"name": "MIA Marseille (FR)", "url": "https://mars-infos.org/spip.php?page=backend"},
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
         {"name": "Avtonom (RU)", "url": "https://avtonom.org/rss.xml"},
@@ -144,11 +148,15 @@ quellen = {
     "Antiracism": [
         {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"},
         {"name": "Black Rose (Anti-Racism)", "url": "https://blackrosefed.org/category/anti-racism/feed/"},
-        {"name": "No One Is Illegal", "url": "https://noii-van.org/feed/"},
-        {"name": "Migrant Solidarity Network (CH)", "url": "https://migrant-solidarity-network.ch/feed/"},
         {"name": "Colorlines", "url": "https://colorlines.com/feed/"},
-        {"name": "Abolition Journal", "url": "https://abolitionjournal.org/feed/"},
-        {"name": "Are You Syrious?", "url": "https://medium.com/feed/are-you-syrious"}
+        {"name": "Abolition Journal", "url": "https://abolitionjournal.org/feed/"}
+    ],
+    "No Borders": [
+        {"name": "Abolish Frontex", "url": "https://abolishfrontex.org/feed/"},
+        {"name": "Sea-Watch", "url": "https://sea-watch.org/feed/"},
+        {"name": "Are You Syrious?", "url": "https://medium.com/feed/are-you-syrious"},
+        {"name": "No One Is Illegal", "url": "https://noii-van.org/feed/"},
+        {"name": "Migrant Solidarity Network (CH)", "url": "https://migrant-solidarity-network.ch/feed/"}
     ],
     "Anticapitalism": [
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
@@ -159,6 +167,12 @@ quellen = {
         {"name": "Monthly Review", "url": "https://monthlyreview.org/feed/"},
         {"name": "Novara Media (UK)", "url": "https://novaramedia.com/feed/"},
         {"name": "The New Inquiry", "url": "https://thenewinquiry.com/feed/"}
+    ],
+    "Theory & Strategy": [
+        {"name": "Ill Will", "url": "https://illwill.com/feed"},
+        {"name": "Endnotes", "url": "https://endnotes.org.uk/feed.xml"},
+        {"name": "Wildcat", "url": "https://www.wildcat-www.de/wildcat.rss"},
+        {"name": "CrimethInc. (Texts)", "url": "https://crimethinc.com/categories/texts/feed"}
     ],
     "Anticolonialism": [
         {"name": "Avispa Midia", "url": "https://avispa.org/feed/"},
@@ -226,7 +240,8 @@ quellen = {
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Solarpunk Magazine", "url": "https://solarpunkmagazine.com/feed/"},
         {"name": "Defend the Atlanta Forest", "url": "https://defendtheatlantaforest.org/feed/"},
-        {"name": "Desmog", "url": "https://www.desmog.com/feed/"}
+        {"name": "Desmog", "url": "https://www.desmog.com/feed/"},
+        {"name": "Ende Gelände", "url": "https://www.ende-gelaende.org/feed/"}
     ],
     "Indigenous Struggles": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
@@ -237,6 +252,11 @@ quellen = {
         {"name": "Cultural Survival", "url": "https://www.culturalsurvival.org/news/rss.xml"},
         {"name": "Native News Online", "url": "https://nativenewsonline.net/?format=feed&type=rss"},
         {"name": "Grist (Indigenous Affairs)", "url": "https://grist.org/indigenous/feed/"}
+    ],
+    "Radical Health & Disability": [
+        {"name": "Asylum Magazine", "url": "https://asylummagazine.org/feed/"},
+        {"name": "Mad in America", "url": "https://www.madinamerica.com/feed/"},
+        {"name": "Disability Visibility", "url": "https://disabilityvisibilityproject.com/feed/"}
     ],
     "Libraries": [
         {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
@@ -300,7 +320,7 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            # 6 Artikel (statt 15) holen, um die Datei-Größe für die App handhabbar zu machen!
+            # 6 statt 15 Artikel laden (Schutz vor Absturz)
             for entry in parsed.entries[:6]:
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
@@ -352,10 +372,12 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(match, link)
                                 if image_url: break
 
+                        # VOLLTEXT EXTRAKTION
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
                         full_text = "\n\n".join(text_blocks)
                         
+                        # SCHUTZ GEGEN FIREWALL-TEXTE
                         waf_phrases = [
                             "Please wait a moment while we ensure the security", 
                             "Protected by Anubis", 
@@ -379,7 +401,7 @@ for kontinent, feeds in quellen.items():
                 elif clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-                # NEU: Das Sicherheitsnetz für extrem lange Artikel (über 12.000 Zeichen)
+                # NEU: Das 12.000-Zeichen-Limit für die App-Stabilität
                 if len(clean_text) > 12000:
                     clean_text = clean_text[:12000] + "\n\n[... Text gekürzt, um Ladezeiten zu schonen ...]"
 
