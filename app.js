@@ -8,15 +8,9 @@ const GITHUB_JSON_URL = "https://raw.githubusercontent.com/Blackfront161/Revolut
 const PROXY_URL = "https://revolution-proxy.paghklo.workers.dev";
 let capVal1 = 0; let capVal2 = 0;
 
-const fontSizes = [90, 100, 120]; 
-let currentFontIndex = 1; 
-
-function changeFontSize(step) {
-    currentFontIndex += step;
-    if (currentFontIndex < 0) currentFontIndex = 0;
-    if (currentFontIndex > 2) currentFontIndex = 2;
-    document.documentElement.style.fontSize = fontSizes[currentFontIndex] + "%";
-    localStorage.setItem('wrn_font_zoom', currentFontIndex);
+function changeFontSize(sizeValue) {
+    document.documentElement.style.fontSize = sizeValue + "%";
+    localStorage.setItem('wrn_font_zoom', sizeValue);
 }
 
 async function fetchFromGemini(promptText) {
@@ -38,7 +32,7 @@ const rbStar = `<svg viewBox="0 0 24 24" width="1.2em" height="1.2em" style="ver
 const uiTexte = {
     en: {
         init: "Fetching data...", error: "Error: Could not connect.", btnTranslate: "Translate", btnLoading: "Translating...", btnDone: "Translated",
-        btnReadMore: "Original", btnExpand: "Read More ⬇️", btnCollapse: "Collapse ⬆️", filterAll: "All Portals", 
+        btnReadMore: "Original", btnExpand: "Read More ⬇️", btnCollapse: "Collapse ⬆️", filterAll: "All Portals", sortNew: "Newest", sortOld: "Oldest",
         searchRegion: "🌍 Region", searchTopic: "🏷️ Topic", latestNews: "Latest News:", translatingRest: "Translating remaining text...",
         topBookmarks: "Bookmarks", btnDonateTop: "Donate", donateTitle: "Support the Project", 
         donateBody: "This project runs independently. Donations are voluntary.", donateWarning: "⚠️ WARNING: By proceeding, you are leaving the anonymous app environment and will be redirected to PayPal.",
@@ -53,7 +47,7 @@ const uiTexte = {
     },
     de: {
         init: "Lade Daten...", error: "Fehler: Keine Verbindung.", btnTranslate: "Übersetzen", btnLoading: "Übersetze...", btnDone: "Übersetzt",
-        btnReadMore: "Zum Original", btnExpand: "Weiterlesen ⬇️", btnCollapse: "Zuklappen ⬆️", filterAll: "Alle Quellen",
+        btnReadMore: "Zum Original", btnExpand: "Weiterlesen ⬇️", btnCollapse: "Zuklappen ⬆️", filterAll: "Alle Quellen", sortNew: "Neueste", sortOld: "Älteste",
         searchRegion: "🌍 Region", searchTopic: "🏷️ Thema", latestNews: "Aktuellste News:", translatingRest: "Übersetze Rest...",
         topBookmarks: "Lesezeichen", btnDonateTop: "Spenden", donateTitle: "Projekt unterstützen", 
         donateBody: "Dieses Projekt läuft unabhängig. Spenden von Unterstützer*innen sind freiwillig.", donateWarning: "⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet.",
@@ -64,11 +58,11 @@ const uiTexte = {
         catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catNoBorders: "No Borders", catAnticapitalism: "Antikapitalismus", catTheory: "Theorie & Strategie", catAnticolonialism: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Ökologie & Klima", catIndigenous: "Indigene Kämpfe", catHealth: "Radical Health", catLibraries: "Bibliotheken",
         fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
-        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist ein reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
+        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist a reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
     },
     es: {
         init: "Cargando datos...", error: "Error de conexión.", btnTranslate: "Traducir", btnLoading: "Traduciendo...", btnDone: "Traducido",
-        btnReadMore: "Original", btnExpand: "Leer más ⬇️", btnCollapse: "Ocultar ⬆️", filterAll: "Todos los portales",
+        btnReadMore: "Original", btnExpand: "Leer más ⬇️", btnCollapse: "Ocultar ⬆️", filterAll: "Todos los portales", sortNew: "Más nuevos", sortOld: "Más antiguos",
         searchRegion: "🌍 Región", searchTopic: "🏷️ Tema", latestNews: "Últimas noticias:", translatingRest: "Traduciendo el resto...",
         topBookmarks: "Marcadores", btnDonateTop: "Donar", donateTitle: "Apoyar el proyecto", 
         donateBody: "Este proyecto es independiente. Las donaciones son voluntarias.", donateWarning: "⚠️ ADVERTENCIA: Serás redirigido a PayPal.",
@@ -83,7 +77,7 @@ const uiTexte = {
     },
     fr: {
         init: "Chargement des données...", error: "Erreur de connexion.", btnTranslate: "Traduire", btnLoading: "Traduction...", btnDone: "Traduit",
-        btnReadMore: "Original", btnExpand: "Lire la suite ⬇️", btnCollapse: "Réduire ⬆️", filterAll: "Tous les portails",
+        btnReadMore: "Original", btnExpand: "Lire la suite ⬇️", btnCollapse: "Réduire ⬆️", filterAll: "Tous les portails", sortNew: "Plus récents", sortOld: "Plus anciens",
         searchRegion: "🌍 Région", searchTopic: "🏷️ Thème", latestNews: "Dernières nouvelles:", translatingRest: "Traduction du reste...",
         topBookmarks: "Signets", btnDonateTop: "Faire un don", donateTitle: "Soutenir le projet", 
         donateBody: "Ce projet est indépendant.", donateWarning: "⚠️ ATTENTION: Vous serez redirigé vers PayPal.",
@@ -94,11 +88,11 @@ const uiTexte = {
         catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAntiimperialism: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
         fbBtn: "💬 Contact", fbTitle: "Contact", fbPlace: "Écrivez ici...", fbCaptcha: "Captcha: Combien font", fbCancel: "Annuler", fbSend: "Envoyer", fbErrCap: "Captcha incorrect!", fbErrEmpty: "Écrivez quelque chose d'abord.",
         infoBtn: "ℹ️ Info", infoTitle: "Info & Sécurité", archiveTitle: "🗄️ Archives (> 3 Mois)", publisherLabel: "SOURCE:", authorLabel: "AUTEUR:", contactLabel: "Contact:",
-        infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenu:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traducciones de l'IA sont traitées de manière anonyme.</p>`
+        infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenido:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traducciones de l'IA sont traitées de manière anonyme.</p>`
     },
     it: {
         init: "Caricamento dati...", error: "Errore di connessione.", btnTranslate: "Traduci", btnLoading: "Traduzione...", btnDone: "Tradotto",
-        btnReadMore: "Originale", btnExpand: "Leggi di più ⬇️", btnCollapse: "Riduci ⬆️", filterAll: "Tutti i portali",
+        btnReadMore: "Originale", btnExpand: "Leggi di più ⬇️", btnCollapse: "Riduci ⬆️", filterAll: "Tutti i portali", sortNew: "Più recenti", sortOld: "Più vecchi",
         searchRegion: "🌍 Regione", searchTopic: "🏷️ Tema", latestNews: "Ultime notizie:", translatingRest: "Traduzione in corso...",
         topBookmarks: "Segnalibri", btnDonateTop: "Dona", donateTitle: "Sostieni il progetto", 
         donateBody: "Questo progetto è indipendente.", donateWarning: "⚠️ ATTENZIONE: Verrai reindirizzato a PayPal.",
@@ -113,7 +107,7 @@ const uiTexte = {
     },
     pt: {
         init: "Carregando dados...", error: "Erro: Sem conexão.", btnTranslate: "Traduzir", btnLoading: "Traduzindo...", btnDone: "Traduzido",
-        btnReadMore: "Original", btnExpand: "Ler mais ⬇️", btnCollapse: "Reduzir ⬆️", filterAll: "Todos os portais",
+        btnReadMore: "Original", btnExpand: "Ler mais ⬇️", btnCollapse: "Reduzir ⬆️", filterAll: "Todos os portais", sortNew: "Mais recentes", sortOld: "Mais antigos",
         searchRegion: "🌍 Região", searchTopic: "🏷️ Tema", latestNews: "Últimas notícias:", translatingRest: "Traduzindo o resto...",
         topBookmarks: "Marcadores", btnDonateTop: "Doar", donateTitle: "Apoiar o projeto",
         donateBody: "Este projeto é independente. As doações são voluntárias.", donateWarning: "⚠️ AVISO: Você será redirecionado para o PayPal.",
@@ -128,7 +122,7 @@ const uiTexte = {
     },
     ru: {
         init: "Загрузка данных...", error: "Ошибка подключения.", btnTranslate: "Перевести", btnLoading: "Перевод...", btnDone: "Переведено",
-        btnReadMore: "Оригинал", btnExpand: "Читать далее ⬇️", btnCollapse: "Свернуть ⬆️", filterAll: "Все порталы",
+        btnReadMore: "Оригинал", btnExpand: "Читать далее ⬇️", btnCollapse: "Свернуть ⬆️", filterAll: "Все порталы", sortNew: "Сначала новые", sortOld: "Сначала старые",
         searchRegion: "🌍 Регион", searchTopic: "🏷️ Тема", latestNews: "Последние новости:", translatingRest: "Перевод остального текста...",
         topBookmarks: "Закладки", btnDonateTop: "Донат", donateTitle: "Поддержать проект",
         donateBody: "Этот проект независимый. Пожертвования добровольны.", donateWarning: "⚠️ ВНИМАНИЕ: Вы будете перенаправлены на PayPal.",
@@ -143,7 +137,7 @@ const uiTexte = {
     },
     el: {
         init: "Φόρτωση δεδομένων...", error: "Σφάλμα σύνδεσης.", btnTranslate: "Μετάφραση", btnLoading: "Μετάφραση...", btnDone: "Μεταφράστηκε",
-        btnReadMore: "Πρωτότυπο", btnExpand: "Περισσότερα ⬇️", btnCollapse: "Λιγότερα ⬆️", filterAll: "Όλες οι πηγές",
+        btnReadMore: "Πρωτότυπο", btnExpand: "Περισσότερα ⬇️", btnCollapse: "Λιγότερα ⬆️", filterAll: "Όλες οι πηγές", sortNew: "Νεότερα", sortOld: "Παλαιότερα",
         searchRegion: "🌍 Περιοχή", searchTopic: "🏷️ Θέμα", latestNews: "Τελευταία Νέα:", translatingRest: "Μετάφραση υπολοίπου...",
         topBookmarks: "Αποθηκευμένα", btnDonateTop: "Δωρεά", donateTitle: "Υποστήριξη Έργου",
         donateBody: "Αυτό το έργο είναι ανεξάρτητο.", donateWarning: "⚠️ ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Θα μεταφερθείτε στο PayPal.",
@@ -158,7 +152,7 @@ const uiTexte = {
     },
     tr: {
         init: "Veriler yükleniyor...", error: "Bağlantı hatası.", btnTranslate: "Çevir", btnLoading: "Çevriliyor...", btnDone: "Çevrildi",
-        btnReadMore: "Orijinal", btnExpand: "Devamını Oku ⬇️", btnCollapse: "Daralt ⬆️", filterAll: "Tüm Portallar",
+        btnReadMore: "Orijinal", btnExpand: "Devamını Oku ⬇️", btnCollapse: "Daralt ⬆️", filterAll: "Tüm Portallar", sortNew: "En Yeni", sortOld: "En Eski",
         searchRegion: "🌍 Bölge", searchTopic: "🏷️ Konu", latestNews: "Son Haberler:", translatingRest: "Kalanı çevriliyor...",
         topBookmarks: "Kaydedilenler", btnDonateTop: "Bağış", donateTitle: "Projeyi Destekle",
         donateBody: "Bu proje bağımsızdır.", donateWarning: "⚠️ UYARI: PayPal'a yönlendirileceksiniz.",
@@ -213,6 +207,9 @@ function changeLanguage() {
     setTxt('txt-topic-summary', t.searchTopic);
     setTxt('txt-archive-title', t.archiveTitle);
     setTxt('txt-contact-label', t.contactLabel);
+    
+    setTxt('opt-sort-new', t.sortNew);
+    setTxt('opt-sort-old', t.sortOld);
     
     setTxt('txt-top-bookmarks', t.topBookmarks);
     setTxt('txt-donate-btn', t.btnDonateTop);
@@ -318,6 +315,7 @@ function openSourcesModal() {
     
     let html = `<button class="btn-micro" style="width:100%; text-align: left; padding: 10px; font-size: 0.8rem; justify-content: flex-start; border-color: var(--color-green); color: var(--color-green);" onclick="filterBySource('ALL')">🌍 ${t.filterAll}</button>`;
     
+    // Die Quellenliste wird exakt aus dem aktuellen Ordner (KontinentData) generiert!
     const portals = [...new Set(currentKontinentData.map(item => item.quelleName))].sort();
     portals.forEach(portal => { 
         let isActive = (currentSourceFilter === portal) ? 'background: rgba(0, 240, 255, 0.2); border-color: var(--color-cyan); color: #fff;' : '';
@@ -371,6 +369,7 @@ function applyFilters() {
     const iSel = document.getElementById('search-input');
     const selPortal = currentSourceFilter || "ALL"; 
     const searchQuery = iSel ? iSel.value.toLowerCase().trim() : "";
+    const sortOrder = document.getElementById('sort-select') ? document.getElementById('sort-select').value : "new";
     
     let filtered = (selPortal === "ALL") ? currentKontinentData : currentKontinentData.filter(a => a.quelleName === selPortal);
     if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery))); }
@@ -378,7 +377,12 @@ function applyFilters() {
     filtered.sort((a, b) => {
         let da = 0; let db = 0;
         if(a.pubDate) da = new Date(a.pubDate).getTime(); if(b.pubDate) db = new Date(b.pubDate).getTime();
-        return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
+        
+        if (sortOrder === "old") {
+            return (isNaN(da) ? 0 : da) - (isNaN(db) ? 0 : db); 
+        } else {
+            return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
+        }
     });
     displayArticles(filtered);
 }
@@ -542,20 +546,23 @@ async function translateArticle(index) {
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
-        let savedZoom = localStorage.getItem('wrn_font_zoom');
-        if (savedZoom !== null) {
-            currentFontIndex = parseInt(savedZoom);
-            if (currentFontIndex < 0) currentFontIndex = 0;
-            if (currentFontIndex > 2) currentFontIndex = 2;
-            document.documentElement.style.fontSize = fontSizes[currentFontIndex] + "%";
-        }
+        let savedZoom = localStorage.getItem('wrn_font_zoom') || "115"; 
+        document.documentElement.style.fontSize = savedZoom + "%";
+        const fsSelect = document.getElementById('ui-fontsize');
+        if (fsSelect) fsSelect.value = savedZoom;
+
         const savedLang = localStorage.getItem('wrn_system_lang'); const ls = document.getElementById('ui-language');
         if (savedLang && ls) { ls.value = savedLang; }
+        
         let savedTheme = localStorage.getItem('wrn_theme_style') || 'theme-dark';
         if(savedTheme === "theme-neon" || savedTheme === "theme-terminal" || savedTheme === "theme-solarpunk") savedTheme = "theme-dark";
-        
         const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
+        
         changeTheme(savedTheme); changeLanguage(); initialisiereApp(); 
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log('PWA Error:', err));
+        }
     } catch (e) {
         const stat = document.getElementById('status-container');
         if(stat) stat.innerText = "Kritischer Start-Fehler: " + e.message;
