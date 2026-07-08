@@ -131,9 +131,9 @@
     <div id="feed-container"></div>
     <h2 class="archive-header" id="txt-archive-title">🗄️ Archive (> 3 Months)</h2>
     <div id="archive-container"></div>
-    <div class="feedback-overlay" id="fb-overlay" onclick="closeAllModals()"></div>
+    <div class="feedback-overlay" id="fb-overlay" style="display: none;" onclick="closeAllModals()"></div>
     
-    <div class="feedback-modal" id="fb-modal">
+    <div class="feedback-modal" id="fb-modal" style="display: none;">
         <h3 id="txt-fb-title">Contact</h3>
         <textarea class="feedback-textarea" id="fb-text"></textarea>
         <div style="margin-bottom: 15px; font-size: 0.9rem; color: var(--text-muted); border-top: 1px dashed var(--color-cyan); padding-top: 10px;">
@@ -150,13 +150,13 @@
         </div>
     </div>
 
-    <div class="feedback-modal" id="info-modal">
+    <div class="feedback-modal" id="info-modal" style="display: none;">
         <h3 id="txt-info-title">App Info & Security</h3>
         <div class="info-text-box" id="txt-info-body"></div>
         <div class="feedback-actions"><button class="btn-submit" style="background:var(--color-cyan); color:#000;" onclick="closeAllModals()">Close</button></div>
     </div>
 
-    <div class="feedback-modal" id="donate-modal">
+    <div class="feedback-modal" id="donate-modal" style="display: none;">
         <h3 id="txt-donate-title">Support Project</h3>
         <div class="info-text-box">
             <p id="txt-donate-body">Dieses Projekt läuft unabhängig. Spenden sind freiwillig.</p>
@@ -170,7 +170,7 @@
         <div class="feedback-actions"><button class="btn-cancel" id="btn-donate-cancel" onclick="closeAllModals()">Schließen</button></div>
     </div>
 
-    <div class="feedback-modal" id="sources-modal">
+    <div class="feedback-modal" id="sources-modal" style="display: none;">
         <h3 style="color: var(--color-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed var(--color-cyan); padding-bottom: 8px; font-size: 1.1rem;">Quellen / Portale</h3>
         <div id="sources-list-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;">
         </div>
