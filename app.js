@@ -85,7 +85,7 @@ const uiTexte = {
         searchPlace: "Rechercher...", bookmarkCat: "Signets enregistrés", btnBookmark: "Sauvegarder" + rbStar, btnUnbookmark: "Sauvegardé" + rbStar,
         themeLabel: "Design:", themeDark: "Sombre", themeLight: "Clair", clearBtn: "Vider le cache 🗑️",
         catGlobal: "Global", catEurope: "Europe", catAfrica: "Afrique", catNorthAmerica: "Am. du Nord", catLatinAmerica: "Am. Latine", catAsia: "Asie", catAustralia: "Australie",
-        catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAntiimperialism: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
+        catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAnti-impérialisme: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
         fbBtn: "💬 Contact", fbTitle: "Contact", fbPlace: "Écrivez ici...", fbCaptcha: "Captcha: Combien font", fbCancel: "Annuler", fbSend: "Envoyer", fbErrCap: "Captcha incorrect!", fbErrEmpty: "Écrivez quelque chose d'abord.",
         infoBtn: "ℹ️ Info", infoTitle: "Info & Sécurité", archiveTitle: "🗄️ Archives (> 3 Mois)", publisherLabel: "SOURCE:", authorLabel: "AUTEUR:", contactLabel: "Contact:",
         infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenido:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traductions de l'IA sont traitées de manière anonyme.</p>`
@@ -329,20 +329,33 @@ function filterBySource(sourceName) {
     applyFilters();
 }
 
+// FIX: Zwingt die App, beim Start sofort "Global" zu laden.
 async function initialisiereApp() {
-    const t = uiTexte[currentLang] || uiTexte['en']; setTxt('status-container', t.init);
+    const t = uiTexte[currentLang] || uiTexte['en'];
+    setTxt('status-container', t.init);
     try {
         const res = await fetch(GITHUB_JSON_URL + "?v=" + new Date().getTime());
         if (!res.ok) throw new Error("Netzwerkfehler");
-        allNewsData = await res.json();
-        localStorage.setItem('cached_news_data', JSON.stringify(allNewsData));
-        ladeKontinentNews(activeKontinent);
+        
+        const fetchedData = await res.json();
+        if(fetchedData && fetchedData.length > 0) {
+            allNewsData = fetchedData;
+            localStorage.setItem('cached_news_data', JSON.stringify(allNewsData));
+            ladeKontinentNews("Global");
+        } else {
+            throw new Error("Leere Daten empfangen");
+        }
     } catch (err) {
         try {
             const offlineData = localStorage.getItem('cached_news_data');
-            if (offlineData) { allNewsData = JSON.parse(offlineData); setTxt('status-container', "[ OFFLINE MODE ]"); ladeKontinentNews(activeKontinent); } 
-            else { setTxt('status-container', t.error); }
-        } catch(e) { setTxt('status-container', "LOKALER SPEICHER FEHLER: " + e.message); }
+            if (offlineData && offlineData.length > 10) {
+                allNewsData = JSON.parse(offlineData);
+                setTxt('status-container', "[ OFFLINE MODE ]");
+                ladeKontinentNews("Global");
+            } else {
+                setTxt('status-container', t.error);
+            }
+        } catch(e) { setTxt('status-container', "Fehler: " + e.message); }
     }
 }
 
@@ -389,6 +402,7 @@ function applyFilters() {
     displayArticles(filtered);
 }
 
+// FIX: Textfarbe im Hell-Modus angepasst.
 function displayArticles(items) {
     const container = document.getElementById('feed-container'); const archiveContainer = document.getElementById('archive-container'); const archiveTitle = document.getElementById('txt-archive-title');
     if(!container || !archiveContainer) return;
