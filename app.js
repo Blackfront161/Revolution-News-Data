@@ -58,7 +58,7 @@ const uiTexte = {
         catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catNoBorders: "No Borders", catAnticapitalism: "Antikapitalismus", catTheory: "Theorie & Strategie", catAnticolonialism: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Ökologie & Klima", catIndigenous: "Indigene Kämpfe", catHealth: "Radical Health", catLibraries: "Bibliotheken",
         fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
-        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist a reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
+        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist ein reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
     },
     es: {
         init: "Cargando datos...", error: "Error de conexión.", btnTranslate: "Traducir", btnLoading: "Traduciendo...", btnDone: "Traducido",
@@ -88,7 +88,7 @@ const uiTexte = {
         catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAntiimperialism: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
         fbBtn: "💬 Contact", fbTitle: "Contact", fbPlace: "Écrivez ici...", fbCaptcha: "Captcha: Combien font", fbCancel: "Annuler", fbSend: "Envoyer", fbErrCap: "Captcha incorrect!", fbErrEmpty: "Écrivez quelque chose d'abord.",
         infoBtn: "ℹ️ Info", infoTitle: "Info & Sécurité", archiveTitle: "🗄️ Archives (> 3 Mois)", publisherLabel: "SOURCE:", authorLabel: "AUTEUR:", contactLabel: "Contact:",
-        infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenido:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traducciones de l'IA sont traitées de manière anonyme.</p>`
+        infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenido:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traductions de l'IA sont traitées de manière anonyme.</p>`
     },
     it: {
         init: "Caricamento dati...", error: "Errore di connessione.", btnTranslate: "Traduci", btnLoading: "Traduzione...", btnDone: "Tradotto",
@@ -315,7 +315,6 @@ function openSourcesModal() {
     
     let html = `<button class="btn-micro" style="width:100%; text-align: left; padding: 10px; font-size: 0.8rem; justify-content: flex-start; border-color: var(--color-green); color: var(--color-green);" onclick="filterBySource('ALL')">🌍 ${t.filterAll}</button>`;
     
-    // Die Quellenliste wird exakt aus dem aktuellen Ordner (KontinentData) generiert!
     const portals = [...new Set(currentKontinentData.map(item => item.quelleName))].sort();
     portals.forEach(portal => { 
         let isActive = (currentSourceFilter === portal) ? 'background: rgba(0, 240, 255, 0.2); border-color: var(--color-cyan); color: var(--text-main);' : '';
@@ -333,8 +332,11 @@ function filterBySource(sourceName) {
 async function initialisiereApp() {
     const t = uiTexte[currentLang] || uiTexte['en']; setTxt('status-container', t.init);
     try {
-        const response = await fetch(GITHUB_JSON_URL + "?t=" + new Date().getTime()); allNewsData = await response.json();
-        localStorage.setItem('cached_news_data', JSON.stringify(allNewsData)); ladeKontinentNews(activeKontinent); 
+        const res = await fetch(GITHUB_JSON_URL + "?v=" + new Date().getTime());
+        if (!res.ok) throw new Error("Netzwerkfehler");
+        allNewsData = await res.json();
+        localStorage.setItem('cached_news_data', JSON.stringify(allNewsData));
+        ladeKontinentNews(activeKontinent);
     } catch (err) {
         try {
             const offlineData = localStorage.getItem('cached_news_data');
@@ -424,8 +426,6 @@ function displayArticles(items) {
             metaHtml += `<span class="meta-label">${t.authorLabel}</span> <span style="color:var(--text-main);">${authorName}</span> <br>`;
         }
         metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:var(--text-main);">${formatDatum}</span>`;
-        }
-        metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:#ffffff;">${formatDatum}</span>`;
 
         let articleHTML = `
             <div class="card ${isReadClass}" id="card-${index}" data-translated="none">
@@ -470,47 +470,16 @@ async function toggleArticle(index) {
 
     try { markAsRead(currentKontinentData[index].link, index); } catch(e){}
 
-    if (!card.dataset.readState) {
-        card.dataset.readState = "collapsed"; 
-        card.dataset.fullOriginalText = fullContent.innerText;
-    }
-
-    const CHUNK_SIZE = 2500; 
-    let fullText = card.dataset.fullOriginalText;
-    let totalLen = fullText.length;
-
-    if (card.dataset.readState === "collapsed") {
-        teaser.style.display = "none";
-        fullContent.style.display = "block";
-        
-        if (totalLen <= CHUNK_SIZE) {
-            fullContent.innerText = fullText;
-            btn.innerText = t.btnCollapse;
-            card.dataset.readState = "full";
-        } else {
-            fullContent.innerText = fullText.substring(0, CHUNK_SIZE) + "\n\n[... " + t.btnExpand + " ...]";
-            btn.innerText = t.btnExpand + " (2)";
-            card.dataset.readState = "part1";
-        }
-    } else if (card.dataset.readState.startsWith("part")) {
-        let partNum = parseInt(card.dataset.readState.replace("part", ""));
-        let nextPartNum = partNum + 1;
-        let currentShownLen = nextPartNum * CHUNK_SIZE;
-
-        if (totalLen <= currentShownLen) {
-            fullContent.innerText = fullText;
-            btn.innerText = t.btnCollapse;
-            card.dataset.readState = "full";
-        } else {
-            fullContent.innerText = fullText.substring(0, currentShownLen) + "\n\n[... " + t.btnExpand + " ...]";
-            btn.innerText = t.btnExpand + " (" + (nextPartNum + 1) + ")";
-            card.dataset.readState = "part" + nextPartNum;
-        }
-    } else if (card.dataset.readState === "full") {
+    if (card.dataset.expanded === "true") {
         teaser.style.display = "block";
         fullContent.style.display = "none";
         btn.innerText = t.btnExpand;
-        card.dataset.readState = "collapsed";
+        card.dataset.expanded = "false";
+    } else {
+        teaser.style.display = "none";
+        fullContent.style.display = "block";
+        btn.innerText = t.btnCollapse;
+        card.dataset.expanded = "true";
     }
 }
 
