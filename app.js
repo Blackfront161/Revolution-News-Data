@@ -318,7 +318,7 @@ function openSourcesModal() {
     // Die Quellenliste wird exakt aus dem aktuellen Ordner (KontinentData) generiert!
     const portals = [...new Set(currentKontinentData.map(item => item.quelleName))].sort();
     portals.forEach(portal => { 
-        let isActive = (currentSourceFilter === portal) ? 'background: rgba(0, 240, 255, 0.2); border-color: var(--color-cyan); color: #fff;' : '';
+        let isActive = (currentSourceFilter === portal) ? 'background: rgba(0, 240, 255, 0.2); border-color: var(--color-cyan); color: var(--text-main);' : '';
         html += `<button class="btn-micro" style="width:100%; text-align: left; padding: 10px; font-size: 0.8rem; justify-content: flex-start; ${isActive}" onclick="filterBySource('${portal.replace(/'/g, "\\'")}')">${portal}</button>`; 
     });
     listContainer.innerHTML = html;
@@ -419,9 +419,11 @@ function displayArticles(items) {
         let publisherName = item.quelleName ? item.quelleName.trim() : "Unbekannte Quelle";
         let authorName = item.author ? item.author.trim() : "";
         
-        let metaHtml = `<span class="meta-label">${t.publisherLabel}</span> <span style="color:#ffffff;">${publisherName}</span> <br>`;
+        let metaHtml = `<span class="meta-label">${t.publisherLabel}</span> <span style="color:var(--text-main);">${publisherName}</span> <br>`;
         if (authorName !== "" && authorName.toLowerCase() !== "unknown" && authorName.toLowerCase() !== publisherName.toLowerCase()) {
-            metaHtml += `<span class="meta-label">${t.authorLabel}</span> <span style="color:#ffffff;">${authorName}</span> <br>`;
+            metaHtml += `<span class="meta-label">${t.authorLabel}</span> <span style="color:var(--text-main);">${authorName}</span> <br>`;
+        }
+        metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:var(--text-main);">${formatDatum}</span>`;
         }
         metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:#ffffff;">${formatDatum}</span>`;
 
