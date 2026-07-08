@@ -85,7 +85,7 @@ const uiTexte = {
         searchPlace: "Rechercher...", bookmarkCat: "Signets enregistrés", btnBookmark: "Sauvegarder" + rbStar, btnUnbookmark: "Sauvegardé" + rbStar,
         themeLabel: "Design:", themeDark: "Sombre", themeLight: "Clair", clearBtn: "Vider le cache 🗑️",
         catGlobal: "Global", catEurope: "Europe", catAfrica: "Afrique", catNorthAmerica: "Am. du Nord", catLatinAmerica: "Am. Latine", catAsia: "Asie", catAustralia: "Australie",
-        catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAnti-impérialisme: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
+        catLabor: "Syndicalisme", catAntifascism: "Antifa", catAntisexism: "Antisexisme", catQueer: "Queer", catAntiracism: "Antiracisme", catNoBorders: "Sans Frontières", catAnticapitalism: "Anticapitalisme", catTheory: "Théorie", catAnticolonialism: "Anticolonialisme", catAntiimperialism: "Anti-Impérialisme", catSquatting: "Logement/Squats", catDemos: "Manifs", catAntirepression: "Anti-Rép/Prisons", catCyber: "Cyber", catNoWar: "No War", catAnimal: "Lib. Animale", catEco: "Éco-Anarchie", catIndigenous: "Indigène", catHealth: "Santé Radicale", catLibraries: "Bibliothèques",
         fbBtn: "💬 Contact", fbTitle: "Contact", fbPlace: "Écrivez ici...", fbCaptcha: "Captcha: Combien font", fbCancel: "Annuler", fbSend: "Envoyer", fbErrCap: "Captcha incorrect!", fbErrEmpty: "Écrivez quelque chose d'abord.",
         infoBtn: "ℹ️ Info", infoTitle: "Info & Sécurité", archiveTitle: "🗄️ Archives (> 3 Mois)", publisherLabel: "SOURCE:", authorLabel: "AUTEUR:", contactLabel: "Contact:",
         infoBody: `<p><strong>Projet de Passion:</strong> Il s'agit d'un projet indépendant. Veuillez signaler les bugs via "Contact".</p><p><strong>Architecture Sécurisée:</strong> Fonctionne sans cookies de suivi ni comptes.</p><p><strong>Contenido:</strong> C'est un lecteur de flux RSS. Nous n'écrivons pas les articles.</p><p><strong>Confidentialité et IA:</strong> Les traductions de l'IA sont traitées de manière anonyme.</p>`
@@ -170,7 +170,13 @@ const uiTexte = {
 let currentLang = "en";
 let activeKontinent = "Global"; 
 let allNewsData = []; 
-let currentKontinentData = []; 
+
+// NEU: Globale Variablen für Endlos-Scrollen
+let currentFilteredItems = []; 
+let currentlyDisplayedCount = 0;
+const ITEMS_PER_PAGE = 15;
+let isRendering = false;
+
 let currentSourceFilter = "ALL"; 
 
 function setTxt(id, text) { const e = document.getElementById(id); if (e && text) e.innerText = text; }
@@ -187,7 +193,7 @@ function changeTheme(themeName) {
 }
 
 function clearAllData() {
-    const confirmTxt = currentLang === "de" ? "Möchtest du wirklich alle Lesezeichen, den Gelesen-Verlauf und alle Einstellungen restlos löschen?" : "Do you really want to completely clear all bookmarks, read history, and local settings?";
+    const confirmTxt = currentLang === "de" ? "Möchtest du wirklich alle Daten und Einstellungen restlos löschen?" : "Completely clear all bookmarks, history, and settings?";
     if (confirm(confirmTxt)) { localStorage.clear(); window.location.reload(); }
 }
 
@@ -198,69 +204,32 @@ function changeLanguage() {
     
     const t = uiTexte[currentLang] || uiTexte['en'];
     
-    setTxt('txt-lang-label', t.langLabel);
-    setTxt('txt-theme-label', t.themeLabel);
-    setTxt('opt-theme-dark', t.themeDark);
-    setTxt('opt-theme-light', t.themeLight);
-    setTxt('btn-clear-cache', t.clearBtn);
-    setTxt('txt-region-summary', t.searchRegion);
-    setTxt('txt-topic-summary', t.searchTopic);
-    setTxt('txt-archive-title', t.archiveTitle);
-    setTxt('txt-contact-label', t.contactLabel);
+    setTxt('txt-lang-label', t.langLabel); setTxt('txt-theme-label', t.themeLabel); setTxt('opt-theme-dark', t.themeDark); setTxt('opt-theme-light', t.themeLight); setTxt('btn-clear-cache', t.clearBtn); setTxt('txt-region-summary', t.searchRegion); setTxt('txt-topic-summary', t.searchTopic); setTxt('txt-archive-title', t.archiveTitle); setTxt('txt-contact-label', t.contactLabel); setTxt('opt-sort-new', t.sortNew); setTxt('opt-sort-old', t.sortOld); setTxt('txt-top-bookmarks', t.topBookmarks); setTxt('txt-donate-btn', t.btnDonateTop); setTxt('txt-donate-title', t.donateTitle); setTxt('txt-donate-body', t.donateBody); setTxt('txt-donate-warning', t.donateWarning); setTxt('btn-paypal', t.btnPaypal); setTxt('btn-donate-cancel', t.btnDonateCancel); setPh('search-input', t.searchPlace);
     
-    setTxt('opt-sort-new', t.sortNew);
-    setTxt('opt-sort-old', t.sortOld);
-    
-    setTxt('txt-top-bookmarks', t.topBookmarks);
-    setTxt('txt-donate-btn', t.btnDonateTop);
-    setTxt('txt-donate-title', t.donateTitle);
-    setTxt('txt-donate-body', t.donateBody);
-    setTxt('txt-donate-warning', t.donateWarning);
-    setTxt('btn-paypal', t.btnPaypal);
-    setTxt('btn-donate-cancel', t.btnDonateCancel);
-    setPh('search-input', t.searchPlace);
-    
-    setTxt('btn-glob', t.catGlobal); setTxt('btn-eur', t.catEurope); setTxt('btn-afr', t.catAfrica);
-    setTxt('btn-nam', t.catNorthAmerica); setTxt('btn-lam', t.catLatinAmerica); setTxt('btn-asi', t.catAsia); setTxt('btn-aus', t.catAustralia);
-    
-    setTxt('cat-labor', t.catLabor); setTxt('cat-antifascism', t.catAntifascism); setTxt('cat-antisexism', t.catAntisexism);
-    setTxt('cat-queer', t.catQueer); setTxt('cat-antiracism', t.catAntiracism); setTxt('cat-noborders', t.catNoBorders);
-    setTxt('cat-anticapitalism', t.catAnticapitalism); setTxt('cat-theory', t.catTheory); setTxt('cat-anticolonialism', t.catAnticolonialism);
-    setTxt('cat-antiimperialism', t.catAntiimperialism); setTxt('cat-squatting', t.catSquatting); setTxt('cat-demos', t.catDemos);
-    setTxt('cat-antirepression', t.catAntirepression); setTxt('cat-cyber', t.catCyber); setTxt('cat-nowar', t.catNoWar);
-    setTxt('cat-animal', t.catAnimal); setTxt('cat-eco', t.catEco); setTxt('cat-indigenous', t.catIndigenous);
-    setTxt('cat-health', t.catHealth); setTxt('btn-lib', t.catLibraries); 
+    setTxt('btn-glob', t.catGlobal); setTxt('btn-eur', t.catEurope); setTxt('btn-afr', t.catAfrica); setTxt('btn-nam', t.catNorthAmerica); setTxt('btn-lam', t.catLatinAmerica); setTxt('btn-asi', t.catAsia); setTxt('btn-aus', t.catAustralia);
+    setTxt('cat-labor', t.catLabor); setTxt('cat-antifascism', t.catAntifascism); setTxt('cat-antisexism', t.catAntisexism); setTxt('cat-queer', t.catQueer); setTxt('cat-antiracism', t.catAntiracism); setTxt('cat-noborders', t.catNoBorders); setTxt('cat-anticapitalism', t.catAnticapitalism); setTxt('cat-theory', t.catTheory); setTxt('cat-anticolonialism', t.catAnticolonialism); setTxt('cat-antiimperialism', t.catAntiimperialism); setTxt('cat-squatting', t.catSquatting); setTxt('cat-demos', t.catDemos); setTxt('cat-antirepression', t.catAntirepression); setTxt('cat-cyber', t.catCyber); setTxt('cat-nowar', t.catNoWar); setTxt('cat-animal', t.catAnimal); setTxt('cat-eco', t.catEco); setTxt('cat-indigenous', t.catIndigenous); setTxt('cat-health', t.catHealth); setTxt('btn-lib', t.catLibraries); 
 
-    setTxt('btn-open-info', "ℹ️ " + t.infoBtn);
-    setTxt('txt-info-title', t.infoTitle);
-    setHtml('txt-info-body', t.infoBody);
+    setTxt('btn-open-info', "ℹ️ " + t.infoBtn); setTxt('txt-info-title', t.infoTitle); setHtml('txt-info-body', t.infoBody); setTxt('btn-open-feedback', t.fbBtn); setTxt('txt-fb-title', t.fbTitle); setPh('fb-text', t.fbPlace); setTxt('txt-captcha-q', t.fbCaptcha); setTxt('btn-fb-cancel', t.fbCancel); setTxt('btn-fb-send', t.fbSend);
     
-    setTxt('btn-open-feedback', t.fbBtn);
-    setTxt('txt-fb-title', t.fbTitle);
-    setPh('fb-text', t.fbPlace);
-    setTxt('txt-captcha-q', t.fbCaptcha);
-    setTxt('btn-fb-cancel', t.fbCancel);
-    setTxt('btn-fb-send', t.fbSend);
-    
-    if(activeKontinent === "Bookmarks") { ladeBookmarks(); } else if (currentKontinentData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
+    if(activeKontinent === "Bookmarks") { ladeBookmarks(); } else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
 }
 
 function getSavedBookmarks() { return JSON.parse(localStorage.getItem('wrn_bookmarks') || '[]'); }
 function getReadArticles() { return JSON.parse(localStorage.getItem('wrn_read_list') || '[]'); }
 
-function markAsRead(link, index) {
+function markAsRead(link, idNum) {
     let readList = getReadArticles();
     if (!readList.includes(link)) { readList.push(link); localStorage.setItem('wrn_read_list', JSON.stringify(readList)); }
-    const card = document.getElementById(`card-${index}`); if(card) card.classList.add('read');
+    const card = document.getElementById(`card-${idNum}`); if(card) card.classList.add('read');
 }
 
-function toggleBookmark(index) {
-    let bookmarks = getSavedBookmarks(); let article = currentKontinentData[index];
+function toggleBookmark(idNum) {
+    let bookmarks = getSavedBookmarks(); let article = currentFilteredItems[idNum];
     let existingIdx = bookmarks.findIndex(b => b.link === article.link);
     const t = uiTexte[currentLang] || uiTexte['en'];
 
-    if (existingIdx > -1) { bookmarks.splice(existingIdx, 1); setHtml(`bmark-${index}`, t.btnBookmark); } 
-    else { bookmarks.push(article); setHtml(`bmark-${index}`, t.btnUnbookmark); }
+    if (existingIdx > -1) { bookmarks.splice(existingIdx, 1); setHtml(`bmark-${idNum}`, t.btnBookmark); } 
+    else { bookmarks.push(article); setHtml(`bmark-${idNum}`, t.btnUnbookmark); }
     
     localStorage.setItem('wrn_bookmarks', JSON.stringify(bookmarks));
     if(activeKontinent === "Bookmarks") ladeBookmarks();
@@ -268,28 +237,28 @@ function toggleBookmark(index) {
 
 function ladeBookmarks() {
     if (activeKontinent === "Bookmarks") { ladeKontinentNews('Global'); return; }
-
-    activeKontinent = "Bookmarks"; currentKontinentData = getSavedBookmarks();
-    currentSourceFilter = "ALL"; 
+    activeKontinent = "Bookmarks"; 
+    
+    let rawBookmarks = getSavedBookmarks();
     document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active'));
     const bBtn = document.getElementById('btn-bookmarks'); if(bBtn) bBtn.classList.add('active');
     
     const t = uiTexte[currentLang] || uiTexte['en'];
-    setTxt('status-container', t.bookmarkCat + ` (${currentKontinentData.length})`);
-    applyFilters();
+    setTxt('status-container', t.bookmarkCat + ` (${rawBookmarks.length})`);
+    
+    currentSourceFilter = "ALL";
+    currentFilteredItems = rawBookmarks;
+    applyFilters(true);
 }
 
 function openDonate() { const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('donate-modal'); if(md) md.style.display = 'block'; }
-
 function openFeedback() {
     const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('fb-modal'); if(md) md.style.display = 'block';
     capVal1 = Math.floor(Math.random() * 10) + 1; capVal2 = Math.floor(Math.random() * 10) + 1;
     setTxt('captcha-num1', capVal1); setTxt('captcha-num2', capVal2);
     const ca = document.getElementById('captcha-answer'); if(ca) ca.value = ''; const ft = document.getElementById('fb-text'); if(ft) ft.value = '';
 }
-
 function openInfo() { const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('info-modal'); if(md) md.style.display = 'block'; }
-
 function closeAllModals() { 
     const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'none'; 
     const m1 = document.getElementById('fb-modal'); if(m1) m1.style.display = 'none'; 
@@ -297,11 +266,9 @@ function closeAllModals() {
     const m3 = document.getElementById('donate-modal'); if(m3) m3.style.display = 'none'; 
     const m4 = document.getElementById('sources-modal'); if(m4) m4.style.display = 'none'; 
 }
-
 function submitFeedback() {
     const ca = document.getElementById('captcha-answer'); const ft = document.getElementById('fb-text'); if(!ca || !ft) return;
     const userAnswer = parseInt(ca.value); const text = ft.value.trim(); const t = uiTexte[currentLang] || uiTexte['en'];
-    
     if (text === "") { alert(t.fbErrEmpty); return; }
     if (userAnswer !== (capVal1 + capVal2)) { alert(t.fbErrCap); return; }
     window.location.href = `mailto:worldrevnews@brief.li?subject=Contact&body=${encodeURIComponent(text)}`; closeAllModals();
@@ -315,7 +282,10 @@ function openSourcesModal() {
     
     let html = `<button class="btn-micro" style="width:100%; text-align: left; padding: 10px; font-size: 0.8rem; justify-content: flex-start; border-color: var(--color-green); color: var(--color-green);" onclick="filterBySource('ALL')">🌍 ${t.filterAll}</button>`;
     
-    const portals = [...new Set(currentKontinentData.map(item => item.quelleName))].sort();
+    // Nimm alle Artikel des aktuellen Kontinents
+    let baseList = (activeKontinent === "Bookmarks") ? getSavedBookmarks() : allNewsData.filter(item => item.kontinent === activeKontinent);
+    const portals = [...new Set(baseList.map(item => item.quelleName))].sort();
+    
     portals.forEach(portal => { 
         let isActive = (currentSourceFilter === portal) ? 'background: rgba(0, 240, 255, 0.2); border-color: var(--color-cyan); color: var(--text-main);' : '';
         html += `<button class="btn-micro" style="width:100%; text-align: left; padding: 10px; font-size: 0.8rem; justify-content: flex-start; ${isActive}" onclick="filterBySource('${portal.replace(/'/g, "\\'")}')">${portal}</button>`; 
@@ -323,96 +293,89 @@ function openSourcesModal() {
     listContainer.innerHTML = html;
 }
 
-function filterBySource(sourceName) {
-    currentSourceFilter = sourceName;
-    closeAllModals();
-    applyFilters();
-}
+function filterBySource(sourceName) { currentSourceFilter = sourceName; closeAllModals(); applyFilters(); }
 
-// FIX: Zwingt die App, beim Start sofort "Global" zu laden.
 async function initialisiereApp() {
-    const t = uiTexte[currentLang] || uiTexte['en'];
-    setTxt('status-container', t.init);
+    const t = uiTexte[currentLang] || uiTexte['en']; setTxt('status-container', t.init);
     try {
         const res = await fetch(GITHUB_JSON_URL + "?v=" + new Date().getTime());
         if (!res.ok) throw new Error("Netzwerkfehler");
-        
         const fetchedData = await res.json();
         if(fetchedData && fetchedData.length > 0) {
-            allNewsData = fetchedData;
-            localStorage.setItem('cached_news_data', JSON.stringify(allNewsData));
-            ladeKontinentNews("Global");
-        } else {
-            throw new Error("Leere Daten empfangen");
-        }
+            allNewsData = fetchedData; localStorage.setItem('cached_news_data', JSON.stringify(allNewsData));
+            ladeKontinentNews("Global"); // FIX: Sofort Global laden!
+        } else { throw new Error("Leere Daten empfangen"); }
     } catch (err) {
         try {
             const offlineData = localStorage.getItem('cached_news_data');
             if (offlineData && offlineData.length > 10) {
-                allNewsData = JSON.parse(offlineData);
-                setTxt('status-container', "[ OFFLINE MODE ]");
-                ladeKontinentNews("Global");
-            } else {
-                setTxt('status-container', t.error);
-            }
+                allNewsData = JSON.parse(offlineData); setTxt('status-container', "[ OFFLINE MODE ]"); ladeKontinentNews("Global");
+            } else { setTxt('status-container', t.error); }
         } catch(e) { setTxt('status-container', "Fehler: " + e.message); }
     }
 }
 
 function ladeKontinentNews(kontinent) {
     if(kontinent === "Bookmarks") return ladeBookmarks();
-    activeKontinent = kontinent; currentKontinentData = allNewsData.filter(item => item.kontinent === kontinent);
-    currentSourceFilter = "ALL"; 
+    activeKontinent = kontinent; currentSourceFilter = "ALL"; 
     
     document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active'));
-    
-    const btnMap = { 
-        'Global': 'btn-glob', 'Europe': 'btn-eur', 'Africa': 'btn-afr', 'North America': 'btn-nam', 'Latin America': 'btn-lam', 'Asia': 'btn-asi', 'Australia & NZ': 'btn-aus', 
-        'Labor Struggles': 'cat-labor', 'Antifascism': 'cat-antifascism', 'Antisexism': 'cat-antisexism', 'Queer-Feminism': 'cat-queer', 'Antiracism': 'cat-antiracism', 'No Borders': 'cat-noborders',
-        'Anticapitalism': 'cat-anticapitalism', 'Theory & Strategy': 'cat-theory', 'Anticolonialism': 'cat-anticolonialism', 'Anti-Imperialism': 'cat-antiimperialism', 'Squatting & Housing': 'cat-squatting',
-        'Demonstrations': 'cat-demos', 'Anti-Rep & Prisons': 'cat-antirepression', 'Cyberactivism': 'cat-cyber', 'No War': 'cat-nowar', 'Animal Liberation': 'cat-animal', 'Eco-Anarchism': 'cat-eco', 'Indigenous Struggles': 'cat-indigenous',
-        'Radical Health & Disability': 'cat-health', 'Libraries': 'btn-lib' 
-    };
-    
+    const btnMap = { 'Global': 'btn-glob', 'Europe': 'btn-eur', 'Africa': 'btn-afr', 'North America': 'btn-nam', 'Latin America': 'btn-lam', 'Asia': 'btn-asi', 'Australia & NZ': 'btn-aus', 'Labor Struggles': 'cat-labor', 'Antifascism': 'cat-antifascism', 'Antisexism': 'cat-antisexism', 'Queer-Feminism': 'cat-queer', 'Antiracism': 'cat-antiracism', 'No Borders': 'cat-noborders', 'Anticapitalism': 'cat-anticapitalism', 'Theory & Strategy': 'cat-theory', 'Anticolonialism': 'cat-anticolonialism', 'Anti-Imperialism': 'cat-antiimperialism', 'Squatting & Housing': 'cat-squatting', 'Demonstrations': 'cat-demos', 'Anti-Rep & Prisons': 'cat-antirepression', 'Cyberactivism': 'cat-cyber', 'No War': 'cat-nowar', 'Animal Liberation': 'cat-animal', 'Eco-Anarchism': 'cat-eco', 'Indigenous Struggles': 'cat-indigenous', 'Radical Health & Disability': 'cat-health', 'Libraries': 'btn-lib' };
     if(btnMap[kontinent]) { const b = document.getElementById(btnMap[kontinent]); if(b) b.classList.add('active'); }
 
     const t = uiTexte[currentLang] || uiTexte['en']; setTxt('status-container', t.latestNews);
     applyFilters();
 }
 
-function applyFilters() {
+function applyFilters(isBookmark = false) {
     const iSel = document.getElementById('search-input');
     const selPortal = currentSourceFilter || "ALL"; 
     const searchQuery = iSel ? iSel.value.toLowerCase().trim() : "";
     const sortOrder = document.getElementById('sort-select') ? document.getElementById('sort-select').value : "new";
     
-    let filtered = (selPortal === "ALL") ? currentKontinentData : currentKontinentData.filter(a => a.quelleName === selPortal);
+    let baseList = (activeKontinent === "Bookmarks" || isBookmark) ? getSavedBookmarks() : allNewsData.filter(item => item.kontinent === activeKontinent);
+    let filtered = (selPortal === "ALL") ? baseList : baseList.filter(a => a.quelleName === selPortal);
+    
     if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery))); }
 
     filtered.sort((a, b) => {
         let da = 0; let db = 0;
         if(a.pubDate) da = new Date(a.pubDate).getTime(); if(b.pubDate) db = new Date(b.pubDate).getTime();
-        
-        if (sortOrder === "old") {
-            return (isNaN(da) ? 0 : da) - (isNaN(db) ? 0 : db); 
-        } else {
-            return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
-        }
+        if (sortOrder === "old") return (isNaN(da) ? 0 : da) - (isNaN(db) ? 0 : db); 
+        else return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
     });
-    displayArticles(filtered);
+    
+    // NEU: Setze die globale Filter-Liste und leere die Container für das Endlos-Scrollen
+    currentFilteredItems = filtered;
+    currentlyDisplayedCount = 0;
+    
+    const container = document.getElementById('feed-container'); const archiveContainer = document.getElementById('archive-container');
+    if(container) container.innerHTML = "";
+    if(archiveContainer) archiveContainer.innerHTML = "";
+    
+    renderNextBatch();
 }
 
-// FIX: Textfarbe im Hell-Modus angepasst.
-function displayArticles(items) {
-    const container = document.getElementById('feed-container'); const archiveContainer = document.getElementById('archive-container'); const archiveTitle = document.getElementById('txt-archive-title');
-    if(!container || !archiveContainer) return;
-    container.innerHTML = ""; archiveContainer.innerHTML = ""; let archiveCount = 0;
+// NEU: Die magische Funktion für das Endlos-Scrollen (Lazy Loading)
+function renderNextBatch() {
+    if (isRendering) return;
+    isRendering = true;
+
+    const container = document.getElementById('feed-container'); 
+    const archiveContainer = document.getElementById('archive-container'); 
+    const archiveTitle = document.getElementById('txt-archive-title');
+    if(!container || !archiveContainer) { isRendering = false; return; }
     
+    const batch = currentFilteredItems.slice(currentlyDisplayedCount, currentlyDisplayedCount + ITEMS_PER_PAGE);
+    if (batch.length === 0) { isRendering = false; return; } // Nichts mehr zum Laden
+
     const t = uiTexte[currentLang] || uiTexte['en'];
     let bookmarks = getSavedBookmarks(); let readList = getReadArticles();
     const today = new Date(); const ninetyDaysMs = 90 * 24 * 60 * 60 * 1000;
+    let archiveCount = archiveContainer.children.length; // Zähle bereits vorhandene alte Artikel
     
-    items.forEach((item, index) => {
+    batch.forEach((item, batchIndex) => {
+        const globalIndex = currentlyDisplayedCount + batchIndex; // Echte ID im Array
         let formatDatum = "LIVE"; let isOld = false;
         try {
             if (item.pubDate) {
@@ -442,28 +405,32 @@ function displayArticles(items) {
         metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:var(--text-main);">${formatDatum}</span>`;
 
         let articleHTML = `
-            <div class="card ${isReadClass}" id="card-${index}" data-translated="none">
+            <div class="card ${isReadClass}" id="card-${globalIndex}" data-translated="none">
                 <div class="meta">${metaHtml}</div>
-                <div class="title" id="title-${index}">${item.title || 'No Title'}</div>
+                <div class="title" id="title-${globalIndex}">${item.title || 'No Title'}</div>
                 ${imgHtml}
-                <div class="teaser" id="teaser-${index}">${teaserText}</div>
-                <div class="full-content" id="content-${index}">${fullText}</div>
+                <div class="teaser" id="teaser-${globalIndex}">${teaserText}</div>
+                <div class="full-content" id="content-${globalIndex}">${fullText}</div>
                 <div class="button-row">
-                    <button class="btn-expand" id="expand-${index}" onclick="toggleArticle(${index})">${t.btnExpand}</button>
-                    <button class="btn-translate" id="btn-${index}" onclick="translateArticle(${index})"><span>[ ${t.btnTranslate} ]</span></button>
-                    <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${index}" onclick="toggleBookmark(${index})">${bookmarkTxt}</button>
+                    <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex})">${t.btnExpand}</button>
+                    <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
+                    <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
                     <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${btoa(unescape(encodeURIComponent(item.title || '')))}', '${btoa(unescape(encodeURIComponent(item.link || '')))}')">[ SHARE 🔗 ]</button>
-                    <a href="${item.link || '#'}" target="_blank" style="text-decoration: none;" onclick="markAsRead('${item.link || ''}', ${index})">
+                    <a href="${item.link || '#'}" target="_blank" style="text-decoration: none;" onclick="markAsRead('${item.link || ''}', ${globalIndex})">
                         <button class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent);">[ ${t.btnReadMore} ]</button>
                     </a>
                 </div>
             </div>
         `;
 
-        if (isOld) { archiveContainer.innerHTML += articleHTML; archiveCount++; } else { container.innerHTML += articleHTML; }
+        if (isOld) { archiveContainer.insertAdjacentHTML('beforeend', articleHTML); archiveCount++; } 
+        else { container.insertAdjacentHTML('beforeend', articleHTML); }
     });
 
     if (archiveTitle) { if (archiveCount > 0) { archiveTitle.style.display = "block"; } else { archiveTitle.style.display = "none"; } }
+    
+    currentlyDisplayedCount += batch.length;
+    isRendering = false;
 }
 
 function shareArticle(encodedTitle, encodedLink) {
@@ -474,37 +441,31 @@ function shareArticle(encodedTitle, encodedLink) {
     } catch(e) {}
 }
 
-async function toggleArticle(index) {
-    const teaser = document.getElementById(`teaser-${index}`); 
-    const fullContent = document.getElementById(`content-${index}`);
-    const btn = document.getElementById(`expand-${index}`); 
-    const card = document.getElementById(`card-${index}`);
+async function toggleArticle(idNum) {
+    const teaser = document.getElementById(`teaser-${idNum}`); const fullContent = document.getElementById(`content-${idNum}`);
+    const btn = document.getElementById(`expand-${idNum}`); const card = document.getElementById(`card-${idNum}`);
     if(!teaser || !fullContent || !btn || !card) return;
     const t = uiTexte[currentLang] || uiTexte['en'];
 
-    try { markAsRead(currentKontinentData[index].link, index); } catch(e){}
+    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
 
     if (card.dataset.expanded === "true") {
-        teaser.style.display = "block";
-        fullContent.style.display = "none";
-        btn.innerText = t.btnExpand;
-        card.dataset.expanded = "false";
+        teaser.style.display = "block"; fullContent.style.display = "none";
+        btn.innerText = t.btnExpand; card.dataset.expanded = "false";
     } else {
-        teaser.style.display = "none";
-        fullContent.style.display = "block";
-        btn.innerText = t.btnCollapse;
-        card.dataset.expanded = "true";
+        teaser.style.display = "none"; fullContent.style.display = "block";
+        btn.innerText = t.btnCollapse; card.dataset.expanded = "true";
     }
 }
 
-async function translateArticle(index) {
-    const titleEl = document.getElementById('title-' + index); const teaserEl = document.getElementById('teaser-' + index);
-    const contentEl = document.getElementById('content-' + index); const btnEl = document.getElementById('btn-' + index); const card = document.getElementById('card-' + index);
+async function translateArticle(idNum) {
+    const titleEl = document.getElementById('title-' + idNum); const teaserEl = document.getElementById('teaser-' + idNum);
+    const contentEl = document.getElementById('content-' + idNum); const btnEl = document.getElementById('btn-' + idNum); const card = document.getElementById('card-' + idNum);
     if(!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
     const t = uiTexte[currentLang] || uiTexte['en'];
 
     if(card.dataset.translated === "full" || card.dataset.translated === "translating") return;
-    try { markAsRead(currentKontinentData[index].link, index); } catch(e){}
+    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
 
     btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
     
@@ -528,6 +489,16 @@ async function translateArticle(index) {
     else { if(transTitle) titleEl.innerText = transTitle; teaserEl.innerText = transText; card.dataset.translated = "teaser"; }
     titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`;
 }
+
+// NEU: Scroll-Listener (Beobachtet, ob der User nach unten scrollt)
+window.addEventListener('scroll', () => {
+    // Wenn der User ca. 800 Pixel vor dem Ende der Seite ist, laden wir nach
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
+        if (currentlyDisplayedCount < currentFilteredItems.length) {
+            renderNextBatch();
+        }
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     try {
