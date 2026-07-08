@@ -10,7 +10,7 @@
 </head>
 <body class="theme-dark" id="app-body">
 
-    <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+    <svg style="width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true" focusable="false">
         <defs>
             <linearGradient id="rbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="50%" stop-color="#FF0000" />
@@ -105,7 +105,7 @@
         <button class="btn-nav" style="flex: 1; border-color: var(--border-read); color: var(--text-muted);" id="btn-clear-cache" onclick="clearAllData()">Clear Cache 🗑️</button>
     </div>
 
-<div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
+    <div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
         
         <button class="btn-micro" style="font-size: 1.2rem; padding: 6px 12px; border-color: var(--color-cyan); color: var(--color-cyan); flex: 0 0 auto;" onclick="openSourcesModal()">☰</button>
         
@@ -122,7 +122,7 @@
             <option value="180">A: Maximal</option>
         </select>
 
-        <div class="search-container" style="flex: 1 1 120px; margin-bottom: 0;">
+        <div class="search-container" style="flex: 1 1 120px; margin-bottom: 0; margin-left: auto;">
             <input type="text" id="search-input" class="search-input" placeholder="Search articles..." oninput="applyFilters()" style="width: 100%;">
         </div>
     </div>
@@ -131,6 +131,7 @@
     <div id="feed-container"></div>
     <h2 class="archive-header" id="txt-archive-title">🗄️ Archive (> 3 Months)</h2>
     <div id="archive-container"></div>
+    
     <div class="feedback-overlay" id="fb-overlay" style="display: none;" onclick="closeAllModals()"></div>
     
     <div class="feedback-modal" id="fb-modal" style="display: none;">
