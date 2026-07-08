@@ -71,7 +71,8 @@ quellen = {
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
         {"name": "C4SS", "url": "https://c4ss.org/feed"},
-        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"}
+        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"},
+        {"name": "Indigenous Action", "url": "https://www.indigenousaction.org/feed/"}
     ],
     "Latin America": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
@@ -82,7 +83,8 @@ quellen = {
         {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"},
         {"name": "ANRed (Argentina)", "url": "https://www.anred.org/feed/"},
         {"name": "Pueblos en Camino", "url": "https://pueblosencamino.org/feed/"},
-        {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
+        {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"},
+        {"name": "Mapuexpress (Chile)", "url": "https://www.mapuexpress.org/feed/"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -101,7 +103,10 @@ quellen = {
         {"name": "Manila Today", "url": "https://manilatoday.net/feed/"},
         {"name": "Kodao Productions", "url": "https://kodao.org/feed/"},
         {"name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/"},
-        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
+        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"},
+        {"name": "LaborNet Japan", "url": "http://www.labornetjp.org/news/rss.xml"},
+        {"name": "Sindikasi (Indonesia)", "url": "https://sindikasi.org/feed/"},
+        {"name": "KCTU News (South Korea)", "url": "http://kctu.org/rss"}
     ],
     "Australia & NZ": [
         {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
@@ -147,7 +152,9 @@ quellen = {
         {"name": "GenderIT (Technofeminism)", "url": "https://www.genderit.org/rss.xml"},
         {"name": "Transgender Europe (TGEU)", "url": "https://tgeu.org/feed/"},
         {"name": "Autostraddle", "url": "https://www.autostraddle.com/feed/"},
-        {"name": "Make Rojava Green Again", "url": "https://makerojavagreenagain.org/feed/"}
+        {"name": "Make Rojava Green Again", "url": "https://makerojavagreenagain.org/feed/"},
+        {"name": "Pinko Magazine", "url": "https://pinko.online/feed/"},
+        {"name": "Feminist Anti-War Resistance", "url": "https://femagainstwar.org/feed/"}
     ],
     "Antiracism": [
         {"name": "Institute of Race Relations", "url": "https://irr.org.uk/feed/"},
@@ -256,7 +263,10 @@ quellen = {
         {"name": "Bulatlat (Indigenous)", "url": "https://www.bulatlat.com/feed/"},
         {"name": "Cultural Survival", "url": "https://www.culturalsurvival.org/news/rss.xml"},
         {"name": "Native News Online", "url": "https://nativenewsonline.net/?format=feed&type=rss"},
-        {"name": "Grist (Indigenous Affairs)", "url": "https://grist.org/indigenous/feed/"}
+        {"name": "Grist (Indigenous Affairs)", "url": "https://grist.org/indigenous/feed/"},
+        {"name": "Indigenous Action", "url": "https://www.indigenousaction.org/feed/"},
+        {"name": "Mapuexpress (Mapuche)", "url": "https://www.mapuexpress.org/feed/"},
+        {"name": "Warrior Publications", "url": "https://warriorpublications.wordpress.com/feed/"}
     ],
     "Radical Health & Disability": [
         {"name": "Asylum Magazine", "url": "https://asylummagazine.org/feed/"},
@@ -439,6 +449,7 @@ if len(alle_artikel) > 0:
     except:
         pass
         
+    # Archiv-Limit greift hier: Die neuesten 2000 bleiben, der Rest wird gelöscht.
     alle_artikel = alle_artikel[:2000]
     
     with open('news.json', 'w', encoding='utf-8') as f:
