@@ -21,6 +21,7 @@ quellen = {
         {"name": "Agency", "url": "https://www.anarchistagency.com/feed/"},
         {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
         {"name": "Anarchist News", "url": "https://morss.it/https://anarchistnews.org/rss.xml"},
+        {"name": "A-Infos (Global)", "url": "http://www.ainfos.ca/ainfos.xml"},
         {"name": "Autonomies", "url": "https://autonomies.org/feed/"},
         {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
         {"name": "Abolition Media", "url": "https://www.abolitionmedia.noblogs.org/feed/"},
@@ -34,6 +35,7 @@ quellen = {
         {"name": "MIA Marseille (FR)", "url": "https://mars-infos.org/spip.php?page=backend"},
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
+        {"name": "Perspektive Online (DE)", "url": "https://www.perspektive-online.de/feed/"},
         {"name": "Avtonom (RU)", "url": "https://avtonom.org/rss.xml"},
         {"name": "Pramen (BY)", "url": "https://pramen.io/feed/"},
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
@@ -53,6 +55,8 @@ quellen = {
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
+        {"name": "Mada Masr (Egypt)", "url": "https://madamasr.com/en/feed"},
+        {"name": "Attac / CADTM Maroc", "url": "https://www.cadtm.org/spip.php?page=backend"},
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
@@ -215,6 +219,7 @@ quellen = {
         {"name": "Autistici/Inventati", "url": "https://www.autistici.org/feed/"},
         {"name": "Nadir.org", "url": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml"},
         {"name": "DDoSecrets", "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss"},
+        {"name": "Kolektiva Media (Video)", "url": "https://kolektiva.media/feeds/videos.xml?videoFilter=local"},
         {"name": "Electronic Frontier Foundation", "url": "https://www.eff.org/rss/updates.xml"}
     ],
     "No War": [
@@ -434,7 +439,6 @@ if len(alle_artikel) > 0:
     except:
         pass
         
-    # Archiv-Limit greift hier: Die neuesten 2000 bleiben, der Rest wird gelöscht.
     alle_artikel = alle_artikel[:2000]
     
     with open('news.json', 'w', encoding='utf-8') as f:
