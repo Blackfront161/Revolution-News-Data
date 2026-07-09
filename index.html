@@ -97,6 +97,13 @@
         </div>
     </details>
 
+    <details class="filter-dropdown" style="border-color: #FFEA00; box-shadow: 0 0 8px rgba(255, 234, 0, 0.2);">
+        <summary id="txt-radar-summary" style="color: #FFEA00;">⚠️ Aktions-Radar</summary>
+        <div class="nav-bar">
+            <button class="btn-nav" id="cat-radar" style="border-color: #FFEA00; color: #FFEA00; width: 100%;" onclick="ladeKontinentNews('Radar')">Alle Termine & Demos</button>
+        </div>
+    </details>
+
     <div class="nav-bar" style="border-bottom: none; gap: 10px; margin-bottom: 5px;">
         <button class="btn-nav" style="flex: 1; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
             <span id="txt-top-bookmarks">Bookmarks</span>
@@ -129,7 +136,7 @@
 
     <div id="status-container" class="status-msg">Connecting to server...</div>
     <div id="feed-container"></div>
-    <h2 class="archive-header" id="txt-archive-title">🗄️ Archive (> 3 Months)</h2>
+    <h2 class="archive-header" id="txt-archive-title" style="display: none;">🗄️ Archive (> 3 Months)</h2>
     <div id="archive-container"></div>
     
     <div class="feedback-overlay" id="fb-overlay" style="display: none;" onclick="closeAllModals()"></div>
