@@ -86,7 +86,11 @@ quellen = {
     ],
     "Radar": [
         {"name": "Radar Squat.net (International)", "url": "https://radar.squat.net/en/events/rss"},
-        {"name": "Stressfaktor (Berlin Termine)", "url": "https://stressfaktor.squat.net/termine.rss"}
+        {"name": "Indymedia DE (Termine)", "url": "https://de.indymedia.org/termine.xml"},
+        {"name": "Kontrapolis (Termine Berlin)", "url": "https://kontrapolis.info/category/termine/feed/"},
+        {"name": "Stressfaktor (Berlin)", "url": "https://stressfaktor.squat.net/termine.rss"},
+        {"name": "Paris-Luttes (Agenda FR)", "url": "https://paris-luttes.info/spip.php?page=backend-agenda"},
+        {"name": "Barrikade (Kurzmeldungen CH)", "url": "https://barrikade.info/spip.php?page=backend-breves"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -328,16 +332,17 @@ alle_artikel = []
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
+    is_radar = (kontinent == "Radar")
+    
     for feed in feeds:
         print(f"-> Portal: {feed['name']}...")
         try:
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:4]: # Nur die 4 neuesten prüfen (Reicht völlig!)
+            for entry in parsed.entries[:4]: 
                 link = entry.get('link', '')
                 
-                # WENN WIR DEN ARTIKEL SCHON KENNEN -> ÜBERSPRINGEN! (Speed-Boost!)
                 if link in bekannte_artikel_dict:
                     alle_artikel.append(bekannte_artikel_dict[link])
                     continue
@@ -348,6 +353,11 @@ for kontinent, feeds in quellen.items():
                 
                 full_text = ""
                 image_url = None
+
+                # RADAR FIX: Für Termine nehmen wir direkt die Beschreibung (weil sie oft kurz ist)
+                if is_radar:
+                    radar_desc = entry.get('summary', entry.get('description', ''))
+                    full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
 
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
@@ -368,7 +378,7 @@ for kontinent, feeds in quellen.items():
                                 image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                                 if image_url: break
 
-                if link:
+                if link and not is_radar:
                     try:
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
@@ -383,12 +393,6 @@ for kontinent, feeds in quellen.items():
                                 src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                                 image_url = clean_image_url(src, link)
                                 if image_url: break
-                                
-                        if not image_url:
-                            matches = re.findall(r'(https?://[^\s"<>]+\.(?:jpg|jpeg|png|webp))', html_req.text, re.IGNORECASE)
-                            for match in matches:
-                                image_url = clean_image_url(match, link)
-                                if image_url: break
 
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
@@ -401,7 +405,8 @@ for kontinent, feeds in quellen.items():
                     except:
                         pass
                 
-                if not full_text or len(full_text) < 150:
+                # Wenn Text zu kurz ist, aus dem Feed holen (Für News > 150 Zeichen)
+                if not is_radar and (not full_text or len(full_text) < 150):
                     try:
                         if 'content' in entry and len(entry.content) > 0:
                             c_obj = entry.content[0]
@@ -420,9 +425,12 @@ for kontinent, feeds in quellen.items():
 
                 clean_text = full_text.strip()
                 
-                if "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
+                # RADAR: Wenn es ein Termin ist, ist ein kurzer Text völlig okay!
+                if is_radar and clean_text == "":
+                    clean_text = "Weitere Infos zum Termin auf der Originalseite."
+                elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
-                elif clean_text == "":
+                elif not is_radar and clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
                 if not image_url:
@@ -450,17 +458,16 @@ if len(alle_artikel) > 0:
         
     alle_artikel = alle_artikel[:2000]
     
-    # 1. Speichern der Daten
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
     
-    # 2. Den Bot zwingen, JEDE Blockade von GitHub zu durchbrechen (Force Pull/Push)
+    # Git Force-Commit (Damit er niemals mehr blockiert wird)
     import os
     os.system('git config --global user.name "News-Bot"')
     os.system('git config --global user.email "bot@worldrevnews.li"')
     os.system('git add news.json')
     os.system('git commit -m "Update News"')
-    os.system('git pull --rebase origin main') # WICHTIG: Holt sich deine Änderungen, bevor er speichert!
+    os.system('git pull --rebase origin main')
     os.system('git push origin main')
     
     print(f"\n[ERFOLG] {len(alle_artikel)} Artikel im Archiv gesichert.")
