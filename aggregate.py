@@ -294,7 +294,14 @@ quellen = {
     ]
 }
 
-# --- SCHARFE TIMEOUTS GEGEN ABSTÜRZE ---
+# --- ANTI-SPAM SHIELD & BLACKLIST ---
+# Hier fügen wir Phrasen ein, die wir nie wieder sehen wollen!
+SPAM_BLACKLIST = [
+    "sicherheitslage verschlimmert",
+    "mordeaffen",
+    "kurt gustav wilckens"
+]
+
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'}
 AUTONOMOUS_TIMEOUT = (5.0, 10.0) 
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
@@ -317,22 +324,31 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
-# --- DAS NEUE ARCHIV-GEDÄCHTNIS (MIT AMNESIE FÜR TERMINE) ---
+# --- DAS NEUE ARCHIV-GEDÄCHTNIS (MIT SPAM-REINIGUNG) ---
 bekannte_artikel_dict = {}
+gesehene_titel = set() # Dient als Dubletten-Killer!
+
 try:
     if os.path.exists('news.json'):
         with open('news.json', 'r', encoding='utf-8') as f:
             alter_stand = json.load(f)
             for art in alter_stand:
-                # WICHTIG: Radar-Termine werden NICHT ins Gedächtnis geladen!
-                # Sie werden immer zu 100% neu geholt.
-                if art.get('kontinent') != 'Radar':
+                titel_clean = art.get('title', '').lower().strip()
+                content_clean = art.get('content', '').lower().strip()
+                author_clean = art.get('author', '').lower().strip()
+                
+                # SPAM-PRÜFUNG: Schmeißt Troll-Artikel rückwirkend aus dem Archiv!
+                is_spam = any(bad in titel_clean or bad in content_clean or bad in author_clean for bad in SPAM_BLACKLIST)
+                
+                # Radar-Termine ignorieren wir wieder fürs Gedächtnis, damit sie jedes Mal frisch geladen werden
+                if not is_spam and art.get('kontinent') != 'Radar' and titel_clean not in gesehene_titel:
                     bekannte_artikel_dict[art['link']] = art
+                    gesehene_titel.add(titel_clean) # Titel merken, um Dubletten zu blockieren!
 except:
     pass
 
 alle_artikel = []
-radar_count = 0 # Wir zählen mit, wie viele Termine gefunden werden!
+radar_count = 0 
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
@@ -344,22 +360,30 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:4]: 
+            # Wir ziehen max 6 Artikel, falls oben Spam weggelöscht wird
+            for entry in parsed.entries[:6]: 
                 link = entry.get('link', '')
+                title = entry.get('title', 'Kein Titel')
+                title_lower = title.lower().strip()
+                author = entry.get('author', 'Unknown')
                 
-                # Wenn der Artikel im Gedächtnis ist (und KEIN Radar-Termin ist)
+                # 1. DUBLETTEN-SCHUTZ: Ist exakt dieser Titel schon da? Weg damit!
+                if title_lower in gesehene_titel and not is_radar:
+                    continue
+                
+                # 2. SPAM-SCHUTZ: Ist das ein Blacklist-Artikel? Weg damit!
+                if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
+                    continue
+
                 if link in bekannte_artikel_dict and not is_radar:
                     alle_artikel.append(bekannte_artikel_dict[link])
                     continue
                 
-                title = entry.get('title', 'Kein Titel')
                 pubDate = entry.get('published', datetime.now().isoformat())
-                author = entry.get('author', 'Unknown')
                 
                 full_text = ""
                 image_url = None
 
-                # RADAR FIX: Für Termine nehmen wir direkt die Beschreibung
                 if is_radar:
                     radar_desc = entry.get('summary', entry.get('description', ''))
                     full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
@@ -429,7 +453,10 @@ for kontinent, feeds in quellen.items():
 
                 clean_text = full_text.strip()
                 
-                # RADAR-TEXT: Keine Firewall-Meldungen, sondern Hinweis zur Quelle!
+                # 3. SPAM-SCHUTZ: Auch im fertigen Text noch mal prüfen!
+                if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
+                    continue
+                
                 if is_radar:
                     if clean_text == "":
                         clean_text = "Weitere Infos zum Termin auf der Originalseite."
@@ -442,6 +469,8 @@ for kontinent, feeds in quellen.items():
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
+                gesehene_titel.add(title_lower) # Titel fürs nächste Mal merken
+                
                 alle_artikel.append({
                     "kontinent": kontinent,
                     "quelleName": feed['name'],
