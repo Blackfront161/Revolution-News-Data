@@ -461,14 +461,17 @@ if len(alle_artikel) > 0:
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
     
-    # Git Force-Commit (Damit er niemals mehr blockiert wird)
-    import os
-    os.system('git config --global user.name "News-Bot"')
-    os.system('git config --global user.email "bot@worldrevnews.li"')
-    os.system('git add news.json')
-    os.system('git commit -m "Update News"')
-    os.system('git pull --rebase origin main')
-    os.system('git push origin main')
+# --- ZUSAMMENFÜHREN & ARCHIV-LIMIT SETZEN (Max. 2000 Artikel) ---
+if len(alle_artikel) > 0:
+    try:
+        alle_artikel.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
+    except:
+        pass
+        
+    alle_artikel = alle_artikel[:2000]
+    
+    with open('news.json', 'w', encoding='utf-8') as f:
+        json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
     
     print(f"\n[ERFOLG] {len(alle_artikel)} Artikel im Archiv gesichert.")
 else:
