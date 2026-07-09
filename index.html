@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#050508">
+    <style>
+        /* Zwingt den Radar-Button dazu, immer grün zu bleiben! */
+        #cat-radar.active { background-color: var(--color-green) !important; color: #000 !important; border-color: var(--color-green) !important; }
+    </style>
 </head>
 <body class="theme-dark" id="app-body">
 
@@ -99,7 +103,7 @@
 
     <div class="nav-bar" style="border-bottom: none; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; display: flex;">
         <button class="btn-nav" id="cat-radar" style="flex: 1 1 22%; border-color: var(--color-green); color: var(--color-green); background: rgba(0, 255, 0, 0.05); display: flex; align-items: center; justify-content: center; font-weight: bold;" onclick="ladeKontinentNews('Radar')">
-            <span id="txt-radar-summary">Termine & Demos</span>
+            <span id="txt-radar-summary">Events & Demos</span>
         </button>
         
         <button class="btn-nav" style="flex: 1 1 22%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
