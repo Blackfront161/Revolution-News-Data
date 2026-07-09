@@ -450,8 +450,19 @@ if len(alle_artikel) > 0:
         
     alle_artikel = alle_artikel[:2000]
     
+    # 1. Speichern der Daten
     with open('news.json', 'w', encoding='utf-8') as f:
         json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
+    
+    # 2. Den Bot zwingen, JEDE Blockade von GitHub zu durchbrechen (Force Pull/Push)
+    import os
+    os.system('git config --global user.name "News-Bot"')
+    os.system('git config --global user.email "bot@worldrevnews.li"')
+    os.system('git add news.json')
+    os.system('git commit -m "Update News"')
+    os.system('git pull --rebase origin main') # WICHTIG: Holt sich deine Änderungen, bevor er speichert!
+    os.system('git push origin main')
+    
     print(f"\n[ERFOLG] {len(alle_artikel)} Artikel im Archiv gesichert.")
 else:
     print(f"\n[STOPP] Keine Artikel gefunden.")
