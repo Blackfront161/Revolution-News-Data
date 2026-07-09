@@ -86,7 +86,7 @@ quellen = {
     ],
     "Radar": [
         {"name": "Radar Squat.net (International)", "url": "https://radar.squat.net/en/events/rss"},
-        {"name": "Indymedia DE (Termine)", "url": "https://de.indymedia.org/termine.xml"},
+        # Indymedia Termine komplett verbannt wegen Spam!
         {"name": "Kontrapolis (Termine Berlin)", "url": "https://kontrapolis.info/category/termine/feed/"},
         {"name": "Stressfaktor (Berlin)", "url": "https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://paris-luttes.info/spip.php?page=backend-agenda"},
@@ -294,8 +294,6 @@ quellen = {
     ]
 }
 
-# --- ANTI-SPAM SHIELD & BLACKLIST ---
-# Hier fügen wir Phrasen ein, die wir nie wieder sehen wollen!
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
     "mordeaffen",
@@ -324,9 +322,8 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
-# --- DAS NEUE ARCHIV-GEDÄCHTNIS (MIT SPAM-REINIGUNG) ---
 bekannte_artikel_dict = {}
-gesehene_titel = set() # Dient als Dubletten-Killer!
+gesehene_titel = set()
 
 try:
     if os.path.exists('news.json'):
@@ -337,13 +334,11 @@ try:
                 content_clean = art.get('content', '').lower().strip()
                 author_clean = art.get('author', '').lower().strip()
                 
-                # SPAM-PRÜFUNG: Schmeißt Troll-Artikel rückwirkend aus dem Archiv!
                 is_spam = any(bad in titel_clean or bad in content_clean or bad in author_clean for bad in SPAM_BLACKLIST)
                 
-                # Radar-Termine ignorieren wir wieder fürs Gedächtnis, damit sie jedes Mal frisch geladen werden
                 if not is_spam and art.get('kontinent') != 'Radar' and titel_clean not in gesehene_titel:
                     bekannte_artikel_dict[art['link']] = art
-                    gesehene_titel.add(titel_clean) # Titel merken, um Dubletten zu blockieren!
+                    gesehene_titel.add(titel_clean)
 except:
     pass
 
@@ -360,18 +355,15 @@ for kontinent, feeds in quellen.items():
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            # Wir ziehen max 6 Artikel, falls oben Spam weggelöscht wird
             for entry in parsed.entries[:6]: 
                 link = entry.get('link', '')
                 title = entry.get('title', 'Kein Titel')
                 title_lower = title.lower().strip()
                 author = entry.get('author', 'Unknown')
                 
-                # 1. DUBLETTEN-SCHUTZ: Ist exakt dieser Titel schon da? Weg damit!
                 if title_lower in gesehene_titel and not is_radar:
                     continue
                 
-                # 2. SPAM-SCHUTZ: Ist das ein Blacklist-Artikel? Weg damit!
                 if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
                     continue
 
@@ -453,7 +445,6 @@ for kontinent, feeds in quellen.items():
 
                 clean_text = full_text.strip()
                 
-                # 3. SPAM-SCHUTZ: Auch im fertigen Text noch mal prüfen!
                 if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
                     continue
                 
@@ -469,7 +460,7 @@ for kontinent, feeds in quellen.items():
                 if not image_url:
                     image_url = PLACEHOLDER_IMAGE
 
-                gesehene_titel.add(title_lower) # Titel fürs nächste Mal merken
+                gesehene_titel.add(title_lower)
                 
                 alle_artikel.append({
                     "kontinent": kontinent,
@@ -486,7 +477,6 @@ for kontinent, feeds in quellen.items():
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
 
-# --- ZUSAMMENFÜHREN & ARCHIV-LIMIT SETZEN (Max. 2000 Artikel) ---
 if len(alle_artikel) > 0:
     try:
         alle_artikel.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
