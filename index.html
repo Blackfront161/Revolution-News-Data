@@ -97,12 +97,11 @@
         </div>
     </details>
 
-    <details class="filter-dropdown" style="border-color: #FFEA00; box-shadow: 0 0 8px rgba(255, 234, 0, 0.2);">
-        <summary id="txt-radar-summary" style="color: #FFEA00;">Aktions-Radar</summary>
-        <div class="nav-bar">
-            <button class="btn-nav" id="cat-radar" style="border-color: #FFEA00; color: #FFEA00; width: 100%;" onclick="ladeKontinentNews('Radar')">Alle Termine & Demos</button>
-        </div>
-    </details>
+    <div class="nav-bar" style="border-bottom: none; margin-bottom: 15px;">
+        <button class="btn-nav" id="cat-radar" style="width: 100%; border-color: #FFEA00; color: #FFEA00; font-weight: bold; background: rgba(255, 234, 0, 0.05); box-shadow: 0 0 8px rgba(255, 234, 0, 0.2); padding: 12px; font-size: 1.1rem;" onclick="ladeKontinentNews('Radar')">
+            <span id="txt-radar-summary">Aktions-Radar (Termine)</span>
+        </button>
+    </div>
 
     <div class="nav-bar" style="border-bottom: none; gap: 10px; margin-bottom: 5px;">
         <button class="btn-nav" style="flex: 1; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
@@ -113,7 +112,6 @@
     </div>
 
     <div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
-        
         <button class="btn-micro" style="font-size: 1.2rem; padding: 6px 12px; border-color: var(--color-cyan); color: var(--color-cyan); flex: 0 0 auto;" onclick="openSourcesModal()">☰</button>
         
         <select id="sort-select" style="background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-read); padding: 8px 4px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; flex: 0 0 auto; outline: none; -webkit-appearance: none;" onchange="applyFilters()">
