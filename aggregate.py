@@ -317,18 +317,22 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
-# --- DAS NEUE ARCHIV-GEDÄCHTNIS ---
+# --- DAS NEUE ARCHIV-GEDÄCHTNIS (MIT AMNESIE FÜR TERMINE) ---
 bekannte_artikel_dict = {}
 try:
     if os.path.exists('news.json'):
         with open('news.json', 'r', encoding='utf-8') as f:
             alter_stand = json.load(f)
             for art in alter_stand:
-                bekannte_artikel_dict[art['link']] = art
+                # WICHTIG: Radar-Termine werden NICHT ins Gedächtnis geladen!
+                # Sie werden immer zu 100% neu geholt.
+                if art.get('kontinent') != 'Radar':
+                    bekannte_artikel_dict[art['link']] = art
 except:
     pass
 
 alle_artikel = []
+radar_count = 0 # Wir zählen mit, wie viele Termine gefunden werden!
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
@@ -343,7 +347,8 @@ for kontinent, feeds in quellen.items():
             for entry in parsed.entries[:4]: 
                 link = entry.get('link', '')
                 
-                if link in bekannte_artikel_dict:
+                # Wenn der Artikel im Gedächtnis ist (und KEIN Radar-Termin ist)
+                if link in bekannte_artikel_dict and not is_radar:
                     alle_artikel.append(bekannte_artikel_dict[link])
                     continue
                 
@@ -354,7 +359,7 @@ for kontinent, feeds in quellen.items():
                 full_text = ""
                 image_url = None
 
-                # RADAR FIX: Für Termine nehmen wir direkt die Beschreibung (weil sie oft kurz ist)
+                # RADAR FIX: Für Termine nehmen wir direkt die Beschreibung
                 if is_radar:
                     radar_desc = entry.get('summary', entry.get('description', ''))
                     full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
@@ -405,7 +410,6 @@ for kontinent, feeds in quellen.items():
                     except:
                         pass
                 
-                # Wenn Text zu kurz ist, aus dem Feed holen (Für News > 150 Zeichen)
                 if not is_radar and (not full_text or len(full_text) < 150):
                     try:
                         if 'content' in entry and len(entry.content) > 0:
@@ -425,9 +429,11 @@ for kontinent, feeds in quellen.items():
 
                 clean_text = full_text.strip()
                 
-                # RADAR: Wenn es ein Termin ist, ist ein kurzer Text völlig okay!
-                if is_radar and clean_text == "":
-                    clean_text = "Weitere Infos zum Termin auf der Originalseite."
+                # RADAR-TEXT: Keine Firewall-Meldungen, sondern Hinweis zur Quelle!
+                if is_radar:
+                    if clean_text == "":
+                        clean_text = "Weitere Infos zum Termin auf der Originalseite."
+                    radar_count += 1
                 elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif not is_radar and clean_text == "":
@@ -449,18 +455,8 @@ for kontinent, feeds in quellen.items():
         except:
             pass
 
-# --- ZUSAMMENFÜHREN & ARCHIV-LIMIT SETZEN (Max. 2000 Artikel) ---
-if len(alle_artikel) > 0:
-    try:
-        alle_artikel.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
-    except:
-        pass
-        
-    alle_artikel = alle_artikel[:2000]
-    
-    with open('news.json', 'w', encoding='utf-8') as f:
-        json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
-    
+print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
+
 # --- ZUSAMMENFÜHREN & ARCHIV-LIMIT SETZEN (Max. 2000 Artikel) ---
 if len(alle_artikel) > 0:
     try:
