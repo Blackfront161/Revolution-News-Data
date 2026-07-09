@@ -458,12 +458,6 @@ async function translateArticle(idNum) {
     titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`;
 }
 
-window.addEventListener('scroll', () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
-        if (currentlyDisplayedCount < currentFilteredItems.length) { renderNextBatch(); }
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     try {
         let savedZoom = localStorage.getItem('wrn_font_zoom') || "115"; 
@@ -480,6 +474,15 @@ document.addEventListener('DOMContentLoaded', () => {
         
         changeTheme(savedTheme); changeLanguage(); initialisiereApp(); 
 
+        // DER KILL-SWITCH FÜR DAS HANDY
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister(); // Tötet den alten Zombie-Worker
+                    console.log("Zombie-Worker vernichtet.");
+                }
+            });
+        }
     } catch (e) {
         const stat = document.getElementById('status-container');
         if(stat) stat.innerText = "Kritischer Start-Fehler: " + e.message;
