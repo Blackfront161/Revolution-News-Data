@@ -71,8 +71,7 @@ quellen = {
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
         {"name": "C4SS", "url": "https://c4ss.org/feed"},
-        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"},
-        {"name": "Indigenous Action", "url": "https://www.indigenousaction.org/feed/"}
+        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"}
     ],
     "Latin America": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
@@ -83,8 +82,11 @@ quellen = {
         {"name": "Indymedia Argentina", "url": "https://argentina.indymedia.org/feed/"},
         {"name": "ANRed (Argentina)", "url": "https://www.anred.org/feed/"},
         {"name": "Pueblos en Camino", "url": "https://pueblosencamino.org/feed/"},
-        {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"},
-        {"name": "Mapuexpress (Chile)", "url": "https://www.mapuexpress.org/feed/"}
+        {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
+    ],
+    "Radar": [
+        {"name": "Radar Squat.net (International)", "url": "https://radar.squat.net/en/events/rss"},
+        {"name": "Stressfaktor (Berlin Termine)", "url": "https://stressfaktor.squat.net/termine.rss"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -103,10 +105,7 @@ quellen = {
         {"name": "Manila Today", "url": "https://manilatoday.net/feed/"},
         {"name": "Kodao Productions", "url": "https://kodao.org/feed/"},
         {"name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/"},
-        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"},
-        {"name": "LaborNet Japan", "url": "http://www.labornetjp.org/news/rss.xml"},
-        {"name": "Sindikasi (Indonesia)", "url": "https://sindikasi.org/feed/"},
-        {"name": "KCTU News (South Korea)", "url": "http://kctu.org/rss"}
+        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
     ],
     "Australia & NZ": [
         {"name": "IndigenousX (Australia)", "url": "https://indigenousx.com.au/feed/"},
@@ -449,7 +448,6 @@ if len(alle_artikel) > 0:
     except:
         pass
         
-    # Archiv-Limit greift hier: Die neuesten 2000 bleiben, der Rest wird gelöscht.
     alle_artikel = alle_artikel[:2000]
     
     with open('news.json', 'w', encoding='utf-8') as f:
