@@ -363,6 +363,7 @@ function renderNextBatch() {
         let authorName = item.author ? item.author.trim() : "";
         
         let isRadar = (item.kontinent === "Radar");
+        // Der grüne Look für die Termine
         let cardStyle = isRadar ? `style="border: 1px solid var(--color-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);"` : "";
         let titleColor = isRadar ? `color: var(--color-green);` : "";
         
@@ -427,36 +428,109 @@ async function toggleArticle(idNum) {
     }
 }
 
+
+// DIE NEUE CHUNKING-ÜBERSETZUNG (Live-Feedback für den User)
 async function translateArticle(idNum) {
     const titleEl = document.getElementById('title-' + idNum); const teaserEl = document.getElementById('teaser-' + idNum);
     const contentEl = document.getElementById('content-' + idNum); const btnEl = document.getElementById('btn-' + idNum); const card = document.getElementById('card-' + idNum);
     if(!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
+    
     const t = uiTexte[currentLang] || uiTexte['en'];
 
     if(card.dataset.translated === "full" || card.dataset.translated === "translating") return;
     try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
 
-    btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
+    card.dataset.translated = "translating"; // Sperre gegen Doppel-Klick
+    const isExpanded = (contentEl.style.display === "block");
     
     let zielSprache = "English"; const sel = document.getElementById('ui-language');
     if(sel && sel.options[sel.selectedIndex]) zielSprache = sel.options[sel.selectedIndex].text;
-    const isExpanded = (contentEl.style.display === "block");
     let genderInstruction = (zielSprache === "Deutsch") ? " Achte bei der deutschen Übersetzung unbedingt auf geschlechtergerechte Sprache (Gendern mit Sternchen, z.B. Aktivist*innen)." : "";
-    
-    let promptText = isExpanded ? 
-        `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${contentEl.innerText}` :
-        `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
 
-    const data = await fetchFromGemini(promptText);
-    if (data.error) { btnEl.innerHTML = "[ ERROR ]"; return; }
+    if (!isExpanded) {
+        // TEASER: Kurzer Text, geht schnell
+        btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
+        let promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
+        
+        const data = await fetchFromGemini(promptText);
+        if (data.error) { btnEl.innerHTML = "[ ERROR ]"; card.dataset.translated = "none"; return; }
 
-    const parts = data.candidates[0].content.parts[0].text.split("---");
-    let transTitle = parts.length >= 2 ? parts[0].trim() : "";
-    let transText = parts.length >= 2 ? parts[1].trim() : data.candidates[0].content.parts[0].text.trim();
+        const parts = data.candidates[0].content.parts[0].text.split("---");
+        if (parts.length >= 2) {
+            let transTitle = parts[0].trim();
+            if(transTitle) titleEl.innerText = transTitle;
+            teaserEl.innerText = parts[1].trim();
+        } else {
+            teaserEl.innerText = data.candidates[0].content.parts[0].text.trim();
+        }
+        
+        titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "teaser";
+    } else {
+        // VOLLTEXT: "Live-Stream-Modus" durch Chunking
+        let rawText = contentEl.innerText;
+        let paragraphs = rawText.split(/\n\n+/);
+        let chunks = [];
+        let currentChunk = "";
 
-    if (isExpanded) { if(transTitle) titleEl.innerText = transTitle; contentEl.innerText = transText; card.dataset.translated = "full"; } 
-    else { if(transTitle) titleEl.innerText = transTitle; teaserEl.innerText = transText; card.dataset.translated = "teaser"; }
-    titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`;
+        // Wir zerteilen den Text in mundgerechte Stücke von max ca. 1800 Zeichen
+        for(let p of paragraphs) {
+            if ((currentChunk.length + p.length) > 1800) {
+                if(currentChunk) chunks.push(currentChunk.trim());
+                currentChunk = p;
+            } else {
+                currentChunk += (currentChunk ? "\n\n" : "") + p;
+            }
+        }
+        if(currentChunk) chunks.push(currentChunk.trim());
+
+        contentEl.innerHTML = ""; // Text leeren, damit wir den Live-Aufbau sehen können
+        let isError = false;
+
+        for (let i = 0; i < chunks.length; i++) {
+            // Live-Feedback auf dem Button!
+            let progressText = chunks.length > 1 ? `[ ${t.btnLoading} ${i+1}/${chunks.length} ]` : `[ ${t.btnLoading} ]`;
+            btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
+
+            let promptText = "";
+            if (i === 0) {
+                promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[i]}`;
+            } else {
+                promptText = `Translate the following text continuation fluently into ${zielSprache}.${genderInstruction}\n\nText: ${chunks[i]}`;
+            }
+
+            const data = await fetchFromGemini(promptText);
+            if (data.error || !data.candidates || !data.candidates[0].content) {
+                contentEl.innerHTML += `<br><br><span style="color:#FF0033;">[ FEHLER: Übersetzung abgebrochen. ]</span>`;
+                isError = true;
+                break;
+            }
+
+            let resultText = data.candidates[0].content.parts[0].text.trim();
+
+            if (i === 0) {
+                const parts = resultText.split("---");
+                if (parts.length >= 2) {
+                    let transTitle = parts[0].trim();
+                    if(transTitle) titleEl.innerText = transTitle;
+                    contentEl.innerHTML += parts[1].trim().replace(/\n/g, "<br>");
+                } else {
+                    contentEl.innerHTML += resultText.replace(/\n/g, "<br>");
+                }
+            } else {
+                // Die weiteren Absätze einfach unten anhängen
+                contentEl.innerHTML += "<br><br>" + resultText.replace(/\n/g, "<br>");
+            }
+        }
+
+        if (!isError) {
+            titleEl.classList.add('translated');
+            btnEl.innerHTML = `[ ${t.btnDone} ]`;
+            card.dataset.translated = "full";
+        } else {
+            btnEl.innerHTML = `[ ERROR ]`;
+            card.dataset.translated = "none";
+        }
+    }
 }
 
 window.addEventListener('scroll', () => {
