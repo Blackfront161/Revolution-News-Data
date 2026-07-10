@@ -28,7 +28,6 @@ quellen = {
         {"name": "Slingshot Collective", "url": "https://slingshotcollective.org/feed/"}
     ],
     "Europe": [
-        {"name": "Indymedia DE", "url": "https://de.indymedia.org/rss.xml"},
         {"name": "Paris-Luttes (FR)", "url": "https://paris-luttes.info/spip.php?page=backend"},
         {"name": "Lundi Matin (FR)", "url": "https://lundi.am/spip.php?page=backend"},
         {"name": "Rebellyon (FR)", "url": "https://rebellyon.info/spip.php?page=backend"},
@@ -85,12 +84,12 @@ quellen = {
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
     "Radar": [
-        {"name": "Radar Squat.net (International)", "url": "https://radar.squat.net/en/events/rss"},
-        # Indymedia Termine komplett verbannt wegen Spam!
-        {"name": "Kontrapolis (Termine Berlin)", "url": "https://kontrapolis.info/category/termine/feed/"},
+        {"name": "Radar Squat.net (Global)", "url": "https://radar.squat.net/de/events/rss"},
+        {"name": "Kontrapolis (Berlin)", "url": "https://kontrapolis.info/category/termine/feed/"},
         {"name": "Stressfaktor (Berlin)", "url": "https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://paris-luttes.info/spip.php?page=backend-agenda"},
-        {"name": "Barrikade (Kurzmeldungen CH)", "url": "https://barrikade.info/spip.php?page=backend-breves"}
+        {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend-breves"},
+        {"name": "CrimethInc. (Events)", "url": "https://crimethinc.com/categories/events/feed"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -301,15 +300,19 @@ SPAM_BLACKLIST = [
 ]
 
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'}
-AUTONOMOUS_TIMEOUT = (5.0, 10.0) 
+AUTONOMOUS_TIMEOUT = 12.0 
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
 
-retry_strategy = Retry(total=1, backoff_factor=0.5, status_forcelist=[429, 500, 502, 503, 504], allowed_methods=["GET"])
+retry_strategy = Retry(total=2, backoff_factor=1.0, status_forcelist=[429, 500, 502, 503, 504], allowed_methods=["GET"])
 adapter = HTTPAdapter(max_retries=retry_strategy)
 
+# DOPPELTER PANZER: Wir nutzen Cloudscraper UND Requests als Fallback
 http = cloudscraper.create_scraper(browser={'browser': 'chrome', 'platform': 'windows', 'desktop': True})
 http.mount("https://", adapter)
 http.mount("http://", adapter)
+
+session = requests.Session()
+session.mount("https://", adapter)
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
@@ -351,129 +354,160 @@ for kontinent, feeds in quellen.items():
     
     for feed in feeds:
         print(f"-> Portal: {feed['name']}...")
+        parsed = None
         try:
+            # 1. VERSUCH: Cloudscraper (Gegen starke Firewalls)
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
             
-            for entry in parsed.entries[:6]: 
-                link = entry.get('link', '')
-                title = entry.get('title', 'Kein Titel')
-                title_lower = title.lower().strip()
-                author = entry.get('author', 'Unknown')
+            # 2. VERSUCH: Wenn Cloudscraper blockiert wird, probieren wir nackte Requests
+            if not parsed.entries:
+                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                parsed = feedparser.parse(feed_req.content)
+        except:
+            try:
+                # 3. NOTFALL-VERSUCH
+                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                parsed = feedparser.parse(feed_req.content)
+            except:
+                pass
                 
-                if title_lower in gesehene_titel and not is_radar:
-                    continue
-                
-                if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
-                    continue
+        if not parsed or not parsed.entries:
+            print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen (Firewall blockiert).")
+            continue
+            
+        # RADAR-UPDATE: Wir holen uns jetzt bis zu 30 Termine pro Kalender!
+        limit = 30 if is_radar else 6
+        for entry in parsed.entries[:limit]: 
+            link = entry.get('link', '')
+            title = entry.get('title', 'Kein Titel')
+            title_lower = title.lower().strip()
+            author = entry.get('author', 'Unknown')
+            
+            if title_lower in gesehene_titel and not is_radar:
+                continue
+            
+            if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
+                continue
 
-                if link in bekannte_artikel_dict and not is_radar:
-                    alle_artikel.append(bekannte_artikel_dict[link])
-                    continue
-                
-                pubDate = entry.get('published', datetime.now().isoformat())
-                
-                full_text = ""
-                image_url = None
+            if link in bekannte_artikel_dict and not is_radar:
+                alle_artikel.append(bekannte_artikel_dict[link])
+                continue
+            
+            pubDate = entry.get('published', entry.get('updated', datetime.now().isoformat()))
+            
+            full_text = ""
+            image_url = None
 
-                if is_radar:
-                    radar_desc = entry.get('summary', entry.get('description', ''))
-                    full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
+            if is_radar:
+                radar_desc = entry.get('summary', entry.get('description', ''))
+                full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
 
-                if 'media_content' in entry and len(entry.media_content) > 0:
-                    image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
+            if 'media_content' in entry and len(entry.media_content) > 0:
+                image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
-                if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
-                    for enc in entry.enclosures:
-                        href = enc.get('href', '')
-                        if enc.get('type', '').startswith('image/') or any(ext in href.lower() for ext in IMAGE_EXTENSIONS):
-                            image_url = clean_image_url(href, link)
+            if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
+                for enc in entry.enclosures:
+                    href = enc.get('href', '')
+                    if enc.get('type', '').startswith('image/') or any(ext in href.lower() for ext in IMAGE_EXTENSIONS):
+                        image_url = clean_image_url(href, link)
+                        if image_url: break
+
+            if not image_url:
+                for content_key in ['description', 'summary']:
+                    if content_key in entry and isinstance(entry[content_key], str):
+                        desc_soup = BeautifulSoup(entry[content_key], 'html.parser')
+                        img_tag = desc_soup.find('img')
+                        if img_tag:
+                            image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                             if image_url: break
 
-                if not image_url:
-                    for content_key in ['description', 'summary']:
-                        if content_key in entry and isinstance(entry[content_key], str):
-                            desc_soup = BeautifulSoup(entry[content_key], 'html.parser')
-                            img_tag = desc_soup.find('img')
-                            if img_tag:
-                                image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
-                                if image_url: break
+            if link and not is_radar:
+                try:
+                    html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    soup = BeautifulSoup(html_req.text, 'html.parser')
+                    
+                    if not image_url:
+                        og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
+                        if og_img:
+                            image_url = clean_image_url(og_img.get('content'), link)
+                    
+                    if not image_url:
+                        for img in soup.find_all('img'):
+                            src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
+                            image_url = clean_image_url(src, link)
+                            if image_url: break
 
-                if link and not is_radar:
+                    paragraphs = soup.find_all('p')
+                    text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
+                    full_text = "\n\n".join(text_blocks)
+                    
+                    waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
+                    if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
+                        full_text = "" 
+
+                except:
+                    pass
+            
+            if not is_radar and (not full_text or len(full_text) < 150):
+                try:
+                    if 'content' in entry and len(entry.content) > 0:
+                        c_obj = entry.content[0]
+                        if hasattr(c_obj, 'value'):
+                            full_text = BeautifulSoup(str(c_obj.value), 'html.parser').get_text().strip()
+                        elif isinstance(c_obj, dict) and 'value' in c_obj:
+                            full_text = BeautifulSoup(str(c_obj['value']), 'html.parser').get_text().strip()
+                except:
+                    pass
+                    
+                if (not full_text or len(full_text) < 150) and 'description' in entry:
                     try:
-                        html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                        soup = BeautifulSoup(html_req.text, 'html.parser')
-                        
-                        if not image_url:
-                            og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
-                            if og_img:
-                                image_url = clean_image_url(og_img.get('content'), link)
-                        
-                        if not image_url:
-                            for img in soup.find_all('img'):
-                                src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
-                                image_url = clean_image_url(src, link)
-                                if image_url: break
-
-                        paragraphs = soup.find_all('p')
-                        text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
-                        full_text = "\n\n".join(text_blocks)
-                        
-                        waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
-                        if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
-                            full_text = "" 
-
+                        full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text().strip()
                     except:
                         pass
-                
-                if not is_radar and (not full_text or len(full_text) < 150):
-                    try:
-                        if 'content' in entry and len(entry.content) > 0:
-                            c_obj = entry.content[0]
-                            if hasattr(c_obj, 'value'):
-                                full_text = BeautifulSoup(str(c_obj.value), 'html.parser').get_text().strip()
-                            elif isinstance(c_obj, dict) and 'value' in c_obj:
-                                full_text = BeautifulSoup(str(c_obj['value']), 'html.parser').get_text().strip()
-                    except:
-                        pass
-                        
-                    if (not full_text or len(full_text) < 150) and 'description' in entry:
-                        try:
-                            full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text().strip()
-                        except:
-                            pass
 
-                clean_text = full_text.strip()
-                
-                if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
-                    continue
-                
-                if is_radar:
-                    if clean_text == "":
-                        clean_text = "Weitere Infos zum Termin auf der Originalseite."
-                    radar_count += 1
-                elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
-                    clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
-                elif not is_radar and clean_text == "":
-                    clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
+            clean_text = full_text.strip()
+            
+            if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
+                continue
+            
+            if is_radar:
+                if clean_text == "":
+                    clean_text = "Weitere Infos zum Termin auf der Originalseite."
+                radar_count += 1
+            elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
+                clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
+            elif not is_radar and clean_text == "":
+                clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-                if not image_url:
-                    image_url = PLACEHOLDER_IMAGE
+            if not image_url:
+                image_url = PLACEHOLDER_IMAGE
 
-                gesehene_titel.add(title_lower)
-                
-                alle_artikel.append({
-                    "kontinent": kontinent,
-                    "quelleName": feed['name'],
-                    "author": author,
-                    "title": title,
-                    "link": link,
-                    "pubDate": pubDate,
-                    "content": clean_text,
-                    "image": image_url
-                })
-        except:
-            pass
+            gesehene_titel.add(title_lower)
+            
+            alle_artikel.append({
+                "kontinent": kontinent,
+                "quelleName": feed['name'],
+                "author": author,
+                "title": title,
+                "link": link,
+                "pubDate": pubDate,
+                "content": clean_text,
+                "image": image_url
+            })
+
+# --- SYSTEM-MELDUNG, FALLS ALLES BLOCKIERT WIRD ---
+if radar_count == 0:
+    alle_artikel.append({
+        "kontinent": "Radar",
+        "quelleName": "System Info",
+        "author": "News-Bot",
+        "title": "🛡️ Radar temporär blockiert",
+        "link": "https://radar.squat.net",
+        "pubDate": datetime.now().isoformat(),
+        "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
+        "image": PLACEHOLDER_IMAGE
+    })
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
 
