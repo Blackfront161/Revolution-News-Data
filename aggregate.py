@@ -83,13 +83,14 @@ quellen = {
         {"name": "Pueblos en Camino", "url": "https://pueblosencamino.org/feed/"},
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
+    # DER PROXY-TUNNEL FÜR DAS RADAR (Bypasst die Cloudflare Firewalls)
     "Radar": [
-        {"name": "Radar Squat.net (Global)", "url": "https://radar.squat.net/de/events/rss"},
-        {"name": "Kontrapolis (Berlin)", "url": "https://kontrapolis.info/category/termine/feed/"},
-        {"name": "Stressfaktor (Berlin)", "url": "https://stressfaktor.squat.net/termine.rss"},
-        {"name": "Paris-Luttes (Agenda FR)", "url": "https://paris-luttes.info/spip.php?page=backend-agenda"},
-        {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend-breves"},
-        {"name": "CrimethInc. (Events)", "url": "https://crimethinc.com/categories/events/feed"}
+        {"name": "Radar Squat.net (Global)", "url": "https://morss.it/https://radar.squat.net/de/events/rss"},
+        {"name": "Kontrapolis (Berlin)", "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/"},
+        {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
+        {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
+        {"name": "Barrikade (CH)", "url": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves"},
+        {"name": "CrimethInc. (Events)", "url": "https://morss.it/https://crimethinc.com/categories/events/feed"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -300,13 +301,11 @@ SPAM_BLACKLIST = [
 ]
 
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'}
-AUTONOMOUS_TIMEOUT = 12.0 
-PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/Blackfront161/Revolution-News-Data/main/placeholder.jpg" 
+AUTONOMOUS_TIMEOUT = (8.0, 15.0) 
 
 retry_strategy = Retry(total=2, backoff_factor=1.0, status_forcelist=[429, 500, 502, 503, 504], allowed_methods=["GET"])
 adapter = HTTPAdapter(max_retries=retry_strategy)
 
-# DOPPELTER PANZER: Wir nutzen Cloudscraper UND Requests als Fallback
 http = cloudscraper.create_scraper(browser={'browser': 'chrome', 'platform': 'windows', 'desktop': True})
 http.mount("https://", adapter)
 http.mount("http://", adapter)
@@ -356,27 +355,22 @@ for kontinent, feeds in quellen.items():
         print(f"-> Portal: {feed['name']}...")
         parsed = None
         try:
-            # 1. VERSUCH: Cloudscraper (Gegen starke Firewalls)
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
             parsed = feedparser.parse(feed_req.text)
-            
-            # 2. VERSUCH: Wenn Cloudscraper blockiert wird, probieren wir nackte Requests
             if not parsed.entries:
                 feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                 parsed = feedparser.parse(feed_req.content)
         except:
             try:
-                # 3. NOTFALL-VERSUCH
                 feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                 parsed = feedparser.parse(feed_req.content)
             except:
                 pass
                 
         if not parsed or not parsed.entries:
-            print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen (Firewall blockiert).")
+            print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
             continue
             
-        # RADAR-UPDATE: Wir holen uns jetzt bis zu 30 Termine pro Kalender!
         limit = 30 if is_radar else 6
         for entry in parsed.entries[:limit]: 
             link = entry.get('link', '')
@@ -480,8 +474,9 @@ for kontinent, feeds in quellen.items():
             elif not is_radar and clean_text == "":
                 clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-            if not image_url:
-                image_url = PLACEHOLDER_IMAGE
+            # Fix für kaputte Bilder: Wenn es kein Bild gibt, bleibt es leer
+            if not image_url or not image_url.startswith('http'):
+                image_url = ""
 
             gesehene_titel.add(title_lower)
             
@@ -496,7 +491,7 @@ for kontinent, feeds in quellen.items():
                 "image": image_url
             })
 
-# --- SYSTEM-MELDUNG, FALLS ALLES BLOCKIERT WIRD ---
+# --- SYSTEM-MELDUNG (OHNE KAPUTTES BILD) ---
 if radar_count == 0:
     alle_artikel.append({
         "kontinent": "Radar",
@@ -506,7 +501,7 @@ if radar_count == 0:
         "link": "https://radar.squat.net",
         "pubDate": datetime.now().isoformat(),
         "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
-        "image": PLACEHOLDER_IMAGE
+        "image": "" # Leer gelassen, damit kein "zerrissenes" Icon erscheint
     })
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
