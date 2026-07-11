@@ -206,7 +206,6 @@ function printZine() {
     setTimeout(() => { printWindow.print(); }, 500);
 }
 
-
 function openDonate() { const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('donate-modal'); if(md) md.style.display = 'block'; }
 function openFeedback() {
     const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('fb-modal'); if(md) md.style.display = 'block';
@@ -317,6 +316,7 @@ function applyFilters(isBookmark = false) {
     renderNextBatch();
 }
 
+// === DER REPARIERTE RENDER-BLOCK FÜR ABSÄTZE UND HTML-SCHUTZ ===
 function renderNextBatch() {
     if (isRendering) return;
     isRendering = true;
@@ -352,8 +352,14 @@ function renderNextBatch() {
         } catch(e) {}
 
         const fullText = item.content || "Text not available.";
+        
+        // NEU: Wandelt die Python-Zeilenumbrüche sicher in echte HTML-Absätze (<br>) um!
+        const safeFullText = fullText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+        
         let teaserText = fullText.substring(0, 100) + "...";
         try { const sentenceMatch = fullText.match(/[^.!?]+[.!?]+/); if(sentenceMatch) teaserText = sentenceMatch[0]; } catch(e) {}
+        const safeTeaserText = teaserText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        
         const imgHtml = item.image ? `<img src="${item.image}" class="article-img" style="display:block;" loading="lazy">` : '';
 
         let isSaved = bookmarks.some(b => b.link === item.link); let bookmarkTxt = isSaved ? t.btnUnbookmark : t.btnBookmark;
@@ -378,10 +384,10 @@ function renderNextBatch() {
                 <div class="meta">${metaHtml}</div>
                 <div class="title" id="title-${globalIndex}" style="${titleColor}">${item.title || 'No Title'}</div>
                 ${imgHtml}
-                <div class="teaser" id="teaser-${globalIndex}">${teaserText}</div>
-                <div class="full-content" id="content-${globalIndex}">${fullText}</div>
+                <div class="teaser" id="teaser-${globalIndex}">${safeTeaserText}</div>
+                <div class="full-content" id="content-${globalIndex}">${safeFullText}</div>
                 <div class="button-row">
-                    <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex})">${t.btnExpand}</button>
+                    <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
                     <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
                     <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
                     <button class="btn-translate" style="border-color: #00FFCC; color: #00FFCC;" onclick="addToZine(${globalIndex})">[ 📄 ZINE ]</button>
@@ -411,9 +417,14 @@ function shareArticle(encodedTitle, encodedLink) {
     } catch(e) {}
 }
 
-async function toggleArticle(idNum) {
-    const teaser = document.getElementById(`teaser-${idNum}`); const fullContent = document.getElementById(`content-${idNum}`);
-    const btn = document.getElementById(`expand-${idNum}`); const card = document.getElementById(`card-${idNum}`);
+// === DER REPARIERTE KLICK-BLOCK ===
+async function toggleArticle(idNum, event) {
+    if (event) event.stopPropagation(); // <-- Verhindert das automatische Schließen
+    
+    const teaser = document.getElementById(`teaser-${idNum}`); 
+    const fullContent = document.getElementById(`content-${idNum}`);
+    const btn = document.getElementById(`expand-${idNum}`); 
+    const card = document.getElementById(`card-${idNum}`);
     if(!teaser || !fullContent || !btn || !card) return;
     const t = uiTexte[currentLang] || uiTexte['en'];
 
@@ -429,8 +440,7 @@ async function toggleArticle(idNum) {
 }
 
 
-// DIE NEUE CHUNKING-ÜBERSETZUNG (Live-Feedback für den User)
-async function translateArticle(idNum) {
+function translateArticle(idNum) {
     const titleEl = document.getElementById('title-' + idNum); const teaserEl = document.getElementById('teaser-' + idNum);
     const contentEl = document.getElementById('content-' + idNum); const btnEl = document.getElementById('btn-' + idNum); const card = document.getElementById('card-' + idNum);
     if(!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
@@ -440,7 +450,7 @@ async function translateArticle(idNum) {
     if(card.dataset.translated === "full" || card.dataset.translated === "translating") return;
     try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
 
-    card.dataset.translated = "translating"; // Sperre gegen Doppel-Klick
+    card.dataset.translated = "translating"; 
     const isExpanded = (contentEl.style.display === "block");
     
     let zielSprache = "English"; const sel = document.getElementById('ui-language');
@@ -448,31 +458,27 @@ async function translateArticle(idNum) {
     let genderInstruction = (zielSprache === "Deutsch") ? " Achte bei der deutschen Übersetzung unbedingt auf geschlechtergerechte Sprache (Gendern mit Sternchen, z.B. Aktivist*innen)." : "";
 
     if (!isExpanded) {
-        // TEASER: Kurzer Text, geht schnell
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
         let promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
         
-        const data = await fetchFromGemini(promptText);
-        if (data.error) { btnEl.innerHTML = "[ ERROR ]"; card.dataset.translated = "none"; return; }
-
-        const parts = data.candidates[0].content.parts[0].text.split("---");
-        if (parts.length >= 2) {
-            let transTitle = parts[0].trim();
-            if(transTitle) titleEl.innerText = transTitle;
-            teaserEl.innerText = parts[1].trim();
-        } else {
-            teaserEl.innerText = data.candidates[0].content.parts[0].text.trim();
-        }
-        
-        titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "teaser";
+        fetchFromGemini(promptText).then(data => {
+            if (data.error) { btnEl.innerHTML = "[ ERROR ]"; card.dataset.translated = "none"; return; }
+            const parts = data.candidates[0].content.parts[0].text.split("---");
+            if (parts.length >= 2) {
+                let transTitle = parts[0].trim();
+                if(transTitle) titleEl.innerText = transTitle;
+                teaserEl.innerText = parts[1].trim();
+            } else {
+                teaserEl.innerText = data.candidates[0].content.parts[0].text.trim();
+            }
+            titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "teaser";
+        });
     } else {
-        // VOLLTEXT: "Live-Stream-Modus" durch Chunking
         let rawText = contentEl.innerText;
         let paragraphs = rawText.split(/\n\n+/);
         let chunks = [];
         let currentChunk = "";
 
-        // Wir zerteilen den Text in mundgerechte Stücke von max ca. 1800 Zeichen
         for(let p of paragraphs) {
             if ((currentChunk.length + p.length) > 1800) {
                 if(currentChunk) chunks.push(currentChunk.trim());
@@ -483,53 +489,47 @@ async function translateArticle(idNum) {
         }
         if(currentChunk) chunks.push(currentChunk.trim());
 
-        contentEl.innerHTML = ""; // Text leeren, damit wir den Live-Aufbau sehen können
+        contentEl.innerHTML = ""; 
         let isError = false;
 
-        for (let i = 0; i < chunks.length; i++) {
-            // Live-Feedback auf dem Button!
-            let progressText = chunks.length > 1 ? `[ ${t.btnLoading} ${i+1}/${chunks.length} ]` : `[ ${t.btnLoading} ]`;
-            btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
+        const processChunks = async () => {
+            for (let i = 0; i < chunks.length; i++) {
+                let progressText = chunks.length > 1 ? `[ ${t.btnLoading} ${i+1}/${chunks.length} ]` : `[ ${t.btnLoading} ]`;
+                btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
 
-            let promptText = "";
-            if (i === 0) {
-                promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[i]}`;
-            } else {
-                promptText = `Translate the following text continuation fluently into ${zielSprache}.${genderInstruction}\n\nText: ${chunks[i]}`;
-            }
+                let promptText = (i === 0) 
+                    ? `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[i]}`
+                    : `Translate the following text continuation fluently into ${zielSprache}.${genderInstruction}\n\nText: ${chunks[i]}`;
 
-            const data = await fetchFromGemini(promptText);
-            if (data.error || !data.candidates || !data.candidates[0].content) {
-                contentEl.innerHTML += `<br><br><span style="color:#FF0033;">[ FEHLER: Übersetzung abgebrochen. ]</span>`;
-                isError = true;
-                break;
-            }
-
-            let resultText = data.candidates[0].content.parts[0].text.trim();
-
-            if (i === 0) {
-                const parts = resultText.split("---");
-                if (parts.length >= 2) {
-                    let transTitle = parts[0].trim();
-                    if(transTitle) titleEl.innerText = transTitle;
-                    contentEl.innerHTML += parts[1].trim().replace(/\n/g, "<br>");
-                } else {
-                    contentEl.innerHTML += resultText.replace(/\n/g, "<br>");
+                const data = await fetchFromGemini(promptText);
+                if (data.error || !data.candidates || !data.candidates[0].content) {
+                    contentEl.innerHTML += `<br><br><span style="color:#FF0033;">[ FEHLER: Übersetzung abgebrochen. ]</span>`;
+                    isError = true; break;
                 }
-            } else {
-                // Die weiteren Absätze einfach unten anhängen
-                contentEl.innerHTML += "<br><br>" + resultText.replace(/\n/g, "<br>");
-            }
-        }
 
-        if (!isError) {
-            titleEl.classList.add('translated');
-            btnEl.innerHTML = `[ ${t.btnDone} ]`;
-            card.dataset.translated = "full";
-        } else {
-            btnEl.innerHTML = `[ ERROR ]`;
-            card.dataset.translated = "none";
-        }
+                let resultText = data.candidates[0].content.parts[0].text.trim();
+
+                if (i === 0) {
+                    const parts = resultText.split("---");
+                    if (parts.length >= 2) {
+                        let transTitle = parts[0].trim();
+                        if(transTitle) titleEl.innerText = transTitle;
+                        contentEl.innerHTML += parts[1].trim().replace(/\n/g, "<br>");
+                    } else {
+                        contentEl.innerHTML += resultText.replace(/\n/g, "<br>");
+                    }
+                } else {
+                    contentEl.innerHTML += "<br><br>" + resultText.replace(/\n/g, "<br>");
+                }
+            }
+
+            if (!isError) {
+                titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "full";
+            } else {
+                btnEl.innerHTML = `[ ERROR ]`; card.dataset.translated = "none";
+            }
+        };
+        processChunks();
     }
 }
 
