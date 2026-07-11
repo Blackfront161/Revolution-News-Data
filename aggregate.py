@@ -7,6 +7,7 @@ from datetime import datetime
 from urllib.parse import urljoin
 import re
 import os
+import time
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
@@ -86,7 +87,6 @@ quellen = {
         {"name": "Pueblos en Camino", "url": "https://pueblosencamino.org/feed/"},
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
-    # DER PROXY-TUNNEL FÜR DAS RADAR (Bypasst die Cloudflare Firewalls)
     "Radar": [
         {"name": "Radar Squat.net (Global)", "url": "https://morss.it/https://radar.squat.net/de/events/rss"},
         {"name": "Radar Squat.net (Europa)", "url": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss"},
@@ -376,7 +376,6 @@ for kontinent, feeds in quellen.items():
             print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
             continue
             
-        # HIER IST DIE MAGIE: Das Limit für Radar massiv erhöht, damit der Tab voll wird!
         limit = 100 if is_radar else 12
         for entry in parsed.entries[:limit]: 
             link = entry.get('link', '')
@@ -401,8 +400,9 @@ for kontinent, feeds in quellen.items():
 
             if is_radar:
                 radar_desc = entry.get('summary', entry.get('description', ''))
-                full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text().strip()
+                full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text(separator="\n\n").strip()
 
+            # --- BILDER SUCHEN ---
             if 'media_content' in entry and len(entry.media_content) > 0:
                 image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
@@ -422,8 +422,22 @@ for kontinent, feeds in quellen.items():
                             image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                             if image_url: break
 
-            if link and not is_radar:
+            # --- TEXT EXTRAHIEREN (NEUE LOGIK) ---
+            
+            # 1. VERSUCH: Vollen Text direkt aus dem RSS-Feed ziehen (blockadesicher!)
+            if not is_radar:
                 try:
+                    if 'content' in entry and len(entry.content) > 0:
+                        c_obj = entry.content[0]
+                        val = c_obj.value if hasattr(c_obj, 'value') else (c_obj.get('value', '') if isinstance(c_obj, dict) else '')
+                        full_text = BeautifulSoup(str(val), 'html.parser').get_text(separator="\n\n").strip()
+                except:
+                    pass
+
+            # 2. VERSUCH: Wenn der RSS-Feed leer oder sehr kurz ist, Webseite scrapen (mit Pause!)
+            if link and not is_radar and len(full_text) < 300:
+                try:
+                    time.sleep(1.5) # WICHTIG: 1,5 Sekunden Pause, damit Cloudflare uns nicht blockiert
                     html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     soup = BeautifulSoup(html_req.text, 'html.parser')
                     
@@ -449,23 +463,14 @@ for kontinent, feeds in quellen.items():
                 except:
                     pass
             
-            if not is_radar and (not full_text or len(full_text) < 150):
+            # 3. NOTFALL: Wenn die Seite uns blockiert hat, nimm die Kurzbeschreibung
+            if not is_radar and (not full_text or len(full_text) < 150) and 'description' in entry:
                 try:
-                    if 'content' in entry and len(entry.content) > 0:
-                        c_obj = entry.content[0]
-                        if hasattr(c_obj, 'value'):
-                            full_text = BeautifulSoup(str(c_obj.value), 'html.parser').get_text().strip()
-                        elif isinstance(c_obj, dict) and 'value' in c_obj:
-                            full_text = BeautifulSoup(str(c_obj['value']), 'html.parser').get_text().strip()
+                    full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text(separator="\n\n").strip()
                 except:
                     pass
-                    
-                if (not full_text or len(full_text) < 150) and 'description' in entry:
-                    try:
-                        full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text().strip()
-                    except:
-                        pass
 
+            # --- TEXT BEREINIGEN ---
             clean_text = full_text.strip()
             
             if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
@@ -480,7 +485,6 @@ for kontinent, feeds in quellen.items():
             elif not is_radar and clean_text == "":
                 clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
 
-            # Fix für kaputte Bilder: Wenn es kein Bild gibt, bleibt es leer
             if not image_url or not image_url.startswith('http'):
                 image_url = ""
 
@@ -497,7 +501,7 @@ for kontinent, feeds in quellen.items():
                 "image": image_url
             })
 
-# --- SYSTEM-MELDUNG (OHNE KAPUTTES BILD) ---
+# --- SYSTEM-MELDUNG ---
 if radar_count == 0:
     alle_artikel.append({
         "kontinent": "Radar",
@@ -507,7 +511,7 @@ if radar_count == 0:
         "link": "https://radar.squat.net",
         "pubDate": datetime.now().isoformat(),
         "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
-        "image": "" # Leer gelassen, damit kein "zerrissenes" Icon erscheint
+        "image": ""
     })
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
