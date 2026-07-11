@@ -1,3 +1,4 @@
+alert("HALLO! DIE NEUE DATEI IST DA!");
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -62,7 +63,14 @@ const uiTexte = {
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
         radarSummary: "Termine & Demos", radarCat: "Termine & Demos",
         infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Sichere Architektur (OPSEC):</strong> Diese App arbeitet komplett ohne Tracker-Cookies für die Besucher*innen, Accounts oder Hintergrund-Protokolle.</p><p><strong>Inhalte & Aggregation:</strong> Diese App ist ein reiner RSS-Feed-Reader. Wir als Entwickler*innen schreiben oder hosten die Artikel nicht selbst.</p><p><strong>KI-Übersetzungen & Datenschutz:</strong> Die Übersetzungen werden dynamisch durch eine KI generiert und können Fehler enthalten. Deine Anfragen als Nutzer*in sind komplett anonymisiert: Es werden absolut keine IP-Adressen oder persönlichen Daten gesammelt oder weitergegeben.</p>`
-    }
+    },
+    es: { btnTranslate: "Traducir", catGlobal: "Global", catEurope: "Europa", searchRegion: "🌍 Región", searchTopic: "🏷️ Tema", radarSummary: "Eventos & Demos", radarCat: "Eventos & Demos" },
+    fr: { btnTranslate: "Traduire", catGlobal: "Global", catEurope: "Europe", searchRegion: "🌍 Région", searchTopic: "🏷️ Thème", radarSummary: "Événements & Démos", radarCat: "Événements & Démos" },
+    it: { btnTranslate: "Traduci", catGlobal: "Globale", catEurope: "Europa", searchRegion: "🌍 Regione", searchTopic: "🏷️ Tema", radarSummary: "Eventi & Demos", radarCat: "Eventi & Demos" },
+    pt: { btnTranslate: "Traduzir", catGlobal: "Global", catEurope: "Europa", searchRegion: "🌍 Região", searchTopic: "🏷️ Tema", radarSummary: "Eventos & Demos", radarCat: "Eventos & Demos" },
+    ru: { btnTranslate: "Перевести", catGlobal: "Мир", catEurope: "Европа", searchRegion: "🌍 Регион", searchTopic: "🏷️ Тема", radarSummary: "События и Акции", radarCat: "События и Акции" },
+    el: { btnTranslate: "Μετάφραση", catGlobal: "Παγκόσμια", catEurope: "Ευρώπη", searchRegion: "🌍 Περιοχή", searchTopic: "🏷️ Θέμα", radarSummary: "Εκδηλώσεις", radarCat: "Εκδηλώσεις" },
+    tr: { btnTranslate: "Çevir", catGlobal: "Küresel", catEurope: "Avrupa", searchRegion: "🌍 Bölge", searchTopic: "🏷️ Konu", radarSummary: "Etkinlikler", radarCat: "Etkinlikler" }
 };
 
 const fallbackLang = uiTexte['en'];
@@ -244,6 +252,7 @@ function filterBySource(sourceName) { currentSourceFilter = sourceName; closeAll
 
 async function initialisiereApp() {
     setTxt('status-container', "Lade Daten...");
+    let hasCache = false;
     
     try {
         const res = await fetch(GITHUB_JSON_URL + "?v=" + new Date().getTime());
@@ -251,18 +260,19 @@ async function initialisiereApp() {
         
         allNewsData = fetchedData;
         try { localStorage.setItem('cached_news_data', JSON.stringify(allNewsData)); } catch(e) {}
+        hasCache = true;
         ladeKontinentNews("Global");
     } catch (err) {
         try {
             const offlineData = localStorage.getItem('cached_news_data');
-            if (offlineData) {
+            if (offlineData && offlineData.length > 10) {
                 allNewsData = JSON.parse(offlineData);
                 ladeKontinentNews("Global");
             } else {
-                setTxt('status-container', "[ FEHLER ] Keine Daten gefunden.");
+                setTxt('status-container', "[ FEHLER ] Keine Daten und kein Internet.");
             }
         } catch(e) {
-            setTxt('status-container', "[ FEHLER ] Lokaler Speicher fehlerhaft.");
+            setTxt('status-container', "[ FEHLER ] Keine Daten und kein Internet.");
         }
     }
 }
@@ -307,6 +317,7 @@ function applyFilters(isBookmark = false) {
     renderNextBatch();
 }
 
+// === DER REPARIERTE RENDER-BLOCK FÜR ABSÄTZE UND HTML-SCHUTZ ===
 function renderNextBatch() {
     if (isRendering) return;
     isRendering = true;
@@ -330,47 +341,86 @@ function renderNextBatch() {
     
     batch.forEach((item, batchIndex) => {
         const globalIndex = currentlyDisplayedCount + batchIndex; 
-        
-        // Texte absichern
+        let formatDatum = "LIVE"; let isOld = false;
+        try {
+            if (item.pubDate) {
+                const articleDate = new Date(item.pubDate);
+                if (!isNaN(articleDate.getTime())) {
+                    formatDatum = articleDate.toISOString().substring(0, 10);
+                    if ((today - articleDate) > ninetyDaysMs) { isOld = true; }
+                }
+            }
+        } catch(e) {}
+
         const fullText = item.content || "Text not available.";
+        
+        // NEU: Wandelt die Python-Zeilenumbrüche sicher in echte HTML-Absätze (<br>) um!
         const safeFullText = fullText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
         
-        let teaserText = fullText.substring(0, 150) + "...";
+        let teaserText = fullText.substring(0, 100) + "...";
+        try { const sentenceMatch = fullText.match(/[^.!?]+[.!?]+/); if(sentenceMatch) teaserText = sentenceMatch[0]; } catch(e) {}
         const safeTeaserText = teaserText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         
         const imgHtml = item.image ? `<img src="${item.image}" class="article-img" style="display:block;" loading="lazy">` : '';
 
-        let isSaved = bookmarks.some(b => b.link === item.link); 
-        let bookmarkTxt = isSaved ? t.btnUnbookmark : t.btnBookmark;
+        let isSaved = bookmarks.some(b => b.link === item.link); let bookmarkTxt = isSaved ? t.btnUnbookmark : t.btnBookmark;
+        let isReadClass = readList.includes(item.link) ? "read" : "";
+
+        let publisherName = item.quelleName ? item.quelleName.trim() : "Unbekannte Quelle";
+        let authorName = item.author ? item.author.trim() : "";
         
-        let metaHtml = `<span class="meta-label">${t.publisherLabel}</span> <span style="color:var(--text-main);">${item.quelleName}</span>`;
+        let isRadar = (item.kontinent === "Radar");
+        // Der grüne Look für die Termine
+        let cardStyle = isRadar ? `style="border: 1px solid var(--color-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);"` : "";
+        let titleColor = isRadar ? `color: var(--color-green);` : "";
+        
+        let metaHtml = `<span class="meta-label">${t.publisherLabel}</span> <span style="color:var(--text-main);">${publisherName}</span> <br>`;
+        if (authorName !== "" && authorName.toLowerCase() !== "unknown" && authorName.toLowerCase() !== publisherName.toLowerCase()) {
+            metaHtml += `<span class="meta-label">${t.authorLabel}</span> <span style="color:var(--text-main);">${authorName}</span> <br>`;
+        }
+        metaHtml += `<span class="meta-label">${t.dateLabel}</span> <span style="color:var(--text-main);">${formatDatum}</span>`;
 
         let articleHTML = `
-            <div class="card" id="card-${globalIndex}" data-expanded="false">
+            <div class="card ${isReadClass}" id="card-${globalIndex}" data-translated="none" ${cardStyle}>
                 <div class="meta">${metaHtml}</div>
-                <div class="title">${item.title || 'No Title'}</div>
+                <div class="title" id="title-${globalIndex}" style="${titleColor}">${item.title || 'No Title'}</div>
                 ${imgHtml}
-                <div class="teaser" id="teaser-${globalIndex}" style="display:block;">${safeTeaserText}</div>
-                <div class="full-content" id="content-${globalIndex}" style="display:none;">${safeFullText}</div>
+                <div class="teaser" id="teaser-${globalIndex}">${safeTeaserText}</div>
+                <div class="full-content" id="content-${globalIndex}">${safeFullText}</div>
                 <div class="button-row">
                     <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
-                    <button class="btn-translate" onclick="translateArticle(${globalIndex})">[ ${t.btnTranslate} ]</button>
-                    <button class="btn-translate" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
-                    <a href="${item.link || '#'}" target="_blank" onclick="markAsRead('${item.link || ''}', ${globalIndex})">
-                        <button class="btn-translate">[ ${t.btnReadMore} ]</button>
+                    <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
+                    <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
+                    <button class="btn-translate" style="border-color: #00FFCC; color: #00FFCC;" onclick="addToZine(${globalIndex})">[ 📄 ZINE ]</button>
+                    <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${btoa(unescape(encodeURIComponent(item.title || '')))}', '${btoa(unescape(encodeURIComponent(item.link || '')))}')">[ SHARE 🔗 ]</button>
+                    <a href="${item.link || '#'}" target="_blank" style="text-decoration: none;" onclick="markAsRead('${item.link || ''}', ${globalIndex})">
+                        <button class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent);">[ ${t.btnReadMore} ]</button>
                     </a>
                 </div>
             </div>
         `;
-        container.insertAdjacentHTML('beforeend', articleHTML);
+
+        if (isOld) { archiveContainer.insertAdjacentHTML('beforeend', articleHTML); archiveCount++; } 
+        else { container.insertAdjacentHTML('beforeend', articleHTML); }
     });
+
+    if (archiveTitle) { if (archiveCount > 0) { archiveTitle.style.display = "block"; } else { archiveTitle.style.display = "none"; } }
     
     currentlyDisplayedCount += batch.length;
     isRendering = false;
 }
 
+function shareArticle(encodedTitle, encodedLink) {
+    try {
+        const title = decodeURIComponent(escape(atob(encodedTitle))); const link = decodeURIComponent(escape(atob(encodedLink)));
+        if (navigator.share) { navigator.share({ title: title, url: link }).catch(console.error); } 
+        else { navigator.clipboard.writeText(title + " - " + link); alert("Link copied to clipboard!"); }
+    } catch(e) {}
+}
+
+// === DER REPARIERTE KLICK-BLOCK ===
 async function toggleArticle(idNum, event) {
-    if (event) event.stopPropagation(); // Stoppt Bubbling, verhindert sofortiges Zuklappen
+    if (event) event.stopPropagation(); // <-- Verhindert das automatische Schließen
     
     const teaser = document.getElementById(`teaser-${idNum}`); 
     const fullContent = document.getElementById(`content-${idNum}`);
@@ -379,30 +429,109 @@ async function toggleArticle(idNum, event) {
     if(!teaser || !fullContent || !btn || !card) return;
     const t = uiTexte[currentLang] || uiTexte['en'];
 
-    if (card.dataset.expanded === "false") {
-        teaser.style.display = "none";
-        fullContent.style.display = "block";
-        btn.innerText = t.btnCollapse;
-        card.dataset.expanded = "true";
+    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
+
+    if (card.dataset.expanded === "true") {
+        teaser.style.display = "block"; fullContent.style.display = "none";
+        btn.innerText = t.btnExpand; card.dataset.expanded = "false";
     } else {
-        teaser.style.display = "block";
-        fullContent.style.display = "none";
-        btn.innerText = t.btnExpand;
-        card.dataset.expanded = "false";
+        teaser.style.display = "none"; fullContent.style.display = "block";
+        btn.innerText = t.btnCollapse; card.dataset.expanded = "true";
     }
 }
 
-async function translateArticle(idNum) {
-    const titleEl = document.getElementById('title-' + idNum); 
-    const teaserEl = document.getElementById('teaser-' + idNum);
-    const contentEl = document.getElementById('content-' + idNum); 
-    const btnEl = document.getElementById('btn-' + idNum); 
-    const card = document.getElementById('card-' + idNum);
-    if(!titleEl || !teaserEl || !contentEl || !card) return;
+
+function translateArticle(idNum) {
+    const titleEl = document.getElementById('title-' + idNum); const teaserEl = document.getElementById('teaser-' + idNum);
+    const contentEl = document.getElementById('content-' + idNum); const btnEl = document.getElementById('btn-' + idNum); const card = document.getElementById('card-' + idNum);
+    if(!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
     
     const t = uiTexte[currentLang] || uiTexte['en'];
-    // Übersetzung hier ist komplex, daher hier die einfache Logik für jetzt
-    alert("Übersetzung wird geladen...");
+
+    if(card.dataset.translated === "full" || card.dataset.translated === "translating") return;
+    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
+
+    card.dataset.translated = "translating"; 
+    const isExpanded = (contentEl.style.display === "block");
+    
+    let zielSprache = "English"; const sel = document.getElementById('ui-language');
+    if(sel && sel.options[sel.selectedIndex]) zielSprache = sel.options[sel.selectedIndex].text;
+    let genderInstruction = (zielSprache === "Deutsch") ? " Achte bei der deutschen Übersetzung unbedingt auf geschlechtergerechte Sprache (Gendern mit Sternchen, z.B. Aktivist*innen)." : "";
+
+    if (!isExpanded) {
+        btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
+        let promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
+        
+        fetchFromGemini(promptText).then(data => {
+            if (data.error) { btnEl.innerHTML = "[ ERROR ]"; card.dataset.translated = "none"; return; }
+            const parts = data.candidates[0].content.parts[0].text.split("---");
+            if (parts.length >= 2) {
+                let transTitle = parts[0].trim();
+                if(transTitle) titleEl.innerText = transTitle;
+                teaserEl.innerText = parts[1].trim();
+            } else {
+                teaserEl.innerText = data.candidates[0].content.parts[0].text.trim();
+            }
+            titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "teaser";
+        });
+    } else {
+        let rawText = contentEl.innerText;
+        let paragraphs = rawText.split(/\n\n+/);
+        let chunks = [];
+        let currentChunk = "";
+
+        for(let p of paragraphs) {
+            if ((currentChunk.length + p.length) > 1800) {
+                if(currentChunk) chunks.push(currentChunk.trim());
+                currentChunk = p;
+            } else {
+                currentChunk += (currentChunk ? "\n\n" : "") + p;
+            }
+        }
+        if(currentChunk) chunks.push(currentChunk.trim());
+
+        contentEl.innerHTML = ""; 
+        let isError = false;
+
+        const processChunks = async () => {
+            for (let i = 0; i < chunks.length; i++) {
+                let progressText = chunks.length > 1 ? `[ ${t.btnLoading} ${i+1}/${chunks.length} ]` : `[ ${t.btnLoading} ]`;
+                btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
+
+                let promptText = (i === 0) 
+                    ? `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[i]}`
+                    : `Translate the following text continuation fluently into ${zielSprache}.${genderInstruction}\n\nText: ${chunks[i]}`;
+
+                const data = await fetchFromGemini(promptText);
+                if (data.error || !data.candidates || !data.candidates[0].content) {
+                    contentEl.innerHTML += `<br><br><span style="color:#FF0033;">[ FEHLER: Übersetzung abgebrochen. ]</span>`;
+                    isError = true; break;
+                }
+
+                let resultText = data.candidates[0].content.parts[0].text.trim();
+
+                if (i === 0) {
+                    const parts = resultText.split("---");
+                    if (parts.length >= 2) {
+                        let transTitle = parts[0].trim();
+                        if(transTitle) titleEl.innerText = transTitle;
+                        contentEl.innerHTML += parts[1].trim().replace(/\n/g, "<br>");
+                    } else {
+                        contentEl.innerHTML += resultText.replace(/\n/g, "<br>");
+                    }
+                } else {
+                    contentEl.innerHTML += "<br><br>" + resultText.replace(/\n/g, "<br>");
+                }
+            }
+
+            if (!isError) {
+                titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "full";
+            } else {
+                btnEl.innerHTML = `[ ERROR ]`; card.dataset.translated = "none";
+            }
+        };
+        processChunks();
+    }
 }
 
 window.addEventListener('scroll', () => {
@@ -412,8 +541,28 @@ window.addEventListener('scroll', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    let savedTheme = localStorage.getItem('wrn_theme_style') || 'theme-dark';
-    changeTheme(savedTheme); 
-    changeLanguage(); 
-    initialisiereApp();
+    try {
+        let savedZoom = localStorage.getItem('wrn_font_zoom') || "115"; 
+        document.documentElement.style.fontSize = savedZoom + "%";
+        const fsSelect = document.getElementById('ui-fontsize');
+        if (fsSelect) fsSelect.value = savedZoom;
+
+        const savedLang = localStorage.getItem('wrn_system_lang'); const ls = document.getElementById('ui-language');
+        if (savedLang && ls) { ls.value = savedLang; }
+        
+        let savedTheme = localStorage.getItem('wrn_theme_style') || 'theme-dark';
+        if(savedTheme === "theme-neon" || savedTheme === "theme-terminal" || savedTheme === "theme-solarpunk") savedTheme = "theme-dark";
+        const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
+        
+        changeTheme(savedTheme); changeLanguage(); initialisiereApp(); 
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) { registration.unregister(); }
+            });
+        }
+    } catch (e) {
+        const stat = document.getElementById('status-container');
+        if(stat) stat.innerText = "Kritischer Start-Fehler: " + e.message;
+    }
 });
