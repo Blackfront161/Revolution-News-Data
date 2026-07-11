@@ -13,6 +13,7 @@ from urllib3.util import Retry
 # --- KONFIGURATION & QUELLEN ---
 quellen = {
     "Global": [
+        {"name": "Anarchist Federation", "url": "https://www.anarchistfederation.net/feed/"},
         {"name": "CrimethInc. (Global)", "url": "https://crimethinc.com/feed"},
         {"name": "Anarkismo (International)", "url": "http://www.anarkismo.net/backend?locale=en"},
         {"name": "ZNet (International)", "url": "https://znetwork.org/feed/"},
@@ -40,6 +41,8 @@ quellen = {
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
         {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
+        {"name": "Infolibre (GR)", "url": "https://infolibre.gr/feed/"},
+        {"name": "OmniaTV (GR)", "url": "https://omniatv.com/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
         {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
@@ -86,6 +89,8 @@ quellen = {
     # DER PROXY-TUNNEL FÜR DAS RADAR (Bypasst die Cloudflare Firewalls)
     "Radar": [
         {"name": "Radar Squat.net (Global)", "url": "https://morss.it/https://radar.squat.net/de/events/rss"},
+        {"name": "Radar Squat.net (Europa)", "url": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss"},
+        {"name": "Radar Squat.net (Nordamerika)", "url": "https://morss.it/https://radar.squat.net/de/events/region/North%20America/rss"},
         {"name": "Kontrapolis (Berlin)", "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/"},
         {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
@@ -371,7 +376,8 @@ for kontinent, feeds in quellen.items():
             print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
             continue
             
-        limit = 30 if is_radar else 6
+        # HIER IST DIE MAGIE: Das Limit für Radar massiv erhöht, damit der Tab voll wird!
+        limit = 100 if is_radar else 12
         for entry in parsed.entries[:limit]: 
             link = entry.get('link', '')
             title = entry.get('title', 'Kein Titel')
