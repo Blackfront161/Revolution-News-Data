@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 import json
 from datetime import datetime
 from urllib.parse import urljoin
-import re
 import os
 import time
 from requests.adapters import HTTPAdapter
@@ -329,7 +328,10 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
-bekannte_artikel_dict = {}
+# =================================================================
+# 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
+# =================================================================
+archiv_dict = {}
 gesehene_titel = set()
 
 try:
@@ -337,20 +339,29 @@ try:
         with open('news.json', 'r', encoding='utf-8') as f:
             alter_stand = json.load(f)
             for art in alter_stand:
-                titel_clean = art.get('title', '').lower().strip()
-                content_clean = art.get('content', '').lower().strip()
-                author_clean = art.get('author', '').lower().strip()
-                
-                is_spam = any(bad in titel_clean or bad in content_clean or bad in author_clean for bad in SPAM_BLACKLIST)
-                
-                if not is_spam and art.get('kontinent') != 'Radar' and titel_clean not in gesehene_titel:
-                    bekannte_artikel_dict[art['link']] = art
+                # Wir laden alle alten Artikel in den Arbeitsspeicher
+                if "link" in art:
+                    archiv_dict[art['link']] = art
+                    titel_clean = art.get('title', '').lower().strip()
                     gesehene_titel.add(titel_clean)
-except:
-    pass
+except Exception as e:
+    print("Starte mit leerem Archiv (Erster Durchlauf).")
 
-alle_artikel = []
 radar_count = 0 
+
+# HILFSFUNKTION: CHECKPOINTS SPEICHERN (Sicherheit gegen Abstürze)
+def save_checkpoint():
+    alle = list(archiv_dict.values())
+    try:
+        # Sortieren nach Datum
+        alle.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
+    except:
+        pass
+    
+    # Maximal 2000 Artikel behalten (damit die App nicht explodiert)
+    alle = alle[:2000] 
+    with open('news.json', 'w', encoding='utf-8') as f:
+        json.dump(alle, f, ensure_ascii=False, indent=2)
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
@@ -376,25 +387,41 @@ for kontinent, feeds in quellen.items():
             print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
             continue
             
-        limit = 100 if is_radar else 12
+        limit = 100 if is_radar else 15
+        
+        # =========================================================
+        # DAS NEUE SPEED-LIMIT (Macht den Code rasend schnell)
+        # =========================================================
+        MAX_NEUE_SCRAPES = 4 # Maximal 4 tief recherchierte Artikel pro Quelle!
+        tiefe_scrapes_gemacht = 0
+
         for entry in parsed.entries[:limit]: 
             link = entry.get('link', '')
             title = entry.get('title', 'Kein Titel')
             title_lower = title.lower().strip()
             author = entry.get('author', 'Unknown')
             
-            if title_lower in gesehene_titel and not is_radar:
-                continue
-            
+            # Spam rausfiltern
             if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
                 continue
 
-            if link in bekannte_artikel_dict and not is_radar:
-                alle_artikel.append(bekannte_artikel_dict[link])
+            # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
+            if link in archiv_dict:
+                if is_radar: radar_count += 1
                 continue
+                
+            if title_lower in gesehene_titel and not is_radar:
+                continue
+
+            # SPEED-LIMIT CHECK FÜR KOMPLETT NEUE ARTIKEL
+            if not is_radar:
+                if tiefe_scrapes_gemacht >= MAX_NEUE_SCRAPES:
+                    # Wir haben die 4 neuesten Artikel dieser Quelle gezogen. 
+                    # Den Rest holen wir bequem beim nächsten GitHub-Lauf in 2 Stunden!
+                    continue 
+                tiefe_scrapes_gemacht += 1
             
             pubDate = entry.get('published', entry.get('updated', datetime.now().isoformat()))
-            
             full_text = ""
             image_url = None
 
@@ -402,7 +429,7 @@ for kontinent, feeds in quellen.items():
                 radar_desc = entry.get('summary', entry.get('description', ''))
                 full_text = BeautifulSoup(str(radar_desc), 'html.parser').get_text(separator="\n\n").strip()
 
-            # --- BILDER SUCHEN ---
+            # Bilder abgreifen
             if 'media_content' in entry and len(entry.media_content) > 0:
                 image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
 
@@ -422,9 +449,7 @@ for kontinent, feeds in quellen.items():
                             image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                             if image_url: break
 
-            # --- TEXT EXTRAHIEREN (NEUE LOGIK) ---
-            
-            # 1. VERSUCH: Vollen Text direkt aus dem RSS-Feed ziehen (blockadesicher!)
+            # Text extrahieren (Der langsame Teil - aber auf 4 Limitiert!)
             if not is_radar:
                 try:
                     if 'content' in entry and len(entry.content) > 0:
@@ -434,10 +459,9 @@ for kontinent, feeds in quellen.items():
                 except:
                     pass
 
-            # 2. VERSUCH: Wenn der RSS-Feed leer oder sehr kurz ist, Webseite scrapen (mit Pause!)
             if link and not is_radar and len(full_text) < 300:
                 try:
-                    time.sleep(1.5) # WICHTIG: 1,5 Sekunden Pause, damit Cloudflare uns nicht blockiert
+                    time.sleep(1.5) # Pflichtpause, damit wir nicht blockiert werden
                     html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     soup = BeautifulSoup(html_req.text, 'html.parser')
                     
@@ -459,18 +483,15 @@ for kontinent, feeds in quellen.items():
                     waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
                     if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                         full_text = "" 
-
                 except:
                     pass
             
-            # 3. NOTFALL: Wenn die Seite uns blockiert hat, nimm die Kurzbeschreibung
             if not is_radar and (not full_text or len(full_text) < 150) and 'description' in entry:
                 try:
                     full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text(separator="\n\n").strip()
                 except:
                     pass
 
-            # --- TEXT BEREINIGEN ---
             clean_text = full_text.strip()
             
             if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
@@ -479,7 +500,6 @@ for kontinent, feeds in quellen.items():
             if is_radar:
                 if clean_text == "":
                     clean_text = "Weitere Infos zum Termin auf der Originalseite."
-                radar_count += 1
             elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
                 clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
             elif not is_radar and clean_text == "":
@@ -488,9 +508,10 @@ for kontinent, feeds in quellen.items():
             if not image_url or not image_url.startswith('http'):
                 image_url = ""
 
-            gesehene_titel.add(title_lower)
-            
-            alle_artikel.append({
+            # =========================================================
+            # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
+            # =========================================================
+            archiv_dict[link] = {
                 "kontinent": kontinent,
                 "quelleName": feed['name'],
                 "author": author,
@@ -499,11 +520,18 @@ for kontinent, feeds in quellen.items():
                 "pubDate": pubDate,
                 "content": clean_text,
                 "image": image_url
-            })
+            }
+            gesehene_titel.add(title_lower)
+            if is_radar: radar_count += 1
+            
+        # =========================================================
+        # CHECKPOINT NACH JEDER QUELLE SPEICHERN (Sichert die Daten)
+        # =========================================================
+        save_checkpoint()
 
-# --- SYSTEM-MELDUNG ---
+# SYSTEM-MELDUNG FALLS RADAR GESTÖRT IST
 if radar_count == 0:
-    alle_artikel.append({
+    archiv_dict["system_info_radar"] = {
         "kontinent": "Radar",
         "quelleName": "System Info",
         "author": "News-Bot",
@@ -512,22 +540,8 @@ if radar_count == 0:
         "pubDate": datetime.now().isoformat(),
         "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
         "image": ""
-    })
+    }
+    save_checkpoint()
 
-print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine frisch geladen! <<<")
-
-if len(alle_artikel) > 0:
-    try:
-        alle_artikel.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
-    except:
-        pass
-        
-    alle_artikel = alle_artikel[:2000]
-    
-    with open('news.json', 'w', encoding='utf-8') as f:
-        json.dump(alle_artikel, f, ensure_ascii=False, indent=2)
-    
-    print(f"\n[ERFOLG] {len(alle_artikel)} Artikel im Archiv gesichert.")
-else:
-    print(f"\n[STOPP] Keine Artikel gefunden.")
-    exit(1)
+print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine gefunden! <<<")
+print(f"\n[ERFOLG] {len(archiv_dict)} Artikel sicher im Archiv abgelegt.")
