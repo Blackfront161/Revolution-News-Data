@@ -335,20 +335,106 @@ def clean_image_url(url, base_url):
 # 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
 # =================================================================
 archiv_dict = {}
-gesehene_titel = set()
+
+# Merkt sich, unter welchem Link ein bereits bekannter Titel gespeichert ist.
+# So können wir bei exakt gleichem Titel eine zusätzliche Kategorie ergänzen,
+# statt denselben Artikel ein zweites Mal anzulegen.
+titel_zu_link = {}
+
+
+def normalize_title(value):
+    """Vereinheitlicht einen Titel für einen vorsichtigen Dublettenvergleich."""
+    return " ".join(str(value or "").lower().split())
+
+
+def get_article_categories(article):
+    """Liest neue categories-Listen und alte kontinent-Felder gemeinsam."""
+    categories = []
+    raw_categories = article.get('categories', [])
+
+    if isinstance(raw_categories, list):
+        for category in raw_categories:
+            clean_category = str(category or '').strip()
+            if clean_category and clean_category not in categories:
+                categories.append(clean_category)
+    elif isinstance(raw_categories, str):
+        clean_category = raw_categories.strip()
+        if clean_category:
+            categories.append(clean_category)
+
+    old_category = str(article.get('kontinent', '') or '').strip()
+    if old_category and old_category not in categories:
+        categories.append(old_category)
+
+    return categories
+
+
+def add_category(article, category):
+    """Ergänzt eine Kategorie und erhält das alte kontinent-Feld als Kompatibilität."""
+    clean_category = str(category or '').strip()
+    categories = get_article_categories(article)
+    category_was_added = False
+
+    if clean_category and clean_category not in categories:
+        categories.append(clean_category)
+        category_was_added = True
+
+    article['categories'] = categories
+
+    # Alte App-Versionen kennen nur kontinent. Deshalb bleibt das erste Element erhalten.
+    if not str(article.get('kontinent', '') or '').strip() and categories:
+        article['kontinent'] = categories[0]
+
+    return category_was_added
+
+
+def register_title(article):
+    """Registriert nur ausreichend aussagekräftige Titel für die Dublettenerkennung."""
+    normalized = normalize_title(article.get('title', ''))
+    link = str(article.get('link', '') or '').strip()
+
+    # Sehr kurze Titel wie "News" werden nicht zusammengeführt.
+    if len(normalized) >= 12 and link:
+        titel_zu_link.setdefault(normalized, link)
+
 
 try:
     if os.path.exists('news.json'):
         with open('news.json', 'r', encoding='utf-8') as f:
             alter_stand = json.load(f)
+
+            if not isinstance(alter_stand, list):
+                raise ValueError('news.json muss eine Liste von Artikeln enthalten.')
+
             for art in alter_stand:
-                # Wir laden alle alten Artikel in den Arbeitsspeicher
-                if "link" in art:
-                    archiv_dict[art['link']] = art
-                    titel_clean = art.get('title', '').lower().strip()
-                    gesehene_titel.add(titel_clean)
-except Exception as e:
-    print("Starte mit leerem Archiv (Erster Durchlauf).")
+                if not isinstance(art, dict):
+                    continue
+
+                link = str(art.get('link', '') or '').strip()
+                if not link:
+                    continue
+
+                # Migriert alte Artikel automatisch auf das neue Kategorienformat.
+                art['categories'] = get_article_categories(art)
+                if not art.get('kontinent') and art['categories']:
+                    art['kontinent'] = art['categories'][0]
+
+                # Falls eine alte Datei denselben Link mehrfach enthält, werden Kategorien
+                # zusammengeführt, statt dass der letzte Eintrag alles überschreibt.
+                if link in archiv_dict:
+                    existing = archiv_dict[link]
+                    for category in art['categories']:
+                        add_category(existing, category)
+
+                    # Behalte nach Möglichkeit den längeren Artikeltext.
+                    if len(str(art.get('content', ''))) > len(str(existing.get('content', ''))):
+                        existing['content'] = art.get('content', '')
+                else:
+                    archiv_dict[link] = art
+
+                register_title(archiv_dict[link])
+except Exception as error:
+    print(f"Starte mit leerem Archiv oder konnte das Archiv nicht laden: {error}")
 
 radar_count = 0 
 
@@ -443,19 +529,32 @@ for kontinent, feeds in quellen.items():
                 continue
 
             title = entry.get('title', 'Kein Titel')
-            title_lower = title.lower().strip()
+            title_lower = normalize_title(title)
             author = entry.get('author', 'Unknown')
             
             # Spam rausfiltern
             if any(bad in title_lower or bad in author.lower() for bad in SPAM_BLACKLIST):
                 continue
 
-            # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
+            # IST DER ARTIKEL SCHON BEKANNT?
+            # Dann wird nicht noch eine Kopie gespeichert. Stattdessen ergänzen wir
+            # die neue Kategorie am bereits vorhandenen Artikel.
             if link in archiv_dict:
-                if is_radar: radar_count += 1
+                category_added = add_category(archiv_dict[link], kontinent)
+                if category_added:
+                    print(f"  [KATEGORIE ERGÄNZT] {title} -> {kontinent}")
+                if is_radar:
+                    radar_count += 1
                 continue
-                
-            if title_lower in gesehene_titel and not is_radar:
+
+            # Manche Portale verwenden unterschiedliche Links für denselben Artikel.
+            # Bei einem ausreichend langen, exakt gleichen Titel wird ebenfalls nur
+            # die neue Kategorie ergänzt.
+            known_title_link = titel_zu_link.get(title_lower)
+            if known_title_link and not is_radar and known_title_link in archiv_dict:
+                category_added = add_category(archiv_dict[known_title_link], kontinent)
+                if category_added:
+                    print(f"  [TITEL-DUBLETTE, KATEGORIE ERGÄNZT] {title} -> {kontinent}")
                 continue
 
             # SPEED-LIMIT CHECK FÜR KOMPLETT NEUE ARTIKEL
@@ -561,6 +660,7 @@ for kontinent, feeds in quellen.items():
             # =========================================================
             archiv_dict[link] = {
                 "kontinent": kontinent,
+                "categories": [kontinent],
                 "quelleName": feed['name'],
                 "author": author,
                 "title": title,
@@ -569,7 +669,7 @@ for kontinent, feeds in quellen.items():
                 "content": clean_text,
                 "image": image_url
             }
-            gesehene_titel.add(title_lower)
+            register_title(archiv_dict[link])
             if is_radar: radar_count += 1
             
         # =========================================================
@@ -581,6 +681,7 @@ for kontinent, feeds in quellen.items():
 if radar_count == 0:
     archiv_dict["https://radar.squat.net"] = {
         "kontinent": "Radar",
+        "categories": ["Radar"],
         "quelleName": "System Info",
         "author": "News-Bot",
         "title": "🛡️ Radar temporär blockiert",
