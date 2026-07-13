@@ -300,6 +300,67 @@ quellen = {
     ]
 }
 
+
+# -----------------------------------------------------------------
+# NEUE QUELLEN MIT MEHREREN PASSENDEN KATEGORIEN
+# -----------------------------------------------------------------
+# Jede Quelle wird hier nur einmal gepflegt. Der Code trägt sie automatisch
+# in alle genannten Kategorien ein. Dank des Feed-Caches weiter unten wird
+# derselbe RSS-Feed trotzdem nur einmal aus dem Internet geladen.
+NEUE_MEHRFACH_QUELLEN = [
+    {
+        "name": "Direkte Aktion (DE)",
+        "url": "https://direkteaktion.org/rss/",
+        "categories": ["Europe", "Labor Struggles", "Theory & Strategy", "Anticapitalism"]
+    },
+    {
+        "name": "Organise Magazine",
+        "url": "https://organisemagazine.org.uk/feed/",
+        "categories": ["Global", "Europe", "Theory & Strategy", "Antifascism", "Anticapitalism"]
+    },
+    {
+        "name": "Corporate Watch",
+        "url": "https://corporatewatch.org/feed/",
+        "categories": ["Europe", "Anticapitalism", "No Borders", "Squatting & Housing", "Anti-Rep & Prisons", "Cyberactivism"]
+    },
+    {
+        "name": "The Final Straw Radio",
+        "url": "https://thefinalstrawradio.libsyn.com/rss",
+        "categories": ["Global", "Theory & Strategy", "Anti-Rep & Prisons", "Antifascism"]
+    },
+    {
+        "name": "Alarm Phone",
+        "url": "https://alarmphone.org/en/feed/",
+        "categories": ["Europe", "Africa", "No Borders", "Anti-Rep & Prisons"]
+    },
+    {
+        "name": "Disability Debrief",
+        "url": "https://www.disabilitydebrief.org/rss/",
+        "categories": ["Global", "Radical Health & Disability"]
+    }
+]
+
+for source in NEUE_MEHRFACH_QUELLEN:
+    clean_name = str(source.get("name", "")).strip()
+    clean_url = str(source.get("url", "")).strip()
+
+    if not clean_name or not clean_url:
+        continue
+
+    for category in source.get("categories", []):
+        clean_category = str(category or "").strip()
+        if not clean_category:
+            continue
+
+        category_feeds = quellen.setdefault(clean_category, [])
+        already_exists = any(
+            str(existing.get("url", "")).strip() == clean_url
+            for existing in category_feeds
+        )
+
+        if not already_exists:
+            category_feeds.append({"name": clean_name, "url": clean_url})
+
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
     "mordeaffen",
@@ -480,35 +541,51 @@ def save_checkpoint():
     )
     os.replace(temporary, target)
 
+# Speichert bereits geladene Feeds im Arbeitsspeicher.
+# Das ist wichtig, weil einige Quellen zu mehreren Kategorien gehören.
+feed_cache = {}
+
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
     is_radar = (kontinent == "Radar")
     
     for feed in feeds:
         print(f"-> Portal: {feed['name']}...")
-        parsed = None
-        try:
-            feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-            feed_req.raise_for_status()
-            parsed = feedparser.parse(feed_req.text)
+        feed_url = str(feed.get('url', '') or '').strip()
+        parsed = feed_cache.get(feed_url)
 
-            if not parsed.entries:
-                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                feed_req.raise_for_status()
-                parsed = feedparser.parse(feed_req.content)
-
-        except requests.RequestException as error:
-            print(f"  [HTTP-FEHLER] Erster Abruf von {feed['name']}: {error}")
+        if parsed is not None:
+            print("  [CACHE] Feed wurde bereits geladen; vorhandene Daten werden wiederverwendet.")
+        else:
             try:
-                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                feed_req = http.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                 feed_req.raise_for_status()
                 parsed = feedparser.parse(feed_req.content)
-            except requests.RequestException as fallback_error:
-                print(f"  [HTTP-FEHLER] Ersatzabruf von {feed['name']}: {fallback_error}")
-            except Exception as parser_error:
-                print(f"  [PARSER-FEHLER] {feed['name']}: {type(parser_error).__name__}: {parser_error}")
-        except Exception as error:
-            print(f"  [UNERWARTETER FEHLER] {feed['name']}: {type(error).__name__}: {error}")
+
+                if not parsed.entries:
+                    feed_req = session.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    feed_req.raise_for_status()
+                    parsed = feedparser.parse(feed_req.content)
+
+            except requests.RequestException as error:
+                print(f"  [HTTP-FEHLER] Erster Abruf von {feed['name']}: {error}")
+                try:
+                    feed_req = session.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    feed_req.raise_for_status()
+                    parsed = feedparser.parse(feed_req.content)
+                except requests.RequestException as fallback_error:
+                    print(f"  [HTTP-FEHLER] Ersatzabruf von {feed['name']}: {fallback_error}")
+                    parsed = None
+                except Exception as parser_error:
+                    print(f"  [PARSER-FEHLER] {feed['name']}: {type(parser_error).__name__}: {parser_error}")
+                    parsed = None
+            except Exception as error:
+                print(f"  [UNERWARTETER FEHLER] {feed['name']}: {type(error).__name__}: {error}")
+                parsed = None
+
+            # Auch ein fehlgeschlagener Feed wird für diesen Programmlauf gemerkt,
+            # damit dieselbe kaputte URL nicht in jeder Kategorie erneut geladen wird.
+            feed_cache[feed_url] = parsed
                 
         if not parsed or not parsed.entries:
             print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
