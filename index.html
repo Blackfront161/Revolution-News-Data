@@ -139,6 +139,91 @@
         </div>
     </div>
 
+
+    <section id="event-filter-panel" class="event-filter-panel" hidden aria-label="Event filters">
+        <div class="event-filter-heading">
+            <strong id="txt-event-filter-title">Event filters</strong>
+            <span id="event-filter-count"></span>
+        </div>
+
+        <div class="event-filter-grid">
+            <label class="event-filter-field">
+                <span id="txt-event-date">Date</span>
+                <select id="event-date-filter" onchange="applyFilters()">
+                    <option value="upcoming" id="opt-event-upcoming">Upcoming</option>
+                    <option value="today" id="opt-event-today">Today</option>
+                    <option value="tomorrow" id="opt-event-tomorrow">Tomorrow</option>
+                    <option value="weekend" id="opt-event-weekend">This weekend</option>
+                    <option value="7days" id="opt-event-7days">Next 7 days</option>
+                    <option value="30days" id="opt-event-30days">Next 30 days</option>
+                    <option value="all" id="opt-event-all-dates">All dates</option>
+                </select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-from">From</span>
+                <input type="date" id="event-from-date" onchange="applyFilters()">
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-to">To</span>
+                <input type="date" id="event-to-date" onchange="applyFilters()">
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-country">Country</span>
+                <select id="event-country-filter" onchange="applyFilters()"><option value="">All</option></select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-city">City</span>
+                <select id="event-city-filter" onchange="applyFilters()"><option value="">All</option></select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-postal">Postal code</span>
+                <input type="search" id="event-postal-filter" oninput="applyFilters()" autocomplete="postal-code">
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-category">Category</span>
+                <select id="event-category-filter" onchange="applyFilters()"><option value="">All</option></select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-tag">Tag</span>
+                <select id="event-tag-filter" onchange="applyFilters()"><option value="">All</option></select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-group">Group</span>
+                <select id="event-group-filter" onchange="applyFilters()"><option value="">All</option></select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-price">Price</span>
+                <select id="event-price-filter" onchange="applyFilters()">
+                    <option value="" id="opt-event-all-price">All</option>
+                    <option value="free" id="opt-event-free">Free</option>
+                    <option value="paid" id="opt-event-paid">Paid</option>
+                    <option value="unknown" id="opt-event-unknown">Unknown</option>
+                </select>
+            </label>
+
+            <label class="event-filter-field">
+                <span id="txt-event-mode">Format</span>
+                <select id="event-mode-filter" onchange="applyFilters()">
+                    <option value="" id="opt-event-all-mode">All</option>
+                    <option value="offline" id="opt-event-offline">In person</option>
+                    <option value="online" id="opt-event-online">Online</option>
+                    <option value="unknown" id="opt-event-mode-unknown">Unknown</option>
+                </select>
+            </label>
+
+            <button type="button" class="btn-event-reset" id="btn-event-reset" onclick="resetEventFilters()">Reset filters</button>
+        </div>
+    </section>
+
     <div id="status-container" class="status-msg">Connecting to server...</div>
     <div id="feed-container"></div>
     <h2 class="archive-header" id="txt-archive-title" style="display: none;">🗄️ Archive (> 3 Months)</h2>

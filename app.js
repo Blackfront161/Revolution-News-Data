@@ -314,6 +314,23 @@ Object.keys(uiTexte).forEach(lang => {
     });
 });
 
+
+const eventUiTexte = {
+    en: { eventFilterTitle:"Event filters", eventDate:"Date", eventUpcoming:"Upcoming", eventToday:"Today", eventTomorrow:"Tomorrow", eventWeekend:"This weekend", event7days:"Next 7 days", event30days:"Next 30 days", eventAllDates:"All dates", eventFrom:"From", eventTo:"To", eventCountry:"Country", eventCity:"City", eventPostal:"Postal code", eventCategory:"Category", eventTag:"Tag", eventGroup:"Group", eventPrice:"Price", eventMode:"Format", eventAll:"All", eventFree:"Free", eventPaid:"Paid", eventUnknown:"Unknown", eventOnline:"Online", eventOffline:"In person", eventReset:"Reset filters", eventStarts:"START:", eventPlace:"PLACE:", eventCategoriesLabel:"CATEGORIES:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GROUPS:", eventPriceLabel:"PRICE:", eventStatusLabel:"STATUS:", eventSortSoon:"Soonest", eventSortLate:"Latest", eventCount:"events" },
+    de: { eventFilterTitle:"Event-Filter", eventDate:"Zeitraum", eventUpcoming:"Kommende", eventToday:"Heute", eventTomorrow:"Morgen", eventWeekend:"Dieses Wochenende", event7days:"Nächste 7 Tage", event30days:"Nächste 30 Tage", eventAllDates:"Alle Termine", eventFrom:"Von", eventTo:"Bis", eventCountry:"Land", eventCity:"Stadt", eventPostal:"Postleitzahl", eventCategory:"Kategorie", eventTag:"Tag", eventGroup:"Gruppe", eventPrice:"Preis", eventMode:"Format", eventAll:"Alle", eventFree:"Kostenlos", eventPaid:"Kostenpflichtig", eventUnknown:"Unbekannt", eventOnline:"Online", eventOffline:"Vor Ort", eventReset:"Filter zurücksetzen", eventStarts:"BEGINN:", eventPlace:"ORT:", eventCategoriesLabel:"KATEGORIEN:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPPEN:", eventPriceLabel:"PREIS:", eventStatusLabel:"STATUS:", eventSortSoon:"Nächste zuerst", eventSortLate:"Spätere zuerst", eventCount:"Events" },
+    es: { eventFilterTitle:"Filtros de eventos", eventDate:"Fecha", eventUpcoming:"Próximos", eventToday:"Hoy", eventTomorrow:"Mañana", eventWeekend:"Este fin de semana", event7days:"Próximos 7 días", event30days:"Próximos 30 días", eventAllDates:"Todas las fechas", eventFrom:"Desde", eventTo:"Hasta", eventCountry:"País", eventCity:"Ciudad", eventPostal:"Código postal", eventCategory:"Categoría", eventTag:"Etiqueta", eventGroup:"Grupo", eventPrice:"Precio", eventMode:"Formato", eventAll:"Todos", eventFree:"Gratis", eventPaid:"De pago", eventUnknown:"Desconocido", eventOnline:"En línea", eventOffline:"Presencial", eventReset:"Restablecer filtros", eventStarts:"INICIO:", eventPlace:"LUGAR:", eventCategoriesLabel:"CATEGORÍAS:", eventTagsLabel:"ETIQUETAS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PRECIO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Próximos", eventSortLate:"Más tarde", eventCount:"eventos" },
+    fr: { eventFilterTitle:"Filtres d’événements", eventDate:"Date", eventUpcoming:"À venir", eventToday:"Aujourd’hui", eventTomorrow:"Demain", eventWeekend:"Ce week-end", event7days:"7 prochains jours", event30days:"30 prochains jours", eventAllDates:"Toutes les dates", eventFrom:"Du", eventTo:"Au", eventCountry:"Pays", eventCity:"Ville", eventPostal:"Code postal", eventCategory:"Catégorie", eventTag:"Tag", eventGroup:"Groupe", eventPrice:"Prix", eventMode:"Format", eventAll:"Tous", eventFree:"Gratuit", eventPaid:"Payant", eventUnknown:"Inconnu", eventOnline:"En ligne", eventOffline:"Sur place", eventReset:"Réinitialiser", eventStarts:"DÉBUT :", eventPlace:"LIEU :", eventCategoriesLabel:"CATÉGORIES :", eventTagsLabel:"TAGS :", eventGroupsLabel:"GROUPES :", eventPriceLabel:"PRIX :", eventStatusLabel:"STATUT :", eventSortSoon:"Plus proches", eventSortLate:"Plus tard", eventCount:"événements" },
+    it: { eventFilterTitle:"Filtri eventi", eventDate:"Data", eventUpcoming:"In arrivo", eventToday:"Oggi", eventTomorrow:"Domani", eventWeekend:"Questo fine settimana", event7days:"Prossimi 7 giorni", event30days:"Prossimi 30 giorni", eventAllDates:"Tutte le date", eventFrom:"Da", eventTo:"A", eventCountry:"Paese", eventCity:"Città", eventPostal:"CAP", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Gruppo", eventPrice:"Prezzo", eventMode:"Formato", eventAll:"Tutti", eventFree:"Gratis", eventPaid:"A pagamento", eventUnknown:"Sconosciuto", eventOnline:"Online", eventOffline:"In presenza", eventReset:"Reimposta filtri", eventStarts:"INIZIO:", eventPlace:"LUOGO:", eventCategoriesLabel:"CATEGORIE:", eventTagsLabel:"TAG:", eventGroupsLabel:"GRUPPI:", eventPriceLabel:"PREZZO:", eventStatusLabel:"STATO:", eventSortSoon:"Più vicini", eventSortLate:"Più tardi", eventCount:"eventi" },
+    pt: { eventFilterTitle:"Filtros de eventos", eventDate:"Data", eventUpcoming:"Próximos", eventToday:"Hoje", eventTomorrow:"Amanhã", eventWeekend:"Este fim de semana", event7days:"Próximos 7 dias", event30days:"Próximos 30 dias", eventAllDates:"Todas as datas", eventFrom:"De", eventTo:"Até", eventCountry:"País", eventCity:"Cidade", eventPostal:"Código postal", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Grupo", eventPrice:"Preço", eventMode:"Formato", eventAll:"Todos", eventFree:"Grátis", eventPaid:"Pago", eventUnknown:"Desconhecido", eventOnline:"Online", eventOffline:"Presencial", eventReset:"Limpar filtros", eventStarts:"INÍCIO:", eventPlace:"LOCAL:", eventCategoriesLabel:"CATEGORIAS:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PREÇO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Mais próximos", eventSortLate:"Mais tarde", eventCount:"eventos" },
+    ru: { eventFilterTitle:"Фильтры событий", eventDate:"Дата", eventUpcoming:"Предстоящие", eventToday:"Сегодня", eventTomorrow:"Завтра", eventWeekend:"Эти выходные", event7days:"Следующие 7 дней", event30days:"Следующие 30 дней", eventAllDates:"Все даты", eventFrom:"С", eventTo:"До", eventCountry:"Страна", eventCity:"Город", eventPostal:"Индекс", eventCategory:"Категория", eventTag:"Тег", eventGroup:"Группа", eventPrice:"Цена", eventMode:"Формат", eventAll:"Все", eventFree:"Бесплатно", eventPaid:"Платно", eventUnknown:"Неизвестно", eventOnline:"Онлайн", eventOffline:"Очно", eventReset:"Сбросить фильтры", eventStarts:"НАЧАЛО:", eventPlace:"МЕСТО:", eventCategoriesLabel:"КАТЕГОРИИ:", eventTagsLabel:"ТЕГИ:", eventGroupsLabel:"ГРУППЫ:", eventPriceLabel:"ЦЕНА:", eventStatusLabel:"СТАТУС:", eventSortSoon:"Ближайшие", eventSortLate:"Поздние", eventCount:"событий" },
+    el: { eventFilterTitle:"Φίλτρα εκδηλώσεων", eventDate:"Ημερομηνία", eventUpcoming:"Επερχόμενα", eventToday:"Σήμερα", eventTomorrow:"Αύριο", eventWeekend:"Αυτό το Σαββατοκύριακο", event7days:"Επόμενες 7 ημέρες", event30days:"Επόμενες 30 ημέρες", eventAllDates:"Όλες οι ημερομηνίες", eventFrom:"Από", eventTo:"Έως", eventCountry:"Χώρα", eventCity:"Πόλη", eventPostal:"Ταχυδρομικός κώδικας", eventCategory:"Κατηγορία", eventTag:"Ετικέτα", eventGroup:"Ομάδα", eventPrice:"Τιμή", eventMode:"Μορφή", eventAll:"Όλα", eventFree:"Δωρεάν", eventPaid:"Με πληρωμή", eventUnknown:"Άγνωστο", eventOnline:"Online", eventOffline:"Με φυσική παρουσία", eventReset:"Επαναφορά φίλτρων", eventStarts:"ΕΝΑΡΞΗ:", eventPlace:"ΤΟΠΟΣ:", eventCategoriesLabel:"ΚΑΤΗΓΟΡΙΕΣ:", eventTagsLabel:"ΕΤΙΚΕΤΕΣ:", eventGroupsLabel:"ΟΜΑΔΕΣ:", eventPriceLabel:"ΤΙΜΗ:", eventStatusLabel:"ΚΑΤΑΣΤΑΣΗ:", eventSortSoon:"Πλησιέστερα", eventSortLate:"Αργότερα", eventCount:"εκδηλώσεις" },
+    tr: { eventFilterTitle:"Etkinlik filtreleri", eventDate:"Tarih", eventUpcoming:"Yaklaşan", eventToday:"Bugün", eventTomorrow:"Yarın", eventWeekend:"Bu hafta sonu", event7days:"Sonraki 7 gün", event30days:"Sonraki 30 gün", eventAllDates:"Tüm tarihler", eventFrom:"Başlangıç", eventTo:"Bitiş", eventCountry:"Ülke", eventCity:"Şehir", eventPostal:"Posta kodu", eventCategory:"Kategori", eventTag:"Etiket", eventGroup:"Grup", eventPrice:"Fiyat", eventMode:"Biçim", eventAll:"Tümü", eventFree:"Ücretsiz", eventPaid:"Ücretli", eventUnknown:"Bilinmiyor", eventOnline:"Çevrimiçi", eventOffline:"Yüz yüze", eventReset:"Filtreleri sıfırla", eventStarts:"BAŞLANGIÇ:", eventPlace:"YER:", eventCategoriesLabel:"KATEGORİLER:", eventTagsLabel:"ETİKETLER:", eventGroupsLabel:"GRUPLAR:", eventPriceLabel:"FİYAT:", eventStatusLabel:"DURUM:", eventSortSoon:"En yakın", eventSortLate:"Daha sonra", eventCount:"etkinlik" }
+};
+
+Object.keys(uiTexte).forEach(lang => {
+    Object.assign(uiTexte[lang], eventUiTexte[lang] || eventUiTexte.en);
+});
+
 let currentLang = "en";
 let activeKontinent = "Global"; 
 let allNewsData = []; 
@@ -329,6 +346,246 @@ let zineArticles = [];
 function setTxt(id, text) { const e = document.getElementById(id); if (e && text) e.innerText = text; }
 function setHtml(id, html) { const e = document.getElementById(id); if (e && html) e.innerHTML = html; }
 function setPh(id, text) { const e = document.getElementById(id); if (e && text) e.placeholder = text; }
+
+
+function isEventArticle(article) {
+    return article?.type === "event" || articleMatchesCategory(article, "Radar");
+}
+
+function normalizedStringArray(value) {
+    const source = Array.isArray(value) ? value : (value ? [value] : []);
+    return [...new Set(source.map(item => String(item ?? "").trim()).filter(Boolean))];
+}
+
+function parseDateMs(value) {
+    if (!value) return 0;
+    const numberValue = Number(value);
+    if (Number.isFinite(numberValue) && numberValue > 1000000000) {
+        return numberValue < 100000000000 ? numberValue * 1000 : numberValue;
+    }
+    const parsed = new Date(value).getTime();
+    return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function getEventStartMs(article) {
+    return parseDateMs(article?.eventStart || article?.pubDate);
+}
+
+function getEventEndMs(article) {
+    return parseDateMs(article?.eventEnd) || getEventStartMs(article);
+}
+
+function getLocalDayBounds(date) {
+    const start = new Date(date);
+    start.setHours(0, 0, 0, 0);
+    const end = new Date(start);
+    end.setDate(end.getDate() + 1);
+    return [start.getTime(), end.getTime()];
+}
+
+function eventOverlaps(article, fromMs, toMs) {
+    const start = getEventStartMs(article);
+    const end = getEventEndMs(article) || start;
+    if (!start) return false;
+    return end >= fromMs && start < toMs;
+}
+
+function eventIsFree(article) {
+    const values = [
+        article?.eventPrice,
+        ...normalizedStringArray(article?.eventPriceCategories)
+    ].join(" ").toLowerCase();
+    return /(^|\b)(free|kostenlos|gratis|frei|0(?:[.,]00)?)(\b|$)/i.test(values);
+}
+
+function eventMatchesSpecialFilters(article) {
+    if (!isEventArticle(article)) return false;
+
+    const now = Date.now();
+    const preset = document.getElementById('event-date-filter')?.value || 'upcoming';
+    const start = getEventStartMs(article);
+    const end = getEventEndMs(article) || start;
+
+    if (preset === 'upcoming' && end < now - (2 * 60 * 60 * 1000)) return false;
+    if (preset === 'today') {
+        const [from, to] = getLocalDayBounds(new Date());
+        if (!eventOverlaps(article, from, to)) return false;
+    }
+    if (preset === 'tomorrow') {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const [from, to] = getLocalDayBounds(tomorrow);
+        if (!eventOverlaps(article, from, to)) return false;
+    }
+    if (preset === 'weekend') {
+        const date = new Date();
+        const weekday = date.getDay();
+        const daysUntilSaturday = weekday === 6 ? 0 : (7 - weekday) % 7 || 7;
+        const saturday = new Date(date);
+        saturday.setDate(date.getDate() + daysUntilSaturday);
+        saturday.setHours(0, 0, 0, 0);
+        const monday = new Date(saturday);
+        monday.setDate(monday.getDate() + 2);
+        if (!eventOverlaps(article, saturday.getTime(), monday.getTime())) return false;
+    }
+    if (preset === '7days' && !eventOverlaps(article, now - 7200000, now + 7 * 86400000)) return false;
+    if (preset === '30days' && !eventOverlaps(article, now - 7200000, now + 30 * 86400000)) return false;
+
+    const fromValue = document.getElementById('event-from-date')?.value;
+    if (fromValue) {
+        const fromMs = new Date(`${fromValue}T00:00:00`).getTime();
+        if (end < fromMs) return false;
+    }
+    const toValue = document.getElementById('event-to-date')?.value;
+    if (toValue) {
+        const toMs = new Date(`${toValue}T23:59:59.999`).getTime();
+        if (start > toMs) return false;
+    }
+
+    const exactChecks = [
+        ['event-country-filter', String(article?.eventCountry || '')],
+        ['event-city-filter', String(article?.eventCity || '')],
+        ['event-mode-filter', String(article?.eventMode || 'unknown')]
+    ];
+    for (const [id, articleValue] of exactChecks) {
+        const selected = document.getElementById(id)?.value || '';
+        if (selected && articleValue !== selected) return false;
+    }
+
+    const postal = (document.getElementById('event-postal-filter')?.value || '').trim().toLowerCase();
+    if (postal && !String(article?.eventPostalCode || '').toLowerCase().includes(postal)) return false;
+
+    const arrayChecks = [
+        ['event-category-filter', article?.eventCategories],
+        ['event-tag-filter', article?.eventTags],
+        ['event-group-filter', article?.eventGroups]
+    ];
+    for (const [id, values] of arrayChecks) {
+        const selected = document.getElementById(id)?.value || '';
+        if (selected && !normalizedStringArray(values).includes(selected)) return false;
+    }
+
+    const priceFilter = document.getElementById('event-price-filter')?.value || '';
+    const hasPrice = Boolean(String(article?.eventPrice || '').trim() || normalizedStringArray(article?.eventPriceCategories).length);
+    if (priceFilter === 'free' && !eventIsFree(article)) return false;
+    if (priceFilter === 'paid' && (!hasPrice || eventIsFree(article))) return false;
+    if (priceFilter === 'unknown' && hasPrice) return false;
+
+    return true;
+}
+
+function displayCountryName(value) {
+    if (!value) return '';
+    if (String(value).length === 2 && typeof Intl.DisplayNames === 'function') {
+        try {
+            return new Intl.DisplayNames([currentLang], { type: 'region' }).of(String(value).toUpperCase()) || value;
+        } catch (error) {}
+    }
+    return value;
+}
+
+function setDynamicSelectOptions(id, values, allLabel, labelFormatter = value => value) {
+    const select = document.getElementById(id);
+    if (!select) return;
+    const previous = select.value;
+    select.textContent = '';
+
+    const allOption = document.createElement('option');
+    allOption.value = '';
+    allOption.textContent = allLabel;
+    select.append(allOption);
+
+    values.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = labelFormatter(value);
+        select.append(option);
+    });
+
+    if ([...select.options].some(option => option.value === previous)) {
+        select.value = previous;
+    }
+}
+
+function populateEventFilters() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const events = allNewsData.filter(article => articleMatchesCategory(article, 'Radar'));
+    const unique = key => [...new Set(events.flatMap(event => normalizedStringArray(event?.[key])))].sort((a, b) => a.localeCompare(b, currentLang));
+    const scalar = key => [...new Set(events.map(event => String(event?.[key] || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, currentLang));
+
+    setDynamicSelectOptions('event-country-filter', scalar('eventCountry'), t.eventAll, displayCountryName);
+    setDynamicSelectOptions('event-city-filter', scalar('eventCity'), t.eventAll);
+    setDynamicSelectOptions('event-category-filter', unique('eventCategories'), t.eventAll);
+    setDynamicSelectOptions('event-tag-filter', unique('eventTags'), t.eventAll);
+    setDynamicSelectOptions('event-group-filter', unique('eventGroups'), t.eventAll);
+}
+
+function resetEventFilters() {
+    const defaults = {
+        'event-date-filter': 'upcoming',
+        'event-from-date': '', 'event-to-date': '',
+        'event-country-filter': '', 'event-city-filter': '',
+        'event-postal-filter': '', 'event-category-filter': '',
+        'event-tag-filter': '', 'event-group-filter': '',
+        'event-price-filter': '', 'event-mode-filter': ''
+    };
+    Object.entries(defaults).forEach(([id, value]) => {
+        const element = document.getElementById(id);
+        if (element) element.value = value;
+    });
+    applyFilters();
+}
+
+function updateEventUiVisibility() {
+    const panel = document.getElementById('event-filter-panel');
+    if (panel) panel.hidden = activeKontinent !== 'Radar';
+}
+
+function updateSortLabels() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    setTxt('opt-sort-new', activeKontinent === 'Radar' ? t.eventSortSoon : t.sortNew);
+    setTxt('opt-sort-old', activeKontinent === 'Radar' ? t.eventSortLate : t.sortOld);
+}
+
+function formatEventDateRange(article) {
+    const startMs = getEventStartMs(article);
+    if (!startMs) return '';
+    const endMs = getEventEndMs(article);
+    const start = new Date(startMs);
+    const end = endMs ? new Date(endMs) : null;
+    const dateFormatter = new Intl.DateTimeFormat(currentLang, { weekday:'short', year:'numeric', month:'2-digit', day:'2-digit' });
+    const timeFormatter = new Intl.DateTimeFormat(currentLang, { hour:'2-digit', minute:'2-digit' });
+    let text = `${dateFormatter.format(start)}, ${timeFormatter.format(start)}`;
+    if (end && endMs !== startMs) {
+        const sameDay = start.toDateString() === end.toDateString();
+        text += sameDay ? `–${timeFormatter.format(end)}` : ` – ${dateFormatter.format(end)}, ${timeFormatter.format(end)}`;
+    }
+    return text;
+}
+
+function buildEventDetailsHtml(article, t) {
+    if (!isEventArticle(article)) return '';
+    const lines = [];
+    const dateText = formatEventDateRange(article);
+    const locationParts = [article?.eventVenue, article?.eventAddress || article?.eventCity].filter(Boolean);
+    if (dateText) lines.push(`<div><strong>${escapeHtml(t.eventStarts)}</strong> ${escapeHtml(dateText)}</div>`);
+    if (locationParts.length) lines.push(`<div><strong>${escapeHtml(t.eventPlace)}</strong> ${escapeHtml([...new Set(locationParts)].join(' · '))}</div>`);
+    if (article?.eventPrice || normalizedStringArray(article?.eventPriceCategories).length) {
+        const priceText = [article.eventPrice, ...normalizedStringArray(article.eventPriceCategories)].filter(Boolean).join(' · ');
+        lines.push(`<div><strong>${escapeHtml(t.eventPriceLabel)}</strong> ${escapeHtml(priceText)}</div>`);
+    }
+    if (article?.eventStatus) lines.push(`<div><strong>${escapeHtml(t.eventStatusLabel)}</strong> ${escapeHtml(article.eventStatus)}</div>`);
+
+    const badges = [
+        ...normalizedStringArray(article?.eventCategories),
+        ...normalizedStringArray(article?.eventTags)
+    ];
+    const badgeHtml = badges.length
+        ? `<div class="event-badges">${badges.slice(0, 12).map(value => `<span class="event-badge">${escapeHtml(value)}</span>`).join('')}</div>`
+        : '';
+
+    return `<div class="event-facts">${lines.join('')}${badgeHtml}</div>`;
+}
 
 function changeTheme(themeName) {
     const body = document.getElementById('app-body');
@@ -358,6 +615,11 @@ function changeLanguage() {
     setTxt('txt-radar-summary', t.radarSummary);
 
     setTxt('btn-open-info', "ℹ️ " + t.infoBtn); setTxt('txt-info-title', t.infoTitle); setHtml('txt-info-body', t.infoBody); setTxt('btn-open-feedback', t.fbBtn); setTxt('txt-fb-title', t.fbTitle); setPh('fb-text', t.fbPlace); setTxt('txt-captcha-q', t.fbCaptcha); setTxt('btn-fb-cancel', t.fbCancel); setTxt('btn-fb-send', t.fbSend);
+
+    setTxt('txt-event-filter-title', t.eventFilterTitle); setTxt('txt-event-date', t.eventDate); setTxt('opt-event-upcoming', t.eventUpcoming); setTxt('opt-event-today', t.eventToday); setTxt('opt-event-tomorrow', t.eventTomorrow); setTxt('opt-event-weekend', t.eventWeekend); setTxt('opt-event-7days', t.event7days); setTxt('opt-event-30days', t.event30days); setTxt('opt-event-all-dates', t.eventAllDates); setTxt('txt-event-from', t.eventFrom); setTxt('txt-event-to', t.eventTo); setTxt('txt-event-country', t.eventCountry); setTxt('txt-event-city', t.eventCity); setTxt('txt-event-postal', t.eventPostal); setTxt('txt-event-category', t.eventCategory); setTxt('txt-event-tag', t.eventTag); setTxt('txt-event-group', t.eventGroup); setTxt('txt-event-price', t.eventPrice); setTxt('txt-event-mode', t.eventMode); setTxt('opt-event-all-price', t.eventAll); setTxt('opt-event-free', t.eventFree); setTxt('opt-event-paid', t.eventPaid); setTxt('opt-event-unknown', t.eventUnknown); setTxt('opt-event-all-mode', t.eventAll); setTxt('opt-event-offline', t.eventOffline); setTxt('opt-event-online', t.eventOnline); setTxt('opt-event-mode-unknown', t.eventUnknown); setTxt('btn-event-reset', t.eventReset);
+    setPh('event-postal-filter', t.eventPostal);
+    updateSortLabels();
+    if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); } else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
 }
@@ -395,6 +657,8 @@ function ladeBookmarks() {
 // Zeigt oder aktualisiert die Lesezeichen, ohne unbeabsichtigt zu Global zurückzuspringen.
 function showBookmarks() {
     activeKontinent = "Bookmarks";
+    updateEventUiVisibility();
+    updateSortLabels();
     const rawBookmarks = getSavedBookmarks();
 
     document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active'));
@@ -539,12 +803,14 @@ async function initialisiereApp() {
         allNewsData = fetchedData;
         try { localStorage.setItem('cached_news_data', JSON.stringify(allNewsData)); } catch(e) {}
         hasCache = true;
+        populateEventFilters();
         ladeKontinentNews("Global");
     } catch (err) {
         try {
             const offlineData = localStorage.getItem('cached_news_data');
             if (offlineData && offlineData.length > 10) {
                 allNewsData = JSON.parse(offlineData);
+                populateEventFilters();
                 ladeKontinentNews("Global");
             } else {
                 setTxt('status-container', "[ FEHLER ] Keine Daten und kein Internet.");
@@ -563,6 +829,10 @@ function ladeKontinentNews(kontinent) {
     const btnMap = { 'Global': 'btn-glob', 'Europe': 'btn-eur', 'Africa': 'btn-afr', 'North America': 'btn-nam', 'Latin America': 'btn-lam', 'Asia': 'btn-asi', 'Australia & NZ': 'btn-aus', 'Labor Struggles': 'cat-labor', 'Antifascism': 'cat-antifascism', 'Antisexism': 'cat-antisexism', 'Queer-Feminism': 'cat-queer', 'Antiracism': 'cat-antiracism', 'No Borders': 'cat-noborders', 'Anticapitalism': 'cat-anticapitalism', 'Theory & Strategy': 'cat-theory', 'Anticolonialism': 'cat-anticolonialism', 'Anti-Imperialism': 'cat-antiimperialism', 'Squatting & Housing': 'cat-squatting', 'Demonstrations': 'cat-demos', 'Anti-Rep & Prisons': 'cat-antirepression', 'Cyberactivism': 'cat-cyber', 'No War': 'cat-nowar', 'Animal Liberation': 'cat-animal', 'Eco-Anarchism': 'cat-eco', 'Indigenous Struggles': 'cat-indigenous', 'Radical Health & Disability': 'cat-health', 'Libraries': 'btn-lib', 'Radar': 'cat-radar' };
     if(btnMap[kontinent]) { const b = document.getElementById(btnMap[kontinent]); if(b) b.classList.add('active'); }
 
+    updateEventUiVisibility();
+    updateSortLabels();
+    if (kontinent === 'Radar') populateEventFilters();
+
     const t = uiTexte[currentLang] || uiTexte['en']; setTxt('status-container', t.latestNews);
     applyFilters();
 }
@@ -575,15 +845,28 @@ function applyFilters(isBookmark = false) {
     
     let baseList = (activeKontinent === "Bookmarks" || isBookmark) ? getSavedBookmarks() : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
     let filtered = (selPortal === "ALL") ? baseList : baseList.filter(a => a.quelleName === selPortal);
+
+    if (activeKontinent === 'Radar') {
+        filtered = filtered.filter(eventMatchesSpecialFilters);
+    }
     
-    if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery))); }
+    if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery)) || normalizedStringArray(a.eventTags).join(' ').toLowerCase().includes(searchQuery) || normalizedStringArray(a.eventCategories).join(' ').toLowerCase().includes(searchQuery) || String(a.eventCity || '').toLowerCase().includes(searchQuery)); }
 
     filtered.sort((a, b) => {
+        if (activeKontinent === 'Radar') {
+            const da = getEventStartMs(a); const db = getEventStartMs(b);
+            return sortOrder === 'old' ? db - da : da - db;
+        }
         let da = 0; let db = 0;
         if(a.pubDate) da = new Date(a.pubDate).getTime(); if(b.pubDate) db = new Date(b.pubDate).getTime();
         if (sortOrder === "old") return (isNaN(da) ? 0 : da) - (isNaN(db) ? 0 : db); 
         else return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
     });
+
+    if (activeKontinent === 'Radar') {
+        const t = uiTexte[currentLang] || uiTexte.en;
+        setTxt('event-filter-count', `${filtered.length} ${t.eventCount}`);
+    }
     
     currentFilteredItems = filtered;
     currentlyDisplayedCount = 0;
@@ -618,11 +901,13 @@ function renderNextBatch() {
     let archiveCount = archiveContainer.children.length; 
     
     batch.forEach((item, batchIndex) => {
-        const globalIndex = currentlyDisplayedCount + batchIndex; 
+        const globalIndex = currentlyDisplayedCount + batchIndex;
+        const isEvent = isEventArticle(item);
         let formatDatum = "LIVE"; let isOld = false;
         try {
-            if (item.pubDate) {
-                const articleDate = new Date(item.pubDate);
+            const dateValue = isEvent ? (item.eventStart || item.pubDate) : item.pubDate;
+            if (dateValue) {
+                const articleDate = new Date(dateValue);
                 if (!isNaN(articleDate.getTime())) {
                     formatDatum = articleDate.toISOString().substring(0, 10);
                     if ((today - articleDate) > ninetyDaysMs) { isOld = true; }
@@ -657,17 +942,21 @@ function renderNextBatch() {
         // Der grüne Look für die Termine
         let cardStyle = isRadar ? `style="border: 1px solid var(--color-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);"` : "";
         let titleColor = isRadar ? `color: var(--color-green);` : "";
+        const eventDetailsHtml = buildEventDetailsHtml(item, t);
+        const cancelledClass = String(item.eventStatus || '').toLowerCase().includes('cancel') ? 'event-cancelled' : '';
         
         let metaHtml = `<span class="meta-label">${escapeHtml(t.publisherLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(publisherName)}</span> <br>`;
         if (authorName !== "" && authorName.toLowerCase() !== "unknown" && authorName.toLowerCase() !== publisherName.toLowerCase()) {
             metaHtml += `<span class="meta-label">${escapeHtml(t.authorLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(authorName)}</span> <br>`;
         }
-        metaHtml += `<span class="meta-label">${escapeHtml(t.dateLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(formatDatum)}</span>`;
+        const metaDateText = isEvent ? formatEventDateRange(item) : formatDatum;
+        metaHtml += `<span class="meta-label">${escapeHtml(isEvent ? t.eventStarts : t.dateLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(metaDateText || formatDatum)}</span>`;
 
         let articleHTML = `
-            <div class="card ${isReadClass}" id="card-${globalIndex}" data-translated="none" ${cardStyle}>
+            <div class="card ${isReadClass} ${cancelledClass}" id="card-${globalIndex}" data-translated="none" ${cardStyle}>
                 <div class="meta">${metaHtml}</div>
                 <div class="title" id="title-${globalIndex}" style="${titleColor}">${escapeHtml(item.title || 'No Title')}</div>
+                ${eventDetailsHtml}
                 ${imgHtml}
                 <div class="teaser" id="teaser-${globalIndex}">${safeTeaserText}</div>
                 <div class="full-content" id="content-${globalIndex}">${safeFullText}</div>
