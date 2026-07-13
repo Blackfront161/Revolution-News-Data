@@ -3,7 +3,7 @@ import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import urljoin
@@ -89,9 +89,6 @@ quellen = {
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
     "Radar": [
-        {"name": "Radar Squat.net (Global)", "url": "https://morss.it/https://radar.squat.net/de/events/rss"},
-        {"name": "Radar Squat.net (Europa)", "url": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss"},
-        {"name": "Radar Squat.net (Nordamerika)", "url": "https://morss.it/https://radar.squat.net/de/events/region/North%20America/rss"},
         {"name": "Kontrapolis (Berlin)", "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/"},
         {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
@@ -392,6 +389,335 @@ def clean_image_url(url, base_url):
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
 
+
+# =================================================================
+# RADAR.SQUAT API
+# =================================================================
+# Die API wird in Zeitabschnitten abgefragt. Dadurch greifen wir nicht nur
+# auf einen RSS-Ausschnitt zu, sondern erhalten strukturierte Eventdaten.
+RADAR_API_URL = "https://radar.squat.net/api/1.2/search/events.json"
+RADAR_BASE_URL = "https://radar.squat.net"
+RADAR_DAYS_AHEAD = 120
+RADAR_CHUNK_DAYS = 30
+RADAR_LIMIT_PER_CHUNK = 500
+RADAR_FIELDS = ",".join([
+    "title", "title_field", "body", "date_time", "offline", "category",
+    "topic", "og_group_ref", "price", "price_category", "event_status",
+    "uuid", "nid", "url", "language", "link", "image", "flyer"
+])
+
+
+def as_list(value):
+    """Macht aus API-Werten zuverlässig eine Liste."""
+    if value is None or value is False:
+        return []
+    if isinstance(value, list):
+        return value
+    if isinstance(value, dict):
+        # Suchresultate können als Objekt mit numerischen Schlüsseln kommen.
+        return list(value.values())
+    return [value]
+
+
+def first_text(value, *keys):
+    """Liest aus wechselnden Radar-Feldformen den ersten brauchbaren Text."""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, dict):
+        for key in keys:
+            candidate = value.get(key)
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+        for key in ("name", "label", "title", "value", "summary", "url", "uri"):
+            candidate = value.get(key)
+            if isinstance(candidate, str) and candidate.strip():
+                return candidate.strip()
+    return ""
+
+
+def radar_term_names(value):
+    names = []
+    for item in as_list(value):
+        name = first_text(item, "name", "label", "title")
+        if name and name not in names:
+            names.append(name)
+    return names
+
+
+def radar_parse_timestamp(value):
+    """Versteht Unix-Zeit, ISO-Zeit und Radar-Zeitstrings."""
+    if value is None or value == "":
+        return 0
+    if isinstance(value, (int, float)):
+        return int(value)
+    text = str(value).strip()
+    if not text:
+        return 0
+    try:
+        return int(float(text))
+    except (TypeError, ValueError):
+        pass
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return int(parsed.timestamp())
+    except (TypeError, ValueError):
+        return 0
+
+
+def radar_datetime_data(event):
+    entries = [item for item in as_list(event.get("date_time")) if isinstance(item, dict)]
+    if not entries:
+        return 0, 0
+
+    candidates = []
+    for item in entries:
+        start = radar_parse_timestamp(item.get("value") or item.get("time_start"))
+        end = radar_parse_timestamp(item.get("value2") or item.get("time_end"))
+        if start:
+            candidates.append((start, end or start))
+
+    if not candidates:
+        return 0, 0
+    candidates.sort(key=lambda pair: pair[0])
+    return candidates[0]
+
+
+def timestamp_iso(timestamp):
+    if not timestamp:
+        return ""
+    return datetime.fromtimestamp(timestamp, tz=timezone.utc).isoformat()
+
+
+def radar_clean_html(value):
+    if isinstance(value, dict):
+        value = value.get("value") or value.get("summary") or ""
+    return BeautifulSoup(str(value or ""), "html.parser").get_text(separator="\n\n").strip()
+
+
+def radar_absolute_url(value):
+    text = first_text(value, "url", "display_url", "uri")
+    if not text:
+        return ""
+    return urljoin(RADAR_BASE_URL + "/", text)
+
+
+def radar_image_url(event):
+    """Sucht vorsichtig nach einem Bild oder Flyer in verschachtelten Feldern."""
+    def walk(value):
+        if isinstance(value, str):
+            if value.startswith("http") and any(ext in value.lower() for ext in IMAGE_EXTENSIONS):
+                return value
+            return ""
+        if isinstance(value, list):
+            for item in value:
+                found = walk(item)
+                if found:
+                    return found
+        if isinstance(value, dict):
+            for key in ("url", "uri", "file_url", "source", "src"):
+                candidate = value.get(key)
+                if isinstance(candidate, str) and candidate:
+                    absolute = urljoin(RADAR_BASE_URL + "/", candidate)
+                    if absolute.startswith("http"):
+                        return absolute
+            for item in value.values():
+                found = walk(item)
+                if found:
+                    return found
+        return ""
+
+    return walk(event.get("image")) or walk(event.get("flyer"))
+
+
+def radar_location_data(event):
+    locations = [item for item in as_list(event.get("offline")) if isinstance(item, dict)]
+    if not locations:
+        return {
+            "venue": "", "address": "", "city": "", "country": "",
+            "postal_code": "", "timezone": "", "lat": "", "lon": ""
+        }
+
+    location = locations[0]
+    address = location.get("address") if isinstance(location.get("address"), dict) else {}
+    map_data = location.get("map") if isinstance(location.get("map"), dict) else {}
+
+    venue = first_text(location, "title", "name", "label")
+    city = first_text(address, "locality", "dependent_locality")
+    country = first_text(address, "country")
+    postal_code = first_text(address, "postal_code")
+    street = first_text(address, "thoroughfare")
+    premise = first_text(address, "premise")
+
+    address_parts = []
+    for part in (street, premise, postal_code, city, country):
+        if part and part not in address_parts:
+            address_parts.append(part)
+
+    return {
+        "venue": venue,
+        "address": ", ".join(address_parts),
+        "city": city,
+        "country": country.upper() if len(country) == 2 else country,
+        "postal_code": postal_code,
+        "timezone": first_text(location, "timezone"),
+        "lat": first_text(map_data, "lat"),
+        "lon": first_text(map_data, "lon")
+    }
+
+
+def radar_event_link(event, uuid):
+    direct = radar_absolute_url(event.get("url"))
+    if direct:
+        return direct
+
+    for link_item in as_list(event.get("link")):
+        candidate = radar_absolute_url(link_item)
+        if candidate:
+            return candidate
+
+    if uuid:
+        return f"{RADAR_BASE_URL}/api/1.2/node/{uuid}.json"
+    return RADAR_BASE_URL
+
+
+def convert_radar_event(event):
+    if not isinstance(event, dict):
+        return None
+
+    uuid = first_text(event, "uuid")
+    title = first_text(event, "title", "title_field") or "Event ohne Titel"
+    start_ts, end_ts = radar_datetime_data(event)
+    if not start_ts:
+        return None
+
+    body = radar_clean_html(event.get("body"))
+    if not body:
+        body = "Weitere Informationen findest du beim Originalevent auf Radar.squat."
+
+    location = radar_location_data(event)
+    groups = radar_term_names(event.get("og_group_ref"))
+    categories = radar_term_names(event.get("category"))
+    tags = radar_term_names(event.get("topic"))
+    price_categories = radar_term_names(event.get("price_category"))
+    price = first_text(event, "price")
+    status = first_text(event, "event_status")
+    link = radar_event_link(event, uuid)
+    image = radar_image_url(event)
+
+    text_for_online = f"{title} {body}".lower()
+    if location["venue"] or location["city"] or location["address"]:
+        event_mode = "offline"
+    elif "online" in text_for_online or "stream" in text_for_online:
+        event_mode = "online"
+    else:
+        event_mode = "unknown"
+
+    return {
+        "type": "event",
+        "sourceType": "radar-api",
+        "eventSource": "Radar.squat",
+        "eventApiId": uuid,
+        "kontinent": "Radar",
+        "categories": ["Radar"],
+        "quelleName": "Radar.squat API",
+        "author": ", ".join(groups) if groups else "Radar.squat",
+        "title": title,
+        "link": link,
+        # pubDate bleibt für ältere App-Versionen erhalten.
+        "pubDate": timestamp_iso(start_ts),
+        "eventStart": timestamp_iso(start_ts),
+        "eventEnd": timestamp_iso(end_ts),
+        "eventVenue": location["venue"],
+        "eventAddress": location["address"],
+        "eventCity": location["city"],
+        "eventCountry": location["country"],
+        "eventPostalCode": location["postal_code"],
+        "eventTimezone": location["timezone"],
+        "eventLatitude": location["lat"],
+        "eventLongitude": location["lon"],
+        "eventCategories": categories,
+        "eventTags": tags,
+        "eventGroups": groups,
+        "eventPrice": price,
+        "eventPriceCategories": price_categories,
+        "eventStatus": status,
+        "eventLanguage": first_text(event, "language"),
+        "eventMode": event_mode,
+        "content": body,
+        "image": image if image.startswith("http") else ""
+    }
+
+
+def fetch_radar_api_events():
+    """Lädt kommende Radar-Events. Bei einem Fehler wird None zurückgegeben."""
+    now = datetime.now(timezone.utc)
+    overall_end = now + timedelta(days=RADAR_DAYS_AHEAD)
+    cursor = now
+    events_by_id = {}
+
+    print(f"\n--- Radar API: kommende {RADAR_DAYS_AHEAD} Tage ---")
+
+    while cursor < overall_end:
+        chunk_end = min(cursor + timedelta(days=RADAR_CHUNK_DAYS), overall_end)
+        params = {
+            "limit": str(RADAR_LIMIT_PER_CHUNK),
+            "language": "de",
+            "fields": RADAR_FIELDS,
+            "filter[~and][search_api_aggregation_1][~gte]": str(int(cursor.timestamp())),
+            "filter[~or][search_api_aggregation_1][~lte]": str(int(chunk_end.timestamp()))
+        }
+
+        try:
+            response = session.get(
+                RADAR_API_URL,
+                params=params,
+                headers={**HEADERS, "Accept": "application/json"},
+                timeout=(10, 45)
+            )
+            response.raise_for_status()
+            payload = response.json()
+        except (requests.RequestException, ValueError) as error:
+            print(f"  [RADAR-API-FEHLER] {cursor.date()} bis {chunk_end.date()}: {error}")
+            return None
+
+        raw_results = payload.get("result", {}) if isinstance(payload, dict) else {}
+        chunk_events = as_list(raw_results)
+        print(f"  [RADAR API] {cursor.date()} bis {chunk_end.date()}: {len(chunk_events)} Rohdatensätze")
+
+        for raw_event in chunk_events:
+            converted = convert_radar_event(raw_event)
+            if not converted:
+                continue
+            unique_id = converted.get("eventApiId") or converted.get("link")
+            events_by_id[unique_id] = converted
+
+        cursor = chunk_end
+
+    return list(events_by_id.values())
+
+
+def replace_radar_api_events(archive, new_events):
+    """Ersetzt nur alte API-Events. Andere Eventquellen bleiben erhalten."""
+    old_api_keys = [
+        key for key, article in archive.items()
+        if isinstance(article, dict) and article.get("sourceType") == "radar-api"
+    ]
+    for key in old_api_keys:
+        archive.pop(key, None)
+
+    # Eine frühere Systemmeldung entfernen, sobald echte Daten vorhanden sind.
+    system_key = "https://radar.squat.net"
+    if new_events and archive.get(system_key, {}).get("quelleName") == "System Info":
+        archive.pop(system_key, None)
+
+    for event in new_events:
+        archive[event["link"]] = event
+
+
 # =================================================================
 # 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
 # =================================================================
@@ -526,17 +852,37 @@ def date_to_timestamp(value):
 # Speichert zuerst eine temporäre Datei und ersetzt news.json erst nach erfolgreichem Schreiben.
 # Dadurch bleibt die alte news.json erhalten, wenn der Prozess während des Speicherns abstürzt.
 def save_checkpoint():
-    alle = list(archiv_dict.values())
-    alle.sort(key=lambda article: date_to_timestamp(article.get('pubDate')), reverse=True)
+    all_items = list(archiv_dict.values())
 
-    # Maximal 2000 Artikel behalten.
-    alle = alle[:2000]
+    event_items = [
+        item for item in all_items
+        if isinstance(item, dict) and "Radar" in get_article_categories(item)
+    ]
+    article_items = [
+        item for item in all_items
+        if not (isinstance(item, dict) and "Radar" in get_article_categories(item))
+    ]
+
+    # Nachrichten: neueste zuerst. Events: nächster Termin zuerst.
+    article_items.sort(
+        key=lambda article: date_to_timestamp(article.get('pubDate')),
+        reverse=True
+    )
+    event_items.sort(
+        key=lambda event: date_to_timestamp(event.get('eventStart') or event.get('pubDate'))
+    )
+
+    # Reserviert bis zu 500 Plätze für Events und den Rest für Nachrichten.
+    event_items = event_items[:500]
+    remaining_slots = max(0, 2000 - len(event_items))
+    article_items = article_items[:remaining_slots]
+    all_items = article_items + event_items
 
     target = Path('news.json')
     temporary = Path('news.json.tmp')
 
     temporary.write_text(
-        json.dumps(alle, ensure_ascii=False, indent=2),
+        json.dumps(all_items, ensure_ascii=False, indent=2),
         encoding='utf-8'
     )
     os.replace(temporary, target)
@@ -736,6 +1082,8 @@ for kontinent, feeds in quellen.items():
             # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
             # =========================================================
             archiv_dict[link] = {
+                "type": "event" if is_radar else "article",
+                "sourceType": "event-feed" if is_radar else "rss",
                 "kontinent": kontinent,
                 "categories": [kontinent],
                 "quelleName": feed['name'],
@@ -743,6 +1091,20 @@ for kontinent, feeds in quellen.items():
                 "title": title,
                 "link": link,
                 "pubDate": pubDate,
+                "eventStart": pubDate if is_radar else "",
+                "eventEnd": "",
+                "eventVenue": "",
+                "eventAddress": "",
+                "eventCity": "",
+                "eventCountry": "",
+                "eventPostalCode": "",
+                "eventCategories": [],
+                "eventTags": [],
+                "eventGroups": [],
+                "eventPrice": "",
+                "eventPriceCategories": [],
+                "eventStatus": "",
+                "eventMode": "unknown" if is_radar else "",
                 "content": clean_text,
                 "image": image_url
             }
@@ -754,6 +1116,16 @@ for kontinent, feeds in quellen.items():
         # =========================================================
         save_checkpoint()
 
+# RADAR.SQUAT DIREKT ÜBER DIE ÖFFENTLICHE API LADEN
+radar_api_events = fetch_radar_api_events()
+if radar_api_events is not None:
+    replace_radar_api_events(archiv_dict, radar_api_events)
+    radar_count += len(radar_api_events)
+    print(f"[RADAR API] {len(radar_api_events)} strukturierte Events übernommen.")
+    save_checkpoint()
+else:
+    print("[RADAR API] Abruf fehlgeschlagen. Bereits gespeicherte API-Events bleiben erhalten.")
+
 # SYSTEM-MELDUNG FALLS RADAR GESTÖRT IST
 if radar_count == 0:
     archiv_dict["https://radar.squat.net"] = {
@@ -761,10 +1133,10 @@ if radar_count == 0:
         "categories": ["Radar"],
         "quelleName": "System Info",
         "author": "News-Bot",
-        "title": "🛡️ Radar temporär blockiert",
+        "title": "🛡️ Eventquellen vorübergehend nicht erreichbar",
         "link": "https://radar.squat.net",
         "pubDate": datetime.now().isoformat(),
-        "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
+        "content": "Die Eventquellen konnten in diesem Update-Lauf nicht geladen werden. Beim nächsten automatischen Lauf wird es erneut versucht.",
         "image": ""
     }
     save_checkpoint()
