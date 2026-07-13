@@ -118,6 +118,33 @@ function extractTranslationText(data) {
     return "";
 }
 
+// Entfernt typische KI-Vorsätze wie „Hier ist die deutsche Übersetzung:“.
+// Das ist nur ein Sicherheitsnetz; der Worker fordert die Modelle zusätzlich
+// ausdrücklich auf, ohne Einleitung direkt mit der Übersetzung zu beginnen.
+function cleanTranslationOutput(value) {
+    let text = String(value ?? "").trim();
+
+    // Entfernt versehentlich ausgegebene Markdown-Codeblöcke.
+    text = text
+        .replace(/^```(?:text|markdown)?\s*/i, "")
+        .replace(/\s*```$/i, "")
+        .trim();
+
+    const unwantedIntroductions = [
+        /^(?:\*\*)?\s*Hier ist (?:die )?(?:ins Deutsche übersetzte(?: Fassung| Version)?|deutsche Übersetzung|Übersetzung)(?: des Textes)?\s*:?\s*(?:\*\*)?\s*/i,
+        /^(?:\*\*)?\s*Hier folgt (?:die )?(?:deutsche Übersetzung|Übersetzung)\s*:?\s*(?:\*\*)?\s*/i,
+        /^(?:\*\*)?\s*Deutsche Übersetzung\s*:?\s*(?:\*\*)?\s*/i,
+        /^(?:\*\*)?\s*Here is (?:the )?(?:German translation|translation|translated version)(?: of the text)?\s*:?\s*(?:\*\*)?\s*/i,
+        /^(?:\*\*)?\s*Translation\s*:?\s*(?:\*\*)?\s*/i
+    ];
+
+    for (const pattern of unwantedIntroductions) {
+        text = text.replace(pattern, "").trim();
+    }
+
+    return text;
+}
+
 function extractTranslationError(data, status) {
     const possibleMessages = [
         data?.error?.message,
@@ -175,7 +202,7 @@ async function fetchFromGemini(promptText) {
             }
         }
 
-        const translatedText = extractTranslationText(data);
+        const translatedText = cleanTranslationOutput(extractTranslationText(data));
 
         // Wichtig für die Kompatibilität mit dem bisherigen Worker:
         // Eine vorhandene Übersetzung wird genutzt, auch wenn der Worker einen
@@ -226,23 +253,13 @@ function showTranslationError(buttonElement, cardElement, result) {
         cardElement.dataset.translated = "none";
     }
 
-    const fullMessage = currentLang === "de"
-        ? `Übersetzung fehlgeschlagen:
-
-${message}`
-        : `Translation failed:
-
-${message}`;
-
     const statusElement = document.getElementById("status-container");
     if (statusElement) {
         statusElement.style.color = "#FF0033";
-        statusElement.textContent = fullMessage.replace(/\n+/g, " ");
+        statusElement.textContent = currentLang === "de"
+            ? `Übersetzung fehlgeschlagen: ${message}`
+            : `Translation failed: ${message}`;
     }
-
-    // Bei einem Fehler wird die genaue Ursache zusätzlich als Fenster gezeigt.
-    // So erscheint nicht mehr nur das Wort "ERROR".
-    alert(fullMessage);
 }
 
 const starSpinner = `<svg class="spinner" viewBox="0 0 24 24" width="1.4em" height="1.4em"><path fill="url(#rbGrad)" stroke="var(--color-accent)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
@@ -741,7 +758,7 @@ async function translateArticle(idNum) {
     if (!isExpanded) {
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
 
-        const promptText = `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
+        const promptText = `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
         const result = await fetchFromGemini(promptText);
 
         if (result.error || !result.text) {
@@ -801,8 +818,8 @@ async function translateArticle(idNum) {
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
 
         const promptText = index === 0
-            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[index]}`
-            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction}\n\nText: ${chunks[index]}`;
+            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[index]}`
+            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction} Output only the translated continuation. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nText: ${chunks[index]}`;
 
         const result = await fetchFromGemini(promptText);
 
