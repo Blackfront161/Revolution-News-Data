@@ -3,7 +3,9 @@ import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
 from urllib.parse import urljoin
 import os
 import time
@@ -316,6 +318,7 @@ http.mount("http://", adapter)
 
 session = requests.Session()
 session.mount("https://", adapter)
+session.mount("http://", adapter)
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
@@ -349,19 +352,47 @@ except Exception as e:
 
 radar_count = 0 
 
-# HILFSFUNKTION: CHECKPOINTS SPEICHERN (Sicherheit gegen Abstürze)
+# Wandelt unterschiedliche RSS-Datumsformate in eine Zahl um, die korrekt sortiert werden kann.
+def date_to_timestamp(value):
+    if not value:
+        return 0
+
+    text = str(value).strip()
+
+    try:
+        parsed = parsedate_to_datetime(text)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.timestamp()
+    except (TypeError, ValueError, OverflowError):
+        pass
+
+    try:
+        parsed = datetime.fromisoformat(text.replace('Z', '+00:00'))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.timestamp()
+    except (TypeError, ValueError, OverflowError):
+        return 0
+
+
+# Speichert zuerst eine temporäre Datei und ersetzt news.json erst nach erfolgreichem Schreiben.
+# Dadurch bleibt die alte news.json erhalten, wenn der Prozess während des Speicherns abstürzt.
 def save_checkpoint():
     alle = list(archiv_dict.values())
-    try:
-        # Sortieren nach Datum
-        alle.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
-    except:
-        pass
-    
-    # Maximal 2000 Artikel behalten (damit die App nicht explodiert)
-    alle = alle[:2000] 
-    with open('news.json', 'w', encoding='utf-8') as f:
-        json.dump(alle, f, ensure_ascii=False, indent=2)
+    alle.sort(key=lambda article: date_to_timestamp(article.get('pubDate')), reverse=True)
+
+    # Maximal 2000 Artikel behalten.
+    alle = alle[:2000]
+
+    target = Path('news.json')
+    temporary = Path('news.json.tmp')
+
+    temporary.write_text(
+        json.dumps(alle, ensure_ascii=False, indent=2),
+        encoding='utf-8'
+    )
+    os.replace(temporary, target)
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
@@ -372,16 +403,26 @@ for kontinent, feeds in quellen.items():
         parsed = None
         try:
             feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+            feed_req.raise_for_status()
             parsed = feedparser.parse(feed_req.text)
+
             if not parsed.entries:
                 feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                feed_req.raise_for_status()
                 parsed = feedparser.parse(feed_req.content)
-        except:
+
+        except requests.RequestException as error:
+            print(f"  [HTTP-FEHLER] Erster Abruf von {feed['name']}: {error}")
             try:
                 feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                feed_req.raise_for_status()
                 parsed = feedparser.parse(feed_req.content)
-            except:
-                pass
+            except requests.RequestException as fallback_error:
+                print(f"  [HTTP-FEHLER] Ersatzabruf von {feed['name']}: {fallback_error}")
+            except Exception as parser_error:
+                print(f"  [PARSER-FEHLER] {feed['name']}: {type(parser_error).__name__}: {parser_error}")
+        except Exception as error:
+            print(f"  [UNERWARTETER FEHLER] {feed['name']}: {type(error).__name__}: {error}")
                 
         if not parsed or not parsed.entries:
             print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
@@ -396,7 +437,11 @@ for kontinent, feeds in quellen.items():
         tiefe_scrapes_gemacht = 0
 
         for entry in parsed.entries[:limit]: 
-            link = entry.get('link', '')
+            link = entry.get('link', '').strip()
+            if not link:
+                print(f"  [ÜBERSPRUNGEN] Eintrag ohne Link bei {feed['name']}")
+                continue
+
             title = entry.get('title', 'Kein Titel')
             title_lower = title.lower().strip()
             author = entry.get('author', 'Unknown')
@@ -463,6 +508,7 @@ for kontinent, feeds in quellen.items():
                 try:
                     time.sleep(1.5) # Pflichtpause, damit wir nicht blockiert werden
                     html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    html_req.raise_for_status()
                     soup = BeautifulSoup(html_req.text, 'html.parser')
                     
                     if not image_url:
@@ -483,8 +529,10 @@ for kontinent, feeds in quellen.items():
                     waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
                     if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
                         full_text = "" 
-                except:
-                    pass
+                except requests.RequestException as error:
+                    print(f"  [ARTIKEL-FEHLER] {link}: {error}")
+                except Exception as error:
+                    print(f"  [EXTRAKTIONS-FEHLER] {link}: {type(error).__name__}: {error}")
             
             if not is_radar and (not full_text or len(full_text) < 150) and 'description' in entry:
                 try:
@@ -531,7 +579,7 @@ for kontinent, feeds in quellen.items():
 
 # SYSTEM-MELDUNG FALLS RADAR GESTÖRT IST
 if radar_count == 0:
-    archiv_dict["system_info_radar"] = {
+    archiv_dict["https://radar.squat.net"] = {
         "kontinent": "Radar",
         "quelleName": "System Info",
         "author": "News-Bot",
