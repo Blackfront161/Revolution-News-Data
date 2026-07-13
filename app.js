@@ -37,6 +37,34 @@ function decodeText(value) {
     return decodeURIComponent(escape(atob(value)));
 }
 
+// Gibt alle Kategorien eines Artikels zurück.
+// Neue Daten verwenden "categories" als Liste. Alte Daten besitzen nur "kontinent".
+// Dadurch bleiben bereits vorhandene news.json-Dateien und alte Lesezeichen kompatibel.
+function getArticleCategories(article) {
+    const result = [];
+
+    if (article && Array.isArray(article.categories)) {
+        article.categories.forEach(category => {
+            const cleanCategory = String(category ?? "").trim();
+            if (cleanCategory && !result.includes(cleanCategory)) {
+                result.push(cleanCategory);
+            }
+        });
+    }
+
+    const oldCategory = String(article?.kontinent ?? "").trim();
+    if (oldCategory && !result.includes(oldCategory)) {
+        result.push(oldCategory);
+    }
+
+    return result;
+}
+
+// Prüft, ob ein Artikel zu einer bestimmten Kategorie gehört.
+function articleMatchesCategory(article, category) {
+    return getArticleCategories(article).includes(category);
+}
+
 // Fügt übersetzten Klartext mit sichtbaren Zeilenumbrüchen ein, ohne HTML auszuführen.
 function appendMultilineText(element, text, addEmptyLine = false) {
     if (!element) return;
@@ -55,28 +83,166 @@ function changeFontSize(sizeValue) {
     localStorage.setItem('wrn_font_zoom', sizeValue);
 }
 
+function extractTranslationText(data) {
+    if (!data) return "";
+
+    if (typeof data === "string") {
+        return data.trim();
+    }
+
+    // Normale Gemini-Antwort
+    const geminiText = data?.candidates?.[0]?.content?.parts
+        ?.map(part => typeof part?.text === "string" ? part.text : "")
+        .join("")
+        .trim();
+    if (geminiText) return geminiText;
+
+    // Unterstützt auch vereinfachte Antworten eines eigenen Workers.
+    const possibleTexts = [
+        data.text,
+        data.translation,
+        data.translatedText,
+        data.result?.text,
+        data.data?.text,
+        data.output?.text,
+        data.choices?.[0]?.message?.content,
+        data.choices?.[0]?.text
+    ];
+
+    for (const value of possibleTexts) {
+        if (typeof value === "string" && value.trim()) {
+            return value.trim();
+        }
+    }
+
+    return "";
+}
+
+function extractTranslationError(data, status) {
+    const possibleMessages = [
+        data?.error?.message,
+        typeof data?.error === "string" ? data.error : "",
+        data?.message,
+        data?.detail,
+        data?.error_description
+    ];
+
+    for (const value of possibleMessages) {
+        if (typeof value === "string" && value.trim()) {
+            return value.trim();
+        }
+    }
+
+    if (status === 401 || status === 403) {
+        return "Der Übersetzungsserver lehnt den Zugriff ab. Secret oder Worker-Einstellungen prüfen.";
+    }
+    if (status === 429) {
+        return "Das kostenlose Übersetzungslimit wurde vorübergehend erreicht. Bitte später erneut versuchen.";
+    }
+    if (status >= 500) {
+        return "Der Übersetzungsserver oder Gemini ist vorübergehend nicht erreichbar.";
+    }
+
+    return `Unbekannter Übersetzungsfehler (HTTP ${status || "ohne Status"}).`;
+}
+
 async function fetchFromGemini(promptText) {
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 45000);
+
     try {
         const response = await fetch(PROXY_URL, {
             method: "POST",
-            // ACHTUNG: Dieser Header ist im Browser sichtbar und deshalb kein echtes Geheimnis.
-            // Er bleibt vorerst erhalten, damit dein vorhandener Worker weiter funktioniert.
-            headers: { "Content-Type": "application/json", "X-App-Secret": "revolution161" },
-            body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
+            headers: {
+                "Content-Type": "application/json",
+                "X-App-Secret": "revolution161"
+            },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: promptText }] }]
+            }),
+            signal: controller.signal
         });
 
-        if (!response.ok) {
-            console.error("Übersetzungsserver antwortet mit Status", response.status);
-            return { error: true };
+        const rawResponse = await response.text();
+        let data = {};
+
+        if (rawResponse.trim()) {
+            try {
+                data = JSON.parse(rawResponse);
+            } catch (parseError) {
+                // Manche Worker geben erfolgreichen Klartext statt JSON zurück.
+                data = rawResponse;
+            }
         }
 
-        const data = await response.json();
-        if (data.error || !data.candidates) return { error: true };
-        return data;
+        const translatedText = extractTranslationText(data);
+
+        // Wichtig für die Kompatibilität mit dem bisherigen Worker:
+        // Eine vorhandene Übersetzung wird genutzt, auch wenn der Worker einen
+        // ungewöhnlichen HTTP-Status mitsendet.
+        if (translatedText) {
+            return {
+                error: false,
+                text: translatedText,
+                status: response.status
+            };
+        }
+
+        const message = extractTranslationError(data, response.status);
+        console.error("Übersetzungsserver-Fehler:", response.status, data);
+        return {
+            error: true,
+            message,
+            status: response.status
+        };
     } catch (error) {
+        const message = error?.name === "AbortError"
+            ? "Die Übersetzung hat länger als 45 Sekunden gedauert und wurde abgebrochen."
+            : `Der Übersetzungsserver konnte nicht erreicht werden: ${error?.message || error}`;
+
         console.error("Übersetzungsfehler:", error);
-        return { error: true };
+        return {
+            error: true,
+            message,
+            status: 0
+        };
+    } finally {
+        window.clearTimeout(timeoutId);
     }
+}
+
+function showTranslationError(buttonElement, cardElement, result) {
+    const message = result?.message || "Unbekannter Übersetzungsfehler.";
+    const shortLabel = currentLang === "de"
+        ? "[ ÜBERSETZUNG FEHLER ]"
+        : "[ TRANSLATION ERROR ]";
+
+    if (buttonElement) {
+        buttonElement.textContent = shortLabel;
+        buttonElement.title = message;
+    }
+
+    if (cardElement) {
+        cardElement.dataset.translated = "none";
+    }
+
+    const fullMessage = currentLang === "de"
+        ? `Übersetzung fehlgeschlagen:
+
+${message}`
+        : `Translation failed:
+
+${message}`;
+
+    const statusElement = document.getElementById("status-container");
+    if (statusElement) {
+        statusElement.style.color = "#FF0033";
+        statusElement.textContent = fullMessage.replace(/\n+/g, " ");
+    }
+
+    // Bei einem Fehler wird die genaue Ursache zusätzlich als Fenster gezeigt.
+    // So erscheint nicht mehr nur das Wort "ERROR".
+    alert(fullMessage);
 }
 
 const starSpinner = `<svg class="spinner" viewBox="0 0 24 24" width="1.4em" height="1.4em"><path fill="url(#rbGrad)" stroke="var(--color-accent)" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
@@ -335,7 +501,7 @@ function openSourcesModal() {
 
     const baseList = (activeKontinent === 'Bookmarks')
         ? getSavedBookmarks()
-        : allNewsData.filter(item => item.kontinent === activeKontinent);
+        : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
 
     const portals = [...new Set(baseList.map(item => item.quelleName).filter(Boolean))].sort();
     portals.forEach(portal => {
@@ -390,7 +556,7 @@ function applyFilters(isBookmark = false) {
     const searchQuery = iSel ? iSel.value.toLowerCase().trim() : "";
     const sortOrder = document.getElementById('sort-select') ? document.getElementById('sort-select').value : "new";
     
-    let baseList = (activeKontinent === "Bookmarks" || isBookmark) ? getSavedBookmarks() : allNewsData.filter(item => item.kontinent === activeKontinent);
+    let baseList = (activeKontinent === "Bookmarks" || isBookmark) ? getSavedBookmarks() : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
     let filtered = (selPortal === "ALL") ? baseList : baseList.filter(a => a.quelleName === selPortal);
     
     if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery))); }
@@ -470,7 +636,7 @@ function renderNextBatch() {
         let publisherName = item.quelleName ? item.quelleName.trim() : "Unbekannte Quelle";
         let authorName = item.author ? item.author.trim() : "";
         
-        let isRadar = (item.kontinent === "Radar");
+        let isRadar = articleMatchesCategory(item, "Radar");
         // Der grüne Look für die Termine
         let cardStyle = isRadar ? `style="border: 1px solid var(--color-green); box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);"` : "";
         let titleColor = isRadar ? `color: var(--color-green);` : "";
@@ -540,101 +706,140 @@ async function toggleArticle(idNum, event) {
 }
 
 
-function translateArticle(idNum) {
-    const titleEl = document.getElementById('title-' + idNum); const teaserEl = document.getElementById('teaser-' + idNum);
-    const contentEl = document.getElementById('content-' + idNum); const btnEl = document.getElementById('btn-' + idNum); const card = document.getElementById('card-' + idNum);
-    if(!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
-    
+async function translateArticle(idNum) {
+    const titleEl = document.getElementById('title-' + idNum);
+    const teaserEl = document.getElementById('teaser-' + idNum);
+    const contentEl = document.getElementById('content-' + idNum);
+    const btnEl = document.getElementById('btn-' + idNum);
+    const card = document.getElementById('card-' + idNum);
+
+    if (!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
+
     const t = uiTexte[currentLang] || uiTexte['en'];
 
-    if(card.dataset.translated === "full" || card.dataset.translated === "translating") return;
-    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
+    if (card.dataset.translated === "full" || card.dataset.translated === "translating") {
+        return;
+    }
 
-    card.dataset.translated = "translating"; 
-    const isExpanded = (contentEl.style.display === "block");
-    
-    let zielSprache = "English"; const sel = document.getElementById('ui-language');
-    if(sel && sel.options[sel.selectedIndex]) zielSprache = sel.options[sel.selectedIndex].text;
-    let genderInstruction = (zielSprache === "Deutsch") ? " Achte bei der deutschen Übersetzung unbedingt auf geschlechtergerechte Sprache (Gendern mit Sternchen, z.B. Aktivist*innen)." : "";
+    try {
+        markAsRead(currentFilteredItems[idNum].link, idNum);
+    } catch (error) {}
+
+    card.dataset.translated = "translating";
+    const isExpanded = card.dataset.expanded === "true" || contentEl.style.display === "block";
+
+    const languageSelect = document.getElementById('ui-language');
+    let targetLanguage = "English";
+    if (languageSelect?.options?.[languageSelect.selectedIndex]) {
+        targetLanguage = languageSelect.options[languageSelect.selectedIndex].text;
+    }
+
+    const genderInstruction = currentLang === "de"
+        ? " Verwende konsequent geschlechtergerechte deutsche Sprache mit Gendersternchen, zum Beispiel Aktivist*innen, Arbeiter*innen und Autor*innen. Vermeide das generische Maskulinum. Verändere Eigennamen, Organisationsnamen und direkte Zitate nicht."
+        : "";
 
     if (!isExpanded) {
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
-        let promptText = `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
-        
-        fetchFromGemini(promptText).then(data => {
-            if (data.error) { btnEl.innerHTML = "[ ERROR ]"; card.dataset.translated = "none"; return; }
-            const parts = data.candidates[0].content.parts[0].text.split("---");
-            if (parts.length >= 2) {
-                let transTitle = parts[0].trim();
-                if(transTitle) titleEl.innerText = transTitle;
-                teaserEl.innerText = parts[1].trim();
-            } else {
-                teaserEl.innerText = data.candidates[0].content.parts[0].text.trim();
-            }
-            titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "teaser";
-        });
-    } else {
-        let rawText = contentEl.innerText;
-        let paragraphs = rawText.split(/\n\n+/);
-        let chunks = [];
-        let currentChunk = "";
 
-        for(let p of paragraphs) {
-            if ((currentChunk.length + p.length) > 1800) {
-                if(currentChunk) chunks.push(currentChunk.trim());
-                currentChunk = p;
-            } else {
-                currentChunk += (currentChunk ? "\n\n" : "") + p;
-            }
+        const promptText = `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
+        const result = await fetchFromGemini(promptText);
+
+        if (result.error || !result.text) {
+            showTranslationError(btnEl, card, result);
+            return;
         }
-        if(currentChunk) chunks.push(currentChunk.trim());
 
-        contentEl.textContent = ""; 
-        let isError = false;
+        const parts = result.text.split("---");
+        if (parts.length >= 2) {
+            const translatedTitle = parts.shift().trim();
+            const translatedTeaser = parts.join("---").trim();
+            if (translatedTitle) titleEl.innerText = translatedTitle;
+            if (translatedTeaser) teaserEl.innerText = translatedTeaser;
+        } else {
+            teaserEl.innerText = result.text.trim();
+        }
 
-        const processChunks = async () => {
-            for (let i = 0; i < chunks.length; i++) {
-                let progressText = chunks.length > 1 ? `[ ${t.btnLoading} ${i+1}/${chunks.length} ]` : `[ ${t.btnLoading} ]`;
-                btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
-
-                let promptText = (i === 0) 
-                    ? `Translate title and text fluently into ${zielSprache}.${genderInstruction} Separate with "---". \n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[i]}`
-                    : `Translate the following text continuation fluently into ${zielSprache}.${genderInstruction}\n\nText: ${chunks[i]}`;
-
-                const data = await fetchFromGemini(promptText);
-                if (data.error || !data.candidates || !data.candidates[0].content) {
-                    const errorText = document.createElement('span');
-                    errorText.style.color = '#FF0033';
-                    errorText.textContent = '[ FEHLER: Übersetzung abgebrochen. ]';
-                    if (contentEl.childNodes.length > 0) contentEl.append(document.createElement('br'), document.createElement('br'));
-                    contentEl.append(errorText);
-                    isError = true; break;
-                }
-
-                let resultText = data.candidates[0].content.parts[0].text.trim();
-
-                if (i === 0) {
-                    const parts = resultText.split("---");
-                    if (parts.length >= 2) {
-                        let transTitle = parts[0].trim();
-                        if(transTitle) titleEl.innerText = transTitle;
-                        appendMultilineText(contentEl, parts[1].trim());
-                    } else {
-                        appendMultilineText(contentEl, resultText);
-                    }
-                } else {
-                    appendMultilineText(contentEl, resultText, true);
-                }
-            }
-
-            if (!isError) {
-                titleEl.classList.add('translated'); btnEl.innerHTML = `[ ${t.btnDone} ]`; card.dataset.translated = "full";
-            } else {
-                btnEl.innerHTML = `[ ERROR ]`; card.dataset.translated = "none";
-            }
-        };
-        processChunks();
+        titleEl.classList.add('translated');
+        btnEl.innerHTML = `[ ${t.btnDone} ]`;
+        btnEl.removeAttribute('title');
+        card.dataset.translated = "teaser";
+        return;
     }
+
+    const rawText = contentEl.innerText.trim();
+    if (!rawText) {
+        showTranslationError(btnEl, card, {
+            message: currentLang === "de"
+                ? "Dieser Artikel enthält keinen übersetzbaren Text."
+                : "This article contains no text to translate."
+        });
+        return;
+    }
+
+    // Lange Texte werden in handliche Teile zerlegt, damit das kostenlose
+    // Übersetzungsmodell nicht mit einer zu großen Anfrage überfordert wird.
+    const paragraphs = rawText.split(/\n\n+/);
+    const chunks = [];
+    let currentChunk = "";
+
+    for (const paragraph of paragraphs) {
+        if ((currentChunk.length + paragraph.length) > 1800) {
+            if (currentChunk.trim()) chunks.push(currentChunk.trim());
+            currentChunk = paragraph;
+        } else {
+            currentChunk += (currentChunk ? "\n\n" : "") + paragraph;
+        }
+    }
+    if (currentChunk.trim()) chunks.push(currentChunk.trim());
+
+    contentEl.textContent = "";
+
+    for (let index = 0; index < chunks.length; index++) {
+        const progressText = chunks.length > 1
+            ? `[ ${t.btnLoading} ${index + 1}/${chunks.length} ]`
+            : `[ ${t.btnLoading} ]`;
+        btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
+
+        const promptText = index === 0
+            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[index]}`
+            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction}\n\nText: ${chunks[index]}`;
+
+        const result = await fetchFromGemini(promptText);
+
+        if (result.error || !result.text) {
+            const errorText = document.createElement('span');
+            errorText.style.color = '#FF0033';
+            errorText.textContent = currentLang === "de"
+                ? `[ Übersetzung abgebrochen: ${result.message || "unbekannter Fehler"} ]`
+                : `[ Translation stopped: ${result.message || "unknown error"} ]`;
+
+            if (contentEl.childNodes.length > 0) {
+                contentEl.append(document.createElement('br'), document.createElement('br'));
+            }
+            contentEl.append(errorText);
+            showTranslationError(btnEl, card, result);
+            return;
+        }
+
+        if (index === 0) {
+            const parts = result.text.split("---");
+            if (parts.length >= 2) {
+                const translatedTitle = parts.shift().trim();
+                const translatedText = parts.join("---").trim();
+                if (translatedTitle) titleEl.innerText = translatedTitle;
+                appendMultilineText(contentEl, translatedText);
+            } else {
+                appendMultilineText(contentEl, result.text);
+            }
+        } else {
+            appendMultilineText(contentEl, result.text, true);
+        }
+    }
+
+    titleEl.classList.add('translated');
+    btnEl.innerHTML = `[ ${t.btnDone} ]`;
+    btnEl.removeAttribute('title');
+    card.dataset.translated = "full";
 }
 
 window.addEventListener('scroll', () => {
