@@ -1,8 +1,10 @@
+# World Revolution News – Quellen + Radar-Filter, Version 2026-07
 import feedparser
 import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import json
+import html
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -339,6 +341,50 @@ NEUE_MEHRFACH_QUELLEN = [
         "name": "Disability Debrief",
         "url": "https://www.disabilitydebrief.org/rss/",
         "categories": ["Global", "Radical Health & Disability"]
+    },
+    {
+        "name": "GroundUp (South Africa)",
+        "url": "https://groundup.org.za/sitenews/atom_full/",
+        "urls": [
+            "https://groundup.org.za/sitenews/rss/"
+        ],
+        "categories": [
+            "Africa", "Labor Struggles", "Squatting & Housing", "No Borders",
+            "Anti-Rep & Prisons", "Radical Health & Disability", "Eco-Anarchism"
+        ]
+    },
+    {
+        "name": "The Elephant (Pan-African)",
+        "url": "https://www.theelephant.info/feed/",
+        "urls": [
+            "https://morss.it/https://www.theelephant.info/"
+        ],
+        "categories": [
+            "Africa", "Anticolonialism", "Anti-Imperialism",
+            "Anti-Rep & Prisons", "Theory & Strategy"
+        ]
+    },
+    {
+        "name": "Africa Is a Country",
+        "url": "https://africasacountry.com/feed/",
+        "urls": [
+            "https://morss.it/https://africasacountry.com/blog"
+        ],
+        "categories": [
+            "Africa", "Anticolonialism", "Anti-Imperialism",
+            "Antiracism", "Theory & Strategy"
+        ]
+    },
+    {
+        "name": "Nawaat (Tunisia)",
+        "url": "https://nawaat.org/feed/",
+        "urls": [
+            "https://morss.it/https://nawaat.org/"
+        ],
+        "categories": [
+            "Africa", "Anticolonialism", "Anti-Rep & Prisons",
+            "Cyberactivism", "Eco-Anarchism"
+        ]
     }
 ]
 
@@ -361,7 +407,15 @@ for source in NEUE_MEHRFACH_QUELLEN:
         )
 
         if not already_exists:
-            category_feeds.append({"name": clean_name, "url": clean_url})
+            source_entry = {"name": clean_name, "url": clean_url}
+            fallback_urls = [
+                str(url or "").strip()
+                for url in source.get("urls", [])
+                if str(url or "").strip()
+            ]
+            if fallback_urls:
+                source_entry["urls"] = fallback_urls
+            category_feeds.append(source_entry)
 
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
@@ -569,10 +623,18 @@ RADAR_DAYS_AHEAD = 120
 RADAR_CHUNK_DAYS = 30
 RADAR_LIMIT_PER_CHUNK = 500
 RADAR_FIELDS = ",".join([
-    "title", "title_field", "body", "date_time", "offline", "category",
-    "topic", "og_group_ref", "price", "price_category", "event_status",
+    "title", "title_field", "body", "date_time",
+    # Referenzen müssen ausdrücklich aufgelöst werden. Ohne diese Felder liefert
+    # Radar bei Orten/Kategorien oft nur IDs und Titel, aber keine Stadt/Land-Daten.
+    "offline", "offline:address", "offline:timezone", "offline:map",
+    "category", "category:name",
+    "topic", "topic:name",
+    "og_group_ref", "og_group_ref:title",
+    "price", "price_category", "event_status",
     "uuid", "nid", "url", "language", "link", "image", "flyer"
 ])
+
+RADAR_FILTER_FACETS = ("country", "city", "tag", "group", "category")
 
 
 def as_list(value):
@@ -605,13 +667,85 @@ def first_text(value, *keys):
     return ""
 
 
+def radar_reference_items(value):
+    """Liest Radar-Referenzen, egal ob Liste, einzelnes Objekt oder ID-Objekt."""
+    if value is None or value is False:
+        return []
+    if isinstance(value, list):
+        return value
+    if isinstance(value, dict):
+        entity_keys = {
+            "id", "uuid", "uri", "resource", "title", "name", "label",
+            "address", "timezone", "map", "formatted", "filter"
+        }
+        if entity_keys.intersection(value.keys()):
+            return [value]
+        return list(value.values())
+    return [value]
+
+
+def clean_radar_label(value):
+    """Entfernt HTML-Entities und versehentliche HTML-Tags aus Facettennamen."""
+    cleaned = html.unescape(str(value or "")).strip()
+    if "<" in cleaned and ">" in cleaned:
+        cleaned = BeautifulSoup(cleaned, "html.parser").get_text(" ", strip=True)
+    return " ".join(cleaned.split())
+
+
 def radar_term_names(value):
     names = []
-    for item in as_list(value):
-        name = first_text(item, "name", "label", "title")
+    for item in radar_reference_items(value):
+        name = clean_radar_label(first_text(item, "name", "label", "title", "formatted"))
         if name and name not in names:
             names.append(name)
     return names
+
+
+def merge_radar_facets(target, raw_facets):
+    """Führt die offiziellen Radar-Facetten aus mehreren Zeitfenstern zusammen."""
+    if not isinstance(raw_facets, dict):
+        return
+
+    for facet_name in RADAR_FILTER_FACETS:
+        for item in radar_reference_items(raw_facets.get(facet_name)):
+            if not isinstance(item, dict):
+                continue
+            filter_value = clean_radar_label(first_text(item, "filter", "value", "id"))
+            label = clean_radar_label(first_text(item, "formatted", "label", "name", "title"))
+            if not label:
+                label = filter_value
+            if not filter_value:
+                filter_value = label
+            if not filter_value or not label:
+                continue
+            try:
+                count = int(item.get("count") or 0)
+            except (TypeError, ValueError):
+                count = 0
+
+            # Für die lokale App wird der sichtbare Name als Wert verwendet.
+            # Nur Länder behalten den offiziellen ISO-Code.
+            local_value = filter_value if facet_name == "country" else label
+            key = local_value.casefold()
+            existing = target[facet_name].get(key)
+            if existing:
+                existing["count"] += count
+            else:
+                target[facet_name][key] = {
+                    "value": local_value,
+                    "label": label,
+                    "filter": filter_value,
+                    "count": count
+                }
+
+
+def finalize_radar_facets(facets):
+    result = {}
+    for facet_name in RADAR_FILTER_FACETS:
+        values = list(facets.get(facet_name, {}).values())
+        values.sort(key=lambda item: item.get("label", "").casefold())
+        result[facet_name] = values
+    return result
 
 
 def radar_parse_timestamp(value):
@@ -702,7 +836,7 @@ def radar_image_url(event):
 
 
 def radar_location_data(event):
-    locations = [item for item in as_list(event.get("offline")) if isinstance(item, dict)]
+    locations = [item for item in radar_reference_items(event.get("offline")) if isinstance(item, dict)]
     if not locations:
         return {
             "venue": "", "address": "", "city": "", "country": "",
@@ -710,20 +844,31 @@ def radar_location_data(event):
         }
 
     location = locations[0]
-    address = location.get("address") if isinstance(location.get("address"), dict) else {}
-    map_data = location.get("map") if isinstance(location.get("map"), dict) else {}
 
-    venue = first_text(location, "title", "name", "label")
-    city = first_text(address, "locality", "dependent_locality")
-    country = first_text(address, "country")
-    postal_code = first_text(address, "postal_code")
-    street = first_text(address, "thoroughfare")
-    premise = first_text(address, "premise")
+    address_candidates = radar_reference_items(location.get("address"))
+    address = next((item for item in address_candidates if isinstance(item, dict)), {})
+
+    map_candidates = radar_reference_items(location.get("map"))
+    map_data = next((item for item in map_candidates if isinstance(item, dict)), {})
+
+    venue = clean_radar_label(first_text(location, "title", "name", "label"))
+    city = clean_radar_label(first_text(address, "locality", "dependent_locality", "city"))
+    country = clean_radar_label(first_text(address, "country", "country_code"))
+    postal_code = clean_radar_label(first_text(address, "postal_code", "postcode"))
+    street = clean_radar_label(first_text(address, "thoroughfare", "street"))
+    premise = clean_radar_label(first_text(address, "premise", "house_number"))
+
+    # Manche Radar-Datensätze legen das Land als Objekt ab.
+    if isinstance(address.get("country"), dict):
+        country = clean_radar_label(first_text(address.get("country"), "iso2", "code", "name"))
 
     address_parts = []
     for part in (street, premise, postal_code, city, country):
         if part and part not in address_parts:
             address_parts.append(part)
+
+    timezone_value = location.get("timezone")
+    timezone_text = first_text(timezone_value, "timezone", "name", "value")
 
     return {
         "venue": venue,
@@ -731,9 +876,9 @@ def radar_location_data(event):
         "city": city,
         "country": country.upper() if len(country) == 2 else country,
         "postal_code": postal_code,
-        "timezone": first_text(location, "timezone"),
-        "lat": first_text(map_data, "lat"),
-        "lon": first_text(map_data, "lon")
+        "timezone": clean_radar_label(timezone_text),
+        "lat": first_text(map_data, "lat", "latitude"),
+        "lon": first_text(map_data, "lon", "lng", "longitude")
     }
 
 
@@ -821,11 +966,12 @@ def convert_radar_event(event):
 
 
 def fetch_radar_api_events():
-    """Lädt kommende Radar-Events. Bei einem Fehler wird None zurückgegeben."""
+    """Lädt kommende Radar-Events sowie die offiziellen Filterfacetten."""
     now = datetime.now(timezone.utc)
     overall_end = now + timedelta(days=RADAR_DAYS_AHEAD)
     cursor = now
     events_by_id = {}
+    merged_facets = {name: {} for name in RADAR_FILTER_FACETS}
 
     print(f"\n--- Radar API: kommende {RADAR_DAYS_AHEAD} Tage ---")
 
@@ -854,6 +1000,7 @@ def fetch_radar_api_events():
 
         raw_results = payload.get("result", {}) if isinstance(payload, dict) else {}
         chunk_events = as_list(raw_results)
+        merge_radar_facets(merged_facets, payload.get("facets") if isinstance(payload, dict) else {})
         print(f"  [RADAR API] {cursor.date()} bis {chunk_end.date()}: {len(chunk_events)} Rohdatensätze")
 
         for raw_event in chunk_events:
@@ -865,14 +1012,18 @@ def fetch_radar_api_events():
 
         cursor = chunk_end
 
-    return list(events_by_id.values())
+    final_facets = finalize_radar_facets(merged_facets)
+    print("  [RADAR FILTER] " + ", ".join(
+        f"{name}: {len(final_facets.get(name, []))}" for name in RADAR_FILTER_FACETS
+    ))
+    return {"events": list(events_by_id.values()), "facets": final_facets}
 
 
-def replace_radar_api_events(archive, new_events):
-    """Ersetzt nur alte API-Events. Andere Eventquellen bleiben erhalten."""
+def replace_radar_api_events(archive, new_events, radar_facets):
+    """Ersetzt alte API-Events und speichert einmalig deren Filtermetadaten."""
     old_api_keys = [
         key for key, article in archive.items()
-        if isinstance(article, dict) and article.get("sourceType") == "radar-api"
+        if isinstance(article, dict) and article.get("sourceType") in {"radar-api", "radar-api-meta"}
     ]
     for key in old_api_keys:
         archive.pop(key, None)
@@ -884,6 +1035,22 @@ def replace_radar_api_events(archive, new_events):
 
     for event in new_events:
         archive[event["link"]] = event
+
+    # Dieser Eintrag wird nicht als Artikel angezeigt (keine Radar-Kategorie),
+    # liefert der App aber exakt die von Radar angebotenen Facettennamen.
+    archive["urn:worldrevnews:radar-filter-meta"] = {
+        "type": "event-filter-meta",
+        "sourceType": "radar-api-meta",
+        "kontinent": "",
+        "categories": [],
+        "quelleName": "Radar.squat API",
+        "title": "Radar filter metadata",
+        "link": "urn:worldrevnews:radar-filter-meta",
+        "pubDate": datetime.now(timezone.utc).isoformat(),
+        "radarFacets": radar_facets or {},
+        "content": "",
+        "image": ""
+    }
 
 
 # =================================================================
@@ -1065,44 +1232,61 @@ for kontinent, feeds in quellen.items():
     
     for feed in feeds:
         print(f"-> Portal: {feed['name']}...")
-        feed_url = str(feed.get('url', '') or '').strip()
-        parsed = feed_cache.get(feed_url)
 
-        if parsed is not None:
-            print("  [CACHE] Feed wurde bereits geladen; vorhandene Daten werden wiederverwendet.")
-        else:
+        # Manche neue Quellen haben mehrere mögliche Feed-Adressen. Der erste
+        # funktionierende Feed wird verwendet; bei einem Ausfall wird automatisch
+        # die nächste Adresse versucht.
+        feed_urls = []
+        primary_url = str(feed.get('url', '') or '').strip()
+        if primary_url:
+            feed_urls.append(primary_url)
+        for fallback_url in feed.get('urls', []) or []:
+            clean_fallback = str(fallback_url or '').strip()
+            if clean_fallback and clean_fallback not in feed_urls:
+                feed_urls.append(clean_fallback)
+
+        parsed = None
+        used_feed_url = ''
+
+        for candidate_index, feed_url in enumerate(feed_urls):
+            cached = feed_cache.get(feed_url, '__NOT_CACHED__')
+            if cached != '__NOT_CACHED__':
+                candidate_parsed = cached
+                if candidate_parsed is not None and candidate_parsed.entries:
+                    parsed = candidate_parsed
+                    used_feed_url = feed_url
+                    print("  [CACHE] Feed wurde bereits geladen; vorhandene Daten werden wiederverwendet.")
+                    break
+                continue
+
             try:
                 feed_req = http.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                 feed_req.raise_for_status()
-                parsed = feedparser.parse(feed_req.content)
+                candidate_parsed = feedparser.parse(feed_req.content)
 
-                if not parsed.entries:
+                if not candidate_parsed.entries:
                     feed_req = session.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     feed_req.raise_for_status()
-                    parsed = feedparser.parse(feed_req.content)
+                    candidate_parsed = feedparser.parse(feed_req.content)
 
             except requests.RequestException as error:
-                print(f"  [HTTP-FEHLER] Erster Abruf von {feed['name']}: {error}")
-                try:
-                    feed_req = session.get(feed_url, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                    feed_req.raise_for_status()
-                    parsed = feedparser.parse(feed_req.content)
-                except requests.RequestException as fallback_error:
-                    print(f"  [HTTP-FEHLER] Ersatzabruf von {feed['name']}: {fallback_error}")
-                    parsed = None
-                except Exception as parser_error:
-                    print(f"  [PARSER-FEHLER] {feed['name']}: {type(parser_error).__name__}: {parser_error}")
-                    parsed = None
+                print(f"  [HTTP-FEHLER] {feed_url}: {error}")
+                candidate_parsed = None
             except Exception as error:
-                print(f"  [UNERWARTETER FEHLER] {feed['name']}: {type(error).__name__}: {error}")
-                parsed = None
+                print(f"  [PARSER-FEHLER] {feed_url}: {type(error).__name__}: {error}")
+                candidate_parsed = None
 
-            # Auch ein fehlgeschlagener Feed wird für diesen Programmlauf gemerkt,
-            # damit dieselbe kaputte URL nicht in jeder Kategorie erneut geladen wird.
-            feed_cache[feed_url] = parsed
-                
+            feed_cache[feed_url] = candidate_parsed
+
+            if candidate_parsed is not None and candidate_parsed.entries:
+                parsed = candidate_parsed
+                used_feed_url = feed_url
+                if candidate_index > 0:
+                    print(f"  [FALLBACK AKTIV] Verwende Ersatzfeed: {feed_url}")
+                break
+
         if not parsed or not parsed.entries:
-            print(f"  [FEHLER] Konnte {feed['name']} nicht abrufen.")
+            print(f"  [FEHLER] Konnte {feed['name']} über keine Feed-Adresse abrufen.")
             continue
             
         limit = 100 if is_radar else 15
@@ -1294,9 +1478,11 @@ for kontinent, feeds in quellen.items():
         save_checkpoint()
 
 # RADAR.SQUAT DIREKT ÜBER DIE ÖFFENTLICHE API LADEN
-radar_api_events = fetch_radar_api_events()
-if radar_api_events is not None:
-    replace_radar_api_events(archiv_dict, radar_api_events)
+radar_api_result = fetch_radar_api_events()
+if radar_api_result is not None:
+    radar_api_events = radar_api_result.get("events", [])
+    radar_api_facets = radar_api_result.get("facets", {})
+    replace_radar_api_events(archiv_dict, radar_api_events, radar_api_facets)
     radar_count += len(radar_api_events)
     print(f"[RADAR API] {len(radar_api_events)} strukturierte Events übernommen.")
     save_checkpoint()

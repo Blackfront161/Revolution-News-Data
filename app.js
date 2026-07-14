@@ -1,3 +1,4 @@
+// World Revolution News – korrigierte Radar-Filter, Version 2026-07
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -859,6 +860,44 @@ function displayCountryName(value) {
     return value;
 }
 
+function getRadarFacetMetadata() {
+    const metadata = allNewsData.find(item => item?.sourceType === 'radar-api-meta');
+    return metadata?.radarFacets && typeof metadata.radarFacets === 'object'
+        ? metadata.radarFacets
+        : {};
+}
+
+function normalizeFilterOption(value, label = value, count = 0) {
+    const cleanValue = String(value ?? '').trim();
+    const cleanLabel = String(label ?? cleanValue).trim();
+    if (!cleanValue || !cleanLabel) return null;
+    return {
+        value: cleanValue,
+        label: cleanLabel,
+        count: Number.isFinite(Number(count)) ? Number(count) : 0
+    };
+}
+
+function mergeFilterOptions(primaryOptions, fallbackValues, valueKey = 'value') {
+    const map = new Map();
+
+    const add = option => {
+        if (!option) return;
+        const normalized = typeof option === 'string'
+            ? normalizeFilterOption(option)
+            : normalizeFilterOption(option[valueKey] ?? option.value, option.label ?? option.formatted, option.count);
+        if (!normalized) return;
+        const key = normalized.value.toLocaleLowerCase();
+        const old = map.get(key);
+        if (!old || normalized.count > old.count) map.set(key, normalized);
+    };
+
+    (Array.isArray(primaryOptions) ? primaryOptions : []).forEach(add);
+    (Array.isArray(fallbackValues) ? fallbackValues : []).forEach(add);
+
+    return [...map.values()].sort((a, b) => a.label.localeCompare(b.label, currentLang));
+}
+
 function setDynamicSelectOptions(id, values, allLabel, labelFormatter = value => value) {
     const select = document.getElementById(id);
     if (!select) return;
@@ -870,10 +909,18 @@ function setDynamicSelectOptions(id, values, allLabel, labelFormatter = value =>
     allOption.textContent = allLabel;
     select.append(allOption);
 
-    values.forEach(value => {
+    values.forEach(item => {
+        const optionData = typeof item === 'object'
+            ? normalizeFilterOption(item.value, item.label, item.count)
+            : normalizeFilterOption(item, labelFormatter(item));
+        if (!optionData) return;
+
         const option = document.createElement('option');
-        option.value = value;
-        option.textContent = labelFormatter(value);
+        option.value = optionData.value;
+        const visibleLabel = labelFormatter(optionData.label);
+        option.textContent = optionData.count > 0
+            ? `${visibleLabel} (${optionData.count})`
+            : visibleLabel;
         select.append(option);
     });
 
@@ -884,24 +931,44 @@ function setDynamicSelectOptions(id, values, allLabel, labelFormatter = value =>
 
 function populateEventFilters() {
     const t = uiTexte[currentLang] || uiTexte.en;
-    const events = allNewsData.filter(article => articleMatchesCategory(article, 'Radar'));
-    const unique = key => [...new Set(events.flatMap(event => normalizedStringArray(event?.[key])))].sort((a, b) => a.localeCompare(b, currentLang));
-    const scalar = key => [...new Set(events.map(event => String(event?.[key] || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, currentLang));
+    const events = allNewsData.filter(article => articleMatchesCategory(article, 'Radar') && isEventArticle(article));
+    const facets = getRadarFacetMetadata();
 
-    setDynamicSelectOptions('event-country-filter', scalar('eventCountry'), t.eventAll, displayCountryName);
+    const arrayValues = key => [...new Set(
+        events.flatMap(event => normalizedStringArray(event?.[key]))
+    )].sort((a, b) => a.localeCompare(b, currentLang));
 
+    const scalarValues = key => [...new Set(
+        events.map(event => String(event?.[key] || '').trim()).filter(Boolean)
+    )].sort((a, b) => a.localeCompare(b, currentLang));
+
+    // Länder: offizieller Radar-Code (z. B. DE) plus Werte aus den Eventdaten.
+    const countryOptions = mergeFilterOptions(facets.country, scalarValues('eventCountry'));
+    setDynamicSelectOptions('event-country-filter', countryOptions, t.eventAll, displayCountryName);
+
+    // Städte werden absichtlich aus den tatsächlich geladenen Events erzeugt,
+    // damit die Länderauswahl die passende Städteliste einschränkt.
     const selectedCountry = document.getElementById('event-country-filter')?.value || '';
     const cityEvents = selectedCountry
-        ? events.filter(event => String(event?.eventCountry || '') === selectedCountry)
+        ? events.filter(event => String(event?.eventCountry || '').trim() === selectedCountry)
         : events;
-    const cities = [...new Set(cityEvents.map(event => String(event?.eventCity || '').trim()).filter(Boolean))]
+    const cities = [...new Set(cityEvents
+        .map(event => String(event?.eventCity || '').trim())
+        .filter(Boolean))]
         .sort((a, b) => a.localeCompare(b, currentLang));
-
     setDynamicSelectOptions('event-city-filter', cities, t.eventAll);
-    setDynamicSelectOptions('event-category-filter', unique('eventCategories'), t.eventAll);
-    setDynamicSelectOptions('event-tag-filter', unique('eventTags'), t.eventAll);
-    setDynamicSelectOptions('event-group-filter', unique('eventGroups'), t.eventAll);
+
+    // Radar liefert diese Facetten offiziell. Zusätzlich werden Werte anderer
+    // Eventquellen aufgenommen, damit z. B. Stressfaktor/Kontrapolis nicht fehlen.
+    const categoryOptions = mergeFilterOptions(facets.category, arrayValues('eventCategories'));
+    const tagOptions = mergeFilterOptions(facets.tag, arrayValues('eventTags'));
+    const groupOptions = mergeFilterOptions(facets.group, arrayValues('eventGroups'));
+
+    setDynamicSelectOptions('event-category-filter', categoryOptions, t.eventAll);
+    setDynamicSelectOptions('event-tag-filter', tagOptions, t.eventAll);
+    setDynamicSelectOptions('event-group-filter', groupOptions, t.eventAll);
 }
+
 
 function handleEventCountryChange() {
     const citySelect = document.getElementById('event-city-filter');
