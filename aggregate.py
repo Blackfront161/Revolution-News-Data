@@ -12,6 +12,11 @@ import time
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 
+try:
+    from trafilatura import extract as trafilatura_extract
+except ImportError:
+    trafilatura_extract = None
+
 # --- KONFIGURATION & QUELLEN ---
 quellen = {
     "Global": [
@@ -388,6 +393,169 @@ def clean_image_url(url, base_url):
     if any(kw in filename for kw in LAYOUT_FILES): return None
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
+
+
+WAF_PHRASES = [
+    "please wait a moment while we ensure the security",
+    "protected by anubis",
+    "enable javascript and cookies",
+    "access denied",
+    "checking your browser"
+]
+
+TRUNCATION_HINTS = [
+    "read more", "continue reading", "weiterlesen", "lire la suite",
+    "leer más", "continua a leggere", "read the full article",
+    "zum vollständigen artikel", "[...]"
+]
+
+
+def normalize_article_text(value):
+    text = str(value or '').replace('\r\n', '\n').replace('\r', '\n')
+    lines = [line.strip() for line in text.split('\n')]
+    cleaned = []
+    previous = None
+    for line in lines:
+        if not line:
+            if cleaned and cleaned[-1] != '':
+                cleaned.append('')
+            continue
+        if line == previous:
+            continue
+        cleaned.append(line)
+        previous = line
+    return '\n'.join(cleaned).strip()
+
+
+def page_is_blocked(text):
+    lowered = str(text or '').lower()
+    return any(phrase in lowered for phrase in WAF_PHRASES)
+
+
+def text_looks_truncated(text):
+    clean = normalize_article_text(text)
+    lowered = clean.lower()
+    if len(clean) < 900:
+        return True
+    if clean.endswith('...') or clean.endswith('…'):
+        return True
+    tail = lowered[-350:]
+    return any(hint in tail for hint in TRUNCATION_HINTS)
+
+
+def extract_feed_text(entry):
+    candidates = []
+    try:
+        for content_item in entry.get('content', []) or []:
+            value = getattr(content_item, 'value', None)
+            if value is None and isinstance(content_item, dict):
+                value = content_item.get('value', '')
+            if value:
+                candidates.append(BeautifulSoup(str(value), 'html.parser').get_text(separator='\n\n'))
+    except Exception:
+        pass
+
+    for key in ('description', 'summary'):
+        try:
+            value = entry.get(key, '')
+            if value:
+                candidates.append(BeautifulSoup(str(value), 'html.parser').get_text(separator='\n\n'))
+        except Exception:
+            pass
+
+    candidates = [normalize_article_text(candidate) for candidate in candidates]
+    candidates = [candidate for candidate in candidates if candidate and not page_is_blocked(candidate)]
+    return max(candidates, key=len, default='')
+
+
+def extract_main_text_from_html(html, url):
+    if not html or page_is_blocked(html):
+        return ''
+
+    extracted = ''
+    if trafilatura_extract is not None:
+        try:
+            extracted = trafilatura_extract(
+                html,
+                url=url,
+                output_format='txt',
+                include_comments=False,
+                include_tables=False,
+                favor_recall=True,
+                deduplicate=True
+            ) or ''
+        except Exception as error:
+            print(f"  [TRAFILATURA-FEHLER] {url}: {type(error).__name__}: {error}")
+
+    extracted = normalize_article_text(extracted)
+    if len(extracted) >= 300 and not page_is_blocked(extracted):
+        return extracted
+
+    soup = BeautifulSoup(html, 'html.parser')
+    for tag in soup(['script', 'style', 'noscript', 'nav', 'footer', 'header', 'aside', 'form', 'svg']):
+        tag.decompose()
+
+    selectors = [
+        'article', 'main', '.entry-content', '.post-content', '.article-content',
+        '.article-body', '.field--name-body', '.node__content', '.story-body',
+        '[itemprop="articleBody"]'
+    ]
+    candidates = []
+    for selector in selectors:
+        for container in soup.select(selector):
+            paragraphs = [
+                node.get_text(' ', strip=True)
+                for node in container.find_all(['p', 'h2', 'h3', 'blockquote', 'li'])
+                if len(node.get_text(' ', strip=True)) > 25
+            ]
+            candidate = normalize_article_text('\n\n'.join(paragraphs))
+            if candidate:
+                candidates.append(candidate)
+
+    if not candidates:
+        paragraphs = [
+            node.get_text(' ', strip=True)
+            for node in soup.find_all(['p', 'h2', 'h3', 'blockquote'])
+            if len(node.get_text(' ', strip=True)) > 30
+        ]
+        candidates.append(normalize_article_text('\n\n'.join(paragraphs)))
+
+    candidates = [candidate for candidate in candidates if candidate and not page_is_blocked(candidate)]
+    return max(candidates, key=len, default='')
+
+
+def should_refresh_existing_article(article):
+    if not isinstance(article, dict):
+        return False
+    content = normalize_article_text(article.get('content', ''))
+    if content and len(content) >= 2000 and not text_looks_truncated(content):
+        return False
+
+    last_attempt = article.get('contentRefreshAttemptedAt')
+    if last_attempt:
+        try:
+            last_dt = datetime.fromisoformat(str(last_attempt).replace('Z', '+00:00'))
+            if last_dt.tzinfo is None:
+                last_dt = last_dt.replace(tzinfo=timezone.utc)
+            if datetime.now(timezone.utc) - last_dt < timedelta(days=7):
+                return False
+        except Exception:
+            pass
+    return True
+
+
+def choose_best_article_text(feed_text, page_text):
+    feed_text = normalize_article_text(feed_text)
+    page_text = normalize_article_text(page_text)
+    if not page_text:
+        return feed_text
+    if not feed_text:
+        return page_text
+    if text_looks_truncated(feed_text) and len(page_text) > len(feed_text):
+        return page_text
+    if len(page_text) >= len(feed_text) * 1.15:
+        return page_text
+    return feed_text
 
 
 # =================================================================
@@ -960,21 +1128,27 @@ for kontinent, feeds in quellen.items():
                 continue
 
             # IST DER ARTIKEL SCHON BEKANNT?
-            # Dann wird nicht noch eine Kopie gespeichert. Stattdessen ergänzen wir
-            # die neue Kategorie am bereits vorhandenen Artikel.
-            if link in archiv_dict:
-                category_added = add_category(archiv_dict[link], kontinent)
+            # Normalerweise wird nur die neue Kategorie ergänzt. Kurze oder offensichtlich
+            # gekürzte Alttexte werden höchstens einmal pro Woche erneut geprüft.
+            existing_article = archiv_dict.get(link)
+            refresh_existing = False
+            if existing_article is not None:
+                category_added = add_category(existing_article, kontinent)
                 if category_added:
                     print(f"  [KATEGORIE ERGÄNZT] {title} -> {kontinent}")
                 if is_radar:
                     radar_count += 1
-                continue
+                    continue
+                refresh_existing = should_refresh_existing_article(existing_article)
+                if not refresh_existing:
+                    continue
+                print(f"  [VOLLTEXT-PRÜFUNG] Bereits bekannter, kurzer Artikel: {title}")
 
             # Manche Portale verwenden unterschiedliche Links für denselben Artikel.
             # Bei einem ausreichend langen, exakt gleichen Titel wird ebenfalls nur
             # die neue Kategorie ergänzt.
             known_title_link = titel_zu_link.get(title_lower)
-            if known_title_link and not is_radar and known_title_link in archiv_dict:
+            if not refresh_existing and known_title_link and not is_radar and known_title_link in archiv_dict:
                 category_added = add_category(archiv_dict[known_title_link], kontinent)
                 if category_added:
                     print(f"  [TITEL-DUBLETTE, KATEGORIE ERGÄNZT] {title} -> {kontinent}")
@@ -1016,53 +1190,45 @@ for kontinent, feeds in quellen.items():
                             image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
                             if image_url: break
 
-            # Text extrahieren (Der langsame Teil - aber auf 4 Limitiert!)
+            # Alle Textvarianten des Feeds werden verglichen. Manche Portale
+            # liefern den Volltext in content:encoded, andere in summary.
             if not is_radar:
-                try:
-                    if 'content' in entry and len(entry.content) > 0:
-                        c_obj = entry.content[0]
-                        val = c_obj.value if hasattr(c_obj, 'value') else (c_obj.get('value', '') if isinstance(c_obj, dict) else '')
-                        full_text = BeautifulSoup(str(val), 'html.parser').get_text(separator="\n\n").strip()
-                except:
-                    pass
+                full_text = extract_feed_text(entry)
 
-            if link and not is_radar and len(full_text) < 300:
+            # Bei wahrscheinlich gekürzten Feeds wird zusätzlich die Artikelseite
+            # geladen. Trafilatura entfernt Navigation, Werbung und Seitenleisten.
+            # Schutzsysteme wie Anubis werden nicht umgangen.
+            should_fetch_page = (
+                link and not is_radar and
+                (text_looks_truncated(full_text) or len(full_text) < 2000)
+            )
+            if should_fetch_page:
                 try:
-                    time.sleep(1.5) # Pflichtpause, damit wir nicht blockiert werden
+                    time.sleep(1.0)
                     html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     html_req.raise_for_status()
                     soup = BeautifulSoup(html_req.text, 'html.parser')
-                    
+
                     if not image_url:
                         og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
                         if og_img:
                             image_url = clean_image_url(og_img.get('content'), link)
-                    
+
                     if not image_url:
                         for img in soup.find_all('img'):
                             src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                             image_url = clean_image_url(src, link)
-                            if image_url: break
+                            if image_url:
+                                break
 
-                    paragraphs = soup.find_all('p')
-                    text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
-                    full_text = "\n\n".join(text_blocks)
-                    
-                    waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
-                    if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
-                        full_text = "" 
+                    page_text = extract_main_text_from_html(html_req.text, link)
+                    full_text = choose_best_article_text(full_text, page_text)
                 except requests.RequestException as error:
                     print(f"  [ARTIKEL-FEHLER] {link}: {error}")
                 except Exception as error:
                     print(f"  [EXTRAKTIONS-FEHLER] {link}: {type(error).__name__}: {error}")
-            
-            if not is_radar and (not full_text or len(full_text) < 150) and 'description' in entry:
-                try:
-                    full_text = BeautifulSoup(str(entry.description), 'html.parser').get_text(separator="\n\n").strip()
-                except:
-                    pass
 
-            clean_text = full_text.strip()
+            clean_text = normalize_article_text(full_text)
             
             if any(bad in clean_text.lower() for bad in SPAM_BLACKLIST):
                 continue
@@ -1070,17 +1236,28 @@ for kontinent, feeds in quellen.items():
             if is_radar:
                 if clean_text == "":
                     clean_text = "Weitere Infos zum Termin auf der Originalseite."
-            elif not is_radar and "anarchist news" not in feed['name'].lower() and title.lower() in clean_text.lower() and len(clean_text) < len(title) + 150:
-                clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
             elif not is_radar and clean_text == "":
-                clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
+                clean_text = "⚠️ Der vollständige Text konnte von dieser Quelle nicht automatisch geladen werden. Bitte öffne den Originalartikel."
 
             if not image_url or not image_url.startswith('http'):
                 image_url = ""
 
             # =========================================================
-            # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
+            # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN ODER VOLLTEXT VERBESSERN
             # =========================================================
+            if refresh_existing and existing_article is not None:
+                existing_article['contentRefreshAttemptedAt'] = datetime.now(timezone.utc).isoformat()
+                old_text = normalize_article_text(existing_article.get('content', ''))
+                if clean_text and not clean_text.startswith('⚠️') and len(clean_text) > len(old_text) + 100:
+                    existing_article['content'] = clean_text
+                    print(f"  [VOLLTEXT AKTUALISIERT] {title}: {len(old_text)} -> {len(clean_text)} Zeichen")
+                if image_url and not existing_article.get('image'):
+                    existing_article['image'] = image_url
+                if author and str(existing_article.get('author', '')).lower() in ('', 'unknown'):
+                    existing_article['author'] = author
+                register_title(existing_article)
+                continue
+
             archiv_dict[link] = {
                 "type": "event" if is_radar else "article",
                 "sourceType": "event-feed" if is_radar else "rss",

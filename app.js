@@ -331,6 +331,22 @@ Object.keys(uiTexte).forEach(lang => {
     Object.assign(uiTexte[lang], eventUiTexte[lang] || eventUiTexte.en);
 });
 
+const podcastUiTexte = {
+    en: { btnPodcast:"Podcast", podcastTitle:"Podcast player", podcastPreparing:"Preparing article…", podcastTranslating:"Translating full article…", podcastSpeaking:"Playing", podcastPaused:"Paused", podcastFinished:"Finished", podcastPause:"Pause", podcastResume:"Resume", podcastStop:"Stop", podcastVoice:"Voice", podcastSpeed:"Speed", podcastAutoVoice:"Automatic voice", podcastNoVoice:"No matching voice is installed; the browser default will be used.", podcastUnsupported:"Text-to-speech is not supported by this browser.", podcastTranslationFailed:"The article could not be translated for playback.", podcastLocal:"local", podcastOnline:"online" },
+    de: { btnPodcast:"Podcast", podcastTitle:"Podcast-Player", podcastPreparing:"Artikel wird vorbereitet…", podcastTranslating:"Vollständiger Artikel wird übersetzt…", podcastSpeaking:"Wiedergabe läuft", podcastPaused:"Pausiert", podcastFinished:"Beendet", podcastPause:"Pause", podcastResume:"Weiter", podcastStop:"Stopp", podcastVoice:"Stimme", podcastSpeed:"Tempo", podcastAutoVoice:"Automatische Stimme", podcastNoVoice:"Keine passende Stimme installiert; die Standardstimme des Browsers wird verwendet.", podcastUnsupported:"Dieser Browser unterstützt keine Vorlesefunktion.", podcastTranslationFailed:"Der Artikel konnte für die Wiedergabe nicht übersetzt werden.", podcastLocal:"lokal", podcastOnline:"online" },
+    es: { btnPodcast:"Pódcast", podcastTitle:"Reproductor de pódcast", podcastPreparing:"Preparando el artículo…", podcastTranslating:"Traduciendo el artículo completo…", podcastSpeaking:"Reproduciendo", podcastPaused:"En pausa", podcastFinished:"Finalizado", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Detener", podcastVoice:"Voz", podcastSpeed:"Velocidad", podcastAutoVoice:"Voz automática", podcastNoVoice:"No hay una voz adecuada instalada; se usará la voz predeterminada del navegador.", podcastUnsupported:"Este navegador no admite la lectura en voz alta.", podcastTranslationFailed:"No se pudo traducir el artículo para la reproducción.", podcastLocal:"local", podcastOnline:"en línea" },
+    fr: { btnPodcast:"Podcast", podcastTitle:"Lecteur podcast", podcastPreparing:"Préparation de l’article…", podcastTranslating:"Traduction de l’article complet…", podcastSpeaking:"Lecture en cours", podcastPaused:"En pause", podcastFinished:"Terminé", podcastPause:"Pause", podcastResume:"Continuer", podcastStop:"Arrêter", podcastVoice:"Voix", podcastSpeed:"Vitesse", podcastAutoVoice:"Voix automatique", podcastNoVoice:"Aucune voix adaptée n’est installée ; la voix par défaut du navigateur sera utilisée.", podcastUnsupported:"Ce navigateur ne prend pas en charge la lecture vocale.", podcastTranslationFailed:"L’article n’a pas pu être traduit pour la lecture.", podcastLocal:"locale", podcastOnline:"en ligne" },
+    it: { btnPodcast:"Podcast", podcastTitle:"Lettore podcast", podcastPreparing:"Preparazione dell’articolo…", podcastTranslating:"Traduzione dell’articolo completo…", podcastSpeaking:"Riproduzione in corso", podcastPaused:"In pausa", podcastFinished:"Terminato", podcastPause:"Pausa", podcastResume:"Continua", podcastStop:"Stop", podcastVoice:"Voce", podcastSpeed:"Velocità", podcastAutoVoice:"Voce automatica", podcastNoVoice:"Non è installata una voce adatta; verrà usata la voce predefinita del browser.", podcastUnsupported:"Questo browser non supporta la lettura vocale.", podcastTranslationFailed:"Non è stato possibile tradurre l’articolo per la riproduzione.", podcastLocal:"locale", podcastOnline:"online" },
+    pt: { btnPodcast:"Podcast", podcastTitle:"Leitor de podcast", podcastPreparing:"A preparar o artigo…", podcastTranslating:"A traduzir o artigo completo…", podcastSpeaking:"A reproduzir", podcastPaused:"Em pausa", podcastFinished:"Terminado", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Parar", podcastVoice:"Voz", podcastSpeed:"Velocidade", podcastAutoVoice:"Voz automática", podcastNoVoice:"Não está instalada uma voz adequada; será usada a voz predefinida do navegador.", podcastUnsupported:"Este navegador não suporta leitura em voz alta.", podcastTranslationFailed:"Não foi possível traduzir o artigo para reprodução.", podcastLocal:"local", podcastOnline:"online" },
+    ru: { btnPodcast:"Подкаст", podcastTitle:"Проигрыватель подкаста", podcastPreparing:"Подготовка статьи…", podcastTranslating:"Перевод полной статьи…", podcastSpeaking:"Воспроизведение", podcastPaused:"Пауза", podcastFinished:"Завершено", podcastPause:"Пауза", podcastResume:"Продолжить", podcastStop:"Стоп", podcastVoice:"Голос", podcastSpeed:"Скорость", podcastAutoVoice:"Автоматический голос", podcastNoVoice:"Подходящий голос не установлен; будет использован голос браузера по умолчанию.", podcastUnsupported:"Этот браузер не поддерживает озвучивание текста.", podcastTranslationFailed:"Не удалось перевести статью для воспроизведения.", podcastLocal:"локальный", podcastOnline:"онлайн" },
+    el: { btnPodcast:"Podcast", podcastTitle:"Αναπαραγωγή podcast", podcastPreparing:"Προετοιμασία άρθρου…", podcastTranslating:"Μετάφραση ολόκληρου του άρθρου…", podcastSpeaking:"Αναπαραγωγή", podcastPaused:"Παύση", podcastFinished:"Ολοκληρώθηκε", podcastPause:"Παύση", podcastResume:"Συνέχεια", podcastStop:"Διακοπή", podcastVoice:"Φωνή", podcastSpeed:"Ταχύτητα", podcastAutoVoice:"Αυτόματη φωνή", podcastNoVoice:"Δεν υπάρχει εγκατεστημένη κατάλληλη φωνή· θα χρησιμοποιηθεί η προεπιλεγμένη φωνή του προγράμματος περιήγησης.", podcastUnsupported:"Αυτό το πρόγραμμα περιήγησης δεν υποστηρίζει εκφώνηση κειμένου.", podcastTranslationFailed:"Το άρθρο δεν μπόρεσε να μεταφραστεί για αναπαραγωγή.", podcastLocal:"τοπική", podcastOnline:"online" },
+    tr: { btnPodcast:"Podcast", podcastTitle:"Podcast oynatıcı", podcastPreparing:"Makale hazırlanıyor…", podcastTranslating:"Makalenin tamamı çevriliyor…", podcastSpeaking:"Oynatılıyor", podcastPaused:"Duraklatıldı", podcastFinished:"Bitti", podcastPause:"Duraklat", podcastResume:"Devam", podcastStop:"Durdur", podcastVoice:"Ses", podcastSpeed:"Hız", podcastAutoVoice:"Otomatik ses", podcastNoVoice:"Uygun bir ses yüklü değil; tarayıcının varsayılan sesi kullanılacak.", podcastUnsupported:"Bu tarayıcı sesli okumayı desteklemiyor.", podcastTranslationFailed:"Makale oynatma için çevrilemedi.", podcastLocal:"yerel", podcastOnline:"çevrimiçi" }
+};
+
+Object.keys(uiTexte).forEach(lang => {
+    Object.assign(uiTexte[lang], podcastUiTexte[lang] || podcastUiTexte.en);
+});
+
 let currentLang = "en";
 let activeKontinent = "Global"; 
 let allNewsData = []; 
@@ -343,9 +359,414 @@ let isRendering = false;
 let currentSourceFilter = "ALL"; 
 let zineArticles = []; 
 
+const translationCache = new Map();
+const speechLanguageTags = {
+    en: 'en-US', de: 'de-DE', es: 'es-ES', fr: 'fr-FR', it: 'it-IT',
+    pt: 'pt-PT', ru: 'ru-RU', el: 'el-GR', tr: 'tr-TR'
+};
+let podcastVoices = [];
+let podcastState = {
+    articleId: null,
+    chunks: [],
+    index: 0,
+    paused: false,
+    loading: false,
+    stopped: true,
+    utterance: null
+};
+
 function setTxt(id, text) { const e = document.getElementById(id); if (e && text) e.innerText = text; }
 function setHtml(id, html) { const e = document.getElementById(id); if (e && html) e.innerHTML = html; }
 function setPh(id, text) { const e = document.getElementById(id); if (e && text) e.placeholder = text; }
+
+function getTargetLanguageName() {
+    const languageSelect = document.getElementById('ui-language');
+    return languageSelect?.options?.[languageSelect.selectedIndex]?.text || 'English';
+}
+
+function getGenderInstruction() {
+    return currentLang === 'de'
+        ? ' Verwende konsequent geschlechtergerechte deutsche Sprache mit Gendersternchen, zum Beispiel Aktivist*innen, Arbeiter*innen und Autor*innen. Vermeide das generische Maskulinum. Verändere Eigennamen, Organisationsnamen und direkte Zitate nicht.'
+        : '';
+}
+
+function createArticleChunks(rawText, maxLength = 1800) {
+    const paragraphs = String(rawText || '').split(/\n\n+/).map(value => value.trim()).filter(Boolean);
+    const chunks = [];
+    let currentChunk = '';
+
+    for (const paragraph of paragraphs) {
+        if (paragraph.length > maxLength) {
+            if (currentChunk) {
+                chunks.push(currentChunk);
+                currentChunk = '';
+            }
+            for (let start = 0; start < paragraph.length; start += maxLength) {
+                chunks.push(paragraph.slice(start, start + maxLength));
+            }
+            continue;
+        }
+
+        if (currentChunk && currentChunk.length + paragraph.length + 2 > maxLength) {
+            chunks.push(currentChunk);
+            currentChunk = paragraph;
+        } else {
+            currentChunk += (currentChunk ? '\n\n' : '') + paragraph;
+        }
+    }
+
+    if (currentChunk) chunks.push(currentChunk);
+    return chunks;
+}
+
+function translationCacheKey(article) {
+    return `${article?.link || article?.title || 'article'}::${currentLang}`;
+}
+
+function parseTranslatedTitleAndText(value, fallbackTitle = '') {
+    const cleanValue = cleanTranslationOutput(value);
+    const parts = cleanValue.split('---');
+    if (parts.length >= 2) {
+        return {
+            title: parts.shift().trim() || fallbackTitle,
+            text: parts.join('---').trim()
+        };
+    }
+    return { title: fallbackTitle, text: cleanValue };
+}
+
+async function translateFullArticleForLanguage(idNum, onProgress = null) {
+    const article = currentFilteredItems[idNum];
+    if (!article) return { error: true, message: 'Artikel nicht gefunden.' };
+
+    const key = translationCacheKey(article);
+    if (translationCache.has(key)) {
+        return { error: false, ...translationCache.get(key), cached: true };
+    }
+
+    const originalTitle = String(article.title || '').trim();
+    const originalText = String(article.content || '').trim();
+    if (!originalText) {
+        return {
+            error: true,
+            message: currentLang === 'de'
+                ? 'Dieser Artikel enthält keinen übersetzbaren Text.'
+                : 'This article contains no text to translate.'
+        };
+    }
+
+    const targetLanguage = getTargetLanguageName();
+    const genderInstruction = getGenderInstruction();
+    const chunks = createArticleChunks(originalText);
+    let translatedTitle = originalTitle;
+    const translatedParts = [];
+
+    for (let index = 0; index < chunks.length; index++) {
+        if (typeof onProgress === 'function') onProgress(index + 1, chunks.length);
+
+        const promptText = index === 0
+            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${originalTitle}\n\nText: ${chunks[index]}`
+            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction} Output only the translated continuation. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nText: ${chunks[index]}`;
+
+        const result = await fetchFromGemini(promptText);
+        if (result.error || !result.text) return result;
+
+        if (index === 0) {
+            const parsed = parseTranslatedTitleAndText(result.text, originalTitle);
+            translatedTitle = parsed.title;
+            if (parsed.text) translatedParts.push(parsed.text);
+        } else {
+            translatedParts.push(cleanTranslationOutput(result.text));
+        }
+    }
+
+    const translated = {
+        title: translatedTitle,
+        text: translatedParts.filter(Boolean).join('\n\n'),
+        language: currentLang
+    };
+    translationCache.set(key, translated);
+    return { error: false, ...translated };
+}
+
+function applyFullTranslationToCard(idNum, translated) {
+    const titleEl = document.getElementById(`title-${idNum}`);
+    const teaserEl = document.getElementById(`teaser-${idNum}`);
+    const contentEl = document.getElementById(`content-${idNum}`);
+    const btnEl = document.getElementById(`btn-${idNum}`);
+    const card = document.getElementById(`card-${idNum}`);
+    const t = uiTexte[currentLang] || uiTexte.en;
+
+    if (titleEl && translated.title) {
+        titleEl.textContent = translated.title;
+        titleEl.classList.add('translated');
+    }
+    if (contentEl) {
+        contentEl.textContent = translated.text || '';
+    }
+    if (teaserEl) {
+        const sentence = String(translated.text || '').match(/[^.!?]+[.!?]+/)?.[0];
+        teaserEl.textContent = sentence || String(translated.text || '').slice(0, 180) + (translated.text?.length > 180 ? '…' : '');
+    }
+    if (btnEl) {
+        btnEl.innerHTML = `[ ${t.btnDone} ]`;
+        btnEl.removeAttribute('title');
+    }
+    if (card) {
+        card.dataset.translated = 'full';
+        card.dataset.translationLanguage = currentLang;
+    }
+}
+
+function splitTextForSpeech(value, maxLength = 280) {
+    const cleanText = String(value || '')
+        .replace(/\s+/g, ' ')
+        .replace(/https?:\/\/\S+/g, '')
+        .trim();
+    if (!cleanText) return [];
+
+    const sentences = cleanText.match(/[^.!?…]+[.!?…]+|[^.!?…]+$/g) || [cleanText];
+    const chunks = [];
+    let current = '';
+
+    for (const sentenceRaw of sentences) {
+        const sentence = sentenceRaw.trim();
+        if (!sentence) continue;
+
+        if (sentence.length > maxLength) {
+            if (current) {
+                chunks.push(current);
+                current = '';
+            }
+            const words = sentence.split(/\s+/);
+            let wordChunk = '';
+            for (const word of words) {
+                if (wordChunk && wordChunk.length + word.length + 1 > maxLength) {
+                    chunks.push(wordChunk);
+                    wordChunk = word;
+                } else {
+                    wordChunk += (wordChunk ? ' ' : '') + word;
+                }
+            }
+            if (wordChunk) chunks.push(wordChunk);
+            continue;
+        }
+
+        if (current && current.length + sentence.length + 1 > maxLength) {
+            chunks.push(current);
+            current = sentence;
+        } else {
+            current += (current ? ' ' : '') + sentence;
+        }
+    }
+
+    if (current) chunks.push(current);
+    return chunks;
+}
+
+function updatePodcastUiText() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    setTxt('txt-podcast-voice', t.podcastVoice);
+    setTxt('txt-podcast-speed', t.podcastSpeed);
+    setTxt('btn-podcast-stop', t.podcastStop);
+    const pauseButton = document.getElementById('btn-podcast-pause');
+    if (pauseButton) pauseButton.textContent = podcastState.paused ? t.podcastResume : t.podcastPause;
+    const title = document.getElementById('podcast-player-title');
+    if (title && podcastState.articleId === null) title.textContent = t.podcastTitle;
+}
+
+function refreshPodcastVoices() {
+    if (!('speechSynthesis' in window)) return;
+    podcastVoices = window.speechSynthesis.getVoices() || [];
+    populatePodcastVoiceOptions();
+}
+
+function populatePodcastVoiceOptions() {
+    const select = document.getElementById('podcast-voice-select');
+    if (!select) return;
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const previous = localStorage.getItem(`wrn_podcast_voice_${currentLang}`) || select.value;
+    const languagePrefix = (speechLanguageTags[currentLang] || currentLang).split('-')[0].toLowerCase();
+    const matching = podcastVoices
+        .filter(voice => String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
+        .sort((a, b) => Number(b.localService) - Number(a.localService) || a.name.localeCompare(b.name));
+
+    select.textContent = '';
+    const autoOption = document.createElement('option');
+    autoOption.value = '';
+    autoOption.textContent = t.podcastAutoVoice;
+    select.append(autoOption);
+
+    matching.forEach(voice => {
+        const option = document.createElement('option');
+        option.value = voice.voiceURI || voice.name;
+        option.textContent = `${voice.name} (${voice.lang}, ${voice.localService ? t.podcastLocal : t.podcastOnline})`;
+        select.append(option);
+    });
+
+    if ([...select.options].some(option => option.value === previous)) select.value = previous;
+}
+
+function getPodcastVoice() {
+    const selected = document.getElementById('podcast-voice-select')?.value || '';
+    const languagePrefix = (speechLanguageTags[currentLang] || currentLang).split('-')[0].toLowerCase();
+    if (selected) {
+        const exact = podcastVoices.find(voice => (voice.voiceURI || voice.name) === selected);
+        if (exact) return exact;
+    }
+    return podcastVoices.find(voice => voice.localService && String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
+        || podcastVoices.find(voice => String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
+        || null;
+}
+
+function setPodcastStatus(text, progress = '') {
+    const status = document.getElementById('podcast-player-status');
+    const progressEl = document.getElementById('podcast-player-progress');
+    if (status) status.textContent = text || '';
+    if (progressEl) progressEl.textContent = progress || '';
+}
+
+function speakCurrentPodcastChunk() {
+    if (!('speechSynthesis' in window) || podcastState.stopped || podcastState.paused) return;
+    const t = uiTexte[currentLang] || uiTexte.en;
+
+    if (podcastState.index >= podcastState.chunks.length) {
+        podcastState.stopped = true;
+        setPodcastStatus(t.podcastFinished, `${podcastState.chunks.length}/${podcastState.chunks.length}`);
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(podcastState.chunks[podcastState.index]);
+    utterance.lang = speechLanguageTags[currentLang] || currentLang;
+    utterance.rate = Number(document.getElementById('podcast-rate-select')?.value || 1);
+    const voice = getPodcastVoice();
+    if (voice) utterance.voice = voice;
+
+    utterance.onend = () => {
+        if (podcastState.stopped) return;
+        podcastState.index += 1;
+        speakCurrentPodcastChunk();
+    };
+    utterance.onerror = event => {
+        if (podcastState.stopped || event.error === 'canceled' || event.error === 'interrupted') return;
+        podcastState.stopped = true;
+        setPodcastStatus(`${t.podcastUnsupported} (${event.error || 'error'})`);
+    };
+
+    podcastState.utterance = utterance;
+    setPodcastStatus(t.podcastSpeaking, `${podcastState.index + 1}/${podcastState.chunks.length}`);
+    window.speechSynthesis.speak(utterance);
+}
+
+async function startPodcast(idNum) {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+        alert(t.podcastUnsupported);
+        return;
+    }
+
+    stopPodcast(false);
+    podcastState.articleId = idNum;
+    podcastState.loading = true;
+    podcastState.stopped = false;
+    podcastState.paused = false;
+
+    const player = document.getElementById('podcast-player');
+    const playerTitle = document.getElementById('podcast-player-title');
+    const article = currentFilteredItems[idNum];
+    const podcastButton = document.getElementById(`podcast-${idNum}`);
+    const card = document.getElementById(`card-${idNum}`);
+    if (player) player.hidden = false;
+    if (playerTitle) playerTitle.textContent = article?.title || t.podcastTitle;
+    if (podcastButton) podcastButton.innerHTML = `${starSpinner} <span>[ ${t.podcastPreparing} ]</span>`;
+    setPodcastStatus(t.podcastTranslating, '0%');
+
+    const result = await translateFullArticleForLanguage(idNum, (current, total) => {
+        const percent = Math.round((current - 1) / Math.max(total, 1) * 100);
+        setPodcastStatus(t.podcastTranslating, `${percent}%`);
+    });
+
+    if (result.error || !result.text) {
+        podcastState.loading = false;
+        podcastState.stopped = true;
+        if (podcastButton) podcastButton.innerHTML = `[ 🎧 ${t.btnPodcast} ]`;
+        setPodcastStatus(`${t.podcastTranslationFailed} ${result.message || ''}`.trim());
+        showTranslationError(document.getElementById(`btn-${idNum}`), card, result);
+        return;
+    }
+
+    applyFullTranslationToCard(idNum, result);
+    if (playerTitle) playerTitle.textContent = result.title || article?.title || t.podcastTitle;
+    if (podcastButton) podcastButton.innerHTML = `[ 🎧 ${t.btnPodcast} ]`;
+
+    const voice = getPodcastVoice();
+    if (!voice) {
+        setPodcastStatus(t.podcastNoVoice);
+    }
+
+    podcastState.chunks = splitTextForSpeech(`${result.title}. ${result.text}`);
+    podcastState.index = 0;
+    podcastState.loading = false;
+    podcastState.stopped = false;
+    podcastState.paused = false;
+    updatePodcastUiText();
+    window.speechSynthesis.cancel();
+    window.setTimeout(speakCurrentPodcastChunk, 80);
+}
+
+function togglePodcastPause() {
+    if (!('speechSynthesis' in window) || podcastState.loading || podcastState.stopped) return;
+    const t = uiTexte[currentLang] || uiTexte.en;
+    if (podcastState.paused) {
+        window.speechSynthesis.resume();
+        podcastState.paused = false;
+        setPodcastStatus(t.podcastSpeaking, `${podcastState.index + 1}/${podcastState.chunks.length}`);
+    } else {
+        window.speechSynthesis.pause();
+        podcastState.paused = true;
+        setPodcastStatus(t.podcastPaused, `${podcastState.index + 1}/${podcastState.chunks.length}`);
+    }
+    updatePodcastUiText();
+}
+
+function stopPodcast(hidePlayer = true) {
+    if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    podcastState = {
+        articleId: null,
+        chunks: [],
+        index: 0,
+        paused: false,
+        loading: false,
+        stopped: true,
+        utterance: null
+    };
+    const player = document.getElementById('podcast-player');
+    if (player && hidePlayer) player.hidden = true;
+    setPodcastStatus('');
+    updatePodcastUiText();
+}
+
+function changePodcastRate(value) {
+    localStorage.setItem('wrn_podcast_rate', String(value || 1));
+}
+
+function changePodcastVoice() {
+    const value = document.getElementById('podcast-voice-select')?.value || '';
+    localStorage.setItem(`wrn_podcast_voice_${currentLang}`, value);
+}
+
+function initializePodcast() {
+    const rateSelect = document.getElementById('podcast-rate-select');
+    const savedRate = localStorage.getItem('wrn_podcast_rate') || '1';
+    if (rateSelect && [...rateSelect.options].some(option => option.value === savedRate)) {
+        rateSelect.value = savedRate;
+    }
+    updatePodcastUiText();
+    refreshPodcastVoices();
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.addEventListener('voiceschanged', refreshPodcastVoices);
+    }
+}
 
 
 function isEventArticle(article) {
@@ -401,59 +822,19 @@ function eventIsFree(article) {
 function eventMatchesSpecialFilters(article) {
     if (!isEventArticle(article)) return false;
 
-    const now = Date.now();
-    const preset = document.getElementById('event-date-filter')?.value || 'upcoming';
-    const start = getEventStartMs(article);
-    const end = getEventEndMs(article) || start;
-
-    if (preset === 'upcoming' && end < now - (2 * 60 * 60 * 1000)) return false;
-    if (preset === 'today') {
-        const [from, to] = getLocalDayBounds(new Date());
-        if (!eventOverlaps(article, from, to)) return false;
-    }
-    if (preset === 'tomorrow') {
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const [from, to] = getLocalDayBounds(tomorrow);
-        if (!eventOverlaps(article, from, to)) return false;
-    }
-    if (preset === 'weekend') {
-        const date = new Date();
-        const weekday = date.getDay();
-        const daysUntilSaturday = weekday === 6 ? 0 : (7 - weekday) % 7 || 7;
-        const saturday = new Date(date);
-        saturday.setDate(date.getDate() + daysUntilSaturday);
-        saturday.setHours(0, 0, 0, 0);
-        const monday = new Date(saturday);
-        monday.setDate(monday.getDate() + 2);
-        if (!eventOverlaps(article, saturday.getTime(), monday.getTime())) return false;
-    }
-    if (preset === '7days' && !eventOverlaps(article, now - 7200000, now + 7 * 86400000)) return false;
-    if (preset === '30days' && !eventOverlaps(article, now - 7200000, now + 30 * 86400000)) return false;
-
-    const fromValue = document.getElementById('event-from-date')?.value;
-    if (fromValue) {
-        const fromMs = new Date(`${fromValue}T00:00:00`).getTime();
-        if (end < fromMs) return false;
-    }
-    const toValue = document.getElementById('event-to-date')?.value;
-    if (toValue) {
-        const toMs = new Date(`${toValue}T23:59:59.999`).getTime();
-        if (start > toMs) return false;
-    }
+    // Abgelaufene Termine werden ohne zusätzlichen Filterknopf ausgeblendet.
+    // Der zweistündige Puffer verhindert, dass ein gerade laufendes Event sofort verschwindet.
+    const end = getEventEndMs(article);
+    if (end && end < Date.now() - (2 * 60 * 60 * 1000)) return false;
 
     const exactChecks = [
         ['event-country-filter', String(article?.eventCountry || '')],
-        ['event-city-filter', String(article?.eventCity || '')],
-        ['event-mode-filter', String(article?.eventMode || 'unknown')]
+        ['event-city-filter', String(article?.eventCity || '')]
     ];
     for (const [id, articleValue] of exactChecks) {
         const selected = document.getElementById(id)?.value || '';
         if (selected && articleValue !== selected) return false;
     }
-
-    const postal = (document.getElementById('event-postal-filter')?.value || '').trim().toLowerCase();
-    if (postal && !String(article?.eventPostalCode || '').toLowerCase().includes(postal)) return false;
 
     const arrayChecks = [
         ['event-category-filter', article?.eventCategories],
@@ -464,12 +845,6 @@ function eventMatchesSpecialFilters(article) {
         const selected = document.getElementById(id)?.value || '';
         if (selected && !normalizedStringArray(values).includes(selected)) return false;
     }
-
-    const priceFilter = document.getElementById('event-price-filter')?.value || '';
-    const hasPrice = Boolean(String(article?.eventPrice || '').trim() || normalizedStringArray(article?.eventPriceCategories).length);
-    if (priceFilter === 'free' && !eventIsFree(article)) return false;
-    if (priceFilter === 'paid' && (!hasPrice || eventIsFree(article))) return false;
-    if (priceFilter === 'unknown' && hasPrice) return false;
 
     return true;
 }
@@ -514,25 +889,40 @@ function populateEventFilters() {
     const scalar = key => [...new Set(events.map(event => String(event?.[key] || '').trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, currentLang));
 
     setDynamicSelectOptions('event-country-filter', scalar('eventCountry'), t.eventAll, displayCountryName);
-    setDynamicSelectOptions('event-city-filter', scalar('eventCity'), t.eventAll);
+
+    const selectedCountry = document.getElementById('event-country-filter')?.value || '';
+    const cityEvents = selectedCountry
+        ? events.filter(event => String(event?.eventCountry || '') === selectedCountry)
+        : events;
+    const cities = [...new Set(cityEvents.map(event => String(event?.eventCity || '').trim()).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, currentLang));
+
+    setDynamicSelectOptions('event-city-filter', cities, t.eventAll);
     setDynamicSelectOptions('event-category-filter', unique('eventCategories'), t.eventAll);
     setDynamicSelectOptions('event-tag-filter', unique('eventTags'), t.eventAll);
     setDynamicSelectOptions('event-group-filter', unique('eventGroups'), t.eventAll);
 }
 
+function handleEventCountryChange() {
+    const citySelect = document.getElementById('event-city-filter');
+    if (citySelect) citySelect.value = '';
+    populateEventFilters();
+    applyFilters();
+}
+
 function resetEventFilters() {
-    const defaults = {
-        'event-date-filter': 'upcoming',
-        'event-from-date': '', 'event-to-date': '',
-        'event-country-filter': '', 'event-city-filter': '',
-        'event-postal-filter': '', 'event-category-filter': '',
-        'event-tag-filter': '', 'event-group-filter': '',
-        'event-price-filter': '', 'event-mode-filter': ''
-    };
-    Object.entries(defaults).forEach(([id, value]) => {
+    const ids = [
+        'event-country-filter',
+        'event-city-filter',
+        'event-category-filter',
+        'event-tag-filter',
+        'event-group-filter'
+    ];
+    ids.forEach(id => {
         const element = document.getElementById(id);
-        if (element) element.value = value;
+        if (element) element.value = '';
     });
+    populateEventFilters();
     applyFilters();
 }
 
@@ -601,8 +991,10 @@ function clearAllData() {
 }
 
 function changeLanguage() {
+    const previousLang = currentLang;
     const langSelect = document.getElementById('ui-language');
     if(langSelect) { currentLang = langSelect.value; }
+    if (previousLang !== currentLang && podcastState.articleId !== null) stopPodcast();
     localStorage.setItem('wrn_system_lang', currentLang); 
     
     const t = uiTexte[currentLang] || uiTexte['en'];
@@ -616,9 +1008,10 @@ function changeLanguage() {
 
     setTxt('btn-open-info', "ℹ️ " + t.infoBtn); setTxt('txt-info-title', t.infoTitle); setHtml('txt-info-body', t.infoBody); setTxt('btn-open-feedback', t.fbBtn); setTxt('txt-fb-title', t.fbTitle); setPh('fb-text', t.fbPlace); setTxt('txt-captcha-q', t.fbCaptcha); setTxt('btn-fb-cancel', t.fbCancel); setTxt('btn-fb-send', t.fbSend);
 
-    setTxt('txt-event-filter-title', t.eventFilterTitle); setTxt('txt-event-date', t.eventDate); setTxt('opt-event-upcoming', t.eventUpcoming); setTxt('opt-event-today', t.eventToday); setTxt('opt-event-tomorrow', t.eventTomorrow); setTxt('opt-event-weekend', t.eventWeekend); setTxt('opt-event-7days', t.event7days); setTxt('opt-event-30days', t.event30days); setTxt('opt-event-all-dates', t.eventAllDates); setTxt('txt-event-from', t.eventFrom); setTxt('txt-event-to', t.eventTo); setTxt('txt-event-country', t.eventCountry); setTxt('txt-event-city', t.eventCity); setTxt('txt-event-postal', t.eventPostal); setTxt('txt-event-category', t.eventCategory); setTxt('txt-event-tag', t.eventTag); setTxt('txt-event-group', t.eventGroup); setTxt('txt-event-price', t.eventPrice); setTxt('txt-event-mode', t.eventMode); setTxt('opt-event-all-price', t.eventAll); setTxt('opt-event-free', t.eventFree); setTxt('opt-event-paid', t.eventPaid); setTxt('opt-event-unknown', t.eventUnknown); setTxt('opt-event-all-mode', t.eventAll); setTxt('opt-event-offline', t.eventOffline); setTxt('opt-event-online', t.eventOnline); setTxt('opt-event-mode-unknown', t.eventUnknown); setTxt('btn-event-reset', t.eventReset);
-    setPh('event-postal-filter', t.eventPostal);
+    setTxt('txt-event-filter-title', t.eventFilterTitle); setTxt('txt-event-country', t.eventCountry); setTxt('txt-event-city', t.eventCity); setTxt('txt-event-category', t.eventCategory); setTxt('txt-event-tag', t.eventTag); setTxt('txt-event-group', t.eventGroup); setTxt('btn-event-reset', t.eventReset);
     updateSortLabels();
+    updatePodcastUiText();
+    populatePodcastVoiceOptions();
     if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); } else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
@@ -963,6 +1356,7 @@ function renderNextBatch() {
                 <div class="button-row">
                     <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
                     <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
+                    <button class="btn-translate btn-podcast" id="podcast-${globalIndex}" onclick="startPodcast(${globalIndex})"><span>[ 🎧 ${escapeHtml(t.btnPodcast)} ]</span></button>
                     <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
                     <button class="btn-translate" style="border-color: #00FFCC; color: #00FFCC;" onclick="addToZine(${globalIndex})">[ 📄 ZINE ]</button>
                     <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${encodedArticleTitle}', '${encodedArticleLink}')">[ SHARE 🔗 ]</button>
@@ -1013,41 +1407,36 @@ async function toggleArticle(idNum, event) {
 
 
 async function translateArticle(idNum) {
-    const titleEl = document.getElementById('title-' + idNum);
-    const teaserEl = document.getElementById('teaser-' + idNum);
-    const contentEl = document.getElementById('content-' + idNum);
-    const btnEl = document.getElementById('btn-' + idNum);
-    const card = document.getElementById('card-' + idNum);
+    const titleEl = document.getElementById(`title-${idNum}`);
+    const teaserEl = document.getElementById(`teaser-${idNum}`);
+    const contentEl = document.getElementById(`content-${idNum}`);
+    const btnEl = document.getElementById(`btn-${idNum}`);
+    const card = document.getElementById(`card-${idNum}`);
+    const article = currentFilteredItems[idNum];
 
-    if (!titleEl || !teaserEl || !contentEl || !btnEl || !card) return;
+    if (!titleEl || !teaserEl || !contentEl || !btnEl || !card || !article) return;
+    const t = uiTexte[currentLang] || uiTexte.en;
 
-    const t = uiTexte[currentLang] || uiTexte['en'];
+    if (card.dataset.translated === 'translating') return;
+    if (card.dataset.translated === 'full' && card.dataset.translationLanguage === currentLang) return;
 
-    if (card.dataset.translated === "full" || card.dataset.translated === "translating") {
-        return;
-    }
+    try { markAsRead(article.link, idNum); } catch (error) {}
+    card.dataset.translated = 'translating';
 
-    try {
-        markAsRead(currentFilteredItems[idNum].link, idNum);
-    } catch (error) {}
-
-    card.dataset.translated = "translating";
-    const isExpanded = card.dataset.expanded === "true" || contentEl.style.display === "block";
-
-    const languageSelect = document.getElementById('ui-language');
-    let targetLanguage = "English";
-    if (languageSelect?.options?.[languageSelect.selectedIndex]) {
-        targetLanguage = languageSelect.options[languageSelect.selectedIndex].text;
-    }
-
-    const genderInstruction = currentLang === "de"
-        ? " Verwende konsequent geschlechtergerechte deutsche Sprache mit Gendersternchen, zum Beispiel Aktivist*innen, Arbeiter*innen und Autor*innen. Vermeide das generische Maskulinum. Verändere Eigennamen, Organisationsnamen und direkte Zitate nicht."
-        : "";
-
+    const isExpanded = card.dataset.expanded === 'true' || contentEl.style.display === 'block';
     if (!isExpanded) {
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
 
-        const promptText = `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${titleEl.innerText}\n\nText: ${teaserEl.innerText}`;
+        const originalText = String(article.content || '').trim();
+        let originalTeaser = originalText.slice(0, 500);
+        const sentence = originalText.match(/[^.!?]+[.!?]+/)?.[0];
+        if (sentence) originalTeaser = sentence;
+
+        const promptText = `Translate the title and text fluently into ${getTargetLanguageName()}.${getGenderInstruction()} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".
+
+Title: ${article.title || ''}
+
+Text: ${originalTeaser}`;
         const result = await fetchFromGemini(promptText);
 
         if (result.error || !result.text) {
@@ -1055,97 +1444,29 @@ async function translateArticle(idNum) {
             return;
         }
 
-        const parts = result.text.split("---");
-        if (parts.length >= 2) {
-            const translatedTitle = parts.shift().trim();
-            const translatedTeaser = parts.join("---").trim();
-            if (translatedTitle) titleEl.innerText = translatedTitle;
-            if (translatedTeaser) teaserEl.innerText = translatedTeaser;
-        } else {
-            teaserEl.innerText = result.text.trim();
-        }
-
+        const parsed = parseTranslatedTitleAndText(result.text, article.title || '');
+        if (parsed.title) titleEl.textContent = parsed.title;
+        if (parsed.text) teaserEl.textContent = parsed.text;
         titleEl.classList.add('translated');
         btnEl.innerHTML = `[ ${t.btnDone} ]`;
         btnEl.removeAttribute('title');
-        card.dataset.translated = "teaser";
+        card.dataset.translated = 'teaser';
+        card.dataset.translationLanguage = currentLang;
         return;
     }
 
-    const rawText = contentEl.innerText.trim();
-    if (!rawText) {
-        showTranslationError(btnEl, card, {
-            message: currentLang === "de"
-                ? "Dieser Artikel enthält keinen übersetzbaren Text."
-                : "This article contains no text to translate."
-        });
-        return;
-    }
-
-    // Lange Texte werden in handliche Teile zerlegt, damit das kostenlose
-    // Übersetzungsmodell nicht mit einer zu großen Anfrage überfordert wird.
-    const paragraphs = rawText.split(/\n\n+/);
-    const chunks = [];
-    let currentChunk = "";
-
-    for (const paragraph of paragraphs) {
-        if ((currentChunk.length + paragraph.length) > 1800) {
-            if (currentChunk.trim()) chunks.push(currentChunk.trim());
-            currentChunk = paragraph;
-        } else {
-            currentChunk += (currentChunk ? "\n\n" : "") + paragraph;
-        }
-    }
-    if (currentChunk.trim()) chunks.push(currentChunk.trim());
-
-    contentEl.textContent = "";
-
-    for (let index = 0; index < chunks.length; index++) {
-        const progressText = chunks.length > 1
-            ? `[ ${t.btnLoading} ${index + 1}/${chunks.length} ]`
-            : `[ ${t.btnLoading} ]`;
+    btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
+    const result = await translateFullArticleForLanguage(idNum, (current, total) => {
+        const progressText = total > 1 ? `[ ${t.btnLoading} ${current}/${total} ]` : `[ ${t.btnLoading} ]`;
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
+    });
 
-        const promptText = index === 0
-            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${titleEl.innerText}\n\nText: ${chunks[index]}`
-            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction} Output only the translated continuation. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nText: ${chunks[index]}`;
-
-        const result = await fetchFromGemini(promptText);
-
-        if (result.error || !result.text) {
-            const errorText = document.createElement('span');
-            errorText.style.color = '#FF0033';
-            errorText.textContent = currentLang === "de"
-                ? `[ Übersetzung abgebrochen: ${result.message || "unbekannter Fehler"} ]`
-                : `[ Translation stopped: ${result.message || "unknown error"} ]`;
-
-            if (contentEl.childNodes.length > 0) {
-                contentEl.append(document.createElement('br'), document.createElement('br'));
-            }
-            contentEl.append(errorText);
-            showTranslationError(btnEl, card, result);
-            return;
-        }
-
-        if (index === 0) {
-            const parts = result.text.split("---");
-            if (parts.length >= 2) {
-                const translatedTitle = parts.shift().trim();
-                const translatedText = parts.join("---").trim();
-                if (translatedTitle) titleEl.innerText = translatedTitle;
-                appendMultilineText(contentEl, translatedText);
-            } else {
-                appendMultilineText(contentEl, result.text);
-            }
-        } else {
-            appendMultilineText(contentEl, result.text, true);
-        }
+    if (result.error || !result.text) {
+        showTranslationError(btnEl, card, result);
+        return;
     }
 
-    titleEl.classList.add('translated');
-    btnEl.innerHTML = `[ ${t.btnDone} ]`;
-    btnEl.removeAttribute('title');
-    card.dataset.translated = "full";
+    applyFullTranslationToCard(idNum, result);
 }
 
 window.addEventListener('scroll', () => {
@@ -1168,7 +1489,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(savedTheme === "theme-neon" || savedTheme === "theme-terminal" || savedTheme === "theme-solarpunk") savedTheme = "theme-dark";
         const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
         
-        changeTheme(savedTheme); changeLanguage(); initialisiereApp(); 
+        changeTheme(savedTheme); changeLanguage(); initializePodcast(); initialisiereApp(); 
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(function(registrations) {
