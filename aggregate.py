@@ -1,10 +1,11 @@
-# World Revolution News – Quellen + Radar-Filter, Version 2026-07
+# World Revolution News – robuste Radar-Orts- und Zeitraumfilter, Version 2026-07
 import feedparser
 import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import json
 import html
+import re
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
@@ -635,6 +636,55 @@ RADAR_FIELDS = ",".join([
 ])
 
 RADAR_FILTER_FACETS = ("country", "city", "group", "category")
+RADAR_LOCATION_FIELDS = "title,address,timezone,map"
+RADAR_MAX_LOCATION_REQUESTS = 350
+RADAR_LOCATION_CACHE = {}
+RADAR_LOCATION_REQUEST_COUNT = 0
+
+# Namen, die in Radar-Ortstiteln vorkommen können. Das ist nur ein Rückfall,
+# falls ein einzelner Ort trotz API-Auflösung keine strukturierte Adresse liefert.
+RADAR_COUNTRY_ALIASES = {
+    "DE": ["deutschland", "germany", "allemagne", "alemania"],
+    "AT": ["österreich", "austria", "autriche"],
+    "CH": ["schweiz", "switzerland", "suisse", "svizzera"],
+    "FR": ["frankreich", "france"],
+    "NL": ["niederlande", "netherlands", "pays-bas", "nederland"],
+    "BE": ["belgien", "belgium", "belgique", "belgië"],
+    "IT": ["italien", "italy", "italia"],
+    "ES": ["spanien", "spain", "españa"],
+    "PT": ["portugal"],
+    "GB": ["vereinigtes königreich", "united kingdom", "great britain", "england", "scotland", "wales"],
+    "IE": ["irland", "ireland"],
+    "DK": ["dänemark", "denmark", "danmark"],
+    "SE": ["schweden", "sweden", "sverige"],
+    "NO": ["norwegen", "norway", "norge"],
+    "FI": ["finnland", "finland", "suomi"],
+    "PL": ["polen", "poland", "polska"],
+    "CZ": ["tschechien", "czechia", "czech republic", "česko"],
+    "GR": ["griechenland", "greece", "ελλάδα"],
+    "TR": ["türkei", "turkey", "türkiye"],
+    "RS": ["serbien", "serbia", "srbija"],
+    "HR": ["kroatien", "croatia", "hrvatska"],
+    "SI": ["slowenien", "slovenia", "slovenija"],
+    "HU": ["ungarn", "hungary", "magyarország"],
+    "RO": ["rumänien", "romania", "românia"],
+    "BG": ["bulgarien", "bulgaria", "българия"],
+    "UA": ["ukraine", "україна"],
+    "US": ["usa", "united states", "vereinigte staaten"],
+    "CA": ["kanada", "canada"],
+    "MX": ["mexiko", "mexico", "méxico"],
+    "BR": ["brasilien", "brazil", "brasil"],
+    "AR": ["argentinien", "argentina"],
+    "CL": ["chile"],
+    "CO": ["kolumbien", "colombia"],
+    "ZA": ["südafrika", "south africa"],
+    "MA": ["marokko", "morocco", "maroc"],
+    "TN": ["tunesien", "tunisia", "tunisie"],
+    "EG": ["ägypten", "egypt", "egypte"],
+    "KE": ["kenia", "kenya"],
+    "AU": ["australien", "australia"],
+    "NZ": ["neuseeland", "new zealand", "aotearoa"],
+}
 
 
 def as_list(value):
@@ -846,35 +896,176 @@ def radar_image_url(event):
     return walk(event.get("image")) or walk(event.get("flyer"))
 
 
+def fetch_radar_location_details(location):
+    """Lädt eine Radar-Ortsreferenz einmalig nach, wenn die Suche nur ID/Titel lieferte."""
+    global RADAR_LOCATION_REQUEST_COUNT
+
+    if not isinstance(location, dict):
+        return {}
+    if isinstance(location.get("address"), dict):
+        return location
+
+    location_id = first_text(location, "id", "uuid")
+    uri = first_text(location, "uri", "url")
+    cache_key = location_id or uri
+    if not cache_key:
+        return location
+
+    if cache_key in RADAR_LOCATION_CACHE:
+        cached = RADAR_LOCATION_CACHE[cache_key]
+        return {**location, **cached} if isinstance(cached, dict) else location
+
+    if RADAR_LOCATION_REQUEST_COUNT >= RADAR_MAX_LOCATION_REQUESTS:
+        return location
+
+    if location_id:
+        request_url = f"{RADAR_BASE_URL}/api/1.2/location/{location_id}.json"
+    else:
+        request_url = uri
+        if request_url and not request_url.endswith(".json"):
+            request_url += ".json"
+
+    try:
+        RADAR_LOCATION_REQUEST_COUNT += 1
+        response = session.get(
+            request_url,
+            params={"fields": RADAR_LOCATION_FIELDS, "language": "de"},
+            headers={**HEADERS, "Accept": "application/json"},
+            timeout=(8, 25)
+        )
+        response.raise_for_status()
+        payload = response.json()
+        if isinstance(payload, dict) and isinstance(payload.get("result"), dict):
+            payload = payload["result"]
+        resolved = payload if isinstance(payload, dict) else {}
+    except (requests.RequestException, ValueError) as error:
+        print(f"  [RADAR-ORT-FEHLER] {cache_key}: {error}")
+        resolved = {}
+
+    RADAR_LOCATION_CACHE[cache_key] = resolved
+    return {**location, **resolved}
+
+
+def match_known_city(raw_title, city_names):
+    raw = clean_radar_label(raw_title).casefold()
+    if not raw:
+        return ""
+    for city in sorted((clean_radar_label(value) for value in city_names if value), key=len, reverse=True):
+        if not city:
+            continue
+        pattern = rf"(?<!\w){re.escape(city.casefold())}(?!\w)"
+        if re.search(pattern, raw, flags=re.UNICODE):
+            return city
+    return ""
+
+
+def infer_country_from_title(raw_title):
+    raw = clean_radar_label(raw_title).casefold()
+    if not raw:
+        return ""
+    for code, aliases in RADAR_COUNTRY_ALIASES.items():
+        for alias in aliases:
+            if re.search(rf"(?<!\w){re.escape(alias.casefold())}(?!\w)", raw, flags=re.UNICODE):
+                return code
+    return ""
+
+
+def enrich_radar_event_locations(events, raw_facets):
+    """Ergänzt fehlende Stadt/Land-Werte aus Radar-Facetten und Ortstiteln."""
+    city_names = []
+    if isinstance(raw_facets, dict):
+        for item in raw_facets.get("city", []):
+            if isinstance(item, dict):
+                label = clean_radar_label(item.get("label") or item.get("value") or item.get("formatted"))
+                if label and label not in city_names:
+                    city_names.append(label)
+
+    # Erst Städte und direkt erkennbare Länder ergänzen.
+    for event in events:
+        raw_title = event.get("eventLocationRaw") or event.get("eventVenue") or event.get("eventAddress") or ""
+        if not event.get("eventCity"):
+            event["eventCity"] = match_known_city(raw_title, city_names)
+        if not event.get("eventCountry"):
+            event["eventCountry"] = infer_country_from_title(raw_title)
+
+    # Danach bekannte Stadt-Land-Kombinationen auf andere Events derselben Stadt übertragen.
+    city_to_country = {}
+    for event in events:
+        city = clean_radar_label(event.get("eventCity"))
+        country = clean_radar_label(event.get("eventCountry")).upper()
+        if city and country:
+            city_to_country.setdefault(city.casefold(), country)
+    for event in events:
+        city = clean_radar_label(event.get("eventCity"))
+        if city and not event.get("eventCountry"):
+            event["eventCountry"] = city_to_country.get(city.casefold(), "")
+
+
+def merge_radar_facets_from_events(target, events):
+    """Erzeugt Filterwerte zusätzlich direkt aus den fertig konvertierten Events."""
+    def add_value(facet_name, value):
+        value = clean_radar_label(value)
+        if not value:
+            return
+        if facet_name == "country" and len(value) == 2:
+            value = value.upper()
+        key = value.casefold()
+        existing = target[facet_name].get(key)
+        if existing:
+            existing["count"] += 1
+        else:
+            target[facet_name][key] = {
+                "value": value,
+                "label": value,
+                "filter": value,
+                "count": 1
+            }
+
+    for event in events:
+        add_value("country", event.get("eventCountry"))
+        add_value("city", event.get("eventCity"))
+        for value in event.get("eventGroups") or []:
+            add_value("group", value)
+        for value in event.get("eventCategories") or []:
+            add_value("category", value)
+
+
 def radar_location_data(event):
     locations = [item for item in radar_reference_items(event.get("offline")) if isinstance(item, dict)]
     if not locations:
         return {
             "venue": "", "address": "", "city": "", "country": "",
-            "postal_code": "", "timezone": "", "lat": "", "lon": ""
+            "postal_code": "", "timezone": "", "lat": "", "lon": "",
+            "raw_title": ""
         }
 
-    location = locations[0]
+    location = fetch_radar_location_details(locations[0])
 
-    # WICHTIG: address und map sind keine Referenzlisten, sondern normale
-    # verschachtelte Objekte. Die alte Version behandelte ihre einzelnen Werte
-    # fälschlich wie eine Liste. Dadurch blieben eventCity und eventCountry leer.
     address_value = location.get("address")
-    address = address_value if isinstance(address_value, dict) else {}
+    if isinstance(address_value, list):
+        address = next((item for item in address_value if isinstance(item, dict)), {})
+    else:
+        address = address_value if isinstance(address_value, dict) else {}
 
     map_value = location.get("map")
-    map_data = map_value if isinstance(map_value, dict) else {}
+    if isinstance(map_value, list):
+        map_data = next((item for item in map_value if isinstance(item, dict)), {})
+    else:
+        map_data = map_value if isinstance(map_value, dict) else {}
 
-    venue = clean_radar_label(first_text(location, "title", "name", "label"))
+    raw_title = clean_radar_label(first_text(location, "title", "name", "label"))
+    venue = clean_radar_label(first_text(address, "name_line", "organisation_name") or raw_title)
     city = clean_radar_label(first_text(address, "locality", "dependent_locality", "city"))
     country = clean_radar_label(first_text(address, "country", "country_code"))
     postal_code = clean_radar_label(first_text(address, "postal_code", "postcode"))
     street = clean_radar_label(first_text(address, "thoroughfare", "street"))
     premise = clean_radar_label(first_text(address, "premise", "house_number"))
 
-    # Manche Radar-Datensätze legen das Land als Objekt ab.
     if isinstance(address.get("country"), dict):
         country = clean_radar_label(first_text(address.get("country"), "iso2", "code", "name"))
+
+    if not country:
+        country = infer_country_from_title(raw_title)
 
     address_parts = []
     for part in (street, premise, postal_code, city, country):
@@ -892,7 +1083,8 @@ def radar_location_data(event):
         "postal_code": postal_code,
         "timezone": clean_radar_label(timezone_text),
         "lat": first_text(map_data, "lat", "latitude"),
-        "lon": first_text(map_data, "lon", "lng", "longitude")
+        "lon": first_text(map_data, "lon", "lng", "longitude"),
+        "raw_title": raw_title
     }
 
 
@@ -960,6 +1152,7 @@ def convert_radar_event(event):
         "eventEnd": timestamp_iso(end_ts),
         "eventDate": event_date,
         "eventVenue": location["venue"],
+        "eventLocationRaw": location["raw_title"],
         "eventAddress": location["address"],
         "eventCity": location["city"],
         "eventCountry": location["country"],
@@ -1027,11 +1220,26 @@ def fetch_radar_api_events():
 
         cursor = chunk_end
 
+    converted_events = list(events_by_id.values())
+
+    # Falls einzelne Orte trotz Auflösung nur einen Titel geliefert haben,
+    # werden Stadt und Land anhand der offiziellen Facetten ergänzt.
+    preliminary_facets = finalize_radar_facets(merged_facets)
+    enrich_radar_event_locations(converted_events, preliminary_facets)
+
+    # Filterwerte zusätzlich aus den tatsächlichen Events erzeugen. Dadurch
+    # funktionieren die Dropdowns auch dann, wenn Radar in einem Zeitfenster
+    # keine vollständigen Facetten mitsendet.
+    merge_radar_facets_from_events(merged_facets, converted_events)
     final_facets = finalize_radar_facets(merged_facets)
+
+    with_city = sum(1 for event in converted_events if event.get("eventCity"))
+    with_country = sum(1 for event in converted_events if event.get("eventCountry"))
     print("  [RADAR FILTER] " + ", ".join(
         f"{name}: {len(final_facets.get(name, []))}" for name in RADAR_FILTER_FACETS
     ))
-    return {"events": list(events_by_id.values()), "facets": final_facets}
+    print(f"  [RADAR ORTE] Stadt vorhanden: {with_city}/{len(converted_events)}, Land vorhanden: {with_country}/{len(converted_events)}, Orts-Nachfragen: {RADAR_LOCATION_REQUEST_COUNT}")
+    return {"events": converted_events, "facets": final_facets}
 
 
 def replace_radar_api_events(archive, new_events, radar_facets):

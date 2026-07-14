@@ -1,4 +1,4 @@
-// World Revolution News – korrigierte Radar-Filter, Version 2026-07
+// World Revolution News – robuste Radar-Orts- und Zeitraumfilter, Version 2026-07
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -317,15 +317,15 @@ Object.keys(uiTexte).forEach(lang => {
 
 
 const eventUiTexte = {
-    en: { eventFilterTitle:"Event filters", eventDate:"Date", eventUpcoming:"Upcoming", eventToday:"Today", eventTomorrow:"Tomorrow", eventWeekend:"This weekend", event7days:"Next 7 days", event30days:"Next 30 days", eventAllDates:"All dates", eventFrom:"From", eventTo:"To", eventCountry:"Country", eventCity:"City", eventPostal:"Postal code", eventCategory:"Category", eventTag:"Tag", eventGroup:"Group", eventPrice:"Price", eventMode:"Format", eventAll:"All", eventFree:"Free", eventPaid:"Paid", eventUnknown:"Unknown", eventOnline:"Online", eventOffline:"In person", eventReset:"Reset filters", eventStarts:"START:", eventPlace:"PLACE:", eventCategoriesLabel:"CATEGORIES:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GROUPS:", eventPriceLabel:"PRICE:", eventStatusLabel:"STATUS:", eventSortSoon:"Soonest", eventSortLate:"Latest", eventCount:"events" },
-    de: { eventFilterTitle:"Event-Filter", eventDate:"Datum", eventUpcoming:"Kommende", eventToday:"Heute", eventTomorrow:"Morgen", eventWeekend:"Dieses Wochenende", event7days:"Nächste 7 Tage", event30days:"Nächste 30 Tage", eventAllDates:"Alle Termine", eventFrom:"Von", eventTo:"Bis", eventCountry:"Land", eventCity:"Stadt", eventPostal:"Postleitzahl", eventCategory:"Kategorie", eventTag:"Tag", eventGroup:"Gruppe", eventPrice:"Preis", eventMode:"Format", eventAll:"Alle", eventFree:"Kostenlos", eventPaid:"Kostenpflichtig", eventUnknown:"Unbekannt", eventOnline:"Online", eventOffline:"Vor Ort", eventReset:"Filter zurücksetzen", eventStarts:"BEGINN:", eventPlace:"ORT:", eventCategoriesLabel:"KATEGORIEN:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPPEN:", eventPriceLabel:"PREIS:", eventStatusLabel:"STATUS:", eventSortSoon:"Nächste zuerst", eventSortLate:"Spätere zuerst", eventCount:"Events" },
-    es: { eventFilterTitle:"Filtros de eventos", eventDate:"Fecha", eventUpcoming:"Próximos", eventToday:"Hoy", eventTomorrow:"Mañana", eventWeekend:"Este fin de semana", event7days:"Próximos 7 días", event30days:"Próximos 30 días", eventAllDates:"Todas las fechas", eventFrom:"Desde", eventTo:"Hasta", eventCountry:"País", eventCity:"Ciudad", eventPostal:"Código postal", eventCategory:"Categoría", eventTag:"Etiqueta", eventGroup:"Grupo", eventPrice:"Precio", eventMode:"Formato", eventAll:"Todos", eventFree:"Gratis", eventPaid:"De pago", eventUnknown:"Desconocido", eventOnline:"En línea", eventOffline:"Presencial", eventReset:"Restablecer filtros", eventStarts:"INICIO:", eventPlace:"LUGAR:", eventCategoriesLabel:"CATEGORÍAS:", eventTagsLabel:"ETIQUETAS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PRECIO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Próximos", eventSortLate:"Más tarde", eventCount:"eventos" },
-    fr: { eventFilterTitle:"Filtres d’événements", eventDate:"Date", eventUpcoming:"À venir", eventToday:"Aujourd’hui", eventTomorrow:"Demain", eventWeekend:"Ce week-end", event7days:"7 prochains jours", event30days:"30 prochains jours", eventAllDates:"Toutes les dates", eventFrom:"Du", eventTo:"Au", eventCountry:"Pays", eventCity:"Ville", eventPostal:"Code postal", eventCategory:"Catégorie", eventTag:"Tag", eventGroup:"Groupe", eventPrice:"Prix", eventMode:"Format", eventAll:"Tous", eventFree:"Gratuit", eventPaid:"Payant", eventUnknown:"Inconnu", eventOnline:"En ligne", eventOffline:"Sur place", eventReset:"Réinitialiser", eventStarts:"DÉBUT :", eventPlace:"LIEU :", eventCategoriesLabel:"CATÉGORIES :", eventTagsLabel:"TAGS :", eventGroupsLabel:"GROUPES :", eventPriceLabel:"PRIX :", eventStatusLabel:"STATUT :", eventSortSoon:"Plus proches", eventSortLate:"Plus tard", eventCount:"événements" },
-    it: { eventFilterTitle:"Filtri eventi", eventDate:"Data", eventUpcoming:"In arrivo", eventToday:"Oggi", eventTomorrow:"Domani", eventWeekend:"Questo fine settimana", event7days:"Prossimi 7 giorni", event30days:"Prossimi 30 giorni", eventAllDates:"Tutte le date", eventFrom:"Da", eventTo:"A", eventCountry:"Paese", eventCity:"Città", eventPostal:"CAP", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Gruppo", eventPrice:"Prezzo", eventMode:"Formato", eventAll:"Tutti", eventFree:"Gratis", eventPaid:"A pagamento", eventUnknown:"Sconosciuto", eventOnline:"Online", eventOffline:"In presenza", eventReset:"Reimposta filtri", eventStarts:"INIZIO:", eventPlace:"LUOGO:", eventCategoriesLabel:"CATEGORIE:", eventTagsLabel:"TAG:", eventGroupsLabel:"GRUPPI:", eventPriceLabel:"PREZZO:", eventStatusLabel:"STATO:", eventSortSoon:"Più vicini", eventSortLate:"Più tardi", eventCount:"eventi" },
-    pt: { eventFilterTitle:"Filtros de eventos", eventDate:"Data", eventUpcoming:"Próximos", eventToday:"Hoje", eventTomorrow:"Amanhã", eventWeekend:"Este fim de semana", event7days:"Próximos 7 dias", event30days:"Próximos 30 dias", eventAllDates:"Todas as datas", eventFrom:"De", eventTo:"Até", eventCountry:"País", eventCity:"Cidade", eventPostal:"Código postal", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Grupo", eventPrice:"Preço", eventMode:"Formato", eventAll:"Todos", eventFree:"Grátis", eventPaid:"Pago", eventUnknown:"Desconhecido", eventOnline:"Online", eventOffline:"Presencial", eventReset:"Limpar filtros", eventStarts:"INÍCIO:", eventPlace:"LOCAL:", eventCategoriesLabel:"CATEGORIAS:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PREÇO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Mais próximos", eventSortLate:"Mais tarde", eventCount:"eventos" },
-    ru: { eventFilterTitle:"Фильтры событий", eventDate:"Дата", eventUpcoming:"Предстоящие", eventToday:"Сегодня", eventTomorrow:"Завтра", eventWeekend:"Эти выходные", event7days:"Следующие 7 дней", event30days:"Следующие 30 дней", eventAllDates:"Все даты", eventFrom:"С", eventTo:"До", eventCountry:"Страна", eventCity:"Город", eventPostal:"Индекс", eventCategory:"Категория", eventTag:"Тег", eventGroup:"Группа", eventPrice:"Цена", eventMode:"Формат", eventAll:"Все", eventFree:"Бесплатно", eventPaid:"Платно", eventUnknown:"Неизвестно", eventOnline:"Онлайн", eventOffline:"Очно", eventReset:"Сбросить фильтры", eventStarts:"НАЧАЛО:", eventPlace:"МЕСТО:", eventCategoriesLabel:"КАТЕГОРИИ:", eventTagsLabel:"ТЕГИ:", eventGroupsLabel:"ГРУППЫ:", eventPriceLabel:"ЦЕНА:", eventStatusLabel:"СТАТУС:", eventSortSoon:"Ближайшие", eventSortLate:"Поздние", eventCount:"событий" },
-    el: { eventFilterTitle:"Φίλτρα εκδηλώσεων", eventDate:"Ημερομηνία", eventUpcoming:"Επερχόμενα", eventToday:"Σήμερα", eventTomorrow:"Αύριο", eventWeekend:"Αυτό το Σαββατοκύριακο", event7days:"Επόμενες 7 ημέρες", event30days:"Επόμενες 30 ημέρες", eventAllDates:"Όλες οι ημερομηνίες", eventFrom:"Από", eventTo:"Έως", eventCountry:"Χώρα", eventCity:"Πόλη", eventPostal:"Ταχυδρομικός κώδικας", eventCategory:"Κατηγορία", eventTag:"Ετικέτα", eventGroup:"Ομάδα", eventPrice:"Τιμή", eventMode:"Μορφή", eventAll:"Όλα", eventFree:"Δωρεάν", eventPaid:"Με πληρωμή", eventUnknown:"Άγνωστο", eventOnline:"Online", eventOffline:"Με φυσική παρουσία", eventReset:"Επαναφορά φίλτρων", eventStarts:"ΕΝΑΡΞΗ:", eventPlace:"ΤΟΠΟΣ:", eventCategoriesLabel:"ΚΑΤΗΓΟΡΙΕΣ:", eventTagsLabel:"ΕΤΙΚΕΤΕΣ:", eventGroupsLabel:"ΟΜΑΔΕΣ:", eventPriceLabel:"ΤΙΜΗ:", eventStatusLabel:"ΚΑΤΑΣΤΑΣΗ:", eventSortSoon:"Πλησιέστερα", eventSortLate:"Αργότερα", eventCount:"εκδηλώσεις" },
-    tr: { eventFilterTitle:"Etkinlik filtreleri", eventDate:"Tarih", eventUpcoming:"Yaklaşan", eventToday:"Bugün", eventTomorrow:"Yarın", eventWeekend:"Bu hafta sonu", event7days:"Sonraki 7 gün", event30days:"Sonraki 30 gün", eventAllDates:"Tüm tarihler", eventFrom:"Başlangıç", eventTo:"Bitiş", eventCountry:"Ülke", eventCity:"Şehir", eventPostal:"Posta kodu", eventCategory:"Kategori", eventTag:"Etiket", eventGroup:"Grup", eventPrice:"Fiyat", eventMode:"Biçim", eventAll:"Tümü", eventFree:"Ücretsiz", eventPaid:"Ücretli", eventUnknown:"Bilinmiyor", eventOnline:"Çevrimiçi", eventOffline:"Yüz yüze", eventReset:"Filtreleri sıfırla", eventStarts:"BAŞLANGIÇ:", eventPlace:"YER:", eventCategoriesLabel:"KATEGORİLER:", eventTagsLabel:"ETİKETLER:", eventGroupsLabel:"GRUPLAR:", eventPriceLabel:"FİYAT:", eventStatusLabel:"DURUM:", eventSortSoon:"En yakın", eventSortLate:"Daha sonra", eventCount:"etkinlik" }
+    en: { eventFilterTitle:"Event filters", eventDate:"Period", eventUpcoming:"Upcoming", eventToday:"Today", eventTomorrow:"Tomorrow", eventWeekend:"This weekend", event7days:"Next 7 days", event14days:"Next 14 days", eventNextMonth:"Next calendar month", event30days:"Next 30 days", eventAllDates:"All dates", eventFrom:"From", eventTo:"To", eventCountry:"Country", eventCity:"City", eventPostal:"Postal code", eventCategory:"Category", eventTag:"Tag", eventGroup:"Group", eventPrice:"Price", eventMode:"Format", eventAll:"All", eventFree:"Free", eventPaid:"Paid", eventUnknown:"Unknown", eventOnline:"Online", eventOffline:"In person", eventReset:"Reset filters", eventStarts:"START:", eventPlace:"PLACE:", eventCategoriesLabel:"CATEGORIES:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GROUPS:", eventPriceLabel:"PRICE:", eventStatusLabel:"STATUS:", eventSortSoon:"Soonest", eventSortLate:"Latest", eventCount:"events" },
+    de: { eventFilterTitle:"Event-Filter", eventDate:"Zeitraum", eventUpcoming:"Kommende", eventToday:"Heute", eventTomorrow:"Morgen", eventWeekend:"Dieses Wochenende", event7days:"Nächste 7 Tage", event14days:"Nächste 14 Tage", eventNextMonth:"Nächster Kalendermonat", event30days:"Nächste 30 Tage", eventAllDates:"Alle Termine", eventFrom:"Von", eventTo:"Bis", eventCountry:"Land", eventCity:"Stadt", eventPostal:"Postleitzahl", eventCategory:"Kategorie", eventTag:"Tag", eventGroup:"Gruppe", eventPrice:"Preis", eventMode:"Format", eventAll:"Alle", eventFree:"Kostenlos", eventPaid:"Kostenpflichtig", eventUnknown:"Unbekannt", eventOnline:"Online", eventOffline:"Vor Ort", eventReset:"Filter zurücksetzen", eventStarts:"BEGINN:", eventPlace:"ORT:", eventCategoriesLabel:"KATEGORIEN:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPPEN:", eventPriceLabel:"PREIS:", eventStatusLabel:"STATUS:", eventSortSoon:"Nächste zuerst", eventSortLate:"Spätere zuerst", eventCount:"Events" },
+    es: { eventFilterTitle:"Filtros de eventos", eventDate:"Período", eventUpcoming:"Próximos", eventToday:"Hoy", eventTomorrow:"Mañana", eventWeekend:"Este fin de semana", event7days:"Próximos 7 días", event14days:"Próximos 14 días", eventNextMonth:"Próximo mes natural", event30days:"Próximos 30 días", eventAllDates:"Todas las fechas", eventFrom:"Desde", eventTo:"Hasta", eventCountry:"País", eventCity:"Ciudad", eventPostal:"Código postal", eventCategory:"Categoría", eventTag:"Etiqueta", eventGroup:"Grupo", eventPrice:"Precio", eventMode:"Formato", eventAll:"Todos", eventFree:"Gratis", eventPaid:"De pago", eventUnknown:"Desconocido", eventOnline:"En línea", eventOffline:"Presencial", eventReset:"Restablecer filtros", eventStarts:"INICIO:", eventPlace:"LUGAR:", eventCategoriesLabel:"CATEGORÍAS:", eventTagsLabel:"ETIQUETAS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PRECIO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Próximos", eventSortLate:"Más tarde", eventCount:"eventos" },
+    fr: { eventFilterTitle:"Filtres d’événements", eventDate:"Période", eventUpcoming:"À venir", eventToday:"Aujourd’hui", eventTomorrow:"Demain", eventWeekend:"Ce week-end", event7days:"7 prochains jours", event14days:"14 prochains jours", eventNextMonth:"Mois civil suivant", event30days:"30 prochains jours", eventAllDates:"Toutes les dates", eventFrom:"Du", eventTo:"Au", eventCountry:"Pays", eventCity:"Ville", eventPostal:"Code postal", eventCategory:"Catégorie", eventTag:"Tag", eventGroup:"Groupe", eventPrice:"Prix", eventMode:"Format", eventAll:"Tous", eventFree:"Gratuit", eventPaid:"Payant", eventUnknown:"Inconnu", eventOnline:"En ligne", eventOffline:"Sur place", eventReset:"Réinitialiser", eventStarts:"DÉBUT :", eventPlace:"LIEU :", eventCategoriesLabel:"CATÉGORIES :", eventTagsLabel:"TAGS :", eventGroupsLabel:"GROUPES :", eventPriceLabel:"PRIX :", eventStatusLabel:"STATUT :", eventSortSoon:"Plus proches", eventSortLate:"Plus tard", eventCount:"événements" },
+    it: { eventFilterTitle:"Filtri eventi", eventDate:"Periodo", eventUpcoming:"In arrivo", eventToday:"Oggi", eventTomorrow:"Domani", eventWeekend:"Questo fine settimana", event7days:"Prossimi 7 giorni", event14days:"Prossimi 14 giorni", eventNextMonth:"Prossimo mese di calendario", event30days:"Prossimi 30 giorni", eventAllDates:"Tutte le date", eventFrom:"Da", eventTo:"A", eventCountry:"Paese", eventCity:"Città", eventPostal:"CAP", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Gruppo", eventPrice:"Prezzo", eventMode:"Formato", eventAll:"Tutti", eventFree:"Gratis", eventPaid:"A pagamento", eventUnknown:"Sconosciuto", eventOnline:"Online", eventOffline:"In presenza", eventReset:"Reimposta filtri", eventStarts:"INIZIO:", eventPlace:"LUOGO:", eventCategoriesLabel:"CATEGORIE:", eventTagsLabel:"TAG:", eventGroupsLabel:"GRUPPI:", eventPriceLabel:"PREZZO:", eventStatusLabel:"STATO:", eventSortSoon:"Più vicini", eventSortLate:"Più tardi", eventCount:"eventi" },
+    pt: { eventFilterTitle:"Filtros de eventos", eventDate:"Período", eventUpcoming:"Próximos", eventToday:"Hoje", eventTomorrow:"Amanhã", eventWeekend:"Este fim de semana", event7days:"Próximos 7 dias", event14days:"Próximos 14 dias", eventNextMonth:"Próximo mês civil", event30days:"Próximos 30 dias", eventAllDates:"Todas as datas", eventFrom:"De", eventTo:"Até", eventCountry:"País", eventCity:"Cidade", eventPostal:"Código postal", eventCategory:"Categoria", eventTag:"Tag", eventGroup:"Grupo", eventPrice:"Preço", eventMode:"Formato", eventAll:"Todos", eventFree:"Grátis", eventPaid:"Pago", eventUnknown:"Desconhecido", eventOnline:"Online", eventOffline:"Presencial", eventReset:"Limpar filtros", eventStarts:"INÍCIO:", eventPlace:"LOCAL:", eventCategoriesLabel:"CATEGORIAS:", eventTagsLabel:"TAGS:", eventGroupsLabel:"GRUPOS:", eventPriceLabel:"PREÇO:", eventStatusLabel:"ESTADO:", eventSortSoon:"Mais próximos", eventSortLate:"Mais tarde", eventCount:"eventos" },
+    ru: { eventFilterTitle:"Фильтры событий", eventDate:"Период", eventUpcoming:"Предстоящие", eventToday:"Сегодня", eventTomorrow:"Завтра", eventWeekend:"Эти выходные", event7days:"Следующие 7 дней", event14days:"Следующие 14 дней", eventNextMonth:"Следующий календарный месяц", event30days:"Следующие 30 дней", eventAllDates:"Все даты", eventFrom:"С", eventTo:"До", eventCountry:"Страна", eventCity:"Город", eventPostal:"Индекс", eventCategory:"Категория", eventTag:"Тег", eventGroup:"Группа", eventPrice:"Цена", eventMode:"Формат", eventAll:"Все", eventFree:"Бесплатно", eventPaid:"Платно", eventUnknown:"Неизвестно", eventOnline:"Онлайн", eventOffline:"Очно", eventReset:"Сбросить фильтры", eventStarts:"НАЧАЛО:", eventPlace:"МЕСТО:", eventCategoriesLabel:"КАТЕГОРИИ:", eventTagsLabel:"ТЕГИ:", eventGroupsLabel:"ГРУППЫ:", eventPriceLabel:"ЦЕНА:", eventStatusLabel:"СТАТУС:", eventSortSoon:"Ближайшие", eventSortLate:"Поздние", eventCount:"событий" },
+    el: { eventFilterTitle:"Φίλτρα εκδηλώσεων", eventDate:"Περίοδος", eventUpcoming:"Επερχόμενα", eventToday:"Σήμερα", eventTomorrow:"Αύριο", eventWeekend:"Αυτό το Σαββατοκύριακο", event7days:"Επόμενες 7 ημέρες", event14days:"Επόμενες 14 ημέρες", eventNextMonth:"Επόμενος ημερολογιακός μήνας", event30days:"Επόμενες 30 ημέρες", eventAllDates:"Όλες οι ημερομηνίες", eventFrom:"Από", eventTo:"Έως", eventCountry:"Χώρα", eventCity:"Πόλη", eventPostal:"Ταχυδρομικός κώδικας", eventCategory:"Κατηγορία", eventTag:"Ετικέτα", eventGroup:"Ομάδα", eventPrice:"Τιμή", eventMode:"Μορφή", eventAll:"Όλα", eventFree:"Δωρεάν", eventPaid:"Με πληρωμή", eventUnknown:"Άγνωστο", eventOnline:"Online", eventOffline:"Με φυσική παρουσία", eventReset:"Επαναφορά φίλτρων", eventStarts:"ΕΝΑΡΞΗ:", eventPlace:"ΤΟΠΟΣ:", eventCategoriesLabel:"ΚΑΤΗΓΟΡΙΕΣ:", eventTagsLabel:"ΕΤΙΚΕΤΕΣ:", eventGroupsLabel:"ΟΜΑΔΕΣ:", eventPriceLabel:"ΤΙΜΗ:", eventStatusLabel:"ΚΑΤΑΣΤΑΣΗ:", eventSortSoon:"Πλησιέστερα", eventSortLate:"Αργότερα", eventCount:"εκδηλώσεις" },
+    tr: { eventFilterTitle:"Etkinlik filtreleri", eventDate:"Dönem", eventUpcoming:"Yaklaşan", eventToday:"Bugün", eventTomorrow:"Yarın", eventWeekend:"Bu hafta sonu", event7days:"Sonraki 7 gün", event14days:"Sonraki 14 gün", eventNextMonth:"Sonraki takvim ayı", event30days:"Sonraki 30 gün", eventAllDates:"Tüm tarihler", eventFrom:"Başlangıç", eventTo:"Bitiş", eventCountry:"Ülke", eventCity:"Şehir", eventPostal:"Posta kodu", eventCategory:"Kategori", eventTag:"Etiket", eventGroup:"Grup", eventPrice:"Fiyat", eventMode:"Biçim", eventAll:"Tümü", eventFree:"Ücretsiz", eventPaid:"Ücretli", eventUnknown:"Bilinmiyor", eventOnline:"Çevrimiçi", eventOffline:"Yüz yüze", eventReset:"Filtreleri sıfırla", eventStarts:"BAŞLANGIÇ:", eventPlace:"YER:", eventCategoriesLabel:"KATEGORİLER:", eventTagsLabel:"ETİKETLER:", eventGroupsLabel:"GRUPLAR:", eventPriceLabel:"FİYAT:", eventStatusLabel:"DURUM:", eventSortSoon:"En yakın", eventSortLate:"Daha sonra", eventCount:"etkinlik" }
 };
 
 Object.keys(uiTexte).forEach(lang => {
@@ -850,11 +850,32 @@ function eventMatchesSpecialFilters(article) {
     ];
     for (const [id, articleValue] of exactChecks) {
         const selected = document.getElementById(id)?.value || '';
-        if (selected && articleValue !== selected) return false;
+        if (selected && articleValue.trim().toLocaleLowerCase() !== selected.trim().toLocaleLowerCase()) return false;
     }
 
-    const selectedDate = document.getElementById('event-date-filter')?.value || '';
-    if (selectedDate && getEventDateKey(article) !== selectedDate) return false;
+    const period = document.getElementById('event-date-filter')?.value || 'upcoming';
+    const now = new Date();
+    const nowMs = now.getTime();
+
+    if (period === 'today') {
+        const [from, to] = getLocalDayBounds(now);
+        if (!eventOverlaps(article, from, to)) return false;
+    } else if (period === 'tomorrow') {
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const [from, to] = getLocalDayBounds(tomorrow);
+        if (!eventOverlaps(article, from, to)) return false;
+    } else if (period === '7days' && !eventOverlaps(article, nowMs - 7200000, nowMs + 7 * 86400000)) {
+        return false;
+    } else if (period === '14days' && !eventOverlaps(article, nowMs - 7200000, nowMs + 14 * 86400000)) {
+        return false;
+    } else if (period === '30days' && !eventOverlaps(article, nowMs - 7200000, nowMs + 30 * 86400000)) {
+        return false;
+    } else if (period === 'nextmonth') {
+        const from = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0, 0);
+        const to = new Date(now.getFullYear(), now.getMonth() + 2, 1, 0, 0, 0, 0);
+        if (!eventOverlaps(article, from.getTime(), to.getTime())) return false;
+    }
 
     const arrayChecks = [
         ['event-category-filter', article?.eventCategories],
@@ -964,17 +985,24 @@ function populateEventFilters() {
     const countryOptions = mergeFilterOptions(facets.country, scalarValues('eventCountry'));
     setDynamicSelectOptions('event-country-filter', countryOptions, t.eventAll, displayCountryName);
 
-    // Städte werden absichtlich aus den tatsächlich geladenen Events erzeugt,
-    // damit die Länderauswahl die passende Städteliste einschränkt.
+    // Städte: zuerst die tatsächlich geladenen Eventdaten, zusätzlich die
+    // offiziellen Radar-Stadtfacetten. So bleibt die Liste auch dann gefüllt,
+    // wenn einzelne ältere Events keine vollständige Ortsadresse besitzen.
     const selectedCountry = document.getElementById('event-country-filter')?.value || '';
     const cityEvents = selectedCountry
-        ? events.filter(event => String(event?.eventCountry || '').trim() === selectedCountry)
+        ? events.filter(event => String(event?.eventCountry || '').trim().toUpperCase() === selectedCountry.toUpperCase())
         : events;
-    const cities = [...new Set(cityEvents
+    const eventCities = [...new Set(cityEvents
         .map(event => String(event?.eventCity || '').trim())
         .filter(Boolean))]
         .sort((a, b) => a.localeCompare(b, currentLang));
-    setDynamicSelectOptions('event-city-filter', cities, t.eventAll);
+
+    // Ist zu einem Land noch keine sichere Stadt-Land-Zuordnung vorhanden,
+    // werden wenigstens die offiziellen Radar-Städte angeboten statt nur „Alle“.
+    const cityOptions = eventCities.length > 0
+        ? mergeFilterOptions([], eventCities)
+        : mergeFilterOptions(facets.city, scalarValues('eventCity'));
+    setDynamicSelectOptions('event-city-filter', cityOptions, t.eventAll);
 
     // Radar liefert diese Facetten offiziell. Zusätzlich werden Werte anderer
     // Eventquellen aufgenommen, damit z. B. Stressfaktor/Kontrapolis nicht fehlen.
@@ -984,17 +1012,29 @@ function populateEventFilters() {
     setDynamicSelectOptions('event-category-filter', categoryOptions, t.eventAll);
     setDynamicSelectOptions('event-group-filter', groupOptions, t.eventAll);
 
-    // Der dritte Filter ist jetzt ein echter Kalendertag und kein Themen-Tag.
-    const dateInput = document.getElementById('event-date-filter');
-    if (dateInput) {
-        const availableDates = events.map(getEventDateKey).filter(Boolean).sort();
-        if (availableDates.length) {
-            dateInput.min = availableDates[0];
-            dateInput.max = availableDates[availableDates.length - 1];
-        } else {
-            dateInput.removeAttribute('min');
-            dateInput.removeAttribute('max');
+    // Der Zeitraum ist ein Auswahlmenü mit verständlichen Presets.
+    const periodSelect = document.getElementById('event-date-filter');
+    if (periodSelect) {
+        const previousPeriod = periodSelect.value || 'upcoming';
+        const periodOptions = [
+            ['upcoming', t.eventUpcoming],
+            ['today', t.eventToday],
+            ['tomorrow', t.eventTomorrow],
+            ['7days', t.event7days],
+            ['14days', t.event14days],
+            ['30days', t.event30days],
+            ['nextmonth', t.eventNextMonth]
+        ];
+        periodSelect.textContent = '';
+        for (const [value, label] of periodOptions) {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = label;
+            periodSelect.append(option);
         }
+        periodSelect.value = periodOptions.some(([value]) => value === previousPeriod)
+            ? previousPeriod
+            : 'upcoming';
     }
 }
 
@@ -1016,7 +1056,8 @@ function resetEventFilters() {
     ];
     ids.forEach(id => {
         const element = document.getElementById(id);
-        if (element) element.value = '';
+        if (!element) return;
+        element.value = id === 'event-date-filter' ? 'upcoming' : '';
     });
     populateEventFilters();
     applyFilters();

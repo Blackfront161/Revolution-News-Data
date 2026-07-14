@@ -158,8 +158,10 @@
             </label>
 
             <label class="event-filter-field">
-                <span id="txt-event-date">Date</span>
-                <input id="event-date-filter" type="date" onchange="applyFilters()">
+                <span id="txt-event-date">Period</span>
+                <select id="event-date-filter" onchange="applyFilters()">
+                    <option value="upcoming">All upcoming</option>
+                </select>
             </label>
 
             <label class="event-filter-field">
