@@ -634,7 +634,7 @@ RADAR_FIELDS = ",".join([
     "uuid", "nid", "url", "language", "link", "image", "flyer"
 ])
 
-RADAR_FILTER_FACETS = ("country", "city", "tag", "group", "category")
+RADAR_FILTER_FACETS = ("country", "city", "group", "category")
 
 
 def as_list(value):
@@ -773,19 +773,30 @@ def radar_parse_timestamp(value):
 def radar_datetime_data(event):
     entries = [item for item in as_list(event.get("date_time")) if isinstance(item, dict)]
     if not entries:
-        return 0, 0
+        return 0, 0, ""
 
     candidates = []
     for item in entries:
-        start = radar_parse_timestamp(item.get("value") or item.get("time_start"))
-        end = radar_parse_timestamp(item.get("value2") or item.get("time_end"))
+        start_raw = item.get("time_start") or item.get("value")
+        end_raw = item.get("time_end") or item.get("value2")
+        start = radar_parse_timestamp(start_raw)
+        end = radar_parse_timestamp(end_raw)
         if start:
-            candidates.append((start, end or start))
+            # Radar liefert time_start normalerweise als ISO-Text mit lokaler
+            # Zeitzone. Die ersten zehn Zeichen sind deshalb der Kalendertag,
+            # der auch im Datumsfilter erscheinen soll.
+            local_date = ""
+            if isinstance(start_raw, str) and len(start_raw) >= 10 and start_raw[4:5] == "-":
+                local_date = start_raw[:10]
+            candidates.append((start, end or start, local_date))
 
     if not candidates:
-        return 0, 0
+        return 0, 0, ""
     candidates.sort(key=lambda pair: pair[0])
-    return candidates[0]
+    start, end, local_date = candidates[0]
+    if not local_date:
+        local_date = datetime.fromtimestamp(start, tz=timezone.utc).date().isoformat()
+    return start, end, local_date
 
 
 def timestamp_iso(timestamp):
@@ -845,11 +856,14 @@ def radar_location_data(event):
 
     location = locations[0]
 
-    address_candidates = radar_reference_items(location.get("address"))
-    address = next((item for item in address_candidates if isinstance(item, dict)), {})
+    # WICHTIG: address und map sind keine Referenzlisten, sondern normale
+    # verschachtelte Objekte. Die alte Version behandelte ihre einzelnen Werte
+    # fälschlich wie eine Liste. Dadurch blieben eventCity und eventCountry leer.
+    address_value = location.get("address")
+    address = address_value if isinstance(address_value, dict) else {}
 
-    map_candidates = radar_reference_items(location.get("map"))
-    map_data = next((item for item in map_candidates if isinstance(item, dict)), {})
+    map_value = location.get("map")
+    map_data = map_value if isinstance(map_value, dict) else {}
 
     venue = clean_radar_label(first_text(location, "title", "name", "label"))
     city = clean_radar_label(first_text(address, "locality", "dependent_locality", "city"))
@@ -903,7 +917,7 @@ def convert_radar_event(event):
 
     uuid = first_text(event, "uuid")
     title = first_text(event, "title", "title_field") or "Event ohne Titel"
-    start_ts, end_ts = radar_datetime_data(event)
+    start_ts, end_ts, event_date = radar_datetime_data(event)
     if not start_ts:
         return None
 
@@ -944,6 +958,7 @@ def convert_radar_event(event):
         "pubDate": timestamp_iso(start_ts),
         "eventStart": timestamp_iso(start_ts),
         "eventEnd": timestamp_iso(end_ts),
+        "eventDate": event_date,
         "eventVenue": location["venue"],
         "eventAddress": location["address"],
         "eventCity": location["city"],
