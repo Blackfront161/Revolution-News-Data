@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026-07-15-1';
-const DATA_CACHE = 'wrn-data-v2026-07-15-1';
+const APP_CACHE = 'wrn-app-v2026-07-15-3';
+const DATA_CACHE = 'wrn-data-v2026-07-15-3';
 
 const APP_SHELL = [
   './',
@@ -58,7 +58,7 @@ self.addEventListener('fetch', event => {
   }
 
   if (['script', 'style', 'manifest', 'font'].includes(request.destination)) {
-    event.respondWith(staleWhileRevalidate(request));
+    event.respondWith(networkFirstAsset(request));
     return;
   }
 
@@ -98,6 +98,19 @@ async function networkFirstData(request) {
         'X-WRN-Offline-Fallback': 'empty'
       }
     });
+  }
+}
+
+async function networkFirstAsset(request) {
+  const cache = await caches.open(APP_CACHE);
+
+  try {
+    const response = await fetchWithTimeout(request, 5000);
+    if (response?.ok) await cache.put(request, response.clone());
+    return response;
+  } catch {
+    return (await cache.match(request, { ignoreSearch: true }))
+      || new Response('', { status: 504 });
   }
 }
 

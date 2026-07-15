@@ -185,24 +185,44 @@ function extractTranslationError(data, status) {
     return `Unbekannter Übersetzungsfehler (HTTP ${status || "ohne Status"}).`;
 }
 
-async function fetchTranslationRequest({ title = "", text = "", mode = "title_and_text" }) {
+const LEGACY_APP_SECRET = "revolution161";
+
+const TRANSLATION_LANGUAGE_NAMES = {
+    en: "English",
+    de: "German",
+    es: "Spanish",
+    fr: "French",
+    it: "Italian",
+    pt: "Portuguese",
+    ru: "Russian",
+    el: "Greek",
+    tr: "Turkish"
+};
+
+function buildLegacyTranslationPrompt({ title = "", text = "", mode = "title_and_text" }) {
+    const languageName = TRANSLATION_LANGUAGE_NAMES[currentLang] || "English";
+    const genderInstruction = currentLang === "de"
+        ? " Verwende konsequent geschlechtergerechte deutsche Sprache mit Gendersternchen, zum Beispiel Aktivist*innen, Arbeiter*innen und Autor*innen. Vermeide das generische Maskulinum. Verändere Eigennamen, Organisationsnamen und direkte Zitate nicht."
+        : "";
+
+    const rules = `Translate fluently into ${languageName}.${genderInstruction} Return only the translation. Do not add an introduction, explanation, heading, commentary, quotation marks or closing sentence. Preserve paragraph breaks and meaning.`;
+
+    if (mode === "continuation") {
+        return `${rules}\n\nText:\n${text}`;
+    }
+
+    return `${rules} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle:\n${title}\n\nText:\n${text}`;
+}
+
+async function performTranslationFetch({ headers, body, timeoutMs = 45000 }) {
     const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => controller.abort(), 45000);
+    const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
 
     try {
         const response = await fetch(PROXY_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Client-Id": getClientId()
-            },
-            body: JSON.stringify({
-                action: "translate",
-                targetLanguage: currentLang,
-                mode,
-                title: String(title || "").slice(0, 500),
-                text: String(text || "").slice(0, 6000)
-            }),
+            headers,
+            body: JSON.stringify(body),
             signal: controller.signal
         });
 
@@ -219,22 +239,105 @@ async function fetchTranslationRequest({ title = "", text = "", mode = "title_an
 
         const translatedText = cleanTranslationOutput(extractTranslationText(data));
         if (response.ok && translatedText) {
-            return { error: false, text: translatedText, status: response.status };
+            return {
+                error: false,
+                text: translatedText,
+                status: response.status,
+                provider: data?.provider || ""
+            };
         }
 
-        const message = extractTranslationError(data, response.status);
-        console.error("Übersetzungsserver-Fehler:", response.status, data);
-        return { error: true, message, status: response.status };
+        return {
+            error: true,
+            message: extractTranslationError(data, response.status),
+            status: response.status,
+            data
+        };
     } catch (error) {
-        const message = error?.name === "AbortError"
-            ? "Die Übersetzung hat länger als 45 Sekunden gedauert und wurde abgebrochen."
-            : `Der Übersetzungsserver konnte nicht erreicht werden: ${error?.message || error}`;
-
-        console.error("Übersetzungsfehler:", error);
-        return { error: true, message, status: 0 };
+        return {
+            error: true,
+            message: error?.name === "AbortError"
+                ? "Die Übersetzung hat länger als 45 Sekunden gedauert und wurde abgebrochen."
+                : `Der Übersetzungsserver konnte nicht erreicht werden: ${error?.message || error}`,
+            status: 0,
+            networkError: true
+        };
     } finally {
         window.clearTimeout(timeoutId);
     }
+}
+
+function shouldTryLegacyTranslation(result) {
+    if (!result?.error) return false;
+
+    // Status 0 entsteht häufig, wenn ein älterer Worker den neuen
+    // X-Client-Id-Header beim CORS-Preflight noch nicht erlaubt.
+    if (result.status === 0) return true;
+
+    // Diese Statuscodes deuten auf ein nicht passendes Anfrageformat
+    // beziehungsweise den noch veröffentlichten älteren Worker hin.
+    return [400, 403, 405, 415].includes(result.status);
+}
+
+async function fetchTranslationRequest({ title = "", text = "", mode = "title_and_text" }) {
+    const safeTitle = String(title || "").slice(0, 500);
+    const safeText = String(text || "").slice(0, 6000);
+
+    // Neues, eingeschränktes Protokoll.
+    const structuredResult = await performTranslationFetch({
+        headers: {
+            "Content-Type": "application/json",
+            "X-Client-Id": getClientId()
+        },
+        body: {
+            action: "translate",
+            targetLanguage: currentLang,
+            mode,
+            title: safeTitle,
+            text: safeText
+        }
+    });
+
+    if (!structuredResult.error) {
+        return structuredResult;
+    }
+
+    // Übergangsreserve: Damit die Übersetzung auch funktioniert, wenn auf
+    // Cloudflare noch der ältere Worker veröffentlicht ist.
+    if (shouldTryLegacyTranslation(structuredResult)) {
+        const legacyPrompt = buildLegacyTranslationPrompt({
+            title: safeTitle,
+            text: safeText,
+            mode
+        });
+
+        const legacyResult = await performTranslationFetch({
+            headers: {
+                "Content-Type": "application/json",
+                "X-App-Secret": LEGACY_APP_SECRET
+            },
+            body: {
+                contents: [{ parts: [{ text: legacyPrompt }] }]
+            }
+        });
+
+        if (!legacyResult.error) {
+            return legacyResult;
+        }
+
+        console.error("Neue und alte Übersetzungsschnittstelle fehlgeschlagen:", {
+            structured: structuredResult,
+            legacy: legacyResult
+        });
+
+        return {
+            ...legacyResult,
+            message: legacyResult.message || structuredResult.message
+        };
+    }
+
+    console.error("Übersetzungsserver-Fehler:", structuredResult);
+    return structuredResult;
 }
 
 function showTranslationError(buttonElement, cardElement, result) {
@@ -331,15 +434,15 @@ Object.keys(uiTexte).forEach(lang => {
 });
 
 const podcastUiTexte = {
-    en: { btnPodcast:"Podcast", podcastTitle:"Podcast player", podcastPreparing:"Preparing article…", podcastTranslating:"Translating full article…", podcastSpeaking:"Playing", podcastPaused:"Paused", podcastFinished:"Finished", podcastPause:"Pause", podcastResume:"Resume", podcastStop:"Stop", podcastVoice:"Voice", podcastSpeed:"Speed", podcastAutoVoice:"Automatic voice", podcastNoVoice:"No matching voice is installed; the browser default will be used.", podcastUnsupported:"Text-to-speech is not supported by this browser.", podcastTranslationFailed:"The article could not be translated for playback.", podcastLocal:"local", podcastOnline:"online" },
-    de: { btnPodcast:"Podcast", podcastTitle:"Podcast-Player", podcastPreparing:"Artikel wird vorbereitet…", podcastTranslating:"Vollständiger Artikel wird übersetzt…", podcastSpeaking:"Wiedergabe läuft", podcastPaused:"Pausiert", podcastFinished:"Beendet", podcastPause:"Pause", podcastResume:"Weiter", podcastStop:"Stopp", podcastVoice:"Stimme", podcastSpeed:"Tempo", podcastAutoVoice:"Automatische Stimme", podcastNoVoice:"Keine passende Stimme installiert; die Standardstimme des Browsers wird verwendet.", podcastUnsupported:"Dieser Browser unterstützt keine Vorlesefunktion.", podcastTranslationFailed:"Der Artikel konnte für die Wiedergabe nicht übersetzt werden.", podcastLocal:"lokal", podcastOnline:"online" },
-    es: { btnPodcast:"Pódcast", podcastTitle:"Reproductor de pódcast", podcastPreparing:"Preparando el artículo…", podcastTranslating:"Traduciendo el artículo completo…", podcastSpeaking:"Reproduciendo", podcastPaused:"En pausa", podcastFinished:"Finalizado", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Detener", podcastVoice:"Voz", podcastSpeed:"Velocidad", podcastAutoVoice:"Voz automática", podcastNoVoice:"No hay una voz adecuada instalada; se usará la voz predeterminada del navegador.", podcastUnsupported:"Este navegador no admite la lectura en voz alta.", podcastTranslationFailed:"No se pudo traducir el artículo para la reproducción.", podcastLocal:"local", podcastOnline:"en línea" },
-    fr: { btnPodcast:"Podcast", podcastTitle:"Lecteur podcast", podcastPreparing:"Préparation de l’article…", podcastTranslating:"Traduction de l’article complet…", podcastSpeaking:"Lecture en cours", podcastPaused:"En pause", podcastFinished:"Terminé", podcastPause:"Pause", podcastResume:"Continuer", podcastStop:"Arrêter", podcastVoice:"Voix", podcastSpeed:"Vitesse", podcastAutoVoice:"Voix automatique", podcastNoVoice:"Aucune voix adaptée n’est installée ; la voix par défaut du navigateur sera utilisée.", podcastUnsupported:"Ce navigateur ne prend pas en charge la lecture vocale.", podcastTranslationFailed:"L’article n’a pas pu être traduit pour la lecture.", podcastLocal:"locale", podcastOnline:"en ligne" },
-    it: { btnPodcast:"Podcast", podcastTitle:"Lettore podcast", podcastPreparing:"Preparazione dell’articolo…", podcastTranslating:"Traduzione dell’articolo completo…", podcastSpeaking:"Riproduzione in corso", podcastPaused:"In pausa", podcastFinished:"Terminato", podcastPause:"Pausa", podcastResume:"Continua", podcastStop:"Stop", podcastVoice:"Voce", podcastSpeed:"Velocità", podcastAutoVoice:"Voce automatica", podcastNoVoice:"Non è installata una voce adatta; verrà usata la voce predefinita del browser.", podcastUnsupported:"Questo browser non supporta la lettura vocale.", podcastTranslationFailed:"Non è stato possibile tradurre l’articolo per la riproduzione.", podcastLocal:"locale", podcastOnline:"online" },
-    pt: { btnPodcast:"Podcast", podcastTitle:"Leitor de podcast", podcastPreparing:"A preparar o artigo…", podcastTranslating:"A traduzir o artigo completo…", podcastSpeaking:"A reproduzir", podcastPaused:"Em pausa", podcastFinished:"Terminado", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Parar", podcastVoice:"Voz", podcastSpeed:"Velocidade", podcastAutoVoice:"Voz automática", podcastNoVoice:"Não está instalada uma voz adequada; será usada a voz predefinida do navegador.", podcastUnsupported:"Este navegador não suporta leitura em voz alta.", podcastTranslationFailed:"Não foi possível traduzir o artigo para reprodução.", podcastLocal:"local", podcastOnline:"online" },
-    ru: { btnPodcast:"Подкаст", podcastTitle:"Проигрыватель подкаста", podcastPreparing:"Подготовка статьи…", podcastTranslating:"Перевод полной статьи…", podcastSpeaking:"Воспроизведение", podcastPaused:"Пауза", podcastFinished:"Завершено", podcastPause:"Пауза", podcastResume:"Продолжить", podcastStop:"Стоп", podcastVoice:"Голос", podcastSpeed:"Скорость", podcastAutoVoice:"Автоматический голос", podcastNoVoice:"Подходящий голос не установлен; будет использован голос браузера по умолчанию.", podcastUnsupported:"Этот браузер не поддерживает озвучивание текста.", podcastTranslationFailed:"Не удалось перевести статью для воспроизведения.", podcastLocal:"локальный", podcastOnline:"онлайн" },
-    el: { btnPodcast:"Podcast", podcastTitle:"Αναπαραγωγή podcast", podcastPreparing:"Προετοιμασία άρθρου…", podcastTranslating:"Μετάφραση ολόκληρου του άρθρου…", podcastSpeaking:"Αναπαραγωγή", podcastPaused:"Παύση", podcastFinished:"Ολοκληρώθηκε", podcastPause:"Παύση", podcastResume:"Συνέχεια", podcastStop:"Διακοπή", podcastVoice:"Φωνή", podcastSpeed:"Ταχύτητα", podcastAutoVoice:"Αυτόματη φωνή", podcastNoVoice:"Δεν υπάρχει εγκατεστημένη κατάλληλη φωνή· θα χρησιμοποιηθεί η προεπιλεγμένη φωνή του προγράμματος περιήγησης.", podcastUnsupported:"Αυτό το πρόγραμμα περιήγησης δεν υποστηρίζει εκφώνηση κειμένου.", podcastTranslationFailed:"Το άρθρο δεν μπόρεσε να μεταφραστεί για αναπαραγωγή.", podcastLocal:"τοπική", podcastOnline:"online" },
-    tr: { btnPodcast:"Podcast", podcastTitle:"Podcast oynatıcı", podcastPreparing:"Makale hazırlanıyor…", podcastTranslating:"Makalenin tamamı çevriliyor…", podcastSpeaking:"Oynatılıyor", podcastPaused:"Duraklatıldı", podcastFinished:"Bitti", podcastPause:"Duraklat", podcastResume:"Devam", podcastStop:"Durdur", podcastVoice:"Ses", podcastSpeed:"Hız", podcastAutoVoice:"Otomatik ses", podcastNoVoice:"Uygun bir ses yüklü değil; tarayıcının varsayılan sesi kullanılacak.", podcastUnsupported:"Bu tarayıcı sesli okumayı desteklemiyor.", podcastTranslationFailed:"Makale oynatma için çevrilemedi.", podcastLocal:"yerel", podcastOnline:"çevrimiçi" }
+    en: { btnPodcast:"Podcast", podcastTitle:"Podcast player", podcastPreparing:"Preparing article…", podcastTranslating:"Translating full article…", podcastSpeaking:"Playing", podcastPaused:"Paused", podcastFinished:"Finished", podcastPlay:"Play", podcastReady:"Ready – press Play", podcastPause:"Pause", podcastResume:"Resume", podcastStop:"Stop", podcastVoice:"Voice", podcastSpeed:"Speed", podcastAutoVoice:"Automatic voice", podcastNoVoice:"No matching voice is installed; the browser default will be used.", podcastUnsupported:"Text-to-speech is not supported by this browser.", podcastTranslationFailed:"The article could not be translated for playback.", podcastLocal:"local", podcastOnline:"online" },
+    de: { btnPodcast:"Podcast", podcastTitle:"Podcast-Player", podcastPreparing:"Artikel wird vorbereitet…", podcastTranslating:"Vollständiger Artikel wird übersetzt…", podcastSpeaking:"Wiedergabe läuft", podcastPaused:"Pausiert", podcastFinished:"Beendet", podcastPlay:"Abspielen", podcastReady:"Bereit – bitte auf Abspielen drücken", podcastPause:"Pause", podcastResume:"Weiter", podcastStop:"Stopp", podcastVoice:"Stimme", podcastSpeed:"Tempo", podcastAutoVoice:"Automatische Stimme", podcastNoVoice:"Keine passende Stimme installiert; die Standardstimme des Browsers wird verwendet.", podcastUnsupported:"Dieser Browser unterstützt keine Vorlesefunktion.", podcastTranslationFailed:"Der Artikel konnte für die Wiedergabe nicht übersetzt werden.", podcastLocal:"lokal", podcastOnline:"online" },
+    es: { btnPodcast:"Pódcast", podcastTitle:"Reproductor de pódcast", podcastPreparing:"Preparando el artículo…", podcastTranslating:"Traduciendo el artículo completo…", podcastSpeaking:"Reproduciendo", podcastPaused:"En pausa", podcastFinished:"Finalizado", podcastPlay:"Reproducir", podcastReady:"Listo – pulsa Reproducir", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Detener", podcastVoice:"Voz", podcastSpeed:"Velocidad", podcastAutoVoice:"Voz automática", podcastNoVoice:"No hay una voz adecuada instalada; se usará la voz predeterminada del navegador.", podcastUnsupported:"Este navegador no admite la lectura en voz alta.", podcastTranslationFailed:"No se pudo traducir el artículo para la reproducción.", podcastLocal:"local", podcastOnline:"en línea" },
+    fr: { btnPodcast:"Podcast", podcastTitle:"Lecteur podcast", podcastPreparing:"Préparation de l’article…", podcastTranslating:"Traduction de l’article complet…", podcastSpeaking:"Lecture en cours", podcastPaused:"En pause", podcastFinished:"Terminé", podcastPlay:"Lire", podcastReady:"Prêt – appuyez sur Lire", podcastPause:"Pause", podcastResume:"Continuer", podcastStop:"Arrêter", podcastVoice:"Voix", podcastSpeed:"Vitesse", podcastAutoVoice:"Voix automatique", podcastNoVoice:"Aucune voix adaptée n’est installée ; la voix par défaut du navigateur sera utilisée.", podcastUnsupported:"Ce navigateur ne prend pas en charge la lecture vocale.", podcastTranslationFailed:"L’article n’a pas pu être traduit pour la lecture.", podcastLocal:"locale", podcastOnline:"en ligne" },
+    it: { btnPodcast:"Podcast", podcastTitle:"Lettore podcast", podcastPreparing:"Preparazione dell’articolo…", podcastTranslating:"Traduzione dell’articolo completo…", podcastSpeaking:"Riproduzione in corso", podcastPaused:"In pausa", podcastFinished:"Terminato", podcastPlay:"Riproduci", podcastReady:"Pronto – premi Riproduci", podcastPause:"Pausa", podcastResume:"Continua", podcastStop:"Stop", podcastVoice:"Voce", podcastSpeed:"Velocità", podcastAutoVoice:"Voce automatica", podcastNoVoice:"Non è installata una voce adatta; verrà usata la voce predefinita del browser.", podcastUnsupported:"Questo browser non supporta la lettura vocale.", podcastTranslationFailed:"Non è stato possibile tradurre l’articolo per la riproduzione.", podcastLocal:"locale", podcastOnline:"online" },
+    pt: { btnPodcast:"Podcast", podcastTitle:"Leitor de podcast", podcastPreparing:"A preparar o artigo…", podcastTranslating:"A traduzir o artigo completo…", podcastSpeaking:"A reproduzir", podcastPaused:"Em pausa", podcastFinished:"Terminado", podcastPlay:"Reproduzir", podcastReady:"Pronto – prima Reproduzir", podcastPause:"Pausa", podcastResume:"Continuar", podcastStop:"Parar", podcastVoice:"Voz", podcastSpeed:"Velocidade", podcastAutoVoice:"Voz automática", podcastNoVoice:"Não está instalada uma voz adequada; será usada a voz predefinida do navegador.", podcastUnsupported:"Este navegador não suporta leitura em voz alta.", podcastTranslationFailed:"Não foi possível traduzir o artigo para reprodução.", podcastLocal:"local", podcastOnline:"online" },
+    ru: { btnPodcast:"Подкаст", podcastTitle:"Проигрыватель подкаста", podcastPreparing:"Подготовка статьи…", podcastTranslating:"Перевод полной статьи…", podcastSpeaking:"Воспроизведение", podcastPaused:"Пауза", podcastFinished:"Завершено", podcastPlay:"Воспроизвести", podcastReady:"Готово — нажмите «Воспроизвести»", podcastPause:"Пауза", podcastResume:"Продолжить", podcastStop:"Стоп", podcastVoice:"Голос", podcastSpeed:"Скорость", podcastAutoVoice:"Автоматический голос", podcastNoVoice:"Подходящий голос не установлен; будет использован голос браузера по умолчанию.", podcastUnsupported:"Этот браузер не поддерживает озвучивание текста.", podcastTranslationFailed:"Не удалось перевести статью для воспроизведения.", podcastLocal:"локальный", podcastOnline:"онлайн" },
+    el: { btnPodcast:"Podcast", podcastTitle:"Αναπαραγωγή podcast", podcastPreparing:"Προετοιμασία άρθρου…", podcastTranslating:"Μετάφραση ολόκληρου του άρθρου…", podcastSpeaking:"Αναπαραγωγή", podcastPaused:"Παύση", podcastFinished:"Ολοκληρώθηκε", podcastPlay:"Αναπαραγωγή", podcastReady:"Έτοιμο – πατήστε Αναπαραγωγή", podcastPause:"Παύση", podcastResume:"Συνέχεια", podcastStop:"Διακοπή", podcastVoice:"Φωνή", podcastSpeed:"Ταχύτητα", podcastAutoVoice:"Αυτόματη φωνή", podcastNoVoice:"Δεν υπάρχει εγκατεστημένη κατάλληλη φωνή· θα χρησιμοποιηθεί η προεπιλεγμένη φωνή του προγράμματος περιήγησης.", podcastUnsupported:"Αυτό το πρόγραμμα περιήγησης δεν υποστηρίζει εκφώνηση κειμένου.", podcastTranslationFailed:"Το άρθρο δεν μπόρεσε να μεταφραστεί για αναπαραγωγή.", podcastLocal:"τοπική", podcastOnline:"online" },
+    tr: { btnPodcast:"Podcast", podcastTitle:"Podcast oynatıcı", podcastPreparing:"Makale hazırlanıyor…", podcastTranslating:"Makalenin tamamı çevriliyor…", podcastSpeaking:"Oynatılıyor", podcastPaused:"Duraklatıldı", podcastFinished:"Bitti", podcastPlay:"Oynat", podcastReady:"Hazır – Oynat düğmesine basın", podcastPause:"Duraklat", podcastResume:"Devam", podcastStop:"Durdur", podcastVoice:"Ses", podcastSpeed:"Hız", podcastAutoVoice:"Otomatik ses", podcastNoVoice:"Uygun bir ses yüklü değil; tarayıcının varsayılan sesi kullanılacak.", podcastUnsupported:"Bu tarayıcı sesli okumayı desteklemiyor.", podcastTranslationFailed:"Makale oynatma için çevrilemedi.", podcastLocal:"yerel", podcastOnline:"çevrimiçi" }
 };
 
 Object.keys(uiTexte).forEach(lang => {
@@ -371,6 +474,7 @@ let podcastState = {
     paused: false,
     loading: false,
     stopped: true,
+    started: false,
     utterance: null
 };
 
@@ -584,7 +688,13 @@ function updatePodcastUiText() {
     setTxt('txt-podcast-speed', t.podcastSpeed);
     setTxt('btn-podcast-stop', t.podcastStop);
     const pauseButton = document.getElementById('btn-podcast-pause');
-    if (pauseButton) pauseButton.textContent = podcastState.paused ? t.podcastResume : t.podcastPause;
+    if (pauseButton) {
+        const readyToStart = !podcastState.loading && !podcastState.stopped && !podcastState.started;
+        pauseButton.textContent = readyToStart
+            ? (t.podcastPlay || 'Play')
+            : (podcastState.paused ? t.podcastResume : t.podcastPause);
+        pauseButton.disabled = podcastState.loading || podcastState.stopped;
+    }
     const title = document.getElementById('podcast-player-title');
     if (title && podcastState.articleId === null) title.textContent = t.podcastTitle;
 }
@@ -601,9 +711,13 @@ function populatePodcastVoiceOptions() {
     const t = uiTexte[currentLang] || uiTexte.en;
     const previous = localStorage.getItem(`wrn_podcast_voice_${currentLang}`) || select.value;
     const languagePrefix = (speechLanguageTags[currentLang] || currentLang).split('-')[0].toLowerCase();
+
     const matching = podcastVoices
         .filter(voice => String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
         .sort((a, b) => Number(b.localService) - Number(a.localService) || a.name.localeCompare(b.name));
+    const otherVoices = podcastVoices
+        .filter(voice => !String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
+        .sort((a, b) => String(a.lang || '').localeCompare(String(b.lang || '')) || a.name.localeCompare(b.name));
 
     select.textContent = '';
     const autoOption = document.createElement('option');
@@ -611,21 +725,38 @@ function populatePodcastVoiceOptions() {
     autoOption.textContent = t.podcastAutoVoice;
     select.append(autoOption);
 
-    matching.forEach(voice => {
+    const appendVoice = voice => {
         const option = document.createElement('option');
-        option.value = voice.voiceURI || voice.name;
+        option.value = voice.voiceURI || `${voice.name}::${voice.lang}`;
         option.textContent = `${voice.name} (${voice.lang}, ${voice.localService ? t.podcastLocal : t.podcastOnline})`;
         select.append(option);
-    });
+    };
 
-    if ([...select.options].some(option => option.value === previous)) select.value = previous;
+    matching.forEach(appendVoice);
+
+    // Auf manchen Smartphones liefert der Browser nur sehr wenige Stimmen für
+    // die ausgewählte Sprache. Deshalb werden danach auch die übrigen
+    // installierten Stimmen angeboten, statt das Auswahlfeld praktisch leer zu lassen.
+    if (otherVoices.length > 0) {
+        const separator = document.createElement('option');
+        separator.disabled = true;
+        separator.textContent = '──────────';
+        select.append(separator);
+        otherVoices.forEach(appendVoice);
+    }
+
+    if ([...select.options].some(option => option.value === previous)) {
+        select.value = previous;
+    }
 }
 
 function getPodcastVoice() {
     const selected = document.getElementById('podcast-voice-select')?.value || '';
     const languagePrefix = (speechLanguageTags[currentLang] || currentLang).split('-')[0].toLowerCase();
     if (selected) {
-        const exact = podcastVoices.find(voice => (voice.voiceURI || voice.name) === selected);
+        const exact = podcastVoices.find(voice =>
+            (voice.voiceURI || `${voice.name}::${voice.lang}`) === selected
+        );
         if (exact) return exact;
     }
     return podcastVoices.find(voice => voice.localService && String(voice.lang || '').toLowerCase().startsWith(languagePrefix))
@@ -646,7 +777,10 @@ function speakCurrentPodcastChunk() {
 
     if (podcastState.index >= podcastState.chunks.length) {
         podcastState.stopped = true;
+        podcastState.started = false;
+        podcastState.utterance = null;
         setPodcastStatus(t.podcastFinished, `${podcastState.chunks.length}/${podcastState.chunks.length}`);
+        updatePodcastUiText();
         return;
     }
 
@@ -656,19 +790,30 @@ function speakCurrentPodcastChunk() {
     const voice = getPodcastVoice();
     if (voice) utterance.voice = voice;
 
+    podcastState.utterance = utterance;
+    podcastState.started = true;
+    podcastState.paused = false;
+
     utterance.onend = () => {
-        if (podcastState.stopped) return;
+        // Wenn Stimme oder Tempo geändert wurden, ist diese alte Äußerung nicht
+        // mehr die aktuelle. Dann darf sie den Abschnittszähler nicht erhöhen.
+        if (podcastState.stopped || podcastState.utterance !== utterance) return;
+        podcastState.utterance = null;
         podcastState.index += 1;
         speakCurrentPodcastChunk();
     };
     utterance.onerror = event => {
+        if (podcastState.utterance !== utterance) return;
         if (podcastState.stopped || event.error === 'canceled' || event.error === 'interrupted') return;
         podcastState.stopped = true;
+        podcastState.started = false;
+        podcastState.utterance = null;
         setPodcastStatus(`${t.podcastUnsupported} (${event.error || 'error'})`);
+        updatePodcastUiText();
     };
 
-    podcastState.utterance = utterance;
     setPodcastStatus(t.podcastSpeaking, `${podcastState.index + 1}/${podcastState.chunks.length}`);
+    updatePodcastUiText();
     window.speechSynthesis.speak(utterance);
 }
 
@@ -683,7 +828,8 @@ async function startPodcast(idNum) {
     podcastState.articleId = idNum;
     podcastState.loading = true;
     podcastState.stopped = false;
-    podcastState.paused = false;
+    podcastState.paused = true;
+    podcastState.started = false;
 
     const player = document.getElementById('podcast-player');
     const playerTitle = document.getElementById('podcast-player-title');
@@ -722,15 +868,26 @@ async function startPodcast(idNum) {
     podcastState.index = 0;
     podcastState.loading = false;
     podcastState.stopped = false;
-    podcastState.paused = false;
-    updatePodcastUiText();
+    podcastState.paused = true;
+    podcastState.started = false;
+    podcastState.utterance = null;
     window.speechSynthesis.cancel();
-    window.setTimeout(speakCurrentPodcastChunk, 80);
+    setPodcastStatus(t.podcastReady || 'Ready – press Play', `0/${podcastState.chunks.length}`);
+    updatePodcastUiText();
 }
 
 function togglePodcastPause() {
     if (!('speechSynthesis' in window) || podcastState.loading || podcastState.stopped) return;
     const t = uiTexte[currentLang] || uiTexte.en;
+
+    // Der erste Klick startet die vorbereitete Aufnahme. Nach der Übersetzung
+    // wird nichts mehr automatisch abgespielt.
+    if (!podcastState.started) {
+        podcastState.paused = false;
+        speakCurrentPodcastChunk();
+        return;
+    }
+
     if (podcastState.paused) {
         window.speechSynthesis.resume();
         podcastState.paused = false;
@@ -752,6 +909,7 @@ function stopPodcast(hidePlayer = true) {
         paused: false,
         loading: false,
         stopped: true,
+        started: false,
         utterance: null
     };
     const player = document.getElementById('podcast-player');
@@ -760,13 +918,37 @@ function stopPodcast(hidePlayer = true) {
     updatePodcastUiText();
 }
 
+function restartPodcastChunkAfterSettingChange() {
+    if (!('speechSynthesis' in window) || podcastState.loading || podcastState.stopped || !podcastState.started) return;
+
+    const wasPlaying = !podcastState.paused;
+    podcastState.utterance = null;
+    window.speechSynthesis.cancel();
+
+    if (wasPlaying) {
+        window.setTimeout(() => {
+            podcastState.started = false;
+            podcastState.paused = false;
+            speakCurrentPodcastChunk();
+        }, 120);
+    } else {
+        podcastState.started = false;
+        podcastState.paused = true;
+        const t = uiTexte[currentLang] || uiTexte.en;
+        setPodcastStatus(t.podcastReady || 'Ready – press Play', `${podcastState.index + 1}/${podcastState.chunks.length}`);
+        updatePodcastUiText();
+    }
+}
+
 function changePodcastRate(value) {
     localStorage.setItem('wrn_podcast_rate', String(value || 1));
+    restartPodcastChunkAfterSettingChange();
 }
 
 function changePodcastVoice() {
     const value = document.getElementById('podcast-voice-select')?.value || '';
     localStorage.setItem(`wrn_podcast_voice_${currentLang}`, value);
+    restartPodcastChunkAfterSettingChange();
 }
 
 function initializePodcast() {
@@ -779,6 +961,8 @@ function initializePodcast() {
     refreshPodcastVoices();
     if ('speechSynthesis' in window) {
         window.speechSynthesis.addEventListener('voiceschanged', refreshPodcastVoices);
+        // Safari und manche Android-Browser stellen die Stimmen erst verspätet bereit.
+        [150, 600, 1500, 3000].forEach(delay => window.setTimeout(refreshPodcastVoices, delay));
     }
 }
 
