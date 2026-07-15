@@ -108,8 +108,8 @@
             <span id="txt-radar-summary">Events</span>
         </button>
 
-        <button class="btn-nav" style="flex: 1 1 18%; border-color: var(--color-green); color: var(--color-green); display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" id="btn-podcast-library" onclick="openPodcastLibrary()">
-            <span id="txt-podcast-library">Podcasts</span>
+        <button class="btn-nav btn-podcast-nav" style="flex: 1 1 18%;" id="btn-podcast-library" onclick="openAudioHub('original')">
+            <span id="txt-podcast-library">Podcasts & Radio</span>
         </button>
         
         <button class="btn-nav" style="flex: 1 1 18%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
@@ -280,11 +280,35 @@
     </div>
 
     <div class="feedback-modal podcast-library-modal" id="podcast-library-modal" style="display: none;">
-        <h3 id="podcast-library-title">Gemeinsame Podcasts – letzte 30 Tage</h3>
-        <div class="podcast-library-toolbar">
-            <button type="button" class="btn-podcast-control" id="btn-podcast-library-refresh" onclick="loadPodcastLibrary()">Aktualisieren</button>
+        <h3 id="podcast-library-title">Podcasts & Live-Radio</h3>
+        <div class="audio-hub-tabs" role="tablist" aria-label="Audio sections">
+            <button type="button" class="audio-hub-tab active" id="tab-original-podcasts" onclick="switchAudioHubTab('original')">Original-Podcasts</button>
+            <button type="button" class="audio-hub-tab" id="tab-generated-podcasts" onclick="switchAudioHubTab('generated')">Erzeugte Podcasts</button>
+            <button type="button" class="audio-hub-tab" id="tab-live-radio" onclick="switchAudioHubTab('radio')">Live-Radio</button>
         </div>
-        <div id="podcast-library-list" class="podcast-library-list" aria-live="polite"></div>
+
+        <section id="panel-original-podcasts" class="audio-hub-panel">
+            <div class="podcast-library-toolbar media-filter-toolbar">
+                <select id="original-podcast-source-filter" onchange="renderOriginalPodcastLibrary()"><option value="">Alle Quellen</option></select>
+                <select id="original-podcast-language-filter" onchange="renderOriginalPodcastLibrary()"><option value="">Alle Sprachen</option></select>
+                <input id="original-podcast-search" type="search" placeholder="Podcasts durchsuchen…" oninput="renderOriginalPodcastLibrary()">
+                <button type="button" class="btn-podcast-control" id="btn-original-podcast-refresh" onclick="loadOriginalPodcasts(true)">Aktualisieren</button>
+            </div>
+            <div id="original-podcast-list" class="podcast-library-list" aria-live="polite"></div>
+        </section>
+
+        <section id="panel-generated-podcasts" class="audio-hub-panel" hidden>
+            <div class="podcast-library-toolbar">
+                <button type="button" class="btn-podcast-control" id="btn-podcast-library-refresh" onclick="loadPodcastLibrary()">Aktualisieren</button>
+            </div>
+            <div id="podcast-library-list" class="podcast-library-list" aria-live="polite"></div>
+        </section>
+
+        <section id="panel-live-radio" class="audio-hub-panel" hidden>
+            <p id="live-radio-note" class="live-radio-note">Live-Sender starten niemals automatisch. Falls ein Stream blockiert ist, öffne die Senderseite.</p>
+            <div id="live-radio-list" class="live-radio-list" aria-live="polite"></div>
+        </section>
+
         <div class="feedback-actions"><button class="btn-cancel" id="btn-podcast-library-close" onclick="closeAllModals()">Schließen</button></div>
     </div>
 

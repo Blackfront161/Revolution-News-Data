@@ -8,6 +8,8 @@ window.onerror = function(msg, url, line, col, error) {
 // Nachrichten und Veranstaltungen werden getrennt aktualisiert.
 const GITHUB_NEWS_URL = "https://blackfront161.github.io/Revolution-News-Data/news.json";
 const GITHUB_EVENTS_URL = "https://blackfront161.github.io/Revolution-News-Data/events.json";
+const GITHUB_PODCASTS_URL = "https://blackfront161.github.io/Revolution-News-Data/podcasts.json";
+const GITHUB_RADIO_URL = "https://blackfront161.github.io/Revolution-News-Data/radio-stations.json";
 const PROXY_URL = "https://revolution-proxy.paghklo.workers.dev";
 let capVal1 = 0; let capVal2 = 0;
 
@@ -481,6 +483,24 @@ const podcastQuotaUiTexte = {
 Object.keys(uiTexte).forEach(lang => {
     Object.assign(uiTexte[lang], podcastQuotaUiTexte[lang] || podcastQuotaUiTexte.en);
 });
+
+
+const audioHubUiTexte = {
+    en: { audioHub:"Podcasts & Radio", audioHubTitle:"Podcasts & Live Radio", tabOriginal:"Original podcasts", tabGenerated:"Generated podcasts", tabRadio:"Live radio", allSources:"All sources", allLanguages:"All languages", searchPodcasts:"Search podcasts…", originalLoading:"Loading original podcasts…", originalEmpty:"No original podcast episodes were found.", originalSource:"Source", originalPublished:"Published", originalDuration:"Duration", listenOriginal:"Open original", feedLink:"Podcast feed", liveRadioNote:"Live stations never start automatically. If a stream is blocked, open the station website.", radioOpen:"Open station", radioStreamError:"The stream could not be played in this browser. Try the station website." },
+    de: { audioHub:"Podcasts & Radio", audioHubTitle:"Podcasts & Live-Radio", tabOriginal:"Original-Podcasts", tabGenerated:"Erzeugte Podcasts", tabRadio:"Live-Radio", allSources:"Alle Quellen", allLanguages:"Alle Sprachen", searchPodcasts:"Podcasts durchsuchen…", originalLoading:"Original-Podcasts werden geladen…", originalEmpty:"Keine Original-Podcastfolgen gefunden.", originalSource:"Quelle", originalPublished:"Veröffentlicht", originalDuration:"Laufzeit", listenOriginal:"Beim Original öffnen", feedLink:"Podcast-Feed", liveRadioNote:"Live-Sender starten niemals automatisch. Falls ein Stream blockiert ist, öffne die Senderseite.", radioOpen:"Senderseite öffnen", radioStreamError:"Der Stream konnte in diesem Browser nicht abgespielt werden. Versuche die Senderseite." },
+    es: { audioHub:"Pódcasts y radio", audioHubTitle:"Pódcasts y radio en directo", tabOriginal:"Pódcasts originales", tabGenerated:"Pódcasts generados", tabRadio:"Radio en directo", allSources:"Todas las fuentes", allLanguages:"Todos los idiomas", searchPodcasts:"Buscar pódcasts…", originalLoading:"Cargando pódcasts originales…", originalEmpty:"No se encontraron episodios.", originalSource:"Fuente", originalPublished:"Publicado", originalDuration:"Duración", listenOriginal:"Abrir original", feedLink:"Feed", liveRadioNote:"Las radios nunca se inician automáticamente. Si un stream falla, abre la web de la emisora.", radioOpen:"Abrir emisora", radioStreamError:"El stream no pudo reproducirse en este navegador." },
+    fr: { audioHub:"Podcasts et radio", audioHubTitle:"Podcasts et radio en direct", tabOriginal:"Podcasts originaux", tabGenerated:"Podcasts générés", tabRadio:"Radio en direct", allSources:"Toutes les sources", allLanguages:"Toutes les langues", searchPodcasts:"Rechercher…", originalLoading:"Chargement des podcasts originaux…", originalEmpty:"Aucun épisode trouvé.", originalSource:"Source", originalPublished:"Publié", originalDuration:"Durée", listenOriginal:"Ouvrir l’original", feedLink:"Flux", liveRadioNote:"Les radios ne démarrent jamais automatiquement. Si un flux échoue, ouvrez le site de la station.", radioOpen:"Ouvrir la station", radioStreamError:"Le flux ne peut pas être lu dans ce navigateur." },
+    it: { audioHub:"Podcast e radio", audioHubTitle:"Podcast e radio dal vivo", tabOriginal:"Podcast originali", tabGenerated:"Podcast generati", tabRadio:"Radio dal vivo", allSources:"Tutte le fonti", allLanguages:"Tutte le lingue", searchPodcasts:"Cerca podcast…", originalLoading:"Caricamento podcast originali…", originalEmpty:"Nessun episodio trovato.", originalSource:"Fonte", originalPublished:"Pubblicato", originalDuration:"Durata", listenOriginal:"Apri originale", feedLink:"Feed", liveRadioNote:"Le radio non partono mai automaticamente. Se lo stream non funziona, apri il sito della stazione.", radioOpen:"Apri stazione", radioStreamError:"Impossibile riprodurre lo stream in questo browser." },
+    pt: { audioHub:"Podcasts e rádio", audioHubTitle:"Podcasts e rádio ao vivo", tabOriginal:"Podcasts originais", tabGenerated:"Podcasts gerados", tabRadio:"Rádio ao vivo", allSources:"Todas as fontes", allLanguages:"Todos os idiomas", searchPodcasts:"Pesquisar podcasts…", originalLoading:"A carregar podcasts originais…", originalEmpty:"Nenhum episódio encontrado.", originalSource:"Fonte", originalPublished:"Publicado", originalDuration:"Duração", listenOriginal:"Abrir original", feedLink:"Feed", liveRadioNote:"As rádios nunca iniciam automaticamente. Se um stream falhar, abra o site da estação.", radioOpen:"Abrir estação", radioStreamError:"O stream não pôde ser reproduzido neste navegador." },
+    ru: { audioHub:"Подкасты и радио", audioHubTitle:"Подкасты и прямой эфир", tabOriginal:"Оригинальные подкасты", tabGenerated:"Созданные подкасты", tabRadio:"Радио", allSources:"Все источники", allLanguages:"Все языки", searchPodcasts:"Поиск подкастов…", originalLoading:"Загрузка оригинальных подкастов…", originalEmpty:"Эпизоды не найдены.", originalSource:"Источник", originalPublished:"Опубликовано", originalDuration:"Длительность", listenOriginal:"Открыть оригинал", feedLink:"Лента", liveRadioNote:"Радио никогда не запускается автоматически. Если поток не работает, откройте сайт станции.", radioOpen:"Открыть станцию", radioStreamError:"Поток не воспроизводится в этом браузере." },
+    el: { audioHub:"Podcast και ραδιόφωνο", audioHubTitle:"Podcast και ζωντανό ραδιόφωνο", tabOriginal:"Πρωτότυπα podcast", tabGenerated:"Δημιουργημένα podcast", tabRadio:"Ζωντανό ραδιόφωνο", allSources:"Όλες οι πηγές", allLanguages:"Όλες οι γλώσσες", searchPodcasts:"Αναζήτηση podcast…", originalLoading:"Φόρτωση πρωτότυπων podcast…", originalEmpty:"Δεν βρέθηκαν επεισόδια.", originalSource:"Πηγή", originalPublished:"Δημοσιεύτηκε", originalDuration:"Διάρκεια", listenOriginal:"Άνοιγμα πρωτοτύπου", feedLink:"Ροή", liveRadioNote:"Οι σταθμοί δεν ξεκινούν ποτέ αυτόματα. Αν η ροή αποτύχει, ανοίξτε τον ιστότοπο του σταθμού.", radioOpen:"Άνοιγμα σταθμού", radioStreamError:"Η ροή δεν αναπαράγεται σε αυτό το πρόγραμμα περιήγησης." },
+    tr: { audioHub:"Podcast ve radyo", audioHubTitle:"Podcast ve canlı radyo", tabOriginal:"Orijinal podcastler", tabGenerated:"Oluşturulan podcastler", tabRadio:"Canlı radyo", allSources:"Tüm kaynaklar", allLanguages:"Tüm diller", searchPodcasts:"Podcast ara…", originalLoading:"Orijinal podcastler yükleniyor…", originalEmpty:"Bölüm bulunamadı.", originalSource:"Kaynak", originalPublished:"Yayınlandı", originalDuration:"Süre", listenOriginal:"Orijinali aç", feedLink:"Besleme", liveRadioNote:"Canlı istasyonlar otomatik başlamaz. Akış çalışmazsa istasyon sitesini açın.", radioOpen:"İstasyonu aç", radioStreamError:"Akış bu tarayıcıda oynatılamadı." }
+};
+Object.keys(uiTexte).forEach(lang => Object.assign(uiTexte[lang], audioHubUiTexte[lang] || audioHubUiTexte.en));
+
+let originalPodcastData = [];
+let radioStationData = [];
+let activeAudioHubTab = 'original';
 
 let currentLang = "en";
 let activeKontinent = "Global"; 
@@ -1063,6 +1083,14 @@ function updateSharedPodcastUiText() {
     setTxt('podcast-quota-title', t.podcastQuotaTitle);
     setTxt('podcast-quota-message', t.podcastQuotaInfo);
     setTxt('podcast-quota-device', t.podcastQuotaDevice);
+    setTxt('txt-podcast-library', t.audioHub || t.podcastLibrary);
+    setTxt('podcast-library-title', t.audioHubTitle || t.podcastLibraryTitle);
+    setTxt('tab-original-podcasts', t.tabOriginal);
+    setTxt('tab-generated-podcasts', t.tabGenerated);
+    setTxt('tab-live-radio', t.tabRadio);
+    setTxt('btn-original-podcast-refresh', t.podcastLibraryRefresh);
+    setTxt('live-radio-note', t.liveRadioNote);
+    setPh('original-podcast-search', t.searchPodcasts);
     if (podcastServiceStatus) renderPodcastQuotaStatus(podcastServiceStatus);
 }
 
@@ -1341,7 +1369,170 @@ function renderPodcastLibrary(items, highlightId = '') {
 }
 
 function pausePodcastLibraryAudio() {
-    document.querySelectorAll('#podcast-library-list audio').forEach(audio => audio.pause());
+    document.querySelectorAll('#podcast-library-modal audio').forEach(audio => audio.pause());
+}
+
+
+function switchAudioHubTab(tab, highlightId = '') {
+    const allowed = ['original', 'generated', 'radio'];
+    activeAudioHubTab = allowed.includes(tab) ? tab : 'original';
+    const mapping = {
+        original: ['panel-original-podcasts', 'tab-original-podcasts'],
+        generated: ['panel-generated-podcasts', 'tab-generated-podcasts'],
+        radio: ['panel-live-radio', 'tab-live-radio']
+    };
+    Object.entries(mapping).forEach(([key, [panelId, buttonId]]) => {
+        const panel = document.getElementById(panelId);
+        const button = document.getElementById(buttonId);
+        if (panel) panel.hidden = key !== activeAudioHubTab;
+        if (button) button.classList.toggle('active', key === activeAudioHubTab);
+    });
+    pausePodcastLibraryAudio();
+    if (activeAudioHubTab === 'original') loadOriginalPodcasts(false);
+    if (activeAudioHubTab === 'generated') loadPodcastLibrary(highlightId);
+    if (activeAudioHubTab === 'radio') loadLiveRadio(false);
+}
+
+async function openAudioHub(tab = 'original', highlightId = '') {
+    closeAllModals();
+    updateSharedPodcastUiText();
+    showPodcastModal('podcast-library-modal');
+    switchAudioHubTab(tab, highlightId);
+}
+
+// Compatibility: newly generated Azure podcasts open the generated tab.
+async function openPodcastLibrary(highlightId = '') {
+    return openAudioHub(highlightId ? 'generated' : 'original', highlightId);
+}
+
+async function loadOriginalPodcasts(force = false) {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const container = document.getElementById('original-podcast-list');
+    if (!container) return;
+    if (originalPodcastData.length && !force) {
+        populateOriginalPodcastFilters();
+        renderOriginalPodcastLibrary();
+        return;
+    }
+    container.textContent = t.originalLoading;
+    try {
+        const response = await fetch(`${GITHUB_PODCASTS_URL}?v=${force ? Date.now() : '1'}`, { cache: force ? 'no-store' : 'default' });
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data)) throw new Error(`HTTP ${response.status}`);
+        originalPodcastData = data.filter(item => getSafeHttpUrl(item.audioUrl));
+        populateOriginalPodcastFilters();
+        renderOriginalPodcastLibrary();
+    } catch (error) {
+        container.className = 'podcast-library-list media-load-error';
+        container.textContent = `${t.originalEmpty} (${error?.message || error})`;
+    }
+}
+
+function populateOriginalPodcastFilters() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const sourceSelect = document.getElementById('original-podcast-source-filter');
+    const languageSelect = document.getElementById('original-podcast-language-filter');
+    if (!sourceSelect || !languageSelect) return;
+    const selectedSource = sourceSelect.value;
+    const selectedLanguage = languageSelect.value;
+    sourceSelect.textContent = '';
+    languageSelect.textContent = '';
+    const sourceAll = document.createElement('option'); sourceAll.value = ''; sourceAll.textContent = t.allSources; sourceSelect.append(sourceAll);
+    const languageAll = document.createElement('option'); languageAll.value = ''; languageAll.textContent = t.allLanguages; languageSelect.append(languageAll);
+    [...new Set(originalPodcastData.map(item => item.sourceName).filter(Boolean))].sort().forEach(value => {
+        const option = document.createElement('option'); option.value = value; option.textContent = value; sourceSelect.append(option);
+    });
+    [...new Set(originalPodcastData.map(item => item.language).filter(Boolean))].sort().forEach(value => {
+        const option = document.createElement('option'); option.value = value; option.textContent = value.toUpperCase(); languageSelect.append(option);
+    });
+    if ([...sourceSelect.options].some(o => o.value === selectedSource)) sourceSelect.value = selectedSource;
+    if ([...languageSelect.options].some(o => o.value === selectedLanguage)) languageSelect.value = selectedLanguage;
+}
+
+function renderOriginalPodcastLibrary() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const container = document.getElementById('original-podcast-list');
+    if (!container) return;
+    container.className = 'podcast-library-list';
+    const source = document.getElementById('original-podcast-source-filter')?.value || '';
+    const language = document.getElementById('original-podcast-language-filter')?.value || '';
+    const search = (document.getElementById('original-podcast-search')?.value || '').trim().toLowerCase();
+    const items = originalPodcastData
+        .filter(item => !source || item.sourceName === source)
+        .filter(item => !language || item.language === language)
+        .filter(item => !search || `${item.title || ''} ${item.description || ''} ${item.sourceName || ''}`.toLowerCase().includes(search))
+        .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0));
+    container.textContent = '';
+    if (!items.length) { container.textContent = t.originalEmpty; return; }
+    items.slice(0, 180).forEach(item => {
+        const card = document.createElement('article'); card.className = 'original-podcast-card';
+        const title = document.createElement('h4'); title.textContent = item.title || 'Podcast'; card.append(title);
+        const meta = document.createElement('div'); meta.className = 'original-podcast-meta';
+        const date = item.published ? new Date(item.published).toLocaleDateString(currentLang === 'en' ? 'en-US' : currentLang) : '';
+        meta.textContent = `${item.sourceName || ''}${date ? ` · ${date}` : ''}${item.duration ? ` · ${item.duration}` : ''}${item.language ? ` · ${item.language.toUpperCase()}` : ''}`;
+        card.append(meta);
+        if (item.description) { const description = document.createElement('p'); description.className = 'original-podcast-description'; description.textContent = String(item.description).slice(0, 700); card.append(description); }
+        const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none'; audio.src = item.audioUrl;
+        audio.addEventListener('play', () => pauseOtherAudio(audio)); card.append(audio);
+        const links = document.createElement('div'); links.className = 'original-podcast-links';
+        if (getSafeHttpUrl(item.episodeUrl)) links.append(makeMediaLink(item.episodeUrl, t.listenOriginal));
+        if (getSafeHttpUrl(item.feedUrl)) links.append(makeMediaLink(item.feedUrl, t.feedLink));
+        if (item.license) { const license = document.createElement('span'); license.textContent = item.license; license.className = 'original-podcast-meta'; links.append(license); }
+        card.append(links); container.append(card);
+    });
+}
+
+function makeMediaLink(url, label) {
+    const link = document.createElement('a'); link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.referrerPolicy = 'no-referrer'; link.textContent = label; return link;
+}
+
+function pauseOtherAudio(activeAudio) {
+    document.querySelectorAll('#podcast-library-modal audio').forEach(other => { if (other !== activeAudio) other.pause(); });
+}
+
+async function loadLiveRadio(force = false) {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const container = document.getElementById('live-radio-list');
+    if (!container) return;
+    if (radioStationData.length && !force) { renderLiveRadio(); return; }
+    container.textContent = t.originalLoading;
+    try {
+        const response = await fetch(`${GITHUB_RADIO_URL}?v=${force ? Date.now() : '1'}`, { cache: force ? 'no-store' : 'default' });
+        const data = await response.json();
+        if (!response.ok || !Array.isArray(data)) throw new Error(`HTTP ${response.status}`);
+        radioStationData = data;
+        renderLiveRadio();
+    } catch (error) {
+        container.className = 'live-radio-list media-load-error';
+        container.textContent = `${t.radioStreamError} (${error?.message || error})`;
+    }
+}
+
+function renderLiveRadio() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const container = document.getElementById('live-radio-list');
+    if (!container) return;
+    container.className = 'live-radio-list'; container.textContent = '';
+    radioStationData.filter(station => station.enabled !== false).forEach(station => {
+        const card = document.createElement('article'); card.className = 'live-radio-card';
+        const title = document.createElement('h4'); title.textContent = station.name || 'Radio'; card.append(title);
+        const meta = document.createElement('div'); meta.className = 'live-radio-meta';
+        meta.textContent = `${station.city || ''}${station.country ? ` · ${station.country}` : ''}${station.languages?.length ? ` · ${station.languages.join(', ').toUpperCase()}` : ''}`; card.append(meta);
+        if (station.description) { const desc = document.createElement('p'); desc.className = 'live-radio-description'; desc.textContent = station.description; card.append(desc); }
+        const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none';
+        const candidates = (station.streamCandidates || []).map(getSafeHttpUrl).filter(Boolean);
+        let candidateIndex = 0;
+        if (candidates.length) audio.src = candidates[0];
+        audio.addEventListener('play', () => pauseOtherAudio(audio));
+        audio.addEventListener('error', () => {
+            if (candidateIndex + 1 < candidates.length) { candidateIndex += 1; audio.src = candidates[candidateIndex]; audio.load(); }
+            else { audio.title = t.radioStreamError; }
+        });
+        card.append(audio);
+        const links = document.createElement('div'); links.className = 'live-radio-links';
+        if (getSafeHttpUrl(station.website)) links.append(makeMediaLink(station.website, t.radioOpen));
+        card.append(links); container.append(card);
+    });
 }
 
 

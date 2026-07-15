@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026-07-15-4';
-const DATA_CACHE = 'wrn-data-v2026-07-15-4';
+const APP_CACHE = 'wrn-app-v2026-07-15-media-1';
+const DATA_CACHE = 'wrn-data-v2026-07-15-media-1';
 
 const APP_SHELL = [
   './',
@@ -17,7 +17,10 @@ const APP_SHELL = [
 const DATA_FILES = new Set([
   new URL('./news.json', self.location.href).pathname,
   new URL('./events.json', self.location.href).pathname,
-  new URL('./source-health.json', self.location.href).pathname
+  new URL('./source-health.json', self.location.href).pathname,
+  new URL('./podcasts.json', self.location.href).pathname,
+  new URL('./podcast-health.json', self.location.href).pathname,
+  new URL('./radio-stations.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {
