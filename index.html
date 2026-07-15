@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#050508">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https://revolution-proxy.paghklo.workers.dev; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https:; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
     <style>
         /* Zwingt den Radar-Button dazu, immer grün zu bleiben! */
         #cat-radar.active { background-color: var(--color-green) !important; color: #000 !important; border-color: var(--color-green) !important; }
@@ -211,6 +211,19 @@
             <button type="button" class="btn-podcast-control btn-podcast-stop" id="btn-podcast-stop" onclick="stopPodcast()">Stop</button>
         </div>
     </section>
+
+    <section id="global-media-bar" class="global-media-bar" hidden aria-live="polite">
+        <div class="global-media-info">
+            <strong id="global-media-title">Audio</strong>
+            <span id="global-media-subtitle"></span>
+            <span id="global-media-status"></span>
+        </div>
+        <div class="global-media-controls">
+            <button type="button" class="btn-media-play" id="global-media-play" onclick="resumeGlobalMedia()">▶ Play</button>
+            <button type="button" class="btn-media-stop" id="global-media-stop" onclick="stopGlobalMedia()">■ Stop</button>
+        </div>
+    </section>
+    <audio id="global-media-player" preload="none" playsinline></audio>
     <div id="status-container" class="status-msg">Connecting to server...</div>
     <div id="feed-container"></div>
     <h2 class="archive-header" id="txt-archive-title" style="display: none;">🗄️ Archive (> 3 Months)</h2>

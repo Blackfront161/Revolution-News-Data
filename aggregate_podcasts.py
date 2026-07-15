@@ -34,10 +34,18 @@ def clean_text(value: object) -> str:
     return re.sub(r"\s+", " ", soup.get_text(" ", strip=True)).strip()
 
 
+HTTPS_UPGRADE_HOSTS = {"www.freie-radios.net", "freie-radios.net"}
+
 def safe_url(value: object, base: str = "") -> str:
-    if not value: return ""
+    if not value:
+        return ""
     url = urljoin(base, str(value).strip())
-    return url if urlparse(url).scheme in {"http", "https"} else ""
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        return ""
+    if parsed.scheme == "http" and (parsed.hostname or "").lower() in HTTPS_UPGRADE_HOSTS:
+        url = "https://" + url.split("://", 1)[1]
+    return url
 
 
 def parse_date(entry) -> str:

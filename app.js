@@ -502,6 +502,22 @@ let originalPodcastData = [];
 let radioStationData = [];
 let activeAudioHubTab = 'original';
 
+const mediaUiTexts = {
+    en:{play:'Play', pause:'Pause', stop:'Stop', loading:'Connecting…', playing:'Playing', paused:'Paused', failed:'Audio could not be loaded.'},
+    de:{play:'Abspielen', pause:'Pause', stop:'Stop', loading:'Verbinde…', playing:'Läuft', paused:'Pausiert', failed:'Audio konnte nicht geladen werden.'},
+    es:{play:'Reproducir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduciendo', paused:'Pausado', failed:'No se pudo cargar el audio.'},
+    fr:{play:'Lecture', pause:'Pause', stop:'Arrêter', loading:'Connexion…', playing:'Lecture', paused:'En pause', failed:'Impossible de charger l’audio.'},
+    it:{play:'Riproduci', pause:'Pausa', stop:'Stop', loading:'Connessione…', playing:'In riproduzione', paused:'In pausa', failed:'Impossibile caricare l’audio.'},
+    pt:{play:'Reproduzir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduzindo', paused:'Pausado', failed:'Não foi possível carregar o áudio.'},
+    ru:{play:'Воспроизвести', pause:'Пауза', stop:'Стоп', loading:'Подключение…', playing:'Воспроизведение', paused:'Пауза', failed:'Не удалось загрузить аудио.'},
+    el:{play:'Αναπαραγωγή', pause:'Παύση', stop:'Στοπ', loading:'Σύνδεση…', playing:'Αναπαραγωγή', paused:'Παύση', failed:'Δεν ήταν δυνατή η φόρτωση του ήχου.'},
+    tr:{play:'Oynat', pause:'Duraklat', stop:'Durdur', loading:'Bağlanıyor…', playing:'Çalıyor', paused:'Duraklatıldı', failed:'Ses yüklenemedi.'}
+};
+let globalMediaState = {
+    id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0, statusId:'', artwork:'', initialized:false
+};
+
+
 let currentLang = "en";
 let activeKontinent = "Global"; 
 let allNewsData = []; 
@@ -1307,71 +1323,263 @@ async function loadPodcastLibrary(highlightId = '') {
     }
 }
 
+
+function getMediaUiText() {
+    return mediaUiTexts[currentLang] || mediaUiTexts.en;
+}
+
+function normalizePlayableMediaUrl(value) {
+    const safe = getSafeHttpUrl(value);
+    if (!safe) return '';
+    try {
+        const url = new URL(safe);
+        // Eine HTTPS-App darf keine HTTP-Audiodateien laden. Bei bekannten
+        // Podcast-Hosts wird deshalb auf deren HTTPS-Adresse umgestellt.
+        const upgradeHosts = new Set(['www.freie-radios.net', 'freie-radios.net']);
+        if (url.protocol === 'http:' && upgradeHosts.has(url.hostname.toLowerCase())) {
+            url.protocol = 'https:';
+            return url.href;
+        }
+        if (location.protocol === 'https:' && url.protocol === 'http:') return '';
+        return url.href;
+    } catch { return ''; }
+}
+
+function uniquePlayableCandidates(values) {
+    return [...new Set((Array.isArray(values) ? values : [values])
+        .map(normalizePlayableMediaUrl)
+        .filter(Boolean))];
+}
+
+function getGlobalMediaPlayer() {
+    const audio = document.getElementById('global-media-player');
+    if (!audio) return null;
+    if (!globalMediaState.initialized) {
+        globalMediaState.initialized = true;
+        audio.addEventListener('loadstart', () => setGlobalMediaStatus(getMediaUiText().loading));
+        audio.addEventListener('waiting', () => setGlobalMediaStatus(getMediaUiText().loading));
+        audio.addEventListener('playing', () => {
+            setGlobalMediaStatus(getMediaUiText().playing, 'playing');
+            if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+            updateGlobalMediaButtons();
+        });
+        audio.addEventListener('pause', () => {
+            if (!audio.ended && globalMediaState.id) setGlobalMediaStatus(getMediaUiText().paused);
+            if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
+            updateGlobalMediaButtons();
+        });
+        audio.addEventListener('ended', () => stopGlobalMedia());
+        audio.addEventListener('error', () => tryNextGlobalMediaCandidate());
+        setupMediaSessionHandlers();
+    }
+    return audio;
+}
+
+function setGlobalMediaStatus(text, className='') {
+    const globalStatus = document.getElementById('global-media-status');
+    if (globalStatus) globalStatus.textContent = text || '';
+    if (globalMediaState.statusId) {
+        const localStatus = document.getElementById(globalMediaState.statusId);
+        if (localStatus) {
+            localStatus.textContent = text || '';
+            localStatus.className = `media-card-status ${className}`.trim();
+        }
+    }
+}
+
+function updateGlobalMediaBar() {
+    const bar = document.getElementById('global-media-bar');
+    const title = document.getElementById('global-media-title');
+    const subtitle = document.getElementById('global-media-subtitle');
+    if (bar) bar.hidden = !globalMediaState.id;
+    if (title) title.textContent = globalMediaState.title || 'Audio';
+    if (subtitle) subtitle.textContent = globalMediaState.artist || '';
+    updateGlobalMediaButtons();
+}
+
+function updateGlobalMediaButtons() {
+    const audio = document.getElementById('global-media-player');
+    const t = getMediaUiText();
+    document.querySelectorAll('.btn-media-play[data-media-id]').forEach(button => {
+        const active = button.dataset.mediaId === globalMediaState.id;
+        button.textContent = active && audio && !audio.paused ? `❚❚ ${t.pause}` : `▶ ${t.play}`;
+    });
+    document.querySelectorAll('.btn-media-stop[data-media-id]').forEach(button => {
+        button.disabled = button.dataset.mediaId !== globalMediaState.id;
+    });
+    const globalPlay = document.getElementById('global-media-play');
+    const globalStop = document.getElementById('global-media-stop');
+    if (globalPlay) globalPlay.textContent = audio && !audio.paused ? `❚❚ ${t.pause}` : `▶ ${t.play}`;
+    if (globalStop) { globalStop.textContent = `■ ${t.stop}`; globalStop.disabled = !globalMediaState.id; }
+}
+
+function setMediaSessionMetadata(config) {
+    if (!('mediaSession' in navigator) || typeof MediaMetadata === 'undefined') return;
+    const artwork = normalizePlayableMediaUrl(config.artwork) || new URL('icon.svg', location.href).href;
+    try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: config.title || 'World Revolution News',
+            artist: config.artist || (config.kind === 'radio' ? 'Live-Radio' : 'Podcast'),
+            album: 'World Revolution News',
+            artwork: [{ src: artwork }]
+        });
+    } catch (error) { console.warn('Media-Session-Metadaten:', error); }
+}
+
+function setupMediaSessionHandlers() {
+    if (!('mediaSession' in navigator)) return;
+    const safeSet = (action, handler) => { try { navigator.mediaSession.setActionHandler(action, handler); } catch {} };
+    safeSet('play', () => resumeGlobalMedia());
+    safeSet('pause', () => pauseGlobalMedia());
+    safeSet('stop', () => stopGlobalMedia());
+    safeSet('seekbackward', details => {
+        const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(audio.duration)) return;
+        audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
+    });
+    safeSet('seekforward', details => {
+        const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(audio.duration)) return;
+        audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 10));
+    });
+    safeSet('seekto', details => {
+        const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(details.seekTime)) return;
+        audio.currentTime = Math.max(0, Math.min(audio.duration || details.seekTime, details.seekTime));
+    });
+}
+
+async function playGlobalMedia(config) {
+    const audio = getGlobalMediaPlayer();
+    if (!audio) return;
+    const candidates = uniquePlayableCandidates(config.candidates || config.url || []);
+    if (!candidates.length) {
+        globalMediaState = { ...globalMediaState, id:config.id || '', statusId:config.statusId || '' };
+        setGlobalMediaStatus(getMediaUiText().failed, 'error');
+        return;
+    }
+
+    if (globalMediaState.id === config.id && audio.src) {
+        if (audio.paused) {
+            try { await audio.play(); } catch (error) { setGlobalMediaStatus(`${getMediaUiText().failed} ${error.message || ''}`, 'error'); }
+        } else {
+            audio.pause();
+        }
+        updateGlobalMediaButtons();
+        return;
+    }
+
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    globalMediaState = {
+        id:String(config.id || ''), kind:String(config.kind || ''), title:String(config.title || 'Audio'),
+        artist:String(config.artist || ''), candidates, candidateIndex:0,
+        statusId:String(config.statusId || ''), artwork:String(config.artwork || ''), initialized:true
+    };
+    audio.src = candidates[0];
+    audio.preload = 'none';
+    updateGlobalMediaBar();
+    setMediaSessionMetadata(globalMediaState);
+    setGlobalMediaStatus(getMediaUiText().loading);
+    try { await audio.play(); }
+    catch (error) {
+        // Ein echter Medienfehler löst zusätzlich das error-Ereignis aus. Eine
+        // Browser-Autoplay-Sperre wird hier verständlich angezeigt.
+        if (error?.name === 'NotAllowedError') setGlobalMediaStatus(`${getMediaUiText().failed} Bitte erneut auf Play drücken.`, 'error');
+        else if (!audio.error) setGlobalMediaStatus(`${getMediaUiText().failed} ${error?.message || ''}`, 'error');
+    }
+}
+
+function tryNextGlobalMediaCandidate() {
+    const audio = getGlobalMediaPlayer();
+    if (!audio || !globalMediaState.id) return;
+    if (globalMediaState.candidateIndex + 1 < globalMediaState.candidates.length) {
+        globalMediaState.candidateIndex += 1;
+        audio.src = globalMediaState.candidates[globalMediaState.candidateIndex];
+        setGlobalMediaStatus(getMediaUiText().loading);
+        audio.load();
+        audio.play().catch(() => {});
+        return;
+    }
+    setGlobalMediaStatus(getMediaUiText().failed, 'error');
+    updateGlobalMediaButtons();
+}
+
+function pauseGlobalMedia() {
+    const audio = getGlobalMediaPlayer();
+    if (audio && !audio.paused) audio.pause();
+}
+
+async function resumeGlobalMedia() {
+    const audio = getGlobalMediaPlayer();
+    if (!audio || !globalMediaState.id) return;
+    if (!audio.paused) { audio.pause(); return; }
+    try { await audio.play(); } catch (error) { setGlobalMediaStatus(`${getMediaUiText().failed} ${error?.message || ''}`, 'error'); }
+}
+
+function stopGlobalMedia() {
+    const audio = getGlobalMediaPlayer();
+    if (audio) {
+        audio.pause();
+        audio.removeAttribute('src');
+        audio.load();
+    }
+    const oldStatusId = globalMediaState.statusId;
+    globalMediaState = { id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0, statusId:'', artwork:'', initialized:true };
+    if (oldStatusId) { const status = document.getElementById(oldStatusId); if (status) status.textContent = ''; }
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'none';
+        try { navigator.mediaSession.metadata = null; } catch {}
+    }
+    updateGlobalMediaBar();
+}
+
+
+function safeDomId(value) { return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 140); }
+function appendSimpleMediaControls(card, config) {
+    const row = document.createElement('div'); row.className = 'media-button-row';
+    const play = document.createElement('button');
+    play.type = 'button'; play.className = 'btn-media-play'; play.dataset.mediaId = config.id;
+    play.textContent = `▶ ${getMediaUiText().play}`;
+    play.addEventListener('click', () => playGlobalMedia(config));
+    const stop = document.createElement('button');
+    stop.type = 'button'; stop.className = 'btn-media-stop'; stop.dataset.mediaId = config.id;
+    stop.textContent = `■ ${getMediaUiText().stop}`; stop.disabled = config.id !== globalMediaState.id;
+    stop.addEventListener('click', () => { if (globalMediaState.id === config.id) stopGlobalMedia(); });
+    row.append(play, stop); card.append(row);
+    const status = document.createElement('div'); status.className = 'media-card-status'; status.id = config.statusId; card.append(status);
+    if (globalMediaState.id === config.id) {
+        const audio = getGlobalMediaPlayer();
+        status.textContent = audio && !audio.paused ? getMediaUiText().playing : getMediaUiText().paused;
+    }
+    updateGlobalMediaButtons();
+}
+
 function renderPodcastLibrary(items, highlightId = '') {
     const t = uiTexte[currentLang] || uiTexte.en;
     const container = document.getElementById('podcast-library-list');
     if (!container) return;
     container.textContent = '';
-    if (!items.length) {
-        container.textContent = t.podcastLibraryEmpty;
-        return;
-    }
-
+    if (!items.length) { container.textContent = t.podcastLibraryEmpty; return; }
     const locale = currentLang === 'en' ? 'en-US' : currentLang;
-    items.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-
+    items.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
     items.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'podcast-library-card';
+        const card=document.createElement('article'); card.className='podcast-library-card';
         if (item.id === highlightId) card.classList.add('podcast-library-card-new');
-
-        const title = document.createElement('h4');
-        title.textContent = item.title || 'Podcast';
-        card.append(title);
-
-        const meta = document.createElement('div');
-        meta.className = 'podcast-library-meta';
-        const modeLabel = item.mode === 'short' ? t.podcastModeShort : t.podcastModeFull;
-        const created = item.createdAt ? new Date(item.createdAt).toLocaleString(locale) : '';
-        meta.textContent = `${modeLabel} · ${(item.language || '').toUpperCase()} · ${item.voiceLabel || item.voice || ''}${created ? ` · ${t.podcastCreated}: ${created}` : ''}`;
-        card.append(meta);
-
-        if (item.source) {
-            const source = document.createElement('div');
-            source.className = 'podcast-library-source';
-            source.textContent = `${t.podcastSource}: ${item.source}`;
-            card.append(source);
-        }
-
-        const audio = document.createElement('audio');
-        audio.controls = true;
-        audio.preload = 'none';
-        audio.src = item.audioUrl;
-        audio.addEventListener('play', () => {
-            document.querySelectorAll('#podcast-library-list audio').forEach(other => {
-                if (other !== audio) other.pause();
-            });
-        });
-        card.append(audio);
-
-        if (getSafeHttpUrl(item.articleUrl)) {
-            const link = document.createElement('a');
-            link.href = item.articleUrl;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.referrerPolicy = 'no-referrer';
-            link.className = 'podcast-original-link';
-            link.textContent = t.podcastOriginal;
-            card.append(link);
-        }
+        const title=document.createElement('h4'); title.textContent=item.title || 'Podcast'; card.append(title);
+        const meta=document.createElement('div'); meta.className='podcast-library-meta';
+        const modeLabel=item.mode === 'short' ? t.podcastModeShort : t.podcastModeFull;
+        const created=item.createdAt ? new Date(item.createdAt).toLocaleString(locale) : '';
+        meta.textContent=`${modeLabel} · ${(item.language || '').toUpperCase()} · ${item.voiceLabel || item.voice || ''}${created ? ` · ${t.podcastCreated}: ${created}` : ''}`; card.append(meta);
+        if (item.source) { const source=document.createElement('div'); source.className='podcast-library-source'; source.textContent=`${t.podcastSource}: ${item.source}`; card.append(source); }
+        const id=`generated:${item.id || item.audioUrl}`;
+        appendSimpleMediaControls(card, { id, kind:'generated', title:item.title || 'Podcast', artist:item.source || 'World Revolution News', candidates:[item.audioUrl], statusId:`media-status-${safeDomId(id)}` });
+        if (getSafeHttpUrl(item.articleUrl)) { const link=document.createElement('a'); link.href=item.articleUrl; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; link.className='podcast-original-link'; link.textContent=t.podcastOriginal; card.append(link); }
         container.append(card);
     });
 }
 
 function pausePodcastLibraryAudio() {
-    document.querySelectorAll('#podcast-library-modal audio').forEach(audio => audio.pause());
+    // Absichtlich leer: Audio soll beim Schließen des Fensters und bei gesperrtem Bildschirm weiterlaufen.
 }
-
 
 function switchAudioHubTab(tab, highlightId = '') {
     const allowed = ['original', 'generated', 'radio'];
@@ -1453,31 +1661,30 @@ function renderOriginalPodcastLibrary() {
     const t = uiTexte[currentLang] || uiTexte.en;
     const container = document.getElementById('original-podcast-list');
     if (!container) return;
-    container.className = 'podcast-library-list';
-    const source = document.getElementById('original-podcast-source-filter')?.value || '';
-    const language = document.getElementById('original-podcast-language-filter')?.value || '';
-    const search = (document.getElementById('original-podcast-search')?.value || '').trim().toLowerCase();
-    const items = originalPodcastData
+    container.className='podcast-library-list';
+    const source=document.getElementById('original-podcast-source-filter')?.value || '';
+    const language=document.getElementById('original-podcast-language-filter')?.value || '';
+    const search=(document.getElementById('original-podcast-search')?.value || '').trim().toLowerCase();
+    const items=originalPodcastData
         .filter(item => !source || item.sourceName === source)
         .filter(item => !language || item.language === language)
         .filter(item => !search || `${item.title || ''} ${item.description || ''} ${item.sourceName || ''}`.toLowerCase().includes(search))
-        .sort((a, b) => new Date(b.published || 0) - new Date(a.published || 0));
-    container.textContent = '';
-    if (!items.length) { container.textContent = t.originalEmpty; return; }
-    items.slice(0, 180).forEach(item => {
-        const card = document.createElement('article'); card.className = 'original-podcast-card';
-        const title = document.createElement('h4'); title.textContent = item.title || 'Podcast'; card.append(title);
-        const meta = document.createElement('div'); meta.className = 'original-podcast-meta';
-        const date = item.published ? new Date(item.published).toLocaleDateString(currentLang === 'en' ? 'en-US' : currentLang) : '';
-        meta.textContent = `${item.sourceName || ''}${date ? ` · ${date}` : ''}${item.duration ? ` · ${item.duration}` : ''}${item.language ? ` · ${item.language.toUpperCase()}` : ''}`;
-        card.append(meta);
-        if (item.description) { const description = document.createElement('p'); description.className = 'original-podcast-description'; description.textContent = String(item.description).slice(0, 700); card.append(description); }
-        const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none'; audio.src = item.audioUrl;
-        audio.addEventListener('play', () => pauseOtherAudio(audio)); card.append(audio);
-        const links = document.createElement('div'); links.className = 'original-podcast-links';
-        if (getSafeHttpUrl(item.episodeUrl)) links.append(makeMediaLink(item.episodeUrl, t.listenOriginal));
-        if (getSafeHttpUrl(item.feedUrl)) links.append(makeMediaLink(item.feedUrl, t.feedLink));
-        if (item.license) { const license = document.createElement('span'); license.textContent = item.license; license.className = 'original-podcast-meta'; links.append(license); }
+        .sort((a,b) => new Date(b.published || 0) - new Date(a.published || 0));
+    container.textContent='';
+    if (!items.length) { container.textContent=t.originalEmpty; return; }
+    items.slice(0,180).forEach(item => {
+        const card=document.createElement('article'); card.className='original-podcast-card';
+        const title=document.createElement('h4'); title.textContent=item.title || 'Podcast'; card.append(title);
+        const meta=document.createElement('div'); meta.className='original-podcast-meta';
+        const date=item.published ? new Date(item.published).toLocaleDateString(currentLang === 'en' ? 'en-US' : currentLang) : '';
+        meta.textContent=`${item.sourceName || ''}${date ? ` · ${date}` : ''}${item.duration ? ` · ${item.duration}` : ''}${item.language ? ` · ${item.language.toUpperCase()}` : ''}`; card.append(meta);
+        if (item.description) { const description=document.createElement('p'); description.className='original-podcast-description'; description.textContent=String(item.description).slice(0,700); card.append(description); }
+        const id=`original:${item.id || item.audioUrl}`;
+        appendSimpleMediaControls(card, { id, kind:'original', title:item.title || 'Podcast', artist:item.sourceName || 'Original-Podcast', candidates:[item.audioUrl], artwork:item.artwork || '', statusId:`media-status-${safeDomId(id)}` });
+        const links=document.createElement('div'); links.className='original-podcast-links';
+        if (getSafeHttpUrl(item.episodeUrl)) links.append(makeMediaLink(item.episodeUrl,t.listenOriginal));
+        if (getSafeHttpUrl(item.feedUrl)) links.append(makeMediaLink(item.feedUrl,t.feedLink));
+        if (item.license) { const license=document.createElement('span'); license.textContent=item.license; license.className='original-podcast-meta'; links.append(license); }
         card.append(links); container.append(card);
     });
 }
@@ -1486,8 +1693,8 @@ function makeMediaLink(url, label) {
     const link = document.createElement('a'); link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.referrerPolicy = 'no-referrer'; link.textContent = label; return link;
 }
 
-function pauseOtherAudio(activeAudio) {
-    document.querySelectorAll('#podcast-library-modal audio').forEach(other => { if (other !== activeAudio) other.pause(); });
+function pauseOtherAudio() {
+    // Kompatibilitätsfunktion. Der einheitliche Player stellt sicher, dass immer nur ein Audio läuft.
 }
 
 async function loadLiveRadio(force = false) {
@@ -1510,31 +1717,22 @@ async function loadLiveRadio(force = false) {
 
 function renderLiveRadio() {
     const t = uiTexte[currentLang] || uiTexte.en;
-    const container = document.getElementById('live-radio-list');
+    const container=document.getElementById('live-radio-list');
     if (!container) return;
-    container.className = 'live-radio-list'; container.textContent = '';
+    container.className='live-radio-list'; container.textContent='';
     radioStationData.filter(station => station.enabled !== false).forEach(station => {
-        const card = document.createElement('article'); card.className = 'live-radio-card';
-        const title = document.createElement('h4'); title.textContent = station.name || 'Radio'; card.append(title);
-        const meta = document.createElement('div'); meta.className = 'live-radio-meta';
-        meta.textContent = `${station.city || ''}${station.country ? ` · ${station.country}` : ''}${station.languages?.length ? ` · ${station.languages.join(', ').toUpperCase()}` : ''}`; card.append(meta);
-        if (station.description) { const desc = document.createElement('p'); desc.className = 'live-radio-description'; desc.textContent = station.description; card.append(desc); }
-        const audio = document.createElement('audio'); audio.controls = true; audio.preload = 'none';
-        const candidates = (station.streamCandidates || []).map(getSafeHttpUrl).filter(Boolean);
-        let candidateIndex = 0;
-        if (candidates.length) audio.src = candidates[0];
-        audio.addEventListener('play', () => pauseOtherAudio(audio));
-        audio.addEventListener('error', () => {
-            if (candidateIndex + 1 < candidates.length) { candidateIndex += 1; audio.src = candidates[candidateIndex]; audio.load(); }
-            else { audio.title = t.radioStreamError; }
-        });
-        card.append(audio);
-        const links = document.createElement('div'); links.className = 'live-radio-links';
-        if (getSafeHttpUrl(station.website)) links.append(makeMediaLink(station.website, t.radioOpen));
+        const card=document.createElement('article'); card.className='live-radio-card';
+        const title=document.createElement('h4'); title.textContent=station.name || 'Radio'; card.append(title);
+        const meta=document.createElement('div'); meta.className='live-radio-meta';
+        meta.textContent=`${station.city || ''}${station.country ? ` · ${station.country}` : ''}${station.languages?.length ? ` · ${station.languages.join(', ').toUpperCase()}` : ''}`; card.append(meta);
+        if (station.description) { const desc=document.createElement('p'); desc.className='live-radio-description'; desc.textContent=station.description; card.append(desc); }
+        const id=`radio:${station.id || station.name}`;
+        appendSimpleMediaControls(card, { id, kind:'radio', title:station.name || 'Live-Radio', artist:`Live-Radio${station.city ? ` · ${station.city}` : ''}`, candidates:station.streamCandidates || [], artwork:station.artwork || '', statusId:`media-status-${safeDomId(id)}` });
+        const links=document.createElement('div'); links.className='live-radio-links';
+        if (getSafeHttpUrl(station.website)) links.append(makeMediaLink(station.website,t.radioOpen));
         card.append(links); container.append(card);
     });
 }
-
 
 function isEventArticle(article) {
     return article?.type === "event" || articleMatchesCategory(article, "Radar");

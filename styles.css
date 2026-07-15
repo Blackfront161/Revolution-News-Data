@@ -509,3 +509,51 @@ textarea,
     .media-filter-toolbar { grid-template-columns: 1fr 1fr; }
     .media-filter-toolbar input { grid-column: 1 / -1; }
 }
+
+
+/* Einheitlicher Audio-Player für Podcasts und Live-Radio */
+#global-media-player { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; bottom: 0; left: 0; }
+.global-media-bar {
+    position: sticky;
+    bottom: 8px;
+    z-index: 80;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    margin: 0 0 14px;
+    border: 2px solid #ff334f;
+    border-radius: 6px;
+    background: var(--bg-card);
+    box-shadow: 0 0 18px rgba(255, 51, 79, 0.24);
+    font-size: 0.78rem;
+}
+.global-media-info { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.global-media-info strong { color: #ff334f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.global-media-info span { color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.global-media-controls, .media-button-row { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
+.media-button-row { margin: 10px 0 6px; }
+.btn-media-play, .btn-media-stop {
+    min-height: 34px;
+    padding: 6px 11px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+.btn-media-play { background: transparent; color: var(--color-green); border: 1px solid var(--color-green); }
+.btn-media-stop { background: transparent; color: #ff334f; border: 1px solid #ff334f; }
+.btn-media-play:hover { background: rgba(0,255,102,.08); }
+.btn-media-stop:hover { background: rgba(255,51,79,.08); }
+.btn-media-stop:disabled { opacity: .45; cursor: not-allowed; }
+.media-card-status { min-height: 1.1em; color: var(--text-muted); font-size: .7rem; }
+.media-card-status.error { color: #ff334f; }
+.media-card-status.playing { color: var(--color-green); }
+@media (max-width: 600px) {
+    .global-media-bar { bottom: 4px; align-items: stretch; }
+    .global-media-controls { flex: 0 0 auto; }
+    .global-media-info { flex: 1 1 auto; }
+}
