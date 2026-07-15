@@ -32,11 +32,13 @@
         </button>
         <button class="btn-micro" style="color:var(--color-cyan); border-color:var(--color-cyan);" onclick="openInfo()" id="btn-open-info">ℹ️ Info</button>
         <button class="btn-micro" style="color:#B026FF; border-color:#B026FF;" onclick="openFeedback()" id="btn-open-feedback">💬 Contact</button>
+        <button class="btn-micro btn-system-status" onclick="openSystemStatus()" id="btn-open-system-status" aria-label="Systemstatus öffnen">● Status</button>
     </div>
 
     <header>
         <div>
             <h1 style="display: inline-block; vertical-align: middle;">World Revolution News</h1>
+            <div class="app-version-inline" id="app-version-inline">v—</div>
         </div>
         <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
             <div class="dropdown-container">
@@ -330,6 +332,62 @@
         <div class="feedback-actions"><button class="btn-cancel" id="btn-podcast-library-close" onclick="closeAllModals()">Schließen</button></div>
     </div>
 
+
+    <div class="feedback-modal system-status-modal" id="system-status-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="system-status-title">
+        <h3 id="system-status-title">Systemstatus</h3>
+        <p class="system-status-hint" id="system-status-hint"></p>
+
+        <div class="system-status-version-row">
+            <span id="system-status-version-label">App-Version</span>
+            <strong id="system-status-version">—</strong>
+        </div>
+
+        <div class="system-status-grid" aria-live="polite">
+            <div class="system-status-item" id="system-status-connection">
+                <div class="system-status-item-head"><span class="system-status-name">Verbindung</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-news">
+                <div class="system-status-item-head"><span class="system-status-name">Nachrichten</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-events">
+                <div class="system-status-item-head"><span class="system-status-name">Events</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-podcasts">
+                <div class="system-status-item-head"><span class="system-status-name">Original-Podcasts</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-generated">
+                <div class="system-status-item-head"><span class="system-status-name">Erzeugte Podcasts</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-radio">
+                <div class="system-status-item-head"><span class="system-status-name">Live-Radio</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-source-health">
+                <div class="system-status-item-head"><span class="system-status-name">Nachrichtenquellen</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-podcast-health">
+                <div class="system-status-item-head"><span class="system-status-name">Podcastquellen</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+            <div class="system-status-item" id="system-status-worker">
+                <div class="system-status-item-head"><span class="system-status-name">Azure / R2 / Worker</span><span class="system-status-badge checking">Wird geprüft …</span></div>
+                <div class="system-status-details"></div>
+            </div>
+        </div>
+
+        <div class="system-status-last-check" id="system-status-last-check"></div>
+        <div class="feedback-actions system-status-actions">
+            <button class="btn-submit" id="btn-system-status-refresh" onclick="refreshSystemStatus()">Neu prüfen</button>
+            <button class="btn-cancel" id="btn-system-status-close" onclick="closeAllModals()">Schließen</button>
+        </div>
+    </div>
+
     <div class="feedback-modal" id="sources-modal" style="display: none;">
         <h3 style="color: var(--color-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed var(--color-cyan); padding-bottom: 8px; font-size: 1.1rem;">Quellen / Portale</h3>
         <div id="sources-list-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;">
@@ -337,7 +395,9 @@
         <div class="feedback-actions" style="margin-top: 15px;"><button class="btn-cancel" onclick="closeAllModals()">Schließen</button></div>
     </div>
 
+    <script src="config.js"></script>
     <script src="offline-db.js"></script>
+    <script src="status-center.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

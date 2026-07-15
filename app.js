@@ -5,12 +5,16 @@ window.onerror = function(msg, url, line, col, error) {
     return false;
 };
 
-// Nachrichten und Veranstaltungen werden getrennt aktualisiert.
-const GITHUB_NEWS_URL = "https://blackfront161.github.io/Revolution-News-Data/news.json";
-const GITHUB_EVENTS_URL = "https://blackfront161.github.io/Revolution-News-Data/events.json";
-const GITHUB_PODCASTS_URL = "https://blackfront161.github.io/Revolution-News-Data/podcasts.json";
-const GITHUB_RADIO_URL = "https://blackfront161.github.io/Revolution-News-Data/radio-stations.json";
-const PROXY_URL = "https://revolution-proxy.paghklo.workers.dev";
+// Zentrale Adressen und Versionsangaben liegen in config.js.
+// Die Rückfallwerte sorgen dafür, dass die App auch nach einem unvollständigen
+// Upload weiterhin startet.
+const WRN_CONFIG = window.WRN_CONFIG || {};
+const WRN_DATA_URLS = WRN_CONFIG.dataUrls || {};
+const GITHUB_NEWS_URL = WRN_DATA_URLS.news || "https://blackfront161.github.io/Revolution-News-Data/news.json";
+const GITHUB_EVENTS_URL = WRN_DATA_URLS.events || "https://blackfront161.github.io/Revolution-News-Data/events.json";
+const GITHUB_PODCASTS_URL = WRN_DATA_URLS.podcasts || "https://blackfront161.github.io/Revolution-News-Data/podcasts.json";
+const GITHUB_RADIO_URL = WRN_DATA_URLS.radio || "https://blackfront161.github.io/Revolution-News-Data/radio-stations.json";
+const PROXY_URL = WRN_CONFIG.proxyUrl || "https://revolution-proxy.paghklo.workers.dev";
 let capVal1 = 0; let capVal2 = 0;
 
 function getClientId() {
@@ -1317,6 +1321,11 @@ async function loadPodcastLibrary(highlightId = '') {
         const data = await response.json();
         if (!response.ok || data.error || !Array.isArray(data.items)) throw new Error(data.message || `HTTP ${response.status}`);
         podcastLibraryCount = data.items.length;
+        window.WRNStatusCenter?.noteDataset('generated', {
+            data: data.items,
+            source: 'network',
+            updatedAt: response.headers.get('date') || new Date().toISOString()
+        });
         updateSharedPodcastUiText();
         renderPodcastLibrary(data.items, highlightId);
     } catch (error) {
@@ -1775,6 +1784,11 @@ async function loadOriginalPodcasts(force = false) {
         const data = await response.json();
         if (!response.ok || !Array.isArray(data)) throw new Error(`HTTP ${response.status}`);
         originalPodcastData = data.filter(item => getSafeHttpUrl(item.audioUrl));
+        window.WRNStatusCenter?.noteDataset('podcasts', {
+            data: originalPodcastData,
+            source: 'network',
+            updatedAt: response.headers.get('last-modified') || response.headers.get('date') || new Date().toISOString()
+        });
         populateOriginalPodcastFilters();
         renderOriginalPodcastLibrary();
     } catch (error) {
@@ -1859,6 +1873,11 @@ async function loadLiveRadio(force = false) {
         const data = await response.json();
         if (!response.ok || !Array.isArray(data)) throw new Error(`HTTP ${response.status}`);
         radioStationData = data;
+        window.WRNStatusCenter?.noteDataset('radio', {
+            data: radioStationData,
+            source: 'network',
+            updatedAt: response.headers.get('last-modified') || response.headers.get('date') || new Date().toISOString()
+        });
         renderLiveRadio();
     } catch (error) {
         container.className = 'live-radio-list media-load-error';
@@ -2403,6 +2422,7 @@ function closeAllModals() {
     const m4 = document.getElementById('sources-modal'); if(m4) m4.style.display = 'none';
     const m5 = document.getElementById('podcast-options-modal'); if(m5) m5.style.display = 'none';
     const m6 = document.getElementById('podcast-library-modal'); if(m6) m6.style.display = 'none';
+    const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
     pausePodcastLibraryAudio();
 }
 function submitFeedback() {
@@ -2473,16 +2493,20 @@ async function fetchJsonFile(url) {
     if (!Array.isArray(data)) {
         throw new Error(`${url}: JSON ist keine Liste.`);
     }
-    return data;
+    return {
+        data,
+        updatedAt: response.headers.get('last-modified') || response.headers.get('date') || new Date().toISOString()
+    };
 }
 
 async function loadDatasetWithOfflineFallback(datasetKey, url, legacyLocalStorageKey) {
     try {
-        const freshData = await fetchJsonFile(url);
+        const freshResult = await fetchJsonFile(url);
+        const freshData = freshResult.data;
         if (window.WRNStorage) {
             await window.WRNStorage.putDataset(datasetKey, freshData);
         }
-        return { data: freshData, source: "network" };
+        return { data: freshData, source: "network", updatedAt: freshResult.updatedAt };
     } catch (networkError) {
         console.warn(`${datasetKey} konnte nicht aktualisiert werden:`, networkError);
 
@@ -2529,6 +2553,9 @@ async function initialisiereApp() {
     const newsItems = newsResult.data;
     const eventItems = eventsResult.data;
     allNewsData = [...newsItems, ...eventItems];
+
+    window.WRNStatusCenter?.noteDataset('news', newsResult);
+    window.WRNStatusCenter?.noteDataset('events', eventsResult);
 
     if (allNewsData.length === 0) {
         setTxt('status-container', "[ FEHLER ] Es sind weder Online- noch Offline-Daten vorhanden.");
@@ -2844,6 +2871,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(savedTheme === "theme-neon" || savedTheme === "theme-terminal" || savedTheme === "theme-solarpunk") savedTheme = "theme-dark";
         const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
         
+        window.WRNStatusCenter?.init();
         changeTheme(savedTheme); changeLanguage(); initializePodcast(); updateSharedPodcastUiText(); initialisiereApp(); 
 
         if ('serviceWorker' in navigator) {
