@@ -1,1 +1,56 @@
+name: App prüfen
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "*.html"
+      - "*.css"
+      - "*.js"
+      - "*.json"
+      - "tests/**"
+      - ".github/workflows/validate-app.yml"
+  pull_request:
+    paths:
+      - "*.html"
+      - "*.css"
+      - "*.js"
+      - "*.json"
+      - "tests/**"
+      - ".github/workflows/validate-app.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Dateien und Syntax prüfen
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: App-Struktur prüfen
+        run: python tests/validate_app.py
+
+      - name: JavaScript-Syntax prüfen
+        shell: bash
+        run: |
+          set -e
+          for file in config.js offline-db.js status-center.js app.js service-worker.js; do
+            echo "Prüfe $file"
+            node --check "$file"
+          done
+
+      - name: Python-Dateien kompilieren
+        shell: bash
+        run: |
+          set -e
+          find . -maxdepth 2 -name "*.py" -print0 | xargs -0 -r python -m py_compile
 
