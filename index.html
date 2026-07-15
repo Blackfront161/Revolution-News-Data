@@ -8,7 +8,7 @@
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#050508">
     <meta name="referrer" content="no-referrer">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob:; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https://revolution-proxy.paghklo.workers.dev; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
     <style>
         /* Zwingt den Radar-Button dazu, immer grün zu bleiben! */
         #cat-radar.active { background-color: var(--color-green) !important; color: #000 !important; border-color: var(--color-green) !important; }
@@ -104,20 +104,24 @@
     </details>
 
     <div class="nav-bar" style="border-bottom: none; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; display: flex;">
-        <button class="btn-nav" id="cat-radar" style="flex: 1 1 22%; border-color: var(--color-green); color: var(--color-green); background: rgba(0, 255, 0, 0.05); display: flex; align-items: center; justify-content: center; font-weight: bold;" onclick="ladeKontinentNews('Radar')">
+        <button class="btn-nav" id="cat-radar" style="flex: 1 1 18%; border-color: var(--color-green); color: var(--color-green); background: rgba(0, 255, 0, 0.05); display: flex; align-items: center; justify-content: center; font-weight: bold;" onclick="ladeKontinentNews('Radar')">
             <span id="txt-radar-summary">Events</span>
         </button>
+
+        <button class="btn-nav" style="flex: 1 1 18%; border-color: var(--color-green); color: var(--color-green); display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" id="btn-podcast-library" onclick="openPodcastLibrary()">
+            <span id="txt-podcast-library">Podcasts</span>
+        </button>
         
-        <button class="btn-nav" style="flex: 1 1 22%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
+        <button class="btn-nav" style="flex: 1 1 18%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
             <span id="txt-top-bookmarks">Bookmarks</span>
             <svg viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="url(#rbGrad)" stroke="#FF0000" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
 
-        <button class="btn-nav" style="flex: 1 1 22%; border-color: #00FFCC; color: #00FFCC; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" onclick="printZine()">
+        <button class="btn-nav" style="flex: 1 1 18%; border-color: #00FFCC; color: #00FFCC; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" onclick="printZine()">
             <span id="txt-zine-count">📄 Zine (0)</span>
         </button>
         
-        <button class="btn-nav" style="flex: 1 1 22%; border-color: var(--border-read); color: var(--text-muted);" id="btn-clear-cache" onclick="clearAllData()">Cache 🗑️</button>
+        <button class="btn-nav" style="flex: 1 1 18%; border-color: var(--border-read); color: var(--text-muted);" id="btn-clear-cache" onclick="clearAllData()">Cache 🗑️</button>
     </div>
 
     <div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
@@ -247,6 +251,35 @@
             <a href="https://www.paypal.com/ncp/payment/6FSV9FEN4X7VS" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="btn-submit" id="btn-paypal" style="display:block; box-sizing:border-box; margin-top:10px; margin-bottom:10px; width:100%; text-align:center; text-decoration:none;">Weiter zu PayPal</a>
         </div>
         <div class="feedback-actions"><button class="btn-cancel" id="btn-donate-cancel" onclick="closeAllModals()">Schließen</button></div>
+    </div>
+
+    <div class="feedback-modal podcast-options-modal" id="podcast-options-modal" style="display: none;">
+        <h3 id="podcast-options-title">Podcast erzeugen</h3>
+        <div id="podcast-options-article-title" class="podcast-options-article-title"></div>
+        <label class="podcast-control-field podcast-azure-voice-field">
+            <span id="txt-podcast-azure-voice">Azure-Stimme</span>
+            <select id="azure-podcast-voice-select" onchange="changeAzurePodcastVoice(this.value)"></select>
+        </label>
+        <p id="txt-podcast-voice-fixed" class="podcast-options-note"></p>
+        <div class="podcast-mode-grid">
+            <button type="button" class="podcast-mode-button" id="btn-podcast-short" onclick="generateAzurePodcast('short')">Kurz-Podcast</button>
+            <p id="txt-podcast-short-help">Eine kompakte Zusammenfassung von etwa 3–5 Minuten.</p>
+            <button type="button" class="podcast-mode-button" id="btn-podcast-full" onclick="generateAzurePodcast('full')">Ganzer Artikel</button>
+            <p id="txt-podcast-full-help">Der übersetzte Artikel, begrenzt auf ungefähr 10 Minuten.</p>
+            <button type="button" class="podcast-mode-button podcast-device-button" id="btn-podcast-device" onclick="startDevicePodcastFromOptions()">Gerätestimme</button>
+            <p id="txt-podcast-device-help">Kostenlose lokale Browserstimme; wird nicht in der gemeinsamen Bibliothek gespeichert.</p>
+        </div>
+        <div id="podcast-options-status" class="podcast-options-status" aria-live="polite"></div>
+        <div class="feedback-actions"><button class="btn-cancel" id="btn-podcast-options-close" onclick="closeAllModals()">Schließen</button></div>
+    </div>
+
+    <div class="feedback-modal podcast-library-modal" id="podcast-library-modal" style="display: none;">
+        <h3 id="podcast-library-title">Gemeinsame Podcasts – letzte 30 Tage</h3>
+        <div class="podcast-library-toolbar">
+            <button type="button" class="btn-podcast-control" id="btn-podcast-library-refresh" onclick="loadPodcastLibrary()">Aktualisieren</button>
+        </div>
+        <div id="podcast-library-list" class="podcast-library-list" aria-live="polite"></div>
+        <div class="feedback-actions"><button class="btn-cancel" id="btn-podcast-library-close" onclick="closeAllModals()">Schließen</button></div>
     </div>
 
     <div class="feedback-modal" id="sources-modal" style="display: none;">

@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026-07-15-3';
-const DATA_CACHE = 'wrn-data-v2026-07-15-3';
+const APP_CACHE = 'wrn-app-v2026-07-15-4';
+const DATA_CACHE = 'wrn-data-v2026-07-15-4';
 
 const APP_SHELL = [
   './',
