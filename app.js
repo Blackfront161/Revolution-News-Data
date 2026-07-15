@@ -466,6 +466,22 @@ Object.keys(uiTexte).forEach(lang => {
     Object.assign(uiTexte[lang], sharedPodcastUiTexte[lang] || sharedPodcastUiTexte.en);
 });
 
+const podcastQuotaUiTexte = {
+    en: { podcastQuotaTitle:"Monthly voice quota", podcastQuotaInfo:"Natural Azure voices and shared MP3 podcasts use a limited monthly app quota. When it is exhausted, only the free device or smartphone voices are available until the next month.", podcastQuotaChecking:"Checking the monthly quota…", podcastQuotaAvailable:"Natural voices are currently available.", podcastQuotaUnavailable:"The monthly quota is exhausted. Only the free device voice is currently available.", podcastQuotaReset:"Natural voices are expected to return on", podcastQuotaDevice:"The device voice remains free and does not use the shared quota." },
+    de: { podcastQuotaTitle:"Monatliches Stimmen-Kontingent", podcastQuotaInfo:"Natürliche Azure-Stimmen und gemeinsam gespeicherte MP3-Podcasts verwenden ein begrenztes monatliches App-Kontingent. Ist es aufgebraucht, stehen bis zum nächsten Monat nur noch die kostenlosen Geräte- oder Smartphone-Stimmen zur Verfügung.", podcastQuotaChecking:"Monatliches Kontingent wird geprüft…", podcastQuotaAvailable:"Natürliche Stimmen sind derzeit verfügbar.", podcastQuotaUnavailable:"Das monatliche Kontingent ist aufgebraucht. Derzeit steht nur die kostenlose Gerätestimme zur Verfügung.", podcastQuotaReset:"Natürliche Stimmen werden voraussichtlich wieder verfügbar am", podcastQuotaDevice:"Die Gerätestimme bleibt kostenlos und verbraucht kein gemeinsames Kontingent." },
+    es: { podcastQuotaTitle:"Cuota mensual de voces", podcastQuotaInfo:"Las voces naturales de Azure y los pódcasts MP3 compartidos usan una cuota mensual limitada de la aplicación. Cuando se agota, hasta el mes siguiente solo están disponibles las voces gratuitas del dispositivo o teléfono.", podcastQuotaChecking:"Comprobando la cuota mensual…", podcastQuotaAvailable:"Las voces naturales están disponibles actualmente.", podcastQuotaUnavailable:"La cuota mensual está agotada. Actualmente solo está disponible la voz gratuita del dispositivo.", podcastQuotaReset:"Se espera que las voces naturales vuelvan el", podcastQuotaDevice:"La voz del dispositivo sigue siendo gratuita y no consume la cuota compartida." },
+    fr: { podcastQuotaTitle:"Quota mensuel de voix", podcastQuotaInfo:"Les voix naturelles Azure et les podcasts MP3 partagés utilisent un quota mensuel limité de l’application. Lorsqu’il est épuisé, seules les voix gratuites de l’appareil ou du smartphone restent disponibles jusqu’au mois suivant.", podcastQuotaChecking:"Vérification du quota mensuel…", podcastQuotaAvailable:"Les voix naturelles sont actuellement disponibles.", podcastQuotaUnavailable:"Le quota mensuel est épuisé. Seule la voix gratuite de l’appareil est disponible pour le moment.", podcastQuotaReset:"Les voix naturelles devraient revenir le", podcastQuotaDevice:"La voix de l’appareil reste gratuite et n’utilise pas le quota partagé." },
+    it: { podcastQuotaTitle:"Quota mensile delle voci", podcastQuotaInfo:"Le voci naturali di Azure e i podcast MP3 condivisi usano una quota mensile limitata dell’app. Quando è esaurita, fino al mese successivo restano disponibili solo le voci gratuite del dispositivo o smartphone.", podcastQuotaChecking:"Controllo della quota mensile…", podcastQuotaAvailable:"Le voci naturali sono attualmente disponibili.", podcastQuotaUnavailable:"La quota mensile è esaurita. Al momento è disponibile solo la voce gratuita del dispositivo.", podcastQuotaReset:"Le voci naturali dovrebbero tornare il", podcastQuotaDevice:"La voce del dispositivo resta gratuita e non usa la quota condivisa." },
+    pt: { podcastQuotaTitle:"Quota mensal de vozes", podcastQuotaInfo:"As vozes naturais do Azure e os podcasts MP3 partilhados usam uma quota mensal limitada da aplicação. Quando se esgota, até ao mês seguinte ficam disponíveis apenas as vozes gratuitas do dispositivo ou smartphone.", podcastQuotaChecking:"A verificar a quota mensal…", podcastQuotaAvailable:"As vozes naturais estão atualmente disponíveis.", podcastQuotaUnavailable:"A quota mensal esgotou-se. Neste momento só está disponível a voz gratuita do dispositivo.", podcastQuotaReset:"Prevê-se que as vozes naturais regressem em", podcastQuotaDevice:"A voz do dispositivo continua gratuita e não usa a quota partilhada." },
+    ru: { podcastQuotaTitle:"Месячный лимит голосов", podcastQuotaInfo:"Естественные голоса Azure и общие MP3-подкасты используют ограниченный месячный лимит приложения. После его исчерпания до следующего месяца доступны только бесплатные голоса устройства или смартфона.", podcastQuotaChecking:"Проверка месячного лимита…", podcastQuotaAvailable:"Естественные голоса сейчас доступны.", podcastQuotaUnavailable:"Месячный лимит исчерпан. Сейчас доступен только бесплатный голос устройства.", podcastQuotaReset:"Ожидается, что естественные голоса снова станут доступны", podcastQuotaDevice:"Голос устройства остаётся бесплатным и не расходует общий лимит." },
+    el: { podcastQuotaTitle:"Μηνιαίο όριο φωνών", podcastQuotaInfo:"Οι φυσικές φωνές Azure και τα κοινόχρηστα podcast MP3 χρησιμοποιούν περιορισμένο μηνιαίο όριο της εφαρμογής. Όταν εξαντληθεί, μέχρι τον επόμενο μήνα είναι διαθέσιμες μόνο οι δωρεάν φωνές της συσκευής ή του smartphone.", podcastQuotaChecking:"Έλεγχος μηνιαίου ορίου…", podcastQuotaAvailable:"Οι φυσικές φωνές είναι διαθέσιμες αυτή τη στιγμή.", podcastQuotaUnavailable:"Το μηνιαίο όριο εξαντλήθηκε. Προς το παρόν είναι διαθέσιμη μόνο η δωρεάν φωνή της συσκευής.", podcastQuotaReset:"Οι φυσικές φωνές αναμένεται να επιστρέψουν στις", podcastQuotaDevice:"Η φωνή της συσκευής παραμένει δωρεάν και δεν χρησιμοποιεί το κοινό όριο." },
+    tr: { podcastQuotaTitle:"Aylık ses kotası", podcastQuotaInfo:"Doğal Azure sesleri ve paylaşılan MP3 podcastler uygulamanın sınırlı aylık kotasını kullanır. Kota bittiğinde bir sonraki aya kadar yalnızca ücretsiz cihaz veya telefon sesleri kullanılabilir.", podcastQuotaChecking:"Aylık kota kontrol ediliyor…", podcastQuotaAvailable:"Doğal sesler şu anda kullanılabilir.", podcastQuotaUnavailable:"Aylık kota tükendi. Şu anda yalnızca ücretsiz cihaz sesi kullanılabilir.", podcastQuotaReset:"Doğal seslerin yeniden kullanılabilir olacağı tahmini tarih", podcastQuotaDevice:"Cihaz sesi ücretsiz kalır ve ortak kotayı kullanmaz." }
+};
+
+Object.keys(uiTexte).forEach(lang => {
+    Object.assign(uiTexte[lang], podcastQuotaUiTexte[lang] || podcastQuotaUiTexte.en);
+});
+
 let currentLang = "en";
 let activeKontinent = "Global"; 
 let allNewsData = []; 
@@ -535,6 +551,7 @@ const azurePodcastVoices = {
 };
 let podcastGenerationArticleId = null;
 let podcastLibraryCount = 0;
+let podcastServiceStatus = null;
 
 
 function setTxt(id, text) { const e = document.getElementById(id); if (e && text) e.innerText = text; }
@@ -1043,6 +1060,76 @@ function updateSharedPodcastUiText() {
     setTxt('txt-podcast-device-help', t.podcastDeviceHelp);
     setTxt('btn-podcast-options-close', t.podcastClose);
     setTxt('txt-podcast-voice-fixed', t.podcastVoiceFixed);
+    setTxt('podcast-quota-title', t.podcastQuotaTitle);
+    setTxt('podcast-quota-message', t.podcastQuotaInfo);
+    setTxt('podcast-quota-device', t.podcastQuotaDevice);
+    if (podcastServiceStatus) renderPodcastQuotaStatus(podcastServiceStatus);
+}
+
+function setAzurePodcastControlsDisabled(disabled) {
+    ['btn-podcast-short', 'btn-podcast-full'].forEach(id => {
+        const button = document.getElementById(id);
+        if (button) button.disabled = Boolean(disabled);
+    });
+    const voiceSelect = document.getElementById('azure-podcast-voice-select');
+    if (voiceSelect) voiceSelect.disabled = Boolean(disabled);
+}
+
+function formatPodcastResetDate(value) {
+    const date = new Date(value || '');
+    if (!Number.isFinite(date.getTime())) return '';
+    try {
+        return new Intl.DateTimeFormat(currentLang === 'en' ? 'en-US' : currentLang, {
+            dateStyle: 'long', timeStyle: 'short'
+        }).format(date);
+    } catch {
+        return date.toLocaleString();
+    }
+}
+
+function renderPodcastQuotaStatus(statusData) {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const status = document.getElementById('podcast-quota-status');
+    if (!status) return;
+    const available = Boolean(statusData?.naturalVoicesAvailable);
+    status.classList.toggle('available', available);
+    status.classList.toggle('unavailable', !available);
+    if (available) {
+        status.textContent = t.podcastQuotaAvailable;
+    } else {
+        const reset = formatPodcastResetDate(statusData?.resetAt);
+        status.textContent = reset
+            ? `${t.podcastQuotaUnavailable} ${t.podcastQuotaReset}: ${reset}.`
+            : t.podcastQuotaUnavailable;
+    }
+    setAzurePodcastControlsDisabled(!available);
+}
+
+async function refreshPodcastAvailability() {
+    const t = uiTexte[currentLang] || uiTexte.en;
+    const status = document.getElementById('podcast-quota-status');
+    if (status) {
+        status.className = 'podcast-quota-status checking';
+        status.textContent = t.podcastQuotaChecking;
+    }
+    setAzurePodcastControlsDisabled(true);
+    try {
+        const response = await fetch(`${PROXY_URL}/?action=podcast.status`, { cache: 'no-store' });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || data.error) throw new Error(data.message || `HTTP ${response.status}`);
+        podcastServiceStatus = data;
+        renderPodcastQuotaStatus(data);
+        return data;
+    } catch (error) {
+        podcastServiceStatus = {
+            naturalVoicesAvailable: false,
+            reason: 'status_unavailable',
+            resetAt: ''
+        };
+        renderPodcastQuotaStatus(podcastServiceStatus);
+        if (status) status.title = String(error?.message || error);
+        return podcastServiceStatus;
+    }
 }
 
 function populateAzurePodcastVoiceOptions() {
@@ -1071,7 +1158,7 @@ function showPodcastModal(modalId) {
     if (modal) modal.style.display = 'block';
 }
 
-function openPodcastOptions(idNum) {
+async function openPodcastOptions(idNum) {
     const article = currentFilteredItems[idNum];
     if (!article) return;
     closeAllModals();
@@ -1083,7 +1170,9 @@ function openPodcastOptions(idNum) {
     populateAzurePodcastVoiceOptions();
     updateSharedPodcastUiText();
     setPodcastGenerationButtonsDisabled(false);
+    setAzurePodcastControlsDisabled(true);
     showPodcastModal('podcast-options-modal');
+    await refreshPodcastAvailability();
 }
 
 function setPodcastGenerationButtonsDisabled(disabled) {
@@ -1133,7 +1222,11 @@ async function generateAzurePodcast(mode) {
 
         const data = await response.json().catch(() => ({}));
         if (!response.ok || data.error || !data.podcast) {
-            throw new Error(data.message || `HTTP ${response.status}`);
+            const generationError = new Error(data.message || `HTTP ${response.status}`);
+            generationError.deviceVoiceOnly = Boolean(data.deviceVoiceOnly);
+            generationError.resetAt = data.resetAt || '';
+            generationError.reason = data.reason || '';
+            throw generationError;
         }
 
         if (status) status.textContent = t.podcastGenerated;
@@ -1142,6 +1235,16 @@ async function generateAzurePodcast(mode) {
     } catch (error) {
         if (status) status.textContent = `${t.podcastGenerationFailed} ${error?.message || error}`;
         setPodcastGenerationButtonsDisabled(false);
+        if (error?.deviceVoiceOnly) {
+            podcastServiceStatus = {
+                naturalVoicesAvailable: false,
+                reason: error.reason || 'monthly_limit',
+                resetAt: error.resetAt || ''
+            };
+            renderPodcastQuotaStatus(podcastServiceStatus);
+        } else {
+            await refreshPodcastAvailability();
+        }
     }
 }
 

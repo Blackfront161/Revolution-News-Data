@@ -256,6 +256,12 @@
     <div class="feedback-modal podcast-options-modal" id="podcast-options-modal" style="display: none;">
         <h3 id="podcast-options-title">Podcast erzeugen</h3>
         <div id="podcast-options-article-title" class="podcast-options-article-title"></div>
+        <div class="podcast-quota-warning" role="status" aria-live="polite">
+            <strong id="podcast-quota-title">Monatliches Stimmen-Kontingent</strong>
+            <p id="podcast-quota-message"></p>
+            <div id="podcast-quota-status" class="podcast-quota-status checking"></div>
+            <p id="podcast-quota-device" class="podcast-quota-device"></p>
+        </div>
         <label class="podcast-control-field podcast-azure-voice-field">
             <span id="txt-podcast-azure-voice">Azure-Stimme</span>
             <select id="azure-podcast-voice-select" onchange="changeAzurePodcastVoice(this.value)"></select>

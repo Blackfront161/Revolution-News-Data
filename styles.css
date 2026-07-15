@@ -377,3 +377,62 @@ a.btn-translate {
     .podcast-mode-grid { grid-template-columns: 1fr; }
     .podcast-mode-grid p { margin: -3px 0 7px; }
 }
+
+/* Hinweis zum monatlichen Kontingent natürlicher Podcast-Stimmen */
+.podcast-quota-warning {
+    margin: 10px 0 14px;
+    padding: 10px;
+    border: 1px dashed var(--color-green);
+    border-radius: 5px;
+    background: rgba(0, 255, 102, 0.04);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+.podcast-quota-warning strong {
+    display: block;
+    color: var(--color-green);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+}
+.podcast-quota-warning p { margin: 5px 0; }
+.podcast-quota-status {
+    margin: 8px 0 5px;
+    padding: 7px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.podcast-quota-status.checking {
+    color: var(--color-cyan);
+    border: 1px solid var(--color-cyan);
+}
+.podcast-quota-status.available {
+    color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+.podcast-quota-status.unavailable {
+    color: #FF3355;
+    border: 1px solid #FF3355;
+}
+.podcast-quota-device {
+    font-size: 0.72rem;
+}
+
+/* Die Schriftgrößen-Auswahl soll nur die Artikel selbst verändern. */
+button,
+select,
+input,
+textarea,
+.feedback-modal,
+.event-filter-panel,
+.podcast-player,
+.podcast-options-modal,
+.podcast-library-modal {
+    font-size: initial;
+}
+.btn-micro { font-size: 0.65rem; }
+.btn-nav { font-size: 0.7rem; }
+.btn-expand,
+.btn-translate { font-size: 0.8rem; }
+.feedback-modal { font-size: 1rem; }
