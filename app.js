@@ -514,7 +514,8 @@ const mediaUiTexts = {
     tr:{play:'Oynat', pause:'Duraklat', stop:'Durdur', loading:'Bağlanıyor…', playing:'Çalıyor', paused:'Duraklatıldı', failed:'Ses yüklenemedi.'}
 };
 let globalMediaState = {
-    id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0, statusId:'', artwork:'', initialized:false
+    id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0,
+    statusId:'', progressId:'', timeId:'', artwork:'', initialized:false
 };
 
 
@@ -1370,6 +1371,9 @@ function getGlobalMediaPlayer() {
         });
         audio.addEventListener('ended', () => stopGlobalMedia());
         audio.addEventListener('error', () => tryNextGlobalMediaCandidate());
+        ['loadedmetadata', 'durationchange', 'timeupdate', 'progress', 'emptied'].forEach(eventName => {
+            audio.addEventListener(eventName, updateGlobalMediaProgress);
+        });
         setupMediaSessionHandlers();
     }
     return audio;
@@ -1391,26 +1395,104 @@ function updateGlobalMediaBar() {
     const bar = document.getElementById('global-media-bar');
     const title = document.getElementById('global-media-title');
     const subtitle = document.getElementById('global-media-subtitle');
+    const pauseButton = document.getElementById('global-media-pause');
+    const progressRow = document.getElementById('global-media-progress-row');
+    const isLiveRadio = globalMediaState.kind === 'radio';
     if (bar) bar.hidden = !globalMediaState.id;
     if (title) title.textContent = globalMediaState.title || 'Audio';
     if (subtitle) subtitle.textContent = globalMediaState.artist || '';
+    if (pauseButton) pauseButton.hidden = isLiveRadio;
+    if (progressRow) progressRow.hidden = isLiveRadio;
     updateGlobalMediaButtons();
+    updateGlobalMediaProgress();
+}
+
+function formatMediaTime(value) {
+    const seconds = Number(value);
+    if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
+    const total = Math.floor(seconds);
+    const hours = Math.floor(total / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const rest = total % 60;
+    return hours > 0
+        ? `${hours}:${String(minutes).padStart(2, '0')}:${String(rest).padStart(2, '0')}`
+        : `${minutes}:${String(rest).padStart(2, '0')}`;
+}
+
+function updateGlobalMediaProgress() {
+    const audio = document.getElementById('global-media-player');
+    if (!audio) return;
+    const current = Number.isFinite(audio.currentTime) ? Math.max(0, audio.currentTime) : 0;
+    const duration = Number.isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+    const isLive = globalMediaState.kind === 'radio' || !duration;
+
+    const updateRange = element => {
+        if (!element) return;
+        element.disabled = isLive || !globalMediaState.id;
+        element.max = duration || 1;
+        element.value = duration ? Math.min(current, duration) : 0;
+    };
+    const updateTime = element => {
+        if (!element) return;
+        element.textContent = isLive
+            ? `${formatMediaTime(current)} / LIVE`
+            : `${formatMediaTime(current)} / ${formatMediaTime(duration)}`;
+    };
+
+    updateRange(document.getElementById('global-media-progress'));
+    updateTime(document.getElementById('global-media-time'));
+    updateRange(globalMediaState.progressId ? document.getElementById(globalMediaState.progressId) : null);
+    updateTime(globalMediaState.timeId ? document.getElementById(globalMediaState.timeId) : null);
+
+    if ('mediaSession' in navigator && typeof navigator.mediaSession.setPositionState === 'function' && duration > 0) {
+        try {
+            navigator.mediaSession.setPositionState({
+                duration,
+                playbackRate: audio.playbackRate || 1,
+                position: Math.min(current, Math.max(0, duration - 0.001))
+            });
+        } catch {}
+    }
+}
+
+function seekGlobalMedia(value) {
+    const audio = getGlobalMediaPlayer();
+    const target = Number(value);
+    if (!audio || !Number.isFinite(audio.duration) || audio.duration <= 0 || !Number.isFinite(target)) return;
+    audio.currentTime = Math.max(0, Math.min(audio.duration, target));
+    updateGlobalMediaProgress();
 }
 
 function updateGlobalMediaButtons() {
     const audio = document.getElementById('global-media-player');
     const t = getMediaUiText();
     document.querySelectorAll('.btn-media-play[data-media-id]').forEach(button => {
+        button.textContent = `▶ ${t.play}`;
+    });
+    document.querySelectorAll('.btn-media-pause[data-media-id]').forEach(button => {
         const active = button.dataset.mediaId === globalMediaState.id;
-        button.textContent = active && audio && !audio.paused ? `❚❚ ${t.pause}` : `▶ ${t.play}`;
+        button.textContent = `❚❚ ${t.pause}`;
+        button.disabled = !active || !audio || audio.paused;
     });
     document.querySelectorAll('.btn-media-stop[data-media-id]').forEach(button => {
+        button.textContent = `■ ${t.stop}`;
         button.disabled = button.dataset.mediaId !== globalMediaState.id;
     });
     const globalPlay = document.getElementById('global-media-play');
+    const globalPause = document.getElementById('global-media-pause');
     const globalStop = document.getElementById('global-media-stop');
-    if (globalPlay) globalPlay.textContent = audio && !audio.paused ? `❚❚ ${t.pause}` : `▶ ${t.play}`;
-    if (globalStop) { globalStop.textContent = `■ ${t.stop}`; globalStop.disabled = !globalMediaState.id; }
+    if (globalPlay) {
+        globalPlay.textContent = `▶ ${t.play}`;
+        globalPlay.disabled = !globalMediaState.id || Boolean(audio && !audio.paused);
+    }
+    if (globalPause) {
+        globalPause.textContent = `❚❚ ${t.pause}`;
+        globalPause.disabled = !globalMediaState.id || !audio || audio.paused;
+    }
+    if (globalStop) {
+        globalStop.textContent = `■ ${t.stop}`;
+        globalStop.disabled = !globalMediaState.id;
+    }
 }
 
 function setMediaSessionMetadata(config) {
@@ -1459,10 +1541,9 @@ async function playGlobalMedia(config) {
     if (globalMediaState.id === config.id && audio.src) {
         if (audio.paused) {
             try { await audio.play(); } catch (error) { setGlobalMediaStatus(`${getMediaUiText().failed} ${error.message || ''}`, 'error'); }
-        } else {
-            audio.pause();
         }
         updateGlobalMediaButtons();
+        updateGlobalMediaProgress();
         return;
     }
 
@@ -1472,7 +1553,8 @@ async function playGlobalMedia(config) {
     globalMediaState = {
         id:String(config.id || ''), kind:String(config.kind || ''), title:String(config.title || 'Audio'),
         artist:String(config.artist || ''), candidates, candidateIndex:0,
-        statusId:String(config.statusId || ''), artwork:String(config.artwork || ''), initialized:true
+        statusId:String(config.statusId || ''), progressId:String(config.progressId || ''),
+        timeId:String(config.timeId || ''), artwork:String(config.artwork || ''), initialized:true
     };
     audio.src = candidates[0];
     audio.preload = 'none';
@@ -1510,8 +1592,7 @@ function pauseGlobalMedia() {
 
 async function resumeGlobalMedia() {
     const audio = getGlobalMediaPlayer();
-    if (!audio || !globalMediaState.id) return;
-    if (!audio.paused) { audio.pause(); return; }
+    if (!audio || !globalMediaState.id || !audio.paused) return;
     try { await audio.play(); } catch (error) { setGlobalMediaStatus(`${getMediaUiText().failed} ${error?.message || ''}`, 'error'); }
 }
 
@@ -1523,8 +1604,15 @@ function stopGlobalMedia() {
         audio.load();
     }
     const oldStatusId = globalMediaState.statusId;
-    globalMediaState = { id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0, statusId:'', artwork:'', initialized:true };
+    const oldProgressId = globalMediaState.progressId;
+    const oldTimeId = globalMediaState.timeId;
+    globalMediaState = {
+        id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0,
+        statusId:'', progressId:'', timeId:'', artwork:'', initialized:true
+    };
     if (oldStatusId) { const status = document.getElementById(oldStatusId); if (status) status.textContent = ''; }
+    if (oldProgressId) { const progress = document.getElementById(oldProgressId); if (progress) { progress.value = 0; progress.disabled = true; } }
+    if (oldTimeId) { const time = document.getElementById(oldTimeId); if (time) time.textContent = '0:00 / 0:00'; }
     if ('mediaSession' in navigator) {
         navigator.mediaSession.playbackState = 'none';
         try { navigator.mediaSession.metadata = null; } catch {}
@@ -1535,22 +1623,81 @@ function stopGlobalMedia() {
 
 function safeDomId(value) { return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 140); }
 function appendSimpleMediaControls(card, config) {
-    const row = document.createElement('div'); row.className = 'media-button-row';
+    const mediaConfig = { ...config };
+    const row = document.createElement('div');
+    row.className = 'media-button-row';
+
     const play = document.createElement('button');
-    play.type = 'button'; play.className = 'btn-media-play'; play.dataset.mediaId = config.id;
+    play.type = 'button';
+    play.className = 'btn-media-play';
+    play.dataset.mediaId = mediaConfig.id;
     play.textContent = `▶ ${getMediaUiText().play}`;
-    play.addEventListener('click', () => playGlobalMedia(config));
+    play.addEventListener('click', () => playGlobalMedia(mediaConfig));
+    row.append(play);
+
+    if (mediaConfig.showPause) {
+        const pause = document.createElement('button');
+        pause.type = 'button';
+        pause.className = 'btn-media-pause';
+        pause.dataset.mediaId = mediaConfig.id;
+        pause.textContent = `❚❚ ${getMediaUiText().pause}`;
+        pause.disabled = true;
+        pause.addEventListener('click', () => {
+            if (globalMediaState.id === mediaConfig.id) pauseGlobalMedia();
+        });
+        row.append(pause);
+    }
+
     const stop = document.createElement('button');
-    stop.type = 'button'; stop.className = 'btn-media-stop'; stop.dataset.mediaId = config.id;
-    stop.textContent = `■ ${getMediaUiText().stop}`; stop.disabled = config.id !== globalMediaState.id;
-    stop.addEventListener('click', () => { if (globalMediaState.id === config.id) stopGlobalMedia(); });
-    row.append(play, stop); card.append(row);
-    const status = document.createElement('div'); status.className = 'media-card-status'; status.id = config.statusId; card.append(status);
-    if (globalMediaState.id === config.id) {
+    stop.type = 'button';
+    stop.className = 'btn-media-stop';
+    stop.dataset.mediaId = mediaConfig.id;
+    stop.textContent = `■ ${getMediaUiText().stop}`;
+    stop.disabled = mediaConfig.id !== globalMediaState.id;
+    stop.addEventListener('click', () => {
+        if (globalMediaState.id === mediaConfig.id) stopGlobalMedia();
+    });
+    row.append(stop);
+    card.append(row);
+
+    if (mediaConfig.showProgress) {
+        const safeId = safeDomId(mediaConfig.id);
+        mediaConfig.progressId = `media-progress-${safeId}`;
+        mediaConfig.timeId = `media-time-${safeId}`;
+        const progressRow = document.createElement('div');
+        progressRow.className = 'media-progress-row';
+        const progress = document.createElement('input');
+        progress.type = 'range';
+        progress.min = '0';
+        progress.max = '1';
+        progress.step = '0.1';
+        progress.value = '0';
+        progress.disabled = true;
+        progress.id = mediaConfig.progressId;
+        progress.setAttribute('aria-label', 'Audio position');
+        progress.addEventListener('input', () => {
+            if (globalMediaState.id === mediaConfig.id) seekGlobalMedia(progress.value);
+        });
+        const time = document.createElement('span');
+        time.id = mediaConfig.timeId;
+        time.className = 'media-time-label';
+        time.textContent = '0:00 / 0:00';
+        progressRow.append(progress, time);
+        card.append(progressRow);
+    }
+
+    const status = document.createElement('div');
+    status.className = 'media-card-status';
+    status.id = mediaConfig.statusId;
+    card.append(status);
+    if (globalMediaState.id === mediaConfig.id) {
         const audio = getGlobalMediaPlayer();
+        globalMediaState.progressId = mediaConfig.progressId || '';
+        globalMediaState.timeId = mediaConfig.timeId || '';
         status.textContent = audio && !audio.paused ? getMediaUiText().playing : getMediaUiText().paused;
     }
     updateGlobalMediaButtons();
+    updateGlobalMediaProgress();
 }
 
 function renderPodcastLibrary(items, highlightId = '') {
@@ -1680,7 +1827,11 @@ function renderOriginalPodcastLibrary() {
         meta.textContent=`${item.sourceName || ''}${date ? ` · ${date}` : ''}${item.duration ? ` · ${item.duration}` : ''}${item.language ? ` · ${item.language.toUpperCase()}` : ''}`; card.append(meta);
         if (item.description) { const description=document.createElement('p'); description.className='original-podcast-description'; description.textContent=String(item.description).slice(0,700); card.append(description); }
         const id=`original:${item.id || item.audioUrl}`;
-        appendSimpleMediaControls(card, { id, kind:'original', title:item.title || 'Podcast', artist:item.sourceName || 'Original-Podcast', candidates:[item.audioUrl], artwork:item.artwork || '', statusId:`media-status-${safeDomId(id)}` });
+        appendSimpleMediaControls(card, {
+            id, kind:'original', title:item.title || 'Podcast', artist:item.sourceName || 'Original-Podcast',
+            candidates:[item.audioUrl], artwork:item.artwork || '', statusId:`media-status-${safeDomId(id)}`,
+            showPause:true, showProgress:true
+        });
         const links=document.createElement('div'); links.className='original-podcast-links';
         if (getSafeHttpUrl(item.episodeUrl)) links.append(makeMediaLink(item.episodeUrl,t.listenOriginal));
         if (getSafeHttpUrl(item.feedUrl)) links.append(makeMediaLink(item.feedUrl,t.feedLink));
@@ -2135,6 +2286,8 @@ function changeLanguage() {
     populatePodcastVoiceOptions();
     populateAzurePodcastVoiceOptions();
     updateSharedPodcastUiText();
+    updateGlobalMediaButtons();
+    updateGlobalMediaProgress();
     if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); } else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
