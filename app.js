@@ -5,10 +5,21 @@ window.onerror = function(msg, url, line, col, error) {
     return false;
 };
 
-// DER CACHE-BYPASS LINK FÜR SOFORTIGE UPDATES
-const GITHUB_JSON_URL = "https://blackfront161.github.io/Revolution-News-Data/news.json";
+// Nachrichten und Veranstaltungen werden getrennt aktualisiert.
+const GITHUB_NEWS_URL = "https://blackfront161.github.io/Revolution-News-Data/news.json";
+const GITHUB_EVENTS_URL = "https://blackfront161.github.io/Revolution-News-Data/events.json";
 const PROXY_URL = "https://revolution-proxy.paghklo.workers.dev";
 let capVal1 = 0; let capVal2 = 0;
+
+function getClientId() {
+    const storageKey = "wrn_client_id";
+    let value = localStorage.getItem(storageKey);
+    if (value) return value;
+
+    value = (window.crypto?.randomUUID?.() || `wrn-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+    localStorage.setItem(storageKey, value);
+    return value;
+}
 
 // Wandelt beliebigen Text so um, dass er gefahrlos in einen HTML-String eingesetzt werden kann.
 function escapeHtml(value) {
@@ -174,7 +185,7 @@ function extractTranslationError(data, status) {
     return `Unbekannter Übersetzungsfehler (HTTP ${status || "ohne Status"}).`;
 }
 
-async function fetchFromGemini(promptText) {
+async function fetchTranslationRequest({ title = "", text = "", mode = "title_and_text" }) {
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 45000);
 
@@ -183,10 +194,14 @@ async function fetchFromGemini(promptText) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-App-Secret": "revolution161"
+                "X-Client-Id": getClientId()
             },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: promptText }] }]
+                action: "translate",
+                targetLanguage: currentLang,
+                mode,
+                title: String(title || "").slice(0, 500),
+                text: String(text || "").slice(0, 6000)
             }),
             signal: controller.signal
         });
@@ -197,43 +212,26 @@ async function fetchFromGemini(promptText) {
         if (rawResponse.trim()) {
             try {
                 data = JSON.parse(rawResponse);
-            } catch (parseError) {
-                // Manche Worker geben erfolgreichen Klartext statt JSON zurück.
+            } catch {
                 data = rawResponse;
             }
         }
 
         const translatedText = cleanTranslationOutput(extractTranslationText(data));
-
-        // Wichtig für die Kompatibilität mit dem bisherigen Worker:
-        // Eine vorhandene Übersetzung wird genutzt, auch wenn der Worker einen
-        // ungewöhnlichen HTTP-Status mitsendet.
-        if (translatedText) {
-            return {
-                error: false,
-                text: translatedText,
-                status: response.status
-            };
+        if (response.ok && translatedText) {
+            return { error: false, text: translatedText, status: response.status };
         }
 
         const message = extractTranslationError(data, response.status);
         console.error("Übersetzungsserver-Fehler:", response.status, data);
-        return {
-            error: true,
-            message,
-            status: response.status
-        };
+        return { error: true, message, status: response.status };
     } catch (error) {
         const message = error?.name === "AbortError"
             ? "Die Übersetzung hat länger als 45 Sekunden gedauert und wurde abgebrochen."
             : `Der Übersetzungsserver konnte nicht erreicht werden: ${error?.message || error}`;
 
         console.error("Übersetzungsfehler:", error);
-        return {
-            error: true,
-            message,
-            status: 0
-        };
+        return { error: true, message, status: 0 };
     } finally {
         window.clearTimeout(timeoutId);
     }
@@ -281,7 +279,7 @@ const uiTexte = {
         fbBtn: "💬 Contact", fbTitle: "Contact", fbPlace: "Write your ideas or bug reports here...", fbCaptcha: "Captcha: What is", fbCancel: "Cancel", fbSend: "Send via Mail", fbErrCap: "Captcha is wrong!", fbErrEmpty: "Please write something first.",
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Security (OPSEC)", archiveTitle: "🗄️ Archive (> 3 Months)", publisherLabel: "SOURCE:", authorLabel: "AUTHOR:", contactLabel: "Contact:",
         radarSummary: "Events", radarCat: "Events",
-        infoBody: `<p><strong>Passion Project:</strong> This is an independent, non-commercial passion project. It may contain errors. Please report bugs or broken sources via the "Contact" section.</p><p><strong>Local app data:</strong> This app does not require user accounts and does not intentionally set advertising or analytics cookies. Bookmarks, reading history, settings, and the offline news cache are stored locally in your browser.</p><p><strong>External connections:</strong> Loading news data, article images, translations, original articles, and PayPal may connect your browser to external providers. Those providers can receive normal technical connection data such as an IP address.</p><p><strong>Content & AI translations:</strong> This app aggregates external RSS content. AI-generated translations may contain errors. Please check the original source when accuracy is important.</p>`
+        infoBody: `<p><strong>Passion Project:</strong> This is an independent, non-commercial passion project. It may contain errors. Please report bugs or broken sources via the "Contact" section.</p><p><strong>Local app data:</strong> This app does not require user accounts and does not intentionally set advertising or analytics cookies. Bookmarks and settings are stored locally in your browser. News, events, and generated translations are stored in IndexedDB for offline use.</p><p><strong>External connections:</strong> Loading news data, article images, translations, original articles, and PayPal may connect your browser to external providers. Those providers can receive normal technical connection data such as an IP address.</p><p><strong>Content & AI translations:</strong> This app aggregates external RSS content. AI-generated translations may contain errors. Please check the original source when accuracy is important.</p>`
     },
     de: {
         init: "Lade Daten...", error: "Offline Modus.", btnTranslate: "Übersetzen", btnLoading: "Übersetze...", btnDone: "Übersetzt",
@@ -297,7 +295,7 @@ const uiTexte = {
         fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
         radarSummary: "Events", radarCat: "Events",
-        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Lokale App-Daten:</strong> Die App benötigt keine Benutzer*innenkonten und setzt selbst keine beabsichtigten Werbe- oder Analyse-Cookies. Lesezeichen, Lesestatus, Einstellungen und der Offline-Nachrichtencache werden lokal in deinem Browser gespeichert.</p><p><strong>Externe Verbindungen:</strong> Beim Laden der Nachrichtendaten, externer Artikelbilder, Übersetzungen, Originalartikel oder von PayPal kann dein Browser Verbindungen zu anderen Anbietern herstellen. Diese Anbieter können dabei übliche technische Verbindungsdaten wie eine IP-Adresse erhalten.</p><p><strong>Inhalte und KI-Übersetzungen:</strong> Die App bündelt fremde RSS-Inhalte. KI-generierte Übersetzungen können Fehler enthalten. Prüfe bei wichtigen Angaben bitte die Originalquelle.</p>`
+        infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Lokale App-Daten:</strong> Die App benötigt keine Benutzer*innenkonten und setzt selbst keine beabsichtigten Werbe- oder Analyse-Cookies. Lesezeichen und Einstellungen werden lokal im Browser gespeichert. Nachrichten, Events und bereits erzeugte Übersetzungen werden für die Offline-Nutzung in IndexedDB gespeichert.</p><p><strong>Externe Verbindungen:</strong> Beim Laden der Nachrichtendaten, externer Artikelbilder, Übersetzungen, Originalartikel oder von PayPal kann dein Browser Verbindungen zu anderen Anbietern herstellen. Diese Anbieter können dabei übliche technische Verbindungsdaten wie eine IP-Adresse erhalten.</p><p><strong>Inhalte und KI-Übersetzungen:</strong> Die App bündelt fremde RSS-Inhalte. KI-generierte Übersetzungen können Fehler enthalten. Prüfe bei wichtigen Angaben bitte die Originalquelle.</p>`
     },
     es: { btnTranslate: "Traducir", catGlobal: "Global", catEurope: "Europa", searchRegion: "🌍 Región", searchTopic: "🏷️ Tema", radarSummary: "Events", radarCat: "Events" },
     fr: { btnTranslate: "Traduire", catGlobal: "Global", catEurope: "Europe", searchRegion: "🌍 Région", searchTopic: "🏷️ Thème", radarSummary: "Events", radarCat: "Events" },
@@ -445,6 +443,18 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
         return { error: false, ...translationCache.get(key), cached: true };
     }
 
+    if (window.WRNStorage) {
+        try {
+            const storedTranslation = await window.WRNStorage.getTranslation(key);
+            if (storedTranslation?.text) {
+                translationCache.set(key, storedTranslation);
+                return { error: false, ...storedTranslation, cached: true };
+            }
+        } catch (error) {
+            console.warn("Gespeicherte Übersetzung konnte nicht gelesen werden:", error);
+        }
+    }
+
     const originalTitle = String(article.title || '').trim();
     const originalText = String(article.content || '').trim();
     if (!originalText) {
@@ -456,8 +466,6 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
         };
     }
 
-    const targetLanguage = getTargetLanguageName();
-    const genderInstruction = getGenderInstruction();
     const chunks = createArticleChunks(originalText);
     let translatedTitle = originalTitle;
     const translatedParts = [];
@@ -465,11 +473,11 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
     for (let index = 0; index < chunks.length; index++) {
         if (typeof onProgress === 'function') onProgress(index + 1, chunks.length);
 
-        const promptText = index === 0
-            ? `Translate the title and text fluently into ${targetLanguage}.${genderInstruction} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nTitle: ${originalTitle}\n\nText: ${chunks[index]}`
-            : `Translate the following continuation fluently into ${targetLanguage}.${genderInstruction} Output only the translated continuation. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".\n\nText: ${chunks[index]}`;
-
-        const result = await fetchFromGemini(promptText);
+        const result = await fetchTranslationRequest({
+            title: index === 0 ? originalTitle : "",
+            text: chunks[index],
+            mode: index === 0 ? "title_and_text" : "continuation"
+        });
         if (result.error || !result.text) return result;
 
         if (index === 0) {
@@ -487,6 +495,11 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
         language: currentLang
     };
     translationCache.set(key, translated);
+    if (window.WRNStorage) {
+        window.WRNStorage.putTranslation(key, translated).catch(error => {
+            console.warn("Übersetzung konnte nicht offline gespeichert werden:", error);
+        });
+    }
     return { error: false, ...translated };
 }
 
@@ -1122,9 +1135,29 @@ function changeTheme(themeName) {
     }
 }
 
-function clearAllData() {
-    const confirmTxt = currentLang === "de" ? "Möchtest du wirklich alle Daten und Einstellungen restlos löschen?" : "Completely clear all bookmarks, history, and settings?";
-    if (confirm(confirmTxt)) { localStorage.clear(); window.location.reload(); }
+async function clearAllData() {
+    const confirmTxt = currentLang === "de"
+        ? "Möchtest du wirklich alle Lesezeichen, Einstellungen, Offline-Nachrichten und gespeicherten Übersetzungen löschen?"
+        : "Delete all bookmarks, settings, offline news and saved translations?";
+
+    if (!confirm(confirmTxt)) return;
+
+    localStorage.clear();
+
+    if (window.WRNStorage) {
+        try { await window.WRNStorage.clearAll(); } catch (error) { console.warn(error); }
+    }
+
+    if ('caches' in window) {
+        try {
+            const names = await caches.keys();
+            await Promise.all(names.map(name => caches.delete(name)));
+        } catch (error) {
+            console.warn("Browser-Caches konnten nicht vollständig gelöscht werden:", error);
+        }
+    }
+
+    window.location.reload();
 }
 
 function changeLanguage() {
@@ -1322,31 +1355,89 @@ function openSourcesModal() {
 
 function filterBySource(sourceName) { currentSourceFilter = sourceName; closeAllModals(); applyFilters(); }
 
-async function initialisiereApp() {
-    setTxt('status-container', "Lade Daten...");
-    let hasCache = false;
-    
+async function fetchJsonFile(url) {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) {
+        throw new Error(`${url}: HTTP ${response.status}`);
+    }
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+        throw new Error(`${url}: JSON ist keine Liste.`);
+    }
+    return data;
+}
+
+async function loadDatasetWithOfflineFallback(datasetKey, url, legacyLocalStorageKey) {
     try {
-        const res = await fetch(GITHUB_JSON_URL + "?v=" + new Date().getTime());
-        const fetchedData = await res.json();
-        
-        allNewsData = fetchedData;
-        try { localStorage.setItem('cached_news_data', JSON.stringify(allNewsData)); } catch(e) {}
-        hasCache = true;
-        populateEventFilters();
-        ladeKontinentNews("Global");
-    } catch (err) {
-        try {
-            const offlineData = localStorage.getItem('cached_news_data');
-            if (offlineData && offlineData.length > 10) {
-                allNewsData = JSON.parse(offlineData);
-                populateEventFilters();
-                ladeKontinentNews("Global");
-            } else {
-                setTxt('status-container', "[ FEHLER ] Keine Daten und kein Internet.");
+        const freshData = await fetchJsonFile(url);
+        if (window.WRNStorage) {
+            await window.WRNStorage.putDataset(datasetKey, freshData);
+        }
+        return { data: freshData, source: "network" };
+    } catch (networkError) {
+        console.warn(`${datasetKey} konnte nicht aktualisiert werden:`, networkError);
+
+        if (window.WRNStorage) {
+            try {
+                const stored = await window.WRNStorage.getDataset(datasetKey);
+                if (Array.isArray(stored) && stored.length > 0) {
+                    return { data: stored, source: "indexeddb", error: networkError };
+                }
+            } catch (storageError) {
+                console.warn(`${datasetKey} konnte nicht aus IndexedDB gelesen werden:`, storageError);
             }
-        } catch(e) {
-            setTxt('status-container', "[ FEHLER ] Keine Daten und kein Internet.");
+        }
+
+        // Nur für die erste Migration von älteren App-Versionen.
+        try {
+            const legacy = JSON.parse(localStorage.getItem(legacyLocalStorageKey) || "[]");
+            if (Array.isArray(legacy) && legacy.length > 0) {
+                return { data: legacy, source: "legacy", error: networkError };
+            }
+        } catch {}
+
+        return { data: [], source: "none", error: networkError };
+    }
+}
+
+async function initialisiereApp() {
+    setTxt('status-container', "Lade Nachrichten und Events...");
+
+    if (window.WRNStorage) {
+        try {
+            await window.WRNStorage.migrateLegacyLocalStorage();
+            window.WRNStorage.requestPersistentStorage().catch(() => false);
+        } catch (error) {
+            console.warn("Offline-Speicher konnte nicht vorbereitet werden:", error);
+        }
+    }
+
+    const [newsResult, eventsResult] = await Promise.all([
+        loadDatasetWithOfflineFallback('news', GITHUB_NEWS_URL, 'cached_news_articles'),
+        loadDatasetWithOfflineFallback('events', GITHUB_EVENTS_URL, 'cached_event_data')
+    ]);
+
+    const newsItems = newsResult.data;
+    const eventItems = eventsResult.data;
+    allNewsData = [...newsItems, ...eventItems];
+
+    if (allNewsData.length === 0) {
+        setTxt('status-container', "[ FEHLER ] Es sind weder Online- noch Offline-Daten vorhanden.");
+        return;
+    }
+
+    populateEventFilters();
+    ladeKontinentNews("Global");
+
+    const offlineSources = [];
+    if (newsResult.source !== 'network') offlineSources.push('Nachrichten');
+    if (eventsResult.source !== 'network') offlineSources.push('Events');
+
+    if (offlineSources.length > 0) {
+        const status = document.getElementById('status-container');
+        if (status) {
+            status.style.color = 'var(--color-accent)';
+            status.textContent = `${offlineSources.join(' und ')} werden aus dem Offline-Speicher angezeigt.`;
         }
     }
 }
@@ -1569,12 +1660,11 @@ async function translateArticle(idNum) {
         const sentence = originalText.match(/[^.!?]+[.!?]+/)?.[0];
         if (sentence) originalTeaser = sentence;
 
-        const promptText = `Translate the title and text fluently into ${getTargetLanguageName()}.${getGenderInstruction()} Return exactly two sections separated by three hyphens: translated title---translated text. Output only those two translated sections. Start immediately with the translated title. Do not add an introduction, explanation, heading, quotation marks, or a sentence such as "Here is the translation" or "Hier ist die deutsche Übersetzung".
-
-Title: ${article.title || ''}
-
-Text: ${originalTeaser}`;
-        const result = await fetchFromGemini(promptText);
+        const result = await fetchTranslationRequest({
+            title: article.title || "",
+            text: originalTeaser,
+            mode: "title_and_text"
+        });
 
         if (result.error || !result.text) {
             showTranslationError(btnEl, card, result);
@@ -1612,6 +1702,26 @@ window.addEventListener('scroll', () => {
     }
 });
 
+window.addEventListener('offline', () => {
+    const status = document.getElementById('status-container');
+    if (status) {
+        status.style.color = 'var(--color-accent)';
+        status.textContent = currentLang === 'de'
+            ? 'Offline: Gespeicherte Nachrichten und Events bleiben verfügbar.'
+            : 'Offline: Saved news and events remain available.';
+    }
+});
+
+window.addEventListener('online', () => {
+    const status = document.getElementById('status-container');
+    if (status) {
+        status.style.color = 'var(--color-green)';
+        status.textContent = currentLang === 'de'
+            ? 'Wieder online. Daten werden beim nächsten Laden aktualisiert.'
+            : 'Back online. Data will refresh on the next load.';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     try {
         let savedZoom = localStorage.getItem('wrn_font_zoom') || "115"; 
@@ -1629,9 +1739,13 @@ document.addEventListener('DOMContentLoaded', () => {
         changeTheme(savedTheme); changeLanguage(); initializePodcast(); initialisiereApp(); 
 
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) { registration.unregister(); }
-            });
+            navigator.serviceWorker.register('./service-worker.js')
+                .then(registration => {
+                    registration.update().catch(() => {});
+                })
+                .catch(error => {
+                    console.warn('Service Worker konnte nicht registriert werden:', error);
+                });
         }
     } catch (e) {
         const stat = document.getElementById('status-container');
