@@ -2538,16 +2538,15 @@ async function initialisiereApp() {
     populateEventFilters();
     ladeKontinentNews("Global");
 
-    const offlineSources = [];
-    if (newsResult.source !== 'network') offlineSources.push('Nachrichten');
-    if (eventsResult.source !== 'network') offlineSources.push('Events');
-
-    if (offlineSources.length > 0) {
-        const status = document.getElementById('status-container');
-        if (status) {
-            status.style.color = 'var(--color-accent)';
-            status.textContent = `${offlineSources.join(' und ')} werden aus dem Offline-Speicher angezeigt.`;
-        }
+    // Ein Offline-Rückfall ist technisch nützlich, aber keine Meldung, die
+    // dauerhaft vor dem ersten Artikel stehen muss. Die App zeigt deshalb
+    // weiterhin die normale Überschrift. Für die Fehlersuche bleibt die
+    // Information nur in der Browser-Konsole erhalten.
+    if (newsResult.source !== 'network' || eventsResult.source !== 'network') {
+        console.warn('Offline-Rückfall verwendet:', {
+            nachrichten: newsResult.source,
+            events: eventsResult.source
+        });
     }
 }
 

@@ -125,14 +125,14 @@
     </div>
 
     <div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
-        <button class="btn-micro" style="font-size: 1.2rem; padding: 6px 12px; border-color: var(--color-cyan); color: var(--color-cyan); flex: 0 0 auto;" onclick="openSourcesModal()">☰</button>
+        <button class="btn-micro filter-control filter-control-menu" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="openSourcesModal()">☰</button>
         
-        <select id="sort-select" style="background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-read); padding: 8px 4px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; flex: 0 0 auto; outline: none; -webkit-appearance: none;" onchange="applyFilters()">
+        <select id="sort-select" class="filter-control" onchange="applyFilters()">
             <option value="new" id="opt-sort-new">Neueste</option>
             <option value="old" id="opt-sort-old">Älteste</option>
         </select>
         
-        <select id="ui-fontsize" style="background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-read); padding: 8px 4px; border-radius: 4px; font-family: monospace; font-size: 0.75rem; flex: 0 0 auto; outline: none; -webkit-appearance: none;" onchange="changeFontSize(this.value)">
+        <select id="ui-fontsize" class="filter-control" onchange="changeFontSize(this.value)">
             <option value="100">A: Normal</option>
             <option value="115">A: Groß</option>
             <option value="130">A: Größer</option>

@@ -44,6 +44,37 @@ details.filter-dropdown summary { cursor: pointer; font-weight: bold; color: var
 .search-input { width: 100%; background: var(--bg-input); border: 1px solid var(--color-accent); color: var(--text-main); padding: 8px; font-family: monospace; box-sizing: border-box; border-radius: 4px; outline: none; font-size: 0.75rem; }
 .search-input:focus { box-shadow: 0 0 8px var(--shadow-accent); }
 
+
+/* Hamburger, Sortierung, Schriftgröße und Suche stehen auf einer Höhe. */
+.filter-bar .filter-control {
+    height: 34px !important;
+    min-height: 34px;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    background: var(--bg-input);
+    color: var(--text-main);
+    border: 1px solid var(--border-read);
+    border-radius: 4px;
+    padding: 0 8px !important;
+    font-family: monospace;
+    font-size: 0.72rem !important;
+    line-height: 1;
+    outline: none;
+}
+.filter-bar button.filter-control-menu {
+    width: 40px;
+    flex-basis: 40px;
+    padding: 0 !important;
+    font-size: 1rem !important;
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+}
+.filter-bar .search-input {
+    height: 34px;
+    min-height: 34px;
+    padding: 0 8px;
+}
+
 .card { background-color: var(--bg-card); border: 1px solid var(--color-accent); box-shadow: 0 0 10px var(--shadow-accent); padding: 15px; margin-bottom: 20px; border-radius: 4px; transition: all 0.3s ease; }
 .card.read { border-color: var(--border-read); box-shadow: none; }
 
@@ -55,11 +86,58 @@ details.filter-dropdown summary { cursor: pointer; font-weight: bold; color: var
 .teaser { color: var(--text-muted); font-style: italic; line-height: 1.5; margin-bottom: 15px; font-size: calc(0.95rem * var(--article-font-scale));}
 .full-content { display: none; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px; white-space: pre-wrap; font-size: calc(0.95rem * var(--article-font-scale));}
 
-.button-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-.btn-expand { background: var(--bg-input); border: 1px dashed var(--border-dashed); color: var(--color-accent); padding: 8px 12px; font-family: monospace; cursor: pointer; border-radius: 4px; text-transform: uppercase; font-size: 0.8rem;}
+.button-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(122px, 1fr));
+    gap: 6px;
+    margin-top: 10px;
+    align-items: stretch;
+}
+.btn-expand {
+    background: var(--bg-input);
+    border: 1px dashed var(--border-dashed);
+    color: var(--color-accent);
+    font-family: monospace;
+    cursor: pointer;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
 .btn-expand:hover { background: rgba(255, 153, 0, 0.05); }
-.btn-translate { background: transparent; border: 1px solid var(--color-cyan); color: var(--color-cyan); padding: 8px 12px; font-family: monospace; cursor: pointer; border-radius: 4px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; font-size: 0.8rem;}
+.btn-translate {
+    background: transparent;
+    border: 1px solid var(--color-cyan);
+    color: var(--color-cyan);
+    font-family: monospace;
+    cursor: pointer;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
 .btn-translate:hover { background-color: rgba(0, 240, 255, 0.05); }
+
+/* Alle Bedienknöpfe unter einem Artikel haben dieselbe kompakte Größe. */
+.button-row > .btn-expand,
+.button-row > .btn-translate {
+    width: 100%;
+    height: 32px;
+    min-height: 32px;
+    box-sizing: border-box;
+    padding: 4px 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.67rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.button-row > .btn-translate > span {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .status-msg { color: var(--color-green); margin-bottom: 20px; font-size: 1rem; font-weight: bold; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -438,7 +516,7 @@ textarea,
 .btn-micro { font-size: 0.65rem; }
 .btn-nav { font-size: 0.7rem; }
 .btn-expand,
-.btn-translate { font-size: 0.8rem; }
+.btn-translate { font-size: 0.67rem; }
 .feedback-modal { font-size: 1rem; }
 
 
