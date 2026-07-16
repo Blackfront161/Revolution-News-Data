@@ -1,4 +1,4 @@
-// World Revolution News – Hauptlogik, Phase 1D (Audio-Hub ausgelagert)
+// World Revolution News – Hauptlogik, Phase 1E (Lesestatus und Ansichten)
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -1005,30 +1005,40 @@ function changeLanguage() {
     updateSharedPodcastUiText();
     updateGlobalMediaButtons();
     updateGlobalMediaProgress();
+    window.WRNReading?.updateUi();
     if (allNewsData.length > 0) populateEventFilters();
     
-    if(activeKontinent === "Bookmarks") { showBookmarks(); } else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
+    if(activeKontinent === "Bookmarks") { showBookmarks(); }
+    else if (activeKontinent === "Read") { showReadArticles(); }
+    else if (allNewsData.length > 0) { setTxt('status-container', t.latestNews); applyFilters(); }
 }
 
-function getSavedBookmarks() { return JSON.parse(localStorage.getItem('wrn_bookmarks') || '[]'); }
-function getReadArticles() { return JSON.parse(localStorage.getItem('wrn_read_list') || '[]'); }
+function getSavedBookmarks() { return window.WRNReading?.getBookmarks() || JSON.parse(localStorage.getItem('wrn_bookmarks') || '[]'); }
+function getReadArticles() { return window.WRNReading?.getReadLinks() || JSON.parse(localStorage.getItem('wrn_read_list') || '[]'); }
 
 function markAsRead(link, idNum) {
-    let readList = getReadArticles();
-    if (!readList.includes(link)) { readList.push(link); localStorage.setItem('wrn_read_list', JSON.stringify(readList)); }
-    const card = document.getElementById(`card-${idNum}`); if(card) card.classList.add('read');
+    window.WRNReading?.setRead(link, true);
+    const card = document.getElementById(`card-${idNum}`);
+    if (card) card.classList.add('read');
+    window.WRNReading?.updateUi();
 }
 
 function toggleBookmark(idNum) {
-    let bookmarks = getSavedBookmarks(); let article = currentFilteredItems[idNum];
-    let existingIdx = bookmarks.findIndex(b => b.link === article.link);
-    const t = uiTexte[currentLang] || uiTexte['en'];
-
-    if (existingIdx > -1) { bookmarks.splice(existingIdx, 1); setHtml(`bmark-${idNum}`, t.btnBookmark); } 
-    else { bookmarks.push(article); setHtml(`bmark-${idNum}`, t.btnUnbookmark); }
-    
-    localStorage.setItem('wrn_bookmarks', JSON.stringify(bookmarks));
+    const article = currentFilteredItems[idNum];
+    if (!article) return;
+    const saved = window.WRNReading?.toggleBookmark(article);
+    const button = document.getElementById(`bmark-${idNum}`);
+    if (button && window.WRNReading) button.innerHTML = window.WRNReading.bookmarkButtonHtml(Boolean(saved));
+    window.WRNReading?.updateUi();
     if(activeKontinent === "Bookmarks") showBookmarks();
+}
+
+function toggleReadState(idNum) {
+    const article = currentFilteredItems[idNum];
+    if (!article) return;
+    window.WRNReading?.toggleRead(article);
+    window.WRNReading?.updateUi();
+    if (activeKontinent === "Read") showReadArticles();
 }
 
 // Wird nur beim Klick auf den Lesezeichen-Button benutzt und schaltet die Ansicht um.
@@ -1051,12 +1061,34 @@ function showBookmarks() {
     const bBtn = document.getElementById('btn-bookmarks');
     if (bBtn) bBtn.classList.add('active');
 
-    const t = uiTexte[currentLang] || uiTexte['en'];
-    setTxt('status-container', t.bookmarkCat + ` (${rawBookmarks.length})`);
+    setTxt('status-container', window.WRNReading?.listLabel('bookmarks', rawBookmarks.length) || `Read later (${rawBookmarks.length})`);
 
     currentSourceFilter = "ALL";
     currentFilteredItems = rawBookmarks;
     applyFilters(true);
+}
+
+function ladeReadArticles() {
+    if (activeKontinent === "Read") {
+        ladeKontinentNews("Global");
+        return;
+    }
+    showReadArticles();
+}
+
+function showReadArticles() {
+    activeKontinent = "Read";
+    updateEventUiVisibility();
+    updateSortLabels();
+    const items = window.WRNReading?.getReadArticleItems(allNewsData) || [];
+
+    document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active'));
+    const button = document.getElementById('btn-read-articles');
+    if (button) button.classList.add('active');
+
+    setTxt('status-container', window.WRNReading?.listLabel('read', items.length) || `Read (${items.length})`);
+    currentSourceFilter = "ALL";
+    applyFilters();
 }
 
 function addToZine(globalIndex) {
@@ -1170,9 +1202,11 @@ function openSourcesModal() {
 
     listContainer.append(createSourceButton(`🌍 ${t.filterAll}`, 'ALL', currentSourceFilter === 'ALL', true));
 
-    const baseList = (activeKontinent === 'Bookmarks')
+    const baseList = activeKontinent === 'Bookmarks'
         ? getSavedBookmarks()
-        : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
+        : activeKontinent === 'Read'
+            ? (window.WRNReading?.getReadArticleItems(allNewsData) || [])
+            : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
 
     const portals = [...new Set(baseList.map(item => item.quelleName).filter(Boolean))].sort();
     portals.forEach(portal => {
@@ -1277,6 +1311,7 @@ async function initialisiereApp() {
 
 function ladeKontinentNews(kontinent) {
     if(kontinent === "Bookmarks") return ladeBookmarks();
+    if(kontinent === "Read") return ladeReadArticles();
     activeKontinent = kontinent; currentSourceFilter = "ALL"; 
     
     document.querySelectorAll('.btn-nav').forEach(btn => btn.classList.remove('active'));
@@ -1297,7 +1332,10 @@ function applyFilters(isBookmark = false) {
     const searchQuery = iSel ? iSel.value.toLowerCase().trim() : "";
     const sortOrder = document.getElementById('sort-select') ? document.getElementById('sort-select').value : "new";
     
-    let baseList = (activeKontinent === "Bookmarks" || isBookmark) ? getSavedBookmarks() : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
+    let baseList;
+    if (activeKontinent === "Bookmarks" || isBookmark) baseList = getSavedBookmarks();
+    else if (activeKontinent === "Read") baseList = window.WRNReading?.getReadArticleItems(allNewsData) || [];
+    else baseList = allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
     let filtered = (selPortal === "ALL") ? baseList : baseList.filter(a => a.quelleName === selPortal);
 
     if (activeKontinent === 'Radar') {
@@ -1386,8 +1424,12 @@ function renderNextBatch() {
             ? `<img src="${escapeHtml(safeImageUrl)}" class="article-img" style="display:block;" loading="lazy" referrerpolicy="no-referrer" alt="${escapeHtml(item.title || '')}">`
             : '';
 
-        let isSaved = bookmarks.some(b => b.link === item.link); let bookmarkTxt = isSaved ? t.btnUnbookmark : t.btnBookmark;
-        let isReadClass = readList.includes(item.link) ? "read" : "";
+        let isSaved = window.WRNReading?.isBookmarked(item) ?? bookmarks.some(b => b.link === item.link);
+        let bookmarkTxt = window.WRNReading?.bookmarkButtonHtml(isSaved) || (isSaved ? t.btnUnbookmark : t.btnBookmark);
+        let isRead = window.WRNReading?.isRead(item) ?? readList.includes(item.link);
+        let isReadClass = isRead ? "read" : "";
+        const readStateTxt = window.WRNReading?.readButtonHtml(isRead) || (isRead ? '[ ✓ Read ]' : '[ ○ Mark read ]');
+        const readingProgressHtml = window.WRNReading?.progressMarkup(item, globalIndex) || '';
 
         let publisherName = item.quelleName ? item.quelleName.trim() : "Unbekannte Quelle";
         let authorName = item.author ? item.author.trim() : "";
@@ -1407,8 +1449,9 @@ function renderNextBatch() {
         metaHtml += `<span class="meta-label">${escapeHtml(isEvent ? t.eventStarts : t.dateLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(metaDateText || formatDatum)}</span>`;
 
         let articleHTML = `
-            <div class="card ${isReadClass} ${cancelledClass}" id="card-${globalIndex}" data-translated="none" ${cardStyle}>
+            <div class="card ${isReadClass} ${cancelledClass}" id="card-${globalIndex}" data-translated="none" data-article-key="${escapeHtml(window.WRNReading?.articleKey(item) || item.link || '')}" ${cardStyle}>
                 <div class="meta">${metaHtml}</div>
+                ${readingProgressHtml}
                 <div class="title" id="title-${globalIndex}" style="${titleColor}">${escapeHtml(item.title || 'No Title')}</div>
                 ${eventDetailsHtml}
                 ${imgHtml}
@@ -1418,7 +1461,8 @@ function renderNextBatch() {
                     <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
                     <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
                     <button class="btn-translate btn-podcast" id="podcast-${globalIndex}" onclick="openPodcastOptions(${globalIndex})"><span>[ 🎧 ${escapeHtml(t.btnPodcast)} ]</span></button>
-                    <button class="btn-translate" style="border-color: #B026FF; color: #B026FF;" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
+                    <button class="btn-translate btn-read-later" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
+                    <button class="btn-translate btn-read-state ${isRead ? 'is-read' : ''}" id="readstate-${globalIndex}" onclick="toggleReadState(${globalIndex})">${readStateTxt}</button>
                     <button class="btn-translate" style="border-color: #00FFCC; color: #00FFCC;" onclick="addToZine(${globalIndex})">[ 📄 ZINE ]</button>
                     <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${encodedArticleTitle}', '${encodedArticleLink}')">[ SHARE 🔗 ]</button>
                     ${safeArticleUrl ? `<a href="${escapeHtml(safeArticleUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent); text-decoration:none;" onclick="markAsRead(decodeText('${encodedArticleLink}'), ${globalIndex})">[ ${escapeHtml(t.btnReadMore)} ]</a>` : ''}
@@ -1431,6 +1475,7 @@ function renderNextBatch() {
     });
 
     if (archiveTitle) { if (archiveCount > 0) { archiveTitle.style.display = "block"; } else { archiveTitle.style.display = "none"; } }
+    window.WRNReading?.decorateRenderedCards(currentFilteredItems, currentlyDisplayedCount, batch.length);
     
     currentlyDisplayedCount += batch.length;
     isRendering = false;
@@ -1455,14 +1500,16 @@ async function toggleArticle(idNum, event) {
     if(!teaser || !fullContent || !btn || !card) return;
     const t = uiTexte[currentLang] || uiTexte['en'];
 
-    try { markAsRead(currentFilteredItems[idNum].link, idNum); } catch(e){}
+    const article = currentFilteredItems[idNum];
 
     if (card.dataset.expanded === "true") {
+        window.WRNReading?.onCollapse(idNum, article, fullContent);
         teaser.style.display = "block"; fullContent.style.display = "none";
         btn.innerText = t.btnExpand; card.dataset.expanded = "false";
     } else {
         teaser.style.display = "none"; fullContent.style.display = "block";
         btn.innerText = t.btnCollapse; card.dataset.expanded = "true";
+        window.WRNReading?.onExpand(idNum, article, card, fullContent);
     }
 }
 
@@ -1570,6 +1617,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
         
         window.WRNStatusCenter?.init();
+        window.WRNReading?.init();
         changeTheme(savedTheme); changeLanguage(); initializePodcast(); updateSharedPodcastUiText(); initialisiereApp(); 
 
         if ('serviceWorker' in navigator) {

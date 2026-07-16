@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026-07-16-phase1d';
-const DATA_CACHE = 'wrn-data-v2026-07-16-phase1d';
+const APP_CACHE = 'wrn-app-v2026-07-16-phase1e';
+const DATA_CACHE = 'wrn-data-v2026-07-16-phase1e';
 
 const APP_SHELL = [
   './',
@@ -14,6 +14,7 @@ const APP_SHELL = [
   './utils.js',
   './media-player.js',
   './events.js',
+  './reading-state.js',
   './audio-hub.js',
   './app.js',
   './manifest.json',

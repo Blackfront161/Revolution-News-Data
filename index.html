@@ -114,12 +114,16 @@
             <span id="txt-podcast-library">Podcasts & Radio</span>
         </button>
         
-        <button class="btn-nav" style="flex: 1 1 18%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
-            <span id="txt-top-bookmarks">Bookmarks</span>
+        <button class="btn-nav" style="flex: 1 1 16%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
+            <span id="txt-top-bookmarks">Read later</span>
             <svg viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="url(#rbGrad)" stroke="#FF0000" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
 
-        <button class="btn-nav" style="flex: 1 1 18%; border-color: #00FFCC; color: #00FFCC; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" onclick="printZine()">
+        <button class="btn-nav" style="flex: 1 1 16%; border-color: var(--border-read); color: var(--text-muted);" id="btn-read-articles" onclick="ladeReadArticles()">
+            <span id="txt-top-read">Read</span>
+        </button>
+
+        <button class="btn-nav" style="flex: 1 1 16%; border-color: #00FFCC; color: #00FFCC; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" onclick="printZine()">
             <span id="txt-zine-count">📄 Zine (0)</span>
         </button>
         
@@ -140,6 +144,12 @@
             <option value="130">A: Größer</option>
             <option value="150">A: Riesig</option>
             <option value="180">A: Maximal</option>
+        </select>
+
+        <select id="ui-news-view" class="filter-control" onchange="changeNewsView(this.value)" aria-label="News view">
+            <option value="cards" id="opt-view-cards">Cards</option>
+            <option value="compact" id="opt-view-compact">Compact</option>
+            <option value="headlines" id="opt-view-headlines">Headlines</option>
         </select>
 
         <div class="search-container" style="flex: 1 1 120px; margin-bottom: 0; margin-left: auto;">
@@ -423,6 +433,7 @@
     <script src="utils.js"></script>
     <script src="media-player.js"></script>
     <script src="events.js"></script>
+    <script src="reading-state.js"></script>
     <script src="app.js"></script>
     <script src="audio-hub.js"></script>
 </body>
