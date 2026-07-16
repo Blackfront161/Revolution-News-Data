@@ -25,7 +25,7 @@ jobs:
           python-version: '3.12'
 
       - name: Release-Fixes anwenden
-        run: python tools/apply_release_1_4.py --cleanup-bootstrap
+        run: python apply_release_1_4.py --cleanup-bootstrap
 
       - name: Dateien prüfen
         run: |
