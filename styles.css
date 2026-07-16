@@ -743,3 +743,81 @@ textarea,
     .top-action-bar .btn-micro { flex: 1 1 calc(50% - 6px); min-height: 34px; }
     .system-status-grid { grid-template-columns: 1fr; }
 }
+
+
+/* Phase 1C: Weiterhören und kompakte Audio-Navigation */
+.continue-listening {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 10px 0 14px;
+    padding: 11px 12px;
+    border: 1px solid var(--color-accent);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 6px;
+    background: rgba(255, 153, 0, 0.06);
+}
+.continue-listening[hidden] { display: none !important; }
+.continue-listening-copy {
+    min-width: 0;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    gap: 3px;
+}
+.continue-listening-copy strong {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+}
+.continue-listening-copy span {
+    color: var(--text-main);
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: calc(0.86rem * var(--article-font-scale));
+}
+.continue-listening-copy small {
+    color: var(--text-muted);
+    font-size: 0.7rem;
+}
+.continue-listening-actions {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.btn-media-skip,
+.btn-media-clear {
+    min-height: 32px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 6px 9px;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.btn-media-skip {
+    background: transparent;
+    color: var(--color-cyan);
+    border: 1px solid var(--color-cyan);
+}
+.btn-media-clear {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-read);
+}
+.btn-media-skip:hover { background: rgba(0, 240, 255, 0.07); }
+.btn-media-clear:hover { background: rgba(255, 255, 255, 0.05); }
+
+@media (max-width: 620px) {
+    .continue-listening { align-items: stretch; flex-direction: column; }
+    .continue-listening-actions { width: 100%; }
+    .continue-listening-actions button { flex: 1 1 120px; }
+    .global-media-controls { width: 100%; }
+    .global-media-controls button { flex: 1 1 auto; }
+}

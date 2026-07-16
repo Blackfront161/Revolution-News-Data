@@ -2,20 +2,128 @@
 'use strict';
 
 const mediaUiTexts = {
-    en:{play:'Play', pause:'Pause', stop:'Stop', loading:'Connecting…', playing:'Playing', paused:'Paused', failed:'Audio could not be loaded.'},
-    de:{play:'Abspielen', pause:'Pause', stop:'Stop', loading:'Verbinde…', playing:'Läuft', paused:'Pausiert', failed:'Audio konnte nicht geladen werden.'},
-    es:{play:'Reproducir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduciendo', paused:'Pausado', failed:'No se pudo cargar el audio.'},
-    fr:{play:'Lecture', pause:'Pause', stop:'Arrêter', loading:'Connexion…', playing:'Lecture', paused:'En pause', failed:'Impossible de charger l’audio.'},
-    it:{play:'Riproduci', pause:'Pausa', stop:'Stop', loading:'Connessione…', playing:'In riproduzione', paused:'In pausa', failed:'Impossibile caricare l’audio.'},
-    pt:{play:'Reproduzir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduzindo', paused:'Pausado', failed:'Não foi possível carregar o áudio.'},
-    ru:{play:'Воспроизвести', pause:'Пауза', stop:'Стоп', loading:'Подключение…', playing:'Воспроизведение', paused:'Пауза', failed:'Не удалось загрузить аудио.'},
-    el:{play:'Αναπαραγωγή', pause:'Παύση', stop:'Στοπ', loading:'Σύνδεση…', playing:'Αναπαραγωγή', paused:'Παύση', failed:'Δεν ήταν δυνατή η φόρτωση του ήχου.'},
-    tr:{play:'Oynat', pause:'Duraklat', stop:'Durdur', loading:'Bağlanıyor…', playing:'Çalıyor', paused:'Duraklatıldı', failed:'Ses yüklenemedi.'}
+    en:{play:'Play', pause:'Pause', stop:'Stop', loading:'Connecting…', playing:'Playing', paused:'Paused', failed:'Audio could not be loaded.', continueAt:'Resume at'},
+    de:{play:'Abspielen', pause:'Pause', stop:'Stop', loading:'Verbinde…', playing:'Läuft', paused:'Pausiert', failed:'Audio konnte nicht geladen werden.', continueAt:'Fortsetzen bei'},
+    es:{play:'Reproducir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduciendo', paused:'Pausado', failed:'No se pudo cargar el audio.', continueAt:'Resume at'},
+    fr:{play:'Lecture', pause:'Pause', stop:'Arrêter', loading:'Connexion…', playing:'Lecture', paused:'En pause', failed:'Impossible de charger l’audio.', continueAt:'Resume at'},
+    it:{play:'Riproduci', pause:'Pausa', stop:'Stop', loading:'Connessione…', playing:'In riproduzione', paused:'In pausa', failed:'Impossibile caricare l’audio.', continueAt:'Resume at'},
+    pt:{play:'Reproduzir', pause:'Pausa', stop:'Parar', loading:'Conectando…', playing:'Reproduzindo', paused:'Pausado', failed:'Não foi possível carregar o áudio.', continueAt:'Resume at'},
+    ru:{play:'Воспроизвести', pause:'Пауза', stop:'Стоп', loading:'Подключение…', playing:'Воспроизведение', paused:'Пауза', failed:'Не удалось загрузить аудио.', continueAt:'Resume at'},
+    el:{play:'Αναπαραγωγή', pause:'Παύση', stop:'Στοπ', loading:'Σύνδεση…', playing:'Αναπαραγωγή', paused:'Παύση', failed:'Δεν ήταν δυνατή η φόρτωση του ήχου.', continueAt:'Resume at'},
+    tr:{play:'Oynat', pause:'Duraklat', stop:'Durdur', loading:'Bağlanıyor…', playing:'Çalıyor', paused:'Duraklatıldı', failed:'Ses yüklenemedi.', continueAt:'Resume at'}
 };
+const MEDIA_POSITION_STORAGE_KEY = 'wrn_media_positions_v1';
+const MEDIA_POSITION_MAX_ITEMS = 30;
+const mediaPositionListeners = new Set();
+let lastMediaPositionSave = 0;
+
 let globalMediaState = {
     id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0,
-    statusId:'', progressId:'', timeId:'', artwork:'', initialized:false
+    statusId:'', progressId:'', timeId:'', artwork:'', initialized:false,
+    resumeApplied:false
 };
+
+function mediaKindCanResume(kind) {
+    return kind === 'original' || kind === 'generated';
+}
+
+function readMediaPositions() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(MEDIA_POSITION_STORAGE_KEY) || '{}');
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch { return {}; }
+}
+
+function writeMediaPositions(records) {
+    try { localStorage.setItem(MEDIA_POSITION_STORAGE_KEY, JSON.stringify(records)); } catch {}
+    mediaPositionListeners.forEach(listener => { try { listener(); } catch {} });
+}
+
+function getSavedMediaPosition(id) {
+    if (!id) return null;
+    const record = readMediaPositions()[id];
+    if (!record || !Number.isFinite(Number(record.position)) || Number(record.position) < 5) return null;
+    return record;
+}
+
+function getRecentMediaPosition() {
+    const records = Object.values(readMediaPositions())
+        .filter(record => record && mediaKindCanResume(record.kind) && Number(record.position) >= 5)
+        .sort((a,b) => Number(b.updatedAt || 0) - Number(a.updatedAt || 0));
+    return records[0] || null;
+}
+
+function clearSavedMediaPosition(id) {
+    if (!id) return;
+    const records = readMediaPositions();
+    if (!(id in records)) return;
+    delete records[id];
+    writeMediaPositions(records);
+}
+
+function persistGlobalMediaPosition(force = false) {
+    const audio = document.getElementById('global-media-player');
+    if (!audio || !globalMediaState.id || !mediaKindCanResume(globalMediaState.kind)) return;
+    const now = Date.now();
+    if (!force && now - lastMediaPositionSave < 4000) return;
+    lastMediaPositionSave = now;
+
+    const position = Number(audio.currentTime);
+    const duration = Number(audio.duration);
+    if (!Number.isFinite(position) || position < 5) return;
+    if (Number.isFinite(duration) && duration > 0 && (duration - position < 20 || position / duration > 0.97)) {
+        clearSavedMediaPosition(globalMediaState.id);
+        return;
+    }
+
+    const records = readMediaPositions();
+    records[globalMediaState.id] = {
+        id: globalMediaState.id,
+        kind: globalMediaState.kind,
+        title: globalMediaState.title,
+        artist: globalMediaState.artist,
+        candidates: globalMediaState.candidates,
+        artwork: globalMediaState.artwork,
+        position,
+        duration: Number.isFinite(duration) && duration > 0 ? duration : 0,
+        updatedAt: now
+    };
+    const trimmed = Object.fromEntries(Object.entries(records)
+        .sort(([,a],[,b]) => Number(b?.updatedAt || 0) - Number(a?.updatedAt || 0))
+        .slice(0, MEDIA_POSITION_MAX_ITEMS));
+    writeMediaPositions(trimmed);
+}
+
+function applySavedMediaPosition() {
+    const audio = document.getElementById('global-media-player');
+    if (!audio || globalMediaState.resumeApplied || !mediaKindCanResume(globalMediaState.kind)) return;
+    const record = getSavedMediaPosition(globalMediaState.id);
+    globalMediaState.resumeApplied = true;
+    if (!record || !Number.isFinite(audio.duration) || audio.duration <= 0) return;
+    const target = Math.min(Number(record.position), Math.max(0, audio.duration - 10));
+    if (target >= 5) audio.currentTime = target;
+}
+
+async function resumeRecentMediaPosition() {
+    const record = getRecentMediaPosition();
+    if (!record) return false;
+    await playGlobalMedia({
+        id: record.id,
+        kind: record.kind,
+        title: record.title,
+        artist: record.artist,
+        candidates: record.candidates,
+        artwork: record.artwork
+    });
+    return true;
+}
+
+window.WRNMediaProgress = Object.freeze({
+    getRecent: getRecentMediaPosition,
+    clearRecent() { const record = getRecentMediaPosition(); if (record) clearSavedMediaPosition(record.id); },
+    resumeRecent: resumeRecentMediaPosition,
+    subscribe(listener) { if (typeof listener === 'function') mediaPositionListeners.add(listener); return () => mediaPositionListeners.delete(listener); }
+});
 
 function getMediaUiText() {
     return mediaUiTexts[currentLang] || mediaUiTexts.en;
@@ -51,21 +159,24 @@ function getGlobalMediaPlayer() {
         globalMediaState.initialized = true;
         audio.addEventListener('loadstart', () => setGlobalMediaStatus(getMediaUiText().loading));
         audio.addEventListener('waiting', () => setGlobalMediaStatus(getMediaUiText().loading));
+        audio.addEventListener('loadedmetadata', () => { applySavedMediaPosition(); updateGlobalMediaProgress(); });
         audio.addEventListener('playing', () => {
             setGlobalMediaStatus(getMediaUiText().playing, 'playing');
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
             updateGlobalMediaButtons();
         });
         audio.addEventListener('pause', () => {
+            persistGlobalMediaPosition(true);
             if (!audio.ended && globalMediaState.id) setGlobalMediaStatus(getMediaUiText().paused);
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
             updateGlobalMediaButtons();
         });
-        audio.addEventListener('ended', () => stopGlobalMedia());
+        audio.addEventListener('ended', () => { clearSavedMediaPosition(globalMediaState.id); stopGlobalMedia({ clearSaved:false }); });
         audio.addEventListener('error', () => tryNextGlobalMediaCandidate());
-        ['loadedmetadata', 'durationchange', 'timeupdate', 'progress', 'emptied'].forEach(eventName => {
+        ['durationchange', 'progress', 'emptied'].forEach(eventName => {
             audio.addEventListener(eventName, updateGlobalMediaProgress);
         });
+        audio.addEventListener('timeupdate', () => { updateGlobalMediaProgress(); persistGlobalMediaPosition(false); });
         setupMediaSessionHandlers();
     }
     return audio;
@@ -89,12 +200,16 @@ function updateGlobalMediaBar() {
     const subtitle = document.getElementById('global-media-subtitle');
     const pauseButton = document.getElementById('global-media-pause');
     const progressRow = document.getElementById('global-media-progress-row');
+    const backButton = document.getElementById('global-media-back');
+    const forwardButton = document.getElementById('global-media-forward');
     const isLiveRadio = globalMediaState.kind === 'radio';
     if (bar) bar.hidden = !globalMediaState.id;
     if (title) title.textContent = globalMediaState.title || 'Audio';
     if (subtitle) subtitle.textContent = globalMediaState.artist || '';
     if (pauseButton) pauseButton.hidden = isLiveRadio;
     if (progressRow) progressRow.hidden = isLiveRadio;
+    if (backButton) backButton.hidden = isLiveRadio;
+    if (forwardButton) forwardButton.hidden = isLiveRadio;
     updateGlobalMediaButtons();
     updateGlobalMediaProgress();
 }
@@ -155,6 +270,15 @@ function seekGlobalMedia(value) {
     updateGlobalMediaProgress();
 }
 
+function skipGlobalMedia(seconds) {
+    const audio = getGlobalMediaPlayer();
+    const offset = Number(seconds);
+    if (!audio || globalMediaState.kind === 'radio' || !Number.isFinite(offset) || !Number.isFinite(audio.duration)) return;
+    audio.currentTime = Math.max(0, Math.min(audio.duration, audio.currentTime + offset));
+    updateGlobalMediaProgress();
+    persistGlobalMediaPosition(true);
+}
+
 function updateGlobalMediaButtons() {
     const audio = document.getElementById('global-media-player');
     const t = getMediaUiText();
@@ -208,11 +332,11 @@ function setupMediaSessionHandlers() {
     safeSet('stop', () => stopGlobalMedia());
     safeSet('seekbackward', details => {
         const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(audio.duration)) return;
-        audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 10));
+        audio.currentTime = Math.max(0, audio.currentTime - (details.seekOffset || 15));
     });
     safeSet('seekforward', details => {
         const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(audio.duration)) return;
-        audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 10));
+        audio.currentTime = Math.min(audio.duration, audio.currentTime + (details.seekOffset || 30));
     });
     safeSet('seekto', details => {
         const audio = getGlobalMediaPlayer(); if (!audio || !Number.isFinite(details.seekTime)) return;
@@ -239,6 +363,7 @@ async function playGlobalMedia(config) {
         return;
     }
 
+    persistGlobalMediaPosition(true);
     audio.pause();
     audio.removeAttribute('src');
     audio.load();
@@ -246,7 +371,7 @@ async function playGlobalMedia(config) {
         id:String(config.id || ''), kind:String(config.kind || ''), title:String(config.title || 'Audio'),
         artist:String(config.artist || ''), candidates, candidateIndex:0,
         statusId:String(config.statusId || ''), progressId:String(config.progressId || ''),
-        timeId:String(config.timeId || ''), artwork:String(config.artwork || ''), initialized:true
+        timeId:String(config.timeId || ''), artwork:String(config.artwork || ''), initialized:true, resumeApplied:false
     };
     audio.src = candidates[0];
     audio.preload = 'none';
@@ -267,6 +392,7 @@ function tryNextGlobalMediaCandidate() {
     if (!audio || !globalMediaState.id) return;
     if (globalMediaState.candidateIndex + 1 < globalMediaState.candidates.length) {
         globalMediaState.candidateIndex += 1;
+        globalMediaState.resumeApplied = false;
         audio.src = globalMediaState.candidates[globalMediaState.candidateIndex];
         setGlobalMediaStatus(getMediaUiText().loading);
         audio.load();
@@ -280,6 +406,7 @@ function tryNextGlobalMediaCandidate() {
 function pauseGlobalMedia() {
     const audio = getGlobalMediaPlayer();
     if (audio && !audio.paused) audio.pause();
+    persistGlobalMediaPosition(true);
 }
 
 async function resumeGlobalMedia() {
@@ -288,20 +415,22 @@ async function resumeGlobalMedia() {
     try { await audio.play(); } catch (error) { setGlobalMediaStatus(`${getMediaUiText().failed} ${error?.message || ''}`, 'error'); }
 }
 
-function stopGlobalMedia() {
+function stopGlobalMedia(options = {}) {
     const audio = getGlobalMediaPlayer();
     if (audio) {
         audio.pause();
         audio.removeAttribute('src');
         audio.load();
     }
+    const oldMediaId = globalMediaState.id;
     const oldStatusId = globalMediaState.statusId;
     const oldProgressId = globalMediaState.progressId;
     const oldTimeId = globalMediaState.timeId;
     globalMediaState = {
         id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0,
-        statusId:'', progressId:'', timeId:'', artwork:'', initialized:true
+        statusId:'', progressId:'', timeId:'', artwork:'', initialized:true, resumeApplied:false
     };
+    if (options.clearSaved !== false && oldMediaId) clearSavedMediaPosition(oldMediaId);
     if (oldStatusId) { const status = document.getElementById(oldStatusId); if (status) status.textContent = ''; }
     if (oldProgressId) { const progress = document.getElementById(oldProgressId); if (progress) { progress.value = 0; progress.disabled = true; } }
     if (oldTimeId) { const time = document.getElementById(oldTimeId); if (time) time.textContent = '0:00 / 0:00'; }
@@ -382,6 +511,10 @@ function appendSimpleMediaControls(card, config) {
     status.className = 'media-card-status';
     status.id = mediaConfig.statusId;
     card.append(status);
+    const savedPosition = getSavedMediaPosition(mediaConfig.id);
+    if (savedPosition && globalMediaState.id !== mediaConfig.id) {
+        status.textContent = `${getMediaUiText().continueAt || 'Resume at'} ${formatMediaTime(savedPosition.position)}`;
+    }
     if (globalMediaState.id === mediaConfig.id) {
         const audio = getGlobalMediaPlayer();
         globalMediaState.progressId = mediaConfig.progressId || '';
