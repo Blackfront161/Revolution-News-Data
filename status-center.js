@@ -41,6 +41,7 @@
             offlineStorage: 'Offline-Speicher',
             legacyStorage: 'alter lokaler Speicher',
             noData: 'Keine Daten',
+            noEvents: 'Aktuell keine Termine',
             statusHint: 'Dieser Bereich zeigt technische Erreichbarkeit und vorhandene Datensätze. Er garantiert nicht, dass weltweit alle möglichen Quellen oder Termine erfasst sind.'
         },
         en: {
@@ -74,6 +75,7 @@
             offlineStorage: 'offline storage',
             legacyStorage: 'legacy local storage',
             noData: 'No data',
+            noEvents: 'No current events',
             statusHint: 'This panel shows technical availability and loaded datasets. It does not guarantee that every possible source or event worldwide has been captured.'
         }
     };
@@ -147,8 +149,8 @@
         Object.entries(mapping).forEach(([key, [id, label]]) => {
             const item = runtime.datasets[key];
             if (!item) return;
-            const kind = item.count > 0 ? (item.source === 'network' ? 'ok' : 'warning') : 'error';
-            const badge = item.count > 0 ? `${item.count} ${t().items}` : t().noData;
+            const kind = item.count > 0 ? (item.source === 'network' ? 'ok' : 'warning') : (key === 'events' ? 'warning' : 'error');
+            const badge = item.count > 0 ? `${item.count} ${t().items}` : (key === 'events' ? t().noEvents : t().noData);
             const parts = [`${t().loadedFrom}: ${sourceLabel(item.source)}`];
             if (item.updatedAt) parts.push(formatDate(item.updatedAt));
             if (item.error) parts.push(item.error);
@@ -194,7 +196,7 @@
                 : (result.data && typeof result.data === 'object' ? Object.keys(result.data).length : 0);
             renderRow(id, label, {
                 kind: count > 0 ? 'ok' : 'warning',
-                badge: `${count} ${t().items}`,
+                badge: count > 0 ? `${count} ${t().items}` : (id === 'system-status-events' ? t().noEvents : t().noData),
                 details: result.updatedAt ? `${t().updated}: ${formatDate(result.updatedAt)}` : ''
             });
             return { count, data: result.data, updatedAt: result.updatedAt };

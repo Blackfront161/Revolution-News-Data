@@ -13,11 +13,11 @@
     const texts = {
         en: {
             readLater: 'Read later', saved: 'Saved', read: 'Read', markRead: 'Mark read', unread: 'Mark unread',
-            readList: 'Read', viewCards: 'Cards', viewCompact: 'Compact', viewHeadlines: 'Headlines', progress: 'Reading progress'
+            readList: 'Read', viewCards: 'Standard', viewCompact: 'Compact', viewHeadlines: 'Headlines only', progress: 'Reading progress'
         },
         de: {
-            readLater: 'Später lesen', saved: 'Gespeichert', read: 'Gelesen', markRead: 'Als gelesen', unread: 'Als ungelesen',
-            readList: 'Gelesen', viewCards: 'Karten', viewCompact: 'Kompakt', viewHeadlines: 'Nur Titel', progress: 'Lesefortschritt'
+            readLater: 'Später lesen', saved: 'Gemerkt', read: 'Gelesen', markRead: 'Als gelesen', unread: 'Als ungelesen',
+            readList: 'Gelesen', viewCards: 'Standard', viewCompact: 'Kompakt', viewHeadlines: 'Nur Titel', progress: 'Lesefortschritt'
         },
         es: { readLater:'Leer después', saved:'Guardado', read:'Leído', markRead:'Marcar leído', unread:'Marcar no leído', readList:'Leídos', viewCards:'Tarjetas', viewCompact:'Compacto', viewHeadlines:'Titulares', progress:'Progreso' },
         fr: { readLater:'Lire plus tard', saved:'Enregistré', read:'Lu', markRead:'Marquer comme lu', unread:'Marquer non lu', readList:'Lus', viewCards:'Cartes', viewCompact:'Compact', viewHeadlines:'Titres', progress:'Progression' },
@@ -116,11 +116,12 @@
     }
 
     function bookmarkButtonHtml(saved) {
-        return saved ? `[ ★ ${t().saved} ]` : `[ ☆ ${t().readLater} ]`;
+        const label = saved ? t().saved : t().readLater;
+        return `<span class="bookmark-button-content"><svg class="bookmark-star" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="url(#rbGrad)" stroke="#ff0000" stroke-width="0.6" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>${escapeHtml(label)}</span></span>`;
     }
 
     function readButtonHtml(read) {
-        return read ? `[ ✓ ${t().read} ]` : `[ ○ ${t().markRead} ]`;
+        return read ? `✓ ${t().read}` : `○ ${t().markRead}`;
     }
 
     function listLabel(kind, count = 0) {
@@ -239,6 +240,7 @@
             if (button) {
                 button.innerHTML = readButtonHtml(read);
                 button.classList.toggle('is-read', read);
+                button.setAttribute('aria-pressed', String(read));
             }
         });
     }
@@ -252,11 +254,18 @@
             card.dataset.articleKey = key;
             card.classList.toggle('read', isRead(article));
             const bookmarkButton = document.getElementById(`bmark-${index}`);
-            if (bookmarkButton) bookmarkButton.innerHTML = bookmarkButtonHtml(isBookmarked(article));
+            if (bookmarkButton) {
+                const saved = isBookmarked(article);
+                bookmarkButton.innerHTML = bookmarkButtonHtml(saved);
+                bookmarkButton.classList.toggle('is-bookmarked', saved);
+                bookmarkButton.setAttribute('aria-pressed', String(saved));
+            }
             const readButton = document.getElementById(`readstate-${index}`);
             if (readButton) {
-                readButton.innerHTML = readButtonHtml(isRead(article));
-                readButton.classList.toggle('is-read', isRead(article));
+                const read = isRead(article);
+                readButton.innerHTML = readButtonHtml(read);
+                readButton.classList.toggle('is-read', read);
+                readButton.setAttribute('aria-pressed', String(read));
             }
         }
     }
@@ -291,11 +300,21 @@
         if (optionHeadlines) optionHeadlines.textContent = text.viewHeadlines;
         document.querySelectorAll('[id^="bmark-"]').forEach(button => {
             const card = button.closest('.card');
-            if (card) button.innerHTML = bookmarkButtonHtml(isBookmarked(card.dataset.articleKey));
+            if (card) {
+                const saved = isBookmarked(card.dataset.articleKey);
+                button.innerHTML = bookmarkButtonHtml(saved);
+                button.classList.toggle('is-bookmarked', saved);
+                button.setAttribute('aria-pressed', String(saved));
+            }
         });
         document.querySelectorAll('[id^="readstate-"]').forEach(button => {
             const card = button.closest('.card');
-            if (card) button.innerHTML = readButtonHtml(isRead(card.dataset.articleKey));
+            if (card) {
+                const read = isRead(card.dataset.articleKey);
+                button.innerHTML = readButtonHtml(read);
+                button.classList.toggle('is-read', read);
+                button.setAttribute('aria-pressed', String(read));
+            }
         });
     }
 

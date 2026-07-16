@@ -1,4 +1,4 @@
-// World Revolution News – Hauptlogik, Phase 1I (transparente Übersetzungen)
+// World Revolution News – Hauptlogik, Phase 1K
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -97,7 +97,7 @@ function extractTranslationError(data, status) {
     }
 
     if (status === 401 || status === 403) {
-        return "Der Übersetzungsserver lehnt den Zugriff ab. Secret oder Worker-Einstellungen prüfen.";
+        return "Der Übersetzungsserver lehnt die Anfrage ab. Bitte später erneut versuchen.";
     }
     if (status === 429) {
         return "Das kostenlose Übersetzungslimit wurde vorübergehend erreicht. Bitte später erneut versuchen.";
@@ -107,35 +107,6 @@ function extractTranslationError(data, status) {
     }
 
     return `Unbekannter Übersetzungsfehler (HTTP ${status || "ohne Status"}).`;
-}
-
-const LEGACY_APP_SECRET = "revolution161";
-
-const TRANSLATION_LANGUAGE_NAMES = {
-    en: "English",
-    de: "German",
-    es: "Spanish",
-    fr: "French",
-    it: "Italian",
-    pt: "Portuguese",
-    ru: "Russian",
-    el: "Greek",
-    tr: "Turkish"
-};
-
-function buildLegacyTranslationPrompt({ title = "", text = "", mode = "title_and_text" }) {
-    const languageName = TRANSLATION_LANGUAGE_NAMES[currentLang] || "English";
-    const genderInstruction = currentLang === "de"
-        ? " Verwende konsequent geschlechtergerechte deutsche Sprache mit Gendersternchen, zum Beispiel Aktivist*innen, Arbeiter*innen und Autor*innen. Vermeide das generische Maskulinum. Verändere Eigennamen, Organisationsnamen und direkte Zitate nicht."
-        : "";
-
-    const rules = `Translate fluently into ${languageName}.${genderInstruction} Return only the translation. Do not add an introduction, explanation, heading, commentary, quotation marks or closing sentence. Preserve paragraph breaks and meaning.`;
-
-    if (mode === "continuation") {
-        return `${rules}\n\nText:\n${text}`;
-    }
-
-    return `${rules} Return exactly two sections separated by three hyphens: translated title---translated text.\n\nTitle:\n${title}\n\nText:\n${text}`;
 }
 
 async function performTranslationFetch({ headers, body, timeoutMs = 45000 }) {
@@ -191,24 +162,12 @@ async function performTranslationFetch({ headers, body, timeoutMs = 45000 }) {
     }
 }
 
-function shouldTryLegacyTranslation(result) {
-    if (!result?.error) return false;
-
-    // Status 0 entsteht häufig, wenn ein älterer Worker den neuen
-    // X-Client-Id-Header beim CORS-Preflight noch nicht erlaubt.
-    if (result.status === 0) return true;
-
-    // Diese Statuscodes deuten auf ein nicht passendes Anfrageformat
-    // beziehungsweise den noch veröffentlichten älteren Worker hin.
-    return [400, 403, 405, 415].includes(result.status);
-}
-
 async function fetchTranslationRequest({ title = "", text = "", mode = "title_and_text" }) {
     const safeTitle = String(title || "").slice(0, 500);
     const safeText = String(text || "").slice(0, 6000);
 
     // Neues, eingeschränktes Protokoll.
-    const structuredResult = await performTranslationFetch({
+    const result = await performTranslationFetch({
         headers: {
             "Content-Type": "application/json",
             "X-Client-Id": getClientId()
@@ -222,46 +181,8 @@ async function fetchTranslationRequest({ title = "", text = "", mode = "title_an
         }
     });
 
-    if (!structuredResult.error) {
-        return structuredResult;
-    }
-
-    // Übergangsreserve: Damit die Übersetzung auch funktioniert, wenn auf
-    // Cloudflare noch der ältere Worker veröffentlicht ist.
-    if (shouldTryLegacyTranslation(structuredResult)) {
-        const legacyPrompt = buildLegacyTranslationPrompt({
-            title: safeTitle,
-            text: safeText,
-            mode
-        });
-
-        const legacyResult = await performTranslationFetch({
-            headers: {
-                "Content-Type": "application/json",
-                "X-App-Secret": LEGACY_APP_SECRET
-            },
-            body: {
-                contents: [{ parts: [{ text: legacyPrompt }] }]
-            }
-        });
-
-        if (!legacyResult.error) {
-            return legacyResult;
-        }
-
-        console.error("Neue und alte Übersetzungsschnittstelle fehlgeschlagen:", {
-            structured: structuredResult,
-            legacy: legacyResult
-        });
-
-        return {
-            ...legacyResult,
-            message: legacyResult.message || structuredResult.message
-        };
-    }
-
-    console.error("Übersetzungsserver-Fehler:", structuredResult);
-    return structuredResult;
+    if (result.error) console.error("Übersetzungsserver-Fehler:", result);
+    return result;
 }
 
 function showTranslationError(buttonElement, cardElement, result) {
@@ -298,7 +219,7 @@ const uiTexte = {
         searchRegion: "🌍 Region", searchTopic: "🏷️ Topic", latestNews: "Latest Updates:", translatingRest: "Translating remaining text...",
         topBookmarks: "Bookmarks", btnDonateTop: "Donate", donateTitle: "Support the Project", 
         donateBody: "This project runs independently. Donations are voluntary.", donateWarning: "⚠️ WARNING: By proceeding, you are leaving the anonymous app environment and will be redirected to PayPal.",
-        btnPaypal: "Continue to PayPal", btnDonateCancel: "Close", dateLabel: "DATE:", langLabel: "Translate to:",
+        btnPaypal: "Continue to PayPal", btnDonateCancel: "Close", dateLabel: "DATE:", langLabel: "Language:",
         searchPlace: "Search articles...", bookmarkCat: "Saved Bookmarks", btnBookmark: "Bookmark" + rbStar, btnUnbookmark: "Saved" + rbStar,
         themeLabel: "Design:", themeDark: "Dark", themeLight: "Light", clearBtn: "Clear Cache 🗑️",
         catGlobal: "Global", catEurope: "Europe", catAfrica: "Africa", catNorthAmerica: "North Am.", catLatinAmerica: "Latin Am.", catAsia: "Asia", catAustralia: "Australia",
@@ -314,14 +235,14 @@ const uiTexte = {
         searchRegion: "🌍 Region", searchTopic: "🏷️ Thema", latestNews: "Aktuelle Updates:", translatingRest: "Übersetze Rest...",
         topBookmarks: "Lesezeichen", btnDonateTop: "Spenden", donateTitle: "Projekt unterstützen", 
         donateBody: "Dieses Projekt läuft unabhängig. Spenden von Unterstützer*innen sind freiwillig.", donateWarning: "⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet.",
-        btnPaypal: "Weiter zu PayPal", btnDonateCancel: "Schließen", dateLabel: "DATUM:", langLabel: "Übersetzen in:",
+        btnPaypal: "Weiter zu PayPal", btnDonateCancel: "Schließen", dateLabel: "DATUM:", langLabel: "Sprache:",
         searchPlace: "Artikel suchen...", bookmarkCat: "Lesezeichen", btnBookmark: "Merken" + rbStar, btnUnbookmark: "Gemerkt" + rbStar,
         themeLabel: "Design:", themeDark: "Dunkel", themeLight: "Hell", clearBtn: "Cache löschen 🗑️",
         catGlobal: "Global", catEurope: "Europa", catAfrica: "Afrika", catNorthAmerica: "Nordam.", catLatinAmerica: "Lateinam.", catAsia: "Asien", catAustralia: "Australien",
         catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catNoBorders: "No Borders", catAnticapitalism: "Antikapitalismus", catTheory: "Theorie & Strategie", catAnticolonialism: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Ökologie & Klima", catIndigenous: "Indigene Kämpfe", catHealth: "Radical Health", catLibraries: "Bibliotheken",
         fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
         infoBtn: "ℹ️ Info", infoTitle: "App Info & Sicherheit", archiveTitle: "🗄️ Archiv (> 3 Monate)", publisherLabel: "QUELLE:", authorLabel: "AUTOR*IN:", contactLabel: "Kontakt:",
-        radarSummary: "Events", radarCat: "Events",
+        radarSummary: "Termine", radarCat: "Termine",
         infoBody: `<p><strong>Aus Leidenschaft:</strong> Dieses Projekt ist ein unabhängiges Leidenschaftsprojekt von und für Aktivist*innen. Bitte melde Bugs oder fehlerhafte Quellen über den Kontakt-Bereich.</p><p><strong>Lokale App-Daten:</strong> Die App benötigt keine Benutzer*innenkonten und setzt selbst keine beabsichtigten Werbe- oder Analyse-Cookies. Lesezeichen und Einstellungen werden lokal im Browser gespeichert. Nachrichten, Events und bereits erzeugte Übersetzungen werden für die Offline-Nutzung in IndexedDB gespeichert.</p><p><strong>Externe Verbindungen:</strong> Beim Laden der Nachrichtendaten, externer Artikelbilder, Übersetzungen, Originalartikel oder von PayPal kann dein Browser Verbindungen zu anderen Anbietern herstellen. Diese Anbieter können dabei übliche technische Verbindungsdaten wie eine IP-Adresse erhalten.</p><p><strong>Gemeinsame Podcasts:</strong> Beim Erzeugen eines Podcasts mit natürlicher Stimme werden der übersetzte Titel und Artikeltext über den Cloudflare-Worker an Microsoft Azure Speech gesendet. Die erzeugte Audiodatei und grundlegende Metadaten werden bis zu 30 Tage öffentlich in der App angezeigt. Mit dem Podcast wird kein Benutzer*innenname gespeichert.</p><p><strong>Inhalte und KI-Übersetzungen:</strong> Die App bündelt fremde RSS-Inhalte. KI-generierte Übersetzungen und Zusammenfassungen können Fehler enthalten. Prüfe bei wichtigen Angaben bitte die Originalquelle.</p>`
     },
     es: { btnTranslate: "Traducir", catGlobal: "Global", catEurope: "Europa", searchRegion: "🌍 Región", searchTopic: "🏷️ Tema", radarSummary: "Events", radarCat: "Events" },
@@ -432,7 +353,8 @@ const ITEMS_PER_PAGE = 15;
 let isRendering = false;
 
 let currentSourceFilter = "ALL"; 
-let zineArticles = []; 
+const ZINE_KEY = 'wrn_zine_articles';
+let zineArticles = loadZineArticles();
 
 const translationCache = new Map();
 const speechLanguageTags = {
@@ -1028,6 +950,7 @@ function changeLanguage() {
     window.WRNReading?.updateUi();
     window.WRNTranslationTools?.refreshTexts();
     window.WRNDataControl?.refreshLanguage();
+    updateZineUi();
     if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); }
@@ -1050,7 +973,11 @@ function toggleBookmark(idNum) {
     if (!article) return;
     const saved = window.WRNReading?.toggleBookmark(article);
     const button = document.getElementById(`bmark-${idNum}`);
-    if (button && window.WRNReading) button.innerHTML = window.WRNReading.bookmarkButtonHtml(Boolean(saved));
+    if (button && window.WRNReading) {
+        button.innerHTML = window.WRNReading.bookmarkButtonHtml(Boolean(saved));
+        button.classList.toggle('is-bookmarked', Boolean(saved));
+        button.setAttribute('aria-pressed', String(Boolean(saved)));
+    }
     window.WRNReading?.updateUi();
     if(activeKontinent === "Bookmarks") showBookmarks();
 }
@@ -1113,49 +1040,159 @@ function showReadArticles() {
     applyFilters();
 }
 
-function addToZine(globalIndex) {
-    let article = currentFilteredItems[globalIndex];
-    if(!zineArticles.includes(article)) {
-        zineArticles.push(article);
-        document.getElementById('txt-zine-count').innerText = `📄 Zine (${zineArticles.length})`;
-        alert(currentLang === "de" ? "Artikel zum Zine hinzugefügt!" : "Article added to Zine!");
-    } else {
-        alert(currentLang === "de" ? "Dieser Artikel ist schon in deinem Zine." : "Article is already in your Zine.");
+function zineArticleKey(article) {
+    return String(article?.link || `${article?.quelleName || ''}::${article?.title || ''}::${article?.pubDate || ''}`).trim();
+}
+
+function loadZineArticles() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(ZINE_KEY) || '[]');
+        return Array.isArray(saved) ? saved.filter(item => item && typeof item === 'object') : [];
+    } catch {
+        return [];
     }
 }
 
+function saveZineArticles() {
+    try {
+        localStorage.setItem(ZINE_KEY, JSON.stringify(zineArticles));
+    } catch (error) {
+        console.warn('Zine konnte nicht lokal gespeichert werden:', error);
+    }
+    window.dispatchEvent(new CustomEvent('wrnzinechange', { detail: { count: zineArticles.length } }));
+}
+
+function isInZine(article) {
+    const key = zineArticleKey(article);
+    return Boolean(key && zineArticles.some(item => zineArticleKey(item) === key));
+}
+
+function zineButtonLabel(article) {
+    if (isInZine(article)) return currentLang === 'de' ? '✓ Aus Zine entfernen' : '✓ Remove from Zine';
+    return currentLang === 'de' ? '📄 Zum Zine' : '📄 Add to Zine';
+}
+
+function updateZineUi() {
+    setTxt('txt-zine-count', `📄 Zine (${zineArticles.length})`);
+    document.querySelectorAll('[id^="zine-"]').forEach(button => {
+        const index = Number(button.id.slice(5));
+        const article = currentFilteredItems[index];
+        if (!article) return;
+        const selected = isInZine(article);
+        button.textContent = zineButtonLabel(article);
+        button.classList.toggle('is-in-zine', selected);
+        button.setAttribute('aria-pressed', String(selected));
+    });
+    if (document.getElementById('zine-modal')?.style.display === 'block') renderZineList();
+}
+
+function toggleZine(globalIndex) {
+    const article = currentFilteredItems[globalIndex];
+    if (!article) return;
+    const key = zineArticleKey(article);
+    const existingIndex = zineArticles.findIndex(item => zineArticleKey(item) === key);
+    if (existingIndex >= 0) zineArticles.splice(existingIndex, 1);
+    else zineArticles.push(article);
+    saveZineArticles();
+    updateZineUi();
+}
+
+function removeFromZine(key) {
+    zineArticles = zineArticles.filter(article => zineArticleKey(article) !== key);
+    saveZineArticles();
+    updateZineUi();
+}
+
+function renderZineList() {
+    const list = document.getElementById('zine-list');
+    if (!list) return;
+    list.textContent = '';
+    if (!zineArticles.length) {
+        const empty = document.createElement('p');
+        empty.className = 'zine-empty';
+        empty.textContent = currentLang === 'de' ? 'Das Zine ist noch leer.' : 'The Zine is empty.';
+        list.append(empty);
+    } else {
+        zineArticles.forEach((article, index) => {
+            const row = document.createElement('div');
+            row.className = 'zine-list-item';
+            const copy = document.createElement('div');
+            const number = document.createElement('strong');
+            number.textContent = `${index + 1}. ${article.title || (currentLang === 'de' ? 'Ohne Titel' : 'Untitled')}`;
+            const source = document.createElement('small');
+            source.textContent = article.quelleName || '';
+            copy.append(number, source);
+            const remove = document.createElement('button');
+            remove.type = 'button';
+            remove.className = 'zine-remove-button';
+            remove.textContent = currentLang === 'de' ? 'Entfernen' : 'Remove';
+            remove.addEventListener('click', () => removeFromZine(zineArticleKey(article)));
+            row.append(copy, remove);
+            list.append(row);
+        });
+    }
+    const printButton = document.getElementById('btn-zine-print');
+    const clearButton = document.getElementById('btn-zine-clear');
+    if (printButton) printButton.disabled = zineArticles.length === 0;
+    if (clearButton) clearButton.disabled = zineArticles.length === 0;
+}
+
+function openZineManager() {
+    const overlay = document.getElementById('fb-overlay');
+    const modal = document.getElementById('zine-modal');
+    if (overlay) overlay.style.display = 'block';
+    if (modal) modal.style.display = 'block';
+    setTxt('zine-modal-title', currentLang === 'de' ? 'Zine zusammenstellen' : 'Build your Zine');
+    setTxt('zine-modal-hint', currentLang === 'de'
+        ? 'Hier kannst du einzelne Artikel entfernen und das Zine drucken oder als PDF speichern.'
+        : 'Remove individual articles, then print the Zine or save it as a PDF.');
+    setTxt('btn-zine-print', currentLang === 'de' ? 'Drucken / PDF' : 'Print / PDF');
+    setTxt('btn-zine-clear', currentLang === 'de' ? 'Zine leeren' : 'Clear Zine');
+    setTxt('btn-zine-close', currentLang === 'de' ? 'Schließen' : 'Close');
+    renderZineList();
+}
+
+function clearZine() {
+    if (!zineArticles.length) return;
+    const question = currentLang === 'de' ? 'Alle Artikel aus dem Zine entfernen?' : 'Remove every article from the Zine?';
+    if (!window.confirm(question)) return;
+    zineArticles = [];
+    saveZineArticles();
+    updateZineUi();
+}
+
 function printZine() {
-    if(zineArticles.length === 0) {
-        alert(currentLang === "de" ? "Dein Zine ist noch leer! Füge zuerst Artikel hinzu." : "Your Zine is empty! Add articles first.");
+    if (!zineArticles.length) return;
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        alert(currentLang === 'de' ? 'Bitte erlaube das Druckfenster für diese App.' : 'Please allow the print window for this app.');
         return;
     }
-    
-    let printWindow = window.open('', '_blank');
-    let html = `<html><head><title>Zine Export</title>
+    let html = `<!doctype html><html><head><meta charset="utf-8"><title></title>
     <style>
-        body { font-family: serif; color: black; background: white; margin: 20px; line-height: 1.4; }
-        .zine-article { column-count: 2; column-gap: 30px; margin-bottom: 40px; border-bottom: 2px solid black; padding-bottom: 20px; }
-        h1 { font-family: sans-serif; text-transform: uppercase; font-size: 1.5em; column-span: all; text-align: center; border-bottom: 1px solid black; padding-bottom: 10px;}
-        .meta { font-style: italic; font-size: 0.8em; margin-bottom: 15px; column-span: all; text-align: center; }
-        p { text-indent: 15px; margin-top: 0; }
-        @media print { body { margin: 0; } }
-    </style>
-    </head><body>`;
-
-    zineArticles.forEach(a => {
-        html += `<div class="zine-article">`;
-        html += `<h1>${escapeHtml(a.title || 'Kein Titel')}</h1>`;
-        html += `<div class="meta">Quelle: ${escapeHtml(a.quelleName || 'Unknown')} | Datum: ${escapeHtml(a.pubDate ? a.pubDate.substring(0,10) : '')}</div>`;
-        html += `<p>${escapeHtml(a.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>')}</p>`;
-        html += `</div>`;
+        @page { size: A4; margin: 0; }
+        html, body { margin: 0; padding: 0; background: #fff; color: #000; }
+        .print-area { box-sizing: border-box; padding: 12mm; font-family: Georgia, serif; line-height: 1.42; }
+        .zine-article { column-count: 2; column-gap: 9mm; margin-bottom: 12mm; border-bottom: 2px solid #000; padding-bottom: 8mm; break-after: page; }
+        .zine-article:last-child { break-after: auto; }
+        h1 { column-span: all; margin: 0 0 4mm; padding-bottom: 3mm; border-bottom: 1px solid #000; font: 700 18pt Arial, sans-serif; text-align: center; }
+        .meta { column-span: all; margin-bottom: 5mm; font: italic 9pt Arial, sans-serif; text-align: center; }
+        p { margin: 0 0 3mm; text-indent: 5mm; orphans: 3; widows: 3; }
+    </style></head><body><main class="print-area">`;
+    zineArticles.forEach(article => {
+        const text = escapeHtml(article.content || '').replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>');
+        const date = article.pubDate ? String(article.pubDate).substring(0, 10) : '';
+        html += `<article class="zine-article"><h1>${escapeHtml(article.title || 'Ohne Titel')}</h1>`;
+        html += `<div class="meta">${currentLang === 'de' ? 'Quelle' : 'Source'}: ${escapeHtml(article.quelleName || 'Unknown')} · ${escapeHtml(date)}</div>`;
+        html += `<p>${text}</p></article>`;
     });
-
-    html += `</body></html>`;
+    html += '</main></body></html>';
+    printWindow.document.open();
     printWindow.document.write(html);
     printWindow.document.close();
+    printWindow.document.title = '';
     printWindow.focus();
-    
-    setTimeout(() => { printWindow.print(); }, 500);
+    window.setTimeout(() => printWindow.print(), 350);
 }
 
 function openDonate() { const ov = document.getElementById('fb-overlay'); if(ov) ov.style.display = 'block'; const md = document.getElementById('donate-modal'); if(md) md.style.display = 'block'; }
@@ -1175,6 +1212,7 @@ function closeAllModals() {
     const m5 = document.getElementById('podcast-options-modal'); if(m5) m5.style.display = 'none';
     const m6 = document.getElementById('podcast-library-modal'); if(m6) m6.style.display = 'none';
     const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
+    const m8 = document.getElementById('zine-modal'); if(m8) m8.style.display = 'none';
     window.WRNSourceProfiles?.close();
     window.WRNTranslationTools?.closeModals();
     window.WRNDataControl?.close();
@@ -1504,11 +1542,11 @@ function renderNextBatch() {
                     <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
                     <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
                     <button class="btn-translate btn-podcast" id="podcast-${globalIndex}" onclick="openPodcastOptions(${globalIndex})"><span>[ 🎧 ${escapeHtml(t.btnPodcast)} ]</span></button>
-                    <button class="btn-translate btn-read-later" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})">${bookmarkTxt}</button>
-                    <button class="btn-translate btn-read-state ${isRead ? 'is-read' : ''}" id="readstate-${globalIndex}" onclick="toggleReadState(${globalIndex})">${readStateTxt}</button>
-                    <button class="btn-translate" style="border-color: #00FFCC; color: #00FFCC;" onclick="addToZine(${globalIndex})">[ 📄 ZINE ]</button>
+                    <button class="btn-translate btn-read-later ${isSaved ? 'is-bookmarked' : ''}" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})" aria-pressed="${isSaved}">${bookmarkTxt}</button>
+                    <button class="btn-translate btn-read-state ${isRead ? 'is-read' : ''}" id="readstate-${globalIndex}" onclick="toggleReadState(${globalIndex})" aria-pressed="${isRead}">${readStateTxt}</button>
+                    <button class="btn-translate btn-zine-article ${isInZine(item) ? 'is-in-zine' : ''}" id="zine-${globalIndex}" onclick="toggleZine(${globalIndex})" aria-pressed="${isInZine(item)}">${escapeHtml(zineButtonLabel(item))}</button>
                     <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${encodedArticleTitle}', '${encodedArticleLink}')">[ SHARE 🔗 ]</button>
-                    ${safeArticleUrl ? `<a href="${escapeHtml(safeArticleUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent); text-decoration:none;" onclick="markAsRead(decodeText('${encodedArticleLink}'), ${globalIndex})">[ ${escapeHtml(t.btnReadMore)} ]</a>` : ''}
+                    ${safeArticleUrl ? `<a href="${escapeHtml(safeArticleUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent); text-decoration:none;">[ ${escapeHtml(t.btnReadMore)} ]</a>` : ''}
                 </div>
             </div>
         `;
@@ -1519,6 +1557,7 @@ function renderNextBatch() {
 
     if (archiveTitle) { if (archiveCount > 0) { archiveTitle.style.display = "block"; } else { archiveTitle.style.display = "none"; } }
     window.WRNReading?.decorateRenderedCards(currentFilteredItems, currentlyDisplayedCount, batch.length);
+    updateZineUi();
     
     currentlyDisplayedCount += batch.length;
     isRendering = false;
@@ -1574,7 +1613,6 @@ async function translateArticle(idNum) {
     if (card.dataset.translated === 'translating') return;
     if (card.dataset.translated === 'full' && card.dataset.translationLanguage === currentLang) return;
 
-    try { markAsRead(article.link, idNum); } catch (error) {}
     card.dataset.translated = 'translating';
 
     const isExpanded = card.dataset.expanded === 'true' || contentEl.style.display === 'block';
@@ -1670,12 +1708,9 @@ document.addEventListener('DOMContentLoaded', () => {
         window.WRNAccessibility?.init();
         const savedTheme = window.WRNAccessibility?.getTheme?.() || localStorage.getItem('wrn_theme_style') || 'theme-dark';
         const ut = document.getElementById('ui-theme'); if (ut) ut.value = savedTheme;
-        const motionSelect = document.getElementById('ui-motion');
-        if (motionSelect) motionSelect.value = window.WRNAccessibility?.getMotionPreference?.() || 'auto';
-        
         window.WRNStatusCenter?.init();
         window.WRNReading?.init();
-        changeTheme(savedTheme); changeLanguage(); initializePodcast(); updateSharedPodcastUiText(); initialisiereApp(); 
+        changeTheme(savedTheme); changeLanguage(); initializePodcast(); updateSharedPodcastUiText(); updateZineUi(); initialisiereApp(); 
 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('./service-worker.js')
@@ -1690,4 +1725,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const stat = document.getElementById('status-container');
         if(stat) stat.innerText = "Kritischer Start-Fehler: " + e.message;
     }
+});
+
+window.addEventListener('wrnzinechange', () => {
+    zineArticles = loadZineArticles();
+    updateZineUi();
 });

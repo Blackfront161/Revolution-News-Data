@@ -35,7 +35,7 @@
         </button>
         <button class="btn-micro" style="color:var(--color-cyan); border-color:var(--color-cyan);" onclick="openInfo()" id="btn-open-info">ℹ️ Info</button>
         <button class="btn-micro" style="color:#B026FF; border-color:#B026FF;" onclick="openFeedback()" id="btn-open-feedback">💬 Contact</button>
-        <button class="btn-micro btn-data-control" onclick="openDataControl()" id="btn-open-data-control" aria-label="Datenschutz und lokale Daten öffnen">🔐 Daten</button>
+        <button class="btn-micro btn-data-control" onclick="openDataControl()" id="btn-open-data-control" aria-label="Lokalen Speicher verwalten">💾 Speicher</button>
         <button class="btn-micro btn-system-status" onclick="openSystemStatus()" id="btn-open-system-status" aria-label="Systemstatus öffnen">● Status</button>
     </div>
 
@@ -44,7 +44,7 @@
             <h1 style="display: inline-block; vertical-align: middle;">World Revolution News</h1>
             <div class="app-version-inline" id="app-version-inline">v—</div>
         </div>
-        <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <div class="header-controls">
             <div class="dropdown-container">
                 <span class="dropdown-label" id="txt-theme-label">Design</span>
                 <select class="theme-select" id="ui-theme" onchange="changeTheme(this.value)">
@@ -57,16 +57,7 @@
             </div>
 
             <div class="dropdown-container">
-                <span class="dropdown-label" id="txt-motion-label">Bewegung</span>
-                <select class="theme-select" id="ui-motion" onchange="changeMotionPreference(this.value)">
-                    <option value="auto" id="opt-motion-auto" selected>Systemeinstellung</option>
-                    <option value="reduced" id="opt-motion-reduced">Reduziert</option>
-                    <option value="full" id="opt-motion-full">Normal</option>
-                </select>
-            </div>
-
-            <div class="dropdown-container">
-                <span class="dropdown-label" id="txt-lang-label">Translate to:</span>
+                <span class="dropdown-label" id="txt-lang-label">Sprache</span>
                 <select class="lang-select" id="ui-language" onchange="changeLanguage()">
                     <option value="en" selected>English</option>
                     <option value="de">Deutsch</option>
@@ -121,29 +112,27 @@
         </div>
     </details>
 
-    <div class="nav-bar" style="border-bottom: none; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; display: flex;">
-        <button class="btn-nav" id="cat-radar" style="flex: 1 1 18%; border-color: var(--color-green); color: var(--color-green); background: rgba(0, 255, 0, 0.05); display: flex; align-items: center; justify-content: center; font-weight: bold;" onclick="ladeKontinentNews('Radar')">
+    <div class="nav-bar quick-nav-bar">
+        <button class="btn-nav quick-nav-events" id="cat-radar" onclick="ladeKontinentNews('Radar')">
             <span id="txt-radar-summary">Events</span>
         </button>
 
-        <button class="btn-nav btn-podcast-nav" style="flex: 1 1 18%;" id="btn-podcast-library" onclick="openAudioHub('original')">
+        <button class="btn-nav btn-podcast-nav" id="btn-podcast-library" onclick="openAudioHub('original')">
             <span id="txt-podcast-library">Podcasts & Radio</span>
         </button>
         
-        <button class="btn-nav" style="flex: 1 1 16%; border-color: #B026FF; color: #B026FF; display: flex; align-items: center; justify-content: center; gap: 6px;" id="btn-bookmarks" onclick="ladeBookmarks()">
+        <button class="btn-nav quick-nav-bookmarks" id="btn-bookmarks" onclick="ladeBookmarks()">
             <span id="txt-top-bookmarks">Read later</span>
             <svg viewBox="0 0 24 24" width="1.2em" height="1.2em"><path fill="url(#rbGrad)" stroke="#FF0000" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </button>
 
-        <button class="btn-nav" style="flex: 1 1 16%; border-color: var(--border-read); color: var(--text-muted);" id="btn-read-articles" onclick="ladeReadArticles()">
+        <button class="btn-nav quick-nav-read" id="btn-read-articles" onclick="ladeReadArticles()">
             <span id="txt-top-read">Read</span>
         </button>
 
-        <button class="btn-nav" style="flex: 1 1 16%; border-color: #00FFCC; color: #00FFCC; display: flex; align-items: center; justify-content: center; font-weight: bold; gap: 6px;" onclick="printZine()">
+        <button class="btn-nav quick-nav-zine" id="btn-open-zine" onclick="openZineManager()">
             <span id="txt-zine-count">📄 Zine (0)</span>
         </button>
-        
-        <button class="btn-nav" style="flex: 1 1 18%; border-color: var(--border-read); color: var(--text-muted);" id="btn-clear-cache" onclick="clearAllData()">Cache 🗑️</button>
     </div>
 
     <div class="filter-bar" style="background: rgba(255, 153, 0, 0.05); padding: 10px; border-radius: 4px; margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; width: 100%; box-sizing: border-box;">
@@ -162,8 +151,8 @@
             <option value="180">A: Maximal</option>
         </select>
 
-        <select id="ui-news-view" class="filter-control" onchange="changeNewsView(this.value)" aria-label="News view">
-            <option value="cards" id="opt-view-cards">Cards</option>
+        <select id="ui-news-view" class="filter-control" onchange="changeNewsView(this.value)" aria-label="Artikelansicht">
+            <option value="cards" id="opt-view-cards">Standard</option>
             <option value="compact" id="opt-view-compact">Compact</option>
             <option value="headlines" id="opt-view-headlines">Headlines</option>
         </select>
@@ -528,30 +517,23 @@
     </div>
 
     <div class="feedback-modal data-control-modal" id="data-control-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="data-control-title">
-        <h3 id="data-control-title">Datenschutz &amp; lokale Daten</h3>
+        <h3 id="data-control-title">Lokaler Speicher</h3>
         <p class="data-control-intro" id="data-control-intro"></p>
 
         <section class="data-control-section" aria-labelledby="data-overview-title">
-            <h4 id="data-overview-title">Lokale Übersicht</h4>
+            <h4 id="data-overview-title">Auf diesem Gerät gespeichert</h4>
             <div class="data-control-grid">
                 <div class="data-control-stat"><span id="data-label-bookmarks">Später lesen</span><strong id="data-count-bookmarks">0</strong></div>
                 <div class="data-control-stat"><span id="data-label-read">Gelesene Artikel</span><strong id="data-count-read">0</strong></div>
-                <div class="data-control-stat"><span id="data-label-audio">Audio-Einträge</span><strong id="data-count-audio">0</strong></div>
-                <div class="data-control-stat"><span id="data-label-translations">Gespeicherte Übersetzungen</span><strong id="data-count-translations">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-zine">Zine</span><strong id="data-count-zine">0</strong></div>
                 <div class="data-control-stat"><span id="data-label-offline">Offline-Datensätze</span><strong id="data-count-offline">0</strong></div>
-                <div class="data-control-stat"><span id="data-label-local">Lokale Einstellungen</span><strong id="data-count-local">0</strong></div>
                 <div class="data-control-stat data-control-stat-wide"><span id="data-label-storage">Browser-Speicher</span><strong id="data-storage-total">—</strong></div>
-                <div class="data-control-stat data-control-stat-wide"><span id="data-label-persistent">Dauerhafter Speicher</span><strong id="data-storage-persistence">—</strong></div>
             </div>
         </section>
 
         <section class="data-control-section" aria-labelledby="data-backup-title">
-            <h4 id="data-backup-title">Datensicherung</h4>
+            <h4 id="data-backup-title">Leselisten sichern</h4>
             <p id="data-backup-hint" class="data-control-hint"></p>
-            <div class="data-control-options">
-                <label><input type="checkbox" id="data-export-offline"> <span id="data-export-offline-label">Offline-Nachrichten und Events einschließen</span></label>
-                <label><input type="checkbox" id="data-export-translations"> <span id="data-export-translations-label">Gespeicherte Übersetzungen einschließen</span></label>
-            </div>
             <div class="data-control-actions">
                 <button type="button" class="btn-submit" id="btn-data-export">Sicherung exportieren</button>
                 <button type="button" class="btn-podcast-control" id="btn-data-import">Sicherung importieren</button>
@@ -560,27 +542,28 @@
         </section>
 
         <section class="data-control-section" aria-labelledby="data-delete-title">
-            <h4 id="data-delete-title">Ausgewählte App-Daten löschen</h4>
+            <h4 id="data-delete-title">Speicher freigeben</h4>
             <div class="data-control-delete-grid">
-                <button type="button" id="btn-data-clear-reading" data-clear-category="reading">Lesedaten löschen</button>
-                <button type="button" id="btn-data-clear-audio" data-clear-category="audio">Audiodaten löschen</button>
-                <button type="button" id="btn-data-clear-translations" data-clear-category="translations">Übersetzungen löschen</button>
-                <button type="button" id="btn-data-clear-offline" data-clear-category="offline">Offline-Daten löschen</button>
-                <button type="button" id="btn-data-clear-interface" data-clear-category="interface">Oberfläche zurücksetzen</button>
-                <button type="button" class="danger" id="btn-data-clear-all" data-clear-category="all">Alle App-Daten löschen</button>
+                <button type="button" id="btn-data-clear-reading" data-clear-category="reading">Leselisten löschen</button>
+                <button type="button" id="btn-data-clear-offline" data-clear-category="offline">Offline-Speicher löschen</button>
+                <button type="button" class="danger" id="btn-data-clear-all" data-clear-category="all">App zurücksetzen</button>
             </div>
-        </section>
-
-        <section class="data-control-section" aria-labelledby="data-external-title">
-            <h4 id="data-external-title">Externe Verbindungen</h4>
-            <p id="data-external-hint" class="data-control-hint"></p>
-            <ul class="data-external-list" id="data-external-list"></ul>
         </section>
 
         <div class="data-control-status" id="data-control-status" aria-live="polite"></div>
         <div class="feedback-actions data-control-footer">
-            <button type="button" class="btn-submit" id="btn-data-refresh">Neu zählen</button>
             <button type="button" class="btn-cancel" id="btn-data-close" onclick="closeAllModals()">Schließen</button>
+        </div>
+    </div>
+
+    <div class="feedback-modal zine-modal" id="zine-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="zine-modal-title">
+        <h3 id="zine-modal-title">Zine zusammenstellen</h3>
+        <p class="zine-hint" id="zine-modal-hint">Hier kannst du einzelne Artikel entfernen, die Reihenfolge prüfen und das Zine drucken oder als PDF speichern.</p>
+        <div class="zine-list" id="zine-list" aria-live="polite"></div>
+        <div class="zine-actions">
+            <button type="button" class="btn-submit" id="btn-zine-print" onclick="printZine()">Drucken / PDF</button>
+            <button type="button" class="btn-podcast-control" id="btn-zine-clear" onclick="clearZine()">Zine leeren</button>
+            <button type="button" class="btn-cancel" id="btn-zine-close" onclick="closeAllModals()">Schließen</button>
         </div>
     </div>
 

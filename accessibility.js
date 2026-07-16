@@ -83,8 +83,7 @@
     }
 
     function getMotionPreference() {
-        const saved = localStorage.getItem(MOTION_KEY) || 'auto';
-        return MOTION_MODES.has(saved) ? saved : 'auto';
+        return 'auto';
     }
 
     function systemPrefersReducedMotion() {
@@ -98,7 +97,8 @@
         const effective = mode === 'auto' ? (systemPrefersReducedMotion() ? 'reduced' : 'full') : mode;
         body.dataset.motion = effective;
         body.dataset.motionPreference = mode;
-        localStorage.setItem(MOTION_KEY, mode);
+        if (mode === 'auto') localStorage.removeItem(MOTION_KEY);
+        else localStorage.setItem(MOTION_KEY, mode);
         const select = document.getElementById('ui-motion');
         if (select && select.value !== mode) select.value = mode;
         return mode;
@@ -206,7 +206,9 @@
         if (initialized) return;
         initialized = true;
         applyTheme(getTheme());
-        applyMotionPreference(getMotionPreference());
+        // Die Oberfläche übernimmt automatisch die Systemeinstellung. Eine
+        // zusätzliche, erklärungsbedürftige Bewegungs-Auswahl ist nicht nötig.
+        applyMotionPreference('auto');
         updateLanguage();
         observeModals();
         document.addEventListener('keydown', handleKeyboard);
