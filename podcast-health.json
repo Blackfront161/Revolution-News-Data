@@ -4,104 +4,104 @@
     "ok": false,
     "episodes": 0,
     "feedOrError": "https://www.aradio-berlin.org/feed/",
-    "checkedAt": "2026-07-15T21:34:49.408785+00:00"
+    "checkedAt": "2026-07-16T03:51:05.284815+00:00"
   },
   "bad-news": {
     "name": "B(A)D News – A-Radio Network",
-    "ok": true,
-    "episodes": 1,
-    "feedOrError": "https://www.a-radio-network.org/feed/",
-    "checkedAt": "2026-07-15T21:34:52.251848+00:00"
+    "ok": false,
+    "episodes": 0,
+    "feedOrError": "https://www.a-radio-network.org/feed/: ConnectTimeout: HTTPSConnectionPool(host='www.a-radio-network.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.a-radio-network.org', port=443) at 0x7fada7c43fe0>, 'Connection to www.a-radio-network.org timed out. (connect timeout=30)')); https://www.a-radio-network.org/category/bad-news/feed/: ConnectTimeout: HTTPSConnectionPool(host='www.a-radio-network.org', port=443): Max retries exceeded with url: /category/bad-news/feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.a-radio-network.org', port=443) at 0x7fada7997170>, 'Connection to www.a-radio-network.org timed out. (connect timeout=30)'))",
+    "checkedAt": "2026-07-16T03:52:26.307738+00:00"
   },
   "dissens": {
     "name": "Dissens Podcast",
     "ok": true,
     "episodes": 30,
     "feedOrError": "https://dissens.podigee.io/feed/mp3",
-    "checkedAt": "2026-07-15T21:34:56.358303+00:00"
+    "checkedAt": "2026-07-16T03:52:30.096406+00:00"
   },
   "final-straw": {
     "name": "The Final Straw Radio",
     "ok": true,
     "episodes": 30,
     "feedOrError": "https://thefinalstrawradio.libsyn.com/rss",
-    "checkedAt": "2026-07-15T21:35:03.104323+00:00"
+    "checkedAt": "2026-07-16T03:52:36.841937+00:00"
   },
   "radio-corax": {
     "name": "Radio CORAX – Nachhören",
     "ok": false,
     "episodes": 0,
-    "feedOrError": "https://radiocorax.de/feed/: HTTPError: 403 Client Error: Forbidden for url: https://radiocorax.de/feed/",
-    "checkedAt": "2026-07-15T21:35:04.122924+00:00"
+    "feedOrError": "https://radiocorax.de/feed/: ConnectTimeout: HTTPSConnectionPool(host='radiocorax.de', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='radiocorax.de', port=443) at 0x7fada7996990>, 'Connection to radiocorax.de timed out. (connect timeout=30)'))",
+    "checkedAt": "2026-07-16T03:53:27.228010+00:00"
   },
   "radio-dreyeckland": {
     "name": "Radio Dreyeckland – Mediathek",
     "ok": false,
     "episodes": 0,
     "feedOrError": "https://rdl.de/rss.xml",
-    "checkedAt": "2026-07-15T21:35:09.114677+00:00"
+    "checkedAt": "2026-07-16T03:53:32.241984+00:00"
   },
   "fsk-hamburg": {
     "name": "FSK Hamburg – Nachhören",
     "ok": false,
     "episodes": 0,
     "feedOrError": "https://www.fsk-hh.org/feed.xml: HTTPError: 404 Client Error: Not Found for url: https://www.fsk-hh.org/feed.xml; https://www.fsk-hh.org/archive/feed.xml: HTTPError: 404 Client Error: Not Found for url: https://www.fsk-hh.org/archive/feed.xml; https://www.fsk-hh.org/rss.xml: HTTPError: 404 Client Error: Not Found for url: https://www.fsk-hh.org/rss.xml",
-    "checkedAt": "2026-07-15T21:35:10.825470+00:00"
+    "checkedAt": "2026-07-16T03:53:33.976982+00:00"
   },
   "radio-blau": {
     "name": "Radio Blau Leipzig",
     "ok": true,
     "episodes": 15,
     "feedOrError": "https://www.freie-radios.net/portal/podcast.php?radio=37&rss=",
-    "checkedAt": "2026-07-15T21:35:13.740125+00:00"
+    "checkedAt": "2026-07-16T03:53:36.088197+00:00"
   },
   "lora-muenchen": {
     "name": "LORA München",
     "ok": true,
     "episodes": 10,
     "feedOrError": "https://lora924.de/feed/",
-    "checkedAt": "2026-07-15T21:35:16.629078+00:00"
+    "checkedAt": "2026-07-16T03:53:39.014936+00:00"
   },
   "common-voices": {
     "name": "Common Voices",
     "ok": false,
     "episodes": 0,
-    "feedOrError": "https://commonvoices.radiocorax.de/feed/: HTTPError: 503 Server Error: Service Temporarily Unavailable for url: https://commonvoices.radiocorax.de/feed; https://commonvoices.radiocorax.de/feed/podcast/: HTTPError: 503 Server Error: Service Unavailable for url: https://commonvoices.radiocorax.de/feed/podcast/; https://commonvoices.radiocorax.de/feed: HTTPError: 503 Server Error: Service Unavailable for url: https://commonvoices.radiocorax.de/feed; https://commonvoices.radiocorax.de/comments/feed: HTTPError: 503 Server Error: Service Unavailable for url: https://commonvoices.radiocorax.de/comments/feed",
-    "checkedAt": "2026-07-15T21:35:20.189459+00:00"
+    "feedOrError": "https://commonvoices.radiocorax.de/feed/: ConnectTimeout: HTTPSConnectionPool(host='commonvoices.radiocorax.de', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='commonvoices.radiocorax.de', port=443) at 0x7fada761bb90>, 'Connection to commonvoices.radiocorax.de timed out. (connect timeout=30)')); https://commonvoices.radiocorax.de/feed/podcast/: ConnectTimeout: HTTPSConnectionPool(host='commonvoices.radiocorax.de', port=443): Max retries exceeded with url: /feed/podcast/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='commonvoices.radiocorax.de', port=443) at 0x7fada77be060>, 'Connection to commonvoices.radiocorax.de timed out. (connect timeout=30)'))",
+    "checkedAt": "2026-07-16T03:54:59.652979+00:00"
   },
   "a-radio-wien": {
     "name": "A-Radio Wien",
     "ok": false,
     "episodes": 0,
     "feedOrError": "https://a-radio.at/feed/: ConnectionError: HTTPSConnectionPool(host='a-radio.at', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='a-radio.at', port=443): Failed to resolve 'a-radio.at' ([Errno -2] Name or service not known)\")); https://a-radio.at/feed/podcast/: ConnectionError: HTTPSConnectionPool(host='a-radio.at', port=443): Max retries exceeded with url: /feed/podcast/ (Caused by NameResolutionError(\"HTTPSConnection(host='a-radio.at', port=443): Failed to resolve 'a-radio.at' ([Errno -2] Name or service not known)\"))",
-    "checkedAt": "2026-07-15T21:35:20.671309+00:00"
+    "checkedAt": "2026-07-16T03:55:00.102857+00:00"
   },
   "frequenz-a": {
     "name": "Frequenz A",
     "ok": true,
     "episodes": 10,
     "feedOrError": "https://frequenza.noblogs.org/feed/",
-    "checkedAt": "2026-07-15T21:35:24.635996+00:00"
+    "checkedAt": "2026-07-16T03:55:04.153083+00:00"
   },
   "crimethinc-ex-worker": {
     "name": "CrimethInc. Ex-Worker",
     "ok": false,
     "episodes": 0,
     "feedOrError": "https://crimethinc.com/podcasts/the-ex-worker/feed: HTTPError: 404 Client Error: Not Found for url: https://crimethinc.com/podcasts/the-ex-worker/feed; https://crimethinc.com/podcasts/the-ex-worker.rss: HTTPError: 500 Server Error: Internal Server Error for url: https://crimethinc.com/podcasts/the-ex-worker.rss; https://crimethinc.com/podcasts/the-ex-worker/feed.xml: HTTPError: 404 Client Error: Not Found for url: https://crimethinc.com/podcasts/the-ex-worker/feed; https://crimethinc.com/feed: entries without playable audio",
-    "checkedAt": "2026-07-15T21:35:34.409621+00:00"
+    "checkedAt": "2026-07-16T03:55:13.481265+00:00"
   },
   "its-going-down": {
     "name": "It’s Going Down Podcast",
     "ok": true,
     "episodes": 27,
     "feedOrError": "https://itsgoingdown.org/category/podcast/feed/",
-    "checkedAt": "2026-07-15T21:35:35.307674+00:00"
+    "checkedAt": "2026-07-16T03:55:14.522046+00:00"
   },
   "freie-radios": {
     "name": "freie-radios.net – aktuelle Beiträge",
     "ok": true,
     "episodes": 15,
     "feedOrError": "https://www.freie-radios.net/portal/podcast.php?rss=",
-    "checkedAt": "2026-07-15T21:35:36.434843+00:00"
+    "checkedAt": "2026-07-16T03:55:16.318661+00:00"
   }
 }
