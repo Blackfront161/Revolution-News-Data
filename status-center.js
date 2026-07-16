@@ -25,6 +25,7 @@
             items: 'Einträge',
             sources: 'Quellen',
             errors: 'Fehler',
+            warnings: 'Warnungen',
             news: 'Nachrichten',
             events: 'Events',
             podcasts: 'Original-Podcasts',
@@ -59,6 +60,7 @@
             items: 'items',
             sources: 'sources',
             errors: 'errors',
+            warnings: 'warnings',
             news: 'News',
             events: 'Events',
             podcasts: 'Original podcasts',
@@ -163,11 +165,21 @@
             ? data
             : (data && typeof data === 'object' ? Object.values(data) : []);
         const normalized = entries.filter(item => item && typeof item === 'object');
-        const errors = normalized.filter(item => {
+        let ok = 0;
+        let warnings = 0;
+        let errors = 0;
+        normalized.forEach(item => {
             const value = String(item.status || item.state || item.result || '').toLowerCase();
-            return value.includes('error') || value.includes('fail') || item.ok === false || Boolean(item.error);
-        }).length;
-        return { total: normalized.length, errors };
+            const httpStatus = Number(item.httpStatus || 0);
+            if (item.ok === true || value === 'ok' || value === 'success') {
+                ok += 1;
+            } else if (value.includes('warning') || (httpStatus >= 200 && httpStatus < 400)) {
+                warnings += 1;
+            } else {
+                errors += 1;
+            }
+        });
+        return { total: normalized.length, ok, warnings, errors };
     }
 
     async function fetchJson(url) {
@@ -217,11 +229,12 @@
             const summary = healthSummary(result.data);
             const details = [];
             if (summary.total) details.push(`${summary.total} ${t().sources}`);
+            if (summary.warnings) details.push(`${summary.warnings} ${t().warnings || 'warnings'}`);
             if (summary.errors) details.push(`${summary.errors} ${t().errors}`);
             if (result.updatedAt) details.push(formatDate(result.updatedAt));
             renderRow(id, label, {
-                kind: summary.errors > 0 ? 'warning' : (summary.total > 0 ? 'ok' : 'warning'),
-                badge: summary.total > 0 ? `${summary.total - summary.errors}/${summary.total}` : t().notConfigured,
+                kind: (summary.errors > 0 || summary.warnings > 0) ? 'warning' : (summary.total > 0 ? 'ok' : 'warning'),
+                badge: summary.total > 0 ? `${summary.ok}/${summary.total}` : t().notConfigured,
                 details: details.join(' · ')
             });
         } catch (error) {

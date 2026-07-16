@@ -1,13 +1,14 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026.07.16-phase1k';
-const DATA_CACHE = 'wrn-data-v2026.07.16-phase1k';
+const APP_CACHE = 'wrn-app-v1.4.0';
+const DATA_CACHE = 'wrn-data-v1.4.0';
 
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
+  './release-1.4.css',
   './config.js',
   './offline-db.js',
   './data-control.js',
@@ -21,6 +22,7 @@ const APP_SHELL = [
   './events.js',
   './reading-state.js',
   './audio-hub.js',
+  './release-1.4.js',
   './app.js',
   './manifest.json',
   './icon.svg'

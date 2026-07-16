@@ -205,9 +205,28 @@ def main() -> int:
         unique[item["audioUrl"]] = item
     items = list(unique.values())
     items.sort(key=lambda x: x.get("published") or "", reverse=True)
-    OUTPUT_FILE.write_text(json.dumps(items[:MAX_TOTAL], ensure_ascii=False, indent=2), encoding="utf-8")
+
+    previous_items = []
+    if OUTPUT_FILE.exists():
+        try:
+            loaded = json.loads(OUTPUT_FILE.read_text(encoding="utf-8"))
+            if isinstance(loaded, list):
+                previous_items = [item for item in loaded if isinstance(item, dict) and item.get("audioUrl")]
+        except Exception as exc:
+            print(f"[PODCAST] previous output could not be read: {exc}")
+
+    if items:
+        output_items = items[:MAX_TOTAL]
+        OUTPUT_FILE.write_text(json.dumps(output_items, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"[PODCAST] saved {len(output_items)} episodes")
+    elif previous_items:
+        # A temporary outage of all feeds must not erase a previously working library.
+        print(f"[PODCAST] no fresh episodes; preserving {len(previous_items)} existing episodes")
+    else:
+        OUTPUT_FILE.write_text("[]\n", encoding="utf-8")
+        print("[PODCAST] no playable episodes and no previous library")
+
     HEALTH_FILE.write_text(json.dumps(health, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"[PODCAST] saved {min(len(items), MAX_TOTAL)} episodes")
     return 0
 
 if __name__ == "__main__":
