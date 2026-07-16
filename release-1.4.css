@@ -238,3 +238,58 @@
         min-height: 46px;
     }
 }
+/* 1.4.2 – orange Akzente vollständig durch Rot ersetzt */
+:root,
+body.theme-dark,
+body.theme-oled,
+body.theme-contrast {
+    --wrn-red: #ff334f;
+    --wrn-red-soft: rgba(255, 51, 79, 0.09);
+    --color-accent: #ff334f;
+    --border-dashed: #ff334f;
+    --shadow-accent: rgba(255, 51, 79, 0.17);
+}
+
+/* Auf hellen Hintergründen ein dunkleres, besser lesbares Rot. */
+body.theme-light,
+body.theme-soft {
+    --wrn-red: #b5122f;
+    --wrn-red-soft: rgba(181, 18, 47, 0.08);
+    --color-accent: #b5122f;
+    --border-dashed: #b5122f;
+    --shadow-accent: rgba(181, 18, 47, 0.15);
+}
+
+/* Fest eingetragene Orange-Werte ebenfalls in Rot umwandeln. */
+.btn-expand:hover {
+    background: var(--wrn-red-soft) !important;
+}
+
+.global-media-progress input[type="range"],
+.media-progress-row input[type="range"] {
+    accent-color: var(--wrn-red) !important;
+}
+
+.btn-media-pause {
+    color: var(--wrn-red) !important;
+    border-color: var(--wrn-red) !important;
+}
+
+.btn-media-pause:hover {
+    background: var(--wrn-red-soft) !important;
+}
+
+/* Orangeartige Hintergründe aus früheren Inline-Regeln neutralisieren. */
+.filter-bar {
+    background: rgba(0, 240, 255, 0.035) !important;
+}
+
+/* Aktive Inhalts- und Navigationsakzente folgen nun Rot statt Orange. */
+details.filter-dropdown summary,
+.card,
+.meta,
+.archive-header,
+.btn-expand,
+.info-text-box strong {
+    border-color: var(--color-accent);
+}
