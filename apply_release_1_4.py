@@ -507,7 +507,7 @@ def main() -> int:
     validate_json()
 
     if args.cleanup_bootstrap:
-        for relative in ["tools/apply_release_1_4.py", ".github/workflows/apply-release-1.4.yml"]:
+        for relative in [     "apply_release_1_4.py",     "tools/apply_release_1_4.py",     "apply-release-1.4.yml",     ".github/workflows/apply-release-1.4.yml", ]:
             target = ROOT / relative
             if target.exists():
                 target.unlink()
