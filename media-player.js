@@ -17,6 +17,26 @@ const MEDIA_POSITION_MAX_ITEMS = 30;
 const mediaPositionListeners = new Set();
 let lastMediaPositionSave = 0;
 
+function dispatchMediaEvent(name, detail = {}) {
+    try { window.dispatchEvent(new CustomEvent(name, { detail })); } catch {}
+}
+
+function getStoredGlobalPlaybackRate() {
+    const fromTools = window.WRNAudioTools?.getPlaybackRate?.();
+    const value = Number(fromTools || localStorage.getItem('wrn_audio_playback_rate') || 1);
+    return [0.75, 1, 1.25, 1.5, 1.75, 2].includes(value) ? value : 1;
+}
+
+function applyGlobalPlaybackRate() {
+    const audio = document.getElementById('global-media-player');
+    if (!audio) return 1;
+    const rate = globalMediaState.kind === 'radio' ? 1 : getStoredGlobalPlaybackRate();
+    audio.playbackRate = rate;
+    audio.defaultPlaybackRate = rate;
+    updateGlobalMediaProgress();
+    return rate;
+}
+
 let globalMediaState = {
     id:'', kind:'', title:'', artist:'', candidates:[], candidateIndex:0,
     statusId:'', progressId:'', timeId:'', artwork:'', initialized:false,
@@ -159,19 +179,26 @@ function getGlobalMediaPlayer() {
         globalMediaState.initialized = true;
         audio.addEventListener('loadstart', () => setGlobalMediaStatus(getMediaUiText().loading));
         audio.addEventListener('waiting', () => setGlobalMediaStatus(getMediaUiText().loading));
-        audio.addEventListener('loadedmetadata', () => { applySavedMediaPosition(); updateGlobalMediaProgress(); });
+        audio.addEventListener('loadedmetadata', () => { applySavedMediaPosition(); applyGlobalPlaybackRate(); updateGlobalMediaProgress(); });
         audio.addEventListener('playing', () => {
             setGlobalMediaStatus(getMediaUiText().playing, 'playing');
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
             updateGlobalMediaButtons();
+            dispatchMediaEvent('wrnmediastate', { state:'playing', media:{ ...globalMediaState } });
         });
         audio.addEventListener('pause', () => {
             persistGlobalMediaPosition(true);
             if (!audio.ended && globalMediaState.id) setGlobalMediaStatus(getMediaUiText().paused);
             if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
             updateGlobalMediaButtons();
+            dispatchMediaEvent('wrnmediastate', { state:'paused', media:{ ...globalMediaState } });
         });
-        audio.addEventListener('ended', () => { clearSavedMediaPosition(globalMediaState.id); stopGlobalMedia({ clearSaved:false }); });
+        audio.addEventListener('ended', () => {
+            const endedMedia = { ...globalMediaState };
+            clearSavedMediaPosition(endedMedia.id);
+            stopGlobalMedia({ clearSaved:false, reason:'ended' });
+            dispatchMediaEvent('wrnmediaended', endedMedia);
+        });
         audio.addEventListener('error', () => tryNextGlobalMediaCandidate());
         ['durationchange', 'progress', 'emptied'].forEach(eventName => {
             audio.addEventListener(eventName, updateGlobalMediaProgress);
@@ -375,9 +402,11 @@ async function playGlobalMedia(config) {
     };
     audio.src = candidates[0];
     audio.preload = 'none';
+    applyGlobalPlaybackRate();
     updateGlobalMediaBar();
     setMediaSessionMetadata(globalMediaState);
     setGlobalMediaStatus(getMediaUiText().loading);
+    dispatchMediaEvent('wrnmediachange', { ...globalMediaState });
     try { await audio.play(); }
     catch (error) {
         // Ein echter Medienfehler löst zusätzlich das error-Ereignis aus. Eine
@@ -422,6 +451,7 @@ function stopGlobalMedia(options = {}) {
         audio.removeAttribute('src');
         audio.load();
     }
+    const oldMedia = { ...globalMediaState };
     const oldMediaId = globalMediaState.id;
     const oldStatusId = globalMediaState.statusId;
     const oldProgressId = globalMediaState.progressId;
@@ -439,8 +469,42 @@ function stopGlobalMedia(options = {}) {
         try { navigator.mediaSession.metadata = null; } catch {}
     }
     updateGlobalMediaBar();
+    dispatchMediaEvent('wrnmediachange', { ...globalMediaState });
+    if (oldMediaId) dispatchMediaEvent('wrnmediastopped', { ...oldMedia, reason:String(options.reason || 'manual') });
 }
 
+function setGlobalMediaPlaybackRate(value) {
+    const numeric = Number(value);
+    const allowed = [0.75, 1, 1.25, 1.5, 1.75, 2];
+    const rate = allowed.includes(numeric) ? numeric : 1;
+    const audio = getGlobalMediaPlayer();
+    if (!audio || globalMediaState.kind === 'radio') return 1;
+    audio.playbackRate = rate;
+    audio.defaultPlaybackRate = rate;
+    updateGlobalMediaProgress();
+    dispatchMediaEvent('wrnmediaratechange', { rate });
+    return rate;
+}
+
+function getGlobalMediaState() {
+    const audio = document.getElementById('global-media-player');
+    return {
+        ...globalMediaState,
+        paused: !audio || audio.paused,
+        currentTime: Number(audio?.currentTime || 0),
+        duration: Number.isFinite(audio?.duration) ? Number(audio.duration) : 0,
+        playbackRate: Number(audio?.playbackRate || 1)
+    };
+}
+
+window.WRNMediaPlayer = Object.freeze({
+    getState: getGlobalMediaState,
+    setPlaybackRate: setGlobalMediaPlaybackRate,
+    play: playGlobalMedia,
+    pause: pauseGlobalMedia,
+    resume: resumeGlobalMedia,
+    stop: stopGlobalMedia
+});
 
 function safeDomId(value) { return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 140); }
 function appendSimpleMediaControls(card, config) {

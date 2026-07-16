@@ -264,6 +264,31 @@
             <button type="button" class="btn-media-skip" id="global-media-forward" onclick="skipGlobalMedia(30)" aria-label="30 Sekunden vor">30s ↷</button>
             <button type="button" class="btn-media-stop" id="global-media-stop" onclick="stopGlobalMedia()">■ Stop</button>
         </div>
+        <div class="global-media-tools" aria-label="Audio-Einstellungen">
+            <label class="global-media-tool" id="global-media-speed-field">
+                <span id="global-media-speed-label">Tempo</span>
+                <select id="global-media-speed" onchange="setGlobalPlaybackRate(this.value)">
+                    <option value="0.75">0,75×</option>
+                    <option value="1" selected>1,0×</option>
+                    <option value="1.25">1,25×</option>
+                    <option value="1.5">1,5×</option>
+                    <option value="1.75">1,75×</option>
+                    <option value="2">2,0×</option>
+                </select>
+            </label>
+            <label class="global-media-tool">
+                <span id="global-media-sleep-label">Schlaf-Timer</span>
+                <select id="global-media-sleep" onchange="setGlobalSleepTimer(this.value)">
+                    <option value="off" selected>Aus</option>
+                    <option value="15">15 Min.</option>
+                    <option value="30">30 Min.</option>
+                    <option value="45">45 Min.</option>
+                    <option value="60">60 Min.</option>
+                    <option value="end">Am Ende der Folge</option>
+                </select>
+            </label>
+            <span id="global-media-sleep-status" class="global-media-sleep-status" aria-live="polite"></span>
+        </div>
     </section>
     <audio id="global-media-player" preload="none" playsinline></audio>
     <div id="status-container" class="status-msg">Connecting to server...</div>
@@ -353,12 +378,23 @@
                 <button type="button" class="btn-media-clear" id="continue-listening-remove" onclick="clearContinueListening()">Entfernen</button>
             </div>
         </section>
+        <section class="audio-queue-panel" id="audio-queue-panel" aria-live="polite">
+            <div class="audio-queue-heading">
+                <strong id="audio-queue-title">Warteschlange (0)</strong>
+                <button type="button" class="btn-media-clear" id="audio-queue-clear" onclick="clearAudioQueue()">Leeren</button>
+            </div>
+            <div id="audio-queue-list" class="audio-queue-list"></div>
+        </section>
 
         <section id="panel-original-podcasts" class="audio-hub-panel">
             <div class="podcast-library-toolbar media-filter-toolbar">
                 <select id="original-podcast-source-filter" onchange="renderOriginalPodcastLibrary()"><option value="">Alle Quellen</option></select>
                 <select id="original-podcast-language-filter" onchange="renderOriginalPodcastLibrary()"><option value="">Alle Sprachen</option></select>
                 <input id="original-podcast-search" type="search" placeholder="Podcasts durchsuchen…" oninput="renderOriginalPodcastLibrary()">
+                <label class="audio-favorites-filter">
+                    <input id="original-podcast-favorites-only" type="checkbox" onchange="renderOriginalPodcastLibrary()">
+                    <span id="original-podcast-favorites-label">Nur Favoriten</span>
+                </label>
                 <button type="button" class="btn-podcast-control" id="btn-original-podcast-refresh" onclick="loadOriginalPodcasts(true)">Aktualisieren</button>
             </div>
             <div id="original-podcast-list" class="podcast-library-list" aria-live="polite"></div>
@@ -372,7 +408,13 @@
         </section>
 
         <section id="panel-live-radio" class="audio-hub-panel" hidden>
-            <p id="live-radio-note" class="live-radio-note">Live-Sender starten niemals automatisch. Falls ein Stream blockiert ist, öffne die Senderseite.</p>
+            <div class="live-radio-toolbar">
+                <p id="live-radio-note" class="live-radio-note">Live-Sender starten niemals automatisch. Falls ein Stream blockiert ist, öffne die Senderseite.</p>
+                <label class="audio-favorites-filter">
+                    <input id="live-radio-favorites-only" type="checkbox" onchange="renderLiveRadio()">
+                    <span id="live-radio-favorites-label">Nur Favoriten</span>
+                </label>
+            </div>
             <div id="live-radio-list" class="live-radio-list" aria-live="polite"></div>
         </section>
 
@@ -448,6 +490,7 @@
     <script src="utils.js"></script>
     <script src="accessibility.js"></script>
     <script src="media-player.js"></script>
+    <script src="audio-tools.js"></script>
     <script src="events.js"></script>
     <script src="reading-state.js"></script>
     <script src="app.js"></script>

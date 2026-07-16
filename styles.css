@@ -1287,3 +1287,187 @@ body[data-motion="reduced"] *::after {
         min-width: 0;
     }
 }
+
+/* === Phase 1G: Audio-Warteschlange, Favoriten, Tempo und Schlaf-Timer === */
+.global-media-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid color-mix(in srgb, var(--color-cyan) 32%, transparent);
+}
+
+.global-media-tool {
+    display: grid;
+    gap: 3px;
+    min-width: 112px;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.global-media-tool select {
+    min-height: 34px;
+    border: 1px solid var(--border-read);
+    background: var(--bg-card);
+    color: var(--text-main);
+    padding: 4px 8px;
+    font: inherit;
+    font-size: 0.78rem;
+}
+
+.global-media-sleep-status {
+    align-self: center;
+    min-height: 1.2em;
+    color: var(--color-orange, #ff9900);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.audio-queue-panel {
+    margin: 10px 0 14px;
+    border: 1px solid color-mix(in srgb, var(--color-cyan) 45%, var(--border-read));
+    background: color-mix(in srgb, var(--bg-card) 92%, var(--color-cyan) 8%);
+    padding: 10px;
+}
+
+.audio-queue-heading,
+.audio-queue-item,
+.audio-queue-actions,
+.audio-tool-card-actions,
+.live-radio-toolbar,
+.audio-favorites-filter {
+    display: flex;
+    align-items: center;
+}
+
+.audio-queue-heading {
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    color: var(--color-cyan);
+}
+
+.audio-queue-list {
+    display: grid;
+    gap: 6px;
+    max-height: 230px;
+    overflow: auto;
+}
+
+.audio-queue-item {
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 0;
+    border-top: 1px dashed var(--border-read);
+}
+
+.audio-queue-copy {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+}
+
+.audio-queue-copy strong,
+.audio-queue-copy small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.audio-queue-copy small,
+.audio-queue-empty {
+    color: var(--text-muted);
+    font-size: 0.72rem;
+}
+
+.audio-queue-actions,
+.audio-tool-card-actions {
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.audio-tool-card-actions {
+    margin-top: 7px;
+}
+
+.btn-audio-favorite,
+.btn-audio-queue {
+    min-height: 32px;
+    padding: 4px 9px;
+    border: 1px solid var(--border-read);
+    background: transparent;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.72rem;
+    cursor: pointer;
+}
+
+.btn-audio-favorite:hover,
+.btn-audio-favorite.active {
+    border-color: #b026ff;
+    color: #d98cff;
+    background: rgba(176, 38, 255, 0.1);
+}
+
+.btn-audio-queue:hover,
+.btn-audio-queue.active {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+    background: rgba(0, 240, 255, 0.08);
+}
+
+.btn-audio-queue:disabled {
+    opacity: 0.75;
+    cursor: default;
+}
+
+.audio-favorites-filter {
+    gap: 6px;
+    min-height: 34px;
+    padding: 4px 8px;
+    border: 1px solid var(--border-read);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    white-space: nowrap;
+}
+
+.audio-favorites-filter input {
+    width: 17px;
+    height: 17px;
+    accent-color: #b026ff;
+}
+
+.live-radio-toolbar {
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.live-radio-toolbar .live-radio-note {
+    flex: 1 1 260px;
+    margin: 0;
+}
+
+@media (max-width: 620px) {
+    .global-media-tools,
+    .audio-queue-item {
+        align-items: stretch;
+    }
+
+    .global-media-tool {
+        flex: 1 1 130px;
+    }
+
+    .audio-queue-item {
+        flex-direction: column;
+    }
+
+    .audio-queue-actions > button,
+    .audio-tool-card-actions > button {
+        flex: 1 1 135px;
+    }
+}

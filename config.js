@@ -3,8 +3,8 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '2026.07.16-phase1f',
-    releasedAt: '2026-07-16T18:00:00Z',
+    version: '2026.07.16-phase1g',
+    releasedAt: '2026-07-16T21:00:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news.json',

@@ -2,6 +2,7 @@
 'use strict';
 
 let originalPodcastData = [];
+let generatedPodcastData = [];
 let radioStationData = [];
 let activeAudioHubTab = localStorage.getItem('wrn_audio_hub_tab') || 'original';
 
@@ -119,6 +120,8 @@ function updateSharedPodcastUiText() {
     setPh('original-podcast-search', t.searchPodcasts);
     if (podcastServiceStatus) renderPodcastQuotaStatus(podcastServiceStatus);
     renderContinueListening();
+    window.WRNAudioTools?.updateLabels?.();
+    window.WRNAudioTools?.renderQueue?.();
 }
 
 function setAzurePodcastControlsDisabled(disabled) {
@@ -327,6 +330,7 @@ async function loadPodcastLibrary(highlightId = '') {
         const data = await response.json();
         if (!response.ok || data.error || !Array.isArray(data.items)) throw new Error(data.message || `HTTP ${response.status}`);
         podcastLibraryCount = data.items.length;
+        generatedPodcastData = data.items;
         window.WRNStatusCenter?.noteDataset('generated', {
             data: data.items,
             source: 'network',
@@ -349,8 +353,13 @@ function renderPodcastLibrary(items, highlightId = '') {
     container.textContent = '';
     if (!items.length) { container.textContent = t.podcastLibraryEmpty; return; }
     const locale = currentLang === 'en' ? 'en-US' : currentLang;
-    items.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-    items.forEach(item => {
+    const sortedItems = [...items].sort((a,b) => {
+        const aId = `generated:${a.id || a.audioUrl}`;
+        const bId = `generated:${b.id || b.audioUrl}`;
+        const favoriteDelta = Number(window.WRNAudioTools?.isFavorite?.(bId)) - Number(window.WRNAudioTools?.isFavorite?.(aId));
+        return favoriteDelta || (new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    });
+    sortedItems.forEach(item => {
         const card=document.createElement('article'); card.className='podcast-library-card';
         if (item.id === highlightId) card.classList.add('podcast-library-card-new');
         const title=document.createElement('h4'); title.textContent=item.title || 'Podcast'; card.append(title);
@@ -360,11 +369,14 @@ function renderPodcastLibrary(items, highlightId = '') {
         meta.textContent=`${modeLabel} · ${(item.language || '').toUpperCase()} · ${item.voiceLabel || item.voice || ''}${created ? ` · ${t.podcastCreated}: ${created}` : ''}`; card.append(meta);
         if (item.source) { const source=document.createElement('div'); source.className='podcast-library-source'; source.textContent=`${t.podcastSource}: ${item.source}`; card.append(source); }
         const id=`generated:${item.id || item.audioUrl}`;
-        appendSimpleMediaControls(card, { id, kind:'generated', title:item.title || 'Podcast', artist:item.source || 'World Revolution News', candidates:[item.audioUrl], statusId:`media-status-${safeDomId(id)}`, showPause:true, showProgress:true });
+        const mediaConfig = { id, kind:'generated', title:item.title || 'Podcast', artist:item.source || 'World Revolution News', candidates:[item.audioUrl], statusId:`media-status-${safeDomId(id)}`, showPause:true, showProgress:true };
+        appendSimpleMediaControls(card, mediaConfig);
+        window.WRNAudioTools?.appendCardActions?.(card, mediaConfig, { queue:true });
         if (getSafeHttpUrl(item.articleUrl)) { const link=document.createElement('a'); link.href=item.articleUrl; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; link.className='podcast-original-link'; link.textContent=t.podcastOriginal; card.append(link); }
         container.append(card);
     });
     renderContinueListening();
+    window.WRNAudioTools?.renderQueue?.();
 }
 
 function pausePodcastLibraryAudio() {
@@ -391,6 +403,7 @@ function switchAudioHubTab(tab, highlightId = '') {
     if (activeAudioHubTab === 'generated') loadPodcastLibrary(highlightId);
     if (activeAudioHubTab === 'radio') loadLiveRadio(false);
     renderContinueListening();
+    window.WRNAudioTools?.renderQueue?.();
 }
 
 async function openAudioHub(tab = 'original', highlightId = '') {
@@ -399,6 +412,7 @@ async function openAudioHub(tab = 'original', highlightId = '') {
     showPodcastModal('podcast-library-modal');
     switchAudioHubTab(tab, highlightId);
     renderContinueListening();
+    window.WRNAudioTools?.renderQueue?.();
 }
 
 // Compatibility: newly generated Azure podcasts open the generated tab.
@@ -463,11 +477,16 @@ function renderOriginalPodcastLibrary() {
     const source=document.getElementById('original-podcast-source-filter')?.value || '';
     const language=document.getElementById('original-podcast-language-filter')?.value || '';
     const search=(document.getElementById('original-podcast-search')?.value || '').trim().toLowerCase();
+    const favoritesOnly=Boolean(document.getElementById('original-podcast-favorites-only')?.checked);
     const items=originalPodcastData
         .filter(item => !source || item.sourceName === source)
         .filter(item => !language || item.language === language)
         .filter(item => !search || `${item.title || ''} ${item.description || ''} ${item.sourceName || ''}`.toLowerCase().includes(search))
-        .sort((a,b) => new Date(b.published || 0) - new Date(a.published || 0));
+        .filter(item => !favoritesOnly || window.WRNAudioTools?.isFavorite?.(`original:${item.id || item.audioUrl}`))
+        .sort((a,b) => {
+            const favoriteDelta = Number(window.WRNAudioTools?.isFavorite?.(`original:${b.id || b.audioUrl}`)) - Number(window.WRNAudioTools?.isFavorite?.(`original:${a.id || a.audioUrl}`));
+            return favoriteDelta || (new Date(b.published || 0) - new Date(a.published || 0));
+        });
     container.textContent='';
     if (!items.length) { container.textContent=t.originalEmpty; return; }
     items.slice(0,180).forEach(item => {
@@ -478,11 +497,13 @@ function renderOriginalPodcastLibrary() {
         meta.textContent=`${item.sourceName || ''}${date ? ` · ${date}` : ''}${item.duration ? ` · ${item.duration}` : ''}${item.language ? ` · ${item.language.toUpperCase()}` : ''}`; card.append(meta);
         if (item.description) { const description=document.createElement('p'); description.className='original-podcast-description'; description.textContent=String(item.description).slice(0,700); card.append(description); }
         const id=`original:${item.id || item.audioUrl}`;
-        appendSimpleMediaControls(card, {
+        const mediaConfig = {
             id, kind:'original', title:item.title || 'Podcast', artist:item.sourceName || 'Original-Podcast',
             candidates:[item.audioUrl], artwork:item.artwork || '', statusId:`media-status-${safeDomId(id)}`,
             showPause:true, showProgress:true
-        });
+        };
+        appendSimpleMediaControls(card, mediaConfig);
+        window.WRNAudioTools?.appendCardActions?.(card, mediaConfig, { queue:true });
         const links=document.createElement('div'); links.className='original-podcast-links';
         if (getSafeHttpUrl(item.episodeUrl)) links.append(makeMediaLink(item.episodeUrl,t.listenOriginal));
         if (getSafeHttpUrl(item.feedUrl)) links.append(makeMediaLink(item.feedUrl,t.feedLink));
@@ -528,14 +549,24 @@ function renderLiveRadio() {
     const container=document.getElementById('live-radio-list');
     if (!container) return;
     container.className='live-radio-list'; container.textContent='';
-    radioStationData.filter(station => station.enabled !== false).forEach(station => {
+    const favoritesOnly=Boolean(document.getElementById('live-radio-favorites-only')?.checked);
+    const stations=radioStationData
+        .filter(station => station.enabled !== false)
+        .filter(station => !favoritesOnly || window.WRNAudioTools?.isFavorite?.(`radio:${station.id || station.name}`))
+        .sort((a,b) => {
+            const favoriteDelta = Number(window.WRNAudioTools?.isFavorite?.(`radio:${b.id || b.name}`)) - Number(window.WRNAudioTools?.isFavorite?.(`radio:${a.id || a.name}`));
+            return favoriteDelta || String(a.name || '').localeCompare(String(b.name || ''));
+        });
+    stations.forEach(station => {
         const card=document.createElement('article'); card.className='live-radio-card';
         const title=document.createElement('h4'); title.textContent=station.name || 'Radio'; card.append(title);
         const meta=document.createElement('div'); meta.className='live-radio-meta';
         meta.textContent=`${station.city || ''}${station.country ? ` · ${station.country}` : ''}${station.languages?.length ? ` · ${station.languages.join(', ').toUpperCase()}` : ''}`; card.append(meta);
         if (station.description) { const desc=document.createElement('p'); desc.className='live-radio-description'; desc.textContent=station.description; card.append(desc); }
         const id=`radio:${station.id || station.name}`;
-        appendSimpleMediaControls(card, { id, kind:'radio', title:station.name || 'Live-Radio', artist:`Live-Radio${station.city ? ` · ${station.city}` : ''}`, candidates:station.streamCandidates || [], artwork:station.artwork || '', statusId:`media-status-${safeDomId(id)}` });
+        const mediaConfig = { id, kind:'radio', title:station.name || 'Live-Radio', artist:`Live-Radio${station.city ? ` · ${station.city}` : ''}`, candidates:station.streamCandidates || [], artwork:station.artwork || '', statusId:`media-status-${safeDomId(id)}` };
+        appendSimpleMediaControls(card, mediaConfig);
+        window.WRNAudioTools?.appendCardActions?.(card, mediaConfig, { queue:false });
         const links=document.createElement('div'); links.className='live-radio-links';
         if (getSafeHttpUrl(station.website)) links.append(makeMediaLink(station.website,t.radioOpen));
         card.append(links); container.append(card);
@@ -546,5 +577,12 @@ function renderLiveRadio() {
 
 document.addEventListener('DOMContentLoaded', () => {
     window.WRNMediaProgress?.subscribe?.(renderContinueListening);
+    window.addEventListener('wrnaudiofavoriteschange', () => {
+        if (activeAudioHubTab === 'original' && originalPodcastData.length) renderOriginalPodcastLibrary();
+        if (activeAudioHubTab === 'generated' && generatedPodcastData.length) renderPodcastLibrary(generatedPodcastData);
+        if (activeAudioHubTab === 'radio' && radioStationData.length) renderLiveRadio();
+    });
     renderContinueListening();
+    window.WRNAudioTools?.renderQueue?.();
+    window.WRNAudioTools?.updateLabels?.();
 });
