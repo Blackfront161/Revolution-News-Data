@@ -108,6 +108,89 @@
         });
     }
 
+
+    async function getAllRecords(storeName) {
+        const db = await openDatabase();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(storeName, 'readonly');
+            const request = transaction.objectStore(storeName).getAll();
+            request.onsuccess = () => resolve(Array.isArray(request.result) ? request.result : []);
+            request.onerror = () => reject(request.error || new Error(`${storeName} konnte nicht gelesen werden.`));
+        });
+    }
+
+    async function getAllDatasetRecords() {
+        return getAllRecords(DATASET_STORE);
+    }
+
+    async function getAllTranslationRecords() {
+        return getAllRecords(TRANSLATION_STORE);
+    }
+
+    async function clearStore(storeName) {
+        const db = await openDatabase();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(storeName, 'readwrite');
+            const request = transaction.objectStore(storeName).clear();
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error || new Error(`${storeName} konnte nicht geleert werden.`));
+        });
+    }
+
+    async function clearDatasets() {
+        await clearStore(DATASET_STORE);
+    }
+
+    async function clearTranslations() {
+        await clearStore(TRANSLATION_STORE);
+    }
+
+    async function replaceStoreRecords(storeName, records) {
+        if (!Array.isArray(records)) throw new Error('Importdaten müssen eine Liste sein.');
+        const safeRecords = records
+            .filter(record => record && typeof record === 'object' && typeof record.key === 'string' && record.key.length <= 2000)
+            .slice(0, 50000);
+        const db = await openDatabase();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(storeName, 'readwrite');
+            const store = transaction.objectStore(storeName);
+            store.clear();
+            safeRecords.forEach(record => store.put(record));
+            transaction.oncomplete = () => resolve(safeRecords.length);
+            transaction.onerror = () => reject(transaction.error || new Error(`${storeName} konnte nicht importiert werden.`));
+            transaction.onabort = () => reject(transaction.error || new Error(`${storeName}-Import wurde abgebrochen.`));
+        });
+    }
+
+    async function replaceDatasetRecords(records) {
+        return replaceStoreRecords(DATASET_STORE, records);
+    }
+
+    async function replaceTranslationRecords(records) {
+        return replaceStoreRecords(TRANSLATION_STORE, records);
+    }
+
+    function approximateBytes(value) {
+        try {
+            return new Blob([JSON.stringify(value)]).size;
+        } catch {
+            return 0;
+        }
+    }
+
+    async function getStorageSummary() {
+        const [datasets, translations] = await Promise.all([
+            getAllDatasetRecords(),
+            getAllTranslationRecords(),
+        ]);
+        return {
+            datasetCount: datasets.length,
+            translationCount: translations.length,
+            datasetBytes: approximateBytes(datasets),
+            translationBytes: approximateBytes(translations),
+        };
+    }
+
     async function clearAll() {
         const db = await openDatabase();
         const storeNames = [DATASET_STORE, TRANSLATION_STORE];
@@ -179,6 +262,13 @@
         putTranslation,
         getTranslation,
         clearAll,
+        clearDatasets,
+        clearTranslations,
+        getAllDatasetRecords,
+        getAllTranslationRecords,
+        replaceDatasetRecords,
+        replaceTranslationRecords,
+        getStorageSummary,
         migrateLegacyLocalStorage,
         requestPersistentStorage
     };

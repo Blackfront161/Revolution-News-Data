@@ -1675,3 +1675,214 @@ body.view-headlines .editorial-badges { margin-bottom: 5px; }
     .translation-compare-grid { grid-template-columns: 1fr; }
     .translation-view-button { flex: 1 1 130px; }
 }
+
+/* === Phase 1J: Datenschutz- und Datenkontrollzentrum === */
+.btn-data-control {
+    color: #ffd166;
+    border-color: #ffd166;
+}
+
+.data-control-modal {
+    width: min(920px, calc(100vw - 28px));
+    max-height: min(88vh, 900px);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.data-control-modal > h3 {
+    color: #ffd166;
+    border-bottom: 1px dashed #ffd166;
+    padding-bottom: 10px;
+}
+
+.data-control-intro,
+.data-control-hint {
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.data-control-section {
+    border: 1px solid var(--border-read);
+    border-radius: 6px;
+    padding: 14px;
+    margin: 14px 0;
+    background: rgba(255, 255, 255, 0.018);
+}
+
+.data-control-section h4 {
+    margin: 0 0 12px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.data-control-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.data-control-stat {
+    min-height: 72px;
+    border: 1px solid var(--border-read);
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--bg-main);
+}
+
+.data-control-stat span {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+}
+
+.data-control-stat strong {
+    color: #ffd166;
+    font-size: 1.12rem;
+    overflow-wrap: anywhere;
+}
+
+.data-control-stat-wide {
+    grid-column: span 3;
+    min-height: auto;
+    flex-direction: row;
+    align-items: center;
+}
+
+.data-control-options {
+    display: grid;
+    gap: 8px;
+    margin: 12px 0;
+}
+
+.data-control-options label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    min-height: 32px;
+    color: var(--text-main);
+    line-height: 1.4;
+}
+
+.data-control-options input {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    accent-color: var(--color-green);
+}
+
+.data-control-actions,
+.data-control-delete-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.data-control-actions button,
+.data-control-delete-grid button {
+    min-height: 42px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.data-control-delete-grid button {
+    border: 1px solid var(--border-read);
+    background: transparent;
+    color: var(--text-main);
+    padding: 9px 10px;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.data-control-delete-grid button:hover,
+.data-control-delete-grid button:focus-visible {
+    border-color: #ffd166;
+    color: #ffd166;
+}
+
+.data-control-delete-grid button.danger {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.data-external-list {
+    display: grid;
+    gap: 8px;
+    padding: 0;
+    margin: 12px 0 0;
+    list-style: none;
+}
+
+.data-external-list li {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.35fr) minmax(0, 1fr);
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--border-read);
+}
+
+.data-external-list strong {
+    color: var(--color-cyan);
+}
+
+.data-external-list span {
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.data-control-status {
+    min-height: 24px;
+    padding: 8px 10px;
+    border-left: 3px solid var(--border-read);
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.02);
+    overflow-wrap: anywhere;
+}
+
+.data-control-status.success {
+    border-left-color: var(--color-green);
+    color: var(--color-green);
+}
+
+.data-control-status.error {
+    border-left-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.data-control-footer {
+    position: sticky;
+    bottom: -1px;
+    padding-top: 12px;
+    background: var(--bg-main);
+}
+
+@media (max-width: 680px) {
+    .data-control-modal {
+        width: calc(100vw - 16px);
+        max-height: 94vh;
+        padding: 14px;
+    }
+
+    .data-control-grid,
+    .data-control-actions,
+    .data-control-delete-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .data-control-stat-wide {
+        grid-column: auto;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .data-external-list li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}

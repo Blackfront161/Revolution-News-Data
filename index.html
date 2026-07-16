@@ -35,6 +35,7 @@
         </button>
         <button class="btn-micro" style="color:var(--color-cyan); border-color:var(--color-cyan);" onclick="openInfo()" id="btn-open-info">ℹ️ Info</button>
         <button class="btn-micro" style="color:#B026FF; border-color:#B026FF;" onclick="openFeedback()" id="btn-open-feedback">💬 Contact</button>
+        <button class="btn-micro btn-data-control" onclick="openDataControl()" id="btn-open-data-control" aria-label="Datenschutz und lokale Daten öffnen">🔐 Daten</button>
         <button class="btn-micro btn-system-status" onclick="openSystemStatus()" id="btn-open-system-status" aria-label="Systemstatus öffnen">● Status</button>
     </div>
 
@@ -526,6 +527,63 @@
         </div>
     </div>
 
+    <div class="feedback-modal data-control-modal" id="data-control-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="data-control-title">
+        <h3 id="data-control-title">Datenschutz &amp; lokale Daten</h3>
+        <p class="data-control-intro" id="data-control-intro"></p>
+
+        <section class="data-control-section" aria-labelledby="data-overview-title">
+            <h4 id="data-overview-title">Lokale Übersicht</h4>
+            <div class="data-control-grid">
+                <div class="data-control-stat"><span id="data-label-bookmarks">Später lesen</span><strong id="data-count-bookmarks">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-read">Gelesene Artikel</span><strong id="data-count-read">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-audio">Audio-Einträge</span><strong id="data-count-audio">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-translations">Gespeicherte Übersetzungen</span><strong id="data-count-translations">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-offline">Offline-Datensätze</span><strong id="data-count-offline">0</strong></div>
+                <div class="data-control-stat"><span id="data-label-local">Lokale Einstellungen</span><strong id="data-count-local">0</strong></div>
+                <div class="data-control-stat data-control-stat-wide"><span id="data-label-storage">Browser-Speicher</span><strong id="data-storage-total">—</strong></div>
+                <div class="data-control-stat data-control-stat-wide"><span id="data-label-persistent">Dauerhafter Speicher</span><strong id="data-storage-persistence">—</strong></div>
+            </div>
+        </section>
+
+        <section class="data-control-section" aria-labelledby="data-backup-title">
+            <h4 id="data-backup-title">Datensicherung</h4>
+            <p id="data-backup-hint" class="data-control-hint"></p>
+            <div class="data-control-options">
+                <label><input type="checkbox" id="data-export-offline"> <span id="data-export-offline-label">Offline-Nachrichten und Events einschließen</span></label>
+                <label><input type="checkbox" id="data-export-translations"> <span id="data-export-translations-label">Gespeicherte Übersetzungen einschließen</span></label>
+            </div>
+            <div class="data-control-actions">
+                <button type="button" class="btn-submit" id="btn-data-export">Sicherung exportieren</button>
+                <button type="button" class="btn-podcast-control" id="btn-data-import">Sicherung importieren</button>
+                <input type="file" id="data-import-file" accept="application/json,.json" hidden>
+            </div>
+        </section>
+
+        <section class="data-control-section" aria-labelledby="data-delete-title">
+            <h4 id="data-delete-title">Ausgewählte App-Daten löschen</h4>
+            <div class="data-control-delete-grid">
+                <button type="button" id="btn-data-clear-reading" data-clear-category="reading">Lesedaten löschen</button>
+                <button type="button" id="btn-data-clear-audio" data-clear-category="audio">Audiodaten löschen</button>
+                <button type="button" id="btn-data-clear-translations" data-clear-category="translations">Übersetzungen löschen</button>
+                <button type="button" id="btn-data-clear-offline" data-clear-category="offline">Offline-Daten löschen</button>
+                <button type="button" id="btn-data-clear-interface" data-clear-category="interface">Oberfläche zurücksetzen</button>
+                <button type="button" class="danger" id="btn-data-clear-all" data-clear-category="all">Alle App-Daten löschen</button>
+            </div>
+        </section>
+
+        <section class="data-control-section" aria-labelledby="data-external-title">
+            <h4 id="data-external-title">Externe Verbindungen</h4>
+            <p id="data-external-hint" class="data-control-hint"></p>
+            <ul class="data-external-list" id="data-external-list"></ul>
+        </section>
+
+        <div class="data-control-status" id="data-control-status" aria-live="polite"></div>
+        <div class="feedback-actions data-control-footer">
+            <button type="button" class="btn-submit" id="btn-data-refresh">Neu zählen</button>
+            <button type="button" class="btn-cancel" id="btn-data-close" onclick="closeAllModals()">Schließen</button>
+        </div>
+    </div>
+
     <div class="feedback-modal" id="sources-modal" style="display: none;">
         <h3 style="color: var(--color-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed var(--color-cyan); padding-bottom: 8px; font-size: 1.1rem;">Quellen / Portale</h3>
         <div id="sources-list-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;">
@@ -535,6 +593,7 @@
 
     <script src="config.js"></script>
     <script src="offline-db.js"></script>
+    <script src="data-control.js"></script>
     <script src="status-center.js"></script>
     <script src="utils.js"></script>
     <script src="source-profiles.js"></script>

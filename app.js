@@ -1027,6 +1027,7 @@ function changeLanguage() {
     updateGlobalMediaProgress();
     window.WRNReading?.updateUi();
     window.WRNTranslationTools?.refreshTexts();
+    window.WRNDataControl?.refreshLanguage();
     if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); }
@@ -1176,6 +1177,7 @@ function closeAllModals() {
     const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
     window.WRNSourceProfiles?.close();
     window.WRNTranslationTools?.closeModals();
+    window.WRNDataControl?.close();
     pausePodcastLibraryAudio();
 }
 function submitFeedback() {
