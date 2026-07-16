@@ -14,7 +14,10 @@
         #cat-radar.active { background-color: var(--color-green) !important; color: #000 !important; border-color: var(--color-green) !important; }
     </style>
 </head>
-<body class="theme-dark" id="app-body">
+<body class="theme-dark" id="app-body" data-motion="full" data-motion-preference="auto">
+
+    <a class="skip-link" id="skip-to-content" href="#feed-container">Skip to articles</a>
+    <div class="sr-only" id="accessibility-live" aria-live="polite" aria-atomic="true"></div>
 
     <svg style="width:0;height:0;position:absolute;pointer-events:none;" aria-hidden="true" focusable="false">
         <defs>
@@ -46,6 +49,18 @@
                 <select class="theme-select" id="ui-theme" onchange="changeTheme(this.value)">
                     <option value="theme-dark" id="opt-theme-dark" selected>Dunkel</option>
                     <option value="theme-light" id="opt-theme-light">Hell</option>
+                    <option value="theme-oled" id="opt-theme-oled">OLED-Schwarz</option>
+                    <option value="theme-contrast" id="opt-theme-contrast">Hoher Kontrast</option>
+                    <option value="theme-soft" id="opt-theme-soft">Augenschonend</option>
+                </select>
+            </div>
+
+            <div class="dropdown-container">
+                <span class="dropdown-label" id="txt-motion-label">Bewegung</span>
+                <select class="theme-select" id="ui-motion" onchange="changeMotionPreference(this.value)">
+                    <option value="auto" id="opt-motion-auto" selected>Systemeinstellung</option>
+                    <option value="reduced" id="opt-motion-reduced">Reduziert</option>
+                    <option value="full" id="opt-motion-full">Normal</option>
                 </select>
             </div>
 
@@ -252,7 +267,7 @@
     </section>
     <audio id="global-media-player" preload="none" playsinline></audio>
     <div id="status-container" class="status-msg">Connecting to server...</div>
-    <div id="feed-container"></div>
+    <div id="feed-container" role="main" tabindex="-1" aria-label="Nachrichten und Events"></div>
     <h2 class="archive-header" id="txt-archive-title" style="display: none;">🗄️ Archive (> 3 Months)</h2>
     <div id="archive-container"></div>
     
@@ -431,6 +446,7 @@
     <script src="offline-db.js"></script>
     <script src="status-center.js"></script>
     <script src="utils.js"></script>
+    <script src="accessibility.js"></script>
     <script src="media-player.js"></script>
     <script src="events.js"></script>
     <script src="reading-state.js"></script>

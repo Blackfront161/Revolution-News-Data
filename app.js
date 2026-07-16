@@ -947,11 +947,16 @@ function initializePodcast() {
 // Event-Filter, Kalenderexport, Kartenlinks und gespeicherte Event-Filter: siehe events.js.
 
 function changeTheme(themeName) {
-    const body = document.getElementById('app-body');
-    if(body) {
-        body.classList.remove('theme-dark', 'theme-light'); body.classList.add(themeName);
-        localStorage.setItem('wrn_theme_style', themeName);
+    if (window.WRNAccessibility?.applyTheme) {
+        return window.WRNAccessibility.applyTheme(themeName);
     }
+    const body = document.getElementById('app-body');
+    if (body) {
+        body.classList.remove('theme-dark', 'theme-light', 'theme-oled', 'theme-contrast', 'theme-soft');
+        body.classList.add(themeName || 'theme-dark');
+        localStorage.setItem('wrn_theme_style', themeName || 'theme-dark');
+    }
+    return themeName || 'theme-dark';
 }
 
 async function clearAllData() {
@@ -988,6 +993,7 @@ function changeLanguage() {
     
     const t = uiTexte[currentLang] || uiTexte['en'];
     document.documentElement.lang = currentLang;
+    window.WRNAccessibility?.updateLanguage(currentLang);
     
     setTxt('txt-lang-label', t.langLabel); setTxt('txt-theme-label', t.themeLabel); setTxt('opt-theme-dark', t.themeDark); setTxt('opt-theme-light', t.themeLight); setTxt('btn-clear-cache', t.clearBtn); setTxt('txt-region-summary', t.searchRegion); setTxt('txt-topic-summary', t.searchTopic); setTxt('txt-archive-title', t.archiveTitle); setTxt('txt-contact-label', t.contactLabel); setTxt('opt-sort-new', t.sortNew); setTxt('opt-sort-old', t.sortOld); setTxt('txt-top-bookmarks', t.topBookmarks); setTxt('txt-donate-btn', t.btnDonateTop); setTxt('txt-donate-title', t.donateTitle); setTxt('txt-donate-body', t.donateBody); setTxt('txt-donate-warning', t.donateWarning); setTxt('btn-paypal', t.btnPaypal); setTxt('btn-donate-cancel', t.btnDonateCancel); setPh('search-input', t.searchPlace);
     
@@ -1612,9 +1618,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedLang = localStorage.getItem('wrn_system_lang'); const ls = document.getElementById('ui-language');
         if (savedLang && ls) { ls.value = savedLang; }
         
-        let savedTheme = localStorage.getItem('wrn_theme_style') || 'theme-dark';
-        if(savedTheme === "theme-neon" || savedTheme === "theme-terminal" || savedTheme === "theme-solarpunk") savedTheme = "theme-dark";
-        const ut = document.getElementById('ui-theme'); if(ut) ut.value = savedTheme;
+        window.WRNAccessibility?.init();
+        const savedTheme = window.WRNAccessibility?.getTheme?.() || localStorage.getItem('wrn_theme_style') || 'theme-dark';
+        const ut = document.getElementById('ui-theme'); if (ut) ut.value = savedTheme;
+        const motionSelect = document.getElementById('ui-motion');
+        if (motionSelect) motionSelect.value = window.WRNAccessibility?.getMotionPreference?.() || 'auto';
         
         window.WRNStatusCenter?.init();
         window.WRNReading?.init();

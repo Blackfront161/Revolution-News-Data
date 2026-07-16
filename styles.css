@@ -1063,3 +1063,227 @@ body[data-news-view="headlines"] .button-row a.btn-translate {
     body[data-news-view="compact"] .button-row,
     body[data-news-view="headlines"] .button-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* ========================================================================== 
+   Phase 1F – visuelle Hierarchie und Barrierefreiheit
+   ========================================================================== */
+
+body.theme-oled {
+    --bg-body: #000000;
+    --bg-card: #050505;
+    --bg-input: #0a0a0a;
+    --text-main: #ffffff;
+    --text-muted: #c5c5c5;
+    --color-accent: #ff9d00;
+    --color-cyan: #22e8ff;
+    --color-green: #25ff75;
+    --border-read: #333333;
+    --shadow-accent: rgba(255, 157, 0, 0.08);
+    --border-dashed: #ff9d00;
+}
+
+body.theme-contrast {
+    --bg-body: #000000;
+    --bg-card: #000000;
+    --bg-input: #000000;
+    --text-main: #ffffff;
+    --text-muted: #ffffff;
+    --color-accent: #ffd800;
+    --color-cyan: #00ffff;
+    --color-green: #65ff65;
+    --border-read: #ffffff;
+    --shadow-accent: transparent;
+    --border-dashed: #ffd800;
+}
+
+body.theme-soft {
+    --bg-body: #171714;
+    --bg-card: #23221d;
+    --bg-input: #2c2a24;
+    --text-main: #eee8d8;
+    --text-muted: #c5bda9;
+    --color-accent: #e6a85c;
+    --color-cyan: #83c5be;
+    --color-green: #9fcf96;
+    --border-read: #5d594f;
+    --shadow-accent: rgba(230, 168, 92, 0.08);
+    --border-dashed: #b98a50;
+}
+
+.sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.skip-link {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 5000;
+    transform: translateY(-150%);
+    background: var(--text-main);
+    color: var(--bg-body);
+    border: 3px solid var(--color-accent);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
+}
+
+:where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-cyan) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 2px var(--bg-body) !important;
+}
+
+#feed-container:focus-visible {
+    outline-offset: 6px !important;
+}
+
+/* Karten bleiben markant, aber Sekundärinformationen konkurrieren weniger. */
+.card {
+    border-color: var(--border-read);
+    border-left: 3px solid var(--color-accent);
+    box-shadow: 0 4px 18px var(--shadow-accent);
+}
+
+.card:not(.event-cancelled):hover {
+    border-left-color: var(--color-cyan);
+}
+
+.card.read {
+    opacity: 0.9;
+    border-left-color: var(--border-read);
+}
+
+.meta {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.meta-label {
+    color: var(--color-cyan);
+    font-weight: 800;
+}
+
+body.theme-contrast .card,
+body.theme-contrast .feedback-modal,
+body.theme-contrast .global-media-bar,
+body.theme-contrast .podcast-player {
+    box-shadow: none !important;
+    border-width: 2px;
+}
+
+body.theme-contrast .card.read {
+    opacity: 1;
+    border-style: dashed;
+}
+
+body.theme-contrast .btn-nav.active {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-color: #ffffff !important;
+    box-shadow: none !important;
+}
+
+body.theme-oled .card,
+body.theme-oled .global-media-bar,
+body.theme-oled .feedback-modal {
+    box-shadow: none;
+}
+
+/* Keine Information soll ausschließlich durch Farbe vermittelt werden. */
+.card.read::before {
+    content: "✓";
+    float: right;
+    color: var(--text-muted);
+    font-weight: 900;
+    margin-left: 8px;
+}
+
+.btn-media-pause,
+.btn-podcast-control:not(.btn-podcast-stop) {
+    border-color: var(--color-accent) !important;
+    color: var(--color-accent) !important;
+}
+
+.btn-media-stop,
+.btn-podcast-stop,
+.btn-podcast-nav {
+    border-color: #ff334f !important;
+    color: #ff334f !important;
+}
+
+/* Reduzierte Bewegung gilt entweder durch die App-Einstellung oder das System. */
+body[data-motion="reduced"] *,
+body[data-motion="reduced"] *::before,
+body[data-motion="reduced"] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body[data-motion-preference="auto"] *,
+    body[data-motion-preference="auto"] *::before,
+    body[data-motion-preference="auto"] *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* Auf Touchgeräten bleiben optisch kompakte Bedienelemente gut antippbar. */
+@media (pointer: coarse) {
+    button,
+    a.btn-translate,
+    .btn-nav,
+    .btn-micro,
+    select,
+    input[type="text"],
+    input[type="search"] {
+        min-height: 44px;
+    }
+
+    .button-row > .btn-expand,
+    .button-row > .btn-translate {
+        min-height: 44px !important;
+    }
+
+    .global-media-controls button {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 720px) {
+    header > div:last-child {
+        width: 100%;
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px !important;
+    }
+
+    header .dropdown-container:last-child {
+        grid-column: 1 / -1;
+    }
+
+    select.lang-select,
+    select.theme-select {
+        width: 100%;
+        min-width: 0;
+    }
+}
