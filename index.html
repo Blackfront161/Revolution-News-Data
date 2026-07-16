@@ -184,6 +184,14 @@
 
             <button type="button" class="btn-event-reset" id="btn-event-reset" onclick="resetEventFilters()">Reset filters</button>
         </div>
+
+        <div class="event-saved-filter-row">
+            <select id="event-saved-filter" aria-label="Saved event filters" onchange="applySavedEventFilter(this.value)">
+                <option value="">Saved filters</option>
+            </select>
+            <button type="button" class="btn-event-saved" id="btn-event-filter-save" onclick="saveCurrentEventFilter()">Save filter</button>
+            <button type="button" class="btn-event-saved delete" id="btn-event-filter-delete" onclick="deleteSelectedEventFilter()" disabled>Delete</button>
+        </div>
     </section>
 
     <section id="podcast-player" class="podcast-player" hidden aria-live="polite">
@@ -414,6 +422,7 @@
     <script src="status-center.js"></script>
     <script src="utils.js"></script>
     <script src="media-player.js"></script>
+    <script src="events.js"></script>
     <script src="app.js"></script>
     <script src="audio-hub.js"></script>
 </body>

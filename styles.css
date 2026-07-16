@@ -821,3 +821,142 @@ textarea,
     .global-media-controls { width: 100%; }
     .global-media-controls button { flex: 1 1 auto; }
 }
+
+/* ===== Phase 1D: Eventstatus, Kalender, Karte und gespeicherte Filter ===== */
+.event-state-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 4px 0 9px;
+}
+.event-state-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-read);
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.event-state-badge.today,
+.event-state-badge.tomorrow {
+    color: var(--color-green);
+    border-color: var(--color-green);
+    background: rgba(0, 255, 102, 0.07);
+}
+.event-state-badge.live {
+    color: #050508;
+    border-color: var(--color-green);
+    background: var(--color-green);
+    box-shadow: 0 0 10px rgba(0, 255, 102, 0.28);
+}
+.event-state-badge.cancelled {
+    color: #fff;
+    border-color: #ff0033;
+    background: #ff0033;
+}
+.event-state-badge.changed {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+    background: rgba(255, 153, 0, 0.08);
+}
+.event-action-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px dashed var(--border-read);
+}
+.event-action-button {
+    min-height: 32px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1.15;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-green);
+    border: 1px solid var(--color-green);
+}
+.event-action-button:hover,
+.event-action-button:focus-visible {
+    background: rgba(0, 255, 102, 0.08);
+    outline: none;
+}
+.event-action-button.calendar {
+    color: var(--color-cyan);
+    border-color: var(--color-cyan);
+}
+.event-action-button.calendar:hover,
+.event-action-button.calendar:focus-visible {
+    background: rgba(0, 240, 255, 0.08);
+}
+.event-action-button.route {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+.event-action-button.route:hover,
+.event-action-button.route:focus-visible {
+    background: rgba(255, 153, 0, 0.08);
+}
+.event-saved-filter-row {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) auto auto;
+    gap: 7px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0, 255, 102, 0.35);
+}
+.event-saved-filter-row select,
+.btn-event-saved {
+    min-height: 34px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 6px 9px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+.event-saved-filter-row select {
+    width: 100%;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 1px solid var(--color-green);
+}
+.btn-event-saved {
+    cursor: pointer;
+    text-transform: uppercase;
+    color: var(--color-green);
+    background: transparent;
+    border: 1px solid var(--color-green);
+}
+.btn-event-saved.delete {
+    color: #ff5577;
+    border-color: #ff5577;
+}
+.btn-event-saved:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
+}
+
+@media (max-width: 620px) {
+    .event-saved-filter-row {
+        grid-template-columns: 1fr 1fr;
+    }
+    .event-saved-filter-row select {
+        grid-column: 1 / -1;
+    }
+    .event-action-row {
+        grid-template-columns: 1fr;
+    }
+}
