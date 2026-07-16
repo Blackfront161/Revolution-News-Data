@@ -1,4 +1,4 @@
-// World Revolution News – Hauptlogik, Phase 1E (Lesestatus und Ansichten)
+// World Revolution News – Hauptlogik, Phase 1I (transparente Übersetzungen)
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
     if (stat) { stat.style.color = '#FF0033'; stat.innerText = `CRASH GEFUNDEN: ${msg} (Zeile ${line})`; }
@@ -498,7 +498,8 @@ function createArticleChunks(rawText, maxLength = 1800) {
 }
 
 function translationCacheKey(article) {
-    return `${article?.link || article?.title || 'article'}::${currentLang}`;
+    const fingerprint = window.WRNTranslationTools?.articleFingerprint(article) || '';
+    return `translation-full::${article?.link || article?.title || 'article'}::${currentLang}::${fingerprint}`;
 }
 
 function parseTranslatedTitleAndText(value, fallbackTitle = '') {
@@ -548,16 +549,24 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
     const chunks = createArticleChunks(originalText);
     let translatedTitle = originalTitle;
     const translatedParts = [];
+    const translationProviders = new Set();
 
     for (let index = 0; index < chunks.length; index++) {
         if (typeof onProgress === 'function') onProgress(index + 1, chunks.length);
 
-        const result = await fetchTranslationRequest({
-            title: index === 0 ? originalTitle : "",
-            text: chunks[index],
-            mode: index === 0 ? "title_and_text" : "continuation"
-        });
+        let result = await window.WRNTranslationTools?.getCachedChunk(article, currentLang, index, chunks[index]);
+        if (!result) {
+            result = await fetchTranslationRequest({
+                title: index === 0 ? originalTitle : "",
+                text: chunks[index],
+                mode: index === 0 ? "title_and_text" : "continuation"
+            });
+            if (!result.error && result.text) {
+                window.WRNTranslationTools?.putCachedChunk(article, currentLang, index, chunks[index], result);
+            }
+        }
         if (result.error || !result.text) return result;
+        if (result.provider) translationProviders.add(result.provider);
 
         if (index === 0) {
             const parsed = parseTranslatedTitleAndText(result.text, originalTitle);
@@ -571,7 +580,9 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
     const translated = {
         title: translatedTitle,
         text: translatedParts.filter(Boolean).join('\n\n'),
-        language: currentLang
+        language: currentLang,
+        providers: [...translationProviders],
+        translatedAt: new Date().toISOString()
     };
     translationCache.set(key, translated);
     if (window.WRNStorage) {
@@ -609,6 +620,7 @@ function applyFullTranslationToCard(idNum, translated) {
         card.dataset.translated = 'full';
         card.dataset.translationLanguage = currentLang;
         window.WRNSourceProfiles?.markTranslated(card, currentFilteredItems[idNum], currentLang);
+        window.WRNTranslationTools?.registerTranslation(idNum, currentFilteredItems[idNum], translated, 'full');
     }
 }
 
@@ -1014,6 +1026,7 @@ function changeLanguage() {
     updateGlobalMediaButtons();
     updateGlobalMediaProgress();
     window.WRNReading?.updateUi();
+    window.WRNTranslationTools?.refreshTexts();
     if (allNewsData.length > 0) populateEventFilters();
     
     if(activeKontinent === "Bookmarks") { showBookmarks(); }
@@ -1162,6 +1175,7 @@ function closeAllModals() {
     const m6 = document.getElementById('podcast-library-modal'); if(m6) m6.style.display = 'none';
     const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
     window.WRNSourceProfiles?.close();
+    window.WRNTranslationTools?.closeModals();
     pausePodcastLibraryAudio();
 }
 function submitFeedback() {
@@ -1479,6 +1493,7 @@ function renderNextBatch() {
                 ${editorialBadgesHtml}
                 ${readingProgressHtml}
                 <div class="title" id="title-${globalIndex}" style="${titleColor}">${escapeHtml(item.title || 'No Title')}</div>
+                <div class="translation-tools" id="translation-tools-${globalIndex}" hidden></div>
                 ${eventDetailsHtml}
                 ${imgHtml}
                 <div class="teaser" id="teaser-${globalIndex}">${safeTeaserText}</div>
@@ -1536,6 +1551,9 @@ async function toggleArticle(idNum, event) {
         teaser.style.display = "none"; fullContent.style.display = "block";
         btn.innerText = t.btnCollapse; card.dataset.expanded = "true";
         window.WRNReading?.onExpand(idNum, article, card, fullContent);
+        if (card.dataset.translated === 'teaser' && card.dataset.translationLanguage === currentLang) {
+            window.setTimeout(() => translateArticle(idNum), 0);
+        }
     }
 }
 
@@ -1585,6 +1603,15 @@ async function translateArticle(idNum) {
         btnEl.removeAttribute('title');
         card.dataset.translated = 'teaser';
         card.dataset.translationLanguage = currentLang;
+        window.WRNSourceProfiles?.markTranslated(card, article, currentLang);
+        window.WRNTranslationTools?.registerTranslation(idNum, article, {
+            title: parsed.title,
+            teaser: parsed.text,
+            text: '',
+            language: currentLang,
+            provider: result.provider || '',
+            translatedAt: new Date().toISOString()
+        }, 'teaser');
         return;
     }
 

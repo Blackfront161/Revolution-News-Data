@@ -488,6 +488,44 @@
         </div>
     </div>
 
+    <div class="feedback-modal translation-compare-modal" id="translation-compare-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="translation-compare-title">
+        <h3 id="translation-compare-title">Compare original and translation</h3>
+        <p class="translation-modal-meta" id="translation-compare-meta"></p>
+        <div class="translation-compare-grid">
+            <section class="translation-compare-column" aria-labelledby="translation-compare-original-heading">
+                <h4 id="translation-compare-original-heading">Original</h4>
+                <strong id="translation-compare-original-title"></strong>
+                <div class="translation-compare-text" id="translation-compare-original-text"></div>
+            </section>
+            <section class="translation-compare-column" aria-labelledby="translation-compare-translated-heading">
+                <h4 id="translation-compare-translated-heading">Machine translation</h4>
+                <strong id="translation-compare-translated-title"></strong>
+                <div class="translation-compare-text" id="translation-compare-translated-text"></div>
+            </section>
+        </div>
+        <p class="translation-modal-hint" id="translation-compare-hint"></p>
+        <div class="feedback-actions">
+            <button class="btn-cancel" id="btn-translation-compare-close" onclick="closeTranslationModals()">Close</button>
+        </div>
+    </div>
+
+    <div class="feedback-modal translation-report-modal" id="translation-report-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="translation-report-title">
+        <h3 id="translation-report-title">Report a translation problem</h3>
+        <p id="translation-report-intro" class="translation-modal-hint"></p>
+        <label class="translation-report-field">
+            <span id="translation-report-issue-label">Problem</span>
+            <select id="translation-report-issue"></select>
+        </label>
+        <label class="translation-report-field">
+            <span id="translation-report-note-label">Optional note</span>
+            <textarea id="translation-report-note" rows="5"></textarea>
+        </label>
+        <div class="feedback-actions">
+            <button class="btn-submit" id="btn-translation-report-send" onclick="sendTranslationReport()">Prepare email</button>
+            <button class="btn-cancel" id="btn-translation-report-close" onclick="closeTranslationModals()">Close</button>
+        </div>
+    </div>
+
     <div class="feedback-modal" id="sources-modal" style="display: none;">
         <h3 style="color: var(--color-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed var(--color-cyan); padding-bottom: 8px; font-size: 1.1rem;">Quellen / Portale</h3>
         <div id="sources-list-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;">
@@ -500,6 +538,7 @@
     <script src="status-center.js"></script>
     <script src="utils.js"></script>
     <script src="source-profiles.js"></script>
+    <script src="translation-tools.js"></script>
     <script src="accessibility.js"></script>
     <script src="media-player.js"></script>
     <script src="audio-tools.js"></script>

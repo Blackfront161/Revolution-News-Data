@@ -1578,3 +1578,100 @@ body.view-headlines .editorial-badges { margin-bottom: 5px; }
     .source-list-info { min-width: 0; padding-inline: 6px; }
     .editorial-badge { font-size: 0.68rem; }
 }
+
+/* Phase 1I: transparente Übersetzungsansichten */
+.translation-tools {
+    display: grid;
+    gap: 6px;
+    margin: 2px 0 12px;
+    padding: 8px;
+    border: 1px dashed rgba(110, 168, 255, 0.62);
+    background: rgba(110, 168, 255, 0.055);
+}
+.translation-tools[hidden] { display: none !important; }
+.translation-view-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.translation-view-button {
+    min-height: 34px;
+    padding: 5px 10px;
+    border: 1px solid var(--border-read);
+    background: transparent;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+.translation-view-button:hover,
+.translation-view-button.active {
+    border-color: #6ea8ff;
+    color: #a9cbff;
+    background: rgba(110, 168, 255, 0.12);
+}
+.translation-view-meta,
+.translation-cache-note,
+.translation-modal-meta,
+.translation-modal-hint {
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+.translation-cache-note { font-style: italic; }
+.translation-compare-modal { max-width: 980px; }
+.translation-compare-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    max-height: 62vh;
+    overflow: auto;
+    margin: 12px 0;
+}
+.translation-compare-column {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--border-read);
+    background: rgba(128, 128, 128, 0.055);
+}
+.translation-compare-column h4 {
+    margin: 0 0 8px;
+    color: #8dbbff;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+}
+.translation-compare-column > strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    overflow-wrap: anywhere;
+}
+.translation-compare-text {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.55;
+    font-size: calc(0.92rem * var(--article-font-scale));
+}
+.translation-report-modal { max-width: 640px; }
+.translation-report-field {
+    display: grid;
+    gap: 5px;
+    margin: 12px 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+}
+.translation-report-field select,
+.translation-report-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--border-read);
+    background: var(--bg-card);
+    color: var(--text-main);
+    padding: 9px;
+    font: inherit;
+}
+.translation-report-field textarea { resize: vertical; min-height: 110px; }
+@media (max-width: 760px) {
+    .translation-compare-grid { grid-template-columns: 1fr; }
+    .translation-view-button { flex: 1 1 130px; }
+}
