@@ -1,0 +1,207 @@
+name: Apply WRN design 1.4.1
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-wrn-design-1-4-1
+  cancel-in-progress: false
+
+jobs:
+  design:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Design aktualisieren
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          css_path = Path("release-1.4.css")
+          css = css_path.read_text(encoding="utf-8")
+
+          marker = "/* 1.4.1 – vereinfachte Nutzeroberfläche und klare Farblogik */"
+          if marker in css:
+              css = css.split(marker, 1)[0].rstrip() + "\n\n"
+
+          design = r'''/* 1.4.1 – vereinfachte Nutzeroberfläche und klare Farblogik */
+          :root {
+              --wrn-red: #ff334f;
+              --wrn-red-soft: rgba(255, 51, 79, 0.08);
+              --wrn-cyan-soft: rgba(0, 240, 255, 0.07);
+          }
+
+          /* Der technische Systemstatus bleibt vorhanden, ist aber kein normaler Nutzerbereich. */
+          .btn-system-status { display: none !important; }
+
+          /* Obere Verwaltungsaktionen: Rot und Cyan im Wechsel. */
+          .top-action-bar .btn-micro,
+          .mobile-more-panel .btn-micro {
+              border-width: 1px !important;
+              box-shadow: none !important;
+          }
+
+          .top-action-bar .btn-micro:nth-child(1),
+          .top-action-bar .btn-micro:nth-child(3),
+          .mobile-more-panel .btn-micro:nth-child(1),
+          .mobile-more-panel .btn-micro:nth-child(3) {
+              color: var(--wrn-red) !important;
+              border-color: var(--wrn-red) !important;
+          }
+
+          .top-action-bar .btn-micro:nth-child(2),
+          .top-action-bar .btn-micro:nth-child(4),
+          .mobile-more-panel .btn-micro:nth-child(2),
+          .mobile-more-panel .btn-micro:nth-child(4) {
+              color: var(--color-cyan) !important;
+              border-color: var(--color-cyan) !important;
+          }
+
+          .top-action-bar .btn-micro:nth-child(1):hover,
+          .top-action-bar .btn-micro:nth-child(3):hover,
+          .mobile-more-panel .btn-micro:nth-child(1):hover,
+          .mobile-more-panel .btn-micro:nth-child(3):hover {
+              background: var(--wrn-red-soft) !important;
+          }
+
+          .top-action-bar .btn-micro:nth-child(2):hover,
+          .top-action-bar .btn-micro:nth-child(4):hover,
+          .mobile-more-panel .btn-micro:nth-child(2):hover,
+          .mobile-more-panel .btn-micro:nth-child(4):hover {
+              background: var(--wrn-cyan-soft) !important;
+          }
+
+          /* Hauptnavigation: Entdecken oben in Cyan, persönliche Bereiche unten in Rot. */
+          .quick-nav-events,
+          .btn-podcast-nav {
+              color: var(--color-cyan) !important;
+              border-color: var(--color-cyan) !important;
+              background: var(--wrn-cyan-soft) !important;
+          }
+
+          .quick-nav-bookmarks,
+          .quick-nav-read {
+              color: var(--wrn-red) !important;
+              border-color: var(--wrn-red) !important;
+              background: var(--wrn-red-soft) !important;
+          }
+
+          .quick-nav-zine {
+              color: var(--color-cyan) !important;
+              border-color: var(--color-cyan) !important;
+              background: transparent !important;
+          }
+
+          .quick-nav-bar .btn-nav:hover {
+              transform: translateY(-1px);
+              filter: brightness(1.15);
+          }
+
+          .quick-nav-bar .btn-nav.active {
+              color: #050508 !important;
+              background: var(--color-cyan) !important;
+              border-color: var(--color-cyan) !important;
+              box-shadow: 0 0 12px rgba(0, 240, 255, 0.28) !important;
+          }
+
+          /* Filter werden ruhiger und folgen der Hauptfarbe Cyan. */
+          .filter-bar {
+              background: rgba(0, 240, 255, 0.035) !important;
+              border: 1px solid rgba(0, 240, 255, 0.14);
+          }
+
+          .filter-bar .filter-control,
+          .filter-bar .search-input {
+              border-color: rgba(0, 240, 255, 0.42) !important;
+          }
+
+          .filter-bar .filter-control:focus,
+          .filter-bar .search-input:focus {
+              border-color: var(--color-cyan) !important;
+              box-shadow: 0 0 8px rgba(0, 240, 255, 0.16) !important;
+          }
+
+          @media (max-width: 720px) {
+              .mobile-more-menu {
+                  border-color: rgba(0, 240, 255, 0.34);
+                  background: rgba(0, 240, 255, 0.025);
+              }
+
+              .mobile-more-panel {
+                  border-top-color: rgba(0, 240, 255, 0.24);
+              }
+          }
+
+          @media (max-width: 390px) {
+              .quick-nav-bar .btn-nav {
+                  min-height: 46px;
+              }
+          }
+          '''
+
+          # Einrückung aus dem eingebetteten Python-String entfernen.
+          design = "\n".join(
+              line[10:] if line.startswith("          ") else line
+              for line in design.splitlines()
+          ).strip() + "\n"
+
+          css_path.write_text(css + design, encoding="utf-8")
+
+          sw_path = Path("service-worker.js")
+          sw = sw_path.read_text(encoding="utf-8")
+          sw = re.sub(
+              r"const APP_CACHE = '[^']+';",
+              "const APP_CACHE = 'wrn-app-v1.4.1';",
+              sw,
+              count=1,
+          )
+          sw = re.sub(
+              r"const DATA_CACHE = '[^']+';",
+              "const DATA_CACHE = 'wrn-data-v1.4.1';",
+              sw,
+              count=1,
+          )
+          sw_path.write_text(sw, encoding="utf-8")
+
+          print("Design 1.4.1 und Cache 1.4.1 wurden vorbereitet.")
+          PY
+
+      - name: Änderungen prüfen
+        shell: bash
+        run: |
+          grep -F "1.4.1 – vereinfachte Nutzeroberfläche" release-1.4.css
+          grep -F "wrn-app-v1.4.1" service-worker.js
+          grep -F "wrn-data-v1.4.1" service-worker.js
+
+          if ! git diff --quiet -- .github/workflows; then
+            echo "::error::Workflow-Dateien dürfen nicht verändert werden."
+            exit 1
+          fi
+
+      - name: Design veröffentlichen
+        shell: bash
+        run: |
+          git config user.name "WRN Design Bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add -- release-1.4.css service-worker.js
+
+          if git diff --cached --quiet; then
+            echo "Design 1.4.1 ist bereits aktiv."
+            exit 0
+          fi
+
+          git diff --cached --name-status
+          git commit -m "Polish WRN mobile design 1.4.1"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
