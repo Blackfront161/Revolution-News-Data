@@ -1,0 +1,149 @@
+name: Replace orange with red 1.4.2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-orange-to-red-1-4-2
+  cancel-in-progress: false
+
+jobs:
+  recolor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Orange vollständig durch Rot ersetzen
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          css_path = Path("release-1.4.css")
+          css = css_path.read_text(encoding="utf-8")
+
+          marker = "/* 1.4.2 – orange Akzente vollständig durch Rot ersetzt */"
+          if marker in css:
+              css = css.split(marker, 1)[0].rstrip() + "\n\n"
+
+          override = r'''/* 1.4.2 – orange Akzente vollständig durch Rot ersetzt */
+          :root,
+          body.theme-dark,
+          body.theme-oled,
+          body.theme-contrast {
+              --wrn-red: #ff334f;
+              --wrn-red-soft: rgba(255, 51, 79, 0.09);
+              --color-accent: #ff334f;
+              --border-dashed: #ff334f;
+              --shadow-accent: rgba(255, 51, 79, 0.17);
+          }
+
+          /* Auf hellen Hintergründen ein dunkleres, besser lesbares Rot. */
+          body.theme-light,
+          body.theme-soft {
+              --wrn-red: #b5122f;
+              --wrn-red-soft: rgba(181, 18, 47, 0.08);
+              --color-accent: #b5122f;
+              --border-dashed: #b5122f;
+              --shadow-accent: rgba(181, 18, 47, 0.15);
+          }
+
+          /* Fest eingetragene Orange-Werte ebenfalls in Rot umwandeln. */
+          .btn-expand:hover {
+              background: var(--wrn-red-soft) !important;
+          }
+
+          .global-media-progress input[type="range"],
+          .media-progress-row input[type="range"] {
+              accent-color: var(--wrn-red) !important;
+          }
+
+          .btn-media-pause {
+              color: var(--wrn-red) !important;
+              border-color: var(--wrn-red) !important;
+          }
+
+          .btn-media-pause:hover {
+              background: var(--wrn-red-soft) !important;
+          }
+
+          /* Orangeartige Hintergründe aus früheren Inline-Regeln neutralisieren. */
+          .filter-bar {
+              background: rgba(0, 240, 255, 0.035) !important;
+          }
+
+          /* Aktive Inhalts- und Navigationsakzente folgen nun Rot statt Orange. */
+          details.filter-dropdown summary,
+          .card,
+          .meta,
+          .archive-header,
+          .btn-expand,
+          .info-text-box strong {
+              border-color: var(--color-accent);
+          }
+          '''
+
+          override = "\n".join(
+              line[10:] if line.startswith("          ") else line
+              for line in override.splitlines()
+          ).strip() + "\n"
+
+          css_path.write_text(css + override, encoding="utf-8")
+
+          sw_path = Path("service-worker.js")
+          sw = sw_path.read_text(encoding="utf-8")
+          sw = re.sub(
+              r"const APP_CACHE = '[^']+';",
+              "const APP_CACHE = 'wrn-app-v1.4.2';",
+              sw,
+              count=1,
+          )
+          sw = re.sub(
+              r"const DATA_CACHE = '[^']+';",
+              "const DATA_CACHE = 'wrn-data-v1.4.2';",
+              sw,
+              count=1,
+          )
+          sw_path.write_text(sw, encoding="utf-8")
+
+          print("Orange wurde vollständig durch Rot ersetzt.")
+          PY
+
+      - name: Ergebnis prüfen
+        shell: bash
+        run: |
+          grep -F "1.4.2 – orange Akzente vollständig" release-1.4.css
+          grep -F -- "--color-accent: #ff334f" release-1.4.css
+          grep -F "wrn-app-v1.4.2" service-worker.js
+          grep -F "wrn-data-v1.4.2" service-worker.js
+
+          if ! git diff --quiet -- .github/workflows; then
+            echo "::error::Workflow-Dateien dürfen nicht verändert werden."
+            exit 1
+          fi
+
+      - name: Farbänderung veröffentlichen
+        shell: bash
+        run: |
+          git config user.name "WRN Design Bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add -- release-1.4.css service-worker.js
+
+          if git diff --cached --quiet; then
+            echo "Die Rot-Version 1.4.2 ist bereits aktiv."
+            exit 0
+          fi
+
+          git diff --cached --name-status
+          git commit -m "Replace orange accents with red 1.4.2"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
