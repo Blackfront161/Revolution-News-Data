@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v2026-07-16-phase1g';
-const DATA_CACHE = 'wrn-data-v2026-07-16-phase1g';
+const APP_CACHE = 'wrn-app-v2026-07-16-phase1h';
+const DATA_CACHE = 'wrn-data-v2026-07-16-phase1h';
 
 const APP_SHELL = [
   './',
@@ -12,6 +12,7 @@ const APP_SHELL = [
   './offline-db.js',
   './status-center.js',
   './utils.js',
+  './source-profiles.js',
   './accessibility.js',
   './media-player.js',
   './audio-tools.js',
@@ -27,6 +28,7 @@ const DATA_FILES = new Set([
   new URL('./news.json', self.location.href).pathname,
   new URL('./events.json', self.location.href).pathname,
   new URL('./source-health.json', self.location.href).pathname,
+  new URL('./source-catalog.json', self.location.href).pathname,
   new URL('./podcasts.json', self.location.href).pathname,
   new URL('./podcast-health.json', self.location.href).pathname,
   new URL('./radio-stations.json', self.location.href).pathname

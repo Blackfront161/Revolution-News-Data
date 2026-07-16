@@ -167,6 +167,17 @@
             <option value="headlines" id="opt-view-headlines">Headlines</option>
         </select>
 
+        <select id="content-type-filter" class="filter-control" onchange="applyFilters()" aria-label="All formats">
+            <option value="">All formats</option>
+            <option value="news">News</option>
+            <option value="analysis">Analysis</option>
+            <option value="commentary">Commentary</option>
+            <option value="interview">Interview</option>
+            <option value="press-release">Press release</option>
+            <option value="podcast">Podcast</option>
+            <option value="event">Event</option>
+        </select>
+
         <div class="search-container" style="flex: 1 1 120px; margin-bottom: 0; margin-left: auto;">
             <input type="text" id="search-input" class="search-input" placeholder="Search articles..." oninput="applyFilters()" style="width: 100%;">
         </div>
@@ -488,6 +499,7 @@
     <script src="offline-db.js"></script>
     <script src="status-center.js"></script>
     <script src="utils.js"></script>
+    <script src="source-profiles.js"></script>
     <script src="accessibility.js"></script>
     <script src="media-player.js"></script>
     <script src="audio-tools.js"></script>

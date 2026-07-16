@@ -608,6 +608,7 @@ function applyFullTranslationToCard(idNum, translated) {
     if (card) {
         card.dataset.translated = 'full';
         card.dataset.translationLanguage = currentLang;
+        window.WRNSourceProfiles?.markTranslated(card, currentFilteredItems[idNum], currentLang);
     }
 }
 
@@ -994,6 +995,7 @@ function changeLanguage() {
     const t = uiTexte[currentLang] || uiTexte['en'];
     document.documentElement.lang = currentLang;
     window.WRNAccessibility?.updateLanguage(currentLang);
+    window.WRNSourceProfiles?.updateUi(currentLang);
     
     setTxt('txt-lang-label', t.langLabel); setTxt('txt-theme-label', t.themeLabel); setTxt('opt-theme-dark', t.themeDark); setTxt('opt-theme-light', t.themeLight); setTxt('btn-clear-cache', t.clearBtn); setTxt('txt-region-summary', t.searchRegion); setTxt('txt-topic-summary', t.searchTopic); setTxt('txt-archive-title', t.archiveTitle); setTxt('txt-contact-label', t.contactLabel); setTxt('opt-sort-new', t.sortNew); setTxt('opt-sort-old', t.sortOld); setTxt('txt-top-bookmarks', t.topBookmarks); setTxt('txt-donate-btn', t.btnDonateTop); setTxt('txt-donate-title', t.donateTitle); setTxt('txt-donate-body', t.donateBody); setTxt('txt-donate-warning', t.donateWarning); setTxt('btn-paypal', t.btnPaypal); setTxt('btn-donate-cancel', t.btnDonateCancel); setPh('search-input', t.searchPlace);
     
@@ -1159,6 +1161,7 @@ function closeAllModals() {
     const m5 = document.getElementById('podcast-options-modal'); if(m5) m5.style.display = 'none';
     const m6 = document.getElementById('podcast-library-modal'); if(m6) m6.style.display = 'none';
     const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
+    window.WRNSourceProfiles?.close();
     pausePodcastLibraryAudio();
 }
 function submitFeedback() {
@@ -1216,7 +1219,12 @@ function openSourcesModal() {
 
     const portals = [...new Set(baseList.map(item => item.quelleName).filter(Boolean))].sort();
     portals.forEach(portal => {
-        listContainer.append(createSourceButton(portal, portal, currentSourceFilter === portal));
+        const profileRow = window.WRNSourceProfiles?.makeSourceListRow(
+            portal,
+            currentSourceFilter === portal,
+            () => filterBySource(portal)
+        );
+        listContainer.append(profileRow || createSourceButton(portal, portal, currentSourceFilter === portal));
     });
 }
 
@@ -1291,6 +1299,7 @@ async function initialisiereApp() {
     const newsItems = newsResult.data;
     const eventItems = eventsResult.data;
     allNewsData = [...newsItems, ...eventItems];
+    window.WRNSourceProfiles?.setArticles(allNewsData);
 
     window.WRNStatusCenter?.noteDataset('news', newsResult);
     window.WRNStatusCenter?.noteDataset('events', eventsResult);
@@ -1337,6 +1346,7 @@ function applyFilters(isBookmark = false) {
     const selPortal = currentSourceFilter || "ALL"; 
     const searchQuery = iSel ? iSel.value.toLowerCase().trim() : "";
     const sortOrder = document.getElementById('sort-select') ? document.getElementById('sort-select').value : "new";
+    const contentType = document.getElementById('content-type-filter')?.value || "";
     
     let baseList;
     if (activeKontinent === "Bookmarks" || isBookmark) baseList = getSavedBookmarks();
@@ -1346,6 +1356,9 @@ function applyFilters(isBookmark = false) {
 
     if (activeKontinent === 'Radar') {
         filtered = filtered.filter(eventMatchesSpecialFilters);
+    }
+    if (contentType) {
+        filtered = filtered.filter(article => window.WRNSourceProfiles?.matchesType(article, contentType) ?? true);
     }
     
     if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery)) || normalizedStringArray(a.eventTags).join(' ').toLowerCase().includes(searchQuery) || normalizedStringArray(a.eventCategories).join(' ').toLowerCase().includes(searchQuery) || String(a.eventCity || '').toLowerCase().includes(searchQuery)); }
@@ -1439,6 +1452,12 @@ function renderNextBatch() {
 
         let publisherName = item.quelleName ? item.quelleName.trim() : "Unbekannte Quelle";
         let authorName = item.author ? item.author.trim() : "";
+        const encodedPublisherName = encodeText(publisherName);
+        const sourceNameHtml = window.WRNSourceProfiles
+            ? `<button type="button" class="source-profile-link" onclick="openSourceProfileEncoded('${encodedPublisherName}')">${escapeHtml(publisherName)}</button>`
+            : `<span style="color:var(--text-main);">${escapeHtml(publisherName)}</span>`;
+        const editorialBadgesHtml = window.WRNSourceProfiles?.badgeMarkup(item, currentLang) || '';
+        const contentTypeKey = window.WRNSourceProfiles?.classifyArticle(item)?.key || '';
         
         let isRadar = articleMatchesCategory(item, "Radar");
         // Der grüne Look für die Termine
@@ -1447,7 +1466,7 @@ function renderNextBatch() {
         const eventDetailsHtml = buildEventDetailsHtml(item, t, globalIndex);
         const cancelledClass = String(item.eventStatus || '').toLowerCase().includes('cancel') ? 'event-cancelled' : '';
         
-        let metaHtml = `<span class="meta-label">${escapeHtml(t.publisherLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(publisherName)}</span> <br>`;
+        let metaHtml = `<span class="meta-label">${escapeHtml(t.publisherLabel)}</span> ${sourceNameHtml} <br>`;
         if (authorName !== "" && authorName.toLowerCase() !== "unknown" && authorName.toLowerCase() !== publisherName.toLowerCase()) {
             metaHtml += `<span class="meta-label">${escapeHtml(t.authorLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(authorName)}</span> <br>`;
         }
@@ -1455,8 +1474,9 @@ function renderNextBatch() {
         metaHtml += `<span class="meta-label">${escapeHtml(isEvent ? t.eventStarts : t.dateLabel)}</span> <span style="color:var(--text-main);">${escapeHtml(metaDateText || formatDatum)}</span>`;
 
         let articleHTML = `
-            <div class="card ${isReadClass} ${cancelledClass}" id="card-${globalIndex}" data-translated="none" data-article-key="${escapeHtml(window.WRNReading?.articleKey(item) || item.link || '')}" ${cardStyle}>
+            <div class="card ${isReadClass} ${cancelledClass}" id="card-${globalIndex}" data-translated="none" data-content-type="${escapeHtml(contentTypeKey)}" data-article-key="${escapeHtml(window.WRNReading?.articleKey(item) || item.link || '')}" ${cardStyle}>
                 <div class="meta">${metaHtml}</div>
+                ${editorialBadgesHtml}
                 ${readingProgressHtml}
                 <div class="title" id="title-${globalIndex}" style="${titleColor}">${escapeHtml(item.title || 'No Title')}</div>
                 ${eventDetailsHtml}
