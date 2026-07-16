@@ -1,4 +1,606 @@
-name: Apply World Revolution News 1.4 fixes
+
+heute 17:34
+führe das gespräch aus work status der umsetzung fort ich habe alles geupdatet in github und möchte das du noch die sprachen kontrollierst ob alle so funktionieren wie sie sollten. warum erscheint im systemstatus orginal podcasts keine dateien? warum sind von 213 nachrichtenquellen 90 fehler?
+warum sind die podcastquellen noch nicht eingereicht?
+die buttons sind so angeordnet, dass es auf dem smartphone nicht schön aussieht, ich meine die ganz oben termine podcasts etc. und das mit dem hamburger menu kann man das schöner anordnen so dass es schön aussieht bei allen smartphones? muss man die versionsnummer so darstellen wie es unter world revo news steht? haben wir alles umgestzt danach damit wir die app in meinem google console zum geschlossenem test als update hinzufügen?
+
+13m 51s nachgedacht
+Prüfergebnis
+Noch nicht als Update für den geschlossenen Test hochladen. Die Grundfunktionen sind vorhanden, aber ich habe mehrere konkrete Fehler und unfertige Punkte gefunden.
+
+1. Sprachen
+Die Sprachumschaltung funktioniert technisch: Sie setzt die Dokumentsprache, aktualisiert Nachrichten, Events, Podcasts, Stimmen, Filter und weitere Module.
+
+Vollständig übersetzt sind die Oberflächen aber nicht.
+
+Englisch und Deutsch sind in der Hauptoberfläche vollständig.
+
+Spanisch, Französisch, Italienisch, Portugiesisch, Russisch, Griechisch und Türkisch enthalten dort jeweils nur wenige übersetzte Begriffe. Alles Fehlende wird automatisch durch Englisch ersetzt.
+
+Events und Lesestatus sind bereits in allen neun Sprachen vorhanden.
+
+Systemstatus, Barrierefreiheit, Speicherverwaltung, Quellenprofile und Übersetzungsvergleich existieren dagegen nur auf Deutsch und Englisch.
+
+Auch Zine-Meldungen und mehrere Fehlertexte verwenden nur die Unterscheidung „Deutsch oder Englisch“.
+
+Ergebnis: Alle Sprachen lassen sich auswählen und Übersetzungen können angefordert werden. Die App ist in sieben davon aber eine Mischung aus der gewählten Sprache und Englisch. Das sollte entweder vervollständigt oder in der Sprachauswahl deutlich als „Beta“ gekennzeichnet werden.
+
+2. Warum zeigt „Original-Podcasts“ keine Dateien?
+Korrektur zu meiner Zwischenmeldung: podcasts.json ist tatsächlich die richtige Liste für die Original-Podcasts. Die erzeugten Azure-Podcasts werden getrennt über den Worker geladen.
+
+Das Problem ist:
+
+podcasts.json enthält momentan nur [].
+
+podcast-health.json enthält momentan nur {}.
+
+Deshalb zählt der Systemstatus korrekt null Einträge.
+
+Die Podcastquellen sind bereits eingetragen: In podcast-sources.json stehen 15 Quellen.
+
+Es gibt außerdem einen eigenen Workflow, der alle vier Stunden aggregate_podcasts.py ausführt und anschließend podcasts.json sowie podcast-health.json speichert.
+
+Wahrscheinlich ist Folgendes passiert:
+
+Der Podcastworkflow erzeugte funktionierende Podcastdaten.
+
+Der große 1.4-Upload überschrieb kurz danach die beiden erzeugten Dateien mit leeren Versionen.
+
+Der normale Nachrichtenworkflow stellt sie nicht wieder her, weil er nur Nachrichten, Events und Nachrichtenquellen verarbeitet.
+
+Sofortmaßnahme: In GitHub Actions den Workflow „Update Original Podcasts“ manuell mit Run workflow starten. Danach müssen beide JSON-Dateien wieder gefüllt sein. Beim letzten erfolgreichen Lauf lieferten ungefähr 8 der 15 Quellen Episoden; andere hatten unter anderem 403-, 404-, DNS- oder Serverfehler.
+
+Damit das nicht wieder passiert, sollten erzeugte Dateien beim manuellen App-Upload nicht mit leeren Platzhalterdateien überschrieben werden.
+
+3. Warum werden 90 von 213 Nachrichtenquellen als Fehler angezeigt?
+Die 90 sind nicht 90 echte Totalausfälle. Der Systemstatus zählt falsch.
+
+Die aktuelle Statuslogik wertet eine Quelle als Fehler, sobald eines davon zutrifft:
+
+Status enthält error oder fail
+
+ok ist false
+
+oder das Feld error enthält irgendeinen Text.
+
+Das dritte Kriterium ist problematisch. Einige Quellen liefern HTTP 200 und werden vom Prüfer als ok: true eingestuft, enthalten aber gleichzeitig einen Parserhinweis im Feld error. Die Oberfläche zählt auch diese als Fehler.
+
+Der eigentliche Quellenprüfer unterscheidet bereits korrekt zwischen:
+
+ok
+
+warning
+
+error.
+
+Seine interne Zusammenfassung berechnet Fehler ausdrücklich getrennt von Warnungen.
+
+Die Anzeige sollte deshalb drei Werte zeigen:
+
+Erreichbar
+
+Warnungen
+
+Nicht erreichbar
+
+Als echte Fehler bleiben beispielsweise Zeitüberschreitungen, ungültige SSL-Zertifikate, DNS-Ausfälle, HTTP 403/404/429 und Serverfehler. Ein RSS-Parserhinweis bei einer ansonsten erreichbaren Quelle sollte dagegen eine Warnung sein.
+
+4. Smartphone-Navigation und Hamburger-Menü
+Dein Eindruck stimmt. Die derzeitige Anordnung ist noch nicht sauber mobiloptimiert.
+
+Oben stehen fünf kleine Verwaltungsbuttons. Darunter folgen fünf unterschiedlich breite Schnellzugriffe. Anschließend kommen Hamburger, Sortierung, Schriftgröße, Ansicht, Formatfilter und Suche in einer flexibel umbrechenden Leiste.
+
+Die CSS-Regeln lassen die Buttons hauptsächlich abhängig von ihrer Textlänge umbrechen. Dadurch entstehen je nach Sprache und Displaybreite ungleichmäßige Reihen.
+
+Ich würde es so anordnen:
+
+Obere Leiste
+Unter etwa 720 Pixeln nur noch:
+
+App-Titel
+
+Sprachwahl und Design in zwei gleich breiten Spalten
+
+ein „Mehr“-Hamburger
+
+In das Mehr-Menü kommen:
+
+Info
+
+Kontakt
+
+Speicher
+
+Systemstatus
+
+Spenden
+
+Hauptnavigation
+Termine, Podcasts, Später lesen und Gelesen als gleichmäßiges 2×2-Raster. Zine darunter über die volle Breite. Unter etwa 340 Pixeln alles einspaltig.
+
+Filterleiste
+Der bisherige Hamburger öffnet momentan nur die Quellenliste. Das ist kein vollständiges mobiles Menü. Besser wäre ein Filtermenü mit:
+
+Quellen
+
+Sortierung
+
+Darstellungsart
+
+Inhaltsformat
+
+Schriftgröße
+
+Die Suche bleibt dauerhaft sichtbar und erhält eine eigene volle Zeile.
+
+Damit wäre die Oberfläche auch bei langen französischen, russischen oder griechischen Bezeichnungen stabil. Die derzeit verstreuten Breakpoints 620, 640, 700 und 720 Pixel sollten dabei vereinheitlicht und zusätzlich bei 360, 390, 412 und 430 Pixeln getestet werden.
+
+5. Muss die Versionsnummer unter „World Revolution News“ stehen?
+Nein. Google Play verlangt nicht, dass die Versionsnummer ständig unter dem App-Titel angezeigt wird.
+
+Momentan wird sie dort ausdrücklich eingefügt. Gleichzeitig steht in der Webkonfiguration nicht 1.4, sondern der interne Wert 2026.07.16-phase1k. Der Systemstatus übernimmt genau diesen Wert.
+
+Meine Empfehlung:
+
+Versionsnummer unter dem Titel entfernen.
+
+Im Systemstatus und im Infofenster Version 1.4 anzeigen.
+
+Den internen Cache-Bezeichner 2026.07.16-phase1k nur im Service Worker verwenden. Der Service Worker verwendet diesen Wert bereits zur Cache-Trennung.
+
+Android: versionName "1.4".
+
+Android: versionCode muss höher als bei der vorherigen Play-Version sein, vermutlich 4, sofern 3 tatsächlich der letzte verwendete Code war.
+
+versionCode ist nur die interne, bei jedem Update steigende Zahl; versionName ist die für Nutzer*innen sichtbare Version. Ein bereits verwendeter versionCode kann nicht erneut hochgeladen werden. 
+
+6. Bereit für den geschlossenen Google-Play-Test?
+Noch nicht.
+
+Vor dem AAB-Upload sollten diese Punkte erledigt sein:
+
+Podcastworkflow ausführen und prüfen, dass podcasts.json und podcast-health.json nicht leer sind.
+
+Fehlerzählung der Nachrichtenquellen korrigieren und Warnungen getrennt anzeigen.
+
+Mobile Navigation neu anordnen.
+
+Versionsanzeige auf 1.4 vereinheitlichen.
+
+Entweder alle neun UI-Sprachen vervollständigen oder sieben davon als Beta kennzeichnen.
+
+Prüfen, ob beim 1.4-Upload ältere Teile von aggregate.py unbeabsichtigt über robustere Funktionen geschrieben wurden.
+
+Das tatsächliche Android-Projekt bauen und kontrollieren.
+
+Den letzten Punkt konnte ich in den verbundenen GitHub-Repositories nicht abschließend prüfen: Dort liegt die Web-App, aber kein erkennbares vollständiges Android-Gradle-Projekt und kein neues AAB. Deshalb kann ich derzeit nicht bestätigen:
+
+Paketname weiterhin exakt com.world.revolution
+
+versionCode höher als die letzte Play-Version
+
+versionName 1.4
+
+targetSdk 36
+
+identischer Play-App-Signierungsschlüssel
+
+erfolgreich erzeugtes Release-AAB
+
+keine offenen Play-Console-Deklarationen oder Pre-Review-Fehler
+
+API 36 ist ab 31. August 2026 für neue Apps und Updates Pflicht; mit targetSdk 36 wäre dieser Teil bereits zukunftssicher. 
+
+Für das Update gehst du anschließend in Testing → Closed testing → Manage track → Create new release, lädst das neue AAB hoch, ergänzt die Versionshinweise, prüfst die Fehlerübersicht und startest den Rollout. 
+
+Die Regel mit mindestens zwölf Tester*innen über vierzehn aufeinanderfolgende Tage betrifft bei neueren persönlichen Entwicklerkonten den späteren Antrag auf Produktionszugang. Sie verhindert nicht, dass du innerhalb deines bestehenden geschlossenen Tests eine aktualisierte Version veröffentlichst. 
+
+Gesamtstatus: ungefähr 80–85 % fertig, aber die Podcastdaten, Statuszählung, mobile Navigation und Android-Buildprüfung sind noch Release-Blocker.
+
+
+ok machen wir was es noch zu machen gibt.
+
+8m 43s nachgedacht
+Release-Paket 1.4 ist fertig
+Die GitHub-Verbindung erlaubt aktuell nur Lesezugriff: Sowohl Branch-Erstellung als auch direkte Dateiänderungen wurden von GitHub mit 403 abgelehnt. Deshalb habe ich einen einmaligen GitHub-Actions-Patch erstellt, der die Änderungen direkt im aktuellen Repository anwendet und anschließend die Hilfsdateien wieder entfernt.
+
+Komplettes Release-Paket herunterladen
+
+Alternativ einzeln:
+
+apply-release-1.4.yml
+
+apply_release_1_4.py
+
+README.md
+
+So wird es angewendet
+ZIP entpacken.
+
+Die Ordner .github und tools in das Stammverzeichnis von Revolution-News-Data hochladen.
+
+In GitHub Actions → Apply World Revolution News 1.4 fixes → Run workflow öffnen.
+
+Nach erfolgreichem Lauf erscheint der Commit „Finalize World Revolution News 1.4“.
+
+Anschließend startet automatisch „Update Original Podcasts“.
+
+Enthaltene Korrekturen
+sichtbare Version auf 1.4.0 vereinheitlicht
+
+internen Buildnamen von der sichtbaren Version getrennt
+
+Versionsnummer unter „World Revolution News“ ausgeblendet
+
+neues mobiles Mehr-Menü für Info, Kontakt, Speicher, Status und Spenden
+
+Termine, Podcasts, Leselisten und Zine als stabiles Smartphone-Raster
+
+Filterleiste und Suche für 320–720 Pixel optimiert
+
+sieben noch unvollständige Sprachen transparent als Beta gekennzeichnet
+
+zentrale Texte und Podcastnavigation in diesen Sprachen ergänzt
+
+Systemstatus zählt Warnungen nicht mehr als vollständige Quellenausfälle
+
+Status zeigt künftig funktionierende Quellen / Gesamtzahl
+
+Podcast-Aggregator löscht bei einem vorübergehenden Totalausfall nicht mehr die bestehende Podcastbibliothek
+
+Podcastworkflow prüft, dass Podcast- und Statusdateien tatsächlich gefüllt sind
+
+Service-Worker-Cache auf 1.4.0 erhöht
+
+Der aktuelle Fehlerzähler behandelt bisher jede nichtleere Fehlermeldung als Ausfall, selbst wenn eine Quelle technisch als ok eingestuft wurde. Genau diese Logik wird durch den Patch ersetzt.
+
+Der Podcast-Aggregator schreibt bisher bei null Ergebnissen unmittelbar eine leere Liste. Der Patch bewahrt stattdessen die letzte funktionierende Bibliothek. Der bestehende Podcastworkflow läuft bereits alle vier Stunden; der Patch ergänzt zusätzlich einen automatischen Lauf nach relevanten Änderungen.
+
+Wichtig zu den hochgeladenen Dateien
+Diese fünf lokalen Dateien bitte nicht erneut über den aktuellen GitHub-Stand kopieren. Sie sind deutlich älter:
+
+Das hochgeladene Manifest verweist noch auf placeholder.jpg statt auf das aktuelle App-Icon. 
+
+
+Die hochgeladene HTML-Datei enthält die heutigen Status-, Podcast-, Speicher-, Barrierefreiheits- und Offline-Module noch nicht. 
+
+
+Die hochgeladene CSS-Datei besitzt nur die ältere Grundgestaltung. 
+
+
+Besonders kritisch: Die alte app.js zeigt beim Start ein Debug-Alert und meldet anschließend sämtliche Service Worker ab. 
+
+
+Auch das hochgeladene Aggregationsskript ist die ältere Variante ohne die neueren Quellen-, Status- und Workflow-Erweiterungen. 
+
+
+Geprüft
+Der Release-Patcher wurde testweise gegen die aktuellen Dateimuster ausgeführt. Erfolgreich geprüft wurden:
+
+Python-Syntax
+
+JavaScript-Syntax von status-center.js
+
+JavaScript-Syntax des neuen Release-Skripts
+
+JSON-Struktur
+
+Einfügung der neuen CSS- und JavaScript-Dateien
+
+Statuszählung mit getrennten Warnungen und Fehlern
+
+Podcast-Sicherung bei leeren Feed-Ergebnissen
+
+Noch nicht enthalten ist das signierte Android-AAB. Dafür fehlt weiterhin das eigentliche Android-/Gradle-Projekt. Nach dem erfolgreichen GitHub-Workflow ist die Web-App vorbereitet; danach müssen für Google Play noch versionName 1.4.0, ein höherer versionCode und das neue signierte AAB gebaut werden.
+
+
+beim hochladen von .github ordner bekomme ich folgende fehlermeldung: Fehlercode: RESULT_CODE_KILLED_BAD_MESSAGE
+
+45s nachgedacht
+Das ist sehr wahrscheinlich ein Absturz des Android-Dateiauswahldialogs beim versteckten Ordner .github. Den Ordner nicht als Ordner hochladen. Lege die Dateien einzeln über GitHubs Texteditor an.
+
+1. Workflow-Datei anlegen
+Repository Revolution-News-Data öffnen.
+
+Add file → Create new file wählen.
+
+Als Dateinamen exakt eingeben:
+
+.github/workflows/apply-release-1.4.yml
+GitHub erstellt dabei .github und workflows automatisch. Workflows müssen unter .github/workflows liegen. 
+
+Diese Datei herunterladen und den gesamten Inhalt kopieren:
+
+apply-release-1.4.yml.txt
+
+Inhalt in GitHub einfügen.
+
+Commit changes wählen und direkt nach main speichern.
+
+2. Python-Patcher anlegen
+Wieder Add file → Create new file öffnen und als Namen eingeben:
+
+tools/apply_release_1_4.py
+Dann den Inhalt dieser Datei einfügen:
+
+apply_release_1_4.py.txt
+
+Anschließend wieder Commit changes.
+
+3. Patch starten
+Danach:
+
+GitHub-Reiter Actions öffnen.
+
+Apply World Revolution News 1.4 fixes auswählen.
+
+Run workflow drücken.
+
+Branch main auswählen.
+
+Noch einmal Run workflow bestätigen.
+
+Der manuelle Start erscheint nur, wenn der Workflow korrekt in .github/workflows gespeichert wurde und workflow_dispatch enthält. 
+
+Auf dem Smartphone am besten im Browsermenü zusätzlich Desktopwebsite aktivieren. Der ZIP- oder Ordner-Upload wird dabei nicht mehr benötigt.
+
+
+bekomme diesen fehler:
+Run python tools/apply_release_1_4.py --cleanup-bootstrap
+python: can't open file '/home/runner/work/Revolution-News-Data/Revolution-News-Data/tools/apply_release_1_4.py': [Errno 2] No such file or directory
+Error: Process completed with exit code 2.
+
+16s nachgedacht
+Der Patcher liegt im Repository-Hauptverzeichnis, nicht im Ordner tools. Gefunden wurde:
+
+apply_release_1_4.py
+Der Workflow sucht dagegen nach:
+
+tools/apply_release_1_4.py
+Darum schlägt der Lauf fehl.
+
+Ändere in .github/workflows/apply-release-1.4.yml diese Zeile:
+
+run: python tools/apply_release_1_4.py --cleanup-bootstrap
+zu:
+
+run: python apply_release_1_4.py --cleanup-bootstrap
+Danach den Workflow erneut starten:
+
+Workflow-Datei öffnen.
+
+Stiftsymbol Edit this file.
+
+Pfad korrigieren.
+
+Commit changes.
+
+Unter Actions den Workflow erneut mit Run workflow ausführen.
+
+Alternativ kannst du die Python-Datei nach tools/apply_release_1_4.py verschieben. Die Änderung im Workflow ist auf dem Smartphone jedoch einfacher.
+
+
+hier nun dieser fehler: 
+Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Run actions/checkout@v4
+Syncing repository: Blackfront161/Revolution-News-Data
+Getting Git version info
+Temporarily overriding HOME='/home/runner/work/_temp/f9133826-fae9-41d9-96a9-4a249eecec8f' before making global git config changes
+Adding repository directory to the temporary git global config as a safe directory
+/usr/bin/git config --global --add safe.directory /home/runner/work/Revolution-News-Data/Revolution-News-Data
+Deleting the contents of '/home/runner/work/Revolution-News-Data/Revolution-News-Data'
+Initializing the repository
+Disabling automatic garbage collection
+Setting up auth
+Fetching the repository
+Determining the checkout info
+/usr/bin/git sparse-checkout disable
+/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Checking out the ref
+/usr/bin/git log -1 --format=%H
+b1283d44818b960f89395224de190b54f21556c0
+0s
+1s
+Run python apply_release_1_4.py --cleanup-bootstrap
+Traceback (most recent call last):
+  File "/home/runner/work/Revolution-News-Data/Revolution-News-Data/apply_release_1_4.py", line 520, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/Revolution-News-Data/Revolution-News-Data/apply_release_1_4.py", line 499, in main
+    patch_config()
+  File "/home/runner/work/Revolution-News-Data/Revolution-News-Data/apply_release_1_4.py", line 331, in patch_config
+    content = read("config.js")
+              ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/Revolution-News-Data/Revolution-News-Data/apply_release_1_4.py", line 313, in read
+    raise FileNotFoundError(f"Missing required repository file: {path}")
+FileNotFoundError: Missing required repository file: config.js
+Error: Process completed with exit code 1.
+
+3m 10s nachgedacht
+Korrektur zu meiner vorherigen Diagnose: config.js ist vorhanden. Der Fehler entsteht, weil der Patcher ursprünglich für den Ordner tools/ geschrieben wurde, jetzt aber im Hauptverzeichnis liegt. Dadurch zeigt parents[1] eine Ebene oberhalb des Repositorys.
+
+Einfachste Korrektur
+Öffne in GitHub:
+
+apply_release_1_4.py
+Ersetze:
+
+ROOT = Path(__file__).resolve().parents[1]
+durch:
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "tools" else SCRIPT_DIR
+Damit funktioniert der Patcher sowohl im Hauptverzeichnis als auch im Ordner tools.
+
+Bereinigung ebenfalls korrigieren
+Suche weiter unten:
+
+for relative in ["tools/apply_release_1_4.py", ".github/workflows/apply-release-1.4.yml"]:
+und ersetze es durch:
+
+for relative in [
+    "apply_release_1_4.py",
+    "tools/apply_release_1_4.py",
+    "apply-release-1.4.yml",
+    ".github/workflows/apply-release-1.4.yml",
+]:
+Fertige korrigierte Datei
+Du kannst stattdessen den gesamten Inhalt dieser Datei in apply_release_1_4.py einsetzen:
+
+apply_release_1_4_FIXED.py.txt
+
+Node-Warnung beseitigen
+Öffne anschließend:
+
+.github/workflows/apply-release-1.4.yml
+Ändere:
+
+uses: actions/checkout@v4
+zu:
+
+uses: actions/checkout@v7
+und:
+
+uses: actions/setup-python@v5
+zu:
+
+uses: actions/setup-python@v6
+checkout@v7 ist die aktuelle veröffentlichte Version; setup-python@v6 verwendet Node 24. 
+
+Hier ist der vollständig korrigierte Workflow:
+
+apply-release-1.4-FIXED.yml.txt
+
+Danach beide Änderungen committen und unter Actions → Apply World Revolution News 1.4 fixes → Run workflow erneut starten. Der konkrete config.js-Pfadfehler ist damit behoben.
+
+
+nun folgender fehler:
+Run python apply_release_1_4.py --cleanup-bootstrap
+  File "/home/runner/work/Revolution-News-Data/Revolution-News-Data/apply_release_1_4.py", line 9
+    SCRIPT_DIR = Path(__file__).resolve().parent ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "tools" else SCRIPT_DIR
+                                                 ^^^^
+SyntaxError: invalid syntax
+Error: Process completed with exit code 1.
+
+19s nachgedacht
+Die beiden Befehle stehen tatsächlich zusammen in Zeile 9/11.
+
+Ersetze die komplette fehlerhafte Zeile:
+
+SCRIPT_DIR = Path(__file__).resolve().parent ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "tools" else SCRIPT_DIR
+durch diese eine gültige Zeile mit Semikolon:
+
+SCRIPT_DIR = Path(__file__).resolve().parent; ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "tools" else SCRIPT_DIR
+Das Semikolon ist hier absichtlich gesetzt. Dadurch funktioniert es auch, wenn GitHubs mobiler Editor beim Einfügen Zeilenumbrüche entfernt.
+
+Danach:
+
+Commit changes drücken.
+
+Unter Actions den Workflow erneut starten.
+
+Die Node-Warnung kann ignoriert werden; sie verursacht diesen Fehler nicht.
+
+Der Dateianfang muss anschließend so aussehen:
+
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import json
+import re
+from pathlib import Path
+
+SCRIPT_DIR = Path(__file__).resolve().parent; ROOT = SCRIPT_DIR.parent if SCRIPT_DIR.name == "tools" else SCRIPT_DIR
+
+RELEASE_CSS = r'''/* World Revolution News 1.4 – mobile release polish */
+
+nun das: bitte gib mir eine korrekte datei zum einfachen einfügen
+Run git config user.name "WRN Release Bot"
+[main 53f4d59] Finalize World Revolution News 1.4
+ 11 files changed, 198 insertions(+), 473 deletions(-)
+ delete mode 100644 .github/workflows/apply-release-1.4.yml
+ create mode 100644 __pycache__/aggregate_podcasts.cpython-312.pyc
+ delete mode 100644 apply-release-1.4.yml
+ create mode 100644 release-1.4.css
+ rename apply_release_1_4.py => release-1.4.js (59%)
+From https://github.com/Blackfront161/Revolution-News-Data
+ * branch            main       -> FETCH_HEAD
+Current branch main is up to date.
+To https://github.com/Blackfront161/Revolution-News-Data
+ ! [remote rejected] HEAD -> main (refusing to allow a GitHub App to create or update workflow .github/workflows/update-podcasts.yml without workflows permission)
+error: failed to push some refs to 'https://github.com/Blackfront161/Revolution-News-Data'
+Error: Process completed with exit code 1.
+
+1m 6s nachgedacht
+Der Fehler kam aus zwei Stellen: Der Patcher änderte update-podcasts.yml und löschte Bootstrap-Dateien, während der Workflow mit git add -A sämtliche Änderungen aufnehmen wollte.
+
+Hier ist die vollständig korrigierte Datei:
+
+apply-release-1.4-SAFE.yml.txt
+
+Einfügen
+Öffne in GitHub:
+
+.github/workflows/apply-release-1.4.yml
+Dann:
+
+Stiftsymbol Edit this file drücken.
+
+Den gesamten bisherigen Inhalt löschen.
+
+Den vollständigen Inhalt der heruntergeladenen Datei einfügen.
+
+Commit changes drücken.
+
+Unter Actions → Apply World Revolution News 1.4 fixes safely den Workflow starten.
+
+Die Datei apply_release_1_4.py musst du diesmal nicht verändern.
+
+Der neue Workflow:
+
+überspringt Änderungen an update-podcasts.yml
+
+verändert keine Datei unter .github/workflows
+
+verwendet kein git add -A
+
+erzeugt keinen __pycache__
+
+löscht den Patcher nicht während des Laufs
+
+committet ausschließlich:
+
+config.js
+
+index.html
+
+status-center.js
+
+aggregate_podcasts.py
+
+service-worker.js
+
+release-1.4.css
+
+release-1.4.js
+
+Nach erfolgreichem Abschluss sollte am Ende stehen:
+
+Finalize World Revolution News 1.4
+...
+HEAD -> main
+und kein remote rejected mehr erscheinen. 
+
+
+Bibliothek
+/
+App Worldrevnews
+/
+apply-release-1.4-SAFE.yml.txt
+
+
+name: Apply World Revolution News 1.4 fixes safely
 
 on:
   workflow_dispatch:
@@ -7,12 +609,16 @@ permissions:
   contents: write
 
 concurrency:
-  group: apply-wrn-release-1-4
+  group: apply-wrn-release-1-4-safe
   cancel-in-progress: false
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
 
 jobs:
   apply:
     runs-on: ubuntu-latest
+
     steps:
       - name: Repository laden
         uses: actions/checkout@v7
@@ -22,33 +628,208 @@ jobs:
       - name: Python einrichten
         uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
-      - name: Release-Fixes anwenden
-        run: python apply_release_1_4.py --cleanup-bootstrap
-
-      - name: Dateien prüfen
+      - name: Release-Fixes sicher anwenden
+        shell: bash
         run: |
-          python -m py_compile aggregate_podcasts.py
-          node --check status-center.js
-          node --check release-1.4.js
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          import apply_release_1_4 as release
+
+          # Das Skript liegt aktuell im Repository-Hauptverzeichnis.
+          release.ROOT = Path.cwd()
+
+          # GitHub-Actions-Tokens dürfen ohne zusätzliche Berechtigung
+          # keine anderen Workflow-Dateien verändern.
+          release.patch_podcast_workflow = lambda: None
+
+          # Keine Bootstrap-Dateien während des Laufs löschen.
+          sys.argv = ["apply_release_1_4.py"]
+          raise SystemExit(release.main())
+          PY
+
+      - name: Ergebnis prüfen
+        shell: bash
+        run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          json.loads(Path('manifest.json').read_text(encoding='utf-8'))
-          print('Manifest und Skripte sind syntaktisch gültig.')
+
+          required = [
+              "config.js",
+              "index.html",
+              "status-center.js",
+              "aggregate_podcasts.py",
+              "service-worker.js",
+              "release-1.4.css",
+              "release-1.4.js",
+              "manifest.json",
+          ]
+
+          missing = [path for path in required if not Path(path).is_file()]
+          if missing:
+              raise SystemExit("Fehlende Dateien: " + ", ".join(missing))
+
+          compile(
+              Path("aggregate_podcasts.py").read_text(encoding="utf-8"),
+              "aggregate_podcasts.py",
+              "exec",
+          )
+          json.loads(Path("manifest.json").read_text(encoding="utf-8"))
+          print("Python, Manifest und erforderliche Release-Dateien sind gültig.")
           PY
 
+          node --check status-center.js
+          node --check release-1.4.js
+
+      - name: Unerlaubte Workflow-Änderungen verhindern
+        shell: bash
+        run: |
+          if ! git diff --quiet -- .github/workflows; then
+            echo "::error::Der Release-Lauf darf keine Dateien unter .github/workflows verändern."
+            git diff -- .github/workflows
+            exit 1
+          fi
+
       - name: Änderungen speichern
+        shell: bash
         run: |
           git config user.name "WRN Release Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add -A
+
+          # Nur ausdrücklich erlaubte App-Dateien aufnehmen.
+          git add --             config.js             index.html             status-center.js             aggregate_podcasts.py             service-worker.js             release-1.4.css             release-1.4.js
+
           if git diff --cached --quiet; then
-            echo "Keine Änderungen nötig."
-          else
-            git commit -m "Finalize World Revolution News 1.4"
-            git pull --rebase origin "${GITHUB_REF_NAME}"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            echo "Keine neuen Release-Änderungen nötig."
+            exit 0
           fi
 
+          echo "Folgende Dateien werden veröffentlicht:"
+          git diff --cached --name-status
+
+          git commit -m "Finalize World Revolution News 1.4"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+Bibliothek
+/
+App Worldrevnews
+/
+apply-release-1.4-SAFE.yml.txt
+
+
+name: Apply World Revolution News 1.4 fixes safely
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-wrn-release-1-4-safe
+  cancel-in-progress: false
+
+env:
+  PYTHONDONTWRITEBYTECODE: "1"
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Release-Fixes sicher anwenden
+        shell: bash
+        run: |
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          import apply_release_1_4 as release
+
+          # Das Skript liegt aktuell im Repository-Hauptverzeichnis.
+          release.ROOT = Path.cwd()
+
+          # GitHub-Actions-Tokens dürfen ohne zusätzliche Berechtigung
+          # keine anderen Workflow-Dateien verändern.
+          release.patch_podcast_workflow = lambda: None
+
+          # Keine Bootstrap-Dateien während des Laufs löschen.
+          sys.argv = ["apply_release_1_4.py"]
+          raise SystemExit(release.main())
+          PY
+
+      - name: Ergebnis prüfen
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          required = [
+              "config.js",
+              "index.html",
+              "status-center.js",
+              "aggregate_podcasts.py",
+              "service-worker.js",
+              "release-1.4.css",
+              "release-1.4.js",
+              "manifest.json",
+          ]
+
+          missing = [path for path in required if not Path(path).is_file()]
+          if missing:
+              raise SystemExit("Fehlende Dateien: " + ", ".join(missing))
+
+          compile(
+              Path("aggregate_podcasts.py").read_text(encoding="utf-8"),
+              "aggregate_podcasts.py",
+              "exec",
+          )
+          json.loads(Path("manifest.json").read_text(encoding="utf-8"))
+          print("Python, Manifest und erforderliche Release-Dateien sind gültig.")
+          PY
+
+          node --check status-center.js
+          node --check release-1.4.js
+
+      - name: Unerlaubte Workflow-Änderungen verhindern
+        shell: bash
+        run: |
+          if ! git diff --quiet -- .github/workflows; then
+            echo "::error::Der Release-Lauf darf keine Dateien unter .github/workflows verändern."
+            git diff -- .github/workflows
+            exit 1
+          fi
+
+      - name: Änderungen speichern
+        shell: bash
+        run: |
+          git config user.name "WRN Release Bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          # Nur ausdrücklich erlaubte App-Dateien aufnehmen.
+          git add --             config.js             index.html             status-center.js             aggregate_podcasts.py             service-worker.js             release-1.4.css             release-1.4.js
+
+          if git diff --cached --quiet; then
+            echo "Keine neuen Release-Änderungen nötig."
+            exit 0
+          fi
+
+          echo "Folgende Dateien werden veröffentlicht:"
+          git diff --cached --name-status
+
+          git commit -m "Finalize World Revolution News 1.4"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
