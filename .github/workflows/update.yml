@@ -1,29 +1,51 @@
 name: Update News
+
 on:
   schedule:
-    - cron: '0 */4 * * *' 
-  workflow_dispatch: 
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Run script
+
+      - name: Nachrichten aktualisieren
         run: python aggregate.py
+
+      - name: Quellenkatalog erzeugen
+        run: python build_source_catalog.py
+
+      - name: Nachrichtenquellen technisch prüfen
+        run: python check_news_sources.py
+
       - name: Commit and push
         run: |
           git config --global user.name "News-Bot"
           git config --global user.email "bot@revolutionnews.net"
-          git add news.json
-          git commit -m "Automatische News-Aktualisierung" || exit 0
-          git push
+          git add news.json events.json source-catalog.json source-health.json
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen"
+          else
+            git commit -m "Automatische News-, Quellen- und Statusaktualisierung"
+            git pull --rebase origin main
+            git push origin main
+          fi
