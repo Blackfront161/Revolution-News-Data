@@ -1,9 +1,9 @@
-/* WRN 1.5.8 – Menü-Icons und kompaktere Artikelaktionen */
+/* WRN 1.5.9 – besonders flache sticky Artikelaktionen */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav158Loaded) return;
-  window.__wrnAppNav158Loaded = true;
+  if (window.__wrnAppNav159Loaded) return;
+  window.__wrnAppNav159Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=158';
+    logo.src = './wrn-logo.webp?v=159';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -595,7 +595,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=158" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=159" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>

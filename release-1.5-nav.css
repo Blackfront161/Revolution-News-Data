@@ -1,4 +1,4 @@
-/* WRN 1.5.8 – Menü-Icons und kompaktere Artikelaktionen */
+/* WRN 1.5.9 – besonders flache sticky Artikelaktionen */
 
 :root {
   --wrn-red: #ff334f;
@@ -1258,5 +1258,65 @@ header h1 {
     min-height: 32px !important;
     padding: 4px 6px !important;
     font-size: 0.68rem !important;
+  }
+}
+
+
+/* =========================================================
+   WRN 1.5.9 – sticky Aktionsbereich nochmals deutlich flacher
+   ========================================================= */
+
+.wrn-detail-actions {
+  max-height: 29dvh !important;
+  padding:
+    3px
+    5px
+    max(3px, env(safe-area-inset-bottom))
+    5px !important;
+}
+
+.wrn-detail-actions .button-row {
+  gap: 3px !important;
+}
+
+.wrn-detail-actions .button-row > button,
+.wrn-detail-actions .button-row > a {
+  min-height: 25px !important;
+  padding: 2px 4px !important;
+  font-size: 0.59rem !important;
+  line-height: 1.05 !important;
+  border-radius: 6px !important;
+}
+
+.wrn-detail-actions .button-row > [id^="btn-"] {
+  min-height: 28px !important;
+  padding: 3px 5px !important;
+  font-size: 0.63rem !important;
+}
+
+@media (max-width: 720px) {
+  .wrn-detail-actions {
+    max-height: 30dvh !important;
+    padding:
+      2px
+      4px
+      max(2px, env(safe-area-inset-bottom))
+      4px !important;
+  }
+
+  .wrn-detail-actions .button-row {
+    gap: 3px !important;
+  }
+
+  .wrn-detail-actions .button-row > button,
+  .wrn-detail-actions .button-row > a {
+    min-height: 24px !important;
+    padding: 2px 3px !important;
+    font-size: 0.57rem !important;
+  }
+
+  .wrn-detail-actions .button-row > [id^="btn-"] {
+    min-height: 27px !important;
+    font-size: 0.61rem !important;
   }
 }
