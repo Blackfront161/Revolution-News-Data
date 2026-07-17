@@ -1,15 +1,17 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.4.3';
-const DATA_CACHE = 'wrn-data-v1.4.3';
+const APP_CACHE = 'wrn-app-v1.5.1';
+const DATA_CACHE = 'wrn-data-v1.5.1';
 
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
   './release-1.4.css',
+  './release-1.5-nav.css',
   './app-background.webp',
+  './wrn-logo.webp',
   './config.js',
   './offline-db.js',
   './data-control.js',
@@ -24,6 +26,7 @@ const APP_SHELL = [
   './reading-state.js',
   './audio-hub.js',
   './release-1.4.js',
+  './release-1.5-nav.js',
   './app.js',
   './manifest.json',
   './icon.svg'
@@ -61,9 +64,6 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-
-  // Nur eigene Dateien werden gespeichert. Fremde Artikelbilder und Webseiten
-  // werden absichtlich nicht dauerhaft gecacht.
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === 'navigate') {
@@ -86,7 +86,6 @@ self.addEventListener('fetch', event => {
 
 async function networkFirstNavigation(request) {
   const cache = await caches.open(APP_CACHE);
-
   try {
     const response = await fetchWithTimeout(request, 5000);
     if (response?.ok) await cache.put('./index.html', response.clone());
@@ -103,7 +102,6 @@ async function networkFirstNavigation(request) {
 
 async function networkFirstData(request) {
   const cache = await caches.open(DATA_CACHE);
-
   try {
     const response = await fetchWithTimeout(request, 8000);
     if (response?.ok) await cache.put(request, response.clone());
@@ -122,7 +120,6 @@ async function networkFirstData(request) {
 
 async function networkFirstAsset(request) {
   const cache = await caches.open(APP_CACHE);
-
   try {
     const response = await fetchWithTimeout(request, 5000);
     if (response?.ok) await cache.put(request, response.clone());
@@ -133,26 +130,9 @@ async function networkFirstAsset(request) {
   }
 }
 
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(APP_CACHE);
-  const cached = await cache.match(request, { ignoreSearch: true });
-
-  const updatePromise = fetch(request)
-    .then(async response => {
-      if (response?.ok) await cache.put(request, response.clone());
-      return response;
-    })
-    .catch(() => null);
-
-  if (cached) return cached;
-  const networkResponse = await updatePromise;
-  return networkResponse || new Response('', { status: 504 });
-}
-
 async function fetchWithTimeout(request, timeoutMs) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
   try {
     return await fetch(request, { signal: controller.signal, cache: 'no-store' });
   } finally {

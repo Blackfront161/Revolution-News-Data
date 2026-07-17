@@ -200,9 +200,69 @@ header h1 {
 
 details.filter-dropdown,
 .quick-nav-bar,
-.filter-bar,
+.filter-bar {
+  display: none !important;
+}
+
 #event-filter-panel {
   display: none !important;
+}
+
+body[data-wrn-tab="events"] #event-filter-panel {
+  display: block !important;
+  margin: 12px 14px 16px;
+  padding: 14px;
+  border: 1px solid rgba(0, 240, 255, 0.26);
+  border-radius: 18px;
+  background: rgba(7, 12, 18, 0.74);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+
+.wrn-search-panel {
+  position: sticky;
+  top: 122px;
+  z-index: 37;
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(5, 8, 12, 0.82);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.16);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+}
+
+.wrn-search-panel[hidden] {
+  display: none !important;
+}
+
+.wrn-search-input {
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  border: 1px solid rgba(0, 240, 255, 0.42);
+  border-radius: 14px;
+  background: rgba(9, 14, 20, 0.86);
+  color: #fff;
+  padding: 0 14px;
+  font: inherit;
+  outline: none;
+}
+
+.wrn-search-input:focus {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.18);
+}
+
+.wrn-search-clear {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 51, 79, 0.44);
+  background: rgba(255, 51, 79, 0.08);
+  color: var(--wrn-red, #ff334f);
+  font-size: 1.2rem;
+  cursor: pointer;
 }
 
 #news {
@@ -264,4 +324,11 @@ body.theme-soft .wrn-subtab {
   .wrn-header-icon { width: 38px; height: 38px; }
   header { gap: 8px; }
   .wrn-brand { gap: 8px; }
+}
+
+@media (max-width: 720px) {
+  .wrn-search-panel { top: 116px; }
+  body[data-wrn-tab="events"] #event-filter-panel {
+    margin: 10px 4px 14px;
+  }
 }

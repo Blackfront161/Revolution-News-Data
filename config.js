@@ -119,3 +119,25 @@ window.WRN_CONFIG = Object.freeze({
     `;
     document.head.appendChild(style);
 })();
+
+/* WRN 1.5.1 – Navigation automatisch laden; index.html muss nicht bearbeitet werden. */
+(() => {
+    if (window.__wrnNavigationLoader151) return;
+    window.__wrnNavigationLoader151 = true;
+
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = './release-1.5-nav.css?v=151';
+    document.head.appendChild(stylesheet);
+
+    const loadNavigation = () => {
+        if (document.querySelector('script[data-wrn-nav="151"]')) return;
+        const script = document.createElement('script');
+        script.src = './release-1.5-nav.js?v=151';
+        script.dataset.wrnNav = '151';
+        document.body.appendChild(script);
+    };
+
+    if (document.readyState === 'complete') loadNavigation();
+    else window.addEventListener('load', loadNavigation, { once: true });
+})();

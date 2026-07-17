@@ -145,11 +145,11 @@
     searchBtn.innerHTML = '🔎';
     searchBtn.title = 'Suche';
     searchBtn.onclick = () => {
-      const input = document.getElementById('search-input');
-      if (input) {
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => input.focus(), 200);
-      }
+      const panel = document.querySelector('.wrn-search-panel');
+      const input = panel?.querySelector('.wrn-search-input');
+      if (!panel || !input) return;
+      panel.hidden = !panel.hidden;
+      if (!panel.hidden) setTimeout(() => input.focus(), 80);
     };
 
     const menuBtn = document.createElement('button');
@@ -158,8 +158,7 @@
     menuBtn.innerHTML = '☰';
     menuBtn.title = 'Menü';
     menuBtn.onclick = () => {
-      if (typeof toggleMobileMoreMenu === 'function') toggleMobileMoreMenu();
-      else if (typeof openSourcesModal === 'function') openSourcesModal();
+      if (typeof openSourcesModal === 'function') openSourcesModal();
     };
 
     actionBox.appendChild(menuBtn);
@@ -180,7 +179,7 @@
     wrap.className = 'wrn-brand';
 
     const img = document.createElement('img');
-    img.src = './wrn-logo.webp?v=150';
+    img.src = './wrn-logo.webp?v=151';
     img.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -221,6 +220,32 @@
     subWrap.hidden = true;
     subWrap.innerHTML = '<div class="wrn-subtabs" role="tablist" aria-label="Unterkategorien"></div>';
     topTabs.insertAdjacentElement('afterend', subWrap);
+
+    const searchPanel = document.createElement('div');
+    searchPanel.className = 'wrn-search-panel';
+    searchPanel.hidden = true;
+    searchPanel.innerHTML = `
+      <input class="wrn-search-input" type="search" placeholder="Artikel durchsuchen…" aria-label="Artikel durchsuchen">
+      <button class="wrn-search-clear" type="button" aria-label="Suche leeren">×</button>
+    `;
+    subWrap.insertAdjacentElement('afterend', searchPanel);
+
+    const searchInput = searchPanel.querySelector('.wrn-search-input');
+    const clearButton = searchPanel.querySelector('.wrn-search-clear');
+
+    searchInput.addEventListener('input', () => {
+      const original = document.getElementById('search-input');
+      if (original) original.value = searchInput.value;
+      if (typeof applyFilters === 'function') applyFilters();
+    });
+
+    clearButton.addEventListener('click', () => {
+      searchInput.value = '';
+      const original = document.getElementById('search-input');
+      if (original) original.value = '';
+      if (typeof applyFilters === 'function') applyFilters();
+      searchInput.focus();
+    });
   }
 
   function renderSubTabs(tab) {
@@ -255,6 +280,12 @@
     const tab = TABS.find(t => t.key === key);
     if (!tab) return;
     state.activeTab = key;
+    document.body.dataset.wrnTab = key;
+
+    const searchPanel = document.querySelector('.wrn-search-panel');
+    if (searchPanel && key !== 'start' && key !== 'regions' && key !== 'topics') {
+      searchPanel.hidden = true;
+    }
 
     $all('.wrn-top-tab').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.key === key);
