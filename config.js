@@ -3,9 +3,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.4.6',
-    build: '2026.07.17-background-stronger',
-    releasedAt: '2026-07-17T08:10:00Z',
+    version: '1.5.2',
+    build: '2026.07.17-navigation-article-view',
+    releasedAt: '2026-07-17T09:45:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news.json',
@@ -19,19 +19,13 @@ window.WRN_CONFIG = Object.freeze({
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev'
 });
 
-/* 1.4.6 – Hintergrund deutlich sichtbarer */
+/* Sichtbarer Fahnenhintergrund */
 (() => {
     const style = document.createElement('style');
     style.id = 'wrn-background-stronger';
     style.textContent = `
-        body::before {
-            display: none !important;
-        }
-
-        html {
-            background: #050508 !important;
-        }
-
+        body::before { display: none !important; }
+        html { background: #050508 !important; }
         body {
             background-color: #050508 !important;
             background-image:
@@ -41,13 +35,12 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(3, 5, 9, 0.16) 46%,
                     rgba(3, 5, 9, 0.30) 100%
                 ),
-                url('./app-background.webp?v=146') !important;
+                url('./app-background.webp?v=152') !important;
             background-position: 52% top !important;
             background-size: cover !important;
             background-repeat: no-repeat !important;
             background-attachment: fixed !important;
         }
-
         .card {
             background-color: rgba(10, 10, 17, 0.72) !important;
             -webkit-backdrop-filter: blur(3px) !important;
@@ -56,17 +49,6 @@ window.WRN_CONFIG = Object.freeze({
                 0 8px 24px rgba(0, 0, 0, 0.35),
                 0 0 10px var(--shadow-accent) !important;
         }
-
-        header,
-        details.filter-dropdown,
-        .filter-bar,
-        .mobile-more-menu,
-        .top-action-bar {
-            background-color: rgba(5, 5, 8, 0.38) !important;
-            -webkit-backdrop-filter: blur(3px) !important;
-            backdrop-filter: blur(3px) !important;
-        }
-
         .feedback-modal,
         .podcast-options-modal,
         .podcast-library-modal,
@@ -74,15 +56,9 @@ window.WRN_CONFIG = Object.freeze({
         .global-media-bar {
             background-color: rgba(13, 13, 20, 0.94) !important;
         }
-
-        h1,
-        .title,
-        .teaser,
-        .full-content,
-        .meta {
+        h1, .title, .teaser, .full-content, .meta {
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
         }
-
         body.theme-light,
         body.theme-soft {
             background-image:
@@ -92,49 +68,35 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(244, 244, 249, 0.54) 48%,
                     rgba(244, 244, 249, 0.66) 100%
                 ),
-                url('./app-background.webp?v=146') !important;
+                url('./app-background.webp?v=152') !important;
         }
-
         body.theme-light .card,
         body.theme-soft .card {
             background-color: rgba(255, 255, 255, 0.82) !important;
         }
-
         @media (max-width: 720px) {
-            body {
-                background-position: 50% top !important;
-            }
-
-            .card {
-                background-color: rgba(10, 10, 17, 0.76) !important;
-            }
-
-            header,
-            details.filter-dropdown,
-            .filter-bar,
-            .mobile-more-menu {
-                background-color: rgba(5, 5, 8, 0.42) !important;
-            }
+            body { background-position: 50% top !important; }
+            .card { background-color: rgba(10, 10, 17, 0.76) !important; }
         }
     `;
     document.head.appendChild(style);
 })();
 
-/* WRN 1.5.1 – Navigation automatisch laden; index.html muss nicht bearbeitet werden. */
+/* Navigation automatisch laden – index.html muss nicht geändert werden. */
 (() => {
-    if (window.__wrnNavigationLoader151) return;
-    window.__wrnNavigationLoader151 = true;
+    if (window.__wrnNavigationLoader152) return;
+    window.__wrnNavigationLoader152 = true;
 
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = './release-1.5-nav.css?v=151';
+    stylesheet.href = './release-1.5-nav.css?v=152';
     document.head.appendChild(stylesheet);
 
     const loadNavigation = () => {
-        if (document.querySelector('script[data-wrn-nav="151"]')) return;
+        if (document.querySelector('script[data-wrn-nav="152"]')) return;
         const script = document.createElement('script');
-        script.src = './release-1.5-nav.js?v=151';
-        script.dataset.wrnNav = '151';
+        script.src = './release-1.5-nav.js?v=152';
+        script.dataset.wrnNav = '152';
         document.body.appendChild(script);
     };
 
