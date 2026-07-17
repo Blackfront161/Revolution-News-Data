@@ -1,9 +1,9 @@
-/* WRN 1.5.9 – besonders flache sticky Artikelaktionen */
+/* WRN 1.6.0 – bereinigte mobile Kopfzeile und animierter App-Start */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav159Loaded) return;
-  window.__wrnAppNav159Loaded = true;
+  if (window.__wrnAppNav160Loaded) return;
+  window.__wrnAppNav160Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=159';
+    logo.src = './wrn-logo.webp?v=160';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -526,7 +526,7 @@
     active?.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
 
-  function activateTab(key, fromSwipe = false) {
+  function activateTab(key, fromSwipe = false, runAction = true) {
     if (detailState) closeArticleDetail(false);
 
     const tab = TABS.find(item => item.key === key);
@@ -552,6 +552,9 @@
     });
 
     renderSubTabs(tab);
+
+    if (!runAction) return;
+
     try {
       tab.activate();
     } catch (error) {
@@ -595,7 +598,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=159" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=160" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -768,8 +771,8 @@
   }
 
   function attachSwipe() {
-    if (window.__wrnSwipe152Bound) return;
-    window.__wrnSwipe152Bound = true;
+    if (window.__wrnSwipe160Bound) return;
+    window.__wrnSwipe160Bound = true;
 
     let startX = 0;
     let startY = 0;
@@ -810,8 +813,8 @@
   }
 
   function patchLanguageFunction() {
-    if (window.__wrnLanguage152Patched) return;
-    window.__wrnLanguage152Patched = true;
+    if (window.__wrnLanguage160Patched) return;
+    window.__wrnLanguage160Patched = true;
 
     const original = window.changeLanguage;
     if (typeof original !== 'function') return;
@@ -858,9 +861,9 @@
 
   function observeStatusMessage() {
     const status = document.getElementById('status-container');
-    if (!status || status.dataset.wrnStatusObserver === '153') return;
+    if (!status || status.dataset.wrnStatusObserver === '160') return;
 
-    status.dataset.wrnStatusObserver = '153';
+    status.dataset.wrnStatusObserver = '160';
     const observer = new MutationObserver(updateNormalStatusVisibility);
     observer.observe(status, {
       childList: true,
@@ -870,9 +873,139 @@
     updateNormalStatusVisibility();
   }
 
+  function removeLegacyMobileArtifacts() {
+    document.querySelectorAll(
+      '#mobile-more-menu, .mobile-more-menu, #language-beta-note'
+    ).forEach(element => element.remove());
+  }
+
+  function watchForLegacyMobileArtifacts() {
+    if (window.__wrnLegacyMenuObserver160) return;
+    window.__wrnLegacyMenuObserver160 = true;
+
+    removeLegacyMobileArtifacts();
+
+    const observer = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (!(node instanceof Element)) continue;
+
+          if (
+            node.matches?.('#mobile-more-menu, .mobile-more-menu, #language-beta-note')
+          ) {
+            node.remove();
+            continue;
+          }
+
+          node.querySelectorAll?.(
+            '#mobile-more-menu, .mobile-more-menu, #language-beta-note'
+          ).forEach(element => element.remove());
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+
+    /* Nach dem vollständigen Start wird nichts Altes mehr neu erzeugt. */
+    window.setTimeout(() => observer.disconnect(), 12000);
+  }
+
+  function hasLoadedDataset() {
+    try {
+      return typeof allNewsData !== 'undefined'
+        && Array.isArray(allNewsData)
+        && allNewsData.length > 0;
+    } catch {
+      return false;
+    }
+  }
+
+  function hasRenderedArticles() {
+    return Boolean(document.querySelector(
+      '#feed-container .card, #archive-container .card'
+    ));
+  }
+
+  function hasRealStartupError() {
+    const status = document.getElementById('status-container');
+    const text = String(status?.textContent || '').toLocaleLowerCase();
+    return text.includes('kritischer start-fehler')
+      || text.includes('[ fehler ]')
+      || text.includes('critical startup error');
+  }
+
+  function removePrematureNoDataMessage() {
+    if (hasLoadedDataset()) return;
+
+    ['feed-container', 'archive-container'].forEach(id => {
+      const container = document.getElementById(id);
+      if (!container) return;
+
+      Array.from(container.children).forEach(child => {
+        const value = String(child.textContent || '')
+          .trim()
+          .toLocaleUpperCase();
+
+        if (value.includes('NO DATA FOUND')) child.remove();
+      });
+    });
+  }
+
+  let wrnReadyWasSent = false;
+
+  function signalAppReady() {
+    if (wrnReadyWasSent) return;
+    wrnReadyWasSent = true;
+    removePrematureNoDataMessage();
+    window.dispatchEvent(new CustomEvent('wrn-app-ready'));
+  }
+
+  function waitForInitialContent() {
+    const startedAt = Date.now();
+    let requestedInitialTab = false;
+
+    const check = () => {
+      removeLegacyMobileArtifacts();
+      removePrematureNoDataMessage();
+
+      /* Bei einem direkten Link zu einem anderen Reiter wird dieser erst
+         aktiviert, nachdem der Datensatz wirklich geladen ist. */
+      if (
+        !requestedInitialTab
+        && state.activeTab !== 'start'
+        && hasLoadedDataset()
+      ) {
+        requestedInitialTab = true;
+        activateTab(state.activeTab, false, false);
+      }
+
+      if (hasRenderedArticles() || hasRealStartupError()) {
+        window.setTimeout(signalAppReady, 180);
+        return;
+      }
+
+      /* Fallback: Bei sehr langsamen oder blockierten Verbindungen soll
+         die Startanimation nicht endlos stehen bleiben. */
+      if (Date.now() - startedAt >= 11000) {
+        signalAppReady();
+        return;
+      }
+
+      window.setTimeout(check, 110);
+    };
+
+    check();
+  }
+
   function init() {
     const header = document.querySelector('header');
     if (!header) return;
+
+    watchForLegacyMobileArtifacts();
+    removeLegacyMobileArtifacts();
 
     injectBrand(header);
     buildTopNavigation();
@@ -887,7 +1020,15 @@
 
     const hashKey = location.hash?.replace('#tab=', '');
     if (hashKey && TABS.some(tab => tab.key === hashKey)) state.activeTab = hashKey;
-    activateTab(state.activeTab);
+
+    /* Nur die Navigation markieren. Die Haupt-App lädt Global selbst,
+       sobald news.json und events.json bereit sind. */
+    activateTab(state.activeTab, false, false);
+
+    if (!window.__wrnInitialContentWatch160) {
+      window.__wrnInitialContentWatch160 = true;
+      waitForInitialContent();
+    }
   }
 
   window.addEventListener('popstate', () => {
