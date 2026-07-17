@@ -125,6 +125,7 @@
     #content-type-filter { grid-column: 1 / -1; }
     .header-controls { grid-template-columns: 1fr !important; }
 }
+
 /* 1.4.1 – vereinfachte Nutzeroberfläche und klare Farblogik */
 :root {
     --wrn-red: #ff334f;
@@ -238,6 +239,7 @@
         min-height: 46px;
     }
 }
+
 /* 1.4.2 – orange Akzente vollständig durch Rot ersetzt */
 :root,
 body.theme-dark,
@@ -292,4 +294,122 @@ details.filter-dropdown summary,
 .btn-expand,
 .info-text-box strong {
     border-color: var(--color-accent);
+}
+
+/* 1.4.3 – abgedunkelter filmischer App-Hintergrund */
+html {
+    background: #050508;
+}
+
+body {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    background: transparent !important;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(180deg,
+            rgba(3, 5, 9, 0.78) 0%,
+            rgba(3, 5, 9, 0.84) 42%,
+            rgba(3, 5, 9, 0.91) 100%),
+        url('./app-background.webp');
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: translateZ(0);
+}
+
+/* Die Oberfläche bleibt lesbar, ohne das Motiv vollständig zu verdecken. */
+.card {
+    background-color: rgba(13, 13, 20, 0.88) !important;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+header,
+details.filter-dropdown,
+.filter-bar,
+.mobile-more-menu,
+.top-action-bar {
+    background-color: rgba(5, 5, 8, 0.66) !important;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+}
+
+header {
+    padding: 12px 10px 15px !important;
+    border-radius: 6px;
+}
+
+.feedback-modal,
+.podcast-options-modal,
+.podcast-library-modal,
+.system-status-modal,
+.global-media-bar {
+    background-color: rgba(13, 13, 20, 0.96) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+/* Helle Designs behalten das Motiv, erhalten aber eine hellere Schutzschicht. */
+body.theme-light::before,
+body.theme-soft::before {
+    background-image:
+        linear-gradient(180deg,
+            rgba(244, 244, 249, 0.78) 0%,
+            rgba(244, 244, 249, 0.84) 48%,
+            rgba(244, 244, 249, 0.92) 100%),
+        url('./app-background.webp');
+    filter: saturate(0.72);
+}
+
+body.theme-light .card,
+body.theme-soft .card {
+    background-color: rgba(255, 255, 255, 0.90) !important;
+}
+
+body.theme-light header,
+body.theme-light details.filter-dropdown,
+body.theme-light .filter-bar,
+body.theme-soft header,
+body.theme-soft details.filter-dropdown,
+body.theme-soft .filter-bar {
+    background-color: rgba(244, 244, 249, 0.80) !important;
+}
+
+@media (max-width: 720px) {
+    body::before {
+        /* Fahne bleibt oben sichtbar; der cyanfarbene Turm liegt hinter dem Feed. */
+        background-position: 52% top;
+    }
+
+    .card {
+        background-color: rgba(13, 13, 20, 0.91) !important;
+        -webkit-backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px);
+    }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+    .card,
+    header,
+    details.filter-dropdown,
+    .filter-bar,
+    .mobile-more-menu,
+    .top-action-bar,
+    .feedback-modal,
+    .podcast-options-modal,
+    .podcast-library-modal,
+    .system-status-modal,
+    .global-media-bar {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
 }

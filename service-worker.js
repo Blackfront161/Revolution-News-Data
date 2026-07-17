@@ -1,14 +1,15 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.4.2';
-const DATA_CACHE = 'wrn-data-v1.4.2';
+const APP_CACHE = 'wrn-app-v1.4.3';
+const DATA_CACHE = 'wrn-data-v1.4.3';
 
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
   './release-1.4.css',
+  './app-background.webp',
   './config.js',
   './offline-db.js',
   './data-control.js',
