@@ -1,15 +1,15 @@
-/* WRN 1.5.3 – Reiter, Mehr-Menü, Artikelansicht und Status-Feinschliff */
+/* WRN 1.5.5 – vereinfachte Kopfzeile und feste Artikelaktionen */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav153Loaded) return;
-  window.__wrnAppNav153Loaded = true;
+  if (window.__wrnAppNav155Loaded) return;
+  window.__wrnAppNav155Loaded = true;
 
   const NAV_TEXTS = {
     de: {
       start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', more: 'Mehr',
-      search: 'Suche', menu: 'Quellen', settings: 'Mehr & Einstellungen',
+      search: 'Suche', menu: 'Quellen', settings: 'Mehr & Einstellungen', sources: 'Quellen',
       back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format',
       sort: 'Sortierung', info: 'Info', contact: 'Kontakt', donate: 'Spenden',
@@ -18,7 +18,7 @@
     en: {
       start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', more: 'More',
-      search: 'Search', menu: 'Sources', settings: 'More & settings',
+      search: 'Search', menu: 'Sources', settings: 'More & settings', sources: 'Sources',
       back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format',
       sort: 'Sorting', info: 'Info', contact: 'Contact', donate: 'Donate',
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=153';
+    logo.src = './wrn-logo.webp?v=155';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -310,6 +310,7 @@
     const actions = document.createElement('div');
     actions.className = 'wrn-more-actions';
     actions.append(
+      actionButton(texts().sources, () => typeof openSourcesModal === 'function' && openSourcesModal()),
       actionButton(texts().info, () => typeof openInfo === 'function' && openInfo()),
       actionButton(texts().contact, () => typeof openFeedback === 'function' && openFeedback()),
       actionButton(texts().donate, () => typeof openDonate === 'function' && openDonate()),
@@ -362,16 +363,6 @@
     const actions = document.createElement('div');
     actions.className = 'wrn-header-actions';
 
-    const sourcesButton = makeButton(
-      'wrn-header-button wrn-header-button-icon',
-      '☰',
-      texts().menu
-    );
-    sourcesButton.setAttribute('aria-label', texts().menu);
-    sourcesButton.addEventListener('click', () => {
-      closeMorePanel();
-      if (typeof openSourcesModal === 'function') openSourcesModal();
-    });
 
     const searchButton = makeButton(
       'wrn-header-button wrn-header-button-icon',
@@ -396,7 +387,7 @@
     moreButton.setAttribute('aria-expanded', 'false');
     moreButton.addEventListener('click', toggleMorePanel);
 
-    actions.append(sourcesButton, searchButton, moreButton);
+    actions.append(searchButton, moreButton);
 
     if (!right.parentElement) header.appendChild(right);
     right.appendChild(actions);
@@ -504,12 +495,7 @@
     const moreButton = $('.wrn-header-button-more');
     if (moreButton) moreButton.textContent = copy.more;
 
-    const sourcesButton = $('.wrn-header-actions button:nth-child(1)');
-    const searchButton = $('.wrn-header-actions button:nth-child(2)');
-    if (sourcesButton) {
-      sourcesButton.title = copy.menu;
-      sourcesButton.setAttribute('aria-label', copy.menu);
-    }
+    const searchButton = $('.wrn-header-actions .wrn-header-button-icon');
     if (searchButton) {
       searchButton.title = copy.search;
       searchButton.setAttribute('aria-label', copy.search);
@@ -530,11 +516,12 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=153" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=155" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
       </div>
+      <div class="wrn-detail-actions" aria-label="Artikelaktionen"></div>
     `;
 
     $('.wrn-detail-back', detail).addEventListener('click', () => {
@@ -574,6 +561,16 @@
     card.setAttribute('role', 'article');
     card.removeAttribute('tabindex');
 
+    const buttonRow = card.querySelector('.button-row');
+    const buttonPlaceholder = document.createElement('div');
+    buttonPlaceholder.className = 'wrn-button-row-placeholder';
+    const actionHost = $('.wrn-detail-actions', detail);
+
+    if (buttonRow && actionHost) {
+      buttonRow.parentNode.insertBefore(buttonPlaceholder, buttonRow);
+      actionHost.appendChild(buttonRow);
+    }
+
     const title = card.querySelector('.title')?.textContent?.trim() || texts().article;
     if (heading) heading.textContent = title;
 
@@ -587,6 +584,8 @@
       placeholder,
       index,
       savedScrollY,
+      buttonRow,
+      buttonPlaceholder,
       historyPushed: false
     };
 
@@ -601,11 +600,22 @@
   function closeArticleDetail(restoreScroll = true) {
     if (!detailState) return;
 
-    const { card, placeholder, index, savedScrollY } = detailState;
+    const {
+      card,
+      placeholder,
+      index,
+      savedScrollY,
+      buttonRow,
+      buttonPlaceholder
+    } = detailState;
     const detail = $('.wrn-article-detail');
 
     if (card?.dataset.expanded === 'true' && typeof toggleArticle === 'function') {
       toggleArticle(index);
+    }
+
+    if (buttonPlaceholder?.parentNode && buttonRow) {
+      buttonPlaceholder.parentNode.replaceChild(buttonRow, buttonPlaceholder);
     }
 
     card?.classList.remove('wrn-detail-card');
