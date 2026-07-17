@@ -3,9 +3,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.5.2',
-    build: '2026.07.17-navigation-article-view',
-    releasedAt: '2026-07-17T09:45:00Z',
+    version: '1.5.3',
+    build: '2026.07.17-header-meta-refinement',
+    releasedAt: '2026-07-17T10:30:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news.json',
@@ -35,7 +35,7 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(3, 5, 9, 0.16) 46%,
                     rgba(3, 5, 9, 0.30) 100%
                 ),
-                url('./app-background.webp?v=152') !important;
+                url('./app-background.webp?v=153') !important;
             background-position: 52% top !important;
             background-size: cover !important;
             background-repeat: no-repeat !important;
@@ -68,7 +68,7 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(244, 244, 249, 0.54) 48%,
                     rgba(244, 244, 249, 0.66) 100%
                 ),
-                url('./app-background.webp?v=152') !important;
+                url('./app-background.webp?v=153') !important;
         }
         body.theme-light .card,
         body.theme-soft .card {
@@ -84,19 +84,19 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Navigation automatisch laden – index.html muss nicht geändert werden. */
 (() => {
-    if (window.__wrnNavigationLoader152) return;
-    window.__wrnNavigationLoader152 = true;
+    if (window.__wrnNavigationLoader153) return;
+    window.__wrnNavigationLoader153 = true;
 
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = './release-1.5-nav.css?v=152';
+    stylesheet.href = './release-1.5-nav.css?v=153';
     document.head.appendChild(stylesheet);
 
     const loadNavigation = () => {
-        if (document.querySelector('script[data-wrn-nav="152"]')) return;
+        if (document.querySelector('script[data-wrn-nav="153"]')) return;
         const script = document.createElement('script');
-        script.src = './release-1.5-nav.js?v=152';
-        script.dataset.wrnNav = '152';
+        script.src = './release-1.5-nav.js?v=153';
+        script.dataset.wrnNav = '153';
         document.body.appendChild(script);
     };
 

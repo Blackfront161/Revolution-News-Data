@@ -1,4 +1,4 @@
-/* WRN 1.5.2 – mobile News-App-Navigation, Mehr-Menü und Artikelansicht */
+/* WRN 1.5.3 – verfeinerte Kopfzeile, Metadaten und einheitliche Schrift */
 
 :root {
   --wrn-red: #ff334f;
@@ -678,5 +678,184 @@ body.theme-soft .wrn-article-detail {
   .wrn-more-grid,
   .wrn-more-actions {
     grid-template-columns: 1fr;
+  }
+}
+/* =========================================================
+   WRN 1.5.3 – Feinschliff
+   ========================================================= */
+
+/* Kompaktere Kopfzeile: Logo und Titel näher zusammen,
+   Titel größer, die drei Bedienknöpfe deutlich kleiner. */
+header {
+  min-height: 52px !important;
+  padding: 5px 7px !important;
+  gap: 3px !important;
+}
+
+.wrn-brand {
+  gap: 3px !important;
+}
+
+.wrn-brand img {
+  width: 34px !important;
+  height: 34px !important;
+  flex: 0 0 34px !important;
+  border-radius: 8px !important;
+}
+
+header h1 {
+  font-family: inherit !important;
+  font-size: clamp(0.91rem, 3.65vw, 1.14rem) !important;
+  line-height: 1 !important;
+  letter-spacing: 0.005em !important;
+  white-space: nowrap !important;
+}
+
+.wrn-header-actions {
+  gap: 3px !important;
+}
+
+.wrn-header-button {
+  width: 30px !important;
+  min-width: 30px !important;
+  max-width: 30px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  border-radius: 7px !important;
+  font-family: inherit !important;
+  font-size: 0.78rem !important;
+  line-height: 1 !important;
+}
+
+.wrn-header-button-icon {
+  font-size: 0.94rem !important;
+}
+
+.wrn-header-button-more {
+  width: auto !important;
+  min-width: 42px !important;
+  max-width: none !important;
+  padding: 0 6px !important;
+  font-size: 0.68rem !important;
+}
+
+/* Die Reiter verwenden dieselbe Schriftfamilie wie Artikel und App. */
+.wrn-top-tab,
+.wrn-subtab,
+.wrn-search-input,
+.wrn-more-field select,
+.wrn-more-action,
+.wrn-detail-back,
+.wrn-detail-heading {
+  font-family: inherit !important;
+}
+
+.wrn-top-tab {
+  font-size: 1rem !important;
+  font-weight: 750 !important;
+  letter-spacing: 0 !important;
+}
+
+.wrn-subtab {
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+}
+
+/* Sticky-Positionen an die kleinere Kopfzeile anpassen. */
+.wrn-top-tabs {
+  top: 52px !important;
+}
+
+.wrn-subtabs-wrap,
+.wrn-search-panel {
+  top: 100px !important;
+}
+
+.wrn-more-panel {
+  top: 55px !important;
+  max-height: calc(100dvh - 60px) !important;
+}
+
+/* Die normale Statusmeldung „Aktuelle Updates“ wird entfernt.
+   Fehler-, Lade- und Offline-Meldungen bleiben weiterhin sichtbar. */
+#status-container.wrn-normal-update {
+  display: none !important;
+}
+
+/* Werte nach QUELLE, AUTOR*IN und DATUM in Grün.
+   Die Bezeichnungen selbst behalten ihre bisherige Farbe. */
+.card .meta > .source-profile-link,
+.card .meta > span:not(.meta-label),
+.wrn-detail-card .meta > .source-profile-link,
+.wrn-detail-card .meta > span:not(.meta-label) {
+  color: var(--color-green) !important;
+}
+
+/* Auch eine Quelle ohne Profilbutton ist grün. */
+.card .meta > span[style],
+.wrn-detail-card .meta > span[style] {
+  color: var(--color-green) !important;
+}
+
+@media (max-width: 720px) {
+  header {
+    min-height: 50px !important;
+    padding: 5px 6px !important;
+  }
+
+  .wrn-brand img {
+    width: 33px !important;
+    height: 33px !important;
+    flex-basis: 33px !important;
+  }
+
+  header h1 {
+    font-size: clamp(0.88rem, 3.55vw, 1.02rem) !important;
+  }
+
+  .wrn-top-tabs {
+    top: 50px !important;
+  }
+
+  .wrn-subtabs-wrap,
+  .wrn-search-panel {
+    top: 97px !important;
+  }
+
+  .wrn-more-panel {
+    top: 53px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .wrn-brand {
+    gap: 2px !important;
+  }
+
+  .wrn-brand img {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  header h1 {
+    font-size: 0.82rem !important;
+  }
+
+  .wrn-header-button {
+    width: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+  }
+
+  .wrn-header-button-more {
+    width: auto !important;
+    min-width: 39px !important;
+    max-width: none !important;
+    padding: 0 5px !important;
+    font-size: 0.64rem !important;
   }
 }

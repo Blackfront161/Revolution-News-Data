@@ -1,9 +1,9 @@
-/* WRN 1.5.2 – Reiter, Mehr-Menü und Artikel-Einzelansicht */
+/* WRN 1.5.3 – Reiter, Mehr-Menü, Artikelansicht und Status-Feinschliff */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav152Loaded) return;
-  window.__wrnAppNav152Loaded = true;
+  if (window.__wrnAppNav153Loaded) return;
+  window.__wrnAppNav153Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=152';
+    logo.src = './wrn-logo.webp?v=153';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -530,7 +530,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=152" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=153" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -727,6 +727,53 @@
     };
   }
 
+  function updateNormalStatusVisibility() {
+    const status = document.getElementById('status-container');
+    if (!status) return;
+
+    const normalized = String(status.textContent || '')
+      .trim()
+      .replace(/\s+/g, ' ')
+      .toLocaleLowerCase();
+
+    const normalLabels = new Set([
+      'aktuelle updates:',
+      'aktuelle updates',
+      'latest updates:',
+      'latest updates',
+      'últimas actualizaciones:',
+      'últimas actualizaciones',
+      'dernières mises à jour :',
+      'dernières mises à jour:',
+      'ultimi aggiornamenti:',
+      'ultimi aggiornamenti',
+      'últimas atualizações:',
+      'últimas atualizações',
+      'последние обновления:',
+      'последние обновления',
+      'τελευταίες ενημερώσεις:',
+      'τελευταίες ενημερώσεις',
+      'son güncellemeler:',
+      'son güncellemeler'
+    ]);
+
+    status.classList.toggle('wrn-normal-update', normalLabels.has(normalized));
+  }
+
+  function observeStatusMessage() {
+    const status = document.getElementById('status-container');
+    if (!status || status.dataset.wrnStatusObserver === '153') return;
+
+    status.dataset.wrnStatusObserver = '153';
+    const observer = new MutationObserver(updateNormalStatusVisibility);
+    observer.observe(status, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+    updateNormalStatusVisibility();
+  }
+
   function init() {
     const header = document.querySelector('header');
     if (!header) return;
@@ -740,6 +787,7 @@
     attachSwipe();
     patchLanguageFunction();
     updateLanguage();
+    observeStatusMessage();
 
     const hashKey = location.hash?.replace('#tab=', '');
     if (hashKey && TABS.some(tab => tab.key === hashKey)) state.activeTab = hashKey;
