@@ -1,4 +1,4 @@
-/* WRN 1.5.6 – Hamburger-Menü und zweireihige Artikelaktionen */
+/* WRN 1.5.8 – Menü-Icons und kompaktere Artikelaktionen */
 
 :root {
   --wrn-red: #ff334f;
@@ -1113,5 +1113,150 @@ header h1 {
 @media (max-width: 390px) {
   header h1 {
     font-size: 0.97rem !important;
+  }
+}
+/* =========================================================
+   WRN 1.5.7 – Symbole im Hamburger-Menü
+   ========================================================= */
+
+.wrn-more-action {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 9px !important;
+  padding: 8px 11px !important;
+  text-align: left !important;
+}
+
+.wrn-menu-action-icon {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.wrn-menu-action-icon svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.wrn-menu-action-label {
+  min-width: 0;
+}
+
+/* Spenden bleibt durch den rot-schwarzen Stern besonders erkennbar. */
+.wrn-more-action[data-wrn-action="donate"] {
+  color: var(--wrn-red) !important;
+  border-color: rgba(255, 51, 79, 0.52) !important;
+  background: rgba(255, 51, 79, 0.075) !important;
+}
+
+.wrn-more-action[data-wrn-action="donate"] .wrn-menu-action-icon {
+  filter: drop-shadow(0 0 4px rgba(255, 51, 79, 0.34));
+}
+
+/* Quellen, Info, Speicher und Status erhalten cyanfarbene Symbole. */
+.wrn-more-action[data-wrn-action="sources"] .wrn-menu-action-icon,
+.wrn-more-action[data-wrn-action="info"] .wrn-menu-action-icon,
+.wrn-more-action[data-wrn-action="storage"] .wrn-menu-action-icon,
+.wrn-more-action[data-wrn-action="status"] .wrn-menu-action-icon {
+  color: var(--color-cyan);
+}
+
+/* Kontakt bleibt violett wie in der früheren Kopfzeile. */
+.wrn-more-action[data-wrn-action="contact"] .wrn-menu-action-icon {
+  color: #b026ff;
+}
+
+/* Zurücksetzen wird bewusst rot dargestellt. */
+.wrn-more-action[data-wrn-action="clear"] .wrn-menu-action-icon {
+  color: var(--wrn-red);
+}
+
+@media (max-width: 720px) {
+  .wrn-more-action {
+    min-height: 42px !important;
+  }
+}
+/* =========================================================
+   WRN 1.5.8 – kompaktere Artikelaktionen
+   ========================================================= */
+
+/* Weiterlesen/Zuklappen in der Einzelansicht vollständig ausblenden. */
+.wrn-detail-actions .btn-expand,
+.wrn-detail-actions [id^="expand-"] {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Untere Aktionsfläche etwas flacher. */
+.wrn-detail-actions {
+  max-height: 36dvh !important;
+  padding:
+    6px
+    7px
+    max(6px, env(safe-area-inset-bottom))
+    7px !important;
+}
+
+.wrn-detail-actions .button-row {
+  gap: 5px !important;
+}
+
+/* Alle sichtbaren Aktionsknöpfe kompakter. */
+.wrn-detail-actions .button-row > button,
+.wrn-detail-actions .button-row > a {
+  min-height: 31px !important;
+  padding: 4px 6px !important;
+  font-size: 0.66rem !important;
+  line-height: 1.12 !important;
+  border-radius: 7px !important;
+}
+
+/* Übersetzen bleibt als Hauptaktion etwas größer als die restlichen Buttons. */
+.wrn-detail-actions .button-row > [id^="btn-"] {
+  min-height: 34px !important;
+  padding: 5px 7px !important;
+  font-size: 0.71rem !important;
+}
+
+@media (max-width: 720px) {
+  .wrn-detail-actions {
+    max-height: 38dvh !important;
+    padding:
+      5px
+      6px
+      max(5px, env(safe-area-inset-bottom))
+      6px !important;
+  }
+
+  .wrn-detail-actions .button-row {
+    gap: 4px !important;
+  }
+
+  .wrn-detail-actions .button-row > button,
+  .wrn-detail-actions .button-row > a {
+    min-height: 29px !important;
+    padding: 3px 5px !important;
+    font-size: 0.63rem !important;
+  }
+
+  .wrn-detail-actions .button-row > [id^="btn-"] {
+    min-height: 32px !important;
+    padding: 4px 6px !important;
+    font-size: 0.68rem !important;
   }
 }

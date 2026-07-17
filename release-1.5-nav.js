@@ -1,9 +1,9 @@
-/* WRN 1.5.6 – Hamburger-Menü und zweireihige Artikelaktionen */
+/* WRN 1.5.8 – Menü-Icons und kompaktere Artikelaktionen */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav156Loaded) return;
-  window.__wrnAppNav156Loaded = true;
+  if (window.__wrnAppNav158Loaded) return;
+  window.__wrnAppNav158Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=156';
+    logo.src = './wrn-logo.webp?v=158';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -250,8 +250,39 @@
     return field;
   }
 
-  function actionButton(label, callback) {
-    const button = makeButton('wrn-more-action', label);
+  function donationStarMarkup() {
+    return `
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="wrnMenuStarGrad157" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="50%" stop-color="#ff0033"></stop>
+            <stop offset="50%" stop-color="#050508"></stop>
+          </linearGradient>
+        </defs>
+        <path
+          d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+          fill="url(#wrnMenuStarGrad157)"
+          stroke="#ff334f"
+          stroke-width="1.1"
+          stroke-linejoin="round">
+        </path>
+      </svg>
+    `;
+  }
+
+  function actionButton(label, iconMarkup, actionKey, callback) {
+    const button = makeButton('wrn-more-action', '');
+    button.dataset.wrnAction = actionKey || '';
+
+    const icon = document.createElement('span');
+    icon.className = 'wrn-menu-action-icon';
+    icon.innerHTML = iconMarkup || '';
+
+    const text = document.createElement('span');
+    text.className = 'wrn-menu-action-label';
+    text.textContent = label;
+
+    button.append(icon, text);
     button.addEventListener('click', () => {
       closeMorePanel();
       try {
@@ -310,13 +341,48 @@
     const actions = document.createElement('div');
     actions.className = 'wrn-more-actions';
     actions.append(
-      actionButton(texts().sources, () => typeof openSourcesModal === 'function' && openSourcesModal()),
-      actionButton(texts().info, () => typeof openInfo === 'function' && openInfo()),
-      actionButton(texts().contact, () => typeof openFeedback === 'function' && openFeedback()),
-      actionButton(texts().donate, () => typeof openDonate === 'function' && openDonate()),
-      actionButton(texts().storage, () => typeof openDataControl === 'function' && openDataControl()),
-      actionButton(texts().status, () => typeof openSystemStatus === 'function' && openSystemStatus()),
-      actionButton(texts().clear, () => typeof clearAllData === 'function' && clearAllData())
+      actionButton(
+        texts().sources,
+        '☰',
+        'sources',
+        () => typeof openSourcesModal === 'function' && openSourcesModal()
+      ),
+      actionButton(
+        texts().info,
+        'ℹ️',
+        'info',
+        () => typeof openInfo === 'function' && openInfo()
+      ),
+      actionButton(
+        texts().contact,
+        '💬',
+        'contact',
+        () => typeof openFeedback === 'function' && openFeedback()
+      ),
+      actionButton(
+        texts().donate,
+        donationStarMarkup(),
+        'donate',
+        () => typeof openDonate === 'function' && openDonate()
+      ),
+      actionButton(
+        texts().storage,
+        '💾',
+        'storage',
+        () => typeof openDataControl === 'function' && openDataControl()
+      ),
+      actionButton(
+        texts().status,
+        '●',
+        'status',
+        () => typeof openSystemStatus === 'function' && openSystemStatus()
+      ),
+      actionButton(
+        texts().clear,
+        '🗑️',
+        'clear',
+        () => typeof clearAllData === 'function' && clearAllData()
+      )
     );
 
     panel.append(head, grid, actions);
@@ -529,7 +595,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=156" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=158" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -582,6 +648,13 @@
     if (buttonRow && actionHost) {
       buttonRow.parentNode.insertBefore(buttonPlaceholder, buttonRow);
       actionHost.appendChild(buttonRow);
+
+      const expandButton = buttonRow.querySelector('.btn-expand, [id^="expand-"]');
+      if (expandButton) {
+        expandButton.hidden = true;
+        expandButton.setAttribute('aria-hidden', 'true');
+        expandButton.tabIndex = -1;
+      }
     }
 
     const title = card.querySelector('.title')?.textContent?.trim() || texts().article;
