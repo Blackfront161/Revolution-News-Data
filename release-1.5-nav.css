@@ -1,4 +1,4 @@
-/* WRN 1.5.5 – vereinfachte Kopfzeile und feste Artikelaktionen */
+/* WRN 1.5.6 – Hamburger-Menü und zweireihige Artikelaktionen */
 
 :root {
   --wrn-red: #ff334f;
@@ -995,5 +995,123 @@ header h1 {
   .wrn-detail-actions .button-row > a {
     min-height: 36px !important;
     font-size: 0.72rem !important;
+  }
+}
+/* =========================================================
+   WRN 1.5.6 – Hamburger zurück, roter Mehr-Knopf entfernt
+   ========================================================= */
+
+.wrn-header-actions {
+  gap: 4px !important;
+}
+
+.wrn-header-menu,
+.wrn-header-search {
+  width: 30px !important;
+  min-width: 30px !important;
+  max-width: 30px !important;
+  height: 30px !important;
+  padding: 0 !important;
+}
+
+/* Der alte rote Mehr-Knopf wird in dieser Version nicht mehr erzeugt. */
+.wrn-header-button-more {
+  display: none !important;
+}
+
+/* Mehr Platz für den Schriftzug durch nur noch zwei Kopfbuttons. */
+header h1 {
+  font-size: clamp(1.05rem, 4.25vw, 1.31rem) !important;
+}
+
+/* =========================================================
+   Artikelaktionen: Übersetzen oben, alle anderen darunter
+   ========================================================= */
+
+.wrn-detail-actions {
+  display: block !important;
+  box-sizing: border-box;
+  max-height: 42dvh;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  padding:
+    9px
+    9px
+    max(9px, env(safe-area-inset-bottom))
+    9px !important;
+  scrollbar-width: thin;
+}
+
+.wrn-detail-actions .button-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+}
+
+/* Der eigentliche Übersetzen-Knopf besitzt die ID btn-<Nummer>. */
+.wrn-detail-actions .button-row > [id^="btn-"] {
+  grid-column: 1 / -1 !important;
+  min-height: 42px !important;
+  font-weight: 800 !important;
+}
+
+.wrn-detail-actions .button-row > button,
+.wrn-detail-actions .button-row > a {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 38px !important;
+  padding: 8px 7px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  white-space: normal !important;
+  line-height: 1.18 !important;
+}
+
+/* Der Artikel ist bereits vollständig offen. */
+.wrn-detail-actions .btn-expand {
+  display: none !important;
+}
+
+@media (max-width: 720px) {
+  header h1 {
+    font-size: clamp(1rem, 4.1vw, 1.20rem) !important;
+  }
+
+  .wrn-detail-actions {
+    max-height: 44dvh;
+    padding:
+      7px
+      7px
+      max(7px, env(safe-area-inset-bottom))
+      7px !important;
+  }
+
+  .wrn-detail-actions .button-row {
+    gap: 6px !important;
+  }
+
+  .wrn-detail-actions .button-row > button,
+  .wrn-detail-actions .button-row > a {
+    min-height: 36px !important;
+    padding: 7px 5px !important;
+    font-size: 0.70rem !important;
+  }
+
+  .wrn-detail-actions .button-row > [id^="btn-"] {
+    min-height: 40px !important;
+    font-size: 0.76rem !important;
+  }
+}
+
+@media (max-width: 390px) {
+  header h1 {
+    font-size: 0.97rem !important;
   }
 }

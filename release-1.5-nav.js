@@ -1,9 +1,9 @@
-/* WRN 1.5.5 – vereinfachte Kopfzeile und feste Artikelaktionen */
+/* WRN 1.5.6 – Hamburger-Menü und zweireihige Artikelaktionen */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav155Loaded) return;
-  window.__wrnAppNav155Loaded = true;
+  if (window.__wrnAppNav156Loaded) return;
+  window.__wrnAppNav156Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -166,7 +166,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=155';
+    logo.src = './wrn-logo.webp?v=156';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -338,20 +338,20 @@
 
   function closeMorePanel() {
     const panel = $('.wrn-more-panel');
-    const button = $('.wrn-header-button-more');
+    const menuButton = $('.wrn-header-menu');
     if (panel) panel.hidden = true;
-    if (button) button.setAttribute('aria-expanded', 'false');
+    if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
   }
 
   function toggleMorePanel() {
     const panel = buildMorePanel();
-    const button = $('.wrn-header-button-more');
+    const menuButton = $('.wrn-header-menu');
     const search = $('.wrn-search-panel');
 
     if (search) search.hidden = true;
     panel.hidden = !panel.hidden;
     if (!panel.hidden) syncMoreControls();
-    if (button) button.setAttribute('aria-expanded', String(!panel.hidden));
+    if (menuButton) menuButton.setAttribute('aria-expanded', String(!panel.hidden));
   }
 
   function injectHeaderControls(header) {
@@ -364,14 +364,30 @@
     actions.className = 'wrn-header-actions';
 
 
+    const menuButton = makeButton(
+      'wrn-header-button wrn-header-button-icon wrn-header-menu',
+      '☰',
+      texts().settings
+    );
+    menuButton.setAttribute('aria-label', texts().settings);
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.addEventListener('click', () => {
+      const panel = $('.wrn-search-panel');
+      if (panel) panel.hidden = true;
+      toggleMorePanel();
+      const morePanel = $('.wrn-more-panel');
+      menuButton.setAttribute('aria-expanded', String(Boolean(morePanel && !morePanel.hidden)));
+    });
+
     const searchButton = makeButton(
-      'wrn-header-button wrn-header-button-icon',
+      'wrn-header-button wrn-header-button-icon wrn-header-search',
       '⌕',
       texts().search
     );
     searchButton.setAttribute('aria-label', texts().search);
     searchButton.addEventListener('click', () => {
       closeMorePanel();
+      menuButton.setAttribute('aria-expanded', 'false');
       const panel = $('.wrn-search-panel');
       const input = $('.wrn-search-input', panel);
       if (!panel || !input) return;
@@ -379,15 +395,7 @@
       if (!panel.hidden) window.setTimeout(() => input.focus(), 70);
     });
 
-    const moreButton = makeButton(
-      'wrn-header-button wrn-header-button-more',
-      texts().more,
-      texts().settings
-    );
-    moreButton.setAttribute('aria-expanded', 'false');
-    moreButton.addEventListener('click', toggleMorePanel);
-
-    actions.append(searchButton, moreButton);
+    actions.append(menuButton, searchButton);
 
     if (!right.parentElement) header.appendChild(right);
     right.appendChild(actions);
@@ -495,7 +503,12 @@
     const moreButton = $('.wrn-header-button-more');
     if (moreButton) moreButton.textContent = copy.more;
 
-    const searchButton = $('.wrn-header-actions .wrn-header-button-icon');
+    const menuButton = $('.wrn-header-menu');
+    const searchButton = $('.wrn-header-search');
+    if (menuButton) {
+      menuButton.title = copy.settings;
+      menuButton.setAttribute('aria-label', copy.settings);
+    }
     if (searchButton) {
       searchButton.title = copy.search;
       searchButton.setAttribute('aria-label', copy.search);
@@ -516,7 +529,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=155" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=156" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -821,7 +834,7 @@
 
   document.addEventListener('click', event => {
     const panel = $('.wrn-more-panel');
-    const button = $('.wrn-header-button-more');
+    const button = $('.wrn-header-menu');
     if (!panel || panel.hidden) return;
     if (panel.contains(event.target) || button?.contains(event.target)) return;
     closeMorePanel();
