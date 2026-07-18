@@ -1,9 +1,9 @@
-/* WRN 1.6.0 – bereinigte mobile Kopfzeile und animierter App-Start */
+/* WRN 1.6.1 – vollständige Themen und zuverlässiges Wischen */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav160Loaded) return;
-  window.__wrnAppNav160Loaded = true;
+  if (window.__wrnAppNav161Loaded) return;
+  window.__wrnAppNav161Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -51,11 +51,26 @@
     {
       key: 'topics',
       subTabs: [
-        ['Labor Struggles','Arbeit'], ['Antifascism','Antifa'],
-        ['Antiracism','Antirassismus'], ['Queer-Feminism','Queer'],
-        ['No Borders','No Borders'], ['Squatting & Housing','Wohnen'],
-        ['Eco-Anarchism','Klima'], ['Anti-Imperialism','Anti-Imp'],
-        ['Theory & Strategy','Theorie']
+        ['Labor Struggles','Arbeitskämpfe'],
+        ['Antifascism','Antifaschismus'],
+        ['Antisexism','Antisexismus'],
+        ['Queer-Feminism','Queer-Feminismus'],
+        ['Antiracism','Antirassismus'],
+        ['No Borders','No Borders'],
+        ['Anticapitalism','Antikapitalismus'],
+        ['Theory & Strategy','Theorie & Strategie'],
+        ['Anticolonialism','Antikolonialismus'],
+        ['Anti-Imperialism','Anti-Imperialismus'],
+        ['Squatting & Housing','Hausbesetzungen'],
+        ['Demonstrations','Demonstrationen'],
+        ['Anti-Rep & Prisons','Anti-Rep & Knast'],
+        ['Cyberactivism','Cyber-Aktivismus'],
+        ['No War','Kriegsdienstverweigerung'],
+        ['Animal Liberation','Tierbefreiung'],
+        ['Eco-Anarchism','Ökologie & Klima'],
+        ['Indigenous Struggles','Indigene Kämpfe'],
+        ['Radical Health & Disability','Radical Health'],
+        ['Libraries','Bibliotheken']
       ],
       activate: subKey => {
         closeAuxiliaryPanels();
@@ -121,6 +136,7 @@
   };
 
   let detailState = null;
+  let suppressCardClickUntil = 0;
 
   function $(selector, root = document) {
     return root.querySelector(selector);
@@ -166,7 +182,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=160';
+    logo.src = './wrn-logo.webp?v=161';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -598,7 +614,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=160" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=161" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -763,6 +779,13 @@
 
     document.addEventListener('click', event => {
       if (detailState) return;
+
+      if (Date.now() < suppressCardClickUntil) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
       const card = event.target.closest?.('#feed-container .card, #archive-container .card');
       if (!card) return;
       if (event.target.closest('button, a, input, select, textarea, summary, label')) return;
@@ -771,12 +794,15 @@
   }
 
   function attachSwipe() {
-    if (window.__wrnSwipe160Bound) return;
-    window.__wrnSwipe160Bound = true;
+    if (window.__wrnSwipe161Bound) return;
+    window.__wrnSwipe161Bound = true;
 
+    let tracking = false;
+    let pointerId = null;
     let startX = 0;
     let startY = 0;
-    let tracking = false;
+    let startTime = 0;
+    let horizontalIntent = false;
 
     const interactive = [
       'button', 'a', 'input', 'select', 'textarea', 'summary', 'label',
@@ -784,37 +810,141 @@
       '.wrn-article-detail', '.feedback-modal', '.global-media-bar'
     ].join(', ');
 
+    const isSwipeSurface = target => Boolean(
+      target?.closest?.('#feed-container, #archive-container')
+    );
+
+    const changeTabFromDistance = (dx, dy, duration) => {
+      const horizontal = Math.abs(dx);
+      const vertical = Math.abs(dy);
+
+      if (horizontal < 48) return;
+      if (horizontal < vertical * 1.18) return;
+      if (duration > 1100) return;
+
+      const index = TABS.findIndex(tab => tab.key === state.activeTab);
+      if (index < 0) return;
+
+      suppressCardClickUntil = Date.now() + 480;
+
+      if (dx < 0 && index < TABS.length - 1) {
+        activateTab(TABS[index + 1].key, true);
+      } else if (dx > 0 && index > 0) {
+        activateTab(TABS[index - 1].key, true);
+      }
+    };
+
+    if ('PointerEvent' in window) {
+      document.addEventListener('pointerdown', event => {
+        if (detailState || tracking) return;
+        if (event.pointerType === 'mouse') return;
+        if (!isSwipeSurface(event.target)) return;
+        if (event.target.closest(interactive)) return;
+
+        tracking = true;
+        pointerId = event.pointerId;
+        startX = event.clientX;
+        startY = event.clientY;
+        startTime = performance.now();
+        horizontalIntent = false;
+
+        event.target.setPointerCapture?.(event.pointerId);
+      }, { passive: true });
+
+      document.addEventListener('pointermove', event => {
+        if (!tracking || event.pointerId !== pointerId || detailState) return;
+
+        const dx = event.clientX - startX;
+        const dy = event.clientY - startY;
+
+        if (
+          Math.abs(dx) > 10
+          && Math.abs(dx) > Math.abs(dy) * 1.12
+        ) {
+          horizontalIntent = true;
+          event.preventDefault();
+        }
+      }, { passive: false });
+
+      const finishPointer = event => {
+        if (!tracking || event.pointerId !== pointerId) return;
+
+        const dx = event.clientX - startX;
+        const dy = event.clientY - startY;
+        const duration = performance.now() - startTime;
+
+        tracking = false;
+        pointerId = null;
+
+        if (horizontalIntent && !detailState) {
+          changeTabFromDistance(dx, dy, duration);
+        }
+      };
+
+      document.addEventListener('pointerup', finishPointer, { passive: true });
+      document.addEventListener('pointercancel', () => {
+        tracking = false;
+        pointerId = null;
+        horizontalIntent = false;
+      }, { passive: true });
+
+      return;
+    }
+
+    /* Rückfall für ältere WebViews. */
     document.addEventListener('touchstart', event => {
-      if (detailState) return;
+      if (detailState || tracking) return;
       const touch = event.changedTouches?.[0];
-      if (!touch || event.target.closest(interactive)) return;
+      if (!touch || !isSwipeSurface(event.target)) return;
+      if (event.target.closest(interactive)) return;
+
+      tracking = true;
       startX = touch.clientX;
       startY = touch.clientY;
-      tracking = true;
+      startTime = performance.now();
+      horizontalIntent = false;
     }, { passive: true });
 
-    document.addEventListener('touchend', event => {
+    document.addEventListener('touchmove', event => {
       if (!tracking || detailState) return;
-      tracking = false;
-
       const touch = event.changedTouches?.[0];
       if (!touch) return;
 
       const dx = touch.clientX - startX;
       const dy = touch.clientY - startY;
-      if (Math.abs(dx) < 72 || Math.abs(dx) < Math.abs(dy) * 1.45) return;
 
-      const index = TABS.findIndex(tab => tab.key === state.activeTab);
-      if (index < 0) return;
+      if (
+        Math.abs(dx) > 10
+        && Math.abs(dx) > Math.abs(dy) * 1.12
+      ) {
+        horizontalIntent = true;
+        event.preventDefault();
+      }
+    }, { passive: false });
 
-      if (dx < 0 && index < TABS.length - 1) activateTab(TABS[index + 1].key, true);
-      if (dx > 0 && index > 0) activateTab(TABS[index - 1].key, true);
+    document.addEventListener('touchend', event => {
+      if (!tracking || detailState) return;
+      const touch = event.changedTouches?.[0];
+      tracking = false;
+
+      if (!touch || !horizontalIntent) return;
+
+      changeTabFromDistance(
+        touch.clientX - startX,
+        touch.clientY - startY,
+        performance.now() - startTime
+      );
+    }, { passive: true });
+
+    document.addEventListener('touchcancel', () => {
+      tracking = false;
+      horizontalIntent = false;
     }, { passive: true });
   }
 
   function patchLanguageFunction() {
-    if (window.__wrnLanguage160Patched) return;
-    window.__wrnLanguage160Patched = true;
+    if (window.__wrnLanguage161Patched) return;
+    window.__wrnLanguage161Patched = true;
 
     const original = window.changeLanguage;
     if (typeof original !== 'function') return;
@@ -861,9 +991,9 @@
 
   function observeStatusMessage() {
     const status = document.getElementById('status-container');
-    if (!status || status.dataset.wrnStatusObserver === '160') return;
+    if (!status || status.dataset.wrnStatusObserver === '161') return;
 
-    status.dataset.wrnStatusObserver = '160';
+    status.dataset.wrnStatusObserver = '161';
     const observer = new MutationObserver(updateNormalStatusVisibility);
     observer.observe(status, {
       childList: true,
@@ -880,8 +1010,8 @@
   }
 
   function watchForLegacyMobileArtifacts() {
-    if (window.__wrnLegacyMenuObserver160) return;
-    window.__wrnLegacyMenuObserver160 = true;
+    if (window.__wrnLegacyMenuObserver161) return;
+    window.__wrnLegacyMenuObserver161 = true;
 
     removeLegacyMobileArtifacts();
 
@@ -1025,8 +1155,8 @@
        sobald news.json und events.json bereit sind. */
     activateTab(state.activeTab, false, false);
 
-    if (!window.__wrnInitialContentWatch160) {
-      window.__wrnInitialContentWatch160 = true;
+    if (!window.__wrnInitialContentWatch161) {
+      window.__wrnInitialContentWatch161 = true;
       waitForInitialContent();
     }
   }

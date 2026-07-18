@@ -1,4 +1,4 @@
-/* WRN 1.6.0 – bereinigte mobile Kopfzeile und animierter App-Start */
+/* WRN 1.6.1 – vollständige Themen und zuverlässiges Wischen */
 
 :root {
   --wrn-red: #ff334f;
@@ -1501,4 +1501,28 @@ html.wrn-app-entering body > *:not(#wrn-start-screen):not(script):not(style) {
     animation-duration: 1ms !important;
     animation-delay: 0ms !important;
   }
+}
+/* =========================================================
+   WRN 1.6.1 – zuverlässiges Wischen in beide Richtungen
+   ========================================================= */
+
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
+#feed-container,
+#archive-container {
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+}
+
+/* Viele Themen bleiben als horizontal scrollbare Chips gut bedienbar. */
+body[data-wrn-tab="topics"] .wrn-subtabs {
+  padding-bottom: 2px;
+  scroll-snap-type: x proximity;
+}
+
+body[data-wrn-tab="topics"] .wrn-subtab {
+  scroll-snap-align: start;
 }
