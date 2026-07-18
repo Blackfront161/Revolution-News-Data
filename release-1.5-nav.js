@@ -1,32 +1,39 @@
-/* WRN 1.6.1 – vollständige Themen und zuverlässiges Wischen */
+/* WRN 1.7.0 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav161Loaded) return;
-  window.__wrnAppNav161Loaded = true;
+  if (window.__wrnAppNav170Loaded) return;
+  window.__wrnAppNav170Loaded = true;
 
   const NAV_TEXTS = {
     de: {
-      start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
-      audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', more: 'Mehr',
-      search: 'Suche', menu: 'Quellen', settings: 'Mehr & Einstellungen', sources: 'Quellen',
-      back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
-      fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format',
-      sort: 'Sortierung', info: 'Info', contact: 'Kontakt', donate: 'Spenden',
-      storage: 'Speicher', status: 'Status', clear: 'App zurücksetzen'
+      briefing: 'Mein Briefing', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
+      audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
+      sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
+      fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
+      contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'App zurücksetzen',
+      searchPlaceholder: 'Artikel durchsuchen…', originalPodcasts: 'Original-Podcasts',
+      generatedPodcasts: 'Erzeugte Podcasts', liveRadio: 'Live-Radio', bookmarks: 'Später lesen', read: 'Gelesen'
     },
     en: {
-      start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
-      audio: 'Audio', saved: 'Saved', zine: 'Zine', more: 'More',
-      search: 'Search', menu: 'Sources', settings: 'More & settings', sources: 'Sources',
-      back: 'Back', article: 'Article', language: 'Language', design: 'Design',
-      fontSize: 'Font size', view: 'Article view', format: 'Format',
-      sort: 'Sorting', info: 'Info', contact: 'Contact', donate: 'Donate',
-      storage: 'Storage', status: 'Status', clear: 'Reset app'
+      briefing: 'My Briefing', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
+      audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
+      sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
+      fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
+      contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Reset app',
+      searchPlaceholder: 'Search articles…', originalPodcasts: 'Original podcasts',
+      generatedPodcasts: 'Generated podcasts', liveRadio: 'Live radio', bookmarks: 'Read later', read: 'Read'
     }
   };
 
   const TABS = [
+    {
+      key: 'briefing',
+      activate: () => {
+        closeAuxiliaryPanels();
+        window.WRNBriefing?.show?.();
+      }
+    },
     {
       key: 'start',
       activate: () => {
@@ -91,9 +98,9 @@
     {
       key: 'audio',
       subTabs: [
-        ['original','Original-Podcasts'],
-        ['generated','Erzeugte Podcasts'],
-        ['radio','Live-Radio']
+        ['original','originalPodcasts'],
+        ['generated','generatedPodcasts'],
+        ['radio','liveRadio']
       ],
       activate: subKey => {
         closeAuxiliaryPanels();
@@ -105,8 +112,8 @@
     {
       key: 'saved',
       subTabs: [
-        ['bookmarks','Später lesen'],
-        ['read','Gelesen']
+        ['bookmarks','bookmarks'],
+        ['read','read']
       ],
       activate: subKey => {
         closeAuxiliaryPanels();
@@ -126,7 +133,7 @@
   ];
 
   const state = {
-    activeTab: 'start',
+    activeTab: 'briefing',
     subSelections: {
       regions: 'Global',
       topics: 'Labor Struggles',
@@ -147,14 +154,26 @@
   }
 
   function languageKey() {
-    const value = document.documentElement.lang
-      || document.getElementById('ui-language')?.value
-      || 'de';
-    return String(value).toLowerCase().startsWith('de') ? 'de' : 'en';
+    const value = document.getElementById('ui-language')?.value
+      || document.documentElement.lang
+      || 'en';
+    return window.WRNI18n?.normalizeLanguage?.(value)
+      || String(value).toLowerCase().split(/[-_]/)[0]
+      || 'en';
   }
 
   function texts() {
-    return NAV_TEXTS[languageKey()] || NAV_TEXTS.de;
+    return window.WRNI18n?.dictionary?.(languageKey())?.nav
+      || NAV_TEXTS[languageKey()]
+      || NAV_TEXTS.en;
+  }
+
+  function subTabLabel(tab, key, fallback) {
+    const language = languageKey();
+    if (tab?.key === 'topics') return window.WRNI18n?.topicLabel?.(key, language) || fallback || key;
+    if (tab?.key === 'regions') return window.WRNI18n?.regionLabel?.(key, language) || fallback || key;
+    if (tab?.key === 'audio' || tab?.key === 'saved') return texts()[fallback] || fallback || key;
+    return fallback || key;
   }
 
   function closeAuxiliaryPanels() {
@@ -182,7 +201,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=161';
+    logo.src = './wrn-logo.webp?v=170';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -203,7 +222,7 @@
     panel.className = 'wrn-search-panel';
     panel.hidden = true;
     panel.innerHTML = `
-      <input class="wrn-search-input" type="search" placeholder="Artikel durchsuchen…" aria-label="Artikel durchsuchen">
+      <input class="wrn-search-input" type="search" placeholder="${texts().searchPlaceholder}" aria-label="${texts().searchPlaceholder}">
       <button class="wrn-search-clear" type="button" aria-label="Suche leeren">×</button>
     `;
     referenceNode.insertAdjacentElement('afterend', panel);
@@ -526,7 +545,7 @@
     tab.subTabs.forEach(([key, label]) => {
       const button = makeButton(
         `wrn-subtab${selected === key ? ' active' : ''}`,
-        label
+        subTabLabel(tab, key, label)
       );
       button.dataset.subkey = key;
       button.addEventListener('click', () => {
@@ -569,6 +588,9 @@
 
     renderSubTabs(tab);
 
+    if (key === 'briefing') window.WRNBriefing?.show?.();
+    else window.WRNBriefing?.hide?.();
+
     if (!runAction) return;
 
     try {
@@ -579,14 +601,12 @@
   }
 
   function updateLanguage() {
+    window.WRNI18n?.auditLegacyTranslations?.();
     const copy = texts();
 
     $all('.wrn-top-tab').forEach(button => {
       button.textContent = copy[button.dataset.key] || button.dataset.key;
     });
-
-    const moreButton = $('.wrn-header-button-more');
-    if (moreButton) moreButton.textContent = copy.more;
 
     const menuButton = $('.wrn-header-menu');
     const searchButton = $('.wrn-header-search');
@@ -599,8 +619,25 @@
       searchButton.setAttribute('aria-label', copy.search);
     }
 
+    const searchInput = $('.wrn-search-input');
+    if (searchInput) {
+      searchInput.placeholder = copy.searchPlaceholder;
+      searchInput.setAttribute('aria-label', copy.searchPlaceholder);
+    }
+
+    const detail = $('.wrn-article-detail');
+    if (detail) {
+      detail.setAttribute('aria-label', copy.article);
+      const back = $('.wrn-detail-back', detail);
+      if (back) back.textContent = `← ${copy.back}`;
+    }
+
+    const activeTab = TABS.find(tab => tab.key === state.activeTab);
+    if (activeTab) renderSubTabs(activeTab);
+
     const morePanel = $('.wrn-more-panel');
     if (morePanel) morePanel.remove();
+    window.WRNBriefing?.refreshLanguage?.();
   }
 
   function buildDetailView() {
@@ -614,7 +651,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=161" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=170" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -711,7 +748,8 @@
       index,
       savedScrollY,
       buttonRow,
-      buttonPlaceholder
+      buttonPlaceholder,
+      externalRestore
     } = detailState;
     const detail = $('.wrn-article-detail');
 
@@ -735,10 +773,95 @@
     document.body.classList.remove('wrn-detail-open');
     detailState = null;
 
+    if (typeof externalRestore === 'function') {
+      try { externalRestore(); } catch (error) { console.error(error); }
+    }
+
     if (restoreScroll) {
       window.setTimeout(() => window.scrollTo({ top: savedScrollY, behavior: 'auto' }), 0);
     }
   }
+
+  function keyForArticle(article) {
+    try {
+      return window.WRNReading?.articleKey?.(article)
+        || String(article?.link || `${article?.quelleName || ''}::${article?.title || ''}::${article?.pubDate || ''}`);
+    } catch {
+      return String(article?.link || article?.title || '');
+    }
+  }
+
+  function openArticleByKey(key) {
+    if (!key || detailState) return false;
+
+    let article = null;
+    try {
+      if (typeof allNewsData !== 'undefined' && Array.isArray(allNewsData)) {
+        article = allNewsData.find(item => keyForArticle(item) === key || String(item?.link || '') === key) || null;
+      }
+    } catch {}
+    if (!article) return false;
+
+    const feed = document.getElementById('feed-container');
+    const archive = document.getElementById('archive-container');
+    const archiveTitle = document.getElementById('txt-archive-title');
+    if (!feed || !archive || typeof renderNextBatch !== 'function') return false;
+
+    const feedFragment = document.createDocumentFragment();
+    const archiveFragment = document.createDocumentFragment();
+    while (feed.firstChild) feedFragment.appendChild(feed.firstChild);
+    while (archive.firstChild) archiveFragment.appendChild(archive.firstChild);
+
+    const snapshot = {
+      filtered: typeof currentFilteredItems !== 'undefined' ? currentFilteredItems : [],
+      displayed: typeof currentlyDisplayedCount !== 'undefined' ? currentlyDisplayedCount : 0,
+      activeKontinent: typeof activeKontinent !== 'undefined' ? activeKontinent : 'Global',
+      sourceFilter: typeof currentSourceFilter !== 'undefined' ? currentSourceFilter : 'ALL',
+      archiveDisplay: archiveTitle?.style.display || ''
+    };
+
+    try {
+      currentFilteredItems = [article];
+      currentlyDisplayedCount = 0;
+      if (typeof isRendering !== 'undefined') isRendering = false;
+      renderNextBatch();
+      const card = document.getElementById('card-0');
+      if (!card) throw new Error('Article card could not be rendered.');
+      decorateCard(card);
+      openArticleDetail(card);
+      if (!detailState) throw new Error('Article detail could not be opened.');
+
+      detailState.externalRestore = () => {
+        feed.textContent = '';
+        archive.textContent = '';
+        feed.appendChild(feedFragment);
+        archive.appendChild(archiveFragment);
+        currentFilteredItems = snapshot.filtered;
+        currentlyDisplayedCount = snapshot.displayed;
+        activeKontinent = snapshot.activeKontinent;
+        currentSourceFilter = snapshot.sourceFilter;
+        if (archiveTitle) archiveTitle.style.display = snapshot.archiveDisplay;
+        decorateExistingCards();
+        if (state.activeTab === 'briefing') window.WRNBriefing?.show?.();
+      };
+      return true;
+    } catch (error) {
+      console.error(error);
+      feed.textContent = '';
+      archive.textContent = '';
+      feed.appendChild(feedFragment);
+      archive.appendChild(archiveFragment);
+      currentFilteredItems = snapshot.filtered;
+      currentlyDisplayedCount = snapshot.displayed;
+      activeKontinent = snapshot.activeKontinent;
+      currentSourceFilter = snapshot.sourceFilter;
+      if (archiveTitle) archiveTitle.style.display = snapshot.archiveDisplay;
+      return false;
+    }
+  }
+
+  window.WRNOpenArticleByKey = openArticleByKey;
+  window.WRNActivateTab = key => activateTab(key);
 
   function decorateCard(card) {
     if (!card || card.dataset.wrnDetailReady === 'true') return;
@@ -794,8 +917,8 @@
   }
 
   function attachSwipe() {
-    if (window.__wrnSwipe161Bound) return;
-    window.__wrnSwipe161Bound = true;
+    if (window.__wrnSwipe170Bound) return;
+    window.__wrnSwipe170Bound = true;
 
     let tracking = false;
     let pointerId = null;
@@ -943,8 +1066,8 @@
   }
 
   function patchLanguageFunction() {
-    if (window.__wrnLanguage161Patched) return;
-    window.__wrnLanguage161Patched = true;
+    if (window.__wrnLanguage170Patched) return;
+    window.__wrnLanguage170Patched = true;
 
     const original = window.changeLanguage;
     if (typeof original !== 'function') return;
@@ -991,9 +1114,9 @@
 
   function observeStatusMessage() {
     const status = document.getElementById('status-container');
-    if (!status || status.dataset.wrnStatusObserver === '161') return;
+    if (!status || status.dataset.wrnStatusObserver === '170') return;
 
-    status.dataset.wrnStatusObserver = '161';
+    status.dataset.wrnStatusObserver = '170';
     const observer = new MutationObserver(updateNormalStatusVisibility);
     observer.observe(status, {
       childList: true,
@@ -1010,8 +1133,8 @@
   }
 
   function watchForLegacyMobileArtifacts() {
-    if (window.__wrnLegacyMenuObserver161) return;
-    window.__wrnLegacyMenuObserver161 = true;
+    if (window.__wrnLegacyMenuObserver170) return;
+    window.__wrnLegacyMenuObserver170 = true;
 
     removeLegacyMobileArtifacts();
 
@@ -1105,7 +1228,7 @@
          aktiviert, nachdem der Datensatz wirklich geladen ist. */
       if (
         !requestedInitialTab
-        && state.activeTab !== 'start'
+        && !['start', 'briefing'].includes(state.activeTab)
         && hasLoadedDataset()
       ) {
         requestedInitialTab = true;
@@ -1155,8 +1278,8 @@
        sobald news.json und events.json bereit sind. */
     activateTab(state.activeTab, false, false);
 
-    if (!window.__wrnInitialContentWatch161) {
-      window.__wrnInitialContentWatch161 = true;
+    if (!window.__wrnInitialContentWatch170) {
+      window.__wrnInitialContentWatch170 = true;
       waitForInitialContent();
     }
   }
