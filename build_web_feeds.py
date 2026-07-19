@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build small browser feeds while retaining the complete news/event archives."""
+"""Build small browser feeds while retaining the complete news/event archives.
+
+The feed builder intentionally does not rewrite config.js. Application releases and
+emergency settings are maintained separately from the automated data refresh.
+"""
 
 from __future__ import annotations
 
@@ -22,14 +26,11 @@ CONFIG_PATH = ROOT / "config.js"
 
 NEWS_LIMIT = max(50, int(os.environ.get("WRN_NEWS_FEED_LIMIT", "500")))
 EVENT_LIMIT = max(50, int(os.environ.get("WRN_EVENT_FEED_LIMIT", "500")))
-NEWS_CONTENT_LIMIT = max(
-    1000,
-    int(os.environ.get("WRN_NEWS_CONTENT_LIMIT", "4500"))
-)
-EVENT_CONTENT_LIMIT = max(
-    800,
-    int(os.environ.get("WRN_EVENT_CONTENT_LIMIT", "2800"))
-)
+NEWS_CONTENT_LIMIT = max(1000, int(os.environ.get("WRN_NEWS_CONTENT_LIMIT", "4500")))
+EVENT_CONTENT_LIMIT = max(800, int(os.environ.get("WRN_EVENT_CONTENT_LIMIT", "2800")))
+CONFIG_UPDATE_ENABLED = os.environ.get("WRN_UPDATE_CONFIG", "").strip().lower() in {
+    "1", "true", "yes", "on"
+}
 
 
 def load_list(path: Path) -> list[dict[str, Any]]:
@@ -46,12 +47,10 @@ def date_value(item: dict[str, Any]) -> float:
         item.get("date"),
         item.get("published"),
     )
-
     for raw in candidates:
         value = str(raw or "").strip()
         if not value:
             continue
-
         try:
             parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
             if parsed.tzinfo is None:
@@ -59,7 +58,6 @@ def date_value(item: dict[str, Any]) -> float:
             return parsed.timestamp()
         except Exception:
             pass
-
         try:
             parsed = parsedate_to_datetime(value)
             if parsed.tzinfo is None:
@@ -67,7 +65,6 @@ def date_value(item: dict[str, Any]) -> float:
             return parsed.timestamp()
         except Exception:
             pass
-
     return 0.0
 
 
@@ -82,7 +79,6 @@ def shorten(value: Any, limit: int) -> tuple[str, bool]:
     text = clean_text(value)
     if len(text) <= limit:
         return text, False
-
     shortened = text[:limit]
     word_boundary = max(
         shortened.rfind(" "),
@@ -91,7 +87,6 @@ def shorten(value: Any, limit: int) -> tuple[str, bool]:
     )
     if word_boundary >= int(limit * 0.78):
         shortened = shortened[:word_boundary]
-
     return shortened.rstrip(" \n.,;:") + " …", True
 
 
@@ -125,13 +120,10 @@ def prepare(
         item = dict(source)
         content, truncated = shorten(item.get("content"), content_limit)
         item["content"] = content
-
         if truncated:
             item["contentComplete"] = False
             item["webFeedTruncated"] = True
-            item["webFeedOriginalLength"] = len(
-                clean_text(source.get("content"))
-            )
+            item["webFeedOriginalLength"] = len(clean_text(source.get("content")))
 
         for field in ("title", "author", "quelleName", "eventVenue"):
             if field in item:
@@ -145,12 +137,7 @@ def prepare(
 
 
 def atomic_json(path: Path, data: Any) -> int:
-    payload = json.dumps(
-        data,
-        ensure_ascii=False,
-        separators=(",", ":"),
-    ) + "\n"
-
+    payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(payload, encoding="utf-8")
     temporary.replace(path)
@@ -158,52 +145,30 @@ def atomic_json(path: Path, data: Any) -> int:
 
 
 def activate_config() -> bool:
+    """Legacy opt-in migration; disabled unless WRN_UPDATE_CONFIG is explicit."""
+    if not CONFIG_UPDATE_ENABLED:
+        return False
     if not CONFIG_PATH.is_file():
         raise FileNotFoundError("config.js wurde nicht gefunden.")
 
     text = CONFIG_PATH.read_text(encoding="utf-8")
     original = text
-
     text = re.sub(
         r"news:\s*'https://blackfront161\.github\.io/"
         r"Revolution-News-Data/(?:news|news-feed)\.json'",
-        "news: 'https://blackfront161.github.io/"
-        "Revolution-News-Data/news-feed.json'",
+        "news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json'",
         text,
         count=1,
     )
     text = re.sub(
         r"events:\s*'https://blackfront161\.github\.io/"
         r"Revolution-News-Data/(?:events|events-feed)\.json'",
-        "events: 'https://blackfront161.github.io/"
-        "Revolution-News-Data/events-feed.json'",
+        "events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json'",
         text,
         count=1,
     )
-
-    if "version: '1.7.8'" not in text:
-        text = re.sub(
-            r"version:\s*'[^']+'",
-            "version: '1.7.8'",
-            text,
-            count=1,
-        )
-        text = re.sub(
-            r"build:\s*'[^']+'",
-            "build: '2026.07.19-lightweight-web-feed'",
-            text,
-            count=1,
-        )
-        text = re.sub(
-            r"releasedAt:\s*'[^']+'",
-            f"releasedAt: '{datetime.now(timezone.utc).isoformat()}'",
-            text,
-            count=1,
-        )
-
     if text == original:
         return False
-
     CONFIG_PATH.write_text(text, encoding="utf-8")
     return True
 
@@ -211,17 +176,8 @@ def activate_config() -> bool:
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
-
-    news_feed = prepare(
-        news,
-        limit=NEWS_LIMIT,
-        content_limit=NEWS_CONTENT_LIMIT,
-    )
-    event_feed = prepare(
-        events,
-        limit=EVENT_LIMIT,
-        content_limit=EVENT_CONTENT_LIMIT,
-    )
+    news_feed = prepare(news, limit=NEWS_LIMIT, content_limit=NEWS_CONTENT_LIMIT)
+    event_feed = prepare(events, limit=EVENT_LIMIT, content_limit=EVENT_CONTENT_LIMIT)
 
     if not news_feed:
         raise SystemExit(
@@ -236,7 +192,7 @@ def main() -> int:
     status = {
         "ok": True,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.8",
+        "version": "1.7.12",
         "news": {
             "archiveCount": len(news),
             "feedCount": len(news_feed),
@@ -250,6 +206,7 @@ def main() -> int:
             "contentLimit": EVENT_CONTENT_LIMIT,
         },
         "configActivated": config_changed,
+        "configUpdateEnabled": CONFIG_UPDATE_ENABLED,
     }
     atomic_json(STATUS_TARGET, status)
 
@@ -263,7 +220,7 @@ def main() -> int:
     )
     print(
         "[WEB-FEED] config.js: "
-        + ("aktiviert" if config_changed else "bereits aktiv")
+        + ("opt-in aktualisiert" if config_changed else "geschützt / unverändert")
     )
     return 0
 

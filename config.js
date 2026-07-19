@@ -1,90 +1,14 @@
-/* World Revolution News – zentrale App-Konfiguration */
+/* World Revolution News – 1.7.12 Emergency Mode */
 'use strict';
 
-
-/* 1.7.7 – nicht blockierende Startanimation */
-(() => {
-    if (window.__wrnStartScreen177) return;
-    window.__wrnStartScreen177 = true;
-
-    const style = document.createElement('style');
-    style.id = 'wrn-start-screen-style-177';
-    style.textContent = `
-        #wrn-start-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 2147483000;
-            display: grid;
-            place-items: center;
-            pointer-events: none;
-            background:
-                linear-gradient(
-                    180deg,
-                    rgba(2,3,7,0.16),
-                    rgba(2,3,7,0.38) 60%,
-                    rgba(2,3,7,0.72)
-                ),
-                url('./app-background.webp?v=177') center top / cover no-repeat,
-                #050508;
-            opacity: 1;
-            animation: wrnStartExit177 1350ms ease forwards;
-        }
-
-        #wrn-start-screen img {
-            width: clamp(98px, 29vw, 150px);
-            height: clamp(98px, 29vw, 150px);
-            object-fit: cover;
-            border-radius: 25px;
-            filter: drop-shadow(0 13px 30px rgba(0,0,0,.58));
-            animation: wrnStartLogo177 700ms cubic-bezier(.2,.82,.3,1.15) forwards;
-        }
-
-        @keyframes wrnStartLogo177 {
-            from { opacity: 0; transform: scale(.75) rotate(-4deg); }
-            to { opacity: 1; transform: scale(1) rotate(0); }
-        }
-
-        @keyframes wrnStartExit177 {
-            0%, 62% { opacity: 1; visibility: visible; }
-            100% { opacity: 0; visibility: hidden; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            #wrn-start-screen {
-                animation-duration: 500ms;
-            }
-
-            #wrn-start-screen img {
-                animation: none;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    const mount = () => {
-        if (!document.body || document.getElementById('wrn-start-screen')) return;
-
-        const screen = document.createElement('div');
-        screen.id = 'wrn-start-screen';
-        screen.setAttribute('aria-hidden', 'true');
-        screen.innerHTML = `
-            <img src="./wrn-logo.webp?v=177" alt="">
-        `;
-        document.body.appendChild(screen);
-
-        window.setTimeout(() => screen.remove(), 1700);
-    };
-
-    if (document.body) mount();
-    else document.addEventListener('DOMContentLoaded', mount, { once: true });
-})();
-
+window.WRN_EMERGENCY_MODE = true;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.11',
-    build: '2026.07.19-click-release-and-cyberthic-brand',
-    releasedAt: '2026-07-19T23:59:45Z',
+    version: '1.7.12',
+    build: '2026.07.19-emergency-mobile-repair',
+    releasedAt: '2026-07-19T20:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
+    emergencyMode: true,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -98,480 +22,312 @@ window.WRN_CONFIG = Object.freeze({
         radioSources: 'https://blackfront161.github.io/Revolution-News-Data/radio-sources.json'
     }),
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev',
-    /* Optional: URL des gemeinsamen Cache-Workers. Leer = bisheriger Ablauf. */
-    sharedTranslationUrl: 'https://wrn-translation-cache.paghklo.workers.dev'
+    sharedTranslationUrl: ''
 });
 
-
-
-/* 1.7.9 – Offline-Speicher darf den Start nie blockieren. */
 (() => {
-    if (window.__wrnStorageStartGuard179) return;
-    window.__wrnStorageStartGuard179 = true;
+    if (window.__wrnEmergency1712) return;
+    window.__wrnEmergency1712 = true;
+
+    /* Begrenze die großen JSON-Antworten, bevor app.js hunderte Karten erzeugt. */
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async (...args) => {
+        const response = await nativeFetch(...args);
+        const requestUrl = String(
+            typeof args[0] === 'string' ? args[0] : args[0]?.url || ''
+        );
+        const limit = /news-feed\.json/i.test(requestUrl)
+            ? 80
+            : (/events-feed\.json/i.test(requestUrl) ? 160 : 0);
+        if (!limit || !response.ok) return response;
+
+        try {
+            const data = await response.clone().json();
+            if (!Array.isArray(data) || data.length <= limit) return response;
+            const headers = new Headers(response.headers);
+            headers.set('content-type', 'application/json; charset=utf-8');
+            headers.delete('content-length');
+            return new Response(JSON.stringify(data.slice(0, limit)), {
+                status: response.status,
+                statusText: response.statusText,
+                headers
+            });
+        } catch (_) {
+            return response;
+        }
+    };
+
+    const MAX_VISIBLE_CARDS = 60;
+    const style = document.createElement('style');
+    style.id = 'wrn-emergency-style-1712';
+    style.textContent = `
+        :root { color-scheme: dark; }
+        html, body {
+            background: #050508 !important;
+            background-image: none !important;
+            background-attachment: scroll !important;
+            scroll-behavior: auto !important;
+        }
+        html, body, body * {
+            animation: none !important;
+            transition: none !important;
+        }
+        body::before, body::after,
+        #wrn-start-screen,
+        .wrn-start-screen,
+        .wrn-start-leaving,
+        .app-start-screen {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        body, .card, .feedback-modal, .podcast-options-modal,
+        .podcast-library-modal, .system-status-modal, .global-media-bar {
+            -webkit-backdrop-filter: none !important;
+            backdrop-filter: none !important;
+            filter: none !important;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+        .card {
+            background: #101017 !important;
+            border: 1px solid #30303a !important;
+            content-visibility: auto;
+            contain-intrinsic-size: 220px;
+        }
+        #feed-container img,
+        #archive-container img,
+        .card picture,
+        .card video,
+        .article-image,
+        .article-thumbnail,
+        .news-image,
+        .card-image {
+            display: none !important;
+        }
+        .btn-podcast-nav,
+        #btn-podcast-library,
+        #btn-open-zine,
+        .quick-nav-zine,
+        .global-media-bar,
+        .audio-hub,
+        .audio-catalog,
+        .briefing-panel,
+        .briefing-card,
+        .article-summary,
+        .summary-panel,
+        .shared-translation-status,
+        .wrn-diagnostics-overlay,
+        [data-feature="briefing"],
+        [data-feature="audio"],
+        [data-feature="summary"] {
+            display: none !important;
+        }
+        .top-action-bar {
+            position: static !important;
+        }
+        .filter-bar,
+        .nav-bar,
+        .quick-nav-bar {
+            background: #0b0b10 !important;
+            box-shadow: none !important;
+        }
+        #feed-container, #archive-container {
+            contain: layout style;
+        }
+        #wrn-emergency-notice {
+            margin: 8px 0 12px;
+            padding: 8px 10px;
+            border: 1px solid #ff334f;
+            background: #18060b;
+            color: #fff;
+            font: 600 13px/1.35 system-ui, sans-serif;
+        }
+        #wrn-emergency-notice a { color: #7ee7ff; }
+        @media (max-width: 720px) {
+            body { padding-left: 8px !important; padding-right: 8px !important; }
+            header { margin-bottom: 10px !important; }
+            .card { margin-bottom: 10px !important; padding: 12px !important; }
+            .teaser, .full-content { max-height: 16em; overflow: hidden; }
+        }
+    `;
+    document.head.appendChild(style);
 
     const timeout = (promise, ms, fallback) => new Promise(resolve => {
-        let done = false;
+        let finished = false;
         const timer = window.setTimeout(() => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             resolve(fallback);
         }, ms);
-
         Promise.resolve(promise).then(value => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             window.clearTimeout(timer);
             resolve(value);
         }).catch(() => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             window.clearTimeout(timer);
             resolve(fallback);
         });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
+    const patchStorage = () => {
         const storage = window.WRNStorage;
-        if (!storage || storage.__startGuard179) return;
+        if (!storage || storage.__emergency1712) return;
+        storage.__emergency1712 = true;
 
-        const original = {
-            migrateLegacyLocalStorage: storage.migrateLegacyLocalStorage?.bind(storage),
-            requestPersistentStorage: storage.requestPersistentStorage?.bind(storage),
-            putDataset: storage.putDataset?.bind(storage),
-            getDataset: storage.getDataset?.bind(storage)
-        };
-
-        storage.__startGuard179 = true;
-
-        storage.migrateLegacyLocalStorage = () => original.migrateLegacyLocalStorage
-            ? timeout(original.migrateLegacyLocalStorage(), 1200, false)
-            : Promise.resolve(false);
-
-        storage.requestPersistentStorage = () => original.requestPersistentStorage
-            ? timeout(original.requestPersistentStorage(), 800, false)
-            : Promise.resolve(false);
-
-        storage.getDataset = key => original.getDataset
-            ? timeout(original.getDataset(key), 1200, null)
+        const getDataset = storage.getDataset?.bind(storage);
+        storage.migrateLegacyLocalStorage = () => Promise.resolve(false);
+        storage.requestPersistentStorage = () => Promise.resolve(false);
+        storage.putDataset = () => Promise.resolve(false);
+        storage.getDataset = key => getDataset
+            ? timeout(getDataset(key), 700, null)
             : Promise.resolve(null);
+    };
 
-        storage.putDataset = (key, data) => {
-            if (original.putDataset) {
-                window.setTimeout(() => {
-                    timeout(original.putDataset(key, data), 1800, false)
-                        .catch(() => false);
-                }, 0);
+    const stripHeavyMedia = root => {
+        if (!root?.querySelectorAll) return;
+        root.querySelectorAll(
+            '#feed-container img, #archive-container img, '
+            + '#feed-container video, #archive-container video, audio'
+        ).forEach(media => {
+            try {
+                if (typeof media.pause === 'function') media.pause();
+                media.removeAttribute('autoplay');
+                media.removeAttribute('src');
+                media.querySelectorAll?.('source').forEach(source => source.removeAttribute('src'));
+                if ('preload' in media) media.preload = 'none';
+            } catch (_) {
+                // Notfallmodus darf bei einzelnen Medien nie abbrechen.
             }
-            return Promise.resolve(false);
-        };
-    }, { once: true });
-})();
+        });
+    };
 
-/* 1.7.9 – sichtbarer Rettungsfeed, falls die Hauptlogik trotzdem hängt. */
-(() => {
-    if (window.__wrnRescueFeed179) return;
-    window.__wrnRescueFeed179 = true;
+    const trimFeed = () => {
+        ['feed-container', 'archive-container'].forEach(id => {
+            const container = document.getElementById(id);
+            if (!container) return;
+            const cards = Array.from(container.querySelectorAll(':scope > .card'));
+            cards.slice(MAX_VISIBLE_CARDS).forEach(card => card.remove());
+            stripHeavyMedia(container);
+        });
+    };
 
-    const escapeText = value => String(value ?? '');
+    const releaseUi = () => {
+        document.documentElement.classList.remove('wrn-booting', 'wrn-app-entering');
+        document.documentElement.style.pointerEvents = 'auto';
+        if (document.body) {
+            document.body.classList.add('wrn-emergency-mode');
+            document.body.dataset.motion = 'reduced';
+            document.body.style.pointerEvents = 'auto';
+        }
+        document.querySelectorAll(
+            '#wrn-start-screen, .wrn-start-screen, .wrn-start-leaving, .app-start-screen'
+        ).forEach(element => element.remove());
+        patchStorage();
+        trimFeed();
+    };
 
-    const renderRescue = async () => {
-        await new Promise(resolve => window.setTimeout(resolve, 5200));
+    const addNotice = () => {
+        if (!document.body || document.getElementById('wrn-emergency-notice')) return;
+        const notice = document.createElement('div');
+        notice.id = 'wrn-emergency-notice';
+        notice.setAttribute('role', 'status');
+        notice.innerHTML = 'Notfallmodus 1.7.12 aktiv – reduzierte Darstellung für Smartphones. '
+            + '<a href="./mobile-repair.html">Leichten Direkt-Feed öffnen</a>';
+        const header = document.querySelector('header');
+        (header?.parentNode || document.body).insertBefore(notice, header?.nextSibling || document.body.firstChild);
+    };
 
-        const status = document.getElementById('status-container');
+    const renderFallbackFeed = async () => {
+        await new Promise(resolve => window.setTimeout(resolve, 2800));
         const feed = document.getElementById('feed-container');
-        const stillLoading = /Lade Nachrichten|Loading news|Connecting/i.test(
-            String(status?.textContent || '')
-        );
-
-        if (!feed || !stillLoading || feed.children.length > 0) return;
+        if (!feed || feed.querySelector('.card')) return;
 
         const controller = new AbortController();
-        const timer = window.setTimeout(() => controller.abort(), 7000);
-
+        const timer = window.setTimeout(() => controller.abort(), 6500);
         try {
-            const response = await fetch(
-                `./news-feed.json?rescue=${Date.now()}`,
-                { cache: 'no-store', signal: controller.signal }
-            );
+            const response = await fetch(`./news-feed.json?emergency=${Date.now()}`, {
+                cache: 'no-store',
+                signal: controller.signal
+            });
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
             const items = await response.json();
-            if (!Array.isArray(items) || items.length === 0) {
-                throw new Error('Leerer Feed');
-            }
+            if (!Array.isArray(items) || items.length === 0) throw new Error('Leerer Feed');
 
-            feed.textContent = '';
-
-            items.slice(0, 30).forEach(item => {
+            const fragment = document.createDocumentFragment();
+            items.slice(0, 40).forEach(item => {
                 const card = document.createElement('article');
-                card.className = 'card wrn-rescue-card';
+                card.className = 'card wrn-emergency-card';
 
                 const meta = document.createElement('div');
                 meta.className = 'meta';
-                meta.textContent = [
-                    item.quelleName || 'World Revolution News',
-                    item.pubDate ? String(item.pubDate).slice(0, 10) : ''
-                ].filter(Boolean).join(' · ');
+                meta.textContent = [item.quelleName, item.pubDate ? String(item.pubDate).slice(0, 10) : '']
+                    .filter(Boolean).join(' · ');
 
-                const title = document.createElement('div');
+                const title = document.createElement('h2');
                 title.className = 'title';
-                title.textContent = escapeText(item.title || 'Nachricht');
+                title.textContent = String(item.title || 'Nachricht');
 
-                const teaser = document.createElement('div');
+                const teaser = document.createElement('p');
                 teaser.className = 'teaser';
-                teaser.textContent = escapeText(item.content || '').slice(0, 420);
+                teaser.textContent = String(item.content || '').slice(0, 520);
 
                 card.append(meta, title, teaser);
-
                 if (item.link) {
                     const link = document.createElement('a');
-                    link.className = 'btn-translate';
                     link.href = String(item.link);
                     link.target = '_blank';
                     link.rel = 'noopener noreferrer';
-                    link.textContent = '[ Original öffnen ]';
+                    link.textContent = 'Original öffnen';
                     card.appendChild(link);
                 }
-
-                feed.appendChild(card);
+                fragment.appendChild(card);
             });
+            feed.replaceChildren(fragment);
 
-            if (status) {
-                status.style.color = 'var(--color-green)';
-                status.textContent = 'Nachrichten geladen';
-            }
+            const status = document.getElementById('status-container');
+            if (status) status.textContent = 'Notfall-Feed geladen';
         } catch (error) {
-            if (status) {
-                status.style.color = '#ff334f';
-                status.textContent = 'Nachrichten konnten nicht geladen werden.';
-            }
-            console.error('WRN Rettungsfeed fehlgeschlagen:', error);
+            const status = document.getElementById('status-container');
+            if (status) status.textContent = 'Notfall-Feed konnte nicht geladen werden.';
+            console.error('WRN Emergency Feed:', error);
         } finally {
             window.clearTimeout(timer);
         }
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', renderRescue, { once: true });
-    } else {
-        renderRescue();
-    }
-})();
+    const start = () => {
+        releaseUi();
+        addNotice();
+        stripHeavyMedia(document);
 
-
-
-/* 1.7.11 – Klickfreigabe und Schutz vor unsichtbaren Alt-Overlays. */
-(() => {
-    if (window.__wrnInteractionRelease1711) return;
-    window.__wrnInteractionRelease1711 = true;
-
-    const releaseInteraction = () => {
-        document.documentElement.classList.remove(
-            'wrn-booting',
-            'wrn-app-entering'
-        );
-
-        document.documentElement.style.pointerEvents = 'auto';
-        if (document.body) document.body.style.pointerEvents = 'auto';
-
-        const startScreen = document.getElementById('wrn-start-screen');
-        if (startScreen) {
-            startScreen.style.pointerEvents = 'none';
-            startScreen.setAttribute('aria-hidden', 'true');
-
-            const animationFinished =
-                performance.now() > 2400
-                || getComputedStyle(startScreen).visibility === 'hidden'
-                || Number(getComputedStyle(startScreen).opacity) < 0.05;
-
-            if (animationFinished) startScreen.remove();
-        }
-
-        document.querySelectorAll(
-            '.wrn-top-tabs, .wrn-top-tab, .wrn-subtabs, .wrn-subtab, '
-            + '.wrn-header-actions, .wrn-header-button, '
-            + '#feed-container, #archive-container, '
-            + '#feed-container .card, #archive-container .card'
-        ).forEach(element => {
-            element.style.pointerEvents = 'auto';
-        });
-
-        document.querySelectorAll(
-            '.wrn-more-panel[hidden], '
-            + '.wrn-search-panel[hidden], '
-            + '.wrn-article-detail[hidden], '
-            + '.wrn-diagnostics-overlay[hidden], '
-            + '[aria-hidden="true"].wrn-start-leaving'
-        ).forEach(element => {
-            element.style.pointerEvents = 'none';
-        });
-    };
-
-    const scheduleRelease = () => {
-        releaseInteraction();
-        window.setTimeout(releaseInteraction, 900);
-        window.setTimeout(releaseInteraction, 2600);
-        window.setTimeout(releaseInteraction, 5200);
-    };
-
-    document.addEventListener(
-        'pointerdown',
-        releaseInteraction,
-        { capture: true, passive: true }
-    );
-
-    document.addEventListener(
-        'touchstart',
-        releaseInteraction,
-        { capture: true, passive: true }
-    );
-
-    window.addEventListener('pageshow', scheduleRelease);
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            scheduleRelease,
-            { once: true }
-        );
-    } else {
-        scheduleRelease();
-    }
-
-    window.WRNReleaseInteraction = releaseInteraction;
-})();
-
-/* Sichtbarer Fahnenhintergrund */
-(() => {
-    const style = document.createElement('style');
-    style.id = 'wrn-background-stronger';
-    style.textContent = `
-        body::before { display: none !important; }
-        html { background: #050508 !important; }
-        body {
-            background-color: #050508 !important;
-            background-image:
-                linear-gradient(
-                    180deg,
-                    rgba(3, 5, 9, 0.08) 0%,
-                    rgba(3, 5, 9, 0.16) 46%,
-                    rgba(3, 5, 9, 0.30) 100%
-                ),
-                url('./app-background.webp?v=175') !important;
-            background-position: 52% top !important;
-            background-size: cover !important;
-            background-repeat: no-repeat !important;
-            background-attachment: fixed !important;
-        }
-        .card {
-            background-color: rgba(10, 10, 17, 0.72) !important;
-            -webkit-backdrop-filter: blur(3px) !important;
-            backdrop-filter: blur(3px) !important;
-            box-shadow:
-                0 8px 24px rgba(0, 0, 0, 0.35),
-                0 0 10px var(--shadow-accent) !important;
-        }
-        .feedback-modal,
-        .podcast-options-modal,
-        .podcast-library-modal,
-        .system-status-modal,
-        .global-media-bar {
-            background-color: rgba(13, 13, 20, 0.94) !important;
-        }
-        h1, .title, .teaser, .full-content, .meta {
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-        }
-        body.theme-light,
-        body.theme-soft {
-            background-image:
-                linear-gradient(
-                    180deg,
-                    rgba(244, 244, 249, 0.44) 0%,
-                    rgba(244, 244, 249, 0.54) 48%,
-                    rgba(244, 244, 249, 0.66) 100%
-                ),
-                url('./app-background.webp?v=175') !important;
-        }
-        body.theme-light .card,
-        body.theme-soft .card {
-            background-color: rgba(255, 255, 255, 0.82) !important;
-        }
-        @media (max-width: 720px) {
-            body { background-position: 50% top !important; }
-            .card { background-color: rgba(10, 10, 17, 0.76) !important; }
-        }
-    `;
-    document.head.appendChild(style);
-})();
-
-/* Briefing, Sprachsystem und Navigation fehlertolerant laden. */
-(() => {
-    if (window.__wrnInterfaceLoader179) return;
-    window.__wrnInterfaceLoader179 = true;
-
-    const VERSION = '1711';
-
-    const addStyle = (file, marker) => {
-        if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
-
-        const stylesheet = document.createElement('link');
-        stylesheet.rel = 'stylesheet';
-        stylesheet.href = `./${file}?v=${VERSION}`;
-        stylesheet.dataset.wrnStyle = marker;
-        stylesheet.addEventListener('error', () => {
-            console.warn(`WRN stylesheet could not be loaded: ${file}`);
-        }, { once: true });
-        document.head.appendChild(stylesheet);
-    };
-
-    const loadScript = (file, marker, timeoutMs = 8000) => new Promise(resolve => {
-        const existing = document.querySelector(
-            `script[data-wrn-module="${marker}"]`
-        );
-
-        if (existing?.dataset.loaded === 'true') {
-            resolve(true);
-            return;
-        }
-
-        if (existing) {
-            let done = false;
-            const finish = success => {
-                if (done) return;
-                done = true;
-                resolve(success);
-            };
-
-            existing.addEventListener('load', () => finish(true), { once: true });
-            existing.addEventListener('error', () => finish(false), { once: true });
-            window.setTimeout(() => finish(false), timeoutMs);
-            return;
-        }
-
-        const script = document.createElement('script');
-        script.src = `./${file}?v=${VERSION}`;
-        script.dataset.wrnModule = marker;
-
-        let done = false;
-        const finish = (success, reason = '') => {
-            if (done) return;
-            done = true;
-            script.dataset.loaded = success ? 'true' : 'false';
-
-            if (!success) {
-                console.warn(`WRN module could not be loaded: ${file}`, reason);
-                window.WRNSafety?.record?.(
-                    'module',
-                    `Modul konnte nicht geladen werden: ${file}`,
-                    file
-                );
+        const observer = new MutationObserver(mutations => {
+            for (const mutation of mutations) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) stripHeavyMedia(node);
+                });
             }
+            trimFeed();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
 
-            resolve(success);
-        };
-
-        const timeout = window.setTimeout(
-            () => finish(false, 'timeout'),
-            timeoutMs
-        );
-
-        script.addEventListener('load', () => {
-            window.clearTimeout(timeout);
-            finish(true);
-        }, { once: true });
-
-        script.addEventListener('error', () => {
-            window.clearTimeout(timeout);
-            finish(false, 'network error');
-        }, { once: true });
-
-        document.body.appendChild(script);
-    });
-
-    const loadList = async files => {
-        for (const [file, marker] of files) {
-            await loadScript(file, marker);
-        }
+        window.setTimeout(releaseUi, 500);
+        window.setTimeout(releaseUi, 1800);
+        window.setTimeout(releaseUi, 4200);
+        renderFallbackFeed();
     };
 
-    const loadInterface = async () => {
-        [
-            ['release-1.5-nav.css', 'navigation-177'],
-            ['briefing.css', 'briefing-177'],
-            ['audio-catalog.css', 'audio-catalog-178'],
-            ['article-summary.css', 'article-summary-178'],
-            ['interface-qol.css', 'interface-qol-177'],
-            ['shared-translation-status.css', 'shared-translation-status-178'],
-            ['typography.css', 'typography-177'],
-            ['app-diagnostics.css', 'app-diagnostics-177']
-        ].forEach(([file, marker]) => addStyle(file, marker));
+    document.addEventListener('pointerdown', releaseUi, { capture: true, passive: true });
+    document.addEventListener('touchstart', releaseUi, { capture: true, passive: true });
+    window.addEventListener('pageshow', releaseUi);
 
-        /*
-         * Kritische Oberfläche zuerst.
-         * Fehlende Zusatzmodule dürfen Navigation und Artikel nicht blockieren.
-         */
-        await loadList([
-            ['app-safety.js', 'app-safety-178'],
-            ['wrn-i18n.js', 'i18n-178'],
-            ['typography.js', 'typography-178'],
-            ['release-1.5-nav.js', 'navigation-178'],
-            ['app-diagnostics.js', 'app-diagnostics-178']
-        ]);
-
-        /*
-         * Komfortmodule werden im Hintergrund ergänzt.
-         * Sie halten die sichtbare Oberfläche nicht mehr auf.
-         */
-        void loadList([
-            ['language-qol.js', 'language-qol-178'],
-            ['language-status.js', 'language-status-178'],
-            ['voice-qol.js', 'voice-qol-178'],
-            ['shared-translation-client.js', 'shared-translation-client-178'],
-            ['briefing.js', 'briefing-178']
-        ]);
-
-        if (!window.WRNSafety?.isActive?.()) {
-            await loadList([
-                ['shared-translation-status.js', 'shared-translation-status-178'],
-                ['translation-dialog-l10n.js', 'translation-dialog-l10n-178'],
-                ['article-summary-core.js', 'article-summary-core-178'],
-                ['article-summary.js', 'article-summary-178'],
-                ['audio-player-fixes.js', 'audio-player-fixes-178'],
-                ['audio-catalog.js', 'audio-catalog-178']
-            ]);
-        }
-
-        window.dispatchEvent(new CustomEvent('wrn-app-ready'));
-    };
-
-    if (document.readyState === 'complete') {
-        loadInterface();
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
-        window.addEventListener('load', loadInterface, { once: true });
+        start();
     }
-})();
-
-
-/* 1.7.10 – lizenzierte Cyberpnuk-Schrift nur für den Markennamen laden. */
-(() => {
-    if (window.__wrnBrandFont1711) return;
-    window.__wrnBrandFont1711 = true;
-
-    const existing = document.querySelector(
-        'link[data-wrn-style="brand-font-1711"]'
-    );
-    if (existing) return;
-
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = './brand-font.css?v=1711';
-    stylesheet.dataset.wrnStyle = 'brand-font-1711';
-    stylesheet.addEventListener('error', () => {
-        console.warn(
-            'WRN Markenschrift konnte nicht geladen werden. '
-            + 'Cyberthic.otf und brand-font.css müssen im Hauptverzeichnis liegen.'
-        );
-    }, { once: true });
-
-    document.head.appendChild(stylesheet);
 })();
