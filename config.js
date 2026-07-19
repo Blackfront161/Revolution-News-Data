@@ -81,13 +81,13 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.7',
-    build: '2026.07.19-news-workflow-and-safe-start',
-    releasedAt: '2026-07-19T22:00:00Z',
+    version: '1.7.8',
+    build: '2026.07.19-lightweight-web-feed',
+    releasedAt: '2026-07-19T23:15:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
-        news: 'https://blackfront161.github.io/Revolution-News-Data/news.json',
-        events: 'https://blackfront161.github.io/Revolution-News-Data/events.json',
+        news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
+        events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
         podcasts: 'https://blackfront161.github.io/Revolution-News-Data/podcasts.json',
         radio: 'https://blackfront161.github.io/Revolution-News-Data/radio-stations.json',
         sourceHealth: 'https://blackfront161.github.io/Revolution-News-Data/source-health.json',
@@ -167,10 +167,10 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Briefing, Sprachsystem und Navigation fehlertolerant laden. */
 (() => {
-    if (window.__wrnInterfaceLoader177) return;
-    window.__wrnInterfaceLoader177 = true;
+    if (window.__wrnInterfaceLoader178) return;
+    window.__wrnInterfaceLoader178 = true;
 
-    const VERSION = '177';
+    const VERSION = '178';
 
     const addStyle = (file, marker) => {
         if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
@@ -259,10 +259,10 @@ window.WRN_CONFIG = Object.freeze({
         [
             ['release-1.5-nav.css', 'navigation-177'],
             ['briefing.css', 'briefing-177'],
-            ['audio-catalog.css', 'audio-catalog-177'],
-            ['article-summary.css', 'article-summary-177'],
+            ['audio-catalog.css', 'audio-catalog-178'],
+            ['article-summary.css', 'article-summary-178'],
             ['interface-qol.css', 'interface-qol-177'],
-            ['shared-translation-status.css', 'shared-translation-status-177'],
+            ['shared-translation-status.css', 'shared-translation-status-178'],
             ['typography.css', 'typography-177'],
             ['app-diagnostics.css', 'app-diagnostics-177']
         ].forEach(([file, marker]) => addStyle(file, marker));
@@ -272,26 +272,33 @@ window.WRN_CONFIG = Object.freeze({
          * Fehlende Zusatzmodule dürfen Navigation und Artikel nicht blockieren.
          */
         await loadList([
-            ['app-safety.js', 'app-safety-177'],
-            ['wrn-i18n.js', 'i18n-177'],
-            ['typography.js', 'typography-177'],
-            ['language-qol.js', 'language-qol-177'],
-            ['language-status.js', 'language-status-177'],
-            ['voice-qol.js', 'voice-qol-177'],
-            ['shared-translation-client.js', 'shared-translation-client-177'],
-            ['briefing.js', 'briefing-177'],
-            ['release-1.5-nav.js', 'navigation-177'],
-            ['app-diagnostics.js', 'app-diagnostics-177']
+            ['app-safety.js', 'app-safety-178'],
+            ['wrn-i18n.js', 'i18n-178'],
+            ['typography.js', 'typography-178'],
+            ['release-1.5-nav.js', 'navigation-178'],
+            ['app-diagnostics.js', 'app-diagnostics-178']
+        ]);
+
+        /*
+         * Komfortmodule werden im Hintergrund ergänzt.
+         * Sie halten die sichtbare Oberfläche nicht mehr auf.
+         */
+        void loadList([
+            ['language-qol.js', 'language-qol-178'],
+            ['language-status.js', 'language-status-178'],
+            ['voice-qol.js', 'voice-qol-178'],
+            ['shared-translation-client.js', 'shared-translation-client-178'],
+            ['briefing.js', 'briefing-178']
         ]);
 
         if (!window.WRNSafety?.isActive?.()) {
             await loadList([
-                ['shared-translation-status.js', 'shared-translation-status-177'],
-                ['translation-dialog-l10n.js', 'translation-dialog-l10n-177'],
-                ['article-summary-core.js', 'article-summary-core-177'],
-                ['article-summary.js', 'article-summary-177'],
-                ['audio-player-fixes.js', 'audio-player-fixes-177'],
-                ['audio-catalog.js', 'audio-catalog-177']
+                ['shared-translation-status.js', 'shared-translation-status-178'],
+                ['translation-dialog-l10n.js', 'translation-dialog-l10n-178'],
+                ['article-summary-core.js', 'article-summary-core-178'],
+                ['article-summary.js', 'article-summary-178'],
+                ['audio-player-fixes.js', 'audio-player-fixes-178'],
+                ['audio-catalog.js', 'audio-catalog-178']
             ]);
         }
 
