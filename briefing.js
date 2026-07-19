@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.2 – erweitertes lokales Text- und Audio-Briefing */
+/* World Revolution News 1.7.3 – Briefing mit verbesserter Stimmenauswahl */
 'use strict';
 
 (() => {
@@ -918,10 +918,30 @@
     refreshVoices();
     const tag = SPEECH_TAGS[language] || language;
     const prefix = tag.split('-')[0].toLowerCase();
-    const matching = voices.filter(voice => String(voice.lang || '').toLowerCase().startsWith(prefix));
-    const options = matching.map(voice => [voice.name, `${voice.name} · ${voice.lang}`]);
+    const matching = window.WRNVoiceTools?.ranked?.(tag)
+      || voices
+        .filter(voice => String(voice.lang || '').toLowerCase().startsWith(prefix))
+        .sort((a, b) => Number(b.localService) - Number(a.localService) || Number(b.default) - Number(a.default));
+
+    const options = matching.map(voice => [
+      voice.name,
+      window.WRNVoiceTools?.label?.(voice, language)
+        || `${voice.name} · ${voice.lang}${voice.localService ? ' · local' : ' · online'}`
+    ]);
+
     if (!options.length) options.push(['', t('noVoice', language)]);
-    return { options, selected: matching.some(voice => voice.name === selectedName) ? selectedName : (matching[0]?.name || '') };
+    return {
+      options,
+      selected: matching.some(voice => voice.name === selectedName)
+        ? selectedName
+        : (matching[0]?.name || '')
+    };
+  }
+
+  function previewSelectedVoice(briefingLanguage, selectedName, rate = 1, pitch = 1) {
+    const tag = SPEECH_TAGS[briefingLanguage] || briefingLanguage;
+    const sample = t('voicePreviewText', briefingLanguage);
+    return window.WRNVoiceTools?.preview?.(selectedName, tag, sample, { rate, pitch }) || false;
   }
 
   function renderSettings(container, language, existing) {
@@ -982,8 +1002,20 @@
       ['0.8', '0.8'], ['0.9', '0.9'], ['1', '1.0'], ['1.1', '1.1'], ['1.2', '1.2']
     ], String(settings.speechPitch));
     const speechRow = createElement('div', 'wrn-briefing-form-row');
-    speechRow.append(voiceField, rateField, pitchField);
-    speech.append(speechRow, createElement('p', 'wrn-briefing-note', t('deviceVoiceNote', language)));
+    const previewButton = button('wrn-briefing-voice-preview', `▶ ${t('voicePreview', language)}`, () => {
+      previewSelectedVoice(
+        languageField.querySelector('select')?.value || settings.language,
+        voiceField.querySelector('select')?.value || '',
+        rateField.querySelector('select')?.value || 1,
+        pitchField.querySelector('select')?.value || 1
+      );
+    });
+    speechRow.append(voiceField, rateField, pitchField, previewButton);
+    speech.append(
+      speechRow,
+      createElement('p', 'wrn-briefing-note', t('deviceVoiceNote', language)),
+      createElement('p', 'wrn-briefing-note wrn-briefing-voice-note', t('voiceQualityNote', language))
+    );
     form.appendChild(speech);
 
     const message = createElement('div', 'wrn-briefing-form-message');
@@ -1161,7 +1193,17 @@
       next.voices[briefing.language] = voiceSelect.value;
       saveSettings(next);
     });
-    row.appendChild(voiceField);
+    row.append(
+      voiceField,
+      button('wrn-briefing-voice-preview', `▶ ${t('voicePreview', language)}`, () => {
+        previewSelectedVoice(
+          briefing.language,
+          voiceSelect.value,
+          settings.speechRate,
+          settings.speechPitch
+        );
+      })
+    );
 
     const progress = createElement('div', 'wrn-briefing-audio-progress');
     const saved = loadLocal(AUDIO_KEY, {});
@@ -1421,7 +1463,8 @@
     const desiredName = settings.voices?.[language];
     const tag = SPEECH_TAGS[language] || language;
     const prefix = tag.split('-')[0].toLowerCase();
-    return voices.find(voice => voice.name === desiredName)
+    return window.WRNVoiceTools?.find?.(desiredName, tag)
+      || voices.find(voice => voice.name === desiredName)
       || voices.find(voice => String(voice.lang || '').toLowerCase() === tag.toLowerCase())
       || voices.find(voice => String(voice.lang || '').toLowerCase().startsWith(prefix))
       || null;

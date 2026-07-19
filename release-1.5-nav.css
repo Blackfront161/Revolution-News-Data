@@ -1,4 +1,4 @@
-/* WRN 1.7.2 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
+/* WRN 1.7.3 – Briefing, Dreier-Aktionsreihe und Stimmen */
 
 :root {
   --wrn-red: #ff334f;
@@ -1525,4 +1525,60 @@ body[data-wrn-tab="topics"] .wrn-subtabs {
 
 body[data-wrn-tab="topics"] .wrn-subtab {
   scroll-snap-align: start;
+}
+
+
+/* =========================================================
+   WRN 1.7.3 – Original, Zine und Teilen in einer Dreierreihe
+   ========================================================= */
+
+.wrn-detail-actions .button-row {
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+}
+
+.wrn-detail-actions .button-row > button,
+.wrn-detail-actions .button-row > a {
+  grid-column: span 3 !important;
+}
+
+/* Hauptaktionen bleiben über die gesamte Breite. */
+.wrn-detail-actions .button-row > [id^="btn-"],
+.wrn-detail-actions .button-row > .wrn-summary-action {
+  grid-column: 1 / -1 !important;
+}
+
+/* Diese drei Aktionen bilden immer die letzte gemeinsame Reihe. */
+.wrn-detail-actions .button-row > .btn-zine-article {
+  grid-column: span 2 !important;
+  order: 90;
+}
+
+.wrn-detail-actions .button-row > [onclick*="shareArticle"] {
+  grid-column: span 2 !important;
+  order: 91;
+}
+
+.wrn-detail-actions .button-row > a[target="_blank"][rel*="noopener"] {
+  grid-column: span 2 !important;
+  order: 92;
+}
+
+.wrn-detail-actions .button-row > .btn-zine-article,
+.wrn-detail-actions .button-row > [onclick*="shareArticle"],
+.wrn-detail-actions .button-row > a[target="_blank"][rel*="noopener"] {
+  min-height: 27px !important;
+  padding-inline: 3px !important;
+  overflow-wrap: anywhere !important;
+  hyphens: auto;
+}
+
+@media (max-width: 720px) {
+  .wrn-detail-actions .button-row > .btn-zine-article,
+  .wrn-detail-actions .button-row > [onclick*="shareArticle"],
+  .wrn-detail-actions .button-row > a[target="_blank"][rel*="noopener"] {
+    min-height: 25px !important;
+    padding: 2px !important;
+    font-size: 0.51rem !important;
+    letter-spacing: -0.01em;
+  }
 }

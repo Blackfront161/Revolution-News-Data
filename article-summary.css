@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.2 – Artikel-Zusammenfassung */
+/* World Revolution News 1.7.3 – Artikel-Zusammenfassung */
 
 .wrn-summary-action {
   border-color: rgba(0, 240, 255, 0.55) !important;
@@ -162,4 +162,10 @@ body.theme-soft .wrn-summary-length {
   .wrn-summary-body {
     font-size: 0.74rem;
   }
+}
+
+
+/* 1.7.3: Zusammenfassen bleibt als Hauptaktion voll breit. */
+.wrn-detail-actions .button-row > .wrn-summary-action {
+  grid-column: 1 / -1 !important;
 }

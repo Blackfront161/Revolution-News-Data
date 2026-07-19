@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.2 – Sprach- und Bedienungsverbesserungen */
+/* World Revolution News 1.7.3 – Sprach- und Bedienungsverbesserungen */
 'use strict';
 
 (() => {
-  if (window.__wrnLanguageQol172) return;
-  window.__wrnLanguageQol172 = true;
+  if (window.__wrnLanguageQol173) return;
+  window.__wrnLanguageQol173 = true;
 
   const patches = {
     es: {
