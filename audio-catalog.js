@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.1 – Audio-Katalog und Untermenüs */
+/* World Revolution News 1.7.2 – Audio-Katalog und Untermenüs */
 'use strict';
 
 (() => {
-  if (window.__wrnAudioCatalog171Loaded) return;
-  window.__wrnAudioCatalog171Loaded = true;
+  if (window.__wrnAudioCatalog172Loaded) return;
+  window.__wrnAudioCatalog172Loaded = true;
 
   const STORAGE_KEY = 'wrn_audio_catalog_filters_v1';
   const HEALTH_REFRESH_MS = 5 * 60 * 1000;
@@ -207,7 +207,7 @@
     const fetchJson = async (url) => {
       if (!url) return {};
       try {
-        const response = await fetch(`${url}?v=${force ? Date.now() : '171'}`, {
+        const response = await fetch(`${url}?v=${force ? Date.now() : '172'}`, {
           cache: force ? 'no-store' : 'default'
         });
         return response.ok ? await response.json() : {};

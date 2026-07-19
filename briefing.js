@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.1 – lokales tägliches Text- und Audio-Briefing */
+/* World Revolution News 1.7.2 – erweitertes lokales Text- und Audio-Briefing */
 'use strict';
 
 (() => {
@@ -49,6 +49,7 @@
   let speechStatus = 'stopped';
   let currentUtterance = null;
   let scrollTimer = null;
+  let showOnlyNew = false;
 
   function i18n() {
     return window.WRNI18n;
@@ -130,6 +131,7 @@
         events: raw.options?.events !== false,
         background: raw.options?.background !== false,
         connections: raw.options?.connections !== false,
+        updates: raw.options?.updates !== false,
         avoidRead: raw.options?.avoidRead !== false
       },
       voices: raw.voices && typeof raw.voices === 'object' ? raw.voices : {},
@@ -286,11 +288,29 @@
   function sentenceSummary(article, length) {
     const source = cleanText(article?.content || article?.description || article?.summary || article?.title || '');
     if (!source) return '';
+
+    const summaryLength = length === 'long' ? 'detailed' : length === 'short' ? 'short' : 'standard';
+    const sourceLanguage = i18n()?.normalizeLanguage?.(
+      article?.language || article?.lang || article?.sourceLanguage || 'en'
+    ) || 'en';
+
+    const generated = window.WRNSummaryCore?.summarizeText?.(source, {
+      title: cleanText(article?.title || ''),
+      length: summaryLength,
+      language: sourceLanguage
+    });
+
+    if (generated?.plainText) {
+      const maximum = length === 'long' ? 720 : length === 'short' ? 300 : 500;
+      const value = generated.plainText.trim();
+      return value.length > maximum
+        ? `${value.slice(0, maximum).replace(/\s+\S*$/, '')}…`
+        : value;
+    }
+
     const desiredSentences = length === 'long' ? 3 : length === 'short' ? 1 : 2;
     const sentences = source.match(/[^.!?…]+[.!?…]+|[^.!?…]+$/g) || [source];
-    const summary = sentences.slice(0, desiredSentences).join(' ').trim();
-    const maximum = length === 'long' ? 620 : length === 'short' ? 250 : 420;
-    return summary.length > maximum ? `${summary.slice(0, maximum).replace(/\s+\S*$/, '')}…` : summary;
+    return sentences.slice(0, desiredSentences).join(' ').trim();
   }
 
   function actualRegionMatches(article) {
@@ -417,14 +437,31 @@
     return selected;
   }
 
-  function previousKeys(history, date) {
+  function itemContentSignature(item) {
+    const text = [
+      item?.title || '',
+      item?.summary || '',
+      ...(item?.sources || []).map(source => `${source.source || ''}:${source.title || ''}`)
+    ].join('|');
+    return window.WRNSummaryCore?.hashText?.(text)
+      || String(text.length);
+  }
+
+  function previousItemMap(history, date) {
     const previous = history.find(item => item.date < date);
-    if (!previous) return new Set();
-    const keys = [];
+    const map = new Map();
+    if (!previous) return map;
+
     for (const section of previous.sections || []) {
-      for (const item of section.items || []) keys.push(item.key);
+      for (const item of section.items || []) {
+        if (!item?.key) continue;
+        map.set(item.key, {
+          signature: item.contentSignature || itemContentSignature(item),
+          item
+        });
+      }
     }
-    return new Set(keys);
+    return map;
   }
 
   function connectionItem(items, settings) {
@@ -479,11 +516,35 @@
 
     const eventClusters = clusterCandidates(candidates.filter(item => item.event));
     const newsClusters = clusterCandidates(candidates.filter(item => !item.event));
-    const desired = LENGTH_COUNTS[settings.length] || LENGTH_COUNTS.standard;
-    const mainCount = Math.max(2, desired - (settings.options.events ? 1 : 0) - (settings.options.background ? 1 : 0));
-    const selectedMain = selectDiverse(newsClusters.filter(item => item.ageDays <= 21), mainCount);
+    newsClusters.forEach(item => { item.contentSignature = itemContentSignature(item); });
 
-    const selectedKeys = new Set(selectedMain.map(item => item.key));
+    const date = todayKey();
+    const history = loadHistory();
+    const previousMap = previousItemMap(history, date);
+
+    const updatedCandidates = settings.options.updates
+      ? newsClusters.filter(item => {
+          const previous = previousMap.get(item.key);
+          return previous && previous.signature !== item.contentSignature;
+        })
+      : [];
+
+    const updateLimit = settings.length === 'long' ? 3 : settings.length === 'short' ? 1 : 2;
+    const updates = selectDiverse(updatedCandidates, updateLimit);
+    const updateKeys = new Set(updates.map(item => item.key));
+
+    const desired = LENGTH_COUNTS[settings.length] || LENGTH_COUNTS.standard;
+    const reserved = updates.length
+      + (settings.options.events ? 1 : 0)
+      + (settings.options.background ? 1 : 0);
+    const mainCount = Math.max(2, desired - reserved);
+
+    const selectedMain = selectDiverse(
+      newsClusters.filter(item => item.ageDays <= 21 && !updateKeys.has(item.key)),
+      mainCount
+    );
+
+    const selectedKeys = new Set([...updates, ...selectedMain].map(item => item.key));
     const underRadar = newsClusters.find(item => !selectedKeys.has(item.key) && item.sources.length === 1 && item.ageDays <= 14)
       || newsClusters.find(item => !selectedKeys.has(item.key) && item.ageDays <= 30);
 
@@ -495,12 +556,10 @@
       ? newsClusters.find(item => !selectedKeys.has(item.key) && item.ageDays >= 7 && item.ageDays <= 120)
       : null;
 
-    const connection = connectionItem(selectedMain, settings);
-    const date = todayKey();
-    const history = loadHistory();
-    const oldKeys = previousKeys(history, date);
+    const connection = connectionItem([...updates, ...selectedMain], settings);
 
     const sections = [
+      section('updates', updates),
       section('overview', selectedMain),
       section('underRadar', underRadar ? [underRadar] : []),
       section('connections', connection ? [connection] : []),
@@ -509,11 +568,16 @@
     ].filter(entry => entry.items.length);
 
     for (const currentSection of sections) {
-      for (const item of currentSection.items) item.isNew = !oldKeys.has(item.key);
+      for (const item of currentSection.items) {
+        const previous = previousMap.get(item.key);
+        item.contentSignature = item.contentSignature || itemContentSignature(item);
+        item.isNew = !previous;
+        item.isUpdated = Boolean(previous && previous.signature !== item.contentSignature);
+      }
     }
 
     return {
-      version: 1,
+      version: 2,
       date,
       language: settings.language,
       fingerprint: contentFingerprint(settings),
@@ -863,7 +927,7 @@
   function renderSettings(container, language, existing) {
     const settings = existing || {
       topics: [], regions: [], language: appLanguage(), length: 'standard',
-      options: { events: true, background: true, connections: true, avoidRead: true },
+      options: { events: true, background: true, connections: true, updates: true, avoidRead: true },
       voices: {}, speechRate: 1, speechPitch: 1
     };
 
@@ -902,6 +966,7 @@
       toggleField(t('includeEvents', language), 'events', settings.options.events),
       toggleField(t('includeBackground', language), 'background', settings.options.background),
       toggleField(t('includeConnections', language), 'connections', settings.options.connections),
+      toggleField(t('includeUpdates', language), 'updates', settings.options.updates),
       toggleField(t('avoidRead', language), 'avoidRead', settings.options.avoidRead)
     );
     form.appendChild(optionsFieldset);
@@ -987,7 +1052,7 @@
         length: data.get('length'),
         options: {
           events: data.has('events'), background: data.has('background'),
-          connections: data.has('connections'), avoidRead: data.has('avoidRead')
+          connections: data.has('connections'), updates: data.has('updates'), avoidRead: data.has('avoidRead')
         },
         voices: { ...settings.voices, [briefingLanguage]: data.get('voice') || '' },
         speechRate: data.get('speechRate'),
@@ -1046,7 +1111,8 @@
     const head = createElement('div', 'wrn-briefing-item-head');
     const title = createElement('h4', '', item.title);
     head.appendChild(title);
-    if (item.isNew) head.appendChild(createElement('span', 'wrn-briefing-new', t('newLabel', language)));
+    if (item.isUpdated) head.appendChild(createElement('span', 'wrn-briefing-new wrn-briefing-updated', t('updatedLabel', language)));
+    else if (item.isNew) head.appendChild(createElement('span', 'wrn-briefing-new', t('newLabel', language)));
     article.appendChild(head);
 
     if (item.summary) article.appendChild(createElement('p', 'wrn-briefing-summary', item.summary));
@@ -1107,6 +1173,52 @@
     container.appendChild(controls);
   }
 
+  function briefingStats(briefing) {
+    const items = (briefing.sections || []).flatMap(entry => entry.items || []);
+    const realItems = items.filter(item => !item.isConnection);
+    const sources = new Set();
+    const regions = new Set();
+    const topics = new Set();
+
+    realItems.forEach(item => {
+      (item.sources || []).forEach(source => { if (source.source) sources.add(source.source); });
+      (item.regionMatches || []).forEach(region => regions.add(region));
+      (item.topicMatches || []).forEach(topic => topics.add(topic));
+    });
+
+    return {
+      newCount: realItems.filter(item => item.isNew).length,
+      updatedCount: realItems.filter(item => item.isUpdated).length,
+      sourceCount: sources.size,
+      regionCount: regions.size,
+      topicCount: topics.size
+    };
+  }
+
+  function renderBriefingStats(container, briefing, language) {
+    const stats = briefingStats(briefing);
+    const section = createElement('section', 'wrn-briefing-stats');
+    section.setAttribute('aria-label', t('briefingStats', language));
+
+    [
+      [stats.newCount, t('newCount', language), 'new'],
+      [stats.updatedCount, t('updatedCount', language), 'updated'],
+      [stats.sourceCount, t('sourceCount', language), 'sources'],
+      [stats.regionCount, t('regionCount', language), 'regions'],
+      [stats.topicCount, t('topicCount', language), 'topics']
+    ].forEach(([value, label, key]) => {
+      const card = createElement('div', `wrn-briefing-stat wrn-briefing-stat-${key}`);
+      card.append(
+        createElement('strong', '', String(value)),
+        createElement('span', '', label)
+      );
+      section.appendChild(card);
+    });
+
+    container.appendChild(section);
+    container.appendChild(createElement('p', 'wrn-briefing-summary-privacy', `🔒 ${t('summaryPrivacy', language)}`));
+  }
+
   function renderBriefingContent(container, briefing, settings) {
     const language = briefing.language;
     const meta = createElement('div', 'wrn-briefing-meta');
@@ -1122,12 +1234,17 @@
       meta.appendChild(createElement('span', 'wrn-briefing-offline', `${t('stale', language)} ${staleDate}`));
     }
     container.appendChild(meta);
+    renderBriefingStats(container, briefing, language);
 
     const actions = createElement('div', 'wrn-briefing-main-actions');
     actions.append(
       button('wrn-briefing-primary', `▶ ${t('listen', language)}`, startOrResumeSpeech),
       button('wrn-briefing-secondary', `↻ ${t('update', language)}`, () => ensureDailyBriefing({ force: true })),
-      button('wrn-briefing-secondary', `↗ ${t('share', language)}`, shareBriefing)
+      button('wrn-briefing-secondary', `↗ ${t('share', language)}`, shareBriefing),
+      button('wrn-briefing-secondary', showOnlyNew ? t('showAll', language) : t('onlyNew', language), () => {
+        showOnlyNew = !showOnlyNew;
+        render();
+      })
     );
     container.appendChild(actions);
 
@@ -1142,11 +1259,22 @@
       return;
     }
 
+    let visibleItems = 0;
     for (const entry of briefing.sections) {
+      const items = showOnlyNew
+        ? entry.items.filter(item => item.isNew || item.isUpdated)
+        : entry.items;
+      if (!items.length) continue;
+
       const sectionElement = createElement('section', `wrn-briefing-section wrn-briefing-section-${entry.id}`);
       sectionElement.appendChild(createElement('h3', '', t(entry.id, language)));
-      entry.items.forEach(item => sectionElement.appendChild(renderItem(item, language)));
+      items.forEach(item => sectionElement.appendChild(renderItem(item, language)));
+      visibleItems += items.length;
       container.appendChild(sectionElement);
+    }
+
+    if (showOnlyNew && visibleItems === 0) {
+      container.appendChild(createElement('div', 'wrn-briefing-empty wrn-briefing-no-new', t('noNew', language)));
     }
 
     container.appendChild(createElement('p', 'wrn-briefing-refresh-note', t('refreshOnceDaily', language)));

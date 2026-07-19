@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.1 – Mein Briefing */
+/* World Revolution News 1.7.2 – erweitertes Mein Briefing */
 
 .wrn-briefing-view {
   box-sizing: border-box;
@@ -598,4 +598,92 @@ body.theme-light .wrn-briefing-history,
 body.theme-soft .wrn-briefing-history {
   background: #fff;
   color: #171922;
+}
+
+
+/* =========================================================
+   WRN 1.7.2 – Briefing-Übersicht und Aktualisierungen
+   ========================================================= */
+
+.wrn-briefing-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 0 7px;
+}
+
+.wrn-briefing-stat {
+  min-width: 0;
+  padding: 7px 5px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 9px;
+  background: rgba(255,255,255,0.035);
+  text-align: center;
+}
+
+.wrn-briefing-stat strong,
+.wrn-briefing-stat span {
+  display: block;
+}
+
+.wrn-briefing-stat strong {
+  color: var(--color-cyan, #00f0ff);
+  font-size: 0.94rem;
+  line-height: 1;
+}
+
+.wrn-briefing-stat span {
+  margin-top: 3px;
+  color: rgba(255,255,255,0.59);
+  font-size: 0.55rem;
+  line-height: 1.05;
+}
+
+.wrn-briefing-stat-new strong {
+  color: var(--color-green, #39ff88);
+}
+
+.wrn-briefing-stat-updated strong {
+  color: #ffd166;
+}
+
+.wrn-briefing-summary-privacy {
+  margin: 0 0 9px;
+  color: var(--color-green, #39ff88);
+  font-size: 0.61rem;
+}
+
+.wrn-briefing-updated {
+  border-color: #ffd166;
+  color: #ffd166;
+}
+
+.wrn-briefing-section-updates > h3 {
+  color: #ffd166;
+  border-bottom-color: rgba(255,209,102,0.27);
+}
+
+.wrn-briefing-no-new {
+  min-height: 120px;
+}
+
+body.theme-light .wrn-briefing-stat,
+body.theme-soft .wrn-briefing-stat {
+  background: rgba(0,0,0,0.035);
+  border-color: rgba(0,0,0,0.10);
+}
+
+body.theme-light .wrn-briefing-stat span,
+body.theme-soft .wrn-briefing-stat span {
+  color: #4b4f5c;
+}
+
+@media (max-width: 720px) {
+  .wrn-briefing-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .wrn-briefing-stat {
+    padding: 6px 4px;
+  }
 }

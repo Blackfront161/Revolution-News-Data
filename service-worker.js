@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.1';
-const DATA_CACHE = 'wrn-data-v1.7.1';
+const APP_CACHE = 'wrn-app-v1.7.2';
+const DATA_CACHE = 'wrn-data-v1.7.2';
 
 const APP_SHELL = [
   './',
@@ -12,6 +12,7 @@ const APP_SHELL = [
   './release-1.5-nav.css',
   './briefing.css',
   './audio-catalog.css',
+  './article-summary.css',
   './app-background.webp',
   './wrn-logo.webp',
   './config.js',
@@ -30,6 +31,9 @@ const APP_SHELL = [
   './release-1.4.js',
   './release-1.5-nav.js',
   './wrn-i18n.js',
+  './language-qol.js',
+  './article-summary-core.js',
+  './article-summary.js',
   './briefing.js',
   './audio-player-fixes.js',
   './audio-catalog.js',

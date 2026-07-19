@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.1 – gemeinsame Navigation- und Briefing-Texte */
+/* World Revolution News 1.7.2 – Navigation, Briefing und Zusammenfassungen */
 'use strict';
 
 (() => {
@@ -162,6 +162,164 @@
     }
   };
 
+
+  const EXTRA_TEXTS = {
+    en: {
+      briefing: {
+        updates:'Changed since yesterday', includeUpdates:'Track updates from previous briefings',
+        updatedLabel:'Updated', briefingStats:'Briefing overview', newCount:'new',
+        updatedCount:'updated', sourceCount:'sources', regionCount:'regions', topicCount:'topics',
+        onlyNew:'Only new & updated', showAll:'Show all', noNew:'No new or updated entries in this briefing.',
+        summaryPrivacy:'Brief summaries and article summaries are created locally from the available text.'
+      },
+      summary: {
+        button:'Summarize', title:'Local summary', short:'Short', standard:'Standard',
+        detailed:'Detailed', regenerate:'Regenerate', copy:'Copy', share:'Share', listen:'Listen',
+        stop:'Stop', close:'Close', local:'On this device', notice:'Automatically extracted from the article text. Check the original source for important details.',
+        noText:'This article does not contain enough text for a useful summary.', compression:'Summary',
+        words:'words', copied:'Summary copied.', copyFailed:'Could not copy the summary.'
+      }
+    },
+    de: {
+      briefing: {
+        updates:'Seit gestern verändert', includeUpdates:'Aktualisierungen aus früheren Briefings verfolgen',
+        updatedLabel:'Aktualisiert', briefingStats:'Briefing-Übersicht', newCount:'neu',
+        updatedCount:'aktualisiert', sourceCount:'Quellen', regionCount:'Regionen', topicCount:'Themen',
+        onlyNew:'Nur Neues & Aktualisiertes', showAll:'Alles anzeigen',
+        noNew:'In diesem Briefing gibt es keine neuen oder aktualisierten Einträge.',
+        summaryPrivacy:'Briefing- und Artikelzusammenfassungen werden lokal aus dem verfügbaren Text erstellt.'
+      },
+      summary: {
+        button:'Zusammenfassen', title:'Lokale Zusammenfassung', short:'Kurz', standard:'Standard',
+        detailed:'Ausführlich', regenerate:'Neu erstellen', copy:'Kopieren', share:'Teilen', listen:'Anhören',
+        stop:'Stoppen', close:'Schließen', local:'Auf diesem Gerät',
+        notice:'Automatisch aus dem Artikeltext extrahiert. Prüfe bei wichtigen Angaben die Originalquelle.',
+        noText:'Dieser Artikel enthält nicht genügend Text für eine brauchbare Zusammenfassung.',
+        compression:'Zusammenfassung', words:'Wörter', copied:'Zusammenfassung kopiert.',
+        copyFailed:'Die Zusammenfassung konnte nicht kopiert werden.'
+      }
+    },
+    es: {
+      briefing: {
+        updates:'Cambios desde ayer', includeUpdates:'Seguir actualizaciones de resúmenes anteriores',
+        updatedLabel:'Actualizado', briefingStats:'Resumen general', newCount:'nuevos',
+        updatedCount:'actualizados', sourceCount:'fuentes', regionCount:'regiones', topicCount:'temas',
+        onlyNew:'Solo nuevos y actualizados', showAll:'Mostrar todo',
+        noNew:'No hay entradas nuevas o actualizadas.', summaryPrivacy:'Los resúmenes se crean localmente a partir del texto disponible.'
+      },
+      summary: {
+        button:'Resumir', title:'Resumen local', short:'Breve', standard:'Estándar', detailed:'Detallado',
+        regenerate:'Volver a crear', copy:'Copiar', share:'Compartir', listen:'Escuchar', stop:'Detener',
+        close:'Cerrar', local:'En este dispositivo',
+        notice:'Extraído automáticamente del texto. Consulta la fuente original para datos importantes.',
+        noText:'El artículo no contiene texto suficiente para un resumen útil.', compression:'Resumen',
+        words:'palabras', copied:'Resumen copiado.', copyFailed:'No se pudo copiar el resumen.'
+      }
+    },
+    fr: {
+      briefing: {
+        updates:'Changements depuis hier', includeUpdates:'Suivre les mises à jour des briefings précédents',
+        updatedLabel:'Mis à jour', briefingStats:'Vue d’ensemble', newCount:'nouveaux',
+        updatedCount:'mis à jour', sourceCount:'sources', regionCount:'régions', topicCount:'thèmes',
+        onlyNew:'Nouveaux et mis à jour', showAll:'Tout afficher',
+        noNew:'Aucune entrée nouvelle ou mise à jour.', summaryPrivacy:'Les résumés sont créés localement à partir du texte disponible.'
+      },
+      summary: {
+        button:'Résumer', title:'Résumé local', short:'Court', standard:'Standard', detailed:'Détaillé',
+        regenerate:'Recréer', copy:'Copier', share:'Partager', listen:'Écouter', stop:'Arrêter',
+        close:'Fermer', local:'Sur cet appareil',
+        notice:'Extrait automatiquement du texte. Vérifiez la source originale pour les informations importantes.',
+        noText:'Le texte est insuffisant pour produire un résumé utile.', compression:'Résumé',
+        words:'mots', copied:'Résumé copié.', copyFailed:'Impossible de copier le résumé.'
+      }
+    },
+    it: {
+      briefing: {
+        updates:'Cambiamenti da ieri', includeUpdates:'Segui aggiornamenti dai briefing precedenti',
+        updatedLabel:'Aggiornato', briefingStats:'Panoramica briefing', newCount:'nuovi',
+        updatedCount:'aggiornati', sourceCount:'fonti', regionCount:'regioni', topicCount:'temi',
+        onlyNew:'Solo nuovi e aggiornati', showAll:'Mostra tutto',
+        noNew:'Nessuna voce nuova o aggiornata.', summaryPrivacy:'I riassunti vengono creati localmente dal testo disponibile.'
+      },
+      summary: {
+        button:'Riassumi', title:'Riassunto locale', short:'Breve', standard:'Standard', detailed:'Dettagliato',
+        regenerate:'Ricrea', copy:'Copia', share:'Condividi', listen:'Ascolta', stop:'Ferma',
+        close:'Chiudi', local:'Su questo dispositivo',
+        notice:'Estratto automaticamente dal testo. Controlla la fonte originale per i dettagli importanti.',
+        noText:'Il testo non è sufficiente per un riassunto utile.', compression:'Riassunto',
+        words:'parole', copied:'Riassunto copiato.', copyFailed:'Impossibile copiare il riassunto.'
+      }
+    },
+    pt: {
+      briefing: {
+        updates:'Alterações desde ontem', includeUpdates:'Acompanhar atualizações de briefings anteriores',
+        updatedLabel:'Atualizado', briefingStats:'Visão geral', newCount:'novos',
+        updatedCount:'atualizados', sourceCount:'fontes', regionCount:'regiões', topicCount:'temas',
+        onlyNew:'Só novos e atualizados', showAll:'Mostrar tudo',
+        noNew:'Não há entradas novas ou atualizadas.', summaryPrivacy:'Os resumos são criados localmente a partir do texto disponível.'
+      },
+      summary: {
+        button:'Resumir', title:'Resumo local', short:'Curto', standard:'Normal', detailed:'Detalhado',
+        regenerate:'Criar novamente', copy:'Copiar', share:'Partilhar', listen:'Ouvir', stop:'Parar',
+        close:'Fechar', local:'Neste dispositivo',
+        notice:'Extraído automaticamente do texto. Confirma a fonte original para detalhes importantes.',
+        noText:'O artigo não tem texto suficiente para um resumo útil.', compression:'Resumo',
+        words:'palavras', copied:'Resumo copiado.', copyFailed:'Não foi possível copiar o resumo.'
+      }
+    },
+    ru: {
+      briefing: {
+        updates:'Изменения со вчерашнего дня', includeUpdates:'Отслеживать изменения из прошлых обзоров',
+        updatedLabel:'Обновлено', briefingStats:'Обзор выпуска', newCount:'новых',
+        updatedCount:'обновлено', sourceCount:'источников', regionCount:'регионов', topicCount:'тем',
+        onlyNew:'Только новое и обновлённое', showAll:'Показать всё',
+        noNew:'Новых или обновлённых материалов нет.', summaryPrivacy:'Сводки создаются локально из доступного текста.'
+      },
+      summary: {
+        button:'Сводка', title:'Локальная сводка', short:'Кратко', standard:'Обычно', detailed:'Подробно',
+        regenerate:'Создать заново', copy:'Копировать', share:'Поделиться', listen:'Слушать', stop:'Стоп',
+        close:'Закрыть', local:'На этом устройстве',
+        notice:'Автоматически извлечено из текста. Важные детали проверяйте в оригинальном источнике.',
+        noText:'Недостаточно текста для полезной сводки.', compression:'Сводка',
+        words:'слов', copied:'Сводка скопирована.', copyFailed:'Не удалось скопировать сводку.'
+      }
+    },
+    el: {
+      briefing: {
+        updates:'Αλλαγές από χθες', includeUpdates:'Παρακολούθηση ενημερώσεων προηγούμενων ενημερώσεων',
+        updatedLabel:'Ενημερώθηκε', briefingStats:'Επισκόπηση', newCount:'νέα',
+        updatedCount:'ενημερωμένα', sourceCount:'πηγές', regionCount:'περιοχές', topicCount:'θέματα',
+        onlyNew:'Μόνο νέα και ενημερωμένα', showAll:'Εμφάνιση όλων',
+        noNew:'Δεν υπάρχουν νέες ή ενημερωμένες εγγραφές.', summaryPrivacy:'Οι περιλήψεις δημιουργούνται τοπικά από το διαθέσιμο κείμενο.'
+      },
+      summary: {
+        button:'Περίληψη', title:'Τοπική περίληψη', short:'Σύντομη', standard:'Κανονική', detailed:'Αναλυτική',
+        regenerate:'Νέα δημιουργία', copy:'Αντιγραφή', share:'Κοινοποίηση', listen:'Ακρόαση', stop:'Διακοπή',
+        close:'Κλείσιμο', local:'Σε αυτή τη συσκευή',
+        notice:'Αυτόματη εξαγωγή από το κείμενο. Ελέγξτε την αρχική πηγή για σημαντικές λεπτομέρειες.',
+        noText:'Δεν υπάρχει αρκετό κείμενο για χρήσιμη περίληψη.', compression:'Περίληψη',
+        words:'λέξεις', copied:'Η περίληψη αντιγράφηκε.', copyFailed:'Η αντιγραφή απέτυχε.'
+      }
+    },
+    tr: {
+      briefing: {
+        updates:'Dünden bu yana değişenler', includeUpdates:'Önceki özetlerdeki güncellemeleri izle',
+        updatedLabel:'Güncellendi', briefingStats:'Özet görünümü', newCount:'yeni',
+        updatedCount:'güncellenmiş', sourceCount:'kaynak', regionCount:'bölge', topicCount:'konu',
+        onlyNew:'Yalnızca yeni ve güncel', showAll:'Tümünü göster',
+        noNew:'Yeni veya güncellenmiş içerik yok.', summaryPrivacy:'Özetler mevcut metinden cihazda yerel olarak oluşturulur.'
+      },
+      summary: {
+        button:'Özetle', title:'Yerel özet', short:'Kısa', standard:'Standart', detailed:'Ayrıntılı',
+        regenerate:'Yeniden oluştur', copy:'Kopyala', share:'Paylaş', listen:'Dinle', stop:'Durdur',
+        close:'Kapat', local:'Bu cihazda',
+        notice:'Makaleden otomatik çıkarılmıştır. Önemli ayrıntıları özgün kaynaktan doğrula.',
+        noText:'Yararlı bir özet için yeterli metin yok.', compression:'Özet',
+        words:'kelime', copied:'Özet kopyalandı.', copyFailed:'Özet kopyalanamadı.'
+      }
+    }
+  };
+
   const TOPIC_UI_KEYS = Object.freeze({
     'Labor Struggles': 'catLabor', 'Antifascism': 'catAntifascism', 'Antisexism': 'catAntisexism',
     'Queer-Feminism': 'catQueer', 'Antiracism': 'catAntiracism', 'No Borders': 'catNoBorders',
@@ -207,9 +365,11 @@
   function dictionary(language) {
     const lang = normalizeLanguage(language);
     const override = OVERRIDES[lang] || {};
+    const extra = EXTRA_TEXTS[lang] || EXTRA_TEXTS.en;
     return {
       nav: mergeObjects(EN.nav, override.nav),
-      briefing: mergeObjects(EN.briefing, override.briefing)
+      briefing: mergeObjects(mergeObjects(EN.briefing, override.briefing), extra.briefing),
+      summary: mergeObjects(EXTRA_TEXTS.en.summary, extra.summary)
     };
   }
 
