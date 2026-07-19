@@ -1,4 +1,4 @@
-/* World Revolution News – 1.7.12 Emergency Compatibility Mode */
+/* World Revolution News – 1.7.12 Click & Performance Repair */
 'use strict';
 
 window.WRN_EMERGENCY_MODE = true;
@@ -6,8 +6,8 @@ window.WRN_EMERGENCY_MODE = true;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.7.12',
-    build: '2026.07.19-emergency-compatible',
-    releasedAt: '2026-07-19T20:45:00+02:00',
+    build: '2026.07.19-click-performance-repair',
+    releasedAt: '2026-07-19T21:20:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: true,
     dataUrls: Object.freeze({
@@ -27,44 +27,45 @@ window.WRN_CONFIG = Object.freeze({
 });
 
 /*
- * Mobile Notbremse:
- * Die vollständige Oberfläche bleibt vorhanden. Auf kleinen Geräten werden nur
- * teure Darstellungs-Effekte abgeschaltet und große Feed-Antworten begrenzt.
+ * Feed-Bremse: Es werden keine Dateien oder gespeicherten Daten gelöscht.
+ * ?full=1 lädt bei Bedarf wieder den vollständigen Feed.
  */
 (() => {
-    if (window.__wrnEmergencyCompatibility1712) return;
-    window.__wrnEmergencyCompatibility1712 = true;
+    if (window.__wrnFeedGuard1712ClickFix) return;
+    window.__wrnFeedGuard1712ClickFix = true;
 
-    const isMobile = () => window.matchMedia('(max-width: 820px)').matches;
-    const fullFeedRequested = () =>
-        new URLSearchParams(window.location.search).get('full') === '1';
+    const wantsFullFeed = () =>
+        new URLSearchParams(location.search).get('full') === '1';
 
     const nativeFetch = window.fetch.bind(window);
+
     window.fetch = async (...args) => {
         const response = await nativeFetch(...args);
+        if (wantsFullFeed() || !response.ok) return response;
 
-        if (!isMobile() || fullFeedRequested() || !response.ok) {
-            return response;
-        }
-
-        const requestUrl = String(
-            typeof args[0] === 'string' ? args[0] : args[0]?.url || ''
+        const url = String(
+            typeof args[0] === 'string'
+                ? args[0]
+                : args[0]?.url || ''
         );
-        const limit = /news-feed\.json/i.test(requestUrl)
-            ? 120
-            : (/events-feed\.json/i.test(requestUrl) ? 200 : 0);
+
+        const limit = /news-feed\.json/i.test(url)
+            ? 160
+            : (/events-feed\.json/i.test(url) ? 220 : 0);
 
         if (!limit) return response;
 
         try {
-            const data = await response.clone().json();
-            if (!Array.isArray(data) || data.length <= limit) return response;
+            const rows = await response.clone().json();
+            if (!Array.isArray(rows) || rows.length <= limit) {
+                return response;
+            }
 
             const headers = new Headers(response.headers);
             headers.set('content-type', 'application/json; charset=utf-8');
             headers.delete('content-length');
 
-            return new Response(JSON.stringify(data.slice(0, limit)), {
+            return new Response(JSON.stringify(rows.slice(0, limit)), {
                 status: response.status,
                 statusText: response.statusText,
                 headers
@@ -73,19 +74,57 @@ window.WRN_CONFIG = Object.freeze({
             return response;
         }
     };
+})();
+
+/*
+ * Reine CSS-Notbremse. Keine Schleife über sämtliche Seitenelemente bei Klicks.
+ */
+(() => {
+    if (document.getElementById('wrn-click-fix-style-1712')) return;
 
     const style = document.createElement('style');
-    style.id = 'wrn-emergency-compatible-style-1712';
+    style.id = 'wrn-click-fix-style-1712';
     style.textContent = `
+        html,
+        body {
+            pointer-events: auto !important;
+        }
+
+        button,
+        a,
+        input,
+        select,
+        textarea,
+        summary,
+        label,
+        [role="button"] {
+            pointer-events: auto;
+        }
+
+        #wrn-start-screen,
+        .wrn-start-screen,
+        .wrn-start-leaving,
+        .app-start-screen,
+        .wrn-article-detail[hidden],
+        .wrn-more-panel[hidden],
+        .wrn-search-panel[hidden],
+        .wrn-subtabs-wrap[hidden],
+        [hidden] {
+            pointer-events: none !important;
+        }
+
         @media (max-width: 820px) {
-            html, body {
+            html,
+            body {
                 background-color: #050508 !important;
                 background-image: none !important;
                 background-attachment: scroll !important;
                 scroll-behavior: auto !important;
             }
 
-            html, body, body * {
+            html,
+            body,
+            body * {
                 animation-duration: 0.001ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.001ms !important;
@@ -99,7 +138,7 @@ window.WRN_CONFIG = Object.freeze({
             .app-start-screen {
                 display: none !important;
                 visibility: hidden !important;
-                pointer-events: none !important;
+                opacity: 0 !important;
             }
 
             body,
@@ -140,27 +179,70 @@ window.WRN_CONFIG = Object.freeze({
     document.head.appendChild(style);
 })();
 
-/* Offline-Speicher darf den Start nicht blockieren; vorhandene Daten bleiben erhalten. */
+/*
+ * Einmalige Freigabe statt einer teuren DOM-Schleife bei jedem pointerdown.
+ */
 (() => {
-    if (window.__wrnStorageStartGuard1712) return;
-    window.__wrnStorageStartGuard1712 = true;
+    if (window.__wrnSingleInteractionRelease1712) return;
+    window.__wrnSingleInteractionRelease1712 = true;
+
+    const release = () => {
+        document.documentElement.classList.remove(
+            'wrn-booting',
+            'wrn-app-entering'
+        );
+
+        document.documentElement.style.pointerEvents = 'auto';
+
+        if (document.body) {
+            document.body.style.pointerEvents = 'auto';
+        }
+
+        const startScreen = document.getElementById('wrn-start-screen');
+        if (startScreen) startScreen.remove();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener(
+            'DOMContentLoaded',
+            release,
+            { once: true }
+        );
+    } else {
+        release();
+    }
+
+    window.addEventListener('pageshow', release, { once: true });
+    window.setTimeout(release, 800);
+    window.setTimeout(release, 2600);
+
+    window.WRNReleaseInteraction = release;
+})();
+
+/*
+ * Offline-Speicher bleibt erhalten, darf den Start aber nicht blockieren.
+ */
+(() => {
+    if (window.__wrnStorageGuard1712ClickFix) return;
+    window.__wrnStorageGuard1712ClickFix = true;
 
     const timeout = (promise, ms, fallback) => new Promise(resolve => {
-        let done = false;
+        let finished = false;
+
         const timer = window.setTimeout(() => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             resolve(fallback);
         }, ms);
 
         Promise.resolve(promise).then(value => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             window.clearTimeout(timer);
             resolve(value);
         }).catch(() => {
-            if (done) return;
-            done = true;
+            if (finished) return;
+            finished = true;
             window.clearTimeout(timer);
             resolve(fallback);
         });
@@ -168,39 +250,52 @@ window.WRN_CONFIG = Object.freeze({
 
     document.addEventListener('DOMContentLoaded', () => {
         const storage = window.WRNStorage;
-        if (!storage || storage.__startGuard1712) return;
+        if (!storage || storage.__clickFixGuard1712) return;
 
         const original = {
             migrateLegacyLocalStorage:
                 storage.migrateLegacyLocalStorage?.bind(storage),
             requestPersistentStorage:
                 storage.requestPersistentStorage?.bind(storage),
-            putDataset: storage.putDataset?.bind(storage),
-            getDataset: storage.getDataset?.bind(storage)
+            getDataset:
+                storage.getDataset?.bind(storage),
+            putDataset:
+                storage.putDataset?.bind(storage)
         };
 
-        storage.__startGuard1712 = true;
+        storage.__clickFixGuard1712 = true;
 
         storage.migrateLegacyLocalStorage = () =>
             original.migrateLegacyLocalStorage
-                ? timeout(original.migrateLegacyLocalStorage(), 1200, false)
+                ? timeout(
+                    original.migrateLegacyLocalStorage(),
+                    1000,
+                    false
+                )
                 : Promise.resolve(false);
 
         storage.requestPersistentStorage = () =>
             original.requestPersistentStorage
-                ? timeout(original.requestPersistentStorage(), 800, false)
+                ? timeout(
+                    original.requestPersistentStorage(),
+                    700,
+                    false
+                )
                 : Promise.resolve(false);
 
         storage.getDataset = key =>
             original.getDataset
-                ? timeout(original.getDataset(key), 1200, null)
+                ? timeout(original.getDataset(key), 1000, null)
                 : Promise.resolve(null);
 
         storage.putDataset = (key, data) => {
             if (original.putDataset) {
                 window.setTimeout(() => {
-                    timeout(original.putDataset(key, data), 1800, false)
-                        .catch(() => false);
+                    void timeout(
+                        original.putDataset(key, data),
+                        1600,
+                        false
+                    );
                 }, 0);
             }
             return Promise.resolve(false);
@@ -208,156 +303,61 @@ window.WRN_CONFIG = Object.freeze({
     }, { once: true });
 })();
 
-/* Klicks zuverlässig freigeben, ohne Elemente oder Funktionen zu entfernen. */
-(() => {
-    if (window.__wrnInteractionRelease1712) return;
-    window.__wrnInteractionRelease1712 = true;
-
-    const releaseInteraction = () => {
-        document.documentElement.classList.remove(
-            'wrn-booting',
-            'wrn-app-entering'
-        );
-
-        document.documentElement.style.pointerEvents = 'auto';
-        if (document.body) document.body.style.pointerEvents = 'auto';
-
-        const startScreen = document.getElementById('wrn-start-screen');
-        if (startScreen) {
-            startScreen.style.pointerEvents = 'none';
-            startScreen.setAttribute('aria-hidden', 'true');
-            startScreen.remove();
-        }
-
-        document.querySelectorAll(
-            'button, a, select, input, textarea, summary, '
-            + '.wrn-top-tabs, .wrn-top-tab, .wrn-subtabs, .wrn-subtab, '
-            + '#feed-container, #archive-container, '
-            + '#feed-container .card, #archive-container .card'
-        ).forEach(element => {
-            element.style.pointerEvents = 'auto';
-        });
-
-        document.querySelectorAll(
-            '[hidden], [aria-hidden="true"].wrn-start-leaving'
-        ).forEach(element => {
-            element.style.pointerEvents = 'none';
-        });
-    };
-
-    const scheduleRelease = () => {
-        releaseInteraction();
-        window.setTimeout(releaseInteraction, 700);
-        window.setTimeout(releaseInteraction, 2200);
-        window.setTimeout(releaseInteraction, 5000);
-    };
-
-    document.addEventListener(
-        'pointerdown',
-        releaseInteraction,
-        { capture: true, passive: true }
-    );
-    document.addEventListener(
-        'touchstart',
-        releaseInteraction,
-        { capture: true, passive: true }
-    );
-    window.addEventListener('pageshow', scheduleRelease);
-
-    if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            scheduleRelease,
-            { once: true }
-        );
-    } else {
-        scheduleRelease();
-    }
-
-    window.WRNReleaseInteraction = releaseInteraction;
-})();
-
 /*
- * Vollständige Zusatzoberfläche aus 1.7.11 wieder laden.
- * Auf Mobilgeräten werden Komfort- und Medienmodule zeitversetzt geladen.
+ * Stabile Kernoberfläche:
+ * Navigation und Sprache werden geladen. Schwere Komfortmodule starten nicht
+ * mehr automatisch gemeinsam. Dadurch bleiben Hauptthread und Klicks frei.
  */
 (() => {
-    if (window.__wrnInterfaceLoader1712) return;
-    window.__wrnInterfaceLoader1712 = true;
+    if (window.__wrnCoreInterface1712ClickFix) return;
+    window.__wrnCoreInterface1712ClickFix = true;
 
-    const VERSION = '1712';
+    const VERSION = '1712-clickfix';
 
     const addStyle = (file, marker) => {
-        if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
+        if (document.querySelector(
+            `link[data-wrn-style="${marker}"]`
+        )) return;
 
-        const stylesheet = document.createElement('link');
-        stylesheet.rel = 'stylesheet';
-        stylesheet.href = `./${file}?v=${VERSION}`;
-        stylesheet.dataset.wrnStyle = marker;
-        stylesheet.addEventListener('error', () => {
-            console.warn(`WRN stylesheet could not be loaded: ${file}`);
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = `./${file}?v=${VERSION}`;
+        link.dataset.wrnStyle = marker;
+        link.addEventListener('error', () => {
+            console.warn(`WRN stylesheet missing: ${file}`);
         }, { once: true });
-        document.head.appendChild(stylesheet);
+        document.head.appendChild(link);
     };
 
-    const loadScript = (file, marker, timeoutMs = 10000) =>
+    const loadScript = (file, marker, timeoutMs = 8000) =>
         new Promise(resolve => {
-            const existing = document.querySelector(
+            const current = document.querySelector(
                 `script[data-wrn-module="${marker}"]`
             );
 
-            if (existing?.dataset.loaded === 'true') {
+            if (current?.dataset.loaded === 'true') {
                 resolve(true);
                 return;
             }
 
-            if (existing) {
-                let done = false;
-                const finish = success => {
-                    if (done) return;
-                    done = true;
-                    resolve(success);
-                };
-                existing.addEventListener(
-                    'load',
-                    () => finish(true),
-                    { once: true }
-                );
-                existing.addEventListener(
-                    'error',
-                    () => finish(false),
-                    { once: true }
-                );
-                window.setTimeout(() => finish(false), timeoutMs);
-                return;
+            const script = current || document.createElement('script');
+
+            if (!current) {
+                script.src = `./${file}?v=${VERSION}`;
+                script.dataset.wrnModule = marker;
             }
 
-            const script = document.createElement('script');
-            script.src = `./${file}?v=${VERSION}`;
-            script.dataset.wrnModule = marker;
+            let finished = false;
 
-            let done = false;
-            const finish = (success, reason = '') => {
-                if (done) return;
-                done = true;
+            const finish = success => {
+                if (finished) return;
+                finished = true;
                 script.dataset.loaded = success ? 'true' : 'false';
-
-                if (!success) {
-                    console.warn(
-                        `WRN module could not be loaded: ${file}`,
-                        reason
-                    );
-                    window.WRNSafety?.record?.(
-                        'module',
-                        `Modul konnte nicht geladen werden: ${file}`,
-                        file
-                    );
-                }
                 resolve(success);
             };
 
             const timer = window.setTimeout(
-                () => finish(false, 'timeout'),
+                () => finish(false),
                 timeoutMs
             );
 
@@ -368,116 +368,133 @@ window.WRN_CONFIG = Object.freeze({
 
             script.addEventListener('error', () => {
                 window.clearTimeout(timer);
-                finish(false, 'network error');
+                finish(false);
             }, { once: true });
 
-            document.body.appendChild(script);
+            if (!current) document.body.appendChild(script);
         });
 
-    const loadList = async files => {
+    const loadSequentially = async files => {
         for (const [file, marker] of files) {
             await loadScript(file, marker);
         }
     };
 
-    const delayWork = callback => {
-        if ('requestIdleCallback' in window) {
-            window.requestIdleCallback(callback, { timeout: 2200 });
-        } else {
-            window.setTimeout(callback, 900);
-        }
-    };
-
-    const loadInterface = async () => {
+    const loadCore = async () => {
         [
-            ['release-1.5-nav.css', 'navigation-1712'],
-            ['briefing.css', 'briefing-1712'],
-            ['audio-catalog.css', 'audio-catalog-1712'],
-            ['article-summary.css', 'article-summary-1712'],
-            ['interface-qol.css', 'interface-qol-1712'],
-            ['shared-translation-status.css', 'shared-translation-status-1712'],
-            ['typography.css', 'typography-1712'],
-            ['app-diagnostics.css', 'app-diagnostics-1712']
+            ['release-1.5-nav.css', 'navigation-clickfix'],
+            ['typography.css', 'typography-clickfix'],
+            ['briefing.css', 'briefing-clickfix'],
+            ['audio-catalog.css', 'audio-catalog-clickfix'],
+            ['article-summary.css', 'summary-clickfix'],
+            ['interface-qol.css', 'interface-clickfix']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
-        await loadList([
-            ['app-safety.js', 'app-safety-1712'],
-            ['wrn-i18n.js', 'i18n-1712'],
-            ['typography.js', 'typography-1712'],
-            ['release-1.5-nav.js', 'navigation-1712'],
-            ['app-diagnostics.js', 'app-diagnostics-1712']
+        await loadSequentially([
+            ['app-safety.js', 'safety-clickfix'],
+            ['wrn-i18n.js', 'i18n-clickfix'],
+            ['typography.js', 'typography-clickfix'],
+            ['release-1.5-nav.js', 'navigation-clickfix']
         ]);
 
-        delayWork(() => {
-            void loadList([
-                ['language-qol.js', 'language-qol-1712'],
-                ['language-status.js', 'language-status-1712'],
-                ['voice-qol.js', 'voice-qol-1712'],
-                ['shared-translation-client.js', 'shared-translation-client-1712'],
-                ['briefing.js', 'briefing-1712']
-            ]);
-        });
-
-        delayWork(() => {
-            if (window.WRNSafety?.isActive?.()) return;
-            void loadList([
-                ['shared-translation-status.js', 'shared-translation-status-1712'],
-                ['translation-dialog-l10n.js', 'translation-dialog-l10n-1712'],
-                ['article-summary-core.js', 'article-summary-core-1712'],
-                ['article-summary.js', 'article-summary-1712'],
-                ['audio-player-fixes.js', 'audio-player-fixes-1712'],
-                ['audio-catalog.js', 'audio-catalog-1712']
-            ]);
-        });
-
-        window.dispatchEvent(new CustomEvent('wrn-app-ready'));
+        window.dispatchEvent(
+            new CustomEvent('wrn-app-ready')
+        );
     };
 
+    /*
+     * Briefing wird erst bei einem echten Klick auf den Briefing-Reiter geladen.
+     * Es blockiert dadurch weder Start noch andere Schaltflächen.
+     */
+    let briefingLoading = null;
+
+    const loadBriefing = () => {
+        if (window.WRNBriefing) {
+            window.WRNBriefing.show?.();
+            return Promise.resolve(true);
+        }
+
+        if (briefingLoading) return briefingLoading;
+
+        briefingLoading = loadScript(
+            'briefing.js',
+            'briefing-lazy-clickfix',
+            12000
+        ).then(success => {
+            if (success) window.WRNBriefing?.show?.();
+            return success;
+        });
+
+        return briefingLoading;
+    };
+
+    document.addEventListener('click', event => {
+        const tab = event.target.closest?.(
+            '.wrn-top-tab[data-key="briefing"]'
+        );
+        if (tab) void loadBriefing();
+    });
+
     if (document.readyState === 'complete') {
-        void loadInterface();
+        void loadCore();
     } else {
         window.addEventListener(
             'load',
-            () => void loadInterface(),
+            () => void loadCore(),
             { once: true }
         );
     }
 })();
 
-/* Sichtbarer Text-Rückfallfeed, nur wenn die normale Hauptlogik hängen bleibt. */
+/*
+ * Text-Rückfall nur dann, wenn die normale App tatsächlich hängen bleibt.
+ */
 (() => {
-    if (window.__wrnRescueFeed1712) return;
-    window.__wrnRescueFeed1712 = true;
+    if (window.__wrnRescueFeed1712ClickFix) return;
+    window.__wrnRescueFeed1712ClickFix = true;
 
-    const renderRescue = async () => {
-        await new Promise(resolve => window.setTimeout(resolve, 7500));
+    const run = async () => {
+        await new Promise(resolve => {
+            window.setTimeout(resolve, 8500);
+        });
 
         const status = document.getElementById('status-container');
         const feed = document.getElementById('feed-container');
-        const stillLoading = /Lade Nachrichten|Loading news|Connecting/i.test(
+
+        const loading = /Lade Nachrichten|Loading news|Connecting/i.test(
             String(status?.textContent || '')
         );
 
-        if (!feed || !stillLoading || feed.children.length > 0) return;
+        if (!feed || !loading || feed.children.length > 0) return;
 
         const controller = new AbortController();
-        const timer = window.setTimeout(() => controller.abort(), 7000);
+        const timer = window.setTimeout(
+            () => controller.abort(),
+            7000
+        );
 
         try {
             const response = await fetch(
                 `./news-feed.json?rescue=${Date.now()}`,
-                { cache: 'no-store', signal: controller.signal }
+                {
+                    cache: 'no-store',
+                    signal: controller.signal
+                }
             );
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-            const items = await response.json();
-            if (!Array.isArray(items) || items.length === 0) {
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const rows = await response.json();
+
+            if (!Array.isArray(rows) || rows.length === 0) {
                 throw new Error('Leerer Feed');
             }
 
             feed.textContent = '';
 
-            items.slice(0, 30).forEach(item => {
+            rows.slice(0, 30).forEach(item => {
                 const card = document.createElement('article');
                 card.className = 'card wrn-rescue-card';
 
@@ -485,16 +502,22 @@ window.WRN_CONFIG = Object.freeze({
                 meta.className = 'meta';
                 meta.textContent = [
                     item.quelleName || 'World Revolution News',
-                    item.pubDate ? String(item.pubDate).slice(0, 10) : ''
+                    item.pubDate
+                        ? String(item.pubDate).slice(0, 10)
+                        : ''
                 ].filter(Boolean).join(' · ');
 
                 const title = document.createElement('div');
                 title.className = 'title';
-                title.textContent = String(item.title || 'Nachricht');
+                title.textContent = String(
+                    item.title || 'Nachricht'
+                );
 
                 const teaser = document.createElement('div');
                 teaser.className = 'teaser';
-                teaser.textContent = String(item.content || '').slice(0, 420);
+                teaser.textContent = String(
+                    item.content || ''
+                ).slice(0, 420);
 
                 card.append(meta, title, teaser);
 
@@ -521,7 +544,7 @@ window.WRN_CONFIG = Object.freeze({
                 status.textContent =
                     'Nachrichten konnten nicht geladen werden.';
             }
-            console.error('WRN Rettungsfeed fehlgeschlagen:', error);
+            console.error('WRN Rettungsfeed:', error);
         } finally {
             window.clearTimeout(timer);
         }
@@ -530,10 +553,10 @@ window.WRN_CONFIG = Object.freeze({
     if (document.readyState === 'loading') {
         document.addEventListener(
             'DOMContentLoaded',
-            () => void renderRescue(),
+            () => void run(),
             { once: true }
         );
     } else {
-        void renderRescue();
+        void run();
     }
 })();
