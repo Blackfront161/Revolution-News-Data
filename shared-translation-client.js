@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.3 – optionaler gemeinsamer Übersetzungs-Cache */
+/* World Revolution News 1.7.4 – gemeinsamer Übersetzungs-Cache */
 'use strict';
 
 (() => {
@@ -85,19 +85,22 @@
         ? cleanTranslationOutput(extractText(data))
         : extractText(data);
       const cacheState = response.headers.get('X-WRN-Shared-Cache') || data?.sharedCache || '';
+      const storage = response.headers.get('X-WRN-Storage') || data?.storage || '';
       const providerBase = String(data?.provider || '');
       const provider = [providerBase, cacheState ? `shared:${cacheState.toLowerCase()}` : '']
         .filter(Boolean)
         .join(' · ');
 
       if (response.ok && translatedText) {
+        dispatchState({ type: 'translation', ok: true, cacheState, storage, language, mode });
         return {
           error: false,
           text: translatedText,
           status: response.status,
           provider,
           sharedCache: cacheState,
-          cached: cacheState.toUpperCase() === 'HIT'
+          cached: cacheState.toUpperCase() === 'HIT',
+          storage
         };
       }
 
@@ -108,6 +111,7 @@
         data
       };
     } catch (error) {
+      dispatchState({ type: 'translation', ok: false, fallback: true, error: String(error?.message || error) });
       if (typeof originalRequest === 'function') return originalRequest(args);
       return {
         error: true,
@@ -124,9 +128,30 @@
   window.fetchTranslationRequest = request;
   try { fetchTranslationRequest = request; } catch {}
 
+  function dispatchState(detail) {
+    window.dispatchEvent(new CustomEvent('wrnsharedtranslationstate', { detail }));
+  }
+
+  async function health() {
+    const endpoint = String(window.WRN_CONFIG?.sharedTranslationUrl || '').trim().replace(/\/$/, '');
+    if (!endpoint) return { ok: false, disabled: true };
+    try {
+      const response = await fetch(`${endpoint}/health`, { cache: 'no-store' });
+      const data = await response.json();
+      const result = { ok: response.ok && data?.ok === true, status: response.status, ...data };
+      dispatchState({ type: 'health', ...result });
+      return result;
+    } catch (error) {
+      const result = { ok: false, error: String(error?.message || error) };
+      dispatchState({ type: 'health', ...result });
+      return result;
+    }
+  }
+
   window.WRNSharedTranslations = Object.freeze({
     enabled: () => Boolean(String(window.WRN_CONFIG?.sharedTranslationUrl || '').trim()),
     request,
+    health,
     sha256
   });
 })();

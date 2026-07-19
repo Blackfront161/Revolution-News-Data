@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.3 – Audio-Player-Stabilität */
+/* World Revolution News 1.7.4 – Audio-Player-Stabilität */
 'use strict';
 
 (() => {
-  if (window.__wrnAudioPlayerFixes173) return;
-  window.__wrnAudioPlayerFixes173 = true;
+  if (window.__wrnAudioPlayerFixes174) return;
+  window.__wrnAudioPlayerFixes174 = true;
 
   try {
     if (typeof mediaUiTexts !== 'undefined') {
@@ -19,8 +19,8 @@
 
   function init() {
     const audio = document.getElementById('global-media-player');
-    if (!audio || audio.dataset.wrnTimeoutFix === '173') return;
-    audio.dataset.wrnTimeoutFix = '173';
+    if (!audio || audio.dataset.wrnTimeoutFix === '174') return;
+    audio.dataset.wrnTimeoutFix = '174';
 
     let timer = 0;
     const clear = () => {
