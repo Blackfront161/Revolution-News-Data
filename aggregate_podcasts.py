@@ -27,7 +27,7 @@ HEALTH_FILE = ROOT / "podcast-health.json"
 MAX_PER_SOURCE = 35
 MAX_TOTAL = 800
 DEFAULT_MAX_AGE_DAYS = 730
-USER_AGENT = "WorldRevolutionNews-AudioCatalog/1.7.1 (+https://blackfront161.github.io/Revolution-News-Data/)"
+USER_AGENT = "WorldRevolutionNews-AudioCatalog/1.7.5 (+https://blackfront161.github.io/Revolution-News-Data/)"
 AUDIO_EXTENSIONS = (".mp3", ".m4a", ".ogg", ".oga", ".opus", ".wav", ".aac", ".flac")
 HTTPS_UPGRADE_HOSTS = {"www.freie-radios.net", "freie-radios.net"}
 

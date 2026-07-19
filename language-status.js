@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.4 – transparenter Sprachstatus */
+/* World Revolution News 1.7.5 – transparenter Sprachstatus */
 'use strict';
 
 (() => {
-  if (window.__wrnLanguageStatus174) return;
-  window.__wrnLanguageStatus174 = true;
+  if (window.__wrnLanguageStatus175) return;
+  window.__wrnLanguageStatus175 = true;
 
   const messages = {
     de: {

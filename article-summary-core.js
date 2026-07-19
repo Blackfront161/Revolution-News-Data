@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.4 – lokale Artikel-Zusammenfassung */
+/* World Revolution News 1.7.5 – lokale Artikel-Zusammenfassung */
 'use strict';
 
 (function attachSummaryCore(root, factory) {

@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.4 – Status gemeinsamer Übersetzungen */
+/* World Revolution News 1.7.5 – Status gemeinsamer Übersetzungen */
 'use strict';
 
 (() => {
-  if (window.__wrnSharedTranslationStatus174) return;
-  window.__wrnSharedTranslationStatus174 = true;
+  if (window.__wrnSharedTranslationStatus175) return;
+  window.__wrnSharedTranslationStatus175 = true;
 
   const texts = {
     de:{disabled:'Gemeinsamer Übersetzungscache: nicht aktiviert',checking:'Gemeinsamer Übersetzungscache wird geprüft …',online:'Gemeinsamer Übersetzungscache: online',kv:'globales KV',edge:'regionaler Ersatzcache',hit:'Übersetzung aus gemeinsamem Cache',miss:'Neue Übersetzung wurde gemeinsam gespeichert',fallback:'Gemeinsamer Cache nicht erreichbar – normale Übersetzung verwendet'},

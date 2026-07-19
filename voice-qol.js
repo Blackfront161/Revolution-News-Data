@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.4 – Gerätestimmen */
+/* World Revolution News 1.7.5 – Gerätestimmen */
 'use strict';
 
 (() => {

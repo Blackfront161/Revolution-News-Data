@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.4 – Artikel-Zusammenfassung */
+/* World Revolution News 1.7.5 – Artikel-Zusammenfassung */
 'use strict';
 
 (() => {

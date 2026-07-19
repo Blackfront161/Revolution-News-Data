@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.4 – Übersetzungsdialoge in allen App-Sprachen */
+/* World Revolution News 1.7.5 – Übersetzungsdialoge in allen App-Sprachen */
 'use strict';
 
 (() => {
-  if (window.__wrnTranslationDialogL10n174) return;
-  window.__wrnTranslationDialogL10n174 = true;
+  if (window.__wrnTranslationDialogL10n175) return;
+  window.__wrnTranslationDialogL10n175 = true;
 
   const L = {
     en:{original:'Original',translation:'Translation',compare:'Compare',report:'Report translation',compareTitle:'Compare original and translation',originalColumn:'Original',translatedColumn:'Machine translation',compareHint:'The comparison stays on this device and does not send article text anywhere.',close:'Close',reportTitle:'Report a translation problem',reportIntro:'Only article metadata, the selected issue and your note are prepared for an email. The article text is not attached.',issueLabel:'Problem',noteLabel:'Optional note',notePlaceholder:'Briefly describe the problem…',send:'Prepare email',issues:['Meaning is wrong','Text is missing','Names or quotations changed','Wrong target language','Formatting or paragraphs are broken','Other problem']},

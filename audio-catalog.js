@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.4 – Audio-Katalog und Untermenüs */
+/* World Revolution News 1.7.5 – Audio-Katalog, Status und Quellenprüfung */
 'use strict';
 
 (() => {
-  if (window.__wrnAudioCatalog174Loaded) return;
-  window.__wrnAudioCatalog174Loaded = true;
+  if (window.__wrnAudioCatalog175Loaded) return;
+  window.__wrnAudioCatalog175Loaded = true;
 
   const STORAGE_KEY = 'wrn_audio_catalog_filters_v1';
   const HEALTH_REFRESH_MS = 5 * 60 * 1000;
@@ -12,7 +12,7 @@
     de: {
       topics:'Themen', regions:'Regionen', languages:'Sprachen', sources:'Quellen',
       all:'Alle', available:'Funktionierend', allStatuses:'Alle Status',
-      health:'Quellenprüfung', healthy:'funktionierend', stale:'älter, aber nutzbar',
+      health:'Quellenprüfung', healthy:'funktionierend', stale:'älter, aber nutzbar', degraded:'vorübergehend gestört · Ersatzstream',
       broken:'derzeit gestört', unknown:'noch nicht geprüft', reset:'Filter zurücksetzen',
       noItems:'Keine passenden Audioinhalte gefunden.', searchRadio:'Radios durchsuchen…',
       station:'Sender', sourceStatus:'Quellenstatus', catalogInfo:'Kuratierter Audio-Katalog',
@@ -22,7 +22,7 @@
     en: {
       topics:'Topics', regions:'Regions', languages:'Languages', sources:'Sources',
       all:'All', available:'Working', allStatuses:'All statuses',
-      health:'Source check', healthy:'working', stale:'older but usable',
+      health:'Source check', healthy:'working', stale:'older but usable', degraded:'temporarily degraded · fallback stream',
       broken:'currently unavailable', unknown:'not checked yet', reset:'Reset filters',
       noItems:'No matching audio content found.', searchRadio:'Search radio stations…',
       station:'Station', sourceStatus:'Source status', catalogInfo:'Curated audio catalog',
@@ -126,7 +126,10 @@
     'guerrilla-history':{region:'Nordamerika',topics:['Geschichte','Antikolonialismus']},
     'millennials-killing-capitalism':{region:'Nordamerika',topics:['Antikapitalismus','Arbeitskämpfe']},
     'black-myths':{region:'Nordamerika',topics:['Antirassismus','Geschichte']},
-    'freie-radios':{region:'DACH',topics:['Freie Radios','Politik']}
+    'freie-radios':{region:'DACH',topics:['Freie Radios','Politik']},
+    'black-autonomy':{region:'Nordamerika',topics:['Anarchismus','Antirassismus','Black Liberation']},
+    'the-response':{region:'Nordamerika',topics:['Mutual Aid','Klima','Selbstorganisation']},
+    'srsly-wrong':{region:'Nordamerika',topics:['Bibliotheksökonomie','Soziale Ökologie','Antikapitalismus']}
   };
 
   let podcastHealth = {};
@@ -195,7 +198,7 @@
 
   function statusMatches(status, selected) {
     if (!selected || selected === 'all') return true;
-    if (selected === 'available') return ['healthy','stale','unknown'].includes(status);
+    if (selected === 'available') return ['healthy','stale','degraded'].includes(status);
     return status === selected;
   }
 
@@ -207,7 +210,7 @@
     const fetchJson = async (url) => {
       if (!url) return {};
       try {
-        const response = await fetch(`${url}?v=${force ? Date.now() : '174'}`, {
+        const response = await fetch(`${url}?v=${force ? Date.now() : '175'}`, {
           cache: force ? 'no-store' : 'default'
         });
         return response.ok ? await response.json() : {};
@@ -417,6 +420,7 @@
     span.className = `wrn-audio-health-badge ${status || 'unknown'}`;
     span.textContent = status === 'healthy' ? `● ${t().healthy}`
       : status === 'stale' ? `◐ ${t().stale}`
+      : status === 'degraded' ? `◒ ${t().degraded || t().stale}`
       : status === 'error' ? `× ${t().broken}`
       : `○ ${t().unknown}`;
     return span;

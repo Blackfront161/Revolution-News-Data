@@ -2,16 +2,16 @@
 'use strict';
 
 
-/* 1.7.4 – Startbild zuerst, App erst nach geladenen Inhalten einblenden */
+/* 1.7.5 – Startbild zuerst, App erst nach geladenen Inhalten einblenden */
 (() => {
-    if (window.__wrnStartScreen174) return;
-    window.__wrnStartScreen174 = true;
+    if (window.__wrnStartScreen175) return;
+    window.__wrnStartScreen175 = true;
 
     const html = document.documentElement;
     html.classList.add('wrn-booting');
 
     const earlyStyle = document.createElement('style');
-    earlyStyle.id = 'wrn-start-screen-style-174';
+    earlyStyle.id = 'wrn-start-screen-style-175';
     earlyStyle.textContent = `
         #mobile-more-menu,
         .mobile-more-menu,
@@ -44,7 +44,7 @@
                     rgba(2,3,7,0.42) 62%,
                     rgba(2,3,7,0.72)
                 ),
-                url('./app-background.webp?v=174') center top / cover no-repeat,
+                url('./app-background.webp?v=175') center top / cover no-repeat,
                 #050508;
             opacity: 1;
             transition: opacity 520ms ease, visibility 520ms ease;
@@ -73,7 +73,7 @@
             opacity: 0;
             transform: scale(.74) rotate(-4deg);
             filter: drop-shadow(0 13px 30px rgba(0,0,0,.58));
-            animation: wrnEarlyLogo174 680ms cubic-bezier(.2,.82,.3,1.15) 240ms forwards;
+            animation: wrnEarlyLogo175 680ms cubic-bezier(.2,.82,.3,1.15) 240ms forwards;
         }
 
         .wrn-start-title {
@@ -84,7 +84,7 @@
             text-shadow: 0 2px 10px rgba(0,0,0,.96);
             opacity: 0;
             transform: translateY(10px);
-            animation: wrnEarlyText174 480ms ease-out 610ms forwards;
+            animation: wrnEarlyText175 480ms ease-out 610ms forwards;
         }
 
         .wrn-start-loader {
@@ -95,7 +95,7 @@
             border-radius: 999px;
             background: rgba(255,255,255,.12);
             opacity: 0;
-            animation: wrnEarlyText174 380ms ease-out 760ms forwards;
+            animation: wrnEarlyText175 380ms ease-out 760ms forwards;
         }
 
         .wrn-start-loader::after {
@@ -105,20 +105,20 @@
             height: 100%;
             border-radius: inherit;
             background: linear-gradient(90deg, #ff334f, #00f0ff);
-            animation: wrnEarlyLoad174 1050ms ease-in-out infinite alternate;
+            animation: wrnEarlyLoad175 1050ms ease-in-out infinite alternate;
         }
 
-        @keyframes wrnEarlyLogo174 {
+        @keyframes wrnEarlyLogo175 {
             from { opacity: 0; transform: scale(.74) rotate(-4deg); }
             to { opacity: 1; transform: scale(1) rotate(0); }
         }
 
-        @keyframes wrnEarlyText174 {
+        @keyframes wrnEarlyText175 {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes wrnEarlyLoad174 {
+        @keyframes wrnEarlyLoad175 {
             from { transform: translateX(-110%); }
             to { transform: translateX(245%); }
         }
@@ -138,7 +138,7 @@
             <div class="wrn-start-content">
                 <img
                     class="wrn-start-logo"
-                    src="./wrn-logo.webp?v=174"
+                    src="./wrn-logo.webp?v=175"
                     alt="World Revolution News">
                 <h1 class="wrn-start-title">World Revolution News</h1>
                 <div class="wrn-start-loader" aria-hidden="true"></div>
@@ -180,9 +180,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.4',
-    build: '2026.07.19-global-shared-translations-and-dialog-l10n',
-    releasedAt: '2026-07-19T15:40:00Z',
+    version: '1.7.5',
+    build: '2026.07.19-stability-radio-podcasts-typography',
+    releasedAt: '2026-07-19T18:30:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news.json',
@@ -217,7 +217,7 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(3, 5, 9, 0.16) 46%,
                     rgba(3, 5, 9, 0.30) 100%
                 ),
-                url('./app-background.webp?v=174') !important;
+                url('./app-background.webp?v=175') !important;
             background-position: 52% top !important;
             background-size: cover !important;
             background-repeat: no-repeat !important;
@@ -250,7 +250,7 @@ window.WRN_CONFIG = Object.freeze({
                     rgba(244, 244, 249, 0.54) 48%,
                     rgba(244, 244, 249, 0.66) 100%
                 ),
-                url('./app-background.webp?v=174') !important;
+                url('./app-background.webp?v=175') !important;
         }
         body.theme-light .card,
         body.theme-soft .card {
@@ -266,12 +266,11 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Briefing, Sprachsystem und Navigation automatisch laden. */
 (() => {
-    if (window.__wrnInterfaceLoader174) return;
-    window.__wrnInterfaceLoader174 = true;
+    if (window.__wrnInterfaceLoader175) return;
+    window.__wrnInterfaceLoader175 = true;
 
     const addStyle = (href, marker) => {
         if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
-
         const stylesheet = document.createElement('link');
         stylesheet.rel = 'stylesheet';
         stylesheet.href = href;
@@ -281,60 +280,61 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadScript = (src, marker) => new Promise((resolve, reject) => {
         const existing = document.querySelector(`script[data-wrn-module="${marker}"]`);
-
         if (existing) {
-            if (existing.dataset.loaded === 'true') {
-                resolve();
-            } else {
-                existing.addEventListener('load', resolve, { once: true });
-            }
+            if (existing.dataset.loaded === 'true') resolve();
+            else existing.addEventListener('load', resolve, { once: true });
             return;
         }
 
         const script = document.createElement('script');
         script.src = src;
         script.dataset.wrnModule = marker;
-
         script.addEventListener('load', () => {
             script.dataset.loaded = 'true';
             resolve();
         }, { once: true });
-
         script.addEventListener('error', reject, { once: true });
         document.body.appendChild(script);
     });
 
     const loadInterface = async () => {
-        addStyle('./release-1.5-nav.css?v=174', 'navigation-174');
-        addStyle('./briefing.css?v=174', 'briefing-174');
-        addStyle('./audio-catalog.css?v=174', 'audio-catalog-174');
-        addStyle('./article-summary.css?v=174', 'article-summary-174');
-        addStyle('./interface-qol.css?v=174', 'interface-qol-174');
-        addStyle('./shared-translation-status.css?v=174', 'shared-translation-status-174');
+        addStyle('./release-1.5-nav.css?v=175', 'navigation-175');
+        addStyle('./briefing.css?v=175', 'briefing-175');
+        addStyle('./audio-catalog.css?v=175', 'audio-catalog-175');
+        addStyle('./article-summary.css?v=175', 'article-summary-175');
+        addStyle('./interface-qol.css?v=175', 'interface-qol-175');
+        addStyle('./shared-translation-status.css?v=175', 'shared-translation-status-175');
+        addStyle('./typography.css?v=175', 'typography-175');
+        addStyle('./app-diagnostics.css?v=175', 'app-diagnostics-175');
 
         try {
-            await loadScript('./wrn-i18n.js?v=174', 'i18n-174');
-            await loadScript('./language-qol.js?v=174', 'language-qol-174');
-            await loadScript('./language-status.js?v=174', 'language-status-174');
-            await loadScript('./voice-qol.js?v=174', 'voice-qol-174');
-            await loadScript('./shared-translation-client.js?v=174', 'shared-translation-client-174');
-            await loadScript('./shared-translation-status.js?v=174', 'shared-translation-status-174');
-            await loadScript('./translation-dialog-l10n.js?v=174', 'translation-dialog-l10n-174');
-            await loadScript('./article-summary-core.js?v=174', 'article-summary-core-174');
-            await loadScript('./article-summary.js?v=174', 'article-summary-174');
-            await loadScript('./briefing.js?v=174', 'briefing-174');
-            await loadScript('./audio-player-fixes.js?v=174', 'audio-player-fixes-174');
-            await loadScript('./audio-catalog.js?v=174', 'audio-catalog-174');
-            await loadScript('./release-1.5-nav.js?v=174', 'navigation-174');
+            await loadScript('./app-safety.js?v=175', 'app-safety-175');
+            await loadScript('./wrn-i18n.js?v=175', 'i18n-175');
+            await loadScript('./typography.js?v=175', 'typography-175');
+            await loadScript('./language-qol.js?v=175', 'language-qol-175');
+            await loadScript('./language-status.js?v=175', 'language-status-175');
+            await loadScript('./voice-qol.js?v=175', 'voice-qol-175');
+            await loadScript('./shared-translation-client.js?v=175', 'shared-translation-client-175');
+            await loadScript('./briefing.js?v=175', 'briefing-175');
+
+            const safeMode = Boolean(window.WRNSafety?.isActive?.());
+            if (!safeMode) {
+                await loadScript('./shared-translation-status.js?v=175', 'shared-translation-status-175');
+                await loadScript('./translation-dialog-l10n.js?v=175', 'translation-dialog-l10n-175');
+                await loadScript('./article-summary-core.js?v=175', 'article-summary-core-175');
+                await loadScript('./article-summary.js?v=175', 'article-summary-175');
+                await loadScript('./audio-player-fixes.js?v=175', 'audio-player-fixes-175');
+                await loadScript('./audio-catalog.js?v=175', 'audio-catalog-175');
+            }
+
+            await loadScript('./release-1.5-nav.js?v=175', 'navigation-175');
+            await loadScript('./app-diagnostics.js?v=175', 'app-diagnostics-175');
         } catch (error) {
             console.error('WRN interface modules could not be loaded:', error);
             window.dispatchEvent(new CustomEvent('wrn-app-ready'));
         }
     };
 
-    if (document.readyState === 'complete') {
-        loadInterface();
-    } else {
-        window.addEventListener('load', loadInterface, { once: true });
-    }
+    if (document.readyState === 'complete') loadInterface();
+    else window.addEventListener('load', loadInterface, { once: true });
 })();

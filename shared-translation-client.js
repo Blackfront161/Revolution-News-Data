@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.4 – gemeinsamer Übersetzungs-Cache */
+/* World Revolution News 1.7.5 – gemeinsamer Übersetzungs-Cache */
 'use strict';
 
 (() => {

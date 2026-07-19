@@ -1,13 +1,13 @@
-/* WRN 1.7.4 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
+/* WRN 1.7.5 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav174Loaded) return;
-  window.__wrnAppNav174Loaded = true;
+  if (window.__wrnAppNav175Loaded) return;
+  window.__wrnAppNav175Loaded = true;
 
   const NAV_TEXTS = {
     de: {
-      briefing: 'Mein Briefing', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
+      briefing: 'Briefing', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
@@ -16,7 +16,7 @@
       generatedPodcasts: 'Erzeugte Podcasts', liveRadio: 'Live-Radio', bookmarks: 'Später lesen', read: 'Gelesen'
     },
     en: {
-      briefing: 'My Briefing', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
+      briefing: 'Briefing', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
@@ -201,7 +201,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=174';
+    logo.src = './wrn-logo.webp?v=175';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -651,7 +651,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=174" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=175" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -919,8 +919,8 @@
   }
 
   function attachSwipe() {
-    if (window.__wrnSwipe174Bound) return;
-    window.__wrnSwipe174Bound = true;
+    if (window.__wrnSwipe175Bound) return;
+    window.__wrnSwipe175Bound = true;
 
     let tracking = false;
     let pointerId = null;
@@ -1068,8 +1068,8 @@
   }
 
   function patchLanguageFunction() {
-    if (window.__wrnLanguage174Patched) return;
-    window.__wrnLanguage174Patched = true;
+    if (window.__wrnLanguage175Patched) return;
+    window.__wrnLanguage175Patched = true;
 
     const original = window.changeLanguage;
     if (typeof original !== 'function') return;
@@ -1116,9 +1116,9 @@
 
   function observeStatusMessage() {
     const status = document.getElementById('status-container');
-    if (!status || status.dataset.wrnStatusObserver === '174') return;
+    if (!status || status.dataset.wrnStatusObserver === '175') return;
 
-    status.dataset.wrnStatusObserver = '174';
+    status.dataset.wrnStatusObserver = '175';
     const observer = new MutationObserver(updateNormalStatusVisibility);
     observer.observe(status, {
       childList: true,
@@ -1135,8 +1135,8 @@
   }
 
   function watchForLegacyMobileArtifacts() {
-    if (window.__wrnLegacyMenuObserver174) return;
-    window.__wrnLegacyMenuObserver174 = true;
+    if (window.__wrnLegacyMenuObserver175) return;
+    window.__wrnLegacyMenuObserver175 = true;
 
     removeLegacyMobileArtifacts();
 
@@ -1280,8 +1280,8 @@
        sobald news.json und events.json bereit sind. */
     activateTab(state.activeTab, false, false);
 
-    if (!window.__wrnInitialContentWatch174) {
-      window.__wrnInitialContentWatch174 = true;
+    if (!window.__wrnInitialContentWatch175) {
+      window.__wrnInitialContentWatch175 = true;
       waitForInitialContent();
     }
   }

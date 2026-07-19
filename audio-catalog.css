@@ -193,3 +193,19 @@
     font-size: 0.62rem;
   }
 }
+
+
+/* WRN 1.7.5 – differenzierter Quellenstatus */
+.wrn-audio-health-badge.degraded {
+  border-color: rgba(255,209,102,0.48);
+  background: rgba(255,209,102,0.08);
+  color: #ffd166;
+}
+
+.wrn-audio-catalog-card.status-degraded {
+  border-color: rgba(255,209,102,0.28);
+}
+
+.wrn-audio-health-badge.unknown {
+  opacity: 0.78;
+}

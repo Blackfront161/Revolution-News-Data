@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.4';
-const DATA_CACHE = 'wrn-data-v1.7.4';
+const APP_CACHE = 'wrn-app-v1.7.5';
+const DATA_CACHE = 'wrn-data-v1.7.5';
 
 const APP_SHELL = [
   './',
@@ -15,6 +15,8 @@ const APP_SHELL = [
   './article-summary.css',
   './interface-qol.css',
   './shared-translation-status.css',
+  './typography.css',
+  './app-diagnostics.css',
   './app-background.webp',
   './wrn-logo.webp',
   './config.js',
@@ -39,6 +41,9 @@ const APP_SHELL = [
   './shared-translation-client.js',
   './shared-translation-status.js',
   './translation-dialog-l10n.js',
+  './typography.js',
+  './app-safety.js',
+  './app-diagnostics.js',
   './article-summary-core.js',
   './article-summary.js',
   './briefing.js',
@@ -48,6 +53,19 @@ const APP_SHELL = [
   './manifest.json',
   './icon.svg'
 ];
+
+const JSON_FALLBACKS = new Map([
+  [new URL('./news.json', self.location.href).pathname, '[]'],
+  [new URL('./events.json', self.location.href).pathname, '[]'],
+  [new URL('./podcasts.json', self.location.href).pathname, '[]'],
+  [new URL('./radio-stations.json', self.location.href).pathname, '[]'],
+  [new URL('./source-health.json', self.location.href).pathname, '{}'],
+  [new URL('./source-catalog.json', self.location.href).pathname, '[]'],
+  [new URL('./podcast-health.json', self.location.href).pathname, '{}'],
+  [new URL('./radio-health.json', self.location.href).pathname, '{}'],
+  [new URL('./podcast-sources.json', self.location.href).pathname, '[]'],
+  [new URL('./radio-sources.json', self.location.href).pathname, '[]']
+]);
 
 const DATA_FILES = new Set([
   new URL('./news.json', self.location.href).pathname,
@@ -65,7 +83,18 @@ const DATA_FILES = new Set([
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(APP_CACHE);
-    await cache.addAll(APP_SHELL);
+    const results = await Promise.allSettled(
+      APP_SHELL.map(async resource => {
+        const request = new Request(new URL(resource, self.location.href), { cache: 'reload' });
+        const response = await fetch(request);
+        if (!response.ok) throw new Error(`${resource}: HTTP ${response.status}`);
+        await cache.put(request, response);
+      })
+    );
+    const failed = results.filter(result => result.status === 'rejected');
+    if (failed.length) {
+      console.warn(`WRN offline cache: ${failed.length} optionale Dateien konnten nicht gespeichert werden.`);
+    }
     await self.skipWaiting();
   })());
 });
@@ -128,7 +157,9 @@ async function networkFirstData(request) {
     return response;
   } catch {
     const cached = await cache.match(request, { ignoreSearch: true });
-    return cached || new Response('[]', {
+    const url = new URL(request.url);
+    const fallback = JSON_FALLBACKS.get(url.pathname) || 'null';
+    return cached || new Response(fallback, {
       status: 200,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
