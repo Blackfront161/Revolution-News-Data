@@ -81,9 +81,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.8',
-    build: '2026.07.19-lightweight-web-feed',
-    releasedAt: '2026-07-19T16:51:49.958446+00:00',
+    version: '1.7.11',
+    build: '2026.07.19-click-release-and-cyberthic-brand',
+    releasedAt: '2026-07-19T23:59:45Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
@@ -258,6 +258,89 @@ window.WRN_CONFIG = Object.freeze({
     }
 })();
 
+
+
+/* 1.7.11 – Klickfreigabe und Schutz vor unsichtbaren Alt-Overlays. */
+(() => {
+    if (window.__wrnInteractionRelease1711) return;
+    window.__wrnInteractionRelease1711 = true;
+
+    const releaseInteraction = () => {
+        document.documentElement.classList.remove(
+            'wrn-booting',
+            'wrn-app-entering'
+        );
+
+        document.documentElement.style.pointerEvents = 'auto';
+        if (document.body) document.body.style.pointerEvents = 'auto';
+
+        const startScreen = document.getElementById('wrn-start-screen');
+        if (startScreen) {
+            startScreen.style.pointerEvents = 'none';
+            startScreen.setAttribute('aria-hidden', 'true');
+
+            const animationFinished =
+                performance.now() > 2400
+                || getComputedStyle(startScreen).visibility === 'hidden'
+                || Number(getComputedStyle(startScreen).opacity) < 0.05;
+
+            if (animationFinished) startScreen.remove();
+        }
+
+        document.querySelectorAll(
+            '.wrn-top-tabs, .wrn-top-tab, .wrn-subtabs, .wrn-subtab, '
+            + '.wrn-header-actions, .wrn-header-button, '
+            + '#feed-container, #archive-container, '
+            + '#feed-container .card, #archive-container .card'
+        ).forEach(element => {
+            element.style.pointerEvents = 'auto';
+        });
+
+        document.querySelectorAll(
+            '.wrn-more-panel[hidden], '
+            + '.wrn-search-panel[hidden], '
+            + '.wrn-article-detail[hidden], '
+            + '.wrn-diagnostics-overlay[hidden], '
+            + '[aria-hidden="true"].wrn-start-leaving'
+        ).forEach(element => {
+            element.style.pointerEvents = 'none';
+        });
+    };
+
+    const scheduleRelease = () => {
+        releaseInteraction();
+        window.setTimeout(releaseInteraction, 900);
+        window.setTimeout(releaseInteraction, 2600);
+        window.setTimeout(releaseInteraction, 5200);
+    };
+
+    document.addEventListener(
+        'pointerdown',
+        releaseInteraction,
+        { capture: true, passive: true }
+    );
+
+    document.addEventListener(
+        'touchstart',
+        releaseInteraction,
+        { capture: true, passive: true }
+    );
+
+    window.addEventListener('pageshow', scheduleRelease);
+
+    if (document.readyState === 'loading') {
+        document.addEventListener(
+            'DOMContentLoaded',
+            scheduleRelease,
+            { once: true }
+        );
+    } else {
+        scheduleRelease();
+    }
+
+    window.WRNReleaseInteraction = releaseInteraction;
+})();
+
 /* Sichtbarer Fahnenhintergrund */
 (() => {
     const style = document.createElement('style');
@@ -326,7 +409,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnInterfaceLoader179) return;
     window.__wrnInterfaceLoader179 = true;
 
-    const VERSION = '179';
+    const VERSION = '1711';
 
     const addStyle = (file, marker) => {
         if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
@@ -471,22 +554,22 @@ window.WRN_CONFIG = Object.freeze({
 
 /* 1.7.10 – lizenzierte Cyberpnuk-Schrift nur für den Markennamen laden. */
 (() => {
-    if (window.__wrnBrandFont1710) return;
-    window.__wrnBrandFont1710 = true;
+    if (window.__wrnBrandFont1711) return;
+    window.__wrnBrandFont1711 = true;
 
     const existing = document.querySelector(
-        'link[data-wrn-style="brand-font-1710"]'
+        'link[data-wrn-style="brand-font-1711"]'
     );
     if (existing) return;
 
     const stylesheet = document.createElement('link');
     stylesheet.rel = 'stylesheet';
-    stylesheet.href = './brand-font.css?v=1710';
-    stylesheet.dataset.wrnStyle = 'brand-font-1710';
+    stylesheet.href = './brand-font.css?v=1711';
+    stylesheet.dataset.wrnStyle = 'brand-font-1711';
     stylesheet.addEventListener('error', () => {
         console.warn(
             'WRN Markenschrift konnte nicht geladen werden. '
-            + 'Cybrpnuk2.ttf und brand-font.css müssen im Hauptverzeichnis liegen.'
+            + 'Cyberthic.otf und brand-font.css müssen im Hauptverzeichnis liegen.'
         );
     }, { once: true });
 

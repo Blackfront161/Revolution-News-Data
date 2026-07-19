@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.6 – Typografie-Auswahl ohne DOM-Endlosschleife */
+/* World Revolution News 1.7.11 – Typografie-Auswahl ohne DOM-Endlosschleife */
 'use strict';
 
 (() => {
