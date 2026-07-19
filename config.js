@@ -198,7 +198,7 @@ window.WRN_CONFIG = Object.freeze({
     }),
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev',
     /* Optional: URL des gemeinsamen Cache-Workers. Leer = bisheriger Ablauf. */
-    sharedTranslationUrl: ''
+    sharedTranslationUrl: 'https://wrn-translation-cache.paghklo.workers.dev'
 });
 
 /* Sichtbarer Fahnenhintergrund */
@@ -271,6 +271,7 @@ window.WRN_CONFIG = Object.freeze({
 
     const addStyle = (href, marker) => {
         if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;
+
         const stylesheet = document.createElement('link');
         stylesheet.rel = 'stylesheet';
         stylesheet.href = href;
@@ -280,19 +281,25 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadScript = (src, marker) => new Promise((resolve, reject) => {
         const existing = document.querySelector(`script[data-wrn-module="${marker}"]`);
+
         if (existing) {
-            if (existing.dataset.loaded === 'true') resolve();
-            else existing.addEventListener('load', resolve, { once: true });
+            if (existing.dataset.loaded === 'true') {
+                resolve();
+            } else {
+                existing.addEventListener('load', resolve, { once: true });
+            }
             return;
         }
 
         const script = document.createElement('script');
         script.src = src;
         script.dataset.wrnModule = marker;
+
         script.addEventListener('load', () => {
             script.dataset.loaded = 'true';
             resolve();
         }, { once: true });
+
         script.addEventListener('error', reject, { once: true });
         document.body.appendChild(script);
     });
@@ -325,6 +332,9 @@ window.WRN_CONFIG = Object.freeze({
         }
     };
 
-    if (document.readyState === 'complete') loadInterface();
-    else window.addEventListener('load', loadInterface, { once: true });
+    if (document.readyState === 'complete') {
+        loadInterface();
+    } else {
+        window.addEventListener('load', loadInterface, { once: true });
+    }
 })();
