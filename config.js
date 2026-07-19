@@ -81,9 +81,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.8',
-    build: '2026.07.19-lightweight-web-feed',
-    releasedAt: '2026-07-19T23:15:00Z',
+    version: '1.7.9',
+    build: '2026.07.19-storage-start-rescue',
+    releasedAt: '2026-07-19T23:59:00Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
@@ -101,6 +101,162 @@ window.WRN_CONFIG = Object.freeze({
     /* Optional: URL des gemeinsamen Cache-Workers. Leer = bisheriger Ablauf. */
     sharedTranslationUrl: 'https://wrn-translation-cache.paghklo.workers.dev'
 });
+
+
+
+/* 1.7.9 – Offline-Speicher darf den Start nie blockieren. */
+(() => {
+    if (window.__wrnStorageStartGuard179) return;
+    window.__wrnStorageStartGuard179 = true;
+
+    const timeout = (promise, ms, fallback) => new Promise(resolve => {
+        let done = false;
+        const timer = window.setTimeout(() => {
+            if (done) return;
+            done = true;
+            resolve(fallback);
+        }, ms);
+
+        Promise.resolve(promise).then(value => {
+            if (done) return;
+            done = true;
+            window.clearTimeout(timer);
+            resolve(value);
+        }).catch(() => {
+            if (done) return;
+            done = true;
+            window.clearTimeout(timer);
+            resolve(fallback);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const storage = window.WRNStorage;
+        if (!storage || storage.__startGuard179) return;
+
+        const original = {
+            migrateLegacyLocalStorage: storage.migrateLegacyLocalStorage?.bind(storage),
+            requestPersistentStorage: storage.requestPersistentStorage?.bind(storage),
+            putDataset: storage.putDataset?.bind(storage),
+            getDataset: storage.getDataset?.bind(storage)
+        };
+
+        storage.__startGuard179 = true;
+
+        storage.migrateLegacyLocalStorage = () => original.migrateLegacyLocalStorage
+            ? timeout(original.migrateLegacyLocalStorage(), 1200, false)
+            : Promise.resolve(false);
+
+        storage.requestPersistentStorage = () => original.requestPersistentStorage
+            ? timeout(original.requestPersistentStorage(), 800, false)
+            : Promise.resolve(false);
+
+        storage.getDataset = key => original.getDataset
+            ? timeout(original.getDataset(key), 1200, null)
+            : Promise.resolve(null);
+
+        storage.putDataset = (key, data) => {
+            if (original.putDataset) {
+                window.setTimeout(() => {
+                    timeout(original.putDataset(key, data), 1800, false)
+                        .catch(() => false);
+                }, 0);
+            }
+            return Promise.resolve(false);
+        };
+    }, { once: true });
+})();
+
+/* 1.7.9 – sichtbarer Rettungsfeed, falls die Hauptlogik trotzdem hängt. */
+(() => {
+    if (window.__wrnRescueFeed179) return;
+    window.__wrnRescueFeed179 = true;
+
+    const escapeText = value => String(value ?? '');
+
+    const renderRescue = async () => {
+        await new Promise(resolve => window.setTimeout(resolve, 5200));
+
+        const status = document.getElementById('status-container');
+        const feed = document.getElementById('feed-container');
+        const stillLoading = /Lade Nachrichten|Loading news|Connecting/i.test(
+            String(status?.textContent || '')
+        );
+
+        if (!feed || !stillLoading || feed.children.length > 0) return;
+
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => controller.abort(), 7000);
+
+        try {
+            const response = await fetch(
+                `./news-feed.json?rescue=${Date.now()}`,
+                { cache: 'no-store', signal: controller.signal }
+            );
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+            const items = await response.json();
+            if (!Array.isArray(items) || items.length === 0) {
+                throw new Error('Leerer Feed');
+            }
+
+            feed.textContent = '';
+
+            items.slice(0, 30).forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'card wrn-rescue-card';
+
+                const meta = document.createElement('div');
+                meta.className = 'meta';
+                meta.textContent = [
+                    item.quelleName || 'World Revolution News',
+                    item.pubDate ? String(item.pubDate).slice(0, 10) : ''
+                ].filter(Boolean).join(' · ');
+
+                const title = document.createElement('div');
+                title.className = 'title';
+                title.textContent = escapeText(item.title || 'Nachricht');
+
+                const teaser = document.createElement('div');
+                teaser.className = 'teaser';
+                teaser.textContent = escapeText(item.content || '').slice(0, 420);
+
+                card.append(meta, title, teaser);
+
+                if (item.link) {
+                    const link = document.createElement('a');
+                    link.className = 'btn-translate';
+                    link.href = String(item.link);
+                    link.target = '_blank';
+                    link.rel = 'noopener noreferrer';
+                    link.textContent = '[ Original öffnen ]';
+                    card.appendChild(link);
+                }
+
+                feed.appendChild(card);
+            });
+
+            if (status) {
+                status.style.color = 'var(--color-green)';
+                status.textContent = 'Nachrichten geladen';
+            }
+        } catch (error) {
+            if (status) {
+                status.style.color = '#ff334f';
+                status.textContent = 'Nachrichten konnten nicht geladen werden.';
+            }
+            console.error('WRN Rettungsfeed fehlgeschlagen:', error);
+        } finally {
+            window.clearTimeout(timer);
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderRescue, { once: true });
+    } else {
+        renderRescue();
+    }
+})();
 
 /* Sichtbarer Fahnenhintergrund */
 (() => {
@@ -167,10 +323,10 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Briefing, Sprachsystem und Navigation fehlertolerant laden. */
 (() => {
-    if (window.__wrnInterfaceLoader178) return;
-    window.__wrnInterfaceLoader178 = true;
+    if (window.__wrnInterfaceLoader179) return;
+    window.__wrnInterfaceLoader179 = true;
 
-    const VERSION = '178';
+    const VERSION = '179';
 
     const addStyle = (file, marker) => {
         if (document.querySelector(`link[data-wrn-style="${marker}"]`)) return;

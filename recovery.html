@@ -51,7 +51,7 @@
     <p>Diese Seite funktioniert unabhängig von der normalen App. Sie löscht nur den technischen Browser-Cache und alte Service Worker. Gespeicherte Artikel, Briefing-Einstellungen und Leselisten bleiben erhalten.</p>
     <p id="status">Bereit.</p>
     <button id="repair">Cache reparieren und App öffnen</button>
-    <a href="./?nav=177&amp;safe=1">App direkt im sicheren Modus öffnen</a>
+    <a href="./?nav=179&amp;safe=1">App direkt im sicheren Modus öffnen</a>
   </main>
   <script>
     'use strict';
@@ -80,7 +80,7 @@
 
         status.textContent = 'Fertig. Die reparierte App wird geöffnet …';
         const target = new URL('./', location.href);
-        target.searchParams.set('nav', '177');
+        target.searchParams.set('nav', '179');
         target.searchParams.set('recovered', Date.now().toString());
         location.replace(target.toString());
       } catch (error) {
