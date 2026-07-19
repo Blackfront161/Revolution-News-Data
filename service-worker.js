@@ -1,12 +1,13 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.11';
-const DATA_CACHE = 'wrn-data-v1.7.11';
+const APP_CACHE = 'wrn-app-v1.7.12';
+const DATA_CACHE = 'wrn-data-v1.7.12';
 
 const APP_SHELL = [
   './',
   './index.html',
+  './mobile-repair.html',
   './styles.css',
   './release-1.4.css',
   './release-1.5-nav.css',
@@ -17,7 +18,6 @@ const APP_SHELL = [
   './shared-translation-status.css',
   './typography.css',
   './brand-font.css',
-  './Cyberthic.otf',
   './app-diagnostics.css',
   './app-background.webp',
   './wrn-logo.webp',
@@ -91,15 +91,24 @@ self.addEventListener('install', event => {
     const cache = await caches.open(APP_CACHE);
     const results = await Promise.allSettled(
       APP_SHELL.map(async resource => {
-        const request = new Request(new URL(resource, self.location.href), { cache: 'reload' });
+        const request = new Request(
+          new URL(resource, self.location.href),
+          { cache: 'reload' }
+        );
         const response = await fetch(request);
-        if (!response.ok) throw new Error(`${resource}: HTTP ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`${resource}: HTTP ${response.status}`);
+        }
         await cache.put(request, response);
       })
     );
+
     const failed = results.filter(result => result.status === 'rejected');
     if (failed.length) {
-      console.warn(`WRN offline cache: ${failed.length} optionale Dateien konnten nicht gespeichert werden.`);
+      console.warn(
+        `WRN offline cache: ${failed.length} optionale Dateien `
+        + 'konnten nicht gespeichert werden.'
+      );
     }
     await self.skipWaiting();
   })());
@@ -109,7 +118,11 @@ self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keep = new Set([APP_CACHE, DATA_CACHE]);
     const cacheNames = await caches.keys();
-    await Promise.all(cacheNames.filter(name => !keep.has(name)).map(name => caches.delete(name)));
+    await Promise.all(
+      cacheNames
+        .filter(name => !keep.has(name))
+        .map(name => caches.delete(name))
+    );
     await self.clients.claim();
   })());
 });
@@ -131,27 +144,38 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  if (['script', 'style', 'manifest', 'font'].includes(request.destination)) {
+  if (['script', 'style', 'manifest', 'font'].includes(
+    request.destination
+  )) {
     event.respondWith(networkFirstAsset(request));
     return;
   }
 
-  event.respondWith(fetch(request).catch(() => caches.match(request)));
+  event.respondWith(
+    fetch(request).catch(() => caches.match(request))
+  );
 });
 
 async function networkFirstNavigation(request) {
   const cache = await caches.open(APP_CACHE);
   try {
     const response = await fetchWithTimeout(request, 5000);
-    if (response?.ok) await cache.put('./index.html', response.clone());
+    if (response?.ok) {
+      await cache.put('./index.html', response.clone());
+    }
     return response;
   } catch {
     return (await cache.match(request))
       || (await cache.match('./index.html'))
-      || new Response('Offline: Die App-Oberfläche ist noch nicht gespeichert.', {
-        status: 503,
-        headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-      });
+      || new Response(
+        'Offline: Die App-Oberfläche ist noch nicht gespeichert.',
+        {
+          status: 503,
+          headers: {
+            'Content-Type': 'text/plain; charset=utf-8'
+          }
+        }
+      );
   }
 }
 
@@ -162,7 +186,10 @@ async function networkFirstData(request) {
     if (response?.ok) await cache.put(request, response.clone());
     return response;
   } catch {
-    const cached = await cache.match(request, { ignoreSearch: true });
+    const cached = await cache.match(
+      request,
+      { ignoreSearch: true }
+    );
     const url = new URL(request.url);
     const fallback = JSON_FALLBACKS.get(url.pathname) || 'null';
     return cached || new Response(fallback, {
@@ -182,16 +209,24 @@ async function networkFirstAsset(request) {
     if (response?.ok) await cache.put(request, response.clone());
     return response;
   } catch {
-    return (await cache.match(request, { ignoreSearch: true }))
-      || new Response('', { status: 504 });
+    return (await cache.match(
+      request,
+      { ignoreSearch: true }
+    )) || new Response('', { status: 504 });
   }
 }
 
 async function fetchWithTimeout(request, timeoutMs) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const timeout = setTimeout(
+    () => controller.abort(),
+    timeoutMs
+  );
   try {
-    return await fetch(request, { signal: controller.signal, cache: 'no-store' });
+    return await fetch(request, {
+      signal: controller.signal,
+      cache: 'no-store'
+    });
   } finally {
     clearTimeout(timeout);
   }

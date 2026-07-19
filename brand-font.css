@@ -1,13 +1,14 @@
 /*
- * World Revolution News 1.7.11 – Cyberthic-Markenschrift
- * Benötigte Datei im Hauptverzeichnis: Cyberthic.otf
+ * World Revolution News 1.7.12 – Markenschrift mit sicherem System-Fallback.
+ *
+ * Die fehlende Datei Cyberthic.otf wird nicht mehr angefordert.
+ * Ist Cyberthic lokal auf dem Gerät installiert, wird sie weiterhin genutzt.
  */
 @font-face {
     font-family: "WRN Cyberthic";
     src:
         local("Cyberthic"),
-        local("Cyberthic Regular"),
-        url("./Cyberthic.otf?v=1711") format("opentype");
+        local("Cyberthic Regular");
     font-style: normal;
     font-weight: 400;
     font-display: swap;
@@ -27,9 +28,6 @@ header h1,
     text-transform: none !important;
     letter-spacing: 0.012em !important;
     line-height: 1.06 !important;
-    text-shadow:
-        0 0 8px rgba(0, 240, 255, 0.18),
-        0 2px 10px rgba(0, 0, 0, 0.92) !important;
 }
 
 .wrn-brand-text,
