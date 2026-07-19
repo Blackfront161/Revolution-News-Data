@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.7';
-const DATA_CACHE = 'wrn-data-v1.7.7';
+const APP_CACHE = 'wrn-app-v1.7.8';
+const DATA_CACHE = 'wrn-data-v1.7.8';
 
 const APP_SHELL = [
   './',
@@ -56,7 +56,9 @@ const APP_SHELL = [
 
 const JSON_FALLBACKS = new Map([
   [new URL('./news.json', self.location.href).pathname, '[]'],
+  [new URL('./news-feed.json', self.location.href).pathname, '[]'],
   [new URL('./events.json', self.location.href).pathname, '[]'],
+  [new URL('./events-feed.json', self.location.href).pathname, '[]'],
   [new URL('./podcasts.json', self.location.href).pathname, '[]'],
   [new URL('./radio-stations.json', self.location.href).pathname, '[]'],
   [new URL('./source-health.json', self.location.href).pathname, '{}'],
@@ -69,7 +71,9 @@ const JSON_FALLBACKS = new Map([
 
 const DATA_FILES = new Set([
   new URL('./news.json', self.location.href).pathname,
+  new URL('./news-feed.json', self.location.href).pathname,
   new URL('./events.json', self.location.href).pathname,
+  new URL('./events-feed.json', self.location.href).pathname,
   new URL('./source-health.json', self.location.href).pathname,
   new URL('./source-catalog.json', self.location.href).pathname,
   new URL('./podcasts.json', self.location.href).pathname,

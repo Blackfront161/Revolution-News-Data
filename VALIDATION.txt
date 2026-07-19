@@ -1,14 +1,17 @@
 OK JavaScript: config.js
 OK JavaScript: service-worker.js
-OK JavaScript: typography.js
-OK Integration: cloudscraper eingetragen
-OK Integration: Workflow installiert requirements
-OK Integration: Workflow importiert cloudscraper zur Prüfung
-OK Integration: Leere News werden abgefangen
-OK Integration: Version 1.7.7
-OK Integration: Startanimation blockiert keine Klicks
-OK Integration: Fehlertoleranter Modullader
-OK Integration: Navigation wird vor optionalem Audio geladen
-OK Integration: Service Worker 1.7.7
-OK Integration: Recovery verweist auf 177
+OK Python: build_web_feeds.py
 OK YAML: update.yml
+OK Integration: Version 1.7.8
+OK Integration: Kleiner News-Feed aktiv
+OK Integration: Kleiner Termin-Feed aktiv
+OK Integration: Navigation früh geladen
+OK Integration: Service Worker 1.7.8
+OK Integration: News-Feed im Service Worker
+OK Integration: Termin-Feed im Service Worker
+OK Integration: Workflow erzeugt Web-Feed
+OK Integration: Workflow committed Web-Feed
+OK Funktionstest: 620 Nachrichten und 570 Termine auf je 500 Web-Einträge reduziert
+[WEB-FEED] News: 500/620 (2.24 MiB)
+[WEB-FEED] Termine: 500/570 (1.43 MiB)
+[WEB-FEED] config.js: bereits aktiv
