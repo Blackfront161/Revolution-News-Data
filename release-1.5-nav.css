@@ -1,4 +1,4 @@
-/* WRN 1.7.0 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
+/* WRN 1.7.1 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
 
 :root {
   --wrn-red: #ff334f;
@@ -1383,7 +1383,7 @@ html.wrn-booting body > *:not(#wrn-start-screen):not(script):not(style) {
       rgba(2, 3, 7, 0.34) 58%,
       rgba(2, 3, 7, 0.68) 100%
     ),
-    url("./app-background.webp?v=170") center top / cover no-repeat;
+    url("./app-background.webp?v=171") center top / cover no-repeat;
   opacity: 0;
   transform: scale(1.045);
   animation: wrnStartBackground 900ms ease-out 40ms forwards;

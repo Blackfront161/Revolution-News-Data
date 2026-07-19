@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.0';
-const DATA_CACHE = 'wrn-data-v1.7.0';
+const APP_CACHE = 'wrn-app-v1.7.1';
+const DATA_CACHE = 'wrn-data-v1.7.1';
 
 const APP_SHELL = [
   './',
@@ -11,6 +11,7 @@ const APP_SHELL = [
   './release-1.4.css',
   './release-1.5-nav.css',
   './briefing.css',
+  './audio-catalog.css',
   './app-background.webp',
   './wrn-logo.webp',
   './config.js',
@@ -30,6 +31,8 @@ const APP_SHELL = [
   './release-1.5-nav.js',
   './wrn-i18n.js',
   './briefing.js',
+  './audio-player-fixes.js',
+  './audio-catalog.js',
   './app.js',
   './manifest.json',
   './icon.svg'
@@ -42,7 +45,10 @@ const DATA_FILES = new Set([
   new URL('./source-catalog.json', self.location.href).pathname,
   new URL('./podcasts.json', self.location.href).pathname,
   new URL('./podcast-health.json', self.location.href).pathname,
-  new URL('./radio-stations.json', self.location.href).pathname
+  new URL('./radio-stations.json', self.location.href).pathname,
+  new URL('./radio-health.json', self.location.href).pathname,
+  new URL('./podcast-sources.json', self.location.href).pathname,
+  new URL('./radio-sources.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {

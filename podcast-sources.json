@@ -8,13 +8,23 @@
       "https://www.aradio-berlin.org/en/feed/"
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 70,
+    "topics": [
+      "Anarchismus",
+      "Antifaschismus",
+      "International"
+    ],
     "categories": [
       "Anarchism",
-      "International",
-      "Antifascism"
+      "Antifascism",
+      "International"
     ],
-    "pageAudioFallback": true
+    "pageAudioFallback": true,
+    "maxAgeDays": 1800
   },
   {
     "id": "bad-news",
@@ -25,7 +35,15 @@
       "https://www.a-radio-network.org/category/bad-news/feed/"
     ],
     "language": "en",
+    "country": "INT",
+    "region": "International",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 80,
+    "topics": [
+      "Anarchismus",
+      "International"
+    ],
     "categories": [
       "Anarchism",
       "International"
@@ -40,7 +58,15 @@
       "https://dissens.podigee.io/feed/mp3"
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "CC BY",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Theorie & Strategie",
+      "Antikapitalismus"
+    ],
     "categories": [
       "Theory & Strategy",
       "Anticapitalism"
@@ -54,7 +80,16 @@
       "https://thefinalstrawradio.libsyn.com/rss"
     ],
     "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Anarchismus",
+      "Anti-Rep & Knast",
+      "International"
+    ],
     "categories": [
       "Anarchism",
       "Anti-Rep & Prisons",
@@ -66,10 +101,20 @@
     "name": "Radio CORAX – Nachhören",
     "homepage": "https://radiocorax.de/nachhoeren/",
     "feedUrls": [
+      "https://www.freie-radios.net/portal/podcast.php?radio=corax&rss=",
       "https://radiocorax.de/feed/"
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "Originalquelle / freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Antifaschismus",
+      "Arbeitskämpfe"
+    ],
     "categories": [
       "Freie Radios",
       "Antifascism",
@@ -82,15 +127,25 @@
     "name": "Radio Dreyeckland – Mediathek",
     "homepage": "https://rdl.de/mediathek",
     "feedUrls": [
+      "https://www.freie-radios.net/portal/podcast.php?radio=rdl&rss=",
       "https://rdl.de/rss.xml",
-      "https://rdl.de/mediathek/rss.xml",
-      "https://rdl.de/feed"
+      "https://rdl.de/mediathek/rss.xml"
     ],
     "language": "de",
-    "license": "Originalquelle",
+    "country": "DE",
+    "region": "DACH",
+    "license": "Originalquelle / freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Politik",
+      "Antifaschismus"
+    ],
     "categories": [
       "Freie Radios",
-      "Politics"
+      "Politics",
+      "Antifascism"
     ],
     "pageAudioFallback": true
   },
@@ -99,14 +154,23 @@
     "name": "FSK Hamburg – Nachhören",
     "homepage": "https://www.fsk-hh.org/archive",
     "feedUrls": [
-      "https://www.fsk-hh.org/feed.xml",
-      "https://www.fsk-hh.org/archive/feed.xml",
-      "https://www.fsk-hh.org/rss.xml"
+      "https://www.freie-radios.net/portal/podcast.php?radio=fsk&rss=",
+      "https://www.fsk-hh.org/feed.xml"
     ],
     "language": "de",
-    "license": "Originalquelle",
+    "country": "DE",
+    "region": "DACH",
+    "license": "Originalquelle / freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Antikapitalismus",
+      "Hamburg"
+    ],
     "categories": [
       "Freie Radios",
+      "Anticapitalism",
       "Hamburg"
     ],
     "pageAudioFallback": true
@@ -119,10 +183,62 @@
       "https://www.freie-radios.net/portal/podcast.php?radio=37&rss="
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Leipzig"
+    ],
     "categories": [
       "Freie Radios",
       "Leipzig"
+    ]
+  },
+  {
+    "id": "coloradio",
+    "name": "coloRadio Dresden",
+    "homepage": "https://coloradio.org/",
+    "feedUrls": [
+      "https://www.freie-radios.net/portal/podcast.php?radio=coloradio&rss="
+    ],
+    "language": "de",
+    "country": "DE",
+    "region": "DACH",
+    "license": "freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Dresden"
+    ],
+    "categories": [
+      "Freie Radios",
+      "Dresden"
+    ]
+  },
+  {
+    "id": "radio-z",
+    "name": "Radio Z Nürnberg",
+    "homepage": "https://www.radio-z.net/",
+    "feedUrls": [
+      "https://www.freie-radios.net/portal/podcast.php?radio=radioz&rss="
+    ],
+    "language": "de",
+    "country": "DE",
+    "region": "DACH",
+    "license": "freie-radios.net",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Nürnberg"
+    ],
+    "categories": [
+      "Freie Radios",
+      "Nuremberg"
     ]
   },
   {
@@ -134,7 +250,15 @@
       "https://lora924.de/category/podcast/feed/"
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "Originalquelle",
+    "sourceKind": "free-radio",
+    "priority": 90,
+    "topics": [
+      "Freie Radios",
+      "München"
+    ],
     "categories": [
       "Freie Radios",
       "Munich"
@@ -150,7 +274,16 @@
       "https://commonvoices.radiocorax.de/feed/podcast/"
     ],
     "language": "multi",
+    "country": "DE",
+    "region": "DACH",
     "license": "Originalquelle",
+    "sourceKind": "free-radio",
+    "priority": 85,
+    "topics": [
+      "Migration",
+      "Mehrsprachig",
+      "Freie Radios"
+    ],
     "categories": [
       "Migration",
       "Multilingual",
@@ -167,12 +300,22 @@
       "https://a-radio.at/feed/podcast/"
     ],
     "language": "de",
+    "country": "AT",
+    "region": "DACH",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 70,
+    "topics": [
+      "Anarchismus",
+      "Österreich"
+    ],
     "categories": [
       "Anarchism",
       "Austria"
     ],
-    "pageAudioFallback": true
+    "pageAudioFallback": true,
+    "enabled": false,
+    "disabledReason": "Domain derzeit nicht erreichbar"
   },
   {
     "id": "frequenz-a",
@@ -182,7 +325,15 @@
       "https://frequenza.noblogs.org/feed/"
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 85,
+    "topics": [
+      "Anarchismus",
+      "International"
+    ],
     "categories": [
       "Anarchism",
       "International"
@@ -194,17 +345,25 @@
     "name": "CrimethInc. Ex-Worker",
     "homepage": "https://crimethinc.com/podcasts/the-ex-worker",
     "feedUrls": [
-      "https://crimethinc.com/podcasts/the-ex-worker/feed",
-      "https://crimethinc.com/podcasts/the-ex-worker.rss",
-      "https://crimethinc.com/podcasts/the-ex-worker/feed.xml"
+      "https://crimethinc.com/podcast/feed",
+      "https://crimethinc.com/podcasts/the-ex-worker.rss"
     ],
     "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Anarchismus",
+      "Theorie & Strategie"
+    ],
     "categories": [
       "Anarchism",
       "Theory & Strategy"
     ],
-    "pageAudioFallback": true
+    "pageAudioFallback": true,
+    "maxAgeDays": 3650
   },
   {
     "id": "its-going-down",
@@ -215,13 +374,246 @@
       "https://itsgoingdown.org/feed/podcast/"
     ],
     "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
     "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Antifaschismus",
+      "Anarchismus",
+      "Nordamerika"
+    ],
     "categories": [
       "Antifascism",
       "Anarchism",
       "North America"
     ],
     "pageAudioFallback": true
+  },
+  {
+    "id": "radio-blackout",
+    "name": "Radio Blackout Torino",
+    "homepage": "https://radioblackout.org/",
+    "feedUrls": [
+      "https://radioblackout.org/feed/",
+      "https://radioblackout.org/podcast/feed/"
+    ],
+    "language": "it",
+    "country": "IT",
+    "region": "Europa",
+    "license": "Originalquelle",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Antikapitalismus",
+      "Antimilitarismus"
+    ],
+    "categories": [
+      "Freie Radios",
+      "Anticapitalism",
+      "No War"
+    ],
+    "pageAudioFallback": true
+  },
+  {
+    "id": "radio-onda-rossa",
+    "name": "Radio Onda Rossa",
+    "homepage": "https://www.ondarossa.info/",
+    "feedUrls": [
+      "https://www.ondarossa.info/rss.xml",
+      "https://www.ondarossa.info/feed"
+    ],
+    "language": "it",
+    "country": "IT",
+    "region": "Europa",
+    "license": "Originalquelle",
+    "sourceKind": "free-radio",
+    "priority": 95,
+    "topics": [
+      "Freie Radios",
+      "Antikapitalismus",
+      "International"
+    ],
+    "categories": [
+      "Freie Radios",
+      "Anticapitalism",
+      "International"
+    ],
+    "pageAudioFallback": true
+  },
+  {
+    "id": "working-class-history",
+    "name": "Working Class History",
+    "homepage": "https://workingclasshistory.com/podcast/",
+    "feedUrls": [
+      "https://workingclasshistory.com/category/podcast/feed/",
+      "https://workingclasshistory.com/feed/podcast/"
+    ],
+    "language": "en",
+    "country": "GB",
+    "region": "Europa",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Arbeitskämpfe",
+      "Geschichte",
+      "Antikapitalismus"
+    ],
+    "categories": [
+      "Labor Struggles",
+      "History",
+      "Anticapitalism"
+    ],
+    "pageAudioFallback": true
+  },
+  {
+    "id": "indigenous-action",
+    "name": "Indigenous Action Podcast",
+    "homepage": "https://www.indigenousaction.org/series/indigenous-action/",
+    "feedUrls": [
+      "https://www.indigenousaction.org/feed/podcast/",
+      "https://www.indigenousaction.org/series/indigenous-action/feed/"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 90,
+    "topics": [
+      "Indigene Kämpfe",
+      "Antikolonialismus",
+      "Antifaschismus"
+    ],
+    "categories": [
+      "Indigenous Struggles",
+      "Anticolonialism",
+      "Antifascism"
+    ],
+    "pageAudioFallback": true,
+    "maxAgeDays": 1800
+  },
+  {
+    "id": "rev-left-radio",
+    "name": "Revolutionary Left Radio",
+    "homepage": "https://revolutionaryleftradio.libsyn.com/",
+    "feedUrls": [
+      "https://revolutionaryleftradio.libsyn.com/rss"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 75,
+    "topics": [
+      "Theorie & Strategie",
+      "Antikapitalismus",
+      "Geschichte"
+    ],
+    "categories": [
+      "Theory & Strategy",
+      "Anticapitalism",
+      "History"
+    ]
+  },
+  {
+    "id": "red-menace",
+    "name": "Red Menace",
+    "homepage": "https://redmenace.libsyn.com/",
+    "feedUrls": [
+      "https://redmenace.libsyn.com/rss"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 70,
+    "topics": [
+      "Theorie & Strategie",
+      "Antikapitalismus"
+    ],
+    "categories": [
+      "Theory & Strategy",
+      "Anticapitalism"
+    ],
+    "maxAgeDays": 1800
+  },
+  {
+    "id": "guerrilla-history",
+    "name": "Guerrilla History",
+    "homepage": "https://guerrillahistory.libsyn.com/",
+    "feedUrls": [
+      "https://guerrillahistory.libsyn.com/rss"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 75,
+    "topics": [
+      "Geschichte",
+      "Antikolonialismus",
+      "Anti-Imperialismus"
+    ],
+    "categories": [
+      "History",
+      "Anticolonialism",
+      "Anti-Imperialism"
+    ]
+  },
+  {
+    "id": "millennials-killing-capitalism",
+    "name": "Millennials Are Killing Capitalism",
+    "homepage": "https://millennialsarekillingcapitalism.libsyn.com/",
+    "feedUrls": [
+      "https://millennialsarekillingcapitalism.libsyn.com/rss"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 75,
+    "topics": [
+      "Antikapitalismus",
+      "Antikolonialismus",
+      "Arbeitskämpfe"
+    ],
+    "categories": [
+      "Anticapitalism",
+      "Anticolonialism",
+      "Labor Struggles"
+    ]
+  },
+  {
+    "id": "black-myths",
+    "name": "Black Myths Podcast",
+    "homepage": "https://blackmyths.libsyn.com/",
+    "feedUrls": [
+      "https://blackmyths.libsyn.com/rss"
+    ],
+    "language": "en",
+    "country": "US",
+    "region": "Nordamerika",
+    "license": "Originalquelle",
+    "sourceKind": "independent-podcast",
+    "priority": 75,
+    "topics": [
+      "Antirassismus",
+      "Geschichte",
+      "Antikolonialismus"
+    ],
+    "categories": [
+      "Antiracism",
+      "History",
+      "Anticolonialism"
+    ]
   },
   {
     "id": "freie-radios",
@@ -231,7 +623,15 @@
       "https://www.freie-radios.net/portal/podcast.php?rss="
     ],
     "language": "de",
+    "country": "DE",
+    "region": "DACH",
     "license": "Nichtkommerzieller Programmaustausch",
+    "sourceKind": "aggregator",
+    "priority": 10,
+    "topics": [
+      "Freie Radios",
+      "Politik"
+    ],
     "categories": [
       "Freie Radios",
       "Politics"

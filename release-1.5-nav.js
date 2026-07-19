@@ -1,9 +1,9 @@
-/* WRN 1.7.0 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
+/* WRN 1.7.1 – Mein Briefing, vollständige Sprachen und interne Quellenlinks */
 'use strict';
 
 (() => {
-  if (window.__wrnAppNav170Loaded) return;
-  window.__wrnAppNav170Loaded = true;
+  if (window.__wrnAppNav171Loaded) return;
+  window.__wrnAppNav171Loaded = true;
 
   const NAV_TEXTS = {
     de: {
@@ -201,7 +201,7 @@
     brand.className = 'wrn-brand';
 
     const logo = document.createElement('img');
-    logo.src = './wrn-logo.webp?v=170';
+    logo.src = './wrn-logo.webp?v=171';
     logo.alt = 'World Revolution News Logo';
 
     const textWrap = document.createElement('div');
@@ -651,7 +651,7 @@
       <div class="wrn-detail-topbar">
         <button class="wrn-detail-back" type="button">← ${texts().back}</button>
         <div class="wrn-detail-heading">${texts().article}</div>
-        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=170" alt="">
+        <img class="wrn-detail-logo" src="./wrn-logo.webp?v=171" alt="">
       </div>
       <div class="wrn-detail-scroll">
         <div class="wrn-detail-host"></div>
@@ -917,8 +917,8 @@
   }
 
   function attachSwipe() {
-    if (window.__wrnSwipe170Bound) return;
-    window.__wrnSwipe170Bound = true;
+    if (window.__wrnSwipe171Bound) return;
+    window.__wrnSwipe171Bound = true;
 
     let tracking = false;
     let pointerId = null;
@@ -1066,8 +1066,8 @@
   }
 
   function patchLanguageFunction() {
-    if (window.__wrnLanguage170Patched) return;
-    window.__wrnLanguage170Patched = true;
+    if (window.__wrnLanguage171Patched) return;
+    window.__wrnLanguage171Patched = true;
 
     const original = window.changeLanguage;
     if (typeof original !== 'function') return;
@@ -1114,9 +1114,9 @@
 
   function observeStatusMessage() {
     const status = document.getElementById('status-container');
-    if (!status || status.dataset.wrnStatusObserver === '170') return;
+    if (!status || status.dataset.wrnStatusObserver === '171') return;
 
-    status.dataset.wrnStatusObserver = '170';
+    status.dataset.wrnStatusObserver = '171';
     const observer = new MutationObserver(updateNormalStatusVisibility);
     observer.observe(status, {
       childList: true,
@@ -1133,8 +1133,8 @@
   }
 
   function watchForLegacyMobileArtifacts() {
-    if (window.__wrnLegacyMenuObserver170) return;
-    window.__wrnLegacyMenuObserver170 = true;
+    if (window.__wrnLegacyMenuObserver171) return;
+    window.__wrnLegacyMenuObserver171 = true;
 
     removeLegacyMobileArtifacts();
 
@@ -1278,8 +1278,8 @@
        sobald news.json und events.json bereit sind. */
     activateTab(state.activeTab, false, false);
 
-    if (!window.__wrnInitialContentWatch170) {
-      window.__wrnInitialContentWatch170 = true;
+    if (!window.__wrnInitialContentWatch171) {
+      window.__wrnInitialContentWatch171 = true;
       waitForInitialContent();
     }
   }

@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.0 – gemeinsame Navigation- und Briefing-Texte */
+/* World Revolution News 1.7.1 – gemeinsame Navigation- und Briefing-Texte */
 'use strict';
 
 (() => {

@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.0 – lokales tägliches Text- und Audio-Briefing */
+/* World Revolution News 1.7.1 – lokales tägliches Text- und Audio-Briefing */
 'use strict';
 
 (() => {
