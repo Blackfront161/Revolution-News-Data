@@ -81,9 +81,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.10',
-    build: '2026.07.19-newsfeed-workflow-and-cyberpnuk-brand',
-    releasedAt: '2026-07-19T23:59:30Z',
+    version: '1.7.8',
+    build: '2026.07.19-lightweight-web-feed',
+    releasedAt: '2026-07-19T16:51:49.958446+00:00',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
