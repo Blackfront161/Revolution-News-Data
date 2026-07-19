@@ -1,0 +1,102 @@
+name: Update News
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-news
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Repository laden
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: pip
+
+      - name: Python-Werkzeuge aktualisieren
+        run: python -m pip install --upgrade pip setuptools wheel
+
+      - name: Abhängigkeiten installieren
+        run: python -m pip install -r requirements.txt
+
+      - name: Abhängigkeiten prüfen
+        run: |
+          python - <<'PY'
+          import bs4
+          import cloudscraper
+          import feedparser
+          import requests
+
+          print("feedparser:", feedparser.__version__)
+          print("requests:", requests.__version__)
+          print("beautifulsoup4:", bs4.__version__)
+          print("cloudscraper:", getattr(cloudscraper, "__version__", "installiert"))
+          PY
+
+      - name: Nachrichten aktualisieren
+        run: python aggregate.py
+
+      - name: Nachrichten-Dateien prüfen
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          news_path = Path("news.json")
+          events_path = Path("events.json")
+
+          if not news_path.is_file():
+              raise SystemExit("news.json wurde nicht erzeugt.")
+          if not events_path.is_file():
+              raise SystemExit("events.json wurde nicht erzeugt.")
+
+          news = json.loads(news_path.read_text(encoding="utf-8"))
+          events = json.loads(events_path.read_text(encoding="utf-8"))
+
+          if not isinstance(news, list):
+              raise SystemExit("news.json ist keine JSON-Liste.")
+          if not isinstance(events, list):
+              raise SystemExit("events.json ist keine JSON-Liste.")
+          if not news:
+              raise SystemExit(
+                  "news.json ist leer. Der vorhandene Nachrichtenstand "
+                  "wird deshalb nicht überschrieben."
+              )
+
+          print(f"Nachrichten: {len(news)}")
+          print(f"Termine: {len(events)}")
+          PY
+
+      - name: Quellenkatalog erzeugen
+        run: python build_source_catalog.py
+
+      - name: Nachrichtenquellen technisch prüfen
+        run: python check_news_sources.py
+
+      - name: Änderungen speichern
+        run: |
+          git config --global user.name "News-Bot"
+          git config --global user.email "bot@revolutionnews.net"
+          git add news.json events.json source-catalog.json source-health.json
+
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen"
+          else
+            git commit -m "Automatische News-, Quellen- und Statusaktualisierung"
+            git pull --rebase origin main
+            git push origin main
+          fi
