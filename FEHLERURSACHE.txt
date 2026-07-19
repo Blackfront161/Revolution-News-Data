@@ -1,0 +1,11 @@
+WRN 1.7.5 – TECHNISCHE FEHLERURSACHE
+
+Der MutationObserver in typography.js beobachtete den gesamten body.
+Sein Callback rief refreshField() auf.
+refreshField() setzte textContent für Label, Optionen und Hinweis selbst dann,
+wenn der Text bereits identisch war.
+
+Das Setzen von textContent ersetzt Textknoten und erzeugt childList-Mutationen.
+Damit erzeugte der Observer seine nächste Ausführung selbst.
+
+1.7.6 verhindert diese Rückkopplung.

@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.5 – Typografie-Auswahl */
+/* World Revolution News 1.7.6 – Typografie-Auswahl ohne DOM-Endlosschleife */
 'use strict';
 
 (() => {
@@ -84,29 +84,49 @@
     else grid.appendChild(field);
   }
 
+  function setTextIfChanged(node, value) {
+    if (node && node.textContent !== value) node.textContent = value;
+  }
+
   function refreshField() {
     const field = document.querySelector('.wrn-typography-field');
     if (!field) return;
+
     const texts = copy();
     const label = field.querySelector(':scope > span');
     const select = field.querySelector('select');
     const note = field.querySelector('small');
-    if (label) label.textContent = texts.label;
+
+    setTextIfChanged(label, texts.label);
+
     if (select) {
       [...select.options].forEach(option => {
-        option.textContent = texts[option.value] || option.value;
+        setTextIfChanged(option, texts[option.value] || option.value);
       });
-      select.setAttribute('aria-label', texts.label);
-      select.value = current();
+
+      if (select.getAttribute('aria-label') !== texts.label) {
+        select.setAttribute('aria-label', texts.label);
+      }
+
+      const nextValue = current();
+      if (select.value !== nextValue) select.value = nextValue;
     }
-    if (note) note.textContent = texts.note;
+
+    setTextIfChanged(note, texts.note);
   }
 
   apply(current(), false);
 
+  let refreshQueued = false;
   const observer = new MutationObserver(() => {
-    buildField();
-    refreshField();
+    if (refreshQueued) return;
+    refreshQueued = true;
+
+    window.requestAnimationFrame(() => {
+      refreshQueued = false;
+      buildField();
+      refreshField();
+    });
   });
 
   function init() {
