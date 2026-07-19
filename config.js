@@ -81,9 +81,9 @@
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.9',
-    build: '2026.07.19-storage-start-rescue',
-    releasedAt: '2026-07-19T23:59:00Z',
+    version: '1.7.10',
+    build: '2026.07.19-newsfeed-workflow-and-cyberpnuk-brand',
+    releasedAt: '2026-07-19T23:59:30Z',
     repository: 'Blackfront161/Revolution-News-Data',
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
@@ -466,4 +466,29 @@ window.WRN_CONFIG = Object.freeze({
     } else {
         window.addEventListener('load', loadInterface, { once: true });
     }
+})();
+
+
+/* 1.7.10 – lizenzierte Cyberpnuk-Schrift nur für den Markennamen laden. */
+(() => {
+    if (window.__wrnBrandFont1710) return;
+    window.__wrnBrandFont1710 = true;
+
+    const existing = document.querySelector(
+        'link[data-wrn-style="brand-font-1710"]'
+    );
+    if (existing) return;
+
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = './brand-font.css?v=1710';
+    stylesheet.dataset.wrnStyle = 'brand-font-1710';
+    stylesheet.addEventListener('error', () => {
+        console.warn(
+            'WRN Markenschrift konnte nicht geladen werden. '
+            + 'Cybrpnuk2.ttf und brand-font.css müssen im Hauptverzeichnis liegen.'
+        );
+    }, { once: true });
+
+    document.head.appendChild(stylesheet);
 })();
