@@ -1,24 +1,25 @@
-/* World Revolution News – 1.7.12 Recovery Stage 1
+/* World Revolution News – 1.7.13 Stable Recovery Stage 2
  *
  * Ziel dieser Stufe:
- * - klickbare Notfallreparatur behalten
- * - vollständigen schnellen Feed auf Desktop wieder freigeben
+ * - stabile und klickbare Nachrichtenansicht beibehalten
+ * - Titelgrafik sauber und platzsparend einbinden
+ * - Systemstatus und vollständige Quellenprüfung zugänglich machen
+ * - gemeinsamen Übersetzungs-Cache wieder aktivieren
  * - Smartphones weiterhin vor zu großer Startlast schützen
- * - App mit "Start" statt dem noch nicht geladenen Briefing öffnen
- * - vorhandene Leselisten, Zine- und Datenspeicherfunktionen nicht löschen
+ * - Briefing, Video-Hub und schwere Diagnose noch nicht automatisch starten
  */
 'use strict';
 
-window.WRN_EMERGENCY_MODE = true;
+window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.12',
-    build: '2026.07.19-recovery-stage-1',
-    releasedAt: '2026-07-19T22:10:00+02:00',
+    version: '1.7.13',
+    build: '2026.07.19-recovery-stage-2',
+    releasedAt: '2026-07-19T23:10:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
-    emergencyMode: true,
-    recoveryStage: 1,
+    emergencyMode: false,
+    recoveryStage: 2,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -41,8 +42,8 @@ window.WRN_CONFIG = Object.freeze({
  * Mit ?full=1 kann die Begrenzung auch auf Mobilgeräten testweise aufgehoben werden.
  */
 (() => {
-    if (window.__wrnRecoveryFeedGuard1712) return;
-    window.__wrnRecoveryFeedGuard1712 = true;
+    if (window.__wrnRecoveryFeedGuard1713) return;
+    window.__wrnRecoveryFeedGuard1713 = true;
 
     const wantsFullFeed = () =>
         new URLSearchParams(location.search).get('full') === '1';
@@ -111,10 +112,10 @@ window.WRN_CONFIG = Object.freeze({
  * Keine DOM-Gesamtsuche bei Klicks und keine Entfernung von App-Funktionen.
  */
 (() => {
-    if (document.getElementById('wrn-recovery-stage-1-style')) return;
+    if (document.getElementById('wrn-recovery-stage-2-style')) return;
 
     const style = document.createElement('style');
-    style.id = 'wrn-recovery-stage-1-style';
+    style.id = 'wrn-recovery-stage-2-style';
     style.textContent = `
         html,
         body {
@@ -213,8 +214,8 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Startbildschirm und alte Blockadeklassen nur einmal entfernen. */
 (() => {
-    if (window.__wrnRecoveryInteractionRelease1712) return;
-    window.__wrnRecoveryInteractionRelease1712 = true;
+    if (window.__wrnRecoveryInteractionRelease1713) return;
+    window.__wrnRecoveryInteractionRelease1713 = true;
 
     const release = () => {
         document.documentElement.classList.remove(
@@ -253,8 +254,8 @@ window.WRN_CONFIG = Object.freeze({
  * blockieren. Der bestehende Inhalt wird nicht gelöscht.
  */
 (() => {
-    if (window.__wrnRecoveryStorageGuard1712) return;
-    window.__wrnRecoveryStorageGuard1712 = true;
+    if (window.__wrnRecoveryStorageGuard1713) return;
+    window.__wrnRecoveryStorageGuard1713 = true;
 
     const shouldGuardStorage = () => {
         const narrow = window.matchMedia('(max-width: 820px)').matches;
@@ -290,7 +291,7 @@ window.WRN_CONFIG = Object.freeze({
     document.addEventListener('DOMContentLoaded', () => {
         const storage = window.WRNStorage;
 
-        if (!storage || storage.__recoveryStage1Guard) return;
+        if (!storage || storage.__recoveryStage2Guard) return;
 
         const original = {
             migrateLegacyLocalStorage:
@@ -303,7 +304,7 @@ window.WRN_CONFIG = Object.freeze({
                 storage.putDataset?.bind(storage)
         };
 
-        storage.__recoveryStage1Guard = true;
+        storage.__recoveryStage2Guard = true;
 
         storage.migrateLegacyLocalStorage = () =>
             original.migrateLegacyLocalStorage
@@ -349,20 +350,22 @@ window.WRN_CONFIG = Object.freeze({
 })();
 
 /*
- * Wiederherstellungsstufe 1:
+ * Wiederherstellungsstufe 2:
  * - Sicherheitsmodul
- * - Sprache
- * - Typografie
+ * - Sprache und Typografie
  * - horizontale Hauptnavigation
+ * - Titelgrafik
+ * - gemeinsamer Übersetzungs-Cache
+ * - vorhandenes Quellen- und Systemstatuszentrum
  *
- * Briefing, Zusammenfassungen, Diagnostik und zusätzliche Audio-Erweiterungen
- * werden in dieser Stufe noch nicht automatisch geladen.
+ * Briefing, Zusammenfassungen, Video-Hub, Diagnostik und zusätzliche
+ * Audio-Erweiterungen werden noch nicht automatisch geladen.
  */
 (() => {
-    if (window.__wrnRecoveryCoreLoader1712) return;
-    window.__wrnRecoveryCoreLoader1712 = true;
+    if (window.__wrnRecoveryCoreLoader1713) return;
+    window.__wrnRecoveryCoreLoader1713 = true;
 
-    const VERSION = '1712-recovery-1';
+    const VERSION = '1713-recovery-2';
 
     const addStyle = (file, marker) => {
         if (
@@ -462,16 +465,21 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadCore = async () => {
         [
-            ['release-1.5-nav.css', 'navigation-recovery-1'],
-            ['typography.css', 'typography-recovery-1'],
-            ['interface-qol.css', 'interface-recovery-1']
+            ['release-1.5-nav.css', 'navigation-recovery-2'],
+            ['typography.css', 'typography-recovery-2'],
+            ['interface-qol.css', 'interface-recovery-2'],
+            ['shared-translation-status.css', 'translation-status-recovery-2'],
+            ['brand-title.css', 'brand-title-recovery-2']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
         await loadSequentially([
-            ['app-safety.js', 'safety-recovery-1'],
-            ['wrn-i18n.js', 'i18n-recovery-1'],
-            ['typography.js', 'typography-recovery-1'],
-            ['release-1.5-nav.js', 'navigation-recovery-1']
+            ['app-safety.js', 'safety-recovery-2'],
+            ['wrn-i18n.js', 'i18n-recovery-2'],
+            ['typography.js', 'typography-recovery-2'],
+            ['brand-title.js', 'brand-title-recovery-2'],
+            ['release-1.5-nav.js', 'navigation-recovery-2'],
+            ['shared-translation-client.js', 'translation-client-recovery-2'],
+            ['translation-dialog-l10n.js', 'translation-dialog-recovery-2']
         ]);
 
         /*
@@ -481,6 +489,18 @@ window.WRN_CONFIG = Object.freeze({
          */
         openStartTab();
         window.setTimeout(openStartTab, 700);
+
+        /*
+         * Nur ein leichter Gesundheitscheck wird verzögert gestartet.
+         * Keine Diagnosebeobachter und keine Audio-/Briefing-Module.
+         */
+        window.setTimeout(() => {
+            void loadScript(
+                'shared-translation-status.js',
+                'translation-status-recovery-2',
+                9000
+            );
+        }, 1400);
 
         window.dispatchEvent(
             new CustomEvent('wrn-app-ready')
@@ -498,100 +518,13 @@ window.WRN_CONFIG = Object.freeze({
     }
 })();
 
-
-
-/*
- * Bildmarke für den App-Titel:
- * Das vorhandene <h1> bleibt für Barrierefreiheit und Suchbarkeit erhalten,
- * wird aber visuell durch die bereitgestellte WRN-Titelschrift ersetzt.
- */
-(() => {
-    if (window.__wrnTitleImage1712) return;
-    window.__wrnTitleImage1712 = true;
-
-    const injectTitleImage = () => {
-        if (document.getElementById('wrn-title-image-style-1712')) return;
-
-        const style = document.createElement('style');
-        style.id = 'wrn-title-image-style-1712';
-        style.textContent = `
-            header h1 {
-                display: inline-block !important;
-                width: min(360px, 72vw);
-                height: clamp(42px, 8vw, 74px);
-                margin: 0 !important;
-                background-image: url('./wrn-title-script.png?v=1712-title');
-                background-repeat: no-repeat;
-                background-position: left center;
-                background-size: contain;
-                color: transparent !important;
-                text-shadow: none !important;
-                text-transform: none !important;
-                letter-spacing: 0 !important;
-                line-height: 1 !important;
-                font-size: 0 !important;
-                overflow: hidden;
-                white-space: nowrap;
-                user-select: none;
-                vertical-align: middle;
-            }
-
-            header h1::before {
-                content: "";
-            }
-
-            .app-version-inline {
-                display: inline-flex;
-                align-items: flex-end;
-                margin-left: 10px;
-                vertical-align: middle;
-            }
-
-            @media (max-width: 820px) {
-                header h1 {
-                    width: min(300px, 78vw);
-                    height: clamp(36px, 10vw, 58px);
-                }
-            }
-
-            @media (max-width: 520px) {
-                header h1 {
-                    width: min(250px, 76vw);
-                    height: clamp(32px, 9vw, 46px);
-                }
-
-                .app-version-inline {
-                    display: block;
-                    margin-left: 0;
-                    margin-top: 4px;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-
-        const title = document.querySelector('header h1');
-        if (title) {
-            const plain = (title.textContent || '').trim() || 'World Revolution News';
-            title.setAttribute('aria-label', plain);
-            title.setAttribute('title', plain);
-            title.textContent = plain;
-        }
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', injectTitleImage, { once: true });
-    } else {
-        injectTitleImage();
-    }
-})();
-
 /*
  * Rettungsfeed nur, falls die normale Haupt-App nach mehreren Sekunden weiterhin
  * keine Karte erzeugt hat.
  */
 (() => {
-    if (window.__wrnRecoveryRescueFeed1712) return;
-    window.__wrnRecoveryRescueFeed1712 = true;
+    if (window.__wrnRecoveryRescueFeed1713) return;
+    window.__wrnRecoveryRescueFeed1713 = true;
 
     const run = async () => {
         await new Promise(resolve => {

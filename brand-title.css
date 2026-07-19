@@ -1,0 +1,80 @@
+/* World Revolution News 1.7.13 – ruhige, kompakte Titelgrafik */
+
+header > div:first-child {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1 1 360px;
+    gap: 0.65rem;
+}
+
+header .wrn-brand-title-image {
+    display: block;
+    width: clamp(250px, 31vw, 390px);
+    max-width: min(100%, 390px);
+    height: auto;
+    max-height: 54px;
+    object-fit: contain;
+    object-position: left center;
+    opacity: 0.94;
+    filter: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+header.wrn-brand-title-ready h1 {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+header .app-version-inline {
+    flex: 0 0 auto;
+    align-self: flex-end;
+    margin: 0 0 0.2rem;
+    opacity: 0.68;
+}
+
+@media (max-width: 820px) {
+    header {
+        padding-top: 0.55rem !important;
+        padding-bottom: 0.6rem !important;
+        gap: 0.55rem !important;
+    }
+
+    header > div:first-child {
+        flex: 1 1 100%;
+        justify-content: flex-start;
+        gap: 0.4rem;
+    }
+
+    header .wrn-brand-title-image {
+        width: clamp(225px, 76vw, 335px);
+        max-height: 46px;
+        opacity: 0.92;
+    }
+
+    header .app-version-inline {
+        font-size: 0.62rem;
+        margin-bottom: 0.12rem;
+    }
+}
+
+@media (max-width: 420px) {
+    header .wrn-brand-title-image {
+        width: min(78vw, 295px);
+        max-height: 41px;
+    }
+}
+
+@media (prefers-contrast: more) {
+    header .wrn-brand-title-image {
+        opacity: 1;
+    }
+}
