@@ -12,6 +12,9 @@ concurrency:
 
 jobs:
   apply:
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
     runs-on: ubuntu-latest
     timeout-minutes: 35
 
@@ -145,6 +148,21 @@ jobs:
 
           git commit -m \
             "Apply CSP translation cache and real audit reports"
+
+          find . -type d -name __pycache__ \
+            -prune -exec rm -rf {} +
+
+          find . -type f \
+            \( -name '*.pyc' \
+            -o -name '*.pyo' \
+            -o -name '*.tmp' \) \
+            -delete
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FEHLER: Unerwartete Dateien nach dem Commit:"
+            git status --short
+            exit 1
+          fi
 
           bash wrn-safe-push.sh \
             "${GITHUB_REF_NAME:-main}"
