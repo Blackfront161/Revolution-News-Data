@@ -6,7 +6,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1"
     >
-    <title>WRN Quellenprüfung</title>
+    <title>WRN Quellenprüfung 1.7.15</title>
     <style>
         :root {
             color-scheme: dark;
@@ -111,6 +111,9 @@ const endpoints = [
 ];
 
 const asArray = data => {
+    if (data && Array.isArray(data.sources)) {
+        return data.sources;
+    }
     if (Array.isArray(data)) return data;
     if (!data || typeof data !== 'object') return [];
 
@@ -149,7 +152,12 @@ const statusOf = item => {
         || raw.includes('fail')
         || raw.includes('offline')
         || raw.includes('timeout')
-        || http >= 400
+        || raw.includes('blocked')
+        || raw.includes('rate')
+        || String(item.error || item.warning || '')
+            .toLowerCase()
+            .includes('certificate')
+        || [404, 410].includes(http)
     ) return 'error';
 
     return 'unknown';
