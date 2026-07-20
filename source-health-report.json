@@ -1,111 +1,1124 @@
 {
-  "schemaVersion": 3,
-  "generatedAt": "2026-07-20T14:49:04.427458+00:00",
+  "schemaVersion": 4,
+  "generatedAt": "2026-07-20T17:23:16.285033+00:00",
   "summary": {
-    "total": 123,
-    "ok": 92,
-    "warning": 6,
-    "error": 0,
-    "unknown": 25,
-    "discovered": 98
+    "total": 326,
+    "ok": 212,
+    "warning": 45,
+    "error": 43,
+    "unknown": 26
   },
   "sources": [
     {
-      "name": "Ende Gelände",
-      "url": "https://www.ende-gelaende.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.ende-gelaende.org%2F&format=xml",
-      "pageUrl": "https://www.ende-gelaende.org/",
+      "name": "Amandla! Magazine",
+      "url": "https://aidc.org.za/category/amandla-magazine/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:42.252736+00:00",
+      "categories": [
+        "Africa"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://aidc.org.za/category/amandla-magazine/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Anarchist Library (PL)",
+      "url": "https://pl.theanarchistlibrary.org/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:43.882073+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pl.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pl.theanarchistlibrary.org', port=443): Failed to resolve 'pl.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Anarchist Library (TR)",
+      "url": "https://tr.theanarchistlibrary.org/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:44.877530+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tr.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='tr.theanarchistlibrary.org', port=443): Failed to resolve 'tr.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Antifa Bern",
+      "url": "https://antifa-bern.ch/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:49.226903+00:00",
+      "categories": [
+        "Antifascism"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='antifa-bern.ch', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='antifa-bern.ch', port=443): Failed to resolve 'antifa-bern.ch' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Antifa.cz",
+      "url": "https://www.antifa.cz/rss.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:49.318749+00:00",
+      "categories": [
+        "Europe",
+        "Antifascism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.antifa.cz/rss.xml",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Autistici/Inventati",
+      "url": "https://www.autistici.org/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:51.295655+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.autistici.org/feed/",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Barrikade (CH)",
+      "url": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:55.639332+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Biblioteca Anarquista (PT)",
+      "url": "https://pt.theanarchistlibrary.org/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:55.795367+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pt.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pt.theanarchistlibrary.org', port=443): Failed to resolve 'pt.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Black Agenda Report",
+      "url": "https://www.blackagendareport.com/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:56.599791+00:00",
+      "categories": [
+        "Africa"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.blackagendareport.com/feed",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Black Rose (Anti-Colonial)",
+      "url": "https://blackrosefed.org/category/anti-colonialism/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:56.927317+00:00",
+      "categories": [
+        "Anticolonialism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://blackrosefed.org/category/anti-colonialism/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Black Rose (Anti-Racism)",
+      "url": "https://blackrosefed.org/category/anti-racism/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:57.042908+00:00",
+      "categories": [
+        "Antiracism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://blackrosefed.org/category/anti-racism/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Black Rose (Feminism)",
+      "url": "https://blackrosefed.org/category/anarcha-feminism/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:57.360941+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://blackrosefed.org/category/anarcha-feminism/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Colorlines",
+      "url": "https://colorlines.com/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:01.805419+00:00",
+      "categories": [
+        "Antiracism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://colorlines.com/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "CrimethInc. (USA)",
+      "url": "https://crimethinc.com/category/north-america/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:05.265741+00:00",
+      "categories": [
+        "North America"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://crimethinc.com/category/north-america/feed",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Cultural Survival",
+      "url": "https://www.culturalsurvival.org/news/rss.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:05.770623+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.culturalsurvival.org/news/rss.xml",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Direct Action Everywhere (DxE)",
+      "url": "https://www.directactioneverywhere.com/rss.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:09.387715+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.directactioneverywhere.com/rss.xml",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Feminist Anti-War Resistance",
+      "url": "https://femagainstwar.org/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:17.486315+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='femagainstwar.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='femagainstwar.org', port=443): Failed to resolve 'femagainstwar.org' ([Errno -5] No address associated with hostname)\"))"
+    },
+    {
+      "name": "Ill Will",
+      "url": "https://illwill.com/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:20.593063+00:00",
+      "categories": [
+        "Theory & Strategy"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://illwill.com/feed",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Jineolojî Academy",
+      "url": "https://jineoloji.org/en/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:24.676355+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://pin-up-casino-tr.org/en/feed/",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Kontrapolis (Berlin)",
+      "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:25.857049+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://morss.it/https://kontrapolis.info/category/termine/feed/",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Libcom (Workplace)",
+      "url": "https://libcom.org/workplace/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:27.979260+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://libcom.org/workplace/feed",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Libcom Library",
+      "url": "https://libcom.org/library/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:28.063956+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://libcom.org/library/feed",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Megafon Bern",
+      "url": "https://megafon.ch/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:31.920118+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://megafon.ch/feed/",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Mietergewerkschaft Berlin",
+      "url": "https://mietergewerkschaft.berlin/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:32.664835+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='mietergewerkschaft.berlin', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='mietergewerkschaft.berlin', port=443): Failed to resolve 'mietergewerkschaft.berlin' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Mutiny Blog",
+      "url": "https://mu-tiny.blogspot.com/feeds/posts/default",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:34.017186+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://mu-tiny.blogspot.com/feeds/posts/default",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Nadir.org",
+      "url": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:34.041249+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Ni Una Menos",
+      "url": "https://niunamenos.org.ar/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:34.795009+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='niunamenos.org.ar', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='niunamenos.org.ar', port=443): Failed to resolve 'niunamenos.org.ar' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "No One Is Illegal",
+      "url": "https://noii-van.org/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:35.111440+00:00",
+      "categories": [
+        "No Borders"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='noii-van.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='noii-van.org', port=443): Failed to resolve 'noii-van.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Paris-Luttes (Agenda FR)",
+      "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:37.441336+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Pramen (BY)",
+      "url": "https://pramen.io/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:38.048788+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://pramen.io/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Pueblos en Camino",
+      "url": "https://pueblosencamino.org/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:38.058573+00:00",
+      "categories": [
+        "Latin America"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://pueblosencamino.org/feed/",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Riseup Networks",
+      "url": "https://riseup.net/en/feed",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:42.481256+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://riseup.net/en/feed",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Rose City Antifa",
+      "url": "https://rosecityantifa.org/feed.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:42.957370+00:00",
+      "categories": [
+        "North America",
+        "Antifascism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://rosecityantifa.org/feed.xml",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "SoliNetz",
+      "url": "https://solinetz.ch/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:44.399054+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://solinetz.ch/feed/",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Sprout Distro",
+      "url": "https://www.sproutdistro.com/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:44.485092+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.sproutdistro.com/feed/",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Stop the War Coalition",
+      "url": "https://www.stopwar.org.uk/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:44.686186+00:00",
+      "categories": [
+        "No War"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.stopwar.org.uk/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Stressfaktor (Berlin)",
+      "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:44.693833+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://morss.it/https://stressfaktor.squat.net/termine.rss",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Systemli",
+      "url": "https://www.systemli.org/feed.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:45.801692+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.systemli.org/feed.xml",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Thozhilalar Koodam (India)",
+      "url": "https://tnlabor.in/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:47.084168+00:00",
+      "categories": [
+        "Asia",
+        "Labor Struggles"
+      ],
+      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tnlabor.in', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='tnlabor.in', port=443): Failed to resolve 'tnlabor.in' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "Umanita Nova (IT)",
+      "url": "http://www.umanitanova.org/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:48.427356+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "error": "DNS-/Domainfehler: HTTPConnectionPool(host='www.umanitanova.org', port=80): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPConnection(host='www.umanitanova.org', port=80): Failed to resolve 'www.umanitanova.org' ([Errno -2] Name or service not known)\"))"
+    },
+    {
+      "name": "VGT Schweiz",
+      "url": "https://vgt.ch/news/rss.xml",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:48.781057+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://vgt.ch/news/rss.xml",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Wildcat",
+      "url": "https://www.wildcat-www.de/wildcat.rss",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:50.005900+00:00",
+      "categories": [
+        "Theory & Strategy"
+      ],
+      "httpStatus": 404,
+      "finalUrl": "https://www.wildcat-www.de/wildcat.rss",
+      "contentType": "text/html; charset=iso-8859-1",
+      "error": "Feed nicht gefunden (HTTP 404)."
+    },
+    {
+      "name": "Worker's Spatula",
+      "url": "https://workersspatula.wordpress.com/feed/",
+      "status": "error",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:50.215006+00:00",
+      "categories": [
+        "Asia",
+        "Anti-Imperialism"
+      ],
+      "httpStatus": 410,
+      "finalUrl": "https://workersspatula.wordpress.com/feed/",
+      "contentType": "text/html; charset=utf-8",
+      "error": "Feed nicht gefunden (HTTP 410)."
+    },
+    {
+      "name": "A-Infos (Global)",
+      "url": "http://www.ainfos.ca/ainfos.xml",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:38.170733+00:00",
+      "categories": [
+        "Global"
+      ],
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.ainfos.ca', port=443): Max retries exceeded with url: /ainfos.xml (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "name": "Abolition Media",
+      "url": "https://www.abolitionmedia.noblogs.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:40.176539+00:00",
+      "categories": [
+        "Global"
+      ],
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.abolitionmedia.noblogs.org', port=443): Max retries exceeded with url: /feed/ (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.abolitionmedia.noblogs.org'. (_ssl.c:1010)\")))"
+    },
+    {
+      "name": "Anarchist Library (RU)",
+      "url": "https://ru.theanarchistlibrary.org/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:44.158160+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://ru.anarchistlibraries.net/special/index",
+      "contentType": "text/html; charset=utf-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Anarchist Library (SV)",
+      "url": "https://sv.theanarchistlibrary.org/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:44.545731+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.anarkistiskabiblioteket.se/special/index",
+      "contentType": "text/html; charset=utf-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Anarkismo (Africa)",
+      "url": "http://www.anarkismo.net/backend?topic=africa",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:45.369370+00:00",
+      "categories": [
+        "Africa"
+      ],
+      "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?topic=africa (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))"
+    },
+    {
+      "name": "Anarkismo (Gender)",
+      "url": "http://www.anarkismo.net/backend?topic=gender",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:45.657172+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?topic=gender (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))"
+    },
+    {
+      "name": "Anarkismo (International)",
+      "url": "http://www.anarkismo.net/backend?locale=en",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:46.095317+00:00",
+      "categories": [
+        "Global"
+      ],
+      "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?locale=en (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))"
+    },
+    {
+      "name": "ANF English (Kurdistan)",
+      "url": "https://anfenglish.com/rss",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:46.800540+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://anfenglish.com/rss",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Apatris (GR)",
+      "url": "https://apatris.info/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:50.409326+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://socolive.club/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Asylum Magazine",
+      "url": "https://asylummagazine.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:50.809837+00:00",
+      "categories": [
+        "Radical Health & Disability"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://asylummagazine.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Athens Indymedia (GR)",
+      "url": "https://athens.indymedia.org/rss/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:50.842817+00:00",
+      "categories": [
+        "Europe",
+        "Demonstrations"
+      ],
+      "httpStatus": 429,
+      "finalUrl": "https://athens.indymedia.org/rss/",
+      "contentType": "text/html",
+      "warning": "Quelle eingeschränkt (HTTP 429)."
+    },
+    {
+      "name": "Attac / CADTM Maroc",
+      "url": "https://www.cadtm.org/spip.php?page=backend",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:51.282444+00:00",
+      "categories": [
+        "Africa"
+      ],
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='www.cadtm.org', port=443): Max retries exceeded with url: /spip.php?page=backend (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.cadtm.org', port=443) at 0x7fea1095b4a0>, 'Connection to www.cadtm.org timed out. (connect timeout=8)'))"
+    },
+    {
+      "name": "Biblioteca Anarquista (ES)",
+      "url": "https://es.theanarchistlibrary.org/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:55.787377+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://es.anarchistlibraries.net/special/index",
+      "contentType": "text/html; charset=utf-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Bibliothèque Anarchiste (FR)",
+      "url": "https://fr.theanarchistlibrary.org/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:56.119264+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://fr.anarchistlibraries.net/special/index",
+      "contentType": "text/html; charset=utf-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Chuang (CN)",
+      "url": "https://chuangcn.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:00.727239+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://chuangcn.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "DDoSecrets",
+      "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:06.016536+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='ddosecrets.com', port=443): Max retries exceeded with url: /api.php?action=featuredfeed&feed=rss (Caused by ConnectTimeoutError(<HTTPSConnection(host='ddosecrets.com', port=443) at 0x7fea10988d10>, 'Connection to ddosecrets.com timed out. (connect timeout=8)'))"
+    },
+    {
+      "name": "Desinformémonos",
+      "url": "https://desinformemonos.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:09.187212+00:00",
+      "categories": [
+        "Latin America"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://desinformemonos.org/feed/",
+      "contentType": "text/html; charset=utf-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Desmog",
+      "url": "https://www.desmog.com/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:09.345513+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:48.178923+00:00",
-      "ok": false,
+      "httpStatus": 403,
+      "finalUrl": "https://www.desmog.com/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Earth First!",
+      "url": "https://earthfirstjournal.news/feed/",
       "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:09.885609+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
+      "httpStatus": 401,
+      "finalUrl": "https://earthfirstjournal.news/feed/",
+      "contentType": "text/html",
+      "warning": "Quelle eingeschränkt (HTTP 401)."
+    },
+    {
+      "name": "Ende Gelände",
+      "url": "https://www.ende-gelaende.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.ende-gelaende.org%2F&format=xml",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:10.753231+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
+      "discovered": true,
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.ende-gelaende.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.ende-gelaende.org%2F&format=xml",
       "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Adresse erreichbar, aber nicht eindeutig als Feed erkannt.",
-      "error": ""
+      "feedType": "unexpected"
+    },
+    {
+      "name": "Endnotes",
+      "url": "https://endnotes.org.uk/feed.xml",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:11.468640+00:00",
+      "categories": [
+        "Theory & Strategy"
+      ],
+      "warning": "Abruffehler: HTTPSConnectionPool(host='www.endnotes.org.uk', port=443): Max retries exceeded with url: /feed.xml (Caused by ResponseError('too many 500 error responses'))"
+    },
+    {
+      "name": "Enough is Enough",
+      "url": "https://enoughisenough14.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:12.407661+00:00",
+      "categories": [
+        "Europe",
+        "Anticapitalism",
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://enoughisenough14.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Fajfa (Antifa)",
+      "url": "https://fajfa.noblogs.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:12.718786+00:00",
+      "categories": [
+        "Antifascism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=fajfa",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Fauda",
+      "url": "https://fauda.noblogs.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:14.485741+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=fauda",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Freedom News",
+      "url": "https://freedomnews.org.uk/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:17.576209+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://freedomnews.org.uk/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Housing Action",
+      "url": "https://housingaction.noblogs.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:19.096416+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=housingaction",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Hunt Saboteurs Association (UK)",
+      "url": "https://www.huntsabs.org.uk/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:19.142286+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://www.huntsabs.org.uk/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
     },
     {
       "name": "IndigenousX (Australia)",
       "url": "https://indigenousx.com.au/wp-json/oembed/1.0/embed?url=https%3A%2F%2Findigenousx.com.au%2F&format=xml",
-      "pageUrl": "https://indigenousx.com.au/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:21.472664+00:00",
       "categories": [
         "Australia & NZ",
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:50.253008+00:00",
-      "ok": false,
-      "status": "warning",
+      "discovered": true,
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://indigenousx.com.au/wp-json/oembed/1.0/embed?url=https%3A%2F%2Findigenousx.com.au%2F&format=xml",
       "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Adresse erreichbar, aber nicht eindeutig als Feed erkannt.",
-      "error": ""
+      "feedType": "unexpected"
+    },
+    {
+      "name": "Infolibre (GR)",
+      "url": "https://infolibre.gr/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:22.486695+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://infolibre.gr/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "IWW (Global)",
+      "url": "https://www.iww.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:24.384062+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://www.iww.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Kodao Productions",
+      "url": "https://kodao.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:25.673134+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://kodao.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
     },
     {
       "name": "Kontrapolis",
       "url": "https://kontrapolis.info/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkontrapolis.info%2F&format=xml",
-      "pageUrl": "https://kontrapolis.info/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:25.805084+00:00",
       "categories": [
         "Demonstrations",
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:51.403456+00:00",
-      "ok": false,
-      "status": "warning",
+      "discovered": true,
+      "warning": "Quelle eingeschränkt (HTTP 401).",
       "httpStatus": 401,
       "finalUrl": "https://kontrapolis.info/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fkontrapolis.info%2F&format=xml",
-      "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Quelle blockiert automatisierte Prüfungen (HTTP 401).",
-      "error": ""
+      "contentType": "text/xml; charset=UTF-8"
     },
     {
       "name": "LabourNet DE",
       "url": "https://www.labournet.de/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.labournet.de%2F&format=xml",
-      "pageUrl": "https://www.labournet.de/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:26.916918+00:00",
       "categories": [
         "Labor Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:52.563794+00:00",
-      "ok": false,
-      "status": "warning",
+      "discovered": true,
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.labournet.de/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.labournet.de%2F&format=xml",
       "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Adresse erreichbar, aber nicht eindeutig als Feed erkannt.",
-      "error": ""
+      "feedType": "unexpected"
+    },
+    {
+      "name": "Lausan (HK)",
+      "url": "https://lausan.hk/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:27.401869+00:00",
+      "categories": [
+        "Asia",
+        "Anticolonialism"
+      ],
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7fea1097f380>, 'Connection to lausan.hk timed out. (connect timeout=8)'))"
+    },
+    {
+      "name": "Libreria Anarchica (IT)",
+      "url": "https://it.theanarchistlibrary.org/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:28.128824+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='it.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'it.theanarchistlibrary.org'. (_ssl.c:1010)\")))"
+    },
+    {
+      "name": "Mad in America",
+      "url": "https://www.madinamerica.com/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:30.441954+00:00",
+      "categories": [
+        "Radical Health & Disability"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://www.madinamerica.com/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "Native News Online",
+      "url": "https://nativenewsonline.net/?format=feed&type=rss",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:34.244220+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://nativenewsonline.net/?format=feed&type=rss",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
     },
     {
       "name": "New Bloom (TW)",
       "url": "https://newbloommag.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fnewbloommag.net%2F&format=xml",
-      "pageUrl": "https://newbloommag.net/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:34.703722+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:55.101903+00:00",
-      "ok": false,
-      "status": "warning",
+      "discovered": true,
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://newbloommag.net/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fnewbloommag.net%2F&format=xml",
       "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Adresse erreichbar, aber nicht eindeutig als Feed erkannt.",
-      "error": ""
+      "feedType": "unexpected"
     },
     {
       "name": "Organise Magazine",
       "url": "https://organisemagazine.org.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Forganisemagazine.org.uk%2F&format=xml",
-      "pageUrl": "https://organisemagazine.org.uk/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:36.354066+00:00",
       "categories": [
         "Europe",
         "Antifascism",
@@ -113,584 +1126,581 @@
         "Theory & Strategy",
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:55.386253+00:00",
-      "ok": false,
-      "status": "warning",
+      "discovered": true,
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://organisemagazine.org.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Forganisemagazine.org.uk%2F&format=xml",
       "contentType": "text/xml; charset=UTF-8",
-      "feedType": "unexpected_content",
-      "discovered": true,
-      "warning": "Adresse erreichbar, aber nicht eindeutig als Feed erkannt.",
-      "error": ""
+      "feedType": "unexpected"
+    },
+    {
+      "name": "Perspektive Online (DE)",
+      "url": "https://www.perspektive-online.de/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:37.639526+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.perspektive-online.de', port=443): Max retries exceeded with url: /feed/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))"
+    },
+    {
+      "name": "Radical Socialist (India)",
+      "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:38.689652+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://radicalsocialist.in/?format=feed&type=rss",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "RevoltLib",
+      "url": "https://revoltlib.com/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:40.955611+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='revoltlib.com', port=443): Max retries exceeded with url: /feed (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1010)')))"
+    },
+    {
+      "name": "Tricontinental: Institute for Social Research",
+      "url": "https://thetricontinental.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:48.326250+00:00",
+      "categories": [
+        "Anticapitalism"
+      ],
+      "httpStatus": 403,
+      "finalUrl": "https://thetricontinental.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "warning": "Quelle eingeschränkt (HTTP 403)."
+    },
+    {
+      "name": "War Resisters' International",
+      "url": "https://wri-irg.org/en/feed",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:49.755050+00:00",
+      "categories": [
+        "No War"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://wri-irg.org/en/feed",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "unexpected",
+      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+    },
+    {
+      "name": "Zwangsräumung Verhindern (Berlin)",
+      "url": "https://zwangsraeumungverhindern.org/feed/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:50.780223+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='zwangsraeumungverhindern.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='zwangsraeumungverhindern.org', port=443) at 0x7fea10fc0620>, 'Connection to zwangsraeumungverhindern.org timed out. (connect timeout=8)'))"
     },
     {
       "name": "A Las Barricadas (ES)",
       "url": "",
-      "pageUrl": "https://www.alasbarricadas.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:38.169496+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:39.040891+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Anarchist Federation",
       "url": "",
-      "pageUrl": "https://www.anarchistfederation.net/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:43.693100+00:00",
       "categories": [
         "Global",
         "North America"
       ],
-      "checkedAt": "2026-07-20T14:48:41.954145+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Anarchist News",
       "url": "",
-      "pageUrl": "http://anarchistnews.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:45.109859+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:42.041735+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Antifa Infoblatt",
       "url": "",
-      "pageUrl": "https://antifainfoblatt.de/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:49.301222+00:00",
       "categories": [
         "Europe",
         "Antifascism"
       ],
-      "checkedAt": "2026-07-20T14:48:42.879342+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Are You Syrious?",
       "url": "",
-      "pageUrl": "https://medium.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:50.702600+00:00",
       "categories": [
         "No Borders"
       ],
-      "checkedAt": "2026-07-20T14:48:43.253652+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Avtonom (RU)",
       "url": "",
-      "pageUrl": "https://avtonom.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:21:53.815016+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:43.648913+00:00",
-      "ok": false,
+      "warning": "Keine technische Feed-Adresse vorhanden."
+    },
+    {
+      "name": "Chuang (CN)",
+      "url": "",
       "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:00.777633+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Critical Resistance",
       "url": "",
-      "pageUrl": "https://criticalresistance.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:05.655435+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:46.684162+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Democracy Now! (Global)",
       "url": "",
-      "pageUrl": "http://www.democracynow.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:08.987394+00:00",
       "categories": [
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:47.243861+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Disability Visibility",
       "url": "",
-      "pageUrl": "https://disabilityvisibilityproject.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:09.881208+00:00",
       "categories": [
         "Radical Health & Disability"
       ],
-      "checkedAt": "2026-07-20T14:48:47.666939+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Electronic Frontier Foundation",
       "url": "",
-      "pageUrl": "https://www.eff.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:10.653255+00:00",
       "categories": [
         "Cyberactivism"
       ],
-      "checkedAt": "2026-07-20T14:48:48.055068+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "GenderIT (Technofeminism)",
       "url": "",
-      "pageUrl": "https://www.genderit.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:17.628936+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:49.008246+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Gods & Radicals",
       "url": "",
-      "pageUrl": "https://sulbooks.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:18.104732+00:00",
       "categories": [
         "Antisexism"
       ],
-      "checkedAt": "2026-07-20T14:48:49.127634+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Grist (Indigenous Affairs)",
       "url": "",
-      "pageUrl": "https://grist.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:18.879226+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:49.155684+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "It's Going Down",
       "url": "",
-      "pageUrl": "https://itsgoingdown.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:23.177790+00:00",
       "categories": [
         "North America",
         "Demonstrations"
       ],
-      "checkedAt": "2026-07-20T14:48:50.414918+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "IWA-AIT (Internationale)",
       "url": "",
-      "pageUrl": "https://iwa-ait.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:23.706557+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:50.453513+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Kolektiva Media (Video)",
       "url": "",
-      "pageUrl": "https://kolektiva.media/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:25.771727+00:00",
       "categories": [
         "Cyberactivism"
       ],
-      "checkedAt": "2026-07-20T14:48:51.217949+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Labor Notes",
       "url": "",
-      "pageUrl": "https://labornotes.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:26.744419+00:00",
       "categories": [
         "Labor Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:52.321719+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Libcom (Global News)",
       "url": "",
-      "pageUrl": "https://libcom.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:27.776404+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:52.567119+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Lower Class Magazine",
       "url": "",
-      "pageUrl": "https://lowerclassmag.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:28.329765+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:52.714940+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Mada Masr (Egypt)",
       "url": "",
-      "pageUrl": "https://www.madamasr.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:30.896604+00:00",
       "categories": [
         "Africa"
       ],
-      "checkedAt": "2026-07-20T14:48:53.298773+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Queer Anarchism",
       "url": "",
-      "pageUrl": "https://queeranarchism.tumblr.com/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:38.461555+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:56.024958+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Radar.squat API",
       "url": "",
-      "pageUrl": "",
-      "categories": [],
-      "checkedAt": "2026-07-20T14:48:56.323338+00:00",
-      "ok": false,
       "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:38.689578+00:00",
+      "categories": [],
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Rojava Info Center",
       "url": "",
-      "pageUrl": "https://rojavainformationcenter.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:42.899896+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:57.041630+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "Rote Hilfe",
       "url": "",
-      "pageUrl": "https://rote-hilfe.de/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:43.286509+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:57.072823+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
     },
     {
       "name": "ZNet (Global)",
       "url": "",
-      "pageUrl": "https://znetwork.org/",
+      "status": "unknown",
+      "ok": false,
+      "lastChecked": "2026-07-20T17:22:50.687968+00:00",
       "categories": [
         "Anticapitalism",
         "Global",
         "Labor Struggles",
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:49:00.257142+00:00",
-      "ok": false,
-      "status": "unknown",
-      "httpStatus": 0,
-      "finalUrl": "",
-      "contentType": "",
-      "feedType": "",
-      "discovered": false,
-      "warning": "Keine technische Feed-Adresse vorhanden; Quelle wurde nicht als defekt gewertet.",
-      "error": ""
+      "warning": "Keine technische Feed-Adresse vorhanden."
+    },
+    {
+      "name": "A Las Barricadas (ES)",
+      "url": "https://www.alasbarricadas.org/noticias/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.168980+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.alasbarricadas.org/noticias/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "A-Radio Berlin",
       "url": "https://www.aradio-berlin.org/feed/",
-      "pageUrl": "https://www.aradio-berlin.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.171083+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:39.041432+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.aradio-berlin.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "A-Radio Berlin",
+      "url": "https://www.aradio-berlin.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.173497+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.aradio-berlin.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Abahlali baseMjondolo (South Africa)",
       "url": "https://abahlali.org/feed/",
-      "pageUrl": "https://abahlali.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.174438+00:00",
       "categories": [
         "Africa"
       ],
-      "checkedAt": "2026-07-20T14:48:39.042071+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://abahlali.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Abahlali baseMjondolo (South Africa)",
+      "url": "https://abahlali.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.175262+00:00",
+      "categories": [
+        "Africa"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://abahlali.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "ABC Belarus",
+      "url": "https://abc-belarus.org/?feed=rss2&lang=en",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:38.176047+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://abc-belarus.org/feed/?lang=en",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "ABC Belarus",
       "url": "https://abc-belarus.org/feed/",
-      "pageUrl": "https://abc-belarus.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:39.038313+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:39.042346+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://abc-belarus.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Abolish Frontex",
       "url": "https://abolishfrontex.org/feed/",
-      "pageUrl": "https://abolishfrontex.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:39.238661+00:00",
       "categories": [
         "No Borders"
       ],
-      "checkedAt": "2026-07-20T14:48:39.043908+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://abolishfrontex.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Abolish Frontex",
+      "url": "https://abolishfrontex.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:39.334396+00:00",
+      "categories": [
+        "No Borders"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://abolishfrontex.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Abolition Journal",
       "url": "https://abolitionjournal.org/feed/",
-      "pageUrl": "https://abolitionjournal.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:39.564950+00:00",
       "categories": [
         "Antiracism"
       ],
-      "checkedAt": "2026-07-20T14:48:39.046806+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://abolitionjournal.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Abolition Journal",
+      "url": "https://abolitionjournal.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:39.507641+00:00",
+      "categories": [
+        "Antiracism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://abolitionjournal.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Act for Freedom Now!",
       "url": "https://actforfree.noblogs.org/feed/",
-      "pageUrl": "https://actforfree.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:40.366343+00:00",
+      "categories": [
+        "Antifascism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://actforfree.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Act for Freedom Now!",
+      "url": "https://actforfree.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:40.664636+00:00",
       "categories": [
         "Antifascism",
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:39.048655+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://actforfree.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Africa Is a Country",
       "url": "https://africasacountry.com/feed/",
-      "pageUrl": "https://africasacountry.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:40.887257+00:00",
       "categories": [
         "Africa",
         "Antiracism",
@@ -699,636 +1709,1205 @@
         "Anti-Imperialism",
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:39.049815+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://africasacountry.com/feed/",
       "contentType": "application/xml",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Agency",
+      "url": "https://www.anarchistagency.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.354360+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://anarchistagency.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Agency",
       "url": "https://anarchistagency.com/feed/",
-      "pageUrl": "https://anarchistagency.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.486247+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:39.287548+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://anarchistagency.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Alarm Phone",
       "url": "https://alarmphone.org/en/feed/",
-      "pageUrl": "https://alarmphone.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.527024+00:00",
       "categories": [
         "Europe",
         "Africa",
         "No Borders",
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:40.127034+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://alarmphone.org/en/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Alerta (GR)",
+      "url": "https://www.alerta.gr/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.716649+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.alerta.gr/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Alerta (GR)",
       "url": "https://www.alerta.gr/feed",
-      "pageUrl": "https://www.alerta.gr/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.806881+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:40.446890+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.alerta.gr/feed",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "ALF Press Office (North America)",
       "url": "https://animalliberationpressoffice.org/NAALPO/feed/",
-      "pageUrl": "https://animalliberationpressoffice.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:41.813848+00:00",
       "categories": [
         "Animal Liberation"
       ],
-      "checkedAt": "2026-07-20T14:48:40.584720+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://animalliberationpressoffice.org/NAALPO/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "ALF Press Office (North America)",
+      "url": "https://animalliberationpressoffice.org/NAALPO/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:42.250943+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://animalliberationpressoffice.org/NAALPO/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Anarchist Black Cross",
       "url": "https://www.abcf.net/feed/",
-      "pageUrl": "https://www.abcf.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:42.757363+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.abcf.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Anarchist Black Cross",
+      "url": "https://www.abcf.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:42.922668+00:00",
       "categories": [
         "Anti-Rep & Prisons",
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:41.308330+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.abcf.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Anarchist Communist Group",
       "url": "https://www.anarchistcommunism.org/feed/",
-      "pageUrl": "https://www.anarchistcommunism.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:43.113577+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.anarchistcommunism.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Anarchist Communist Group",
+      "url": "https://www.anarchistcommunism.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:43.439096+00:00",
       "categories": [
         "Europe",
         "Global",
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:41.856419+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.anarchistcommunism.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Anarchist Federation",
+      "url": "https://www.anarchistfederation.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:43.653278+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.anarchistfederation.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Anarchist News",
+      "url": "https://morss.it/https://anarchistnews.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:44.990636+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://morss.it/https://anarchistnews.org/rss.xml",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Anarchistische Bibliothek (DE)",
       "url": "https://de.anarchistlibraries.net/feed",
-      "pageUrl": "https://de.anarchistlibraries.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:45.345866+00:00",
       "categories": [
         "Libraries"
       ],
-      "checkedAt": "2026-07-20T14:48:42.090271+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://de.anarchistlibraries.net/feed",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Anarchistische Bibliothek (DE)",
+      "url": "https://anarchistischebibliothek.org/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:45.342008+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://de.anarchistlibraries.net/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "AngryWorkers",
+      "url": "https://angryworkers.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:46.861365+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.angryworkers.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "AngryWorkers",
       "url": "https://www.angryworkers.org/feed/",
-      "pageUrl": "https://www.angryworkers.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:47.244849+00:00",
       "categories": [
         "Labor Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:42.114657+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.angryworkers.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "ANRed (Argentina)",
       "url": "https://www.anred.org/feed/",
-      "pageUrl": "https://www.anred.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:47.473736+00:00",
       "categories": [
         "Latin America"
       ],
-      "checkedAt": "2026-07-20T14:48:42.701313+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.anred.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "ANRed (Argentina)",
+      "url": "https://www.anred.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:48.989321+00:00",
+      "categories": [
+        "Latin America"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.anred.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Antifa Infoblatt",
+      "url": "https://www.antifainfoblatt.de/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:49.279492+00:00",
+      "categories": [
+        "Europe",
+        "Antifascism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://antifainfoblatt.de/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Antimilitarismus",
       "url": "https://antimilitarismus.noblogs.org/feed/",
-      "pageUrl": "https://antimilitarismus.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:50.151723+00:00",
       "categories": [
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:43.180923+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://antimilitarismus.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Antimilitarismus",
+      "url": "https://antimilitarismus.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:50.333262+00:00",
+      "categories": [
+        "No War"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://antimilitarismus.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Are You Syrious?",
+      "url": "https://medium.com/feed/are-you-syrious",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:50.584492+00:00",
+      "categories": [
+        "No Borders"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://medium.com/feed/are-you-syrious",
+      "contentType": "text/xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Asian Labour Review",
       "url": "https://labourreview.org/feed/",
-      "pageUrl": "https://labourreview.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:50.754809+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:43.285400+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://labourreview.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Asian Labour Review",
+      "url": "https://labourreview.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:50.806052+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://labourreview.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Autonomies",
       "url": "https://autonomies.org/feed/",
-      "pageUrl": "https://autonomies.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:51.731267+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:43.343611+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://autonomies.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Autonomies",
+      "url": "https://autonomies.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:51.405062+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://autonomies.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Autostraddle",
       "url": "https://www.autostraddle.com/feed/",
-      "pageUrl": "https://www.autostraddle.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:52.067333+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:43.421517+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.autostraddle.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Autostraddle",
+      "url": "https://www.autostraddle.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:52.129605+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.autostraddle.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Avispa Midia",
       "url": "https://avispa.org/feed/",
-      "pageUrl": "https://avispa.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:52.264699+00:00",
       "categories": [
         "Latin America",
         "Anticolonialism",
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:43.478975+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://avispa.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Avispa Midia",
+      "url": "https://avispa.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:52.286789+00:00",
+      "categories": [
+        "Latin America",
+        "Anticolonialism",
+        "Indigenous Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://avispa.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Avtonom (RU)",
+      "url": "https://avtonom.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:53.376573+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://avtonom.org/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "AWSM",
       "url": "https://awsm.nz/feed/",
-      "pageUrl": "https://awsm.nz/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:53.853059+00:00",
       "categories": [
         "Australia & NZ"
       ],
-      "checkedAt": "2026-07-20T14:48:43.694206+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://awsm.nz/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "AWSM",
+      "url": "https://awsm.nz/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:54.219525+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://awsm.nz/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Barrikade",
       "url": "https://barrikade.info/spip.php?page=backend",
-      "pageUrl": "https://barrikade.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:54.278958+00:00",
       "categories": [
         "Squatting & Housing",
         "Europe",
         "Antifascism",
         "Demonstrations"
       ],
-      "checkedAt": "2026-07-20T14:48:43.980261+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://publish.barrikade.info/spip.php?page=backend",
       "contentType": "text/xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Barrikade (CH)",
+      "url": "https://barrikade.info/spip.php?page=backend",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:54.721746+00:00",
+      "categories": [
+        "Europe",
+        "Antifascism",
+        "Squatting & Housing"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://publish.barrikade.info/spip.php?page=backend",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Black Rose / Rosa Negra",
       "url": "https://www.blackrosefed.org/feed/",
-      "pageUrl": "https://www.blackrosefed.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:58.407826+00:00",
       "categories": [
         "North America"
       ],
-      "checkedAt": "2026-07-20T14:48:44.464010+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.blackrosefed.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Black Rose / Rosa Negra",
+      "url": "https://blackrosefed.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:57.450758+00:00",
+      "categories": [
+        "North America"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.blackrosefed.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "BOAK (RU)",
+      "url": "https://boak.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:58.533041+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://boak.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Bulatlat (Indigenous)",
       "url": "https://www.bulatlat.com/feed/",
-      "pageUrl": "https://www.bulatlat.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:59.237706+00:00",
       "categories": [
         "Indigenous Struggles",
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:44.978039+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.bulatlat.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Bulatlat (Philippines)",
+      "url": "https://www.bulatlat.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:21:59.487853+00:00",
+      "categories": [
+        "Asia",
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.bulatlat.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "C4SS",
+      "url": "https://c4ss.org/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:00.543087+00:00",
+      "categories": [
+        "North America"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://c4ss.org/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "C4SS",
       "url": "https://c4ss.org/?feed=rss2",
-      "pageUrl": "https://c4ss.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:00.598715+00:00",
       "categories": [
         "North America"
       ],
-      "checkedAt": "2026-07-20T14:48:45.365802+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://c4ss.org/feed",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
-    },
-    {
-      "name": "Chuang (CN)",
-      "url": "https://chuangcn.org/feed/",
-      "pageUrl": "https://chuangcn.org/",
-      "categories": [
-        "Asia"
-      ],
-      "checkedAt": "2026-07-20T14:48:45.769290+00:00",
-      "ok": true,
-      "status": "ok",
-      "httpStatus": 200,
-      "finalUrl": "https://chuangcn.org/feed/",
-      "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "CNT (Spanien)",
       "url": "https://www.cnt.es/feed/",
-      "pageUrl": "https://www.cnt.es/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:00.857008+00:00",
       "categories": [
         "Labor Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:45.860772+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.cnt.es/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "CNT (Spanien)",
+      "url": "https://www.cnt.es/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:01.001091+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.cnt.es/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Comunizar",
       "url": "https://comunizar.com.ar/feed/",
-      "pageUrl": "https://comunizar.com.ar/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:02.036964+00:00",
       "categories": [
         "Latin America",
         "Anticapitalism"
       ],
-      "checkedAt": "2026-07-20T14:48:46.131507+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://comunizar.com.ar/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Comunizar",
+      "url": "https://comunizar.com.ar/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:02.271683+00:00",
+      "categories": [
+        "Latin America",
+        "Anticapitalism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://comunizar.com.ar/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "CrimethInc.",
       "url": "https://crimethinc.com/feed",
-      "pageUrl": "https://crimethinc.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:02.395858+00:00",
       "categories": [
         "Anticapitalism",
         "Global",
         "Radar",
         "Theory & Strategy"
       ],
-      "checkedAt": "2026-07-20T14:48:46.643642+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://crimethinc.com/feed",
       "contentType": "application/atom+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "CrimethInc. (Events)",
+      "url": "https://morss.it/https://crimethinc.com/categories/events/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:03.549485+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://morss.it/https://crimethinc.com/categories/events/feed",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "CrimethInc. (Global)",
+      "url": "https://crimethinc.com/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:03.870412+00:00",
+      "categories": [
+        "Global",
+        "Anticapitalism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://crimethinc.com/feed",
+      "contentType": "application/atom+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "CrimethInc. (Texts)",
+      "url": "https://crimethinc.com/categories/texts/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:04.171006+00:00",
+      "categories": [
+        "Theory & Strategy"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://crimethinc.com/categories/texts/feed",
+      "contentType": "application/atom+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Critical Resistance",
+      "url": "https://criticalresistance.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:05.342564+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://criticalresistance.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Defend Council Housing (UK)",
+      "url": "https://www.defendcouncilhousing.org.uk/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:06.031196+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://defendcouncilhousing.org.uk/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Defend Council Housing (UK)",
       "url": "https://defendcouncilhousing.org.uk/feed/",
-      "pageUrl": "https://defendcouncilhousing.org.uk/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:06.763676+00:00",
       "categories": [
         "Squatting & Housing"
       ],
-      "checkedAt": "2026-07-20T14:48:47.150973+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://defendcouncilhousing.org.uk/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Defend the Atlanta Forest",
       "url": "https://defendtheatlantaforest.org/feed/",
-      "pageUrl": "https://defendtheatlantaforest.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:08.366692+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:47.178162+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://defendtheatlantaforest.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Defend the Atlanta Forest",
+      "url": "https://defendtheatlantaforest.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:08.434693+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://defendtheatlantaforest.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Democracy Now! (Global)",
+      "url": "https://www.democracynow.org/democracynow.rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:08.698932+00:00",
+      "categories": [
+        "No War"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.democracynow.org/democracynow.rss",
+      "contentType": "application/rss+xml",
+      "feedType": "xml"
     },
     {
       "name": "Direkte Aktion (DE)",
       "url": "https://direkteaktion.org/feed/",
-      "pageUrl": "https://direkteaktion.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:09.451839+00:00",
       "categories": [
         "Europe",
         "Labor Struggles",
         "Anticapitalism",
         "Theory & Strategy"
       ],
-      "checkedAt": "2026-07-20T14:48:47.410014+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://direkteaktion.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Disability Debrief",
       "url": "https://www.disabilitydebrief.org/rss/",
-      "pageUrl": "https://www.disabilitydebrief.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:09.664213+00:00",
       "categories": [
         "Global",
         "Radical Health & Disability"
       ],
-      "checkedAt": "2026-07-20T14:48:47.424607+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.disabilitydebrief.org/rss/",
       "contentType": "application/rss+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Disability Visibility",
+      "url": "https://disabilityvisibilityproject.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:09.799430+00:00",
+      "categories": [
+        "Radical Health & Disability"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://disabilityvisibilityproject.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "El Libertario",
       "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
-      "pageUrl": "http://periodicoellibertario.blogspot.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:09.972788+00:00",
       "categories": [
         "Latin America"
       ],
-      "checkedAt": "2026-07-20T14:48:47.813801+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
       "contentType": "application/atom+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "El Libertario",
+      "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:10.117852+00:00",
+      "categories": [
+        "Latin America"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
+      "contentType": "application/atom+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Electronic Frontier Foundation",
+      "url": "https://www.eff.org/rss/updates.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:10.602081+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.eff.org/rss/updates.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Ende Gelände",
+      "url": "https://www.ende-gelaende.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:10.687197+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.ende-gelaende.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Enlace Zapatista (EZLN)",
       "url": "https://enlacezapatista.ezln.org.mx/feed/",
-      "pageUrl": "https://enlacezapatista.ezln.org.mx/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:11.476490+00:00",
+      "categories": [
+        "Latin America",
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://enlacezapatista.ezln.org.mx/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Enlace Zapatista (EZLN)",
+      "url": "https://enlacezapatista.ezln.org.mx/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:11.817820+00:00",
       "categories": [
         "Indigenous Struggles",
         "Latin America"
       ],
-      "checkedAt": "2026-07-20T14:48:48.179951+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://enlacezapatista.ezln.org.mx/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "FAU (Deutschland)",
+      "url": "https://www.fau.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:12.794642+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.fau.org/rss.xml",
+      "contentType": "application/atom+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "FAU (Deutschland)",
       "url": "https://www.fau.org/RSS",
-      "pageUrl": "https://www.fau.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:13.346178+00:00",
       "categories": [
         "Labor Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:48.285692+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.fau.org/RSS",
       "contentType": "application/atom+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Federacja Anarchistyczna (PL)",
       "url": "https://federacja-anarchistyczna.pl/feed/",
-      "pageUrl": "https://federacja-anarchistyczna.pl/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:14.493786+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:48.521759+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://federacja-anarchistyczna.pl/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Federacja Anarchistyczna (PL)",
+      "url": "https://federacja-anarchistyczna.pl/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:15.722956+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://federacja-anarchistyczna.pl/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Federation of Anarchism Era",
       "url": "https://asranarshism.com/feed/",
-      "pageUrl": "https://asranarshism.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:16.173904+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:48.696589+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://asranarshism.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Federation of Anarchism Era",
+      "url": "https://asranarshism.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:16.744971+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://asranarshism.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Feministische Antifa",
+      "url": "https://fantifa.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:17.524029+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://fantifa.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "GenderIT (Technofeminism)",
+      "url": "https://www.genderit.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:17.577070+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.genderit.org/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Gods & Radicals",
+      "url": "https://abeautifulresistance.org/site?format=rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:18.030184+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://sulbooks.com/site?format=rss",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Green Left",
       "url": "https://www.greenleft.org.au/rss.xml",
-      "pageUrl": "https://www.greenleft.org.au/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:18.449950+00:00",
       "categories": [
         "Australia & NZ"
       ],
-      "checkedAt": "2026-07-20T14:48:49.129894+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.greenleft.org.au/rss.xml",
       "contentType": "application/rss+xml; charset=utf-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Green Left",
+      "url": "https://www.greenleft.org.au/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:18.457499+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.greenleft.org.au/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Grist (Indigenous Affairs)",
+      "url": "https://grist.org/indigenous/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:18.590576+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://grist.org/indigenous/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "GroundUp (South Africa)",
       "url": "https://www.groundup.org.za/sitenews/rss/",
-      "pageUrl": "https://groundup.org.za/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:18.945087+00:00",
       "categories": [
         "Squatting & Housing",
         "Anti-Rep & Prisons",
@@ -1338,364 +2917,734 @@
         "Labor Struggles",
         "No Borders"
       ],
-      "checkedAt": "2026-07-20T14:48:49.248442+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://groundup.org.za/sitenews/rss/",
       "contentType": "application/rss+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "IEN Earth",
       "url": "https://www.ienearth.org/feed/",
-      "pageUrl": "https://www.ienearth.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:19.177028+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:49.349764+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.ienearth.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "IEN Earth",
+      "url": "https://www.ienearth.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:19.478501+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.ienearth.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Indigenous Action",
       "url": "https://www.indigenousaction.org/feed/",
-      "pageUrl": "https://www.indigenousaction.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:20.672809+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:49.661582+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.indigenousaction.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Indigenous Action",
+      "url": "https://www.indigenousaction.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:20.760498+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.indigenousaction.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "IndigenousX (Australia)",
+      "url": "https://indigenousx.com.au/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:21.040212+00:00",
+      "categories": [
+        "Australia & NZ",
+        "Indigenous Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://indigenousx.com.au/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Indymedia Argentina",
       "url": "https://argentina.indymedia.org/feed/",
-      "pageUrl": "https://argentina.indymedia.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:21.587104+00:00",
       "categories": [
         "Latin America"
       ],
-      "checkedAt": "2026-07-20T14:48:50.302298+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://argentina.indymedia.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Indymedia Argentina",
+      "url": "https://argentina.indymedia.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:21.672998+00:00",
+      "categories": [
+        "Latin America"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://argentina.indymedia.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Institute of Race Relations",
       "url": "https://irr.org.uk/feed/",
-      "pageUrl": "https://irr.org.uk/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:22.540998+00:00",
       "categories": [
         "Antiracism"
       ],
-      "checkedAt": "2026-07-20T14:48:50.414085+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://irr.org.uk/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Institute of Race Relations",
+      "url": "https://irr.org.uk/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:22.754088+00:00",
+      "categories": [
+        "Antiracism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://irr.org.uk/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "It's Going Down",
+      "url": "https://itsgoingdown.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:23.122486+00:00",
+      "categories": [
+        "North America",
+        "Demonstrations"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://itsgoingdown.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "IWA-AIT (Internationale)",
+      "url": "https://iwa-ait.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:23.210922+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://iwa-ait.org/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "IWOC (Incarcerated Workers)",
+      "url": "https://incarceratedworkers.org/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:24.102343+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://incarceratedworkers.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "IWOC (Incarcerated Workers)",
       "url": "https://incarceratedworkers.org/feed/",
-      "pageUrl": "https://incarceratedworkers.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:24.269785+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:50.752911+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://incarceratedworkers.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Karapatan (Human Rights)",
       "url": "https://www.karapatan.org/feed/",
-      "pageUrl": "https://www.karapatan.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:24.686892+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:50.756131+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.karapatan.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Karapatan (Human Rights)",
+      "url": "https://www.karapatan.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:24.761684+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.karapatan.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Kite Line Radio",
       "url": "https://kitelineradio.noblogs.org/feed/",
-      "pageUrl": "https://kitelineradio.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:24.986182+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:50.884727+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://kitelineradio.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Kite Line Radio",
+      "url": "https://kitelineradio.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:25.659844+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://kitelineradio.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Kolektiva Media (Video)",
+      "url": "https://kolektiva.media/feeds/videos.xml?videoFilter=local",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:25.723222+00:00",
+      "categories": [
+        "Cyberactivism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://kolektiva.media/feeds/videos.xml?videoFilter=local",
+      "contentType": "application/xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Kontrapolis (DE)",
+      "url": "https://kontrapolis.info/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:25.943749+00:00",
+      "categories": [
+        "Europe",
+        "Demonstrations"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://kontrapolis.info/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Labor for Palestine",
       "url": "https://laborforpalestine.net/feed/",
-      "pageUrl": "https://laborforpalestine.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:25.994658+00:00",
       "categories": [
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:52.218588+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://laborforpalestine.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Labor for Palestine",
+      "url": "https://laborforpalestine.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:26.487163+00:00",
+      "categories": [
+        "No War"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://laborforpalestine.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Labor Notes",
+      "url": "https://labornotes.org/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:26.501263+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://labornotes.org/feed",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "LabourNet DE",
+      "url": "https://www.labournet.de/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:26.795417+00:00",
+      "categories": [
+        "Labor Struggles"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.labournet.de/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Libcom (Global News)",
+      "url": "https://libcom.org/news/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:27.762071+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://libcom.org/recent/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Lower Class Magazine",
+      "url": "https://lowerclassmag.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:28.217436+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://lowerclassmag.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Lundi Matin (FR)",
       "url": "https://lundi.am/spip.php?page=backend",
-      "pageUrl": "https://lundi.am/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:29.299372+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:52.914119+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://lundi.am/spip.php?page=backend",
       "contentType": "text/xml; charset=utf-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Lundi Matin (FR)",
+      "url": "https://lundi.am/spip.php?page=backend",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:29.530794+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://lundi.am/spip.php?page=backend",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "MACG",
       "url": "https://melbacg.wordpress.com/feed/",
-      "pageUrl": "https://melbacg.wordpress.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:30.317092+00:00",
       "categories": [
         "Australia & NZ"
       ],
-      "checkedAt": "2026-07-20T14:48:53.232164+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://melbacg.wordpress.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "MACG",
+      "url": "https://melbacg.wordpress.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:30.371656+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://melbacg.wordpress.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Mada Masr (Egypt)",
+      "url": "https://madamasr.com/en/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:30.479328+00:00",
+      "categories": [
+        "Africa"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.madamasr.com/en/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Make Rojava Green Again",
       "url": "https://makerojavagreenagain.org/feed/",
-      "pageUrl": "https://makerojavagreenagain.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.026924+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:53.446339+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://makerojavagreenagain.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Make Rojava Green Again",
+      "url": "https://makerojavagreenagain.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.103196+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://makerojavagreenagain.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Manila Today",
       "url": "https://manilatoday.net/feed/",
-      "pageUrl": "https://manilatoday.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.170316+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:53.637842+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://manilatoday.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Manila Today",
+      "url": "https://manilatoday.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.324766+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://manilatoday.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Mapuexpress (Mapuche)",
       "url": "https://www.mapuexpress.org/feed/",
-      "pageUrl": "https://www.mapuexpress.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.660903+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:53.910356+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.mapuexpress.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Mapuexpress (Mapuche)",
+      "url": "https://www.mapuexpress.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:31.730653+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.mapuexpress.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Mekong Review",
       "url": "https://mekongreview.com/feed/",
-      "pageUrl": "https://mekongreview.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.084151+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:54.122774+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://mekongreview.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Mekong Review",
+      "url": "https://mekongreview.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.422397+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://mekongreview.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "MIA Marseille (FR)",
       "url": "https://mars-infos.org/spip.php?page=backend",
-      "pageUrl": "https://mars-infos.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.522832+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:54.173121+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://mars-infos.org/spip.php?page=backend",
       "contentType": "text/xml; charset=utf-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "MIA Marseille (FR)",
+      "url": "https://mars-infos.org/spip.php?page=backend",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.575290+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://mars-infos.org/spip.php?page=backend",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Migrant Solidarity Network (CH)",
       "url": "https://migrant-solidarity-network.ch/feed/",
-      "pageUrl": "https://migrant-solidarity-network.ch/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.725768+00:00",
       "categories": [
         "No Borders"
       ],
-      "checkedAt": "2026-07-20T14:48:54.439765+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://migrant-solidarity-network.ch/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Migrant Solidarity Network (CH)",
+      "url": "https://migrant-solidarity-network.ch/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.909648+00:00",
+      "categories": [
+        "No Borders"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://migrant-solidarity-network.ch/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Missy Magazine (DE)",
       "url": "https://missy-magazine.de/feed/",
-      "pageUrl": "https://missy-magazine.de/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:32.983642+00:00",
       "categories": [
         "Antisexism"
       ],
-      "checkedAt": "2026-07-20T14:48:54.508556+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://missy-magazine.de/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Missy Magazine (DE)",
+      "url": "https://missy-magazine.de/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:33.143053+00:00",
+      "categories": [
+        "Antisexism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://missy-magazine.de/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Monthly Review",
       "url": "https://monthlyreview.org/feed/",
-      "pageUrl": "https://monthlyreview.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:33.310086+00:00",
       "categories": [
         "Anticapitalism"
       ],
-      "checkedAt": "2026-07-20T14:48:54.802070+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://monthlyreview.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Monthly Review",
+      "url": "https://monthlyreview.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:33.728102+00:00",
+      "categories": [
+        "Anticapitalism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://monthlyreview.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Montreal Antifasciste",
       "url": "https://montreal-antifasciste.info/fr/feed/",
-      "pageUrl": "https://montreal-antifasciste.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:33.742364+00:00",
       "categories": [
         "North America",
         "Antifascism"
       ],
-      "checkedAt": "2026-07-20T14:48:54.865979+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://montreal-antifasciste.info/fr/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Montreal Antifasciste",
+      "url": "https://montreal-antifasciste.info/fr/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:33.964295+00:00",
+      "categories": [
+        "North America",
+        "Antifascism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://montreal-antifasciste.info/fr/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Nawaat (Tunisia)",
       "url": "https://nawaat.org/feed/",
-      "pageUrl": "https://nawaat.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:34.322955+00:00",
       "categories": [
         "Africa",
         "Anticolonialism",
@@ -1703,183 +3652,403 @@
         "Cyberactivism",
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:55.018465+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://nawaat.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "New Bloom (TW)",
+      "url": "https://newbloommag.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:34.433930+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://newbloommag.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Novara Media (UK)",
       "url": "https://novaramedia.com/feed/",
-      "pageUrl": "https://novaramedia.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:35.465751+00:00",
       "categories": [
         "Anticapitalism"
       ],
-      "checkedAt": "2026-07-20T14:48:55.205757+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://novaramedia.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Novara Media (UK)",
+      "url": "https://novaramedia.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:35.534973+00:00",
+      "categories": [
+        "Anticapitalism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://novaramedia.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "OmniaTV (GR)",
       "url": "https://omniatv.com/feed/",
-      "pageUrl": "https://omniatv.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:35.603921+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:55.240775+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://omniatv.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "OmniaTV (GR)",
+      "url": "https://omniatv.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:35.842642+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://omniatv.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Overland",
+      "url": "https://overland.org.au/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:36.361564+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://overland.org.au/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Palang Hitam (Indonesia)",
       "url": "https://palanghitam.noblogs.org/feed/",
-      "pageUrl": "https://palanghitam.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:36.484743+00:00",
       "categories": [
         "Asia"
       ],
-      "checkedAt": "2026-07-20T14:48:55.483098+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://palanghitam.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Palang Hitam (Indonesia)",
+      "url": "https://palanghitam.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.160486+00:00",
+      "categories": [
+        "Asia"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://palanghitam.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Pambazuka News",
+      "url": "https://www.pambazuka.org/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.434048+00:00",
+      "categories": [
+        "Africa",
+        "Anti-Imperialism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.pambazuka.org/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Paris-Luttes (FR)",
       "url": "https://paris-luttes.info/spip.php?page=backend",
-      "pageUrl": "https://paris-luttes.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.448741+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:55.815496+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://paris-luttes.info/spip.php?page=backend",
       "contentType": "text/xml; charset=utf-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Paris-Luttes (FR)",
+      "url": "https://paris-luttes.info/spip.php?page=backend",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.508221+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://paris-luttes.info/spip.php?page=backend",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Pinko Magazine",
       "url": "https://www.pinko.online/rss/",
-      "pageUrl": "https://www.pinko.online/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.965675+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:55.880306+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.pinko.online/rss/",
       "contentType": "application/rss+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Pinko Magazine",
+      "url": "https://pinko.online/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:37.941085+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://www.pinko.online/rss/",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Queer Anarchism",
+      "url": "https://queeranarchism.tumblr.com/rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:38.132375+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://queeranarchism.tumblr.com/rss",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Radar Squat.net (Europa)",
+      "url": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:38.486175+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Radar Squat.net (Global)",
+      "url": "https://morss.it/https://radar.squat.net/de/events/rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:38.513591+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://morss.it/https://radar.squat.net/de/events/rss",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Radar Squat.net (Nordamerika)",
+      "url": "https://morss.it/https://radar.squat.net/de/events/region/North%20America/rss",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:38.576196+00:00",
+      "categories": [
+        "Radar"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://morss.it/https://radar.squat.net/de/events/region/North%20America/rss",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Rebellyon (FR)",
       "url": "https://rebellyon.info/spip.php?page=backend",
-      "pageUrl": "https://rebellyon.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:39.113221+00:00",
       "categories": [
         "Europe"
       ],
-      "checkedAt": "2026-07-20T14:48:56.323490+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://rebellyon.info/spip.php?page=backend",
       "contentType": "text/xml; charset=utf-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Rebellyon (FR)",
+      "url": "https://rebellyon.info/spip.php?page=backend",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:39.480857+00:00",
+      "categories": [
+        "Europe"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://rebellyon.info/spip.php?page=backend",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Recht auf Stadt (Hamburg)",
       "url": "https://www.rechtaufstadt.net/feed/",
-      "pageUrl": "https://www.rechtaufstadt.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:39.749778+00:00",
       "categories": [
         "Squatting & Housing"
       ],
-      "checkedAt": "2026-07-20T14:48:56.333299+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://www.rechtaufstadt.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Recht auf Stadt (Hamburg)",
+      "url": "https://www.rechtaufstadt.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:40.549680+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://www.rechtaufstadt.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Red Flag (Aus)",
+      "url": "https://redflag.org.au/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:40.835092+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://redflag.org.au/rss/",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Red Flag (Aus)",
       "url": "https://redflag.org.au/rss/",
-      "pageUrl": "https://redflag.org.au/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:40.905517+00:00",
       "categories": [
         "Australia & NZ"
       ],
-      "checkedAt": "2026-07-20T14:48:56.538438+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://redflag.org.au/rss/",
       "contentType": "application/rss+xml; charset=utf-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Rheinmetall Entwaffnen",
       "url": "https://rheinmetallentwaffnen.noblogs.org/feed/",
-      "pageUrl": "https://rheinmetallentwaffnen.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:41.949819+00:00",
       "categories": [
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:56.636156+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://rheinmetallentwaffnen.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Rheinmetall Entwaffnen",
+      "url": "https://rheinmetallentwaffnen.noblogs.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:42.127626+00:00",
+      "categories": [
+        "No War"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://rheinmetallentwaffnen.noblogs.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "ROAPE",
       "url": "https://roape.net/feed/",
-      "pageUrl": "https://roape.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:42.652320+00:00",
+      "categories": [
+        "Africa",
+        "Anti-Imperialism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://roape.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "ROAPE",
+      "url": "https://roape.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:42.743530+00:00",
       "categories": [
         "Africa",
         "Anti-Imperialism",
@@ -1887,166 +4056,289 @@
         "Anticolonialism",
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:56.906401+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://roape.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Rojava Info Center",
+      "url": "https://rojavainformationcenter.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:42.835909+00:00",
+      "categories": [
+        "Asia"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://rojavainformationcenter.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Rote Hilfe",
+      "url": "https://www.rote-hilfe.de/rss.xml",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.223204+00:00",
+      "categories": [
+        "Anti-Rep & Prisons"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://rote-hilfe.de/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "xml"
     },
     {
       "name": "Sea-Watch",
       "url": "https://sea-watch.org/feed/",
-      "pageUrl": "https://sea-watch.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.378967+00:00",
       "categories": [
         "No Borders"
       ],
-      "checkedAt": "2026-07-20T14:48:57.317218+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://sea-watch.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Sea-Watch",
+      "url": "https://sea-watch.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.479082+00:00",
+      "categories": [
+        "No Borders"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://sea-watch.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Slackbastard",
       "url": "https://slackbastard.anarchobase.com/?feed=rss2",
-      "pageUrl": "https://slackbastard.anarchobase.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.666926+00:00",
       "categories": [
         "Australia & NZ"
       ],
-      "checkedAt": "2026-07-20T14:48:57.340187+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://slackbastard.anarchobase.com/?feed=rss2",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "Slackbastard",
+      "url": "https://slackbastard.anarchobase.com/?feed=rss2",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.660823+00:00",
+      "categories": [
+        "Australia & NZ"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://slackbastard.anarchobase.com/?feed=rss2",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Slingshot Collective",
       "url": "https://slingshotcollective.org/feed/",
-      "pageUrl": "https://slingshotcollective.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:43.904800+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:57.490495+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://slingshotcollective.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Slingshot Collective",
+      "url": "https://slingshotcollective.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.215435+00:00",
+      "categories": [
+        "Global"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://slingshotcollective.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Solarpunk Magazine",
       "url": "https://solarpunkmagazine.com/feed/",
-      "pageUrl": "https://solarpunkmagazine.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.327598+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:57.544887+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://solarpunkmagazine.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Solarpunk Magazine",
+      "url": "https://solarpunkmagazine.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.397035+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://solarpunkmagazine.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Squat!net",
       "url": "https://de.squat.net/feed/",
-      "pageUrl": "https://de.squat.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.582067+00:00",
       "categories": [
         "Squatting & Housing"
       ],
-      "checkedAt": "2026-07-20T14:48:57.796939+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://de.squat.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Squat!net",
+      "url": "https://de.squat.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.609968+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://de.squat.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "SubMedia",
       "url": "https://sub.media/feed/",
-      "pageUrl": "https://sub.media/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:44.804736+00:00",
       "categories": [
         "North America",
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:57.860997+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://sub.media/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "SubMedia",
+      "url": "https://sub.media/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:45.298482+00:00",
+      "categories": [
+        "North America",
+        "Eco-Anarchism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://sub.media/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Subversiones (Mexico)",
+      "url": "https://subversiones.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:45.422602+00:00",
+      "categories": [
+        "Latin America"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://subversiones.org/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Subversiones (Mexico)",
       "url": "https://subversiones.org/feed",
-      "pageUrl": "https://subversiones.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:45.674565+00:00",
       "categories": [
         "Latin America"
       ],
-      "checkedAt": "2026-07-20T14:48:57.918827+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://subversiones.org/feed",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "The Anarchist Library (EN)",
       "url": "https://theanarchistlibrary.org/feed",
-      "pageUrl": "https://theanarchistlibrary.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:45.903995+00:00",
       "categories": [
         "Libraries"
       ],
-      "checkedAt": "2026-07-20T14:48:58.066114+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://theanarchistlibrary.org/feed",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "The Anarchist Library (EN)",
+      "url": "https://theanarchistlibrary.org/feed",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:45.952964+00:00",
+      "categories": [
+        "Libraries"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://theanarchistlibrary.org/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "The Elephant (Pan-African)",
       "url": "https://www.theelephant.info/feed/",
-      "pageUrl": "https://www.theelephant.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:46.076715+00:00",
       "categories": [
         "Africa",
         "Theory & Strategy",
@@ -2054,237 +4346,378 @@
         "Anti-Imperialism",
         "Anti-Rep & Prisons"
       ],
-      "checkedAt": "2026-07-20T14:48:58.138372+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://www.theelephant.info/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "The Final Straw Radio",
       "url": "https://thefinalstrawradio.noblogs.org/feed/",
-      "pageUrl": "https://thefinalstrawradio.noblogs.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:46.314001+00:00",
       "categories": [
         "Antifascism",
         "Theory & Strategy",
         "Anti-Rep & Prisons",
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:58.154634+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://thefinalstrawradio.noblogs.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "The New Inquiry",
       "url": "https://thenewinquiry.com/feed/",
-      "pageUrl": "https://thenewinquiry.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:46.364861+00:00",
       "categories": [
         "Anticapitalism"
       ],
-      "checkedAt": "2026-07-20T14:48:58.526059+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://thenewinquiry.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "The New Inquiry",
+      "url": "https://thenewinquiry.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:46.381208+00:00",
+      "categories": [
+        "Anticapitalism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://thenewinquiry.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Tierbefreier",
       "url": "https://tierbefreier.org/feed/",
-      "pageUrl": "https://tierbefreier.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:47.635277+00:00",
       "categories": [
         "Animal Liberation"
       ],
-      "checkedAt": "2026-07-20T14:48:59.209033+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://tierbefreier.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Tierbefreier",
+      "url": "https://tierbefreier.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:47.637129+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://tierbefreier.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Transgender Europe (TGEU)",
       "url": "https://tgeu.org/feed/",
-      "pageUrl": "https://tgeu.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:47.772090+00:00",
       "categories": [
         "Queer-Feminism"
       ],
-      "checkedAt": "2026-07-20T14:48:59.315523+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://tgeu.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Transgender Europe (TGEU)",
+      "url": "https://tgeu.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:47.845224+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://tgeu.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Unicorn Riot",
       "url": "https://unicornriot.ninja/feed/",
-      "pageUrl": "https://unicornriot.ninja/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:48.444302+00:00",
       "categories": [
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:59.427039+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://unicornriot.ninja/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Unicorn Riot",
+      "url": "https://unicornriot.ninja/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:48.522976+00:00",
+      "categories": [
+        "Global"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://unicornriot.ninja/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Unoffensive Animal",
       "url": "https://unoffensiveanimal.is/feed/",
-      "pageUrl": "https://unoffensiveanimal.is/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:48.545397+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://unoffensiveanimal.is/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Unoffensive Animal",
+      "url": "https://unoffensiveanimal.is/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:48.567793+00:00",
       "categories": [
         "Animal Liberation",
         "Global"
       ],
-      "checkedAt": "2026-07-20T14:48:59.467714+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://unoffensiveanimal.is/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Waging Nonviolence",
       "url": "https://wagingnonviolence.org/feed/",
-      "pageUrl": "https://wagingnonviolence.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:49.082959+00:00",
+      "categories": [
+        "Global"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://wagingnonviolence.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "Waging Nonviolence",
+      "url": "https://wagingnonviolence.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:49.613011+00:00",
       "categories": [
         "Global",
         "Anticapitalism"
       ],
-      "checkedAt": "2026-07-20T14:48:59.884358+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://wagingnonviolence.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
     },
     {
       "name": "Warrior Publications",
       "url": "https://warriorpublications.wordpress.com/feed/",
-      "pageUrl": "https://warriorpublications.wordpress.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:49.850312+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
-      "checkedAt": "2026-07-20T14:48:59.906145+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://warriorpublications.wordpress.com/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Warrior Publications",
+      "url": "https://warriorpublications.wordpress.com/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:49.918562+00:00",
+      "categories": [
+        "Indigenous Struggles"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://warriorpublications.wordpress.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Winter Oak",
       "url": "https://winteroak.org.uk/feed/",
-      "pageUrl": "https://winteroak.org.uk/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.149556+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
-      "checkedAt": "2026-07-20T14:48:59.932020+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://winteroak.org.uk/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Winter Oak",
+      "url": "https://winteroak.org.uk/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.207818+00:00",
+      "categories": [
+        "Eco-Anarchism"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://winteroak.org.uk/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "World BEYOND War",
       "url": "https://worldbeyondwar.org/feed/",
-      "pageUrl": "https://worldbeyondwar.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.316803+00:00",
       "categories": [
         "No War"
       ],
-      "checkedAt": "2026-07-20T14:48:59.993852+00:00",
-      "ok": true,
-      "status": "ok",
+      "discovered": true,
+      "warning": "Feed-Adresse automatisch erkannt.",
       "httpStatus": 200,
       "finalUrl": "https://worldbeyondwar.org/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
-      "discovered": true,
-      "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "feedType": "xml"
+    },
+    {
+      "name": "World BEYOND War",
+      "url": "https://worldbeyondwar.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.280157+00:00",
+      "categories": [
+        "No War"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://worldbeyondwar.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Zabalaza",
       "url": "https://zabalaza.net/feed/",
-      "pageUrl": "https://zabalaza.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.415204+00:00",
       "categories": [
         "Africa"
       ],
-      "checkedAt": "2026-07-20T14:49:00.205020+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://zabalaza.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Zabalaza",
+      "url": "https://zabalaza.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.485732+00:00",
+      "categories": [
+        "Africa"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://zabalaza.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
     },
     {
       "name": "Zabalaza Books (Africa)",
       "url": "https://zabalazabooks.net/feed/",
-      "pageUrl": "https://zabalazabooks.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.587196+00:00",
       "categories": [
         "Libraries"
       ],
-      "checkedAt": "2026-07-20T14:49:00.211402+00:00",
-      "ok": true,
-      "status": "ok",
       "httpStatus": 200,
       "finalUrl": "https://zabalazabooks.net/feed/",
       "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "xml_feed",
+      "feedType": "xml"
+    },
+    {
+      "name": "Zabalaza Books (Africa)",
+      "url": "https://zabalazabooks.net/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.679046+00:00",
+      "categories": [
+        "Libraries"
+      ],
       "discovered": true,
       "warning": "Feed-Adresse automatisch erkannt.",
-      "error": ""
+      "httpStatus": 200,
+      "finalUrl": "https://zabalazabooks.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "xml"
+    },
+    {
+      "name": "ZNet (International)",
+      "url": "https://znetwork.org/feed/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-20T17:22:50.739969+00:00",
+      "categories": [
+        "Global",
+        "Anticapitalism"
+      ],
+      "httpStatus": 200,
+      "finalUrl": "https://znetwork.org/feed/",
+      "contentType": "text/html; charset=UTF-8",
+      "feedType": "xml"
     }
   ]
 }

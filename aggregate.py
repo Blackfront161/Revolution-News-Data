@@ -298,6 +298,33 @@ quellen = {
         {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
     ]
 }
+# WRN MULTILINGUAL SOURCES 1.7.19 START
+_wrn_extra_sources_1719 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}]
+for _wrn_source in _wrn_extra_sources_1719:
+    for _wrn_category in _wrn_source.get('categories', ['Global']):
+        _wrn_bucket = quellen.setdefault(_wrn_category, [])
+        _wrn_name = str(_wrn_source.get('name', '')).lower()
+        _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').lower()
+        _wrn_exists = any(
+            str(_wrn_item.get('name', '')).lower() == _wrn_name
+            or str(
+                _wrn_item.get('url')
+                or _wrn_item.get('feedUrl')
+                or _wrn_item.get('feed')
+                or ''
+            ).rstrip('/').lower() == _wrn_url
+            for _wrn_item in _wrn_bucket
+            if isinstance(_wrn_item, dict)
+        )
+        if not _wrn_exists:
+            _wrn_bucket.append({
+                'name': _wrn_source['name'],
+                'url': _wrn_source['feedUrl'],
+                'language': _wrn_source.get('languages', ['und'])[0],
+                'homepage': _wrn_source.get('homepage', ''),
+            })
+# WRN MULTILINGUAL SOURCES 1.7.19 END
+
 
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
