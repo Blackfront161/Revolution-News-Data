@@ -27,6 +27,9 @@ REQUIRED_FILES = [
     "check_news_sources.py",
     "normalize_source_health.py",
     "feature_audit.py",
+    "reconcile_audio_health.py",
+    "merge_multilingual_sources.py",
+    "language_source_audit.py",
 ]
 
 

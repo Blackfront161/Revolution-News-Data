@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.16 – vollständige Quellenübersicht */
+/* World Revolution News 1.7.19 – vollständige Quellenübersicht */
 'use strict';
 
 (() => {
@@ -167,7 +167,7 @@
 
         if (
             item.ok === true
-            || ['ok', 'online', 'success', 'healthy', 'available']
+            || ['ok', 'online', 'success', 'healthy', 'available', 'playable']
                 .includes(raw)
             || (
                 httpStatus >= 200
@@ -181,6 +181,8 @@
 
         if (
             raw.includes('warn')
+            || raw.includes('limited')
+            || raw.includes('restricted')
             || raw.includes('partial')
             || raw.includes('slow')
             || raw.includes('redirect')
@@ -201,6 +203,7 @@
 
         if (
             raw.includes('error')
+            || raw.includes('broken')
             || raw.includes('fail')
             || raw.includes('offline')
             || combined.includes('not found')
@@ -433,6 +436,46 @@
         return dedupeRows([
             ...merged,
             ...leftovers
+        ]);
+    };
+
+
+    const preferVerifiedAudio = (legacyRows, verifiedRows) => {
+        const verified = new Map();
+
+        dedupeRows(verifiedRows).forEach(row => {
+            verified.set(canonicalName(row.name), row);
+        });
+
+        const archived = new Set([
+            'commonvoices',
+            'badnewsaradionetwork',
+            'badnews'
+        ]);
+
+        const merged = dedupeRows(legacyRows)
+            .filter(row => !archived.has(canonicalName(row.name)))
+            .map(row => {
+                const replacement = verified.get(
+                    canonicalName(row.name)
+                );
+
+                if (!replacement) return row;
+
+                verified.delete(canonicalName(row.name));
+
+                return {
+                    ...row,
+                    ...replacement,
+                    name: row.name || replacement.name,
+                    url: replacement.url || row.url,
+                    detail: replacement.detail || row.detail
+                };
+            });
+
+        return dedupeRows([
+            ...merged,
+            ...verified.values()
         ]);
     };
 
@@ -774,7 +817,8 @@
             ['news', urls.sourceHealth],
             ['catalog', urls.sourceCatalog],
             ['podcast', urls.podcastHealth],
-            ['radio', urls.radioHealth]
+            ['radio', urls.radioHealth],
+            ['audio', urls.audioHealth]
         ].filter(([, url]) => Boolean(url));
 
         const settled = await Promise.allSettled(
@@ -788,19 +832,34 @@
             news: [],
             catalog: [],
             podcast: [],
-            radio: []
+            radio: [],
+            audioPodcast: [],
+            audioRadio: []
         };
 
         settled.forEach((result, index) => {
             const kind = endpoints[index][0];
 
             if (result.status === 'fulfilled') {
-                grouped[kind] = normalize(
-                    result.value.data,
-                    kind,
-                    kind === 'catalog' ? 'unknown' : 'unknown'
-                );
-            } else {
+                if (kind === 'audio') {
+                    grouped.audioPodcast = normalize(
+                        result.value.data?.podcasts?.checks || [],
+                        'podcast',
+                        'unknown'
+                    );
+                    grouped.audioRadio = normalize(
+                        result.value.data?.radio?.checks || [],
+                        'radio',
+                        'unknown'
+                    );
+                } else {
+                    grouped[kind] = normalize(
+                        result.value.data,
+                        kind,
+                        'unknown'
+                    );
+                }
+            } else if (kind !== 'audio') {
                 grouped[kind] = [{
                     id: `${kind}-unavailable`,
                     kind,
@@ -819,10 +878,19 @@
             grouped.news
         );
 
+        const podcasts = preferVerifiedAudio(
+            grouped.podcast,
+            grouped.audioPodcast
+        );
+        const radios = preferVerifiedAudio(
+            grouped.radio,
+            grouped.audioRadio
+        );
+
         state.rows = dedupeRows([
             ...news,
-            ...grouped.podcast,
-            ...grouped.radio
+            ...podcasts,
+            ...radios
         ]).sort((a, b) => {
             const priority = {
                 error: 0,

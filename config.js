@@ -1,12 +1,14 @@
-/* World Revolution News – 1.7.18 Intro Animation and Recovery Audit
+/* World Revolution News – 1.7.19 Audio Tab, Multilingual Sources and Zine Designer
  *
  * Ziel dieser Stufe:
- * - die frühere Startanimation sicher und nicht blockierend zurückbringen
- * - jede Quellenzeile um das Validator-Pflichtfeld ok ergänzen
- * - alte oEmbed-Fehladressen aus dem Quellenstatus bereinigen
- * - vorhandene, deaktivierte und fehlende App-Module automatisch inventarisieren
- * - keine bestehenden Funktionsdateien blind löschen oder ersetzen
- * - den stabilen Klick-, Feed-, Briefing- und Audio-Unterbau beibehalten
+ * - Original-Podcasts, erzeugte Podcasts und Live-Radio direkt im Audio-Reiter anzeigen
+ * - Podcast-Einleitungen auf einen erklärenden Satz begrenzen
+ * - einen einzigen fortlaufenden Player mit Play/Pause bzw. Radio-Stop verwenden
+ * - geprüfte Audioergebnisse gegenüber veralteten Podcast-Statusdateien priorisieren
+ * - die freigegebenen mehrsprachigen Quellen ohne Löschung bestehender Quellen ergänzen
+ * - Sprachabdeckung transparent prüfen
+ * - dem Zine-Reiter anpassbare Flyer-Formate und Gestaltungsstile geben
+ * - die Startanimation und alle bisherigen Stabilitätsreparaturen beibehalten
  */
 'use strict';
 
@@ -38,12 +40,12 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.18',
-    build: '2026.07.20-intro-recovery-audit',
-    releasedAt: '2026-07-20T22:15:00+02:00',
+    version: '1.7.19',
+    build: '2026.07.20-audio-tab-multilingual-zine',
+    releasedAt: '2026-07-20T23:40:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 7,
+    recoveryStage: 8,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -56,7 +58,9 @@ window.WRN_CONFIG = Object.freeze({
         podcastSources: 'https://blackfront161.github.io/Revolution-News-Data/podcast-sources.json',
         radioSources: 'https://blackfront161.github.io/Revolution-News-Data/radio-sources.json',
         audioHealth: 'https://blackfront161.github.io/Revolution-News-Data/audio-health.json',
-        featureAudit: 'https://blackfront161.github.io/Revolution-News-Data/feature-audit.json'
+        featureAudit: 'https://blackfront161.github.io/Revolution-News-Data/feature-audit.json',
+        languageSourceAudit: 'https://blackfront161.github.io/Revolution-News-Data/language-source-audit.json',
+        generatedPodcasts: 'https://blackfront161.github.io/Revolution-News-Data/generated-podcasts.json'
     }),
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev',
     sharedTranslationUrl: 'https://wrn-translation-cache.paghklo.workers.dev'
@@ -68,8 +72,8 @@ window.WRN_CONFIG = Object.freeze({
  * Mit ?full=1 kann die Begrenzung auch auf Mobilgeräten testweise aufgehoben werden.
  */
 (() => {
-    if (window.__wrnRecoveryFeedGuard1718) return;
-    window.__wrnRecoveryFeedGuard1718 = true;
+    if (window.__wrnRecoveryFeedGuard1719) return;
+    window.__wrnRecoveryFeedGuard1719 = true;
 
     const wantsFullFeed = () =>
         new URLSearchParams(location.search).get('full') === '1';
@@ -138,10 +142,10 @@ window.WRN_CONFIG = Object.freeze({
  * Keine DOM-Gesamtsuche bei Klicks und keine Entfernung von App-Funktionen.
  */
 (() => {
-    if (document.getElementById('wrn-recovery-stage-7-style')) return;
+    if (document.getElementById('wrn-recovery-stage-8-style')) return;
 
     const style = document.createElement('style');
-    style.id = 'wrn-recovery-stage-7-style';
+    style.id = 'wrn-recovery-stage-8-style';
     style.textContent = `
         html,
         body {
@@ -240,8 +244,8 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Startbildschirm und alte Blockadeklassen nur einmal entfernen. */
 (() => {
-    if (window.__wrnRecoveryInteractionRelease1718) return;
-    window.__wrnRecoveryInteractionRelease1718 = true;
+    if (window.__wrnRecoveryInteractionRelease1719) return;
+    window.__wrnRecoveryInteractionRelease1719 = true;
 
     const release = () => {
         document.documentElement.classList.remove(
@@ -280,8 +284,8 @@ window.WRN_CONFIG = Object.freeze({
  * blockieren. Der bestehende Inhalt wird nicht gelöscht.
  */
 (() => {
-    if (window.__wrnRecoveryStorageGuard1718) return;
-    window.__wrnRecoveryStorageGuard1718 = true;
+    if (window.__wrnRecoveryStorageGuard1719) return;
+    window.__wrnRecoveryStorageGuard1719 = true;
 
     const shouldGuardStorage = () => {
         const narrow = window.matchMedia('(max-width: 820px)').matches;
@@ -317,7 +321,7 @@ window.WRN_CONFIG = Object.freeze({
     document.addEventListener('DOMContentLoaded', () => {
         const storage = window.WRNStorage;
 
-        if (!storage || storage.__recoveryStage7Guard) return;
+        if (!storage || storage.__recoveryStage8Guard) return;
 
         const original = {
             migrateLegacyLocalStorage:
@@ -330,7 +334,7 @@ window.WRN_CONFIG = Object.freeze({
                 storage.putDataset?.bind(storage)
         };
 
-        storage.__recoveryStage7Guard = true;
+        storage.__recoveryStage8Guard = true;
 
         storage.migrateLegacyLocalStorage = () =>
             original.migrateLegacyLocalStorage
@@ -376,7 +380,7 @@ window.WRN_CONFIG = Object.freeze({
 })();
 
 /*
- * Wiederherstellungsstufe 7:
+ * Wiederherstellungsstufe 8:
  * - Sicherheitsmodul
  * - Sprache und Typografie
  * - horizontale Hauptnavigation
@@ -393,10 +397,10 @@ window.WRN_CONFIG = Object.freeze({
  * Push-Mitteilungen und schwere Diagnose werden noch nicht automatisch geladen.
  */
 (() => {
-    if (window.__wrnRecoveryCoreLoader1718) return;
-    window.__wrnRecoveryCoreLoader1718 = true;
+    if (window.__wrnRecoveryCoreLoader1719) return;
+    window.__wrnRecoveryCoreLoader1719 = true;
 
-    const VERSION = '1718-intro-recovery-audit';
+    const VERSION = '1719-audio-tab-multilingual-zine';
 
     const addStyle = (file, marker) => {
         if (
@@ -496,37 +500,41 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadCore = async () => {
         [
-            ['release-1.5-nav.css', 'navigation-recovery-7'],
-            ['typography.css', 'typography-recovery-7'],
-            ['interface-qol.css', 'interface-recovery-7'],
-            ['shared-translation-status.css', 'translation-status-recovery-7'],
-            ['wrn-header.css', 'future-header-recovery-7'],
-            ['source-verification.css', 'source-verification-recovery-7'],
-            ['briefing-loader.css', 'briefing-loader-recovery-7'],
-            ['article-actions.css', 'article-actions-recovery-7'],
-            ['sticky-dialogs.css', 'sticky-dialogs-recovery-7'],
-            ['audio-loader.css', 'audio-loader-recovery-7'],
-            ['audio-reliability.css', 'audio-reliability-recovery-7'],
-            ['runtime-selftest.css', 'runtime-selftest-recovery-7'],
-            ['recovery-audit.css', 'recovery-audit-recovery-7']
+            ['release-1.5-nav.css', 'navigation-recovery-8'],
+            ['typography.css', 'typography-recovery-8'],
+            ['interface-qol.css', 'interface-recovery-8'],
+            ['shared-translation-status.css', 'translation-status-recovery-8'],
+            ['wrn-header.css', 'future-header-recovery-8'],
+            ['source-verification.css', 'source-verification-recovery-8'],
+            ['briefing-loader.css', 'briefing-loader-recovery-8'],
+            ['article-actions.css', 'article-actions-recovery-8'],
+            ['sticky-dialogs.css', 'sticky-dialogs-recovery-8'],
+            ['audio-tab.css', 'audio-tab-recovery-8'],
+            ['audio-reliability.css', 'audio-reliability-recovery-8'],
+            ['runtime-selftest.css', 'runtime-selftest-recovery-8'],
+            ['recovery-audit.css', 'recovery-audit-recovery-8'],
+            ['language-source-status.css', 'language-source-status-recovery-8'],
+            ['zine-designer.css', 'zine-designer-recovery-8']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
         await loadSequentially([
-            ['app-safety.js', 'safety-recovery-7'],
-            ['wrn-i18n.js', 'i18n-recovery-7'],
-            ['typography.js', 'typography-recovery-7'],
-            ['wrn-header.js', 'future-header-recovery-7'],
-            ['release-1.5-nav.js', 'navigation-recovery-7'],
-            ['source-verification.js', 'source-verification-recovery-7'],
-            ['briefing-loader.js', 'briefing-loader-recovery-7'],
-            ['article-actions.js', 'article-actions-recovery-7'],
-            ['sticky-dialogs.js', 'sticky-dialogs-recovery-7'],
-            ['audio-loader.js', 'audio-loader-recovery-7'],
-            ['audio-reliability.js', 'audio-reliability-recovery-7'],
-            ['runtime-selftest.js', 'runtime-selftest-recovery-7'],
-            ['recovery-audit.js', 'recovery-audit-recovery-7'],
-            ['shared-translation-client.js', 'translation-client-recovery-7'],
-            ['translation-dialog-l10n.js', 'translation-dialog-recovery-7']
+            ['app-safety.js', 'safety-recovery-8'],
+            ['wrn-i18n.js', 'i18n-recovery-8'],
+            ['typography.js', 'typography-recovery-8'],
+            ['wrn-header.js', 'future-header-recovery-8'],
+            ['release-1.5-nav.js', 'navigation-recovery-8'],
+            ['source-verification.js', 'source-verification-recovery-8'],
+            ['briefing-loader.js', 'briefing-loader-recovery-8'],
+            ['article-actions.js', 'article-actions-recovery-8'],
+            ['sticky-dialogs.js', 'sticky-dialogs-recovery-8'],
+            ['audio-tab.js', 'audio-tab-recovery-8'],
+            ['audio-reliability.js', 'audio-reliability-recovery-8'],
+            ['runtime-selftest.js', 'runtime-selftest-recovery-8'],
+            ['recovery-audit.js', 'recovery-audit-recovery-8'],
+            ['language-source-status.js', 'language-source-status-recovery-8'],
+            ['zine-designer.js', 'zine-designer-recovery-8'],
+            ['shared-translation-client.js', 'translation-client-recovery-8'],
+            ['translation-dialog-l10n.js', 'translation-dialog-recovery-8']
         ]);
 
         /*
@@ -544,7 +552,7 @@ window.WRN_CONFIG = Object.freeze({
         window.setTimeout(() => {
             void loadScript(
                 'shared-translation-status.js',
-                'translation-status-recovery-7',
+                'translation-status-recovery-8',
                 9000
             );
         }, 1400);
@@ -570,8 +578,8 @@ window.WRN_CONFIG = Object.freeze({
  * keine Karte erzeugt hat.
  */
 (() => {
-    if (window.__wrnRecoveryRescueFeed1718) return;
-    window.__wrnRecoveryRescueFeed1718 = true;
+    if (window.__wrnRecoveryRescueFeed1719) return;
+    window.__wrnRecoveryRescueFeed1719 = true;
 
     const run = async () => {
         await new Promise(resolve => {

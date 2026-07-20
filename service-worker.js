@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.18';
-const DATA_CACHE = 'wrn-data-v1.7.18';
+const APP_CACHE = 'wrn-app-v1.7.19';
+const DATA_CACHE = 'wrn-data-v1.7.19';
 
 const APP_SHELL = [
   './',
@@ -25,11 +25,13 @@ const APP_SHELL = [
   './briefing-loader.css',
   './article-actions.css',
   './sticky-dialogs.css',
-  './audio-loader.css',
+  './audio-tab.css',
   './audio-reliability.css',
   './runtime-selftest.css',
   './intro-screen.css',
   './recovery-audit.css',
+  './language-source-status.css',
+  './zine-designer.css',
   './app-diagnostics.css',
   './app-background.webp',
   './wrn-logo.webp',
@@ -61,11 +63,13 @@ const APP_SHELL = [
   './briefing-loader.js',
   './article-actions.js',
   './sticky-dialogs.js',
-  './audio-loader.js',
+  './audio-tab.js',
   './audio-reliability.js',
   './runtime-selftest.js',
   './intro-screen.js',
   './recovery-audit.js',
+  './language-source-status.js',
+  './zine-designer.js',
   './app-safety.js',
   './app-diagnostics.js',
   './article-summary-core.js',
@@ -92,7 +96,9 @@ const JSON_FALLBACKS = new Map([
   [new URL('./podcast-sources.json', self.location.href).pathname, '[]'],
   [new URL('./radio-sources.json', self.location.href).pathname, '[]'],
   [new URL('./audio-health.json', self.location.href).pathname, '{}'],
-  [new URL('./feature-audit.json', self.location.href).pathname, '{}']
+  [new URL('./feature-audit.json', self.location.href).pathname, '{}'],
+  [new URL('./language-source-audit.json', self.location.href).pathname, '{}'],
+  [new URL('./multilingual-source-registry.json', self.location.href).pathname, '{}']
 ]);
 
 const DATA_FILES = new Set([
@@ -109,7 +115,9 @@ const DATA_FILES = new Set([
   new URL('./podcast-sources.json', self.location.href).pathname,
   new URL('./radio-sources.json', self.location.href).pathname,
   new URL('./audio-health.json', self.location.href).pathname,
-  new URL('./feature-audit.json', self.location.href).pathname
+  new URL('./feature-audit.json', self.location.href).pathname,
+  new URL('./language-source-audit.json', self.location.href).pathname,
+  new URL('./multilingual-source-registry.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {

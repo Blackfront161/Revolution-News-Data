@@ -93,8 +93,8 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "audio-player-fixes.js",
             "audio-catalog.js",
             "audio-catalog.css",
-            "audio-loader.js",
-            "audio-loader.css",
+            "audio-tab.js",
+            "audio-tab.css",
             "audio-reliability.js",
             "audio-reliability.css",
         ],
@@ -123,6 +123,10 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "runtime-selftest.css",
             "recovery-audit.js",
             "recovery-audit.css",
+            "language-source-status.js",
+            "language-source-status.css",
+            "zine-designer.js",
+            "zine-designer.css",
         ],
     },
 }
@@ -226,7 +230,7 @@ def main() -> int:
     payload = {
         "schemaVersion": 1,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.18",
+        "version": "1.7.19",
         "summary": {
             "groups": len(groups),
             "criticalMissing": len(critical_missing),
