@@ -1,3 +1,4 @@
+/* WRN 1.7.21c: browser deletion is repository-scoped. */
 /* World Revolution News – einfache Kontrolle des lokalen App-Speichers */
 'use strict';
 
@@ -234,7 +235,7 @@
 
     async function clearBrowserCaches() {
         if (!('caches' in window)) return;
-        const names = await caches.keys();
+        const names = await window.WRNOriginSafety.getOwnedCacheNames();
         await Promise.all(names.map(name => caches.delete(name)));
     }
 

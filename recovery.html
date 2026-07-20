@@ -1,3 +1,4 @@
+/* WRN 1.7.21c: browser deletion is repository-scoped. */
 <!doctype html>
 <html lang="de">
 <head>
@@ -44,6 +45,7 @@
     #status { min-height: 2.8em; color: #ffd166; }
     .danger { border-color: #ff334f; color: #ff6680; }
   </style>
+  <script src="./wrn-origin-safety.js?v=1721c"></script>
 </head>
 <body>
   <main>
@@ -65,12 +67,12 @@
 
       try {
         if ('serviceWorker' in navigator) {
-          const registrations = await navigator.serviceWorker.getRegistrations();
+          const registrations = await window.WRNOriginSafety.getOwnedServiceWorkerRegistrations();
           await Promise.all(registrations.map(registration => registration.unregister()));
         }
 
         if ('caches' in window) {
-          const names = await caches.keys();
+          const names = await window.WRNOriginSafety.getOwnedCacheNames();
           await Promise.all(
             names
               .filter(name => name.startsWith('wrn-'))

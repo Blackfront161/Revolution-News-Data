@@ -1,3 +1,4 @@
+/* WRN 1.7.21c: browser deletion is repository-scoped. */
 // World Revolution News – Hauptlogik, Phase 1K
 window.onerror = function(msg, url, line, col, error) {
     const stat = document.getElementById('status-container');
@@ -901,7 +902,7 @@ async function clearAllData() {
 
     if (!confirm(confirmTxt)) return;
 
-    localStorage.clear();
+    window.WRNOriginSafety.clearOwnedStorage(window.localStorage);
 
     if (window.WRNStorage) {
         try { await window.WRNStorage.clearAll(); } catch (error) { console.warn(error); }
@@ -909,7 +910,7 @@ async function clearAllData() {
 
     if ('caches' in window) {
         try {
-            const names = await caches.keys();
+            const names = await window.WRNOriginSafety.getOwnedCacheNames();
             await Promise.all(names.map(name => caches.delete(name)));
         } catch (error) {
             console.warn("Browser-Caches konnten nicht vollständig gelöscht werden:", error);
