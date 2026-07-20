@@ -1,117 +1,75 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-07-20T17:23:16.430206+00:00",
-  "activeSourceRows": 228,
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-20T19:46:37.259890+00:00",
+  "version": "1.7.22",
+  "activeSourceRows": 377,
+  "knownLanguageRows": 120,
+  "unknownLanguageRows": 276,
   "activeLanguages": {
-    "und": 228
-  },
-  "approvedLanguages": {
-    "ar": 1,
-    "de": 2,
-    "en": 5,
-    "es": 2,
-    "fr": 1,
+    "ar": 2,
+    "ca": 1,
+    "de": 39,
+    "el": 6,
+    "en": 20,
+    "es": 14,
+    "fr": 14,
+    "id": 2,
+    "it": 12,
+    "map": 1,
+    "pl": 2,
     "pt": 1,
-    "und": 1
+    "ru": 2,
+    "sl": 2,
+    "und": 276,
+    "zh": 2
   },
-  "approvedSources": [
-    {
-      "name": "Freedom News",
-      "kind": "news",
-      "languages": [
-        "en"
-      ],
-      "status": "already_present",
-      "action": "enrich_only"
-    },
-    {
-      "name": "Unicorn Riot",
-      "kind": "news",
-      "languages": [
-        "en"
-      ],
-      "status": "already_present",
-      "action": "enrich_only"
-    },
-    {
-      "name": "Labor Notes",
-      "kind": "news",
-      "languages": [
-        "en"
-      ],
-      "status": "already_present",
-      "action": "enrich_only"
-    },
-    {
-      "name": "Graswurzelrevolution",
-      "kind": "news",
-      "adapter": "rss",
-      "languages": [
-        "de"
-      ],
-      "homepage": "https://www.graswurzel.net/gwr/",
-      "feedUrl": "https://www.graswurzel.net/gwr/feed/",
-      "categories": [
-        "Europe",
-        "No War",
-        "Anarchism"
-      ],
-      "status": "approved"
-    },
-    {
-      "name": "Agência Pública",
-      "kind": "news",
-      "adapter": "rss",
-      "languages": [
-        "pt"
-      ],
-      "homepage": "https://apublica.org/",
-      "feedUrl": "https://apublica.org/feed/",
-      "categories": [
-        "Latin America",
-        "Environment",
-        "Investigative"
-      ],
-      "status": "approved"
-    },
-    {
-      "name": "Transnational Institute",
-      "kind": "structured_news",
-      "adapter": "structured_page",
-      "languages": [
-        "en",
-        "es"
-      ],
-      "homepage": "https://www.tni.org/en",
-      "alternate": "https://www.tni.org/es",
-      "categories": [
-        "Global",
-        "Anticapitalism",
-        "No War",
-        "Climate Justice",
-        "Labor Struggles"
-      ],
-      "status": "adapter_prepared",
-      "note": "No stable RSS endpoint confirmed; metadata adapter required."
-    },
-    {
-      "name": "Radio Dreyeckland",
-      "kind": "radio_and_podcast",
-      "languages": [
-        "de",
-        "en",
-        "es",
-        "fr",
-        "ar",
-        "und"
-      ],
-      "homepage": "https://rdl.de/",
-      "streamUrl": "http://www.rdl.de:8000/rdl.m3u",
-      "podcastFeed": "https://rdl.de/podcasts/all",
-      "newsflashFeed": "https://rdl.de/podcasts/all/newsflash",
-      "status": "approved_audio",
-      "contentPolicy": "metadata_and_links_only"
-    }
+  "explicitLanguages": {
+    "ar": 2,
+    "ca": 1,
+    "de": 26,
+    "el": 1,
+    "en": 19,
+    "es": 5,
+    "fr": 5,
+    "it": 3,
+    "map": 1,
+    "pt": 1,
+    "sl": 2,
+    "und": 2
+  },
+  "inferredLanguages": {
+    "de": 12,
+    "el": 5,
+    "es": 9,
+    "fr": 9,
+    "id": 2,
+    "it": 9,
+    "pl": 2,
+    "ru": 2,
+    "zh": 2
+  },
+  "offeredInterfaceLanguages": [
+    "en",
+    "de",
+    "es",
+    "fr",
+    "it",
+    "pt",
+    "ru",
+    "el",
+    "tr",
+    "new",
+    "old",
+    "off",
+    "end"
   ],
-  "note": "Mehrfachkategorien zählen als mehrere Quellenzeilen; sie werden beim Abruf über die Feed-URL dedupliziert."
+  "missingOfferedLanguages": [
+    "tr",
+    "new",
+    "old",
+    "off",
+    "end"
+  ],
+  "sourceRegistryGeneratedAt": "2026-07-20T19:46:37.253513+00:00",
+  "sourceCount": 377
 }

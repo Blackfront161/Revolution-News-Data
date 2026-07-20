@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-20T19:46:37.325441+00:00",
+  "workflowCount": 11,
+  "warningCount": 10,
+  "workflows": [
+    {
+      "path": ".github/workflows/apply-origin-safety.yml",
+      "writer": true,
+      "commonConcurrency": true,
+      "safePush": true,
+      "modifiesWorkflows": false,
+      "warnings": []
+    },
+    {
+      "path": ".github/workflows/apply-release-1.4.yml",
+      "writer": true,
+      "commonConcurrency": false,
+      "safePush": false,
+      "modifiesWorkflows": false,
+      "warnings": [
+        "missing_wrn_main_write",
+        "missing_safe_push"
+      ]
+    },
+    {
+      "path": ".github/workflows/apply-release-1722.yml",
+      "writer": true,
+      "commonConcurrency": true,
+      "safePush": true,
+      "modifiesWorkflows": false,
+      "warnings": []
+    },
+    {
+      "path": ".github/workflows/design-1.4.1.yml",
+      "writer": true,
+      "commonConcurrency": false,
+      "safePush": false,
+      "modifiesWorkflows": false,
+      "warnings": [
+        "missing_wrn_main_write",
+        "missing_safe_push"
+      ]
+    },
+    {
+      "path": ".github/workflows/design-1.4.2.yml",
+      "writer": true,
+      "commonConcurrency": false,
+      "safePush": false,
+      "modifiesWorkflows": false,
+      "warnings": [
+        "missing_wrn_main_write",
+        "missing_safe_push"
+      ]
+    },
+    {
+      "path": ".github/workflows/merge-multilingual-sources.yml",
+      "writer": true,
+      "commonConcurrency": true,
+      "safePush": true,
+      "modifiesWorkflows": true,
+      "warnings": [
+        "possible_workflow_self_modification"
+      ]
+    },
+    {
+      "path": ".github/workflows/quality-gate.yml",
+      "writer": false,
+      "commonConcurrency": null,
+      "safePush": null,
+      "modifiesWorkflows": false,
+      "warnings": []
+    },
+    {
+      "path": ".github/workflows/repair-audio.yml",
+      "writer": true,
+      "commonConcurrency": true,
+      "safePush": true,
+      "modifiesWorkflows": true,
+      "warnings": [
+        "possible_workflow_self_modification"
+      ]
+    },
+    {
+      "path": ".github/workflows/update-podcasts.yml",
+      "writer": true,
+      "commonConcurrency": false,
+      "safePush": false,
+      "modifiesWorkflows": false,
+      "warnings": [
+        "missing_wrn_main_write",
+        "missing_safe_push"
+      ]
+    },
+    {
+      "path": ".github/workflows/update.yml",
+      "writer": true,
+      "commonConcurrency": true,
+      "safePush": true,
+      "modifiesWorkflows": false,
+      "warnings": []
+    },
+    {
+      "path": ".github/workflows/validate-app.yml",
+      "writer": false,
+      "commonConcurrency": null,
+      "safePush": null,
+      "modifiesWorkflows": false,
+      "warnings": []
+    }
+  ]
+}
