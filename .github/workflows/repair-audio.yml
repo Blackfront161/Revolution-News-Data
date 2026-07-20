@@ -82,6 +82,13 @@ jobs:
           python normalize_source_health.py 2>&1 \
             | tee source-health-normalize.log
 
+      - name: Vollständigkeit der App-Funktionen prüfen
+        shell: bash
+        run: |
+          set -o pipefail
+          python feature_audit.py 2>&1 \
+            | tee feature-audit.log
+
       - name: Erzeugte Audio-Dateien prüfen
         shell: bash
         run: |
@@ -115,6 +122,7 @@ jobs:
             audio-output-report.json
             audio-source-report.json
             source-health-report.json
+            feature-audit.json
             podcast-health.json
             audio-health.json
 
@@ -138,6 +146,7 @@ jobs:
             audio-output-report.json
             source-health.json
             source-health-report.json
+            feature-audit.json
           )
 
           for file in "${files[@]}"; do
