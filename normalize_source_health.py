@@ -1,187 +1,328 @@
-/* World Revolution News 1.7.18 – Startanimation */
+#!/usr/bin/env python3
+"""Normalize source-health.json to the schema expected by tests/validate_app.py.
 
-html.wrn-intro-active-1718 {
-    overflow: hidden;
+Required top-level format:
+
+{
+  "stable-key": {
+    "name": "...",
+    "url": "...",
+    "status": "ok|warning|error|unknown",
+    "lastChecked": "ISO timestamp"
+  }
 }
 
-.wrn-intro-screen-1718 {
-    position: fixed;
-    inset: 0;
-    z-index: 20000;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    background: #030409;
-    color: #fff;
-    opacity: 0;
-    pointer-events: auto;
-    isolation: isolate;
-    transition: opacity 420ms ease !important;
+Rich metadata is preserved separately in source-health-report.json.
+"""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import re
+from typing import Any
+from urllib.parse import urlparse, parse_qs, unquote
+
+
+ROOT = Path(__file__).resolve().parent
+HEALTH_PATH = ROOT / "source-health.json"
+REPORT_PATH = ROOT / "source-health-report.json"
+CATALOG_PATH = ROOT / "source-catalog.json"
+
+METADATA_KEYS = {
+    "schemaVersion",
+    "generatedAt",
+    "summary",
+    "sources",
+    "items",
+    "entries",
+    "results",
 }
 
-.wrn-intro-screen-1718.wrn-intro-visible-1718 {
-    opacity: 1;
-}
 
-.wrn-intro-screen-1718.wrn-intro-leaving-1718 {
-    opacity: 0;
-    pointer-events: none;
-}
+def read_json(path: Path, fallback: Any) -> Any:
+    if not path.is_file():
+        return fallback
 
-.wrn-intro-backdrop-1718 {
-    position: absolute;
-    inset: -3%;
-    z-index: -3;
-    background:
-        url("./app-background.webp?v=1718")
-        center / cover no-repeat;
-    filter: saturate(0.82) contrast(1.08) brightness(0.52);
-    transform: scale(1.045);
-    animation: wrn-intro-drift-1718 5.5s ease-out both !important;
-}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return fallback
 
-.wrn-intro-shade-1718 {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background:
-        radial-gradient(
-            circle at 50% 42%,
-            rgba(0, 229, 239, 0.13),
-            transparent 34%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(3, 4, 9, 0.54),
-            rgba(3, 4, 9, 0.88)
-        );
-}
 
-.wrn-intro-content-1718 {
-    width: min(86vw, 760px);
-    display: grid;
-    justify-items: center;
-    gap: 0.9rem;
-    padding: 1.2rem;
-    text-align: center;
-    transform: translateY(12px);
-    opacity: 0;
-    animation:
-        wrn-intro-rise-1718 700ms 80ms ease-out forwards !important;
-}
+def as_rows(data: Any) -> list[dict[str, Any]]:
+    if isinstance(data, list):
+        return [item for item in data if isinstance(item, dict)]
 
-.wrn-intro-logo-1718 {
-    width: clamp(72px, 11vw, 118px);
-    height: auto;
-    filter:
-        drop-shadow(0 0 16px rgba(0, 229, 239, 0.25))
-        drop-shadow(0 0 22px rgba(255, 49, 88, 0.12));
-}
+    if not isinstance(data, dict):
+        return []
 
-.wrn-intro-wordmark-1718 {
-    width: min(88vw, 670px);
-    max-height: 100px;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.72));
-}
+    for key in ("sources", "items", "entries", "results"):
+        value = data.get(key)
 
-.wrn-intro-progress-track-1718 {
-    width: min(72vw, 430px);
-    height: 4px;
-    overflow: hidden;
-    border: 1px solid rgba(0, 229, 239, 0.55);
-    border-radius: 999px;
-    background: rgba(2, 5, 12, 0.72);
-}
+        if isinstance(value, list):
+            return [item for item in value if isinstance(item, dict)]
 
-.wrn-intro-progress-1718 {
-    display: block;
-    width: 100%;
-    height: 100%;
-    transform: scaleX(0);
-    transform-origin: left center;
-    background: linear-gradient(
-        90deg,
-        #00e5ef 0%,
-        #66fff1 66%,
-        #ff3158 100%
-    );
-    box-shadow: 0 0 14px rgba(0, 229, 239, 0.65);
-    transition: transform 110ms linear !important;
-}
+        if isinstance(value, dict):
+            return [
+                {"__key": entry_key, **entry_value}
+                for entry_key, entry_value in value.items()
+                if isinstance(entry_value, dict)
+            ]
 
-.wrn-intro-status-1718 {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.76);
-    font-size: clamp(0.72rem, 1.8vw, 0.9rem);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
+    rows: list[dict[str, Any]] = []
 
-.wrn-intro-skip-1718 {
-    min-width: 108px;
-    min-height: 42px;
-    margin-top: 0.15rem;
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    border-radius: 5px;
-    background: rgba(3, 4, 9, 0.55);
-    color: rgba(255, 255, 255, 0.82);
-    font: inherit;
-    cursor: pointer;
-}
+    for key, value in data.items():
+        if key in METADATA_KEYS or not isinstance(value, dict):
+            continue
 
-.wrn-intro-skip-1718:focus-visible {
-    outline: 2px solid #00e5ef;
-    outline-offset: 3px;
-}
+        rows.append({"__key": key, **value})
 
-@keyframes wrn-intro-rise-1718 {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
+    return rows
 
-@keyframes wrn-intro-drift-1718 {
-    from {
-        transform: scale(1.08) translate3d(0, 0, 0);
-    }
-    to {
-        transform: scale(1.025) translate3d(0, -0.4%, 0);
-    }
-}
 
-@media (max-width: 520px) {
-    .wrn-intro-content-1718 {
-        width: 92vw;
-        gap: 0.7rem;
-    }
+def name_of(item: dict[str, Any]) -> str:
+    return str(
+        item.get("name")
+        or item.get("sourceName")
+        or item.get("source")
+        or item.get("quelleName")
+        or item.get("title")
+        or item.get("__key")
+        or "Unbekannte Quelle"
+    ).strip()
 
-    .wrn-intro-logo-1718 {
-        width: 78px;
-    }
 
-    .wrn-intro-wordmark-1718 {
-        width: min(94vw, 410px);
-        max-height: 70px;
-    }
+def url_of(item: dict[str, Any]) -> str:
+    return str(
+        item.get("url")
+        or item.get("feedUrl")
+        or item.get("feed")
+        or item.get("rss")
+        or item.get("finalUrl")
+        or item.get("pageUrl")
+        or item.get("homepage")
+        or ""
+    ).strip()
 
-    .wrn-intro-progress-track-1718 {
-        width: min(78vw, 320px);
-    }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    .wrn-intro-screen-1718,
-    .wrn-intro-content-1718,
-    .wrn-intro-backdrop-1718,
-    .wrn-intro-progress-1718 {
-        animation: none !important;
-        transition-duration: 1ms !important;
-    }
+def status_of(item: dict[str, Any]) -> str:
+    raw = str(
+        item.get("status")
+        or item.get("state")
+        or item.get("result")
+        or ""
+    ).strip().lower()
 
-    .wrn-intro-content-1718 {
-        opacity: 1;
-        transform: none;
-    }
-}
+    if raw in {"ok", "online", "healthy", "available", "playable", "success"}:
+        return "ok"
+
+    if raw in {
+        "warning",
+        "warn",
+        "limited",
+        "restricted",
+        "partial",
+        "timeout",
+        "blocked",
+    }:
+        return "warning"
+
+    if raw in {"error", "broken", "failed", "offline", "invalid"}:
+        return "error"
+
+    if item.get("ok") is True:
+        return "ok"
+
+    if item.get("ok") is False:
+        message = str(
+            item.get("warning")
+            or item.get("error")
+            or item.get("message")
+            or ""
+        ).lower()
+
+        if any(token in message for token in (
+            "404",
+            "410",
+            "dns",
+            "name resolution",
+            "nicht gefunden",
+            "invalid feed",
+        )):
+            return "error"
+
+        return "warning"
+
+    return "unknown"
+
+
+def checked_of(item: dict[str, Any], fallback: str) -> str:
+    return str(
+        item.get("lastChecked")
+        or item.get("checkedAt")
+        or item.get("lastCheck")
+        or item.get("updatedAt")
+        or fallback
+    ).strip()
+
+
+def stable_key(name: str, url: str, used: set[str]) -> str:
+    raw = f"{name}-{url}"
+    key = re.sub(r"[^a-z0-9]+", "-", raw.lower()).strip("-")[:120]
+
+    if not key:
+        key = "source"
+
+    original = key
+    number = 2
+
+    while key in used:
+        key = f"{original}-{number}"
+        number += 1
+
+    used.add(key)
+    return key
+
+
+def catalog_rows() -> list[dict[str, Any]]:
+    return as_rows(read_json(CATALOG_PATH, []))
+
+
+
+def sanitize_oembed_url(value: str) -> str:
+    """Replace accidental WordPress oEmbed endpoints with their target page."""
+
+    raw = str(value or "").strip()
+
+    if "/wp-json/oembed/" not in raw:
+        return raw
+
+    try:
+        parsed = urlparse(raw)
+        target = parse_qs(parsed.query).get("url", [""])[0]
+        target = unquote(target).strip()
+
+        if target:
+            return target
+    except Exception:
+        pass
+
+    return raw
+
+def normalize() -> dict[str, dict[str, Any]]:
+    original = read_json(HEALTH_PATH, {})
+    generated_at = (
+        original.get("generatedAt")
+        if isinstance(original, dict)
+        else None
+    ) or datetime.now(timezone.utc).isoformat()
+
+    rows = as_rows(original)
+
+    # Preserve the rich format before rewriting source-health.json.
+    if isinstance(original, dict) and any(
+        key in original for key in ("schemaVersion", "summary", "sources")
+    ):
+        REPORT_PATH.write_text(
+            json.dumps(original, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+    # If source-health.json is empty or damaged, build unknown entries
+    # from source-catalog.json instead of producing an empty file.
+    if not rows:
+        rows = catalog_rows()
+
+    result: dict[str, dict[str, Any]] = {}
+    used: set[str] = set()
+
+    for item in rows:
+        name = name_of(item)
+        url = url_of(item)
+        status = status_of(item)
+        last_checked = checked_of(item, generated_at)
+
+        key = stable_key(name, url, used)
+
+        normalized: dict[str, Any] = {
+            "name": name,
+            "url": sanitize_oembed_url(url),
+            "status": status,
+            "ok": status == "ok",
+            "lastChecked": last_checked,
+        }
+
+        # Additional fields remain available to the app but do not break
+        # the legacy validator.
+        for field in (
+            "httpStatus",
+            "finalUrl",
+            "contentType",
+            "feedType",
+            "warning",
+            "error",
+            "categories",
+            "pageUrl",
+            "discovered",
+        ):
+            if field in item and item[field] not in (None, "", [], {}):
+                normalized[field] = item[field]
+
+        result[key] = normalized
+
+    HEALTH_PATH.write_text(
+        json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    return result
+
+
+def validate(data: dict[str, dict[str, Any]]) -> list[str]:
+    errors: list[str] = []
+
+    if not isinstance(data, dict):
+        return ["source-health.json muss ein Objekt sein."]
+
+    for key, item in data.items():
+        if not isinstance(item, dict):
+            errors.append(f"Eintrag {key!r} muss ein Objekt sein.")
+            continue
+
+        for required in ("name", "url", "status", "ok", "lastChecked"):
+            if required not in item:
+                errors.append(
+                    f"{key!r} fehlt das Feld {required!r}."
+                )
+
+    return errors
+
+
+def main() -> int:
+    normalized = normalize()
+    errors = validate(normalized)
+
+    print(
+        f"source-health.json normalisiert: "
+        f"{len(normalized)} Quellen."
+    )
+
+    if REPORT_PATH.is_file():
+        print(
+            "Erweiterter Bericht gespeichert: "
+            "source-health-report.json"
+        )
+
+    if errors:
+        for error in errors:
+            print(f"FEHLER: {error}")
+        return 1
+
+    print("Validator-kompatibles Quellenschema: OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
