@@ -32,6 +32,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
+
           python -m pip install --upgrade pip setuptools wheel 2>&1 \
             | tee audio-install.log
 
@@ -74,6 +75,13 @@ jobs:
           python check_audio_sources.py 2>&1 \
             | tee audio-source-check.log
 
+      - name: Quellenstatus für App-Validator normalisieren
+        shell: bash
+        run: |
+          set -o pipefail
+          python normalize_source_health.py 2>&1 \
+            | tee source-health-normalize.log
+
       - name: Erzeugte Audio-Dateien prüfen
         shell: bash
         run: |
@@ -106,6 +114,7 @@ jobs:
             audio-environment-report.json
             audio-output-report.json
             audio-source-report.json
+            source-health-report.json
             podcast-health.json
             audio-health.json
 
@@ -127,6 +136,8 @@ jobs:
             audio-health.json
             audio-environment-report.json
             audio-output-report.json
+            source-health.json
+            source-health-report.json
           )
 
           for file in "${files[@]}"; do
@@ -136,10 +147,10 @@ jobs:
           done
 
           if git diff --cached --quiet; then
-            echo "Keine Audio-Änderungen."
+            echo "Keine Audio- oder Schema-Änderungen."
             exit 0
           fi
 
-          git commit -m "Update repaired podcast and radio health data"
+          git commit -m "Repair audio data and normalize source health schema"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
