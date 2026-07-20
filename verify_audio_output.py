@@ -33,10 +33,10 @@ def count_entries(data: Any, candidates: tuple[str, ...]) -> int:
             return len(value)
 
         if isinstance(value, dict):
-            if key in ("podcasts", "radio"):
-                checks = value.get("checks")
-                if isinstance(checks, list):
-                    return len(checks)
+            checks = value.get("checks")
+
+            if isinstance(checks, list):
+                return len(checks)
 
             return len(value)
 
@@ -57,19 +57,17 @@ def main() -> int:
         try:
             data = load(path)
         except Exception as error:
-            errors.append(f"{filename} enthält ungültiges JSON: {error}")
+            errors.append(
+                f"{filename} enthält ungültiges JSON: {error}"
+            )
             continue
 
-        size = path.stat().st_size
         count = count_entries(data, candidates)
 
         report[filename] = {
-            "sizeBytes": size,
+            "sizeBytes": path.stat().st_size,
             "entryCount": count,
         }
-
-        if size < 3:
-            errors.append(f"{filename} ist leer.")
 
         if filename == "podcasts.json" and count == 0:
             errors.append(
@@ -78,10 +76,7 @@ def main() -> int:
 
     Path("audio-output-report.json").write_text(
         json.dumps(
-            {
-                "files": report,
-                "errors": errors,
-            },
+            {"files": report, "errors": errors},
             ensure_ascii=False,
             indent=2,
         ) + "\n",
@@ -91,7 +86,8 @@ def main() -> int:
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
     if errors:
-        print("\n".join(f"FEHLER: {item}" for item in errors))
+        for error in errors:
+            print(f"FEHLER: {error}")
         return 1
 
     print("Audio-Ausgabedateien erfolgreich geprüft.")

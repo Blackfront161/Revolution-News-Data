@@ -24,6 +24,8 @@ REQUIRED_FILES = [
     "aggregate_podcasts.py",
     "apply_audio_source_repairs.py",
     "check_audio_sources.py",
+    "check_news_sources.py",
+    "normalize_source_health.py",
 ]
 
 
@@ -85,22 +87,6 @@ def main() -> int:
     )
 
     print(json.dumps(report, ensure_ascii=False, indent=2))
-
-    if missing_modules:
-        print("\nFEHLENDE PYTHON-PAKETE:", file=sys.stderr)
-        print("\n".join(missing_modules), file=sys.stderr)
-
-    if missing_files:
-        print("\nFEHLENDE PROJEKTDATEIEN:", file=sys.stderr)
-        print("\n".join(missing_files), file=sys.stderr)
-
-    if syntax_errors:
-        print("\nPYTHON-SYNTAXFEHLER:", file=sys.stderr)
-        print("\n".join(syntax_errors), file=sys.stderr)
-
-    if pip_check.returncode != 0:
-        print("\nABHÄNGIGKEITSKONFLIKTE:", file=sys.stderr)
-        print(report["pipCheckOutput"], file=sys.stderr)
 
     return 1 if (
         missing_modules
