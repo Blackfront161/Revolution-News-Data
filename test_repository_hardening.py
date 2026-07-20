@@ -1,104 +1,103 @@
-'use strict';
+#!/usr/bin/env python3
+"""Regression tests for the WRN workflow and page hardener."""
 
-const assert = require('node:assert/strict');
-const safety = require('../wrn-origin-safety.js');
+from __future__ import annotations
 
-class FakeStorage {
-    constructor(values) {
-        this.values = new Map(Object.entries(values));
-    }
+import importlib.util
+from pathlib import Path
+import tempfile
 
-    get length() {
-        return this.values.size;
-    }
 
-    key(index) {
-        return [...this.values.keys()][index] ?? null;
-    }
+ROOT = Path(__file__).resolve().parent
+MODULE_PATH = ROOT / "harden_wrn_repository.py"
 
-    removeItem(key) {
-        this.values.delete(key);
-    }
+spec = importlib.util.spec_from_file_location(
+    "wrn_hardener",
+    MODULE_PATH,
+)
+module = importlib.util.module_from_spec(spec)
+assert spec.loader is not None
+spec.loader.exec_module(module)
 
-    has(key) {
-        return this.values.has(key);
-    }
-}
 
-(async () => {
-    assert.equal(
-        safety.isOwnedCacheName('wrn-app-v1.7.21'),
-        true
-    );
-    assert.equal(
-        safety.isOwnedCacheName('another-project-cache'),
-        false
-    );
+def test_concurrency() -> None:
+    workflow = """name: Writer
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git push
+"""
 
-    assert.equal(safety.isOwnedStorageKey('wrn_theme'), true);
-    assert.equal(safety.isOwnedStorageKey('wrn-reading'), true);
-    assert.equal(safety.isOwnedStorageKey('wrn:queue'), true);
-    assert.equal(safety.isOwnedStorageKey('wrnReadingState'), true);
-    assert.equal(safety.isOwnedStorageKey('other_project'), false);
+    updated, changed = module.set_common_concurrency(workflow)
 
-    const storage = new FakeStorage({
-        wrn_theme: 'dark',
-        'wrn-reading': '1',
-        other_project: 'keep'
-    });
+    assert changed
+    assert "group: wrn-main-write" in updated
 
-    assert.equal(safety.clearOwnedStorage(storage), 2);
-    assert.equal(storage.has('wrn_theme'), false);
-    assert.equal(storage.has('wrn-reading'), false);
-    assert.equal(storage.has('other_project'), true);
 
-    const deletedCaches = [];
+def test_update_news_staging() -> None:
+    workflow = """name: Update News
+on:
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check sources
+        run: python check_news_sources.py
+      - name: Commit changes
+        run: |
+          git config user.name bot
+          git add source-health.json
+          git commit -m update
+          git push
+"""
 
-    const fakeCaches = {
-        async keys() {
-            return [
-                'wrn-app-v1',
-                'wrn-data-v1',
-                'foreign-cache'
-            ];
-        },
-        async delete(name) {
-            deletedCaches.push(name);
-            return true;
-        }
-    };
+    updated, changed = module.add_update_news_staging(workflow)
 
-    assert.deepEqual(
-        await safety.getOwnedCacheNames(fakeCaches),
-        ['wrn-app-v1', 'wrn-data-v1']
-    );
+    assert changed
+    assert "source-health-report.json" in updated
+    assert "discovered-feeds.json" in updated
+    assert updated.index("source-health-report.json") < updated.index(
+        "git commit"
+    )
 
-    assert.equal(
-        await safety.clearOwnedCaches(fakeCaches),
-        2
-    );
 
-    assert.deepEqual(
-        deletedCaches,
-        ['wrn-app-v1', 'wrn-data-v1']
-    );
+def test_html_injection_and_replacements() -> None:
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "recovery.html"
+        path.write_text(
+            """<html><head></head><body><script>
+localStorage.clear();
+const cachesToDelete = await caches.keys();
+const registrations =
+  await navigator.serviceWorker.getRegistrations();
+</script></body></html>""",
+            encoding="utf-8",
+        )
 
-    assert.equal(
-        safety.isOwnedScope(
-            'https://blackfront161.github.io/Revolution-News-Data/'
-        ),
-        true
-    );
+        assert module.inject_safety_script(path)
+        changes = module.replace_destructive_patterns(path)
+        text = path.read_text(encoding="utf-8")
 
-    assert.equal(
-        safety.isOwnedScope(
-            'https://blackfront161.github.io/Other-Project/'
-        ),
-        false
-    );
+        assert "wrn-origin-safety.js" in text
+        assert "localStorage.clear()" not in text
+        assert "getOwnedCacheNames()" in text
+        assert "getOwnedServiceWorkerRegistrations()" in text
+        assert changes
 
-    console.log('WRN origin safety tests: OK');
-})().catch(error => {
-    console.error(error);
-    process.exit(1);
-});
+
+def main() -> int:
+    test_concurrency()
+    test_update_news_staging()
+    test_html_injection_and_replacements()
+    print("WRN repository hardening tests: OK")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

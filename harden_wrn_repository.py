@@ -238,13 +238,13 @@ def replace_simple_push(text: str) -> tuple[str, bool]:
 
     text = re.sub(
         r"(?m)^(?P<indent>\s*)git pull --rebase.*$",
-        r"\g<indent># Rebase wird von scripts/wrn-safe-push.sh ausgeführt.",
+        r"\g<indent># Rebase wird von wrn-safe-push.sh ausgeführt.",
         text,
     )
 
     text = re.sub(
         r"(?m)^(?P<indent>\s*)git push(?:\s+.*)?$",
-        r'\g<indent>bash scripts/wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"',
+        r'\g<indent>bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"',
         text,
     )
 
