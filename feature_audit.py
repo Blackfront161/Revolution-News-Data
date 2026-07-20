@@ -30,9 +30,11 @@ GROUPS: dict[str, dict[str, list[str]]] = {
         ],
         "optional": [
             "icon.svg",
+            "app-background.css",
             "app-background.webp",
             "wrn-logo.webp",
             "wrn-future-header.webp",
+            "wrn-future-header.png",
         ],
     },
     "intro_and_navigation": {
@@ -230,7 +232,7 @@ def main() -> int:
     payload = {
         "schemaVersion": 1,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.19",
+        "version": "1.7.20",
         "summary": {
             "groups": len(groups),
             "criticalMissing": len(critical_missing),

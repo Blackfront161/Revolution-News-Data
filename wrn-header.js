@@ -1,32 +1,31 @@
-/* World Revolution News 1.7.14 – kompakter futuristischer Header */
+/* World Revolution News 1.7.20 – neuer Header mit transparentem Banner */
 'use strict';
 
 (() => {
-    if (window.__wrnFutureHeader1714) return;
-    window.__wrnFutureHeader1714 = true;
+    if (window.__wrnFutureHeader1720) return;
+    window.__wrnFutureHeader1720 = true;
 
-    const removeOldTitleAssets = header => {
+    const removeOldHeaderAssets = header => {
         header.querySelectorAll(
             '.wrn-brand-title-image, .wrn-title-script, '
             + 'img[src*="wrn-title-script"], '
-            + '.wrn-future-header-image'
+            + '.wrn-future-header-image, .wrn-custom-header-banner'
         ).forEach(node => node.remove());
     };
 
     const install = () => {
         const header = document.querySelector('header');
         const heading = header?.querySelector('h1');
-        const brandArea = heading?.parentElement;
+        const brandArea = heading?.parentElement || header?.firstElementChild || header;
 
         if (!header || !heading || !brandArea) return false;
 
-        removeOldTitleAssets(header);
+        removeOldHeaderAssets(header);
 
         const image = document.createElement('img');
-        image.className = 'wrn-future-header-image';
-        image.src = './wrn-future-header.webp?v=1714';
-        image.alt = '';
-        image.setAttribute('aria-hidden', 'true');
+        image.className = 'wrn-future-header-image wrn-custom-header-banner';
+        image.src = './wrn-future-header.webp?v=1720';
+        image.alt = 'World Revolution News';
         image.decoding = 'async';
         image.fetchPriority = 'high';
         image.draggable = false;
@@ -57,11 +56,7 @@
     };
 
     if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            start,
-            { once: true }
-        );
+        document.addEventListener('DOMContentLoaded', start, { once: true });
     } else {
         start();
     }

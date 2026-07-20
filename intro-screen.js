@@ -2,8 +2,8 @@
 'use strict';
 
 (() => {
-    if (window.__wrnIntroScreen1718) return;
-    window.__wrnIntroScreen1718 = true;
+    if (window.__wrnIntroScreen1720) return;
+    window.__wrnIntroScreen1720 = true;
 
     const params = new URLSearchParams(location.search);
 
@@ -24,49 +24,49 @@
     const now = () => performance.now();
 
     const create = () => {
-        if (document.getElementById('wrn-intro-screen-1718')) {
+        if (document.getElementById('wrn-intro-screen-1720')) {
             return;
         }
 
         screen = document.createElement('section');
-        screen.id = 'wrn-intro-screen-1718';
-        screen.className = 'wrn-intro-screen-1718';
+        screen.id = 'wrn-intro-screen-1720';
+        screen.className = 'wrn-intro-screen-1720';
         screen.setAttribute('aria-label', 'World Revolution News startet');
         screen.setAttribute('role', 'status');
         screen.innerHTML = `
-            <div class="wrn-intro-backdrop-1718"></div>
-            <div class="wrn-intro-shade-1718"></div>
+            <div class="wrn-intro-backdrop-1720"></div>
+            <div class="wrn-intro-shade-1720"></div>
 
-            <div class="wrn-intro-content-1718">
+            <div class="wrn-intro-content-1720">
                 <img
-                    class="wrn-intro-logo-1718"
-                    src="./wrn-logo.webp?v=1718"
+                    class="wrn-intro-logo-1720"
+                    src="./wrn-logo.webp?v=1720"
                     alt=""
                     aria-hidden="true"
                     decoding="async"
                 >
 
                 <img
-                    class="wrn-intro-wordmark-1718"
-                    src="./wrn-future-header.webp?v=1718"
+                    class="wrn-intro-wordmark-1720"
+                    src="./wrn-future-header.webp?v=1720"
                     alt="World Revolution News"
                     decoding="async"
                 >
 
                 <div
-                    class="wrn-intro-progress-track-1718"
+                    class="wrn-intro-progress-track-1720"
                     aria-hidden="true"
                 >
-                    <span class="wrn-intro-progress-1718"></span>
+                    <span class="wrn-intro-progress-1720"></span>
                 </div>
 
-                <p class="wrn-intro-status-1718">
+                <p class="wrn-intro-status-1720">
                     Independent news loading
                 </p>
 
                 <button
                     type="button"
-                    class="wrn-intro-skip-1718"
+                    class="wrn-intro-skip-1720"
                 >
                     Skip
                 </button>
@@ -74,14 +74,14 @@
         `;
 
         progressBar = screen.querySelector(
-            '.wrn-intro-progress-1718'
+            '.wrn-intro-progress-1720'
         );
 
-        screen.querySelector('.wrn-intro-skip-1718')
+        screen.querySelector('.wrn-intro-skip-1720')
             ?.addEventListener('click', () => finish('skip'));
 
         document.body.prepend(screen);
-        document.documentElement.classList.add('wrn-intro-active-1718');
+        document.documentElement.classList.add('wrn-intro-active-1720');
 
         const language = String(
             document.getElementById('ui-language')?.value
@@ -90,14 +90,14 @@
         ).toLowerCase();
 
         if (language.startsWith('de')) {
-            screen.querySelector('.wrn-intro-status-1718')
+            screen.querySelector('.wrn-intro-status-1720')
                 .textContent = 'Unabhängige Nachrichten werden geladen';
-            screen.querySelector('.wrn-intro-skip-1718')
+            screen.querySelector('.wrn-intro-skip-1720')
                 .textContent = 'Überspringen';
         }
 
         requestAnimationFrame(() => {
-            screen?.classList.add('wrn-intro-visible-1718');
+            screen?.classList.add('wrn-intro-visible-1720');
         });
 
         startProgress();
@@ -156,19 +156,19 @@
 
         if (!screen) {
             document.documentElement.classList.remove(
-                'wrn-intro-active-1718'
+                'wrn-intro-active-1720'
             );
             return;
         }
 
         screen.dataset.finishReason = reason;
-        screen.classList.add('wrn-intro-leaving-1718');
+        screen.classList.add('wrn-intro-leaving-1720');
 
         window.setTimeout(() => {
             screen?.remove();
             screen = null;
             document.documentElement.classList.remove(
-                'wrn-intro-active-1718'
+                'wrn-intro-active-1720'
             );
             window.dispatchEvent(
                 new CustomEvent('wrn-intro-closed', {
