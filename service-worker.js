@@ -1,8 +1,9 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.20';
-const DATA_CACHE = 'wrn-data-v1.7.20';
+const APP_CACHE = 'wrn-app-v1.7.21';
+const DATA_CACHE = 'wrn-data-v1.7.21';
+const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
   './',
@@ -39,6 +40,7 @@ const APP_SHELL = [
   './wrn-future-header.webp',
   './wrn-future-header.png',
   './config.js',
+  './wrn-origin-safety.js',
   './offline-db.js',
   './data-control.js',
   './status-center.js',
@@ -154,11 +156,16 @@ self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keep = new Set([APP_CACHE, DATA_CACHE]);
     const cacheNames = await caches.keys();
+
     await Promise.all(
       cacheNames
-        .filter(name => !keep.has(name))
+        .filter(name =>
+          name.startsWith(WRN_CACHE_PREFIX)
+          && !keep.has(name)
+        )
         .map(name => caches.delete(name))
     );
+
     await self.clients.claim();
   })());
 });

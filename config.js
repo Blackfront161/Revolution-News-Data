@@ -1,4 +1,4 @@
-/* World Revolution News – 1.7.20 Header and Background Restore
+/* World Revolution News – 1.7.21 Origin Safety and Workflow Locking
  *
 * Ziel dieser Stufe:
 * - den fehlenden visuellen Hintergrund wiederherstellen
@@ -8,6 +8,122 @@
 * - die Audio-, Quellen- und Zine-Verbesserungen aus 1.7.19 unverändert beibehalten
  */
 'use strict';
+
+/*
+ * Origin-Sicherheit muss vor data-control.js und app.js aktiv sein.
+ * Deshalb wird der Schutz direkt in config.js initialisiert.
+ */
+(() => {
+    if (window.__wrnOriginSafetyBootstrap1721) return;
+    window.__wrnOriginSafetyBootstrap1721 = true;
+
+    const isOwnedCacheName = name =>
+        String(name || '').startsWith('wrn-');
+
+    const isOwnedStorageKey = key => {
+        const value = String(key || '');
+        return /^wrn(?:_|-|:)/i.test(value) || /^wrn[A-Z]/.test(value);
+    };
+
+    const scopePath = new URL('./', location.href).pathname;
+
+    const isOwnedScope = scope => {
+        try {
+            return new URL(scope, location.href)
+                .pathname
+                .startsWith(scopePath);
+        } catch {
+            return false;
+        }
+    };
+
+    const clearOwnedStorage = storage => {
+        if (!storage) return 0;
+
+        const keys = [];
+
+        for (let index = 0; index < storage.length; index += 1) {
+            const key = storage.key(index);
+            if (isOwnedStorageKey(key)) keys.push(key);
+        }
+
+        keys.forEach(key => storage.removeItem(key));
+        return keys.length;
+    };
+
+    if (
+        window.Storage?.prototype
+        && !Storage.prototype.__wrnSafeClear1721
+    ) {
+        Storage.prototype.clear = function scopedClear() {
+            return clearOwnedStorage(this);
+        };
+
+        Object.defineProperty(
+            Storage.prototype,
+            '__wrnSafeClear1721',
+            { value: true }
+        );
+    }
+
+    if (window.caches && !window.caches.__wrnSafeCaches1721) {
+        const nativeKeys = window.caches.keys.bind(window.caches);
+        const nativeDelete = window.caches.delete.bind(window.caches);
+
+        window.caches.keys = async () =>
+            (await nativeKeys()).filter(isOwnedCacheName);
+
+        window.caches.delete = name =>
+            isOwnedCacheName(name)
+                ? nativeDelete(name)
+                : Promise.resolve(false);
+
+        Object.defineProperty(
+            window.caches,
+            '__wrnSafeCaches1721',
+            { value: true }
+        );
+    }
+
+    const workerContainer = navigator.serviceWorker;
+
+    if (
+        workerContainer
+        && !workerContainer.__wrnSafeRegistrations1721
+        && typeof workerContainer.getRegistrations === 'function'
+    ) {
+        const nativeGetRegistrations =
+            workerContainer.getRegistrations.bind(workerContainer);
+
+        workerContainer.getRegistrations = async () =>
+            (await nativeGetRegistrations())
+                .filter(registration =>
+                    isOwnedScope(registration.scope)
+                );
+
+        Object.defineProperty(
+            workerContainer,
+            '__wrnSafeRegistrations1721',
+            { value: true }
+        );
+    }
+
+    window.WRNOriginSafety = Object.freeze({
+        version: '1.7.21',
+        scopePath,
+        isOwnedCacheName,
+        isOwnedStorageKey,
+        isOwnedScope,
+        clearOwnedStorage,
+        getOwnedCacheNames: async () =>
+            window.caches ? window.caches.keys() : [],
+        getOwnedServiceWorkerRegistrations: async () =>
+            navigator.serviceWorker
+                ? navigator.serviceWorker.getRegistrations()
+                : []
+    });
+})();
+
 
 /*
  * Frühe, unabhängige Startanimation.
@@ -37,12 +153,12 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.20',
-    build: '2026.07.20-header-background-restore',
-    releasedAt: '2026-07-21T00:40:00+02:00',
+    version: '1.7.21',
+    build: '2026.07.21-origin-safety-workflow-locking',
+    releasedAt: '2026-07-21T02:10:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 9,
+    recoveryStage: 10,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -69,8 +185,8 @@ window.WRN_CONFIG = Object.freeze({
  * Mit ?full=1 kann die Begrenzung auch auf Mobilgeräten testweise aufgehoben werden.
  */
 (() => {
-    if (window.__wrnRecoveryFeedGuard1720) return;
-    window.__wrnRecoveryFeedGuard1720 = true;
+    if (window.__wrnRecoveryFeedGuard1721) return;
+    window.__wrnRecoveryFeedGuard1721 = true;
 
     const wantsFullFeed = () =>
         new URLSearchParams(location.search).get('full') === '1';
@@ -139,10 +255,10 @@ window.WRN_CONFIG = Object.freeze({
  * Keine DOM-Gesamtsuche bei Klicks und keine Entfernung von App-Funktionen.
  */
 (() => {
-    if (document.getElementById('wrn-recovery-stage-9-style')) return;
+    if (document.getElementById('wrn-recovery-stage-10-style')) return;
 
     const style = document.createElement('style');
-    style.id = 'wrn-recovery-stage-9-style';
+    style.id = 'wrn-recovery-stage-10-style';
     style.textContent = `
         html,
         body {
@@ -241,8 +357,8 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Startbildschirm und alte Blockadeklassen nur einmal entfernen. */
 (() => {
-    if (window.__wrnRecoveryInteractionRelease1720) return;
-    window.__wrnRecoveryInteractionRelease1720 = true;
+    if (window.__wrnRecoveryInteractionRelease1721) return;
+    window.__wrnRecoveryInteractionRelease1721 = true;
 
     const release = () => {
         document.documentElement.classList.remove(
@@ -281,8 +397,8 @@ window.WRN_CONFIG = Object.freeze({
  * blockieren. Der bestehende Inhalt wird nicht gelöscht.
  */
 (() => {
-    if (window.__wrnRecoveryStorageGuard1720) return;
-    window.__wrnRecoveryStorageGuard1720 = true;
+    if (window.__wrnRecoveryStorageGuard1721) return;
+    window.__wrnRecoveryStorageGuard1721 = true;
 
     const shouldGuardStorage = () => {
         const narrow = window.matchMedia('(max-width: 820px)').matches;
@@ -318,7 +434,7 @@ window.WRN_CONFIG = Object.freeze({
     document.addEventListener('DOMContentLoaded', () => {
         const storage = window.WRNStorage;
 
-        if (!storage || storage.__recoveryStage9Guard) return;
+        if (!storage || storage.__recoveryStage10Guard) return;
 
         const original = {
             migrateLegacyLocalStorage:
@@ -331,7 +447,7 @@ window.WRN_CONFIG = Object.freeze({
                 storage.putDataset?.bind(storage)
         };
 
-        storage.__recoveryStage9Guard = true;
+        storage.__recoveryStage10Guard = true;
 
         storage.migrateLegacyLocalStorage = () =>
             original.migrateLegacyLocalStorage
@@ -377,7 +493,7 @@ window.WRN_CONFIG = Object.freeze({
 })();
 
 /*
- * Wiederherstellungsstufe 9:
+ * Wiederherstellungsstufe 10:
  * - Sicherheitsmodul
  * - Sprache und Typografie
  * - horizontale Hauptnavigation
@@ -394,10 +510,10 @@ window.WRN_CONFIG = Object.freeze({
  * Push-Mitteilungen und schwere Diagnose werden noch nicht automatisch geladen.
  */
 (() => {
-    if (window.__wrnRecoveryCoreLoader1720) return;
-    window.__wrnRecoveryCoreLoader1720 = true;
+    if (window.__wrnRecoveryCoreLoader1721) return;
+    window.__wrnRecoveryCoreLoader1721 = true;
 
-    const VERSION = '1720-header-background-restore';
+    const VERSION = '1721-origin-safety-workflow-locking';
 
     const addStyle = (file, marker) => {
         if (
@@ -497,42 +613,43 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadCore = async () => {
         [
-            ['release-1.5-nav.css', 'navigation-recovery-9'],
-            ['typography.css', 'typography-recovery-9'],
-            ['interface-qol.css', 'interface-recovery-9'],
-            ['shared-translation-status.css', 'translation-status-recovery-9'],
-            ['app-background.css', 'background-recovery-9'],
-            ['wrn-header.css', 'future-header-recovery-9'],
-            ['source-verification.css', 'source-verification-recovery-9'],
-            ['briefing-loader.css', 'briefing-loader-recovery-9'],
-            ['article-actions.css', 'article-actions-recovery-9'],
-            ['sticky-dialogs.css', 'sticky-dialogs-recovery-9'],
-            ['audio-tab.css', 'audio-tab-recovery-9'],
-            ['audio-reliability.css', 'audio-reliability-recovery-9'],
-            ['runtime-selftest.css', 'runtime-selftest-recovery-9'],
-            ['recovery-audit.css', 'recovery-audit-recovery-9'],
-            ['language-source-status.css', 'language-source-status-recovery-9'],
-            ['zine-designer.css', 'zine-designer-recovery-9']
+            ['release-1.5-nav.css', 'navigation-recovery-10'],
+            ['typography.css', 'typography-recovery-10'],
+            ['interface-qol.css', 'interface-recovery-10'],
+            ['shared-translation-status.css', 'translation-status-recovery-10'],
+            ['app-background.css', 'background-recovery-10'],
+            ['wrn-header.css', 'future-header-recovery-10'],
+            ['source-verification.css', 'source-verification-recovery-10'],
+            ['briefing-loader.css', 'briefing-loader-recovery-10'],
+            ['article-actions.css', 'article-actions-recovery-10'],
+            ['sticky-dialogs.css', 'sticky-dialogs-recovery-10'],
+            ['audio-tab.css', 'audio-tab-recovery-10'],
+            ['audio-reliability.css', 'audio-reliability-recovery-10'],
+            ['runtime-selftest.css', 'runtime-selftest-recovery-10'],
+            ['recovery-audit.css', 'recovery-audit-recovery-10'],
+            ['language-source-status.css', 'language-source-status-recovery-10'],
+            ['zine-designer.css', 'zine-designer-recovery-10']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
         await loadSequentially([
-            ['app-safety.js', 'safety-recovery-9'],
-            ['wrn-i18n.js', 'i18n-recovery-9'],
-            ['typography.js', 'typography-recovery-9'],
-            ['wrn-header.js', 'future-header-recovery-9'],
-            ['release-1.5-nav.js', 'navigation-recovery-9'],
-            ['source-verification.js', 'source-verification-recovery-9'],
-            ['briefing-loader.js', 'briefing-loader-recovery-9'],
-            ['article-actions.js', 'article-actions-recovery-9'],
-            ['sticky-dialogs.js', 'sticky-dialogs-recovery-9'],
-            ['audio-tab.js', 'audio-tab-recovery-9'],
-            ['audio-reliability.js', 'audio-reliability-recovery-9'],
-            ['runtime-selftest.js', 'runtime-selftest-recovery-9'],
-            ['recovery-audit.js', 'recovery-audit-recovery-9'],
-            ['language-source-status.js', 'language-source-status-recovery-9'],
-            ['zine-designer.js', 'zine-designer-recovery-9'],
-            ['shared-translation-client.js', 'translation-client-recovery-9'],
-            ['translation-dialog-l10n.js', 'translation-dialog-recovery-9']
+            ['wrn-origin-safety.js', 'origin-safety-recovery-10'],
+            ['app-safety.js', 'safety-recovery-10'],
+            ['wrn-i18n.js', 'i18n-recovery-10'],
+            ['typography.js', 'typography-recovery-10'],
+            ['wrn-header.js', 'future-header-recovery-10'],
+            ['release-1.5-nav.js', 'navigation-recovery-10'],
+            ['source-verification.js', 'source-verification-recovery-10'],
+            ['briefing-loader.js', 'briefing-loader-recovery-10'],
+            ['article-actions.js', 'article-actions-recovery-10'],
+            ['sticky-dialogs.js', 'sticky-dialogs-recovery-10'],
+            ['audio-tab.js', 'audio-tab-recovery-10'],
+            ['audio-reliability.js', 'audio-reliability-recovery-10'],
+            ['runtime-selftest.js', 'runtime-selftest-recovery-10'],
+            ['recovery-audit.js', 'recovery-audit-recovery-10'],
+            ['language-source-status.js', 'language-source-status-recovery-10'],
+            ['zine-designer.js', 'zine-designer-recovery-10'],
+            ['shared-translation-client.js', 'translation-client-recovery-10'],
+            ['translation-dialog-l10n.js', 'translation-dialog-recovery-10']
         ]);
 
         /*
@@ -550,7 +667,7 @@ window.WRN_CONFIG = Object.freeze({
         window.setTimeout(() => {
             void loadScript(
                 'shared-translation-status.js',
-                'translation-status-recovery-9',
+                'translation-status-recovery-10',
                 9000
             );
         }, 1400);
@@ -576,8 +693,8 @@ window.WRN_CONFIG = Object.freeze({
  * keine Karte erzeugt hat.
  */
 (() => {
-    if (window.__wrnRecoveryRescueFeed1720) return;
-    window.__wrnRecoveryRescueFeed1720 = true;
+    if (window.__wrnRecoveryRescueFeed1721) return;
+    window.__wrnRecoveryRescueFeed1721 = true;
 
     const run = async () => {
         await new Promise(resolve => {
