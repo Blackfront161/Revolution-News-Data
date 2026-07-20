@@ -1,0 +1,113 @@
+name: Merge approved multilingual sources
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-source-merge
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          if [ -f requirements.txt ]; then
+            python -m pip install -r requirements.txt
+          fi
+          python -m pip install -r requirements-audio.txt
+
+      - name: Quellen ohne Löschungen zusammenführen
+        run: python merge_multilingual_sources.py
+
+      - name: Nachrichten neu aggregieren
+        run: python aggregate.py
+
+      - name: Schnelle Web-Feeds aktualisieren
+        run: |
+          if [ -f build_web_feeds.py ]; then
+            python build_web_feeds.py
+          fi
+
+      - name: Original-Podcasts aktualisieren
+        run: python aggregate_podcasts.py
+
+      - name: Radio und Podcasts prüfen
+        run: |
+          python check_audio_sources.py
+          python reconcile_audio_health.py
+
+      - name: Nachrichtenquellen prüfen
+        run: python check_news_sources.py
+
+      - name: Quellenstatus normalisieren
+        run: python normalize_source_health.py
+
+      - name: Sprachabdeckung prüfen
+        run: python language_source_audit.py
+
+      - name: App prüfen
+        run: |
+          python feature_audit.py
+          if [ -f tests/validate_app.py ]; then
+            python tests/validate_app.py
+          fi
+
+      - name: Änderungen speichern
+        shell: bash
+        run: |
+          set -e
+
+          git config user.name "wrn-source-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          files=(
+            aggregate.py
+            podcast-sources.json
+            radio-sources.json
+            news.json
+            news-feed.json
+            podcasts.json
+            podcast-health.json
+            radio-health.json
+            audio-health.json
+            source-health.json
+            source-health-report.json
+            source-catalog.json
+            discovered-feeds.json
+            language-source-audit.json
+            feature-audit.json
+          )
+
+          for file in "${files[@]}"; do
+            if [ -e "$file" ]; then
+              git add "$file"
+            fi
+          done
+
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+
+          git commit -m "Merge approved multilingual sources and refresh media"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
