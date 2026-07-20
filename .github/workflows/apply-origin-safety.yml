@@ -26,24 +26,259 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Benötigte Sicherheitsdateien prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            wrn-origin-safety.js
+            harden_wrn_repository.py
+            wrn-safe-push.sh
+            config.js
+            service-worker.js
+          )
+
+          for file in "${required[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "FEHLER: Benötigte Datei fehlt: $file"
+              exit 1
+            fi
+          done
+
       - name: Aktuelle Reparaturseiten und Workflows absichern
         run: python harden_wrn_repository.py
 
-      - name: Origin-Sicherheit testen
+      - name: JavaScript-Syntax prüfen
         run: |
           node --check wrn-origin-safety.js
           node --check config.js
           node --check service-worker.js
-          node tests/test_origin_safety.js
-          python tests/test_repository_hardening.py
+
+      - name: Origin-Sicherheit direkt testen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          node <<'NODE'
+          'use strict';
+
+          const assert = require('node:assert/strict');
+          const safety = require('./wrn-origin-safety.js');
+
+          class FakeStorage {
+            constructor(values) {
+              this.values = new Map(Object.entries(values));
+            }
+
+            get length() {
+              return this.values.size;
+            }
+
+            key(index) {
+              return [...this.values.keys()][index] ?? null;
+            }
+
+            removeItem(key) {
+              this.values.delete(key);
+            }
+
+            has(key) {
+              return this.values.has(key);
+            }
+          }
+
+          (async () => {
+            assert.equal(
+              safety.isOwnedCacheName('wrn-app-v1.7.21'),
+              true
+            );
+            assert.equal(
+              safety.isOwnedCacheName('foreign-project-cache'),
+              false
+            );
+
+            assert.equal(
+              safety.isOwnedStorageKey('wrn_theme'),
+              true
+            );
+            assert.equal(
+              safety.isOwnedStorageKey('foreign_theme'),
+              false
+            );
+
+            const storage = new FakeStorage({
+              wrn_theme: 'dark',
+              'wrn-reading': '1',
+              foreign_theme: 'keep'
+            });
+
+            assert.equal(
+              safety.clearOwnedStorage(storage),
+              2
+            );
+            assert.equal(storage.has('wrn_theme'), false);
+            assert.equal(storage.has('wrn-reading'), false);
+            assert.equal(storage.has('foreign_theme'), true);
+
+            const deleted = [];
+            const fakeCaches = {
+              async keys() {
+                return [
+                  'wrn-app-v1',
+                  'wrn-data-v1',
+                  'foreign-cache'
+                ];
+              },
+              async delete(name) {
+                deleted.push(name);
+                return true;
+              }
+            };
+
+            assert.deepEqual(
+              await safety.getOwnedCacheNames(fakeCaches),
+              ['wrn-app-v1', 'wrn-data-v1']
+            );
+
+            assert.equal(
+              await safety.clearOwnedCaches(fakeCaches),
+              2
+            );
+
+            assert.deepEqual(
+              deleted,
+              ['wrn-app-v1', 'wrn-data-v1']
+            );
+
+            assert.equal(
+              safety.isOwnedScope(
+                'https://blackfront161.github.io/'
+                + 'Revolution-News-Data/'
+              ),
+              true
+            );
+
+            assert.equal(
+              safety.isOwnedScope(
+                'https://blackfront161.github.io/'
+                + 'Other-Project/'
+              ),
+              false
+            );
+
+            console.log('WRN origin safety inline test: OK');
+          })().catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Workflow-Härtung direkt testen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python <<'PY'
+          from pathlib import Path
+          import importlib.util
+          import tempfile
+
+          module_path = Path("harden_wrn_repository.py")
+
+          spec = importlib.util.spec_from_file_location(
+              "wrn_hardener",
+              module_path,
+          )
+          module = importlib.util.module_from_spec(spec)
+          assert spec.loader is not None
+          spec.loader.exec_module(module)
+
+          workflow_text = (
+              "name: Update News\n"
+              "on:\n"
+              "  workflow_dispatch:\n"
+              "permissions:\n"
+              "  contents: write\n"
+              "jobs:\n"
+              "  update:\n"
+              "    runs-on: ubuntu-latest\n"
+              "    steps:\n"
+              "      - name: Check sources\n"
+              "        run: python check_news_sources.py\n"
+              "      - name: Commit changes\n"
+              "        run: |\n"
+              "          git config user.name bot\n"
+              "          git add source-health.json\n"
+              "          git commit -m update\n"
+              "          git push\n"
+          )
+
+          updated, changed = module.set_common_concurrency(
+              workflow_text
+          )
+          assert changed
+          assert "group: wrn-main-write" in updated
+
+          updated, changed = module.add_update_news_staging(
+              workflow_text
+          )
+          assert changed
+          assert "source-health-report.json" in updated
+          assert "discovered-feeds.json" in updated
+          assert updated.index(
+              "source-health-report.json"
+          ) < updated.index("git commit")
+
+          updated, changed = module.replace_simple_push(
+              workflow_text
+          )
+          assert changed
+          assert "bash wrn-safe-push.sh" in updated
+          assert "scripts/wrn-safe-push.sh" not in updated
+
+          with tempfile.TemporaryDirectory() as directory:
+              path = Path(directory) / "recovery.html"
+              path.write_text(
+                  "<html><head></head><body><script>\n"
+                  "localStorage.clear();\n"
+                  "const names = await caches.keys();\n"
+                  "const registrations = await "
+                  "navigator.serviceWorker.getRegistrations();\n"
+                  "</script></body></html>",
+                  encoding="utf-8",
+              )
+
+              assert module.inject_safety_script(path)
+              changes = module.replace_destructive_patterns(
+                  path
+              )
+              text = path.read_text(encoding="utf-8")
+
+              assert "wrn-origin-safety.js" in text
+              assert "localStorage.clear()" not in text
+              assert "getOwnedCacheNames()" in text
+              assert (
+                  "getOwnedServiceWorkerRegistrations()"
+                  in text
+              )
+              assert changes
+
+          print("WRN repository hardening inline test: OK")
+          PY
 
       - name: Service-Worker-Scope statisch prüfen
         shell: bash
         run: |
           set -euo pipefail
 
-          grep -q "name.startsWith(WRN_CACHE_PREFIX)" service-worker.js
-          grep -q "const WRN_CACHE_PREFIX = 'wrn-'" service-worker.js
+          grep -q \
+            "name.startsWith(WRN_CACHE_PREFIX)" \
+            service-worker.js
+
+          grep -q \
+            "const WRN_CACHE_PREFIX = 'wrn-'" \
+            service-worker.js
 
           if grep -n \
             ".filter(name => !keep.has(name))" \
@@ -57,6 +292,8 @@ jobs:
         run: |
           if [ -f tests/validate_app.py ]; then
             python tests/validate_app.py
+          else
+            echo "Hinweis: tests/validate_app.py nicht vorhanden."
           fi
 
       - name: Änderungen speichern
@@ -65,11 +302,16 @@ jobs:
           set -euo pipefail
 
           git config user.name "wrn-safety-bot"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.email \
+            "actions@users.noreply.github.com"
 
-          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          find . -type d -name __pycache__ \
+            -prune -exec rm -rf {} +
+
           find . -type f \
-            \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \) \
+            \( -name '*.pyc' \
+            -o -name '*.pyo' \
+            -o -name '*.tmp' \) \
             -delete
 
           git add -A -- .
@@ -82,5 +324,5 @@ jobs:
           git commit -m \
             "Apply origin-scoped data deletion and workflow locking"
 
-          bash scripts/wrn-safe-push.sh \
+          bash wrn-safe-push.sh \
             "${GITHUB_REF_NAME:-main}"
