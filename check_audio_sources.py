@@ -1,386 +1,334 @@
 #!/usr/bin/env python3
-"""Resolve curated radio stations and validate browser-playable HTTPS streams.
+"""Check actual podcast audio files and live radio streams."""
 
-1.7.5 improvements:
-- preserves the last known working stream during short outages
-- verifies response type and audio magic bytes
-- records latency, redirects, candidate results and last success
-- distinguishes healthy, degraded, error and unknown
-"""
 from __future__ import annotations
-
+from collections import defaultdict
+from datetime import datetime, timezone
+import configparser
+import io
 import json
-import re
-import socket
-import time
-from datetime import datetime, timezone, timedelta
-from difflib import SequenceMatcher
 from pathlib import Path
-from urllib.parse import quote, urlparse
+from typing import Any
+from urllib.parse import urljoin
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parent
-SOURCES_FILE = ROOT / "radio-sources.json"
-OUTPUT_FILE = ROOT / "radio-stations.json"
-HEALTH_FILE = ROOT / "radio-health.json"
-USER_AGENT = "WorldRevolutionNews-RadioHealth/1.7.5 (+https://blackfront161.github.io/Revolution-News-Data/)"
+PODCASTS = ROOT / "podcasts.json"
+RADIOS = ROOT / "radio-stations.json"
+OUTPUT = ROOT / "audio-health.json"
 
-session = requests.Session()
-session.headers.update({
-    "User-Agent": USER_AGENT,
-    "Accept": "audio/*, application/ogg, application/octet-stream, */*;q=0.3",
-    "Icy-MetaData": "1",
-})
-
-FALLBACK_API_SERVERS = [
-    "https://de1.api.radio-browser.info",
-    "https://de2.api.radio-browser.info",
-    "https://nl1.api.radio-browser.info",
-]
-
-AUDIO_TYPES = (
-    "audio/",
-    "application/ogg",
-    "application/x-ogg",
-    "application/octet-stream",
-    "binary/octet-stream",
+TIMEOUT = (8, 15)
+MAX_BYTES = 65536
+USER_AGENT = (
+    "Mozilla/5.0 (compatible; WorldRevolutionNews/1.7.17; "
+    "+https://blackfront161.github.io/Revolution-News-Data/)"
 )
-STALE_GRACE = timedelta(days=7)
 
 
-def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
-
-
-def iso_now() -> str:
-    return utc_now().isoformat()
-
-
-def unique(values):
-    return list(dict.fromkeys(str(value).strip() for value in values if str(value).strip()))
-
-
-def load_json(path: Path, fallback):
+def read_json(path: Path, fallback: Any) -> Any:
+    if not path.exists():
+        return fallback
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return fallback
 
 
-def normalize_name(value: str) -> str:
-    return re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
+def rows(data: Any) -> list[dict[str, Any]]:
+    if isinstance(data, list):
+        return [item for item in data if isinstance(item, dict)]
+    if isinstance(data, dict):
+        for field in ("items", "episodes", "stations", "sources", "results"):
+            if isinstance(data.get(field), list):
+                return [item for item in data[field] if isinstance(item, dict)]
+        return [
+            {"name": name, **value}
+            for name, value in data.items()
+            if isinstance(value, dict)
+        ]
+    return []
 
 
-def similarity(a: str, b: str) -> float:
-    return SequenceMatcher(None, normalize_name(a), normalize_name(b)).ratio()
+def first(item: dict[str, Any], names: tuple[str, ...]) -> str:
+    for name in names:
+        value = item.get(name)
+        if value:
+            if isinstance(value, dict):
+                for nested in ("url", "href", "src"):
+                    if value.get(nested):
+                        return str(value[nested]).strip()
+            return str(value).strip()
+    return ""
 
 
-def parse_iso(value: str) -> datetime | None:
-    try:
-        parsed = datetime.fromisoformat(str(value or "").replace("Z", "+00:00"))
-        if parsed.tzinfo is None:
-            parsed = parsed.replace(tzinfo=timezone.utc)
-        return parsed.astimezone(timezone.utc)
-    except Exception:
-        return None
+def podcast_name(item: dict[str, Any]) -> str:
+    return first(
+        item,
+        (
+            "sourceName", "podcastName", "podcast", "show",
+            "quelleName", "source", "author"
+        ),
+    ) or "Unbekannter Podcast"
 
 
-def radio_browser_servers() -> list[str]:
-    servers = []
-    try:
-        for info in socket.getaddrinfo("all.api.radio-browser.info", 443, type=socket.SOCK_STREAM):
-            ip = info[4][0]
-            try:
-                hostname = socket.gethostbyaddr(ip)[0]
-                if hostname:
-                    servers.append(f"https://{hostname}")
-            except Exception:
-                continue
-    except Exception:
-        pass
-    return unique(servers + FALLBACK_API_SERVERS)
+def podcast_url(item: dict[str, Any]) -> str:
+    return first(
+        item,
+        (
+            "audioUrl", "audio_url", "enclosureUrl", "enclosure",
+            "mediaUrl", "file", "url"
+        ),
+    )
 
 
-def lookup_radio_browser(names: list[str], website: str = "") -> list[str]:
-    website_host = (urlparse(website).hostname or "").replace("www.", "")
-    candidates: list[str] = []
+def radio_name(item: dict[str, Any]) -> str:
+    return first(item, ("name", "station", "title", "label", "sourceName")) \
+        or "Unbekanntes Radio"
 
-    for server in radio_browser_servers():
-        for name in names:
-            try:
-                url = (
-                    f"{server}/json/stations/byname/{quote(name)}"
-                    "?hidebroken=true&limit=20&order=clickcount&reverse=true"
-                )
-                response = session.get(url, timeout=15)
-                response.raise_for_status()
-                rows = response.json()
-            except Exception:
-                continue
 
-            ranked = []
-            for row in rows if isinstance(rows, list) else []:
-                row_name = str(row.get("name") or "")
-                score = similarity(name, row_name)
-                homepage_host = (
-                    urlparse(str(row.get("homepage") or "")).hostname or ""
-                ).replace("www.", "")
-                if website_host and homepage_host and (
-                    homepage_host == website_host
-                    or homepage_host.endswith("." + website_host)
-                    or website_host.endswith("." + homepage_host)
-                ):
-                    score += 0.45
-                if score < 0.48:
-                    continue
+def radio_url(item: dict[str, Any]) -> str:
+    return first(
+        item,
+        ("streamUrl", "stream_url", "audioUrl", "playlistUrl", "stream", "url"),
+    )
 
-                stream = str(row.get("url_resolved") or row.get("url") or "").strip()
-                if stream.startswith("https://"):
-                    ranked.append((
-                        score,
-                        int(row.get("clickcount") or 0),
-                        int(row.get("bitrate") or 0),
-                        stream,
-                    ))
 
-            ranked.sort(reverse=True)
-            candidates.extend(stream for _, _, _, stream in ranked[:5])
+def client() -> requests.Session:
+    retry = Retry(
+        total=2,
+        connect=2,
+        read=1,
+        backoff_factor=0.5,
+        status_forcelist=[500, 502, 503, 504],
+        allowed_methods=frozenset(["GET"]),
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session = requests.Session()
+    session.headers.update({
+        "User-Agent": USER_AGENT,
+        "Accept": "audio/*, application/x-mpegURL, audio/x-mpegurl, */*",
+    })
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    return session
 
-        if candidates:
+
+def read_limited(response: requests.Response) -> bytes:
+    result = bytearray()
+    for chunk in response.iter_content(8192):
+        if not chunk:
+            continue
+        result.extend(chunk[: MAX_BYTES - len(result)])
+        if len(result) >= MAX_BYTES:
             break
-
-    return unique(candidates)
-
-
-def looks_like_audio(chunk: bytes) -> bool:
-    if not chunk:
-        return False
-    prefix = chunk[:16]
-    if prefix.startswith((b"ID3", b"OggS", b"fLaC", b"RIFF")):
-        return True
-    if len(prefix) >= 2 and prefix[0] == 0xFF and (prefix[1] & 0xE0) == 0xE0:
-        return True
-    if b"ftypM4A" in chunk[:32] or b"ftypisom" in chunk[:32]:
-        return True
-    return False
+    return bytes(result)
 
 
-def looks_like_markup(chunk: bytes) -> bool:
-    sample = chunk[:256].lstrip().lower()
-    return sample.startswith((
-        b"<!doctype html",
-        b"<html",
-        b"<?xml",
-        b"{",
-        b"[",
-    ))
+def playlist_target(body: bytes, content_type: str, base_url: str) -> str:
+    text = body.decode("utf-8", errors="replace")
+    lowered = content_type.lower()
+
+    if "scpls" in lowered or "[playlist]" in text.lower():
+        parser = configparser.ConfigParser()
+        try:
+            parser.read_file(io.StringIO(text))
+            for section in parser.sections():
+                for name, value in parser.items(section):
+                    if name.lower().startswith("file") and value.strip():
+                        return urljoin(base_url, value.strip())
+        except Exception:
+            pass
+
+    if "mpegurl" in lowered or "#extm3u" in text.lower():
+        for line in text.splitlines():
+            value = line.strip()
+            if value and not value.startswith("#"):
+                return urljoin(base_url, value)
+
+    return ""
 
 
-def check_stream(url: str) -> dict:
-    started = time.monotonic()
+def test_url(
+    session: requests.Session,
+    url: str,
+    *,
+    resolve_playlist: bool = True,
+) -> dict[str, Any]:
     result = {
         "url": url,
-        "ok": False,
-        "statusCode": 0,
+        "status": "unknown",
+        "httpStatus": 0,
         "contentType": "",
-        "finalUrl": "",
-        "latencyMs": 0,
-        "message": "",
+        "detail": "",
     }
 
-    if not str(url).startswith("https://"):
-        result["message"] = "Kein HTTPS-Stream"
+    if not url:
+        result["status"] = "broken"
+        result["detail"] = "Keine Audio-Adresse."
         return result
 
     try:
         response = session.get(
             url,
-            stream=True,
-            timeout=(8, 16),
+            headers={"Range": "bytes=0-65535"},
+            timeout=TIMEOUT,
             allow_redirects=True,
-            headers={"Range": "bytes=0-4095", "Icy-MetaData": "1"},
+            stream=True,
         )
-        result["statusCode"] = response.status_code
-        result["contentType"] = str(response.headers.get("content-type") or "").lower()
-        result["finalUrl"] = str(response.url or url)
-        result["latencyMs"] = round((time.monotonic() - started) * 1000)
+        result["httpStatus"] = response.status_code
+        result["contentType"] = response.headers.get("Content-Type", "")
 
-        if not result["finalUrl"].startswith("https://"):
-            response.close()
-            result["message"] = "Weiterleitung auf unsicheres HTTP"
+        if response.status_code in (401, 403, 408, 429):
+            result["status"] = "limited"
+            result["detail"] = f"Automatischer Test begrenzt (HTTP {response.status_code})."
+            return result
+        if response.status_code in (404, 410):
+            result["status"] = "broken"
+            result["detail"] = f"Nicht gefunden (HTTP {response.status_code})."
+            return result
+        if response.status_code >= 500:
+            result["status"] = "limited"
+            result["detail"] = f"Temporärer Serverfehler (HTTP {response.status_code})."
+            return result
+        if not 200 <= response.status_code < 400:
+            result["status"] = "limited"
+            result["detail"] = f"Unerwarteter Status HTTP {response.status_code}."
             return result
 
-        if response.status_code not in {200, 206}:
-            response.close()
-            result["message"] = f"HTTP {response.status_code}"
-            return result
+        body = read_limited(response)
+        if resolve_playlist:
+            nested = playlist_target(body, result["contentType"], response.url)
+            if nested and nested != url:
+                nested_result = test_url(
+                    session,
+                    nested,
+                    resolve_playlist=False,
+                )
+                nested_result["playlistUrl"] = url
+                return nested_result
 
-        chunk = b""
-        for part in response.iter_content(4096):
-            if part:
-                chunk += part
-                if len(chunk) >= 4096:
-                    break
-        response.close()
-
-        if not chunk:
-            result["message"] = "Stream liefert keine Daten"
-            return result
-
-        content_type = result["contentType"]
-        type_is_audio = content_type.startswith(AUDIO_TYPES)
-        magic_is_audio = looks_like_audio(chunk)
-
-        if "text/html" in content_type or "application/json" in content_type or looks_like_markup(chunk):
-            result["message"] = f"Kein Audiostream ({content_type or 'Markup'})"
-            return result
-
-        if not type_is_audio and not magic_is_audio:
-            result["message"] = f"Audioformat nicht sicher erkennbar ({content_type or 'ohne Typ'})"
-            return result
-
-        result["ok"] = True
-        result["message"] = "Stream erreichbar"
+        ctype = result["contentType"].lower()
+        signature = (
+            body.startswith(b"ID3")
+            or body.startswith(b"OggS")
+            or body.startswith(b"fLaC")
+            or b"ftyp" in body[:32]
+            or body[:2] in (b"\xff\xfb", b"\xff\xf3", b"\xff\xf2")
+        )
+        if ctype.startswith("audio/") or "application/ogg" in ctype or signature:
+            result["status"] = "playable"
+            result["detail"] = "Audioantwort erfolgreich."
+        elif body:
+            result["status"] = "limited"
+            result["detail"] = "Erreichbar, Audioformat nicht eindeutig."
+        else:
+            result["status"] = "limited"
+            result["detail"] = "Leere Testantwort."
         return result
-    except Exception as exc:
-        result["latencyMs"] = round((time.monotonic() - started) * 1000)
-        result["message"] = f"{type(exc).__name__}: {exc}"
+
+    except requests.exceptions.Timeout as error:
+        result["status"] = "limited"
+        result["detail"] = f"Zeitüberschreitung: {error}"
         return result
+    except requests.RequestException as error:
+        message = str(error)
+        result["status"] = (
+            "broken"
+            if any(token in message for token in (
+                "NameResolutionError",
+                "Name or service not known",
+                "getaddrinfo failed",
+            ))
+            else "limited"
+        )
+        result["detail"] = message
+        return result
+
+
+def summary(checks: list[dict[str, Any]]) -> dict[str, int]:
+    return {
+        "total": len(checks),
+        "playable": sum(item.get("status") == "playable" for item in checks),
+        "limited": sum(item.get("status") == "limited" for item in checks),
+        "broken": sum(item.get("status") == "broken" for item in checks),
+        "unknown": sum(item.get("status") == "unknown" for item in checks),
+    }
 
 
 def main() -> int:
-    sources = load_json(SOURCES_FILE, [])
-    if not isinstance(sources, list):
-        raise SystemExit("radio-sources.json muss eine Liste enthalten")
+    podcast_items = rows(read_json(PODCASTS, []))
+    radio_items = rows(read_json(RADIOS, []))
 
-    previous_stations = {
-        item.get("id"): item
-        for item in load_json(OUTPUT_FILE, [])
-        if isinstance(item, dict) and item.get("id")
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in podcast_items:
+        grouped[podcast_name(item)].append(item)
+
+    podcast_checks: list[dict[str, Any]] = []
+    radio_checks: list[dict[str, Any]] = []
+    session = client()
+
+    try:
+        for name, episodes in sorted(grouped.items()):
+            urls = [podcast_url(item) for item in episodes]
+            urls = [url for url in urls if url][:2]
+
+            if not urls:
+                podcast_checks.append({
+                    "name": name,
+                    "status": "broken",
+                    "detail": "Keine Audiodatei in den Episoden.",
+                })
+                continue
+
+            checks = [test_url(session, url) for url in urls]
+            statuses = [item["status"] for item in checks]
+            status = (
+                "playable" if "playable" in statuses
+                else "limited" if "limited" in statuses
+                else "broken" if "broken" in statuses
+                else "unknown"
+            )
+            podcast_checks.append({
+                "name": name,
+                "status": status,
+                "testedEpisodes": len(checks),
+                "checks": checks,
+            })
+
+        for station in radio_items:
+            checked = test_url(session, radio_url(station))
+            radio_checks.append({
+                "name": radio_name(station),
+                **checked,
+            })
+    finally:
+        session.close()
+
+    payload = {
+        "schemaVersion": 1,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "podcasts": {
+            "summary": summary(podcast_checks),
+            "checks": podcast_checks,
+            "episodeCount": len(podcast_items),
+        },
+        "radio": {
+            "summary": summary(radio_checks),
+            "checks": radio_checks,
+            "stationCount": len(radio_items),
+        },
     }
-    previous_health = load_json(HEALTH_FILE, {})
-    if not isinstance(previous_health, dict):
-        previous_health = {}
-
-    stations = []
-    health = {}
-
-    for source in sources:
-        source_id = source.get("id", source.get("name", "unknown"))
-        print(f"[RADIO] {source.get('name')}")
-
-        previous_station = previous_stations.get(source_id, {})
-        previous_row = previous_health.get(source_id, {})
-        previous_working = (
-            previous_row.get("workingStream")
-            or previous_station.get("workingStream")
-            or ""
-        )
-
-        manual = list(source.get("streamCandidates") or [])
-        discovered = lookup_radio_browser(
-            list(source.get("radioBrowserNames") or [source.get("name", "")]),
-            source.get("website", "")
-        )
-        candidates = unique(([previous_working] if previous_working else []) + manual + discovered)
-
-        working = ""
-        checks = []
-        for candidate in candidates[:12]:
-            check = check_stream(candidate)
-            checks.append(check)
-            if check["ok"]:
-                working = check["finalUrl"] or candidate
-                break
-
-        now = utc_now()
-        previous_success = parse_iso(
-            previous_row.get("lastSuccessAt")
-            or previous_station.get("lastSuccess")
-            or previous_row.get("checkedAt")
-            or ""
-        )
-        recent_previous = bool(
-            previous_working
-            and previous_success
-            and now - previous_success <= STALE_GRACE
-        )
-
-        if working:
-            status = "healthy"
-            usable_stream = working
-            last_success = now.isoformat()
-        elif recent_previous:
-            status = "degraded"
-            usable_stream = previous_working
-            last_success = previous_success.isoformat()
-        elif candidates:
-            status = "error"
-            usable_stream = ""
-            last_success = previous_success.isoformat() if previous_success else ""
-        else:
-            status = "unknown"
-            usable_stream = ""
-            last_success = previous_success.isoformat() if previous_success else ""
-
-        ordered_candidates = unique(([usable_stream] if usable_stream else []) + candidates)
-
-        station = {
-            key: value for key, value in source.items()
-            if key != "radioBrowserNames"
-        }
-        station["streamCandidates"] = ordered_candidates
-        station["healthStatus"] = status
-        station["workingStream"] = usable_stream
-        station["lastChecked"] = now.isoformat()
-        station["lastSuccess"] = last_success
-        stations.append(station)
-
-        failures = [item for item in checks if not item.get("ok")]
-        health[source_id] = {
-            "name": source.get("name"),
-            "status": status,
-            "ok": status in {"healthy", "degraded"},
-            "workingStream": usable_stream,
-            "candidateCount": len(candidates),
-            "testedCount": len(checks),
-            "checkedAt": now.isoformat(),
-            "lastSuccessAt": last_success,
-            "latencyMs": next((item["latencyMs"] for item in checks if item.get("ok")), 0),
-            "contentType": next((item["contentType"] for item in checks if item.get("ok")), ""),
-            "finalUrl": next((item["finalUrl"] for item in checks if item.get("ok")), usable_stream),
-            "message": (
-                "Stream erreichbar"
-                if status == "healthy"
-                else "Letzten funktionierenden Stream vorübergehend beibehalten"
-                if status == "degraded"
-                else failures[-1]["message"]
-                if failures
-                else "Kein Streamkandidat gefunden"
-            ),
-            "candidateResults": checks[:8],
-        }
-
-    stations.sort(key=lambda item: (
-        item.get("region", ""),
-        item.get("country", ""),
-        item.get("name", "")
-    ))
-    OUTPUT_FILE.write_text(
-        json.dumps(stations, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8"
+    OUTPUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
     )
-    HEALTH_FILE.write_text(
-        json.dumps(health, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8"
-    )
-
-    healthy = sum(1 for item in health.values() if item.get("status") == "healthy")
-    degraded = sum(1 for item in health.values() if item.get("status") == "degraded")
-    broken = sum(1 for item in health.values() if item.get("status") == "error")
-    unknown = sum(1 for item in health.values() if item.get("status") == "unknown")
-    print(f"[RADIO] healthy={healthy} degraded={degraded} error={broken} unknown={unknown}")
+    print(json.dumps({
+        "podcasts": payload["podcasts"]["summary"],
+        "radio": payload["radio"]["summary"],
+    }, ensure_ascii=False))
     return 0
 
 

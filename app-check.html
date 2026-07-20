@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WRN App-Test</title>
+<style>
+:root{color-scheme:dark}
+body{margin:0;padding:1rem;background:#07080d;color:#fff;font-family:system-ui,sans-serif}
+main{max-width:900px;margin:auto}h1{color:#b39cff}
+article{margin:.5rem 0;padding:.7rem;border:1px solid #333;border-left-width:4px;border-radius:6px;background:#10131b}
+.ok{border-left-color:#00d596}.warning{border-left-color:#f0a43c}.error{border-left-color:#ff3158}
+</style>
+</head>
+<body><main>
+<h1>World Revolution News – Daten- und App-Test</h1>
+<p id="status">Prüfung läuft …</p><div id="results"></div>
+<script>
+const endpoints=[
+ ['Nachrichten','./news-feed.json'],
+ ['Termine','./events-feed.json'],
+ ['Original-Podcasts','./podcasts.json'],
+ ['Live-Radio','./radio-stations.json'],
+ ['Quellenstatus','./source-health.json'],
+ ['Audio-Status','./audio-health.json']
+];
+const count=d=>Array.isArray(d)?d.length:(d&&typeof d==='object'?(Array.isArray(d.items)?d.items.length:Array.isArray(d.sources)?d.sources.length:Array.isArray(d.stations)?d.stations.length:Object.keys(d).length):0);
+(async()=>{
+ const rows=[];
+ for(const [name,url] of endpoints){
+  try{
+   const r=await fetch(`${url}?test=${Date.now()}`,{cache:'no-store'});
+   if(!r.ok)throw new Error(`HTTP ${r.status}`);
+   const d=await r.json(),n=count(d);
+   rows.push({name,status:n>0?'ok':'warning',detail:`${n} Einträge`});
+  }catch(e){rows.push({name,status:'error',detail:String(e)});}
+ }
+ document.getElementById('results').innerHTML=rows.map(r=>`<article class="${r.status}"><strong>${r.name}</strong><p>${r.detail}</p></article>`).join('');
+ document.getElementById('status').textContent=`Geprüft: ${new Date().toLocaleString()}`;
+})();
+</script></main></body></html>
