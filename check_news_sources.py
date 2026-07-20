@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""World Revolution News 1.7.15 – robuste Quellenprüfung."""
+"""World Revolution News 1.7.16 – Quellenprüfung mit Feed-Erkennung."""
 
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
+from html.parser import HTMLParser
 import json
 from pathlib import Path
 import re
 import socket
 import ssl
 from typing import Any
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import warnings
 
 import requests
@@ -23,18 +24,54 @@ from urllib3.util.retry import Retry
 ROOT = Path(__file__).resolve().parent
 CATALOG_PATH = ROOT / "source-catalog.json"
 OUTPUT_PATH = ROOT / "source-health.json"
+DISCOVERED_PATH = ROOT / "discovered-feeds.json"
 
 USER_AGENT = (
-    "Mozilla/5.0 (compatible; WorldRevolutionNews/1.7.15; "
+    "Mozilla/5.0 (compatible; WorldRevolutionNews/1.7.16; "
     "+https://blackfront161.github.io/Revolution-News-Data/)"
 )
 
 CONNECT_TIMEOUT = 8
 READ_TIMEOUT = 15
-MAX_BYTES = 131072
+MAX_BYTES = 196608
 MAX_WORKERS = 8
 
 warnings.simplefilter("ignore", InsecureRequestWarning)
+
+
+class FeedLinkParser(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.links: list[str] = []
+
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]]
+    ) -> None:
+        if tag.lower() != "link":
+            return
+
+        data = {
+            str(key).lower(): str(value or "")
+            for key, value in attrs
+        }
+
+        rel = data.get("rel", "").lower()
+        content_type = data.get("type", "").lower()
+        href = data.get("href", "").strip()
+
+        if not href or "alternate" not in rel:
+            return
+
+        if any(token in content_type for token in (
+            "rss",
+            "atom",
+            "feed+json",
+            "application/xml",
+            "text/xml",
+        )):
+            self.links.append(href)
 
 
 def load_json(path: Path) -> Any:
@@ -48,19 +85,18 @@ def as_sources(data: Any) -> list[dict[str, Any]]:
     if isinstance(data, dict):
         for key in ("sources", "items", "entries", "results"):
             value = data.get(key)
+
             if isinstance(value, list):
                 return [
                     item for item in value
                     if isinstance(item, dict)
                 ]
 
-        rows: list[dict[str, Any]] = []
-
-        for key, value in data.items():
-            if isinstance(value, dict):
-                rows.append({"name": key, **value})
-
-        return rows
+        return [
+            {"name": key, **value}
+            for key, value in data.items()
+            if isinstance(value, dict)
+        ]
 
     return []
 
@@ -76,11 +112,23 @@ def source_name(item: dict[str, Any]) -> str:
     ).strip()
 
 
-def source_url(item: dict[str, Any]) -> str:
+def explicit_feed_url(item: dict[str, Any]) -> str:
     return str(
-        item.get("url")
-        or item.get("feedUrl")
+        item.get("feedUrl")
         or item.get("feed")
+        or item.get("rss")
+        or item.get("atom")
+        or ""
+    ).strip()
+
+
+def source_page_url(item: dict[str, Any]) -> str:
+    return str(
+        item.get("homepage")
+        or item.get("website")
+        or item.get("siteUrl")
+        or item.get("sourceUrl")
+        or item.get("url")
         or item.get("link")
         or ""
     ).strip()
@@ -158,36 +206,41 @@ def merge_catalog(
     merged: dict[str, dict[str, Any]] = {}
 
     for item in rows:
-        url = source_url(item)
         name = source_name(item)
-        key = canonical_url(url) or re.sub(
-            r"[^a-z0-9]+",
-            "",
-            name.lower()
+        feed_url = explicit_feed_url(item)
+        page_url = source_page_url(item)
+
+        key = (
+            canonical_url(feed_url)
+            or canonical_url(page_url)
+            or re.sub(r"[^a-z0-9]+", "", name.lower())
         )
 
         if not key:
             continue
 
+        candidate = {
+            "name": name,
+            "feedUrl": feed_url,
+            "pageUrl": page_url,
+            "categories": source_categories(item),
+        }
+
         if key not in merged:
-            merged[key] = {
-                "name": name,
-                "url": url,
-                "categories": source_categories(item)
-            }
+            merged[key] = candidate
             continue
 
         existing = merged[key]
 
-        for category in source_categories(item):
+        for category in candidate["categories"]:
             if category not in existing["categories"]:
                 existing["categories"].append(category)
 
-        if len(name) > len(existing["name"]):
-            existing["name"] = name
+        if not existing["feedUrl"] and candidate["feedUrl"]:
+            existing["feedUrl"] = candidate["feedUrl"]
 
-        if not existing["url"] and url:
-            existing["url"] = url
+        if not existing["pageUrl"] and candidate["pageUrl"]:
+            existing["pageUrl"] = candidate["pageUrl"]
 
     return sorted(
         merged.values(),
@@ -218,7 +271,7 @@ def make_session() -> requests.Session:
         "Accept": (
             "application/rss+xml, application/atom+xml, "
             "application/feed+json, application/xml, text/xml, "
-            "application/json, text/html;q=0.8, */*;q=0.5"
+            "application/json, text/html;q=0.9, */*;q=0.5"
         ),
     })
     session.mount("https://", adapter)
@@ -279,9 +332,6 @@ def looks_like_feed(
     ):
         return True, "json_feed"
 
-    if "xml" in content_type and sample.startswith(b"<"):
-        return True, "xml_document"
-
     return False, "unexpected_content"
 
 
@@ -290,7 +340,8 @@ def result_base(
 ) -> dict[str, Any]:
     return {
         "name": source["name"],
-        "url": source["url"],
+        "url": source.get("feedUrl", ""),
+        "pageUrl": source.get("pageUrl", ""),
         "categories": source.get("categories", []),
         "checkedAt": datetime.now(timezone.utc).isoformat(),
         "ok": False,
@@ -299,6 +350,7 @@ def result_base(
         "finalUrl": "",
         "contentType": "",
         "feedType": "",
+        "discovered": False,
         "warning": "",
         "error": "",
     }
@@ -307,7 +359,8 @@ def result_base(
 def request_once(
     session: requests.Session,
     url: str,
-    verify: bool
+    *,
+    verify: bool = True
 ) -> tuple[requests.Response, bytes]:
     response = session.get(
         url,
@@ -320,7 +373,66 @@ def request_once(
     return response, read_limited(response)
 
 
-def classify_http(
+def discover_feed(
+    session: requests.Session,
+    page_url: str
+) -> str:
+    if not page_url:
+        return ""
+
+    try:
+        response, payload = request_once(
+            session,
+            page_url,
+            verify=True
+        )
+    except requests.exceptions.SSLError:
+        try:
+            response, payload = request_once(
+                session,
+                page_url,
+                verify=False
+            )
+        except requests.RequestException:
+            return ""
+    except requests.RequestException:
+        return ""
+
+    content_type = response.headers.get(
+        "Content-Type",
+        ""
+    ).lower()
+
+    is_feed, _ = looks_like_feed(payload, content_type)
+
+    if is_feed:
+        return response.url
+
+    if "html" not in content_type and b"<html" not in payload.lower():
+        return ""
+
+    parser = FeedLinkParser()
+
+    try:
+        parser.feed(
+            payload.decode(
+                response.encoding or "utf-8",
+                errors="replace"
+            )
+        )
+    except Exception:
+        return ""
+
+    for href in parser.links:
+        candidate = urljoin(response.url, href)
+
+        if candidate:
+            return candidate
+
+    return ""
+
+
+def classify_response(
     result: dict[str, Any],
     response: requests.Response,
     payload: bytes,
@@ -345,7 +457,7 @@ def classify_http(
     if status in (401, 403):
         result["status"] = "warning"
         result["warning"] = (
-            "Die Quelle blockiert automatisierte Prüfungen "
+            "Quelle blockiert automatisierte Prüfungen "
             f"(HTTP {status})."
         )
         return result
@@ -384,69 +496,52 @@ def classify_http(
 
         if insecure_tls:
             result["warning"] = (
-                "Feed erreichbar, aber das TLS-Zertifikat "
-                "konnte nicht regulär bestätigt werden."
+                "Feed erreichbar, TLS-Zertifikat konnte "
+                "aber nicht regulär bestätigt werden."
             )
 
         return result
 
     result["status"] = "warning"
     result["warning"] = (
-        "Adresse erreichbar, Antwort wurde aber nicht eindeutig "
-        "als RSS-, Atom- oder JSON-Feed erkannt."
+        "Adresse erreichbar, aber nicht eindeutig als Feed erkannt."
     )
     return result
 
 
-def check_source(
-    source: dict[str, Any]
+def check_feed_url(
+    session: requests.Session,
+    result: dict[str, Any],
+    feed_url: str,
 ) -> dict[str, Any]:
-    result = result_base(source)
-    url = source.get("url", "").strip()
-
-    if not url:
-        result["status"] = "error"
-        result["error"] = "Keine Feed-Adresse vorhanden."
-        return result
-
-    session = make_session()
+    result["url"] = feed_url
 
     try:
         response, payload = request_once(
             session,
-            url,
+            feed_url,
             verify=True
         )
-        return classify_http(result, response, payload)
+        return classify_response(result, response, payload)
 
-    except requests.exceptions.SSLError as error:
+    except requests.exceptions.SSLError:
         try:
             response, payload = request_once(
                 session,
-                url,
+                feed_url,
                 verify=False
             )
-
-            result = classify_http(
+            return classify_response(
                 result,
                 response,
                 payload,
                 insecure_tls=True,
             )
-
-            if result["status"] == "error":
-                result["error"] = (
-                    "TLS-Fehler und Ersatzabruf "
-                    f"fehlgeschlagen: {error}"
-                )
-
-            return result
-
-        except requests.RequestException as fallback_error:
+        except requests.RequestException as error:
             result["status"] = "warning"
             result["warning"] = (
-                "TLS-Zertifikat nicht bestätigt; auch der "
-                f"Diagnoseabruf scheiterte: {fallback_error}"
+                "TLS-Problem und Diagnoseabruf fehlgeschlagen: "
+                f"{error}"
             )
             return result
 
@@ -458,15 +553,13 @@ def check_source(
     except requests.exceptions.ConnectionError as error:
         message = str(error)
 
-        if (
-            "NameResolutionError" in message
-            or "getaddrinfo failed" in message
-            or "Name or service not known" in message
-        ):
+        if any(token in message for token in (
+            "NameResolutionError",
+            "getaddrinfo failed",
+            "Name or service not known",
+        )):
             result["status"] = "error"
-            result["error"] = (
-                f"DNS-/Domainfehler: {message}"
-            )
+            result["error"] = f"DNS-/Domainfehler: {message}"
         else:
             result["status"] = "warning"
             result["warning"] = (
@@ -480,10 +573,48 @@ def check_source(
         result["warning"] = f"Abruffehler: {error}"
         return result
 
-    except (ValueError, ssl.SSLError, socket.error) as error:
-        result["status"] = "error"
-        result["error"] = f"Ungültige Quelle: {error}"
-        return result
+
+def check_source(
+    source: dict[str, Any]
+) -> dict[str, Any]:
+    result = result_base(source)
+    session = make_session()
+
+    try:
+        feed_url = source.get("feedUrl", "").strip()
+
+        if not feed_url:
+            feed_url = discover_feed(
+                session,
+                source.get("pageUrl", "").strip()
+            )
+
+            if feed_url:
+                result["discovered"] = True
+                result["warning"] = (
+                    "Feed-Adresse automatisch auf der Quellenseite erkannt."
+                )
+
+        if not feed_url:
+            result["status"] = "unknown"
+            result["warning"] = (
+                "Keine technische Feed-Adresse vorhanden; "
+                "Quelle wurde nicht als defekt gewertet."
+            )
+            return result
+
+        checked = check_feed_url(
+            session,
+            result,
+            feed_url
+        )
+
+        if result["discovered"] and checked["status"] == "ok":
+            checked["warning"] = (
+                "Feed-Adresse automatisch erkannt."
+            )
+
+        return checked
 
     finally:
         session.close()
@@ -491,10 +622,7 @@ def check_source(
 
 def main() -> int:
     if not CATALOG_PATH.exists():
-        raise SystemExit(
-            "source-catalog.json fehlt. "
-            "Zuerst build_source_catalog.py ausführen."
-        )
+        raise SystemExit("source-catalog.json fehlt.")
 
     catalog = merge_catalog(
         as_sources(load_json(CATALOG_PATH))
@@ -544,12 +672,9 @@ def main() -> int:
         item.get("name", "").lower(),
     ))
 
-    counts = {
+    summary = {
         "total": len(results),
-        "ok": sum(
-            item["status"] == "ok"
-            for item in results
-        ),
+        "ok": sum(item["status"] == "ok" for item in results),
         "warning": sum(
             item["status"] == "warning"
             for item in results
@@ -562,14 +687,18 @@ def main() -> int:
             item["status"] == "unknown"
             for item in results
         ),
+        "discovered": sum(
+            bool(item.get("discovered"))
+            for item in results
+        ),
     }
 
     payload = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "summary": counts,
+        "summary": summary,
         "sources": results,
     }
 
@@ -584,7 +713,22 @@ def main() -> int:
     )
     temporary.replace(OUTPUT_PATH)
 
-    print(json.dumps(counts, ensure_ascii=False))
+    discovered = {
+        item["name"]: item["url"]
+        for item in results
+        if item.get("discovered") and item.get("url")
+    }
+
+    DISCOVERED_PATH.write_text(
+        json.dumps(
+            discovered,
+            ensure_ascii=False,
+            indent=2,
+        ) + "\n",
+        encoding="utf-8",
+    )
+
+    print(json.dumps(summary, ensure_ascii=False))
     return 0
 
 

@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.15 – vollständige Quellenübersicht */
+/* World Revolution News 1.7.16 – vollständige Quellenübersicht */
 'use strict';
 
 (() => {
@@ -213,6 +213,15 @@
             return 'error';
         }
 
+        if (
+            raw.includes('unknown')
+            || combined.includes('keine technische feed-adresse')
+            || combined.includes('nicht als defekt gewertet')
+            || combined.includes('not checked')
+        ) {
+            return 'unknown';
+        }
+
         if (item.ok === false) return 'warning';
 
         return 'unknown';
@@ -253,6 +262,7 @@
 
         const message = String(
             item.error
+            || item.warning
             || item.message
             || item.reason
             || item.detail

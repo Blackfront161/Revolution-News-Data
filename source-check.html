@@ -6,7 +6,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1"
     >
-    <title>WRN Quellenprüfung 1.7.15</title>
+    <title>WRN Quellenprüfung 1.7.16</title>
     <style>
         :root {
             color-scheme: dark;
@@ -214,6 +214,7 @@ async function refresh() {
                     status: statusOf(item),
                     detail: String(
                         item.error
+                        || item.warning
                         || item.message
                         || item.reason
                         || ''
