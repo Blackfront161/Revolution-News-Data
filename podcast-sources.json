@@ -27,30 +27,6 @@
     "maxAgeDays": 1800
   },
   {
-    "id": "bad-news",
-    "name": "B(A)D News – A-Radio Network",
-    "homepage": "https://www.a-radio-network.org/",
-    "feedUrls": [
-      "https://www.a-radio-network.org/feed/",
-      "https://www.a-radio-network.org/category/bad-news/feed/"
-    ],
-    "language": "en",
-    "country": "INT",
-    "region": "International",
-    "license": "Originalquelle",
-    "sourceKind": "independent-podcast",
-    "priority": 80,
-    "topics": [
-      "Anarchismus",
-      "International"
-    ],
-    "categories": [
-      "Anarchism",
-      "International"
-    ],
-    "pageAudioFallback": true
-  },
-  {
     "id": "dissens",
     "name": "Dissens Podcast",
     "homepage": "https://podcast.dissenspodcast.de/",
@@ -266,35 +242,9 @@
     "pageAudioFallback": true
   },
   {
-    "id": "common-voices",
-    "name": "Common Voices",
-    "homepage": "https://commonvoices.radiocorax.de/",
-    "feedUrls": [
-      "https://commonvoices.radiocorax.de/feed/",
-      "https://commonvoices.radiocorax.de/feed/podcast/"
-    ],
-    "language": "multi",
-    "country": "DE",
-    "region": "DACH",
-    "license": "Originalquelle",
-    "sourceKind": "free-radio",
-    "priority": 85,
-    "topics": [
-      "Migration",
-      "Mehrsprachig",
-      "Freie Radios"
-    ],
-    "categories": [
-      "Migration",
-      "Multilingual",
-      "Freie Radios"
-    ],
-    "pageAudioFallback": true
-  },
-  {
     "id": "a-radio-wien",
     "name": "A-Radio Wien",
-    "homepage": "https://a-radio.at/",
+    "homepage": "https://de.cba.media/podcast/anarchistisches-radio",
     "feedUrls": [
       "https://a-radio.at/feed/",
       "https://a-radio.at/feed/podcast/"
@@ -315,7 +265,9 @@
     ],
     "pageAudioFallback": true,
     "enabled": false,
-    "disabledReason": "Domain derzeit nicht erreichbar"
+    "disabledReason": "Domain derzeit nicht erreichbar",
+    "feedUrl": "https://de.cba.media/podcast/anarchistisches-radio/feed?limit=100",
+    "repairNote": "Offizieller CBA-Podcastfeed."
   },
   {
     "id": "frequenz-a",
@@ -446,7 +398,7 @@
   {
     "id": "working-class-history",
     "name": "Working Class History",
-    "homepage": "https://workingclasshistory.com/podcast/",
+    "homepage": "https://workingclasshistory.com/podcasts/",
     "feedUrls": [
       "https://workingclasshistory.com/category/podcast/feed/",
       "https://workingclasshistory.com/feed/podcast/"
@@ -467,7 +419,9 @@
       "History",
       "Anticapitalism"
     ],
-    "pageAudioFallback": true
+    "pageAudioFallback": true,
+    "feedUrl": "https://www.spreaker.com/show/5711490/episodes/feed",
+    "repairNote": "Offizieller aktueller RSS-Feed."
   },
   {
     "id": "indigenous-action",
