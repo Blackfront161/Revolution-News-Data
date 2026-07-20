@@ -75,6 +75,13 @@ jobs:
           python check_audio_sources.py 2>&1 \
             | tee audio-source-check.log
 
+      - name: Audio-Prüfung mit alten Statusdateien abgleichen
+        shell: bash
+        run: |
+          set -o pipefail
+          python reconcile_audio_health.py 2>&1 \
+            | tee audio-health-reconcile.log
+
       - name: Quellenstatus für App-Validator normalisieren
         shell: bash
         run: |
@@ -144,6 +151,8 @@ jobs:
             audio-health.json
             audio-environment-report.json
             audio-output-report.json
+            podcast-health.json
+            radio-health.json
             source-health.json
             source-health-report.json
             feature-audit.json
