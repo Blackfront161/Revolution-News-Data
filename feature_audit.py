@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
-"""Inventory World Revolution News features after the emergency recovery.
-
-The audit never deletes files and does not restore unknown old copies.
-It records whether expected feature files exist and whether they are cached
-or loaded by the current recovery configuration.
-"""
+"""Generate a non-empty feature audit from the actual repository tree."""
 
 from __future__ import annotations
 
 from datetime import datetime, timezone
 import json
 from pathlib import Path
-import re
 from typing import Any
 
 
@@ -22,56 +16,53 @@ GROUPS: dict[str, dict[str, list[str]]] = {
     "core": {
         "critical": [
             "index.html",
-            "styles.css",
             "app.js",
             "config.js",
             "service-worker.js",
             "manifest.json",
         ],
         "optional": [
-            "icon.svg",
+            "styles.css",
             "app-background.css",
             "app-background.webp",
-            "wrn-logo.webp",
-            "wrn-future-header.webp",
-            "wrn-future-header.png",
-        ],
-    },
-    "intro_and_navigation": {
-        "critical": [
-            "intro-screen.js",
-            "intro-screen.css",
-            "release-1.5-nav.js",
-            "release-1.5-nav.css",
-        ],
-        "optional": [
-            "release-1.4.js",
-            "release-1.4.css",
-            "interface-qol.css",
             "wrn-header.js",
             "wrn-header.css",
         ],
     },
-    "reading_and_accessibility": {
+    "navigation_and_reading": {
         "critical": [],
         "optional": [
+            "release-1.5-nav.js",
+            "release-1.5-nav.css",
             "reading-state.js",
             "accessibility.js",
-            "source-profiles.js",
-            "translation-tools.js",
             "typography.js",
             "typography.css",
-            "wrn-i18n.js",
-            "language-qol.js",
-            "language-status.js",
         ],
     },
     "privacy_and_storage": {
-        "critical": [],
+        "critical": [
+            "wrn-origin-safety.js",
+        ],
         "optional": [
             "offline-db.js",
             "data-control.js",
             "status-center.js",
+            "recovery.html",
+            "mobile-repair.html",
+        ],
+    },
+    "news_and_sources": {
+        "critical": [
+            "aggregate.py",
+            "check_news_sources.py",
+        ],
+        "optional": [
+            "build_source_catalog.py",
+            "source-verification.js",
+            "source-verification.css",
+            "multilingual-source-registry.json",
+            "build_sources_registry.py",
         ],
     },
     "briefing_and_summaries": {
@@ -89,16 +80,14 @@ GROUPS: dict[str, dict[str, list[str]]] = {
     "audio": {
         "critical": [],
         "optional": [
-            "media-player.js",
-            "audio-tools.js",
-            "audio-hub.js",
-            "audio-player-fixes.js",
-            "audio-catalog.js",
-            "audio-catalog.css",
+            "aggregate_podcasts.py",
+            "check_audio_sources.py",
             "audio-tab.js",
             "audio-tab.css",
             "audio-reliability.js",
             "audio-reliability.css",
+            "radio-stations.json",
+            "podcasts.json",
         ],
     },
     "translation": {
@@ -108,56 +97,34 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "shared-translation-status.js",
             "shared-translation-status.css",
             "translation-dialog-l10n.js",
+            "wrn-i18n.js",
         ],
     },
-    "diagnostics_and_recovery": {
-        "critical": [
-            "app-safety.js",
-            "normalize_source_health.py",
-            "check_news_sources.py",
-        ],
+    "zine_and_flyers": {
+        "critical": [],
         "optional": [
-            "app-diagnostics.js",
-            "app-diagnostics.css",
-            "source-verification.js",
-            "source-verification.css",
-            "runtime-selftest.js",
-            "runtime-selftest.css",
-            "recovery-audit.js",
-            "recovery-audit.css",
-            "language-source-status.js",
-            "language-source-status.css",
             "zine-designer.js",
             "zine-designer.css",
         ],
     },
+    "diagnostics_and_ci": {
+        "critical": [
+            "feature_audit.py",
+            "language_source_audit.py",
+            "validate_release_1722.py",
+        ],
+        "optional": [
+            "runtime-selftest.js",
+            "runtime-selftest.css",
+            "origin-safety-report.json",
+            "csp-audit.json",
+            "sources-registry.json",
+        ],
+    },
 }
 
-LAZY_ALLOWED = {
-    "briefing.js",
-    "briefing.css",
-    "article-summary-core.js",
-    "article-summary.js",
-    "article-summary.css",
-    "media-player.js",
-    "audio-tools.js",
-    "audio-hub.js",
-    "audio-player-fixes.js",
-    "audio-catalog.js",
-    "audio-catalog.css",
-    "app-diagnostics.js",
-    "app-diagnostics.css",
-}
 
-
-def read_text(path: Path) -> str:
-    try:
-        return path.read_text(encoding="utf-8")
-    except Exception:
-        return ""
-
-
-def audit_file(
+def file_record(
     filename: str,
     *,
     critical: bool,
@@ -166,109 +133,127 @@ def audit_file(
 ) -> dict[str, Any]:
     path = ROOT / filename
     present = path.is_file()
-    cached = filename in worker_text
-    loaded = filename in config_text
-
-    if not present:
-        status = "missing"
-    elif loaded:
-        status = "active_or_loader"
-    elif filename in LAZY_ALLOWED:
-        status = "present_lazy"
-    elif cached:
-        status = "present_cached"
-    else:
-        status = "present_unreferenced"
 
     return {
         "file": filename,
         "critical": critical,
         "present": present,
-        "cached": cached,
-        "loadedByConfig": loaded,
-        "status": status,
         "sizeBytes": path.stat().st_size if present else 0,
+        "loadedByConfig": (
+            filename in config_text
+            if present
+            else False
+        ),
+        "cachedByServiceWorker": (
+            filename in worker_text
+            if present
+            else False
+        ),
     }
 
 
 def main() -> int:
-    config_text = read_text(ROOT / "config.js")
-    worker_text = read_text(ROOT / "service-worker.js")
+    config_text = (
+        (ROOT / "config.js").read_text(
+            encoding="utf-8",
+            errors="replace",
+        )
+        if (ROOT / "config.js").is_file()
+        else ""
+    )
+
+    worker_text = (
+        (ROOT / "service-worker.js").read_text(
+            encoding="utf-8",
+            errors="replace",
+        )
+        if (ROOT / "service-worker.js").is_file()
+        else ""
+    )
 
     groups: dict[str, Any] = {}
     critical_missing: list[str] = []
     optional_missing: list[str] = []
 
     for group_name, definitions in GROUPS.items():
-        rows: list[dict[str, Any]] = []
+        records: list[dict[str, Any]] = []
 
-        for critical, files in (
-            (True, definitions.get("critical", [])),
-            (False, definitions.get("optional", [])),
+        for critical, filenames in (
+            (True, definitions["critical"]),
+            (False, definitions["optional"]),
         ):
-            for filename in files:
-                row = audit_file(
+            for filename in filenames:
+                record = file_record(
                     filename,
                     critical=critical,
                     config_text=config_text,
                     worker_text=worker_text,
                 )
-                rows.append(row)
+                records.append(record)
 
-                if not row["present"]:
-                    (
-                        critical_missing
-                        if critical
-                        else optional_missing
-                    ).append(filename)
+                if not record["present"]:
+                    if critical:
+                        critical_missing.append(filename)
+                    else:
+                        optional_missing.append(filename)
 
         groups[group_name] = {
-            "total": len(rows),
-            "present": sum(row["present"] for row in rows),
-            "missing": sum(not row["present"] for row in rows),
-            "files": rows,
+            "total": len(records),
+            "present": sum(
+                item["present"]
+                for item in records
+            ),
+            "missing": sum(
+                not item["present"]
+                for item in records
+            ),
+            "files": records,
         }
 
     payload = {
-        "schemaVersion": 1,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.20",
+        "schemaVersion": 2,
+        "generatedAt": datetime.now(
+            timezone.utc
+        ).isoformat(),
+        "version": "1.7.22",
         "summary": {
             "groups": len(groups),
+            "groupNames": list(groups),
             "criticalMissing": len(critical_missing),
             "optionalMissing": len(optional_missing),
             "criticalMissingFiles": critical_missing,
             "optionalMissingFiles": optional_missing,
         },
         "groups": groups,
-        "interpretation": {
-            "active_or_loader":
-                "Datei vorhanden und in config.js direkt oder als Loader referenziert.",
-            "present_lazy":
-                "Datei vorhanden; absichtlich erst bei Bedarf zu laden.",
-            "present_cached":
-                "Datei vorhanden und im Offline-Cache, aber nicht beim Start aktiv.",
-            "present_unreferenced":
-                "Datei vorhanden, derzeit jedoch nicht referenziert.",
-            "missing":
-                "Datei fehlt im Repository.",
-        },
     }
 
     OUTPUT.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2,
+        ) + "\n",
         encoding="utf-8",
     )
 
-    print(json.dumps(payload["summary"], ensure_ascii=False, indent=2))
+    print(
+        json.dumps(
+            payload["summary"],
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
+
+    if not groups:
+        print("FEHLER: Keine Auditgruppen erzeugt.")
+        return 1
 
     if critical_missing:
-        print("KRITISCHE DATEIEN FEHLEN:")
+        print("FEHLER: Kritische Dateien fehlen:")
         for filename in critical_missing:
             print(f"- {filename}")
         return 1
 
-    print("Kritische App-Dateien vollständig.")
     return 0
 
 

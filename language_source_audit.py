@@ -1,115 +1,141 @@
 #!/usr/bin/env python3
-"""Audit language coverage of active and approved sources."""
+"""Generate language coverage from sources-registry.json."""
 
 from __future__ import annotations
 
-import ast
 from collections import Counter
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 from typing import Any
+
+from build_sources_registry import build_registry
 
 
 ROOT = Path(__file__).resolve().parent
-REGISTRY = ROOT / "multilingual-source-registry.json"
-AGGREGATE = ROOT / "aggregate.py"
 OUTPUT = ROOT / "language-source-audit.json"
 
 
-def read_json(path: Path, fallback: Any) -> Any:
-    if not path.exists():
-        return fallback
-    return json.loads(path.read_text(encoding="utf-8"))
+def offered_languages() -> list[str]:
+    path = ROOT / "index.html"
 
-
-def aggregate_rows() -> list[dict[str, Any]]:
-    if not AGGREGATE.exists():
+    if not path.is_file():
         return []
 
-    tree = ast.parse(AGGREGATE.read_text(encoding="utf-8"))
-    result = []
+    text = path.read_text(
+        encoding="utf-8",
+        errors="replace",
+    )
 
-    for node in tree.body:
-        if not isinstance(node, (ast.Assign, ast.AnnAssign)):
-            continue
+    languages = re.findall(
+        r"<option\b[^>]*\bvalue=[\"']"
+        r"([a-zA-Z]{2,3}(?:[-_][a-zA-Z]{2,4})?)"
+        r"[\"']",
+        text,
+        flags=re.IGNORECASE,
+    )
 
-        value_node = node.value
+    result: list[str] = []
 
-        try:
-            value = ast.literal_eval(value_node)
-        except Exception:
-            continue
+    for language in languages:
+        normalized = re.split(
+            r"[-_]",
+            language.lower(),
+        )[0]
 
-        if not isinstance(value, dict):
-            continue
-
-        for category, rows in value.items():
-            if not isinstance(rows, list):
-                continue
-
-            for item in rows:
-                if not isinstance(item, dict):
-                    continue
-
-                result.append({
-                    "name": item.get("name", "Unbekannt"),
-                    "language": (
-                        item.get("language")
-                        or item.get("lang")
-                        or item.get("sprache")
-                        or "und"
-                    ),
-                    "category": str(category),
-                    "url": (
-                        item.get("url")
-                        or item.get("feedUrl")
-                        or item.get("feed")
-                        or ""
-                    )
-                })
-
-        if result:
-            break
+        if normalized not in result:
+            result.append(normalized)
 
     return result
 
 
 def main() -> int:
-    active = aggregate_rows()
-    registry = read_json(REGISTRY, {})
-    approved = registry.get("sources", [])
+    registry = build_registry()
 
-    active_counts = Counter(
-        str(item.get("language", "und")).split("-")[0].lower()
-        for item in active
+    active = [
+        item
+        for item in registry.get("sources", [])
+        if item.get("active", True)
+    ]
+
+    counts: Counter[str] = Counter()
+    explicit_counts: Counter[str] = Counter()
+    inferred_counts: Counter[str] = Counter()
+
+    for source in active:
+        languages = source.get("languages") or ["und"]
+
+        for language in languages:
+            normalized = str(language or "und").lower()
+            counts[normalized] += 1
+
+            if source.get("languageSource") == "explicit":
+                explicit_counts[normalized] += 1
+            elif source.get("languageSource") == "inferred":
+                inferred_counts[normalized] += 1
+
+    offered = offered_languages()
+    missing_offered = [
+        language
+        for language in offered
+        if counts.get(language, 0) == 0
+    ]
+
+    known_rows = sum(
+        count
+        for language, count in counts.items()
+        if language != "und"
     )
 
-    approved_counts = Counter()
-
-    for item in approved:
-        for language in item.get("languages", ["und"]):
-            approved_counts[str(language).split("-")[0].lower()] += 1
-
-    payload = {
-        "schemaVersion": 1,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
+    payload: dict[str, Any] = {
+        "schemaVersion": 2,
+        "generatedAt": datetime.now(
+            timezone.utc
+        ).isoformat(),
+        "version": "1.7.22",
         "activeSourceRows": len(active),
-        "activeLanguages": dict(sorted(active_counts.items())),
-        "approvedLanguages": dict(sorted(approved_counts.items())),
-        "approvedSources": approved,
-        "note": (
-            "Mehrfachkategorien zählen als mehrere Quellenzeilen; "
-            "sie werden beim Abruf über die Feed-URL dedupliziert."
-        )
+        "knownLanguageRows": known_rows,
+        "unknownLanguageRows": counts.get("und", 0),
+        "activeLanguages": dict(
+            sorted(counts.items())
+        ),
+        "explicitLanguages": dict(
+            sorted(explicit_counts.items())
+        ),
+        "inferredLanguages": dict(
+            sorted(inferred_counts.items())
+        ),
+        "offeredInterfaceLanguages": offered,
+        "missingOfferedLanguages": missing_offered,
+        "sourceRegistryGeneratedAt":
+            registry.get("generatedAt", ""),
+        "sourceCount":
+            registry.get("sourceCount", 0),
     }
 
     OUTPUT.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8"
+        json.dumps(
+            payload,
+            ensure_ascii=False,
+            indent=2,
+        ) + "\n",
+        encoding="utf-8",
     )
 
     print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+    if payload["activeSourceRows"] == 0:
+        print("FEHLER: Keine aktiven Quellenzeilen.")
+        return 1
+
+    if payload["knownLanguageRows"] == 0:
+        print(
+            "FEHLER: Alle Quellen haben weiterhin "
+            "die Sprache und."
+        )
+        return 1
+
     return 0
 
 
