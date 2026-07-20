@@ -1,0 +1,86 @@
+name: Apply 1.7.21 origin safety
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Aktuelle Reparaturseiten und Workflows absichern
+        run: python harden_wrn_repository.py
+
+      - name: Origin-Sicherheit testen
+        run: |
+          node --check wrn-origin-safety.js
+          node --check config.js
+          node --check service-worker.js
+          node tests/test_origin_safety.js
+          python tests/test_repository_hardening.py
+
+      - name: Service-Worker-Scope statisch prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          grep -q "name.startsWith(WRN_CACHE_PREFIX)" service-worker.js
+          grep -q "const WRN_CACHE_PREFIX = 'wrn-'" service-worker.js
+
+          if grep -n \
+            ".filter(name => !keep.has(name))" \
+            service-worker.js
+          then
+            echo "FEHLER: breite Cache-Löschung noch vorhanden."
+            exit 1
+          fi
+
+      - name: App-Validator ausführen
+        run: |
+          if [ -f tests/validate_app.py ]; then
+            python tests/validate_app.py
+          fi
+
+      - name: Änderungen speichern
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "wrn-safety-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          find . -type f \
+            \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \) \
+            -delete
+
+          git add -A -- .
+
+          if git diff --cached --quiet; then
+            echo "Keine zusätzlichen Sicherheitsänderungen."
+            exit 0
+          fi
+
+          git commit -m \
+            "Apply origin-scoped data deletion and workflow locking"
+
+          bash scripts/wrn-safe-push.sh \
+            "${GITHUB_REF_NAME:-main}"

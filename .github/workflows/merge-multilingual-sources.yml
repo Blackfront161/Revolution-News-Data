@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: wrn-data-write
+  group: wrn-main-write
   cancel-in-progress: false
 
 jobs:
@@ -114,7 +114,7 @@ jobs:
             exit 1
           fi
 
-          # Andere WRN-Datenworkflows werden über wrn-data-write serialisiert.
+          # Andere WRN-Datenworkflows werden über wrn-main-write serialisiert.
           # Falls zwischen Checkout und Push trotzdem ein externer Commit kam,
           # wird bis zu dreimal sauber rebasiert und erneut gepusht.
           for attempt in 1 2 3; do
