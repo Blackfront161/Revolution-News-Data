@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: wrn-source-merge
+  group: wrn-data-write
   cancel-in-progress: false
 
 jobs:
@@ -71,37 +71,26 @@ jobs:
             python tests/validate_app.py
           fi
 
-      - name: Änderungen speichern
+      - name: Änderungen sicher speichern und pushen
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           git config user.name "wrn-source-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          files=(
-            aggregate.py
-            podcast-sources.json
-            radio-sources.json
-            news.json
-            news-feed.json
-            podcasts.json
-            podcast-health.json
-            radio-health.json
-            audio-health.json
-            source-health.json
-            source-health-report.json
-            source-catalog.json
-            discovered-feeds.json
-            language-source-audit.json
-            feature-audit.json
-          )
+          # Nur temporäre Python-Artefakte entfernen. Alle erzeugten
+          # Projekt- und Datendateien sollen danach eingecheckt werden.
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          find . -type f             \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \)             -delete
+          rm -rf .pytest_cache
 
-          for file in "${files[@]}"; do
-            if [ -e "$file" ]; then
-              git add "$file"
-            fi
-          done
+          echo "Arbeitsbaum vor dem Commit:"
+          git status --short
+
+          # Der Runner startet aus einem sauberen Checkout. Deshalb sind
+          # alle verbliebenen Änderungen Ergebnisse dieses Workflows.
+          git add -A -- .
 
           if git diff --cached --quiet; then
             echo "Keine Änderungen."
@@ -109,5 +98,37 @@ jobs:
           fi
 
           git commit -m "Merge approved multilingual sources and refresh media"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+          # Sicherheitsnetz: Falls ein Prozess eine Datei nach dem ersten
+          # git add noch verändert hat, wird sie in denselben Commit aufgenommen.
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Nachträgliche Änderungen werden in den Commit aufgenommen:"
+            git status --short
+            git add -A -- .
+            git commit --amend --no-edit
+          fi
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FEHLER: Arbeitsbaum ist vor dem Rebase nicht sauber."
+            git status --short
+            exit 1
+          fi
+
+          # Andere WRN-Datenworkflows werden über wrn-data-write serialisiert.
+          # Falls zwischen Checkout und Push trotzdem ein externer Commit kam,
+          # wird bis zu dreimal sauber rebasiert und erneut gepusht.
+          for attempt in 1 2 3; do
+            echo "Push-Versuch ${attempt}/3"
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "Änderungen erfolgreich gepusht."
+              exit 0
+            fi
+
+            sleep $((attempt * 4))
+          done
+
+          echo "FEHLER: Push nach drei Versuchen nicht möglich."
+          exit 1

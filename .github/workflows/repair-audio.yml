@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: wrn-audio-repair
+  group: wrn-data-write
   cancel-in-progress: false
 
 jobs:
@@ -133,36 +133,25 @@ jobs:
             podcast-health.json
             audio-health.json
 
-      - name: Ergebnisse speichern
+      - name: Ergebnisse sicher speichern und pushen
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           git config user.name "wrn-audio-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          files=(
-            podcast-sources.json
-            podcast-source-archive.json
-            derived-podcast-series.json
-            audio-source-report.json
-            podcasts.json
-            podcast-health.json
-            audio-health.json
-            audio-environment-report.json
-            audio-output-report.json
-            podcast-health.json
-            radio-health.json
-            source-health.json
-            source-health-report.json
-            feature-audit.json
-          )
+          # Die Logs wurden im vorherigen Schritt bereits als Diagnose-Artefakt
+          # hochgeladen und gehören nicht ins Repository.
+          rm -f -- *.log
+          find . -type d -name __pycache__ -prune -exec rm -rf {} +
+          find . -type f             \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \)             -delete
+          rm -rf .pytest_cache
 
-          for file in "${files[@]}"; do
-            if [ -e "$file" ]; then
-              git add "$file"
-            fi
-          done
+          echo "Arbeitsbaum vor dem Commit:"
+          git status --short
+
+          git add -A -- .
 
           if git diff --cached --quiet; then
             echo "Keine Audio- oder Schema-Änderungen."
@@ -170,5 +159,32 @@ jobs:
           fi
 
           git commit -m "Repair audio data and normalize source health schema"
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Nachträgliche Änderungen werden in den Commit aufgenommen:"
+            git status --short
+            git add -A -- .
+            git commit --amend --no-edit
+          fi
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FEHLER: Arbeitsbaum ist vor dem Rebase nicht sauber."
+            git status --short
+            exit 1
+          fi
+
+          for attempt in 1 2 3; do
+            echo "Push-Versuch ${attempt}/3"
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "Änderungen erfolgreich gepusht."
+              exit 0
+            fi
+
+            sleep $((attempt * 4))
+          done
+
+          echo "FEHLER: Push nach drei Versuchen nicht möglich."
+          exit 1
