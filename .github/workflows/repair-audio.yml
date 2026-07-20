@@ -1,0 +1,65 @@
+name: Repair and verify audio
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-audio-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests feedparser
+
+      - name: Podcastquellen reparieren
+        run: python apply_audio_source_repairs.py
+
+      - name: Original-Podcasts aktualisieren
+        run: python aggregate_podcasts.py
+
+      - name: Podcasts und Radios prüfen
+        run: python check_audio_sources.py
+
+      - name: App-Prüfung ausführen
+        run: |
+          if [ -f tests/validate_app.py ]; then
+            python tests/validate_app.py
+          fi
+
+      - name: Ergebnisse speichern
+        run: |
+          git config user.name "wrn-audio-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add \
+            podcast-sources.json \
+            podcast-source-archive.json \
+            derived-podcast-series.json \
+            audio-source-report.json \
+            podcasts.json \
+            podcast-health.json \
+            audio-health.json
+          if git diff --cached --quiet; then
+            echo "Keine Audio-Änderungen."
+          else
+            git commit -m "Update repaired podcast and radio health data"
+            git push
+          fi
