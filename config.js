@@ -1,12 +1,13 @@
-/* World Revolution News – 1.7.13 Stable Recovery Stage 2
+/* World Revolution News – 1.7.14 Full Source Verification
  *
  * Ziel dieser Stufe:
  * - stabile und klickbare Nachrichtenansicht beibehalten
- * - Titelgrafik sauber und platzsparend einbinden
- * - Systemstatus und vollständige Quellenprüfung zugänglich machen
- * - gemeinsamen Übersetzungs-Cache wieder aktivieren
+ * - neuen kompakten Cyberpunk-Header einsetzen
+ * - Nachrichten-, Podcast- und Radioquellen gemeinsam auswerten
+ * - fehlerhafte und unbekannte Quellen filterbar anzeigen
+ * - unabhängige Quellenprüfseite bereitstellen
  * - Smartphones weiterhin vor zu großer Startlast schützen
- * - Briefing, Video-Hub und schwere Diagnose noch nicht automatisch starten
+ * - Briefing, Video-Hub und Aktionsradar noch nicht automatisch starten
  */
 'use strict';
 
@@ -14,12 +15,12 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.13',
-    build: '2026.07.19-recovery-stage-2',
-    releasedAt: '2026-07-19T23:10:00+02:00',
+    version: '1.7.14',
+    build: '2026.07.20-source-verification',
+    releasedAt: '2026-07-20T12:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 2,
+    recoveryStage: 3,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -42,8 +43,8 @@ window.WRN_CONFIG = Object.freeze({
  * Mit ?full=1 kann die Begrenzung auch auf Mobilgeräten testweise aufgehoben werden.
  */
 (() => {
-    if (window.__wrnRecoveryFeedGuard1713) return;
-    window.__wrnRecoveryFeedGuard1713 = true;
+    if (window.__wrnRecoveryFeedGuard1714) return;
+    window.__wrnRecoveryFeedGuard1714 = true;
 
     const wantsFullFeed = () =>
         new URLSearchParams(location.search).get('full') === '1';
@@ -112,10 +113,10 @@ window.WRN_CONFIG = Object.freeze({
  * Keine DOM-Gesamtsuche bei Klicks und keine Entfernung von App-Funktionen.
  */
 (() => {
-    if (document.getElementById('wrn-recovery-stage-2-style')) return;
+    if (document.getElementById('wrn-recovery-stage-3-style')) return;
 
     const style = document.createElement('style');
-    style.id = 'wrn-recovery-stage-2-style';
+    style.id = 'wrn-recovery-stage-3-style';
     style.textContent = `
         html,
         body {
@@ -214,8 +215,8 @@ window.WRN_CONFIG = Object.freeze({
 
 /* Startbildschirm und alte Blockadeklassen nur einmal entfernen. */
 (() => {
-    if (window.__wrnRecoveryInteractionRelease1713) return;
-    window.__wrnRecoveryInteractionRelease1713 = true;
+    if (window.__wrnRecoveryInteractionRelease1714) return;
+    window.__wrnRecoveryInteractionRelease1714 = true;
 
     const release = () => {
         document.documentElement.classList.remove(
@@ -254,8 +255,8 @@ window.WRN_CONFIG = Object.freeze({
  * blockieren. Der bestehende Inhalt wird nicht gelöscht.
  */
 (() => {
-    if (window.__wrnRecoveryStorageGuard1713) return;
-    window.__wrnRecoveryStorageGuard1713 = true;
+    if (window.__wrnRecoveryStorageGuard1714) return;
+    window.__wrnRecoveryStorageGuard1714 = true;
 
     const shouldGuardStorage = () => {
         const narrow = window.matchMedia('(max-width: 820px)').matches;
@@ -291,7 +292,7 @@ window.WRN_CONFIG = Object.freeze({
     document.addEventListener('DOMContentLoaded', () => {
         const storage = window.WRNStorage;
 
-        if (!storage || storage.__recoveryStage2Guard) return;
+        if (!storage || storage.__recoveryStage3Guard) return;
 
         const original = {
             migrateLegacyLocalStorage:
@@ -304,7 +305,7 @@ window.WRN_CONFIG = Object.freeze({
                 storage.putDataset?.bind(storage)
         };
 
-        storage.__recoveryStage2Guard = true;
+        storage.__recoveryStage3Guard = true;
 
         storage.migrateLegacyLocalStorage = () =>
             original.migrateLegacyLocalStorage
@@ -350,22 +351,23 @@ window.WRN_CONFIG = Object.freeze({
 })();
 
 /*
- * Wiederherstellungsstufe 2:
+ * Wiederherstellungsstufe 3:
  * - Sicherheitsmodul
  * - Sprache und Typografie
  * - horizontale Hauptnavigation
- * - Titelgrafik
+ * - kompakter futuristischer Header
  * - gemeinsamer Übersetzungs-Cache
- * - vorhandenes Quellen- und Systemstatuszentrum
+ * - vollständiges Quellenprüfungszentrum
+ * - vorhandenes Systemstatuszentrum
  *
- * Briefing, Zusammenfassungen, Video-Hub, Diagnostik und zusätzliche
- * Audio-Erweiterungen werden noch nicht automatisch geladen.
+ * Briefing, Geschichten, Zeitleisten, Video-Hub, Aktionsradar,
+ * Push-Mitteilungen und schwere Diagnose werden noch nicht automatisch geladen.
  */
 (() => {
-    if (window.__wrnRecoveryCoreLoader1713) return;
-    window.__wrnRecoveryCoreLoader1713 = true;
+    if (window.__wrnRecoveryCoreLoader1714) return;
+    window.__wrnRecoveryCoreLoader1714 = true;
 
-    const VERSION = '1713-recovery-2';
+    const VERSION = '1714-source-verification';
 
     const addStyle = (file, marker) => {
         if (
@@ -465,21 +467,23 @@ window.WRN_CONFIG = Object.freeze({
 
     const loadCore = async () => {
         [
-            ['release-1.5-nav.css', 'navigation-recovery-2'],
-            ['typography.css', 'typography-recovery-2'],
-            ['interface-qol.css', 'interface-recovery-2'],
-            ['shared-translation-status.css', 'translation-status-recovery-2'],
-            ['brand-title.css', 'brand-title-recovery-2']
+            ['release-1.5-nav.css', 'navigation-recovery-3'],
+            ['typography.css', 'typography-recovery-3'],
+            ['interface-qol.css', 'interface-recovery-3'],
+            ['shared-translation-status.css', 'translation-status-recovery-3'],
+            ['wrn-header.css', 'future-header-recovery-3'],
+            ['source-verification.css', 'source-verification-recovery-3']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
         await loadSequentially([
-            ['app-safety.js', 'safety-recovery-2'],
-            ['wrn-i18n.js', 'i18n-recovery-2'],
-            ['typography.js', 'typography-recovery-2'],
-            ['brand-title.js', 'brand-title-recovery-2'],
-            ['release-1.5-nav.js', 'navigation-recovery-2'],
-            ['shared-translation-client.js', 'translation-client-recovery-2'],
-            ['translation-dialog-l10n.js', 'translation-dialog-recovery-2']
+            ['app-safety.js', 'safety-recovery-3'],
+            ['wrn-i18n.js', 'i18n-recovery-3'],
+            ['typography.js', 'typography-recovery-3'],
+            ['wrn-header.js', 'future-header-recovery-3'],
+            ['release-1.5-nav.js', 'navigation-recovery-3'],
+            ['source-verification.js', 'source-verification-recovery-3'],
+            ['shared-translation-client.js', 'translation-client-recovery-3'],
+            ['translation-dialog-l10n.js', 'translation-dialog-recovery-3']
         ]);
 
         /*
@@ -497,7 +501,7 @@ window.WRN_CONFIG = Object.freeze({
         window.setTimeout(() => {
             void loadScript(
                 'shared-translation-status.js',
-                'translation-status-recovery-2',
+                'translation-status-recovery-3',
                 9000
             );
         }, 1400);
@@ -523,8 +527,8 @@ window.WRN_CONFIG = Object.freeze({
  * keine Karte erzeugt hat.
  */
 (() => {
-    if (window.__wrnRecoveryRescueFeed1713) return;
-    window.__wrnRecoveryRescueFeed1713 = true;
+    if (window.__wrnRecoveryRescueFeed1714) return;
+    window.__wrnRecoveryRescueFeed1714 = true;
 
     const run = async () => {
         await new Promise(resolve => {
