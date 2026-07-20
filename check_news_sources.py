@@ -469,6 +469,11 @@ def discover_feed(
     )
 
 
+
+def finalize_result(result: dict[str, Any]) -> dict[str, Any]:
+    result["ok"] = result.get("status") == "ok"
+    return result
+
 def check_source(source: dict[str, Any]) -> dict[str, Any]:
     checked_at = datetime.now(timezone.utc).isoformat()
     name = source["name"]
@@ -480,6 +485,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
         "name": name,
         "url": url,
         "status": "unknown",
+        "ok": False,
         "lastChecked": checked_at,
         "categories": categories,
     }
@@ -498,7 +504,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                 result["warning"] = (
                     "Keine technische Feed-Adresse vorhanden."
                 )
-                return result
+                return finalize_result(result)
 
         try:
             response = session.get(
@@ -510,11 +516,11 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
         except requests.exceptions.Timeout as error:
             result["status"] = "warning"
             result["warning"] = f"Zeitüberschreitung: {error}"
-            return result
+            return finalize_result(result)
         except requests.exceptions.SSLError as error:
             result["status"] = "warning"
             result["warning"] = f"TLS-Zertifikatsproblem: {error}"
-            return result
+            return finalize_result(result)
         except requests.exceptions.ConnectionError as error:
             message = str(error)
 
@@ -531,11 +537,11 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                     f"Temporäres Verbindungsproblem: {message}"
                 )
 
-            return result
+            return finalize_result(result)
         except requests.RequestException as error:
             result["status"] = "warning"
             result["warning"] = f"Abruffehler: {error}"
-            return result
+            return finalize_result(result)
 
         result["httpStatus"] = response.status_code
         result["finalUrl"] = response.url
@@ -549,7 +555,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
             result["error"] = (
                 f"Feed nicht gefunden (HTTP {response.status_code})."
             )
-            return result
+            return finalize_result(result)
 
         if (
             response.status_code in (401, 403, 408, 429)
@@ -559,14 +565,14 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
             result["warning"] = (
                 f"Quelle eingeschränkt (HTTP {response.status_code})."
             )
-            return result
+            return finalize_result(result)
 
         if not 200 <= response.status_code < 400:
             result["status"] = "warning"
             result["warning"] = (
                 f"Unerwarteter HTTP-Status {response.status_code}."
             )
-            return result
+            return finalize_result(result)
 
         payload = read_limited(response)
         valid_feed, feed_type = looks_like_feed(
@@ -583,7 +589,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                 "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
             )
 
-        return result
+        return finalize_result(result)
     finally:
         session.close()
 
@@ -614,6 +620,7 @@ def write_results(results: list[dict[str, Any]]) -> None:
     flat: dict[str, dict[str, Any]] = {}
 
     for item in results:
+        item["ok"] = item.get("status") == "ok"
         flat[stable_key(item, used)] = item
 
     summary = {
@@ -690,6 +697,7 @@ def main() -> int:
                     "name": source["name"],
                     "url": source.get("url", ""),
                     "status": "warning",
+                    "ok": False,
                     "lastChecked": datetime.now(
                         timezone.utc
                     ).isoformat(),

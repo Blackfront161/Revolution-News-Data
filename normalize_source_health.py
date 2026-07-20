@@ -22,6 +22,7 @@ import json
 from pathlib import Path
 import re
 from typing import Any
+from urllib.parse import urlparse, parse_qs, unquote
 
 
 ROOT = Path(__file__).resolve().parent
@@ -189,6 +190,27 @@ def catalog_rows() -> list[dict[str, Any]]:
     return as_rows(read_json(CATALOG_PATH, []))
 
 
+
+def sanitize_oembed_url(value: str) -> str:
+    """Replace accidental WordPress oEmbed endpoints with their target page."""
+
+    raw = str(value or "").strip()
+
+    if "/wp-json/oembed/" not in raw:
+        return raw
+
+    try:
+        parsed = urlparse(raw)
+        target = parse_qs(parsed.query).get("url", [""])[0]
+        target = unquote(target).strip()
+
+        if target:
+            return target
+    except Exception:
+        pass
+
+    return raw
+
 def normalize() -> dict[str, dict[str, Any]]:
     original = read_json(HEALTH_PATH, {})
     generated_at = (
@@ -226,8 +248,9 @@ def normalize() -> dict[str, dict[str, Any]]:
 
         normalized: dict[str, Any] = {
             "name": name,
-            "url": url,
+            "url": sanitize_oembed_url(url),
             "status": status,
+            "ok": status == "ok",
             "lastChecked": last_checked,
         }
 
@@ -268,7 +291,7 @@ def validate(data: dict[str, dict[str, Any]]) -> list[str]:
             errors.append(f"Eintrag {key!r} muss ein Objekt sein.")
             continue
 
-        for required in ("name", "url", "status", "lastChecked"):
+        for required in ("name", "url", "status", "ok", "lastChecked"):
             if required not in item:
                 errors.append(
                     f"{key!r} fehlt das Feld {required!r}."

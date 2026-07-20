@@ -26,6 +26,7 @@ REQUIRED_FILES = [
     "check_audio_sources.py",
     "check_news_sources.py",
     "normalize_source_health.py",
+    "feature_audit.py",
 ]
 
 

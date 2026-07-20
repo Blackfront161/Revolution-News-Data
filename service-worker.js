@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.17';
-const DATA_CACHE = 'wrn-data-v1.7.17';
+const APP_CACHE = 'wrn-app-v1.7.18';
+const DATA_CACHE = 'wrn-data-v1.7.18';
 
 const APP_SHELL = [
   './',
@@ -28,6 +28,8 @@ const APP_SHELL = [
   './audio-loader.css',
   './audio-reliability.css',
   './runtime-selftest.css',
+  './intro-screen.css',
+  './recovery-audit.css',
   './app-diagnostics.css',
   './app-background.webp',
   './wrn-logo.webp',
@@ -62,6 +64,8 @@ const APP_SHELL = [
   './audio-loader.js',
   './audio-reliability.js',
   './runtime-selftest.js',
+  './intro-screen.js',
+  './recovery-audit.js',
   './app-safety.js',
   './app-diagnostics.js',
   './article-summary-core.js',
@@ -87,7 +91,8 @@ const JSON_FALLBACKS = new Map([
   [new URL('./radio-health.json', self.location.href).pathname, '{}'],
   [new URL('./podcast-sources.json', self.location.href).pathname, '[]'],
   [new URL('./radio-sources.json', self.location.href).pathname, '[]'],
-  [new URL('./audio-health.json', self.location.href).pathname, '{}']
+  [new URL('./audio-health.json', self.location.href).pathname, '{}'],
+  [new URL('./feature-audit.json', self.location.href).pathname, '{}']
 ]);
 
 const DATA_FILES = new Set([
@@ -103,7 +108,8 @@ const DATA_FILES = new Set([
   new URL('./radio-health.json', self.location.href).pathname,
   new URL('./podcast-sources.json', self.location.href).pathname,
   new URL('./radio-sources.json', self.location.href).pathname,
-  new URL('./audio-health.json', self.location.href).pathname
+  new URL('./audio-health.json', self.location.href).pathname,
+  new URL('./feature-audit.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {
