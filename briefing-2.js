@@ -1,4 +1,4 @@
-/* World Revolution News 1.8.0 – Briefing 2 */
+/* World Revolution News 1.8.1 – Briefing 2 und Entwicklungen */
 'use strict';
 
 (() => {
@@ -9,66 +9,66 @@
 
   const TEXTS = {
     de: {
-      morning:'Morgen', evening:'Abend', week:'Woche', watch:'Beobachtet', openStories:'Geschichten öffnen',
+      morning:'Morgen', evening:'Abend', week:'Woche', watch:'Beobachtet', openStories:'Entwicklungen öffnen',
       local:'Diese Auswertung bleibt auf diesem Gerät.', weekTitle:'Wochenrückblick', days:'Tage', items:'Einträge', sources:'Quellen',
-      recurring:'Weiterlaufende Geschichten', topSources:'Häufige Quellen', noHistory:'Noch nicht genug gespeicherte Briefings.',
+      recurring:'Weiterlaufende Entwicklungen', topSources:'Häufige Quellen', noHistory:'Noch nicht genug gespeicherte Briefings.',
       morningTitle:'Morgenlage', eveningTitle:'Abendlage', newItems:'Neue Entwicklungen', updatedItems:'Veränderte Entwicklungen',
       add:'Begriff hinzufügen', placeholder:'Ort, Organisation oder Kampagne…', noMatches:'Keine aktuellen Treffer für die Beobachtungsliste.',
       remove:'Entfernen', open:'Öffnen', copy:'Zusammenfassung kopieren', copied:'Kopiert'
     },
     en: {
-      morning:'Morning', evening:'Evening', week:'Week', watch:'Watched', openStories:'Open stories',
+      morning:'Morning', evening:'Evening', week:'Week', watch:'Watched', openStories:'Open developments',
       local:'This analysis stays on this device.', weekTitle:'Weekly review', days:'days', items:'items', sources:'sources',
-      recurring:'Continuing stories', topSources:'Frequent sources', noHistory:'Not enough saved briefings yet.',
+      recurring:'Continuing developments', topSources:'Frequent sources', noHistory:'Not enough saved briefings yet.',
       morningTitle:'Morning view', eveningTitle:'Evening view', newItems:'New developments', updatedItems:'Changed developments',
       add:'Add term', placeholder:'Place, organization or campaign…', noMatches:'No current watchlist matches.',
       remove:'Remove', open:'Open', copy:'Copy summary', copied:'Copied'
     },
     es: {
-      morning:'Mañana', evening:'Tarde', week:'Semana', watch:'Observado', openStories:'Abrir historias', local:'El análisis permanece en este dispositivo.',
-      weekTitle:'Resumen semanal', days:'días', items:'entradas', sources:'fuentes', recurring:'Historias en curso', topSources:'Fuentes frecuentes',
+      morning:'Mañana', evening:'Tarde', week:'Semana', watch:'Observado', openStories:'Abrir desarrollos', local:'El análisis permanece en este dispositivo.',
+      weekTitle:'Resumen semanal', days:'días', items:'entradas', sources:'fuentes', recurring:'Desarrollos en curso', topSources:'Fuentes frecuentes',
       noHistory:'Aún no hay suficientes resúmenes guardados.', morningTitle:'Vista matinal', eveningTitle:'Vista nocturna',
       newItems:'Nuevos desarrollos', updatedItems:'Cambios', add:'Añadir término', placeholder:'Lugar, organización o campaña…',
       noMatches:'No hay coincidencias actuales.', remove:'Quitar', open:'Abrir', copy:'Copiar resumen', copied:'Copiado'
     },
     fr: {
-      morning:'Matin', evening:'Soir', week:'Semaine', watch:'Suivi', openStories:'Ouvrir les histoires', local:'Cette analyse reste sur cet appareil.',
-      weekTitle:'Revue de la semaine', days:'jours', items:'éléments', sources:'sources', recurring:'Histoires en cours', topSources:'Sources fréquentes',
+      morning:'Matin', evening:'Soir', week:'Semaine', watch:'Suivi', openStories:'Ouvrir les évolutions', local:'Cette analyse reste sur cet appareil.',
+      weekTitle:'Revue de la semaine', days:'jours', items:'éléments', sources:'sources', recurring:'Évolutions en cours', topSources:'Sources fréquentes',
       noHistory:'Pas encore assez de briefings enregistrés.', morningTitle:'Vue du matin', eveningTitle:'Vue du soir',
       newItems:'Nouveaux développements', updatedItems:'Développements modifiés', add:'Ajouter un terme', placeholder:'Lieu, organisation ou campagne…',
       noMatches:'Aucun résultat actuel.', remove:'Retirer', open:'Ouvrir', copy:'Copier le résumé', copied:'Copié'
     },
     it: {
-      morning:'Mattina', evening:'Sera', week:'Settimana', watch:'Osservati', openStories:'Apri storie', local:'L’analisi resta su questo dispositivo.',
-      weekTitle:'Riepilogo settimanale', days:'giorni', items:'elementi', sources:'fonti', recurring:'Storie in corso', topSources:'Fonti frequenti',
+      morning:'Mattina', evening:'Sera', week:'Settimana', watch:'Osservati', openStories:'Apri sviluppi', local:'L’analisi resta su questo dispositivo.',
+      weekTitle:'Riepilogo settimanale', days:'giorni', items:'elementi', sources:'fonti', recurring:'Sviluppi in corso', topSources:'Fonti frequenti',
       noHistory:'Non ci sono ancora abbastanza briefing salvati.', morningTitle:'Vista mattutina', eveningTitle:'Vista serale',
       newItems:'Nuovi sviluppi', updatedItems:'Sviluppi aggiornati', add:'Aggiungi termine', placeholder:'Luogo, organizzazione o campagna…',
       noMatches:'Nessuna corrispondenza attuale.', remove:'Rimuovi', open:'Apri', copy:'Copia riepilogo', copied:'Copiato'
     },
     pt: {
-      morning:'Manhã', evening:'Noite', week:'Semana', watch:'Observado', openStories:'Abrir histórias', local:'A análise permanece neste dispositivo.',
-      weekTitle:'Resumo semanal', days:'dias', items:'itens', sources:'fontes', recurring:'Histórias em curso', topSources:'Fontes frequentes',
+      morning:'Manhã', evening:'Noite', week:'Semana', watch:'Observado', openStories:'Abrir desenvolvimentos', local:'A análise permanece neste dispositivo.',
+      weekTitle:'Resumo semanal', days:'dias', items:'itens', sources:'fontes', recurring:'Desenvolvimentos em curso', topSources:'Fontes frequentes',
       noHistory:'Ainda não há briefings guardados suficientes.', morningTitle:'Visão da manhã', eveningTitle:'Visão da noite',
       newItems:'Novos desenvolvimentos', updatedItems:'Desenvolvimentos alterados', add:'Adicionar termo', placeholder:'Local, organização ou campanha…',
       noMatches:'Sem resultados atuais.', remove:'Remover', open:'Abrir', copy:'Copiar resumo', copied:'Copiado'
     },
     ru: {
-      morning:'Утро', evening:'Вечер', week:'Неделя', watch:'Наблюдение', openStories:'Открыть истории', local:'Анализ остается на этом устройстве.',
-      weekTitle:'Обзор недели', days:'дней', items:'материалов', sources:'источников', recurring:'Продолжающиеся истории', topSources:'Частые источники',
+      morning:'Утро', evening:'Вечер', week:'Неделя', watch:'Наблюдение', openStories:'Открыть развитие событий', local:'Анализ остается на этом устройстве.',
+      weekTitle:'Обзор недели', days:'дней', items:'материалов', sources:'источников', recurring:'Продолжающиеся события', topSources:'Частые источники',
       noHistory:'Сохраненных обзоров пока недостаточно.', morningTitle:'Утренняя картина', eveningTitle:'Вечерняя картина',
       newItems:'Новые события', updatedItems:'Изменившиеся события', add:'Добавить термин', placeholder:'Место, организация или кампания…',
       noMatches:'Совпадений пока нет.', remove:'Удалить', open:'Открыть', copy:'Копировать обзор', copied:'Скопировано'
     },
     el: {
-      morning:'Πρωί', evening:'Βράδυ', week:'Εβδομάδα', watch:'Παρακολούθηση', openStories:'Άνοιγμα ιστοριών', local:'Η ανάλυση μένει σε αυτή τη συσκευή.',
-      weekTitle:'Εβδομαδιαία ανασκόπηση', days:'ημέρες', items:'στοιχεία', sources:'πηγές', recurring:'Ιστορίες που συνεχίζονται', topSources:'Συχνές πηγές',
+      morning:'Πρωί', evening:'Βράδυ', week:'Εβδομάδα', watch:'Παρακολούθηση', openStories:'Άνοιγμα εξελίξεων', local:'Η ανάλυση μένει σε αυτή τη συσκευή.',
+      weekTitle:'Εβδομαδιαία ανασκόπηση', days:'ημέρες', items:'στοιχεία', sources:'πηγές', recurring:'Εξελίξεις που συνεχίζονται', topSources:'Συχνές πηγές',
       noHistory:'Δεν υπάρχουν ακόμη αρκετές αποθηκευμένες ενημερώσεις.', morningTitle:'Πρωινή εικόνα', eveningTitle:'Βραδινή εικόνα',
       newItems:'Νέες εξελίξεις', updatedItems:'Αλλαγμένες εξελίξεις', add:'Προσθήκη όρου', placeholder:'Τόπος, οργάνωση ή καμπάνια…',
       noMatches:'Δεν υπάρχουν τρέχοντα αποτελέσματα.', remove:'Αφαίρεση', open:'Άνοιγμα', copy:'Αντιγραφή σύνοψης', copied:'Αντιγράφηκε'
     },
     tr: {
-      morning:'Sabah', evening:'Akşam', week:'Hafta', watch:'İzlenen', openStories:'Hikâyeleri aç', local:'Bu analiz bu cihazda kalır.',
-      weekTitle:'Haftalık değerlendirme', days:'gün', items:'öğe', sources:'kaynak', recurring:'Devam eden hikâyeler', topSources:'Sık kaynaklar',
+      morning:'Sabah', evening:'Akşam', week:'Hafta', watch:'İzlenen', openStories:'Gelişmeleri aç', local:'Bu analiz bu cihazda kalır.',
+      weekTitle:'Haftalık değerlendirme', days:'gün', items:'öğe', sources:'kaynak', recurring:'Devam eden gelişmeler', topSources:'Sık kaynaklar',
       noHistory:'Henüz yeterli kayıtlı briefing yok.', morningTitle:'Sabah görünümü', eveningTitle:'Akşam görünümü',
       newItems:'Yeni gelişmeler', updatedItems:'Değişen gelişmeler', add:'Terim ekle', placeholder:'Yer, örgüt veya kampanya…',
       noMatches:'Güncel eşleşme yok.', remove:'Kaldır', open:'Aç', copy:'Özeti kopyala', copied:'Kopyalandı'

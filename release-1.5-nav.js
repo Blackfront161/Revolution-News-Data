@@ -1,4 +1,4 @@
-/* WRN 1.8.0 – Briefing, Geschichten, vollständige Sprachen und interne Quellenlinks */
+/* WRN 1.8.1 – Entwicklungen, Video, Audio-Herkunft und vollständige Sprachen */
 'use strict';
 
 (() => {
@@ -7,7 +7,7 @@
 
   const NAV_TEXTS = {
     de: {
-      briefing: 'Briefing', stories: 'Geschichten', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
+      briefing: 'Briefing', stories: 'Entwicklungen', video: 'Video', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
@@ -16,7 +16,7 @@
       generatedPodcasts: 'Erzeugte Podcasts', liveRadio: 'Live-Radio', bookmarks: 'Später lesen', read: 'Gelesen'
     },
     en: {
-      briefing: 'Briefing', stories: 'Stories', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
+      briefing: 'Briefing', stories: 'Developments', video: 'Video', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
@@ -39,6 +39,13 @@
       activate: () => {
         closeAuxiliaryPanels();
         window.WRNStories?.show?.();
+      }
+    },
+    {
+      key: 'video',
+      activate: () => {
+        closeAuxiliaryPanels();
+        window.WRNVideoHub?.show?.();
       }
     },
     {
@@ -113,7 +120,8 @@
         closeAuxiliaryPanels();
         const target = subKey || state.subSelections.audio || 'original';
         state.subSelections.audio = target;
-        if (typeof openAudioHub === 'function') openAudioHub(target);
+        if (window.WRNAudioTab181?.open) window.WRNAudioTab181.open(target);
+        else if (typeof openAudioHub === 'function') openAudioHub(target);
       }
     },
     {
@@ -186,6 +194,8 @@
   function closeAuxiliaryPanels() {
     const panel = document.getElementById('event-filter-panel');
     if (panel) panel.hidden = true;
+    window.WRNAudioTab181?.close?.();
+    window.WRNVideoHub?.hide?.();
   }
 
   function makeButton(className, text, title) {
@@ -600,6 +610,11 @@
 
     if (key === 'stories') window.WRNStories?.show?.();
     else window.WRNStories?.hide?.();
+
+    if (key === 'video') window.WRNVideoHub?.show?.();
+    else window.WRNVideoHub?.hide?.();
+
+    if (key !== 'audio') window.WRNAudioTab181?.close?.();
 
     if (!runAction) return;
 

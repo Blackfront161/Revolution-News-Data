@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.8.0',
+        version: '1.8.1',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -153,12 +153,12 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.0',
-    build: '2026.07.21-stories-briefing2',
-    releasedAt: '2026-07-21T12:00:00+02:00',
+    version: '1.8.1',
+    build: '2026.07.21-video-audio-language-source-fixes',
+    releasedAt: '2026-07-21T18:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 13,
+    recoveryStage: 14,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -630,6 +630,7 @@ window.WRN_CONFIG = Object.freeze({
             ['language-source-status.css', 'language-source-status-recovery-10'],
             ['briefing-2.css', 'briefing2-recovery-13'],
             ['stories-timeline.css', 'stories-recovery-13'],
+            ['video-hub.css', 'video-hub-recovery-14'],
             ['zine-designer.css', 'zine-designer-recovery-10']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
@@ -637,9 +638,11 @@ window.WRN_CONFIG = Object.freeze({
             ['wrn-origin-safety.js', 'origin-safety-recovery-10'],
             ['app-safety.js', 'safety-recovery-10'],
             ['wrn-i18n.js', 'i18n-recovery-10'],
+            ['audio-region-core.js', 'audio-region-recovery-14'],
             ['stories-core.js', 'stories-core-recovery-13'],
             ['briefing-2.js', 'briefing2-recovery-13'],
             ['stories-timeline.js', 'stories-recovery-13'],
+            ['video-hub.js', 'video-hub-recovery-14'],
             ['typography.js', 'typography-recovery-10'],
             ['wrn-header.js', 'future-header-recovery-10'],
             ['release-1.5-nav.js', 'navigation-recovery-10'],

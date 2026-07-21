@@ -262,3 +262,62 @@
         grid-column: 2;
     }
 }
+
+/* WRN 1.8.1 – echte Unterebene für die Herkunft der Original-Podcasts */
+.wrn-audio-origin-block-181 {
+  margin: 0 0 1rem;
+  padding: .8rem;
+  border: 1px solid var(--border-color, rgba(255,255,255,.18));
+  border-radius: .8rem;
+  background: rgba(0,0,0,.16);
+}
+
+.wrn-audio-origin-block-181[hidden] { display: none !important; }
+
+.wrn-audio-origin-block-181 > strong {
+  display: block;
+  margin-bottom: .55rem;
+  font-size: .86rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.wrn-audio-region-tabs-181 {
+  display: flex;
+  gap: .45rem;
+  overflow-x: auto;
+  padding-bottom: .2rem;
+  scrollbar-width: thin;
+}
+
+.wrn-audio-region-tabs-181 button {
+  flex: 0 0 auto;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: .45rem .7rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.wrn-audio-region-tabs-181 button.active {
+  background: currentColor;
+  color: var(--bg-color, #111);
+}
+
+.wrn-audio-region-tabs-181 button span {
+  opacity: .72;
+  font-size: .78em;
+}
+
+.wrn-audio-search-controls-181 > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, auto);
+  gap: .6rem;
+}
+
+@media (max-width: 620px) {
+  .wrn-audio-search-controls-181 > div {
+    grid-template-columns: 1fr;
+  }
+}

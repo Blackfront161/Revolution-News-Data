@@ -36,17 +36,38 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: App-Struktur prüfen
-        run: python tests/validate_app.py
-
-      - name: JavaScript-Syntax prüfen
+      - name: App-Struktur und Release 1.8.1 prüfen
         shell: bash
         run: |
-          set -e
-          for file in config.js offline-db.js status-center.js app.js service-worker.js; do
+          set -euo pipefail
+
+          python tests/validate_app.py
+          python tests/test_release_181.py
+          PYTHONPATH=. python tests/test_audio_source_schema.py
+
+      - name: JavaScript-Syntax und Kernlogik prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for file in \
+            config.js \
+            offline-db.js \
+            status-center.js \
+            app.js \
+            service-worker.js \
+            release-1.5-nav.js \
+            audio-region-core.js \
+            audio-tab.js \
+            video-hub.js \
+            source-verification.js
+          do
             echo "Prüfe $file"
             node --check "$file"
           done
+
+          node tests/test_stories_core.js
+          node tests/test_audio_region_core.js
 
       - name: Python-Dateien kompilieren
         shell: bash

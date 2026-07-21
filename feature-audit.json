@@ -1,17 +1,18 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-21T09:08:33.846031+00:00",
-  "version": "1.8.0",
+  "generatedAt": "2026-07-21T10:36:06.643118+00:00",
+  "version": "1.8.1",
   "summary": {
-    "groups": 10,
+    "groups": 11,
     "groupNames": [
       "core",
       "navigation_and_reading",
       "privacy_and_storage",
       "news_and_sources",
       "briefing_and_summaries",
-      "stories_and_timelines",
+      "developments_and_timelines",
       "audio",
+      "video_hub",
       "translation",
       "zine_and_flyers",
       "diagnostics_and_ci"
@@ -47,7 +48,7 @@
           "file": "config.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 26199,
+          "sizeBytes": 26392,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -55,7 +56,7 @@
           "file": "service-worker.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 8524,
+          "sizeBytes": 8593,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -118,7 +119,7 @@
           "file": "release-1.5-nav.js",
           "critical": false,
           "present": true,
-          "sizeBytes": 42239,
+          "sizeBytes": 42715,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -252,7 +253,7 @@
           "file": "source-verification.js",
           "critical": false,
           "present": true,
-          "sizeBytes": 28415,
+          "sizeBytes": 34268,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -315,7 +316,7 @@
           "file": "briefing-2.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 18424,
+          "sizeBytes": 18503,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -361,7 +362,7 @@
         }
       ]
     },
-    "stories_and_timelines": {
+    "developments_and_timelines": {
       "total": 4,
       "present": 4,
       "missing": 0,
@@ -378,7 +379,7 @@
           "file": "stories-timeline.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 20019,
+          "sizeBytes": 20090,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -386,7 +387,7 @@
           "file": "stories-timeline.css",
           "critical": true,
           "present": true,
-          "sizeBytes": 4767,
+          "sizeBytes": 4751,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -401,8 +402,8 @@
       ]
     },
     "audio": {
-      "total": 8,
-      "present": 8,
+      "total": 9,
+      "present": 9,
       "missing": 0,
       "files": [
         {
@@ -417,15 +418,23 @@
           "file": "check_audio_sources.py",
           "critical": false,
           "present": true,
-          "sizeBytes": 10464,
+          "sizeBytes": 11715,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
+        },
+        {
+          "file": "audio-region-core.js",
+          "critical": false,
+          "present": true,
+          "sizeBytes": 3946,
+          "loadedByConfig": true,
+          "cachedByServiceWorker": true
         },
         {
           "file": "audio-tab.js",
           "critical": false,
           "present": true,
-          "sizeBytes": 22664,
+          "sizeBytes": 25691,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -433,7 +442,7 @@
           "file": "audio-tab.css",
           "critical": false,
           "present": true,
-          "sizeBytes": 5452,
+          "sizeBytes": 6711,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -466,6 +475,29 @@
           "critical": false,
           "present": true,
           "sizeBytes": 1064480,
+          "loadedByConfig": true,
+          "cachedByServiceWorker": true
+        }
+      ]
+    },
+    "video_hub": {
+      "total": 2,
+      "present": 2,
+      "missing": 0,
+      "files": [
+        {
+          "file": "video-hub.js",
+          "critical": true,
+          "present": true,
+          "sizeBytes": 16444,
+          "loadedByConfig": true,
+          "cachedByServiceWorker": true
+        },
+        {
+          "file": "video-hub.css",
+          "critical": true,
+          "present": true,
+          "sizeBytes": 2210,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         }
@@ -512,7 +544,7 @@
           "file": "wrn-i18n.js",
           "critical": false,
           "present": true,
-          "sizeBytes": 56254,
+          "sizeBytes": 56445,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         }
@@ -550,7 +582,7 @@
           "file": "feature_audit.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 6871,
+          "sizeBytes": 7052,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -558,7 +590,7 @@
           "file": "language_source_audit.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 3544,
+          "sizeBytes": 5330,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -598,7 +630,7 @@
           "file": "csp-audit.json",
           "critical": false,
           "present": true,
-          "sizeBytes": 506,
+          "sizeBytes": 592,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },

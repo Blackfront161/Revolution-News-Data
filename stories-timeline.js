@@ -1,4 +1,4 @@
-/* World Revolution News 1.8.0 – Geschichten und Zeitleisten */
+/* World Revolution News 1.8.1 – Entwicklungen und Zeitleisten */
 'use strict';
 
 (() => {
@@ -10,57 +10,57 @@
 
   const TEXTS = {
     de: {
-      title: 'Geschichten & Zeitleisten', intro: 'Mehrere Berichte werden lokal zu Entwicklungen gebündelt. Keine Daten werden hochgeladen.',
-      search: 'Geschichten durchsuchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
+      title: 'Entwicklungen & Zeitleisten', intro: 'Mehrere Berichte werden lokal zu Entwicklungen gebündelt. Keine Daten werden hochgeladen.',
+      search: 'Entwicklungen durchsuchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
       refresh: 'Neu berechnen', empty: 'Noch keine Entwicklung mit mehreren Quellen gefunden.', articles: 'Beiträge', perspectives: 'Perspektivenvergleich',
       timeline: 'Zeitleiste', watch: 'Beobachten', watching: 'Beobachtet', share: 'Teilen', copy: 'Kopiert', open: 'Artikel öffnen',
       sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste'
     },
     en: {
-      title: 'Stories & timelines', intro: 'Multiple reports are grouped locally into developments. No data is uploaded.',
-      search: 'Search stories…', period: 'Period', sources: 'Minimum sources', days7: '7 days', days14: '14 days', days30: '30 days',
+      title: 'Developments & timelines', intro: 'Multiple reports are grouped locally into developments. No data is uploaded.',
+      search: 'Search developments…', period: 'Period', sources: 'Minimum sources', days7: '7 days', days14: '14 days', days30: '30 days',
       refresh: 'Recalculate', empty: 'No multi-source development was found yet.', articles: 'articles', perspectives: 'Perspective comparison',
       timeline: 'Timeline', watch: 'Watch', watching: 'Watching', share: 'Share', copy: 'Copied', open: 'Open article',
       sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist'
     },
     es: {
-      title:'Historias y cronologías', intro:'Varios informes se agrupan localmente. No se suben datos.', search:'Buscar historias…', period:'Periodo',
-      sources:'Fuentes mínimas', days7:'7 días', days14:'14 días', days30:'30 días', refresh:'Recalcular', empty:'Aún no hay una historia con varias fuentes.',
+      title:'Desarrollos y cronologías', intro:'Varios informes se agrupan localmente. No se suben datos.', search:'Buscar desarrollos…', period:'Periodo',
+      sources:'Fuentes mínimas', days7:'7 días', days14:'14 días', days30:'30 días', refresh:'Recalcular', empty:'Aún no hay un desarrollo con varias fuentes.',
       articles:'artículos', perspectives:'Comparar perspectivas', timeline:'Cronología', watch:'Seguir', watching:'Siguiendo', share:'Compartir', copy:'Copiado',
       open:'Abrir artículo', sourcesLabel:'Fuentes', first:'Inicio', latest:'Último estado', local:'Análisis local', terms:'Lista de seguimiento'
     },
     fr: {
-      title:'Histoires et chronologies', intro:'Plusieurs articles sont regroupés localement. Aucune donnée n’est envoyée.', search:'Rechercher…', period:'Période',
-      sources:'Sources minimum', days7:'7 jours', days14:'14 jours', days30:'30 jours', refresh:'Recalculer', empty:'Aucune histoire multi-source trouvée.',
+      title:'Évolutions et chronologies', intro:'Plusieurs articles sont regroupés localement. Aucune donnée n’est envoyée.', search:'Rechercher…', period:'Période',
+      sources:'Sources minimum', days7:'7 jours', days14:'14 jours', days30:'30 jours', refresh:'Recalculer', empty:'Aucune évolution multi-source trouvée.',
       articles:'articles', perspectives:'Comparer les perspectives', timeline:'Chronologie', watch:'Suivre', watching:'Suivi', share:'Partager', copy:'Copié',
       open:'Ouvrir l’article', sourcesLabel:'Sources', first:'Début', latest:'Dernier état', local:'Analyse locale', terms:'Liste de suivi'
     },
     it: {
-      title:'Storie e cronologie', intro:'Più articoli vengono raggruppati localmente. Nessun dato viene caricato.', search:'Cerca storie…', period:'Periodo',
-      sources:'Fonti minime', days7:'7 giorni', days14:'14 giorni', days30:'30 giorni', refresh:'Ricalcola', empty:'Nessuna storia con più fonti trovata.',
+      title:'Sviluppi e cronologie', intro:'Più articoli vengono raggruppati localmente. Nessun dato viene caricato.', search:'Cerca sviluppi…', period:'Periodo',
+      sources:'Fonti minime', days7:'7 giorni', days14:'14 giorni', days30:'30 giorni', refresh:'Ricalcola', empty:'Nessuno sviluppo con più fonti trovato.',
       articles:'articoli', perspectives:'Confronto delle prospettive', timeline:'Cronologia', watch:'Segui', watching:'Seguita', share:'Condividi', copy:'Copiato',
       open:'Apri articolo', sourcesLabel:'Fonti', first:'Inizio', latest:'Ultimo stato', local:'Analisi locale', terms:'Lista osservata'
     },
     pt: {
-      title:'Histórias e cronologias', intro:'Várias notícias são agrupadas localmente. Nenhum dado é enviado.', search:'Pesquisar histórias…', period:'Período',
-      sources:'Fontes mínimas', days7:'7 dias', days14:'14 dias', days30:'30 dias', refresh:'Recalcular', empty:'Ainda não foi encontrada uma história com várias fontes.',
+      title:'Desenvolvimentos e cronologias', intro:'Várias notícias são agrupadas localmente. Nenhum dado é enviado.', search:'Pesquisar desenvolvimentos…', period:'Período',
+      sources:'Fontes mínimas', days7:'7 dias', days14:'14 dias', days30:'30 dias', refresh:'Recalcular', empty:'Ainda não foi encontrado um desenvolvimento com várias fontes.',
       articles:'artigos', perspectives:'Comparar perspetivas', timeline:'Cronologia', watch:'Observar', watching:'Observada', share:'Partilhar', copy:'Copiado',
       open:'Abrir artigo', sourcesLabel:'Fontes', first:'Início', latest:'Último estado', local:'Análise local', terms:'Lista de observação'
     },
     ru: {
-      title:'Истории и хронологии', intro:'Материалы группируются локально. Данные не загружаются.', search:'Поиск историй…', period:'Период',
-      sources:'Минимум источников', days7:'7 дней', days14:'14 дней', days30:'30 дней', refresh:'Пересчитать', empty:'Истории из нескольких источников пока не найдены.',
+      title:'Развитие событий и хронология', intro:'Материалы группируются локально. Данные не загружаются.', search:'Поиск событий…', period:'Период',
+      sources:'Минимум источников', days7:'7 дней', days14:'14 дней', days30:'30 дней', refresh:'Пересчитать', empty:'События из нескольких источников пока не найдены.',
       articles:'материалов', perspectives:'Сравнение взглядов', timeline:'Хронология', watch:'Наблюдать', watching:'Отслеживается', share:'Поделиться', copy:'Скопировано',
       open:'Открыть статью', sourcesLabel:'Источники', first:'Начало', latest:'Последнее', local:'Локальный анализ', terms:'Список наблюдения'
     },
     el: {
-      title:'Ιστορίες και χρονολόγια', intro:'Πολλαπλές αναφορές ομαδοποιούνται τοπικά. Δεν αποστέλλονται δεδομένα.', search:'Αναζήτηση ιστοριών…', period:'Περίοδος',
-      sources:'Ελάχιστες πηγές', days7:'7 ημέρες', days14:'14 ημέρες', days30:'30 ημέρες', refresh:'Επανυπολογισμός', empty:'Δεν βρέθηκε ακόμη ιστορία με πολλές πηγές.',
+      title:'Εξελίξεις και χρονολόγια', intro:'Πολλαπλές αναφορές ομαδοποιούνται τοπικά. Δεν αποστέλλονται δεδομένα.', search:'Αναζήτηση εξελίξεων…', period:'Περίοδος',
+      sources:'Ελάχιστες πηγές', days7:'7 ημέρες', days14:'14 ημέρες', days30:'30 ημέρες', refresh:'Επανυπολογισμός', empty:'Δεν βρέθηκε ακόμη εξέλιξη με πολλές πηγές.',
       articles:'άρθρα', perspectives:'Σύγκριση οπτικών', timeline:'Χρονολόγιο', watch:'Παρακολούθηση', watching:'Παρακολουθείται', share:'Κοινοποίηση', copy:'Αντιγράφηκε',
       open:'Άνοιγμα άρθρου', sourcesLabel:'Πηγές', first:'Αρχή', latest:'Τελευταία εξέλιξη', local:'Τοπική ανάλυση', terms:'Λίστα παρακολούθησης'
     },
     tr: {
-      title:'Hikâyeler ve zaman çizelgeleri', intro:'Birden çok haber yerel olarak gruplanır. Veri yüklenmez.', search:'Hikâye ara…', period:'Dönem',
+      title:'Gelişmeler ve zaman çizelgeleri', intro:'Birden çok haber yerel olarak gruplanır. Veri yüklenmez.', search:'Gelişme ara…', period:'Dönem',
       sources:'En az kaynak', days7:'7 gün', days14:'14 gün', days30:'30 gün', refresh:'Yeniden hesapla', empty:'Henüz çok kaynaklı bir gelişme bulunamadı.',
       articles:'yazı', perspectives:'Bakış açılarını karşılaştır', timeline:'Zaman çizelgesi', watch:'İzle', watching:'İzleniyor', share:'Paylaş', copy:'Kopyalandı',
       open:'Makaleyi aç', sourcesLabel:'Kaynaklar', first:'Başlangıç', latest:'Son durum', local:'Yerel analiz', terms:'İzleme listesi'
