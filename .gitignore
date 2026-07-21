@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporäre Dateien
+*.tmp
+*.temp
+*.log
+
+# Lokale WRN-Sicherungen
+aggregate.py.pre-*.bak
+
+# Umgebungsdateien
+.env
+.env.*
+!.env.example
+
+# Betriebssystem und Editoren
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
