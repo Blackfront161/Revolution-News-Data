@@ -92,25 +92,26 @@ jobs:
 
           echo "$count JavaScript-Dateien geprüft."
 
-      - name: Entwicklungen, Audio und Origin-Sicherheit testen
+      - name: Entwicklungen, Audio, Quellenfilter und Origin-Sicherheit testen
         shell: bash
         run: |
           set -euo pipefail
 
           node tests/test_stories_core.js
           node tests/test_audio_region_core.js
+          node tests/test_source_filters.js
 
           if [ -f tests/test_origin_safety.js ]; then
             node tests/test_origin_safety.js
           fi
 
-      - name: Audioquellen und Release 1.8.1 testen
+      - name: Audioquellen und Release 1.8.2 testen
         shell: bash
         run: |
           set -euo pipefail
 
           PYTHONPATH=. python tests/test_audio_source_schema.py
-          python tests/test_release_181.py
+          python tests/test_release_182.py
 
       - name: Alle Python-Dateien prüfen
         shell: bash

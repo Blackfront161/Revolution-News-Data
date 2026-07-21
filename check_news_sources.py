@@ -28,6 +28,7 @@ from urllib3.util.retry import Retry
 ROOT = Path(__file__).resolve().parent
 AGGREGATE_PATH = ROOT / "aggregate.py"
 CATALOG_PATH = ROOT / "source-catalog.json"
+MULTILINGUAL_REGISTRY_PATH = ROOT / "multilingual-source-registry.json"
 OUTPUT_PATH = ROOT / "source-health.json"
 REPORT_PATH = ROOT / "source-health-report.json"
 DISCOVERED_PATH = ROOT / "discovered-feeds.json"
@@ -205,6 +206,55 @@ def literal_source_mapping(path: Path) -> dict[str, Any]:
     return {}
 
 
+def string_list(value: Any) -> list[str]:
+    if isinstance(value, str):
+        values = [value]
+    elif isinstance(value, list):
+        values = value
+    else:
+        values = []
+
+    result: list[str] = []
+
+    for item in values:
+        clean = str(item or "").strip()
+
+        if clean and clean not in result:
+            result.append(clean)
+
+    return result
+
+
+def source_metadata(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "languages": string_list(
+            item.get("languages", item.get("language", []))
+        ),
+        "originRegion": str(item.get("originRegion", "") or "").strip(),
+        "originCountry": str(item.get("originCountry", "") or "").strip(),
+        "originCountryCode": str(
+            item.get("originCountryCode", "") or ""
+        ).strip().upper(),
+    }
+
+
+def merge_source_metadata(
+    target: dict[str, Any],
+    incoming: dict[str, Any],
+) -> None:
+    for language in incoming.get("languages", []):
+        if language not in target.setdefault("languages", []):
+            target["languages"].append(language)
+
+    for field in (
+        "originRegion",
+        "originCountry",
+        "originCountryCode",
+    ):
+        if not target.get(field) and incoming.get(field):
+            target[field] = incoming[field]
+
+
 def load_sources(
     aggregate_path: Path = AGGREGATE_PATH,
 ) -> list[dict[str, Any]]:
@@ -263,6 +313,7 @@ def load_sources(
                     "url": url,
                     "pageUrl": page_url,
                     "categories": [str(category)],
+                    **source_metadata(item),
                 }
                 continue
 
@@ -277,8 +328,20 @@ def load_sources(
             if not current["pageUrl"] and page_url:
                 current["pageUrl"] = page_url
 
-    # Enrich with source-catalog.json without deleting aggregate.py sources.
-    for item in as_catalog_sources(read_json(CATALOG_PATH, [])):
+            merge_source_metadata(current, source_metadata(item))
+
+    # Enrich with declarative registries without deleting aggregate.py sources.
+    registry_items: list[dict[str, Any]] = []
+
+    for registry_path in (
+        CATALOG_PATH,
+        MULTILINGUAL_REGISTRY_PATH,
+    ):
+        registry_items.extend(
+            as_catalog_sources(read_json(registry_path, []))
+        )
+
+    for item in registry_items:
         name = str(
             item.get("name")
             or item.get("sourceName")
@@ -325,6 +388,7 @@ def load_sources(
                     for category in categories
                     if str(category).strip()
                 ],
+                **source_metadata(item),
             }
             continue
 
@@ -341,6 +405,8 @@ def load_sources(
 
         if not current["pageUrl"] and page_url:
             current["pageUrl"] = page_url
+
+        merge_source_metadata(current, source_metadata(item))
 
     return sorted(
         merged.values(),
@@ -488,6 +554,10 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
         "ok": False,
         "lastChecked": checked_at,
         "categories": categories,
+        "languages": source.get("languages", []),
+        "originRegion": source.get("originRegion", ""),
+        "originCountry": source.get("originCountry", ""),
+        "originCountryCode": source.get("originCountryCode", ""),
     }
 
     session = make_session()
@@ -703,6 +773,10 @@ def main() -> int:
                     ).isoformat(),
                     "warning": f"Interner Prüffehler: {error}",
                     "categories": source.get("categories", []),
+                    "languages": source.get("languages", []),
+                    "originRegion": source.get("originRegion", ""),
+                    "originCountry": source.get("originCountry", ""),
+                    "originCountryCode": source.get("originCountryCode", ""),
                 }
 
             results.append(result)

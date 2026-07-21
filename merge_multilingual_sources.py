@@ -15,8 +15,14 @@ AGGREGATE = ROOT / "aggregate.py"
 PODCAST_SOURCES = ROOT / "podcast-sources.json"
 RADIO_SOURCES = ROOT / "radio-sources.json"
 
-START = "# WRN MULTILINGUAL SOURCES 1.7.19 START"
-END = "# WRN MULTILINGUAL SOURCES 1.7.19 END"
+START = "# WRN MULTILINGUAL SOURCES 1.8.2 START"
+END = "# WRN MULTILINGUAL SOURCES 1.8.2 END"
+LEGACY_BLOCKS = (
+    (
+        "# WRN MULTILINGUAL SOURCES 1.7.19 START",
+        "# WRN MULTILINGUAL SOURCES 1.7.19 END",
+    ),
+)
 
 
 def read_json(path: Path, fallback: Any) -> Any:
@@ -70,16 +76,29 @@ def find_source_mapping(source: str) -> tuple[str, int]:
     return name, line
 
 
+def remove_marked_block(source: str, start: str, end: str) -> str:
+    while start in source:
+        if end not in source:
+            raise RuntimeError(f"Unvollständiger Quellenblock: {start}")
+
+        before = source.index(start)
+        after = source.index(end, before) + len(end)
+        source = source[:before].rstrip() + "\n" + source[after:].lstrip()
+
+    return source
+
+
 def patch_aggregate(registry: dict[str, Any]) -> bool:
+    """Write one additive, idempotent source block; never replace quellen."""
+
     if not AGGREGATE.exists():
         raise FileNotFoundError("aggregate.py fehlt.")
 
-    source = AGGREGATE.read_text(encoding="utf-8")
+    original = AGGREGATE.read_text(encoding="utf-8")
+    source = remove_marked_block(original, START, END)
 
-    if START in source and END in source:
-        before = source.index(START)
-        after = source.index(END) + len(END)
-        source = source[:before].rstrip() + "\n" + source[after:].lstrip()
+    for legacy_start, legacy_end in LEGACY_BLOCKS:
+        source = remove_marked_block(source, legacy_start, legacy_end)
 
     variable, end_line = find_source_mapping(source)
 
@@ -88,34 +107,49 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
         if item.get("kind") == "news"
         and item.get("status") == "approved"
         and item.get("adapter") == "rss"
+        and item.get("name") != "Democracy Now!"
     ]
 
     block = [
         START,
-        f"_wrn_extra_sources_1719 = {approved!r}",
-        "for _wrn_source in _wrn_extra_sources_1719:",
-        "    for _wrn_category in _wrn_source.get('categories', ['Global']):",
-        f"        _wrn_bucket = {variable}.setdefault(_wrn_category, [])",
-        "        _wrn_name = str(_wrn_source.get('name', '')).lower()",
-        "        _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').lower()",
-        "        _wrn_exists = any(",
-        "            str(_wrn_item.get('name', '')).lower() == _wrn_name",
-        "            or str(",
+        "# Additive and idempotent: the existing source dictionary is never replaced.",
+        f"_wrn_extra_sources_182 = {approved!r}",
+        "for _wrn_source in _wrn_extra_sources_182:",
+        "    _wrn_name = str(_wrn_source.get('name', '')).casefold()",
+        "    _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').casefold()",
+        "    _wrn_existing = None",
+        f"    for _wrn_existing_bucket in {variable}.values():",
+        "        if not isinstance(_wrn_existing_bucket, list):",
+        "            continue",
+        "        for _wrn_item in _wrn_existing_bucket:",
+        "            if not isinstance(_wrn_item, dict):",
+        "                continue",
+        "            _wrn_item_name = str(_wrn_item.get('name', '')).casefold()",
+        "            _wrn_item_url = str(",
         "                _wrn_item.get('url')",
         "                or _wrn_item.get('feedUrl')",
         "                or _wrn_item.get('feed')",
         "                or ''",
-        "            ).rstrip('/').lower() == _wrn_url",
-        "            for _wrn_item in _wrn_bucket",
-        "            if isinstance(_wrn_item, dict)",
-        "        )",
-        "        if not _wrn_exists:",
-        "            _wrn_bucket.append({",
-        "                'name': _wrn_source['name'],",
-        "                'url': _wrn_source['feedUrl'],",
-        "                'language': _wrn_source.get('languages', ['und'])[0],",
-        "                'homepage': _wrn_source.get('homepage', ''),",
-        "            })",
+        "            ).rstrip('/').casefold()",
+        "            if _wrn_item_name == _wrn_name or _wrn_item_url == _wrn_url:",
+        "                _wrn_existing = _wrn_item",
+        "                break",
+        "        if _wrn_existing is not None:",
+        "            break",
+        "    if _wrn_existing is None:",
+        "        _wrn_primary_category = _wrn_source.get('categories', ['Global'])[0]",
+        "        _wrn_existing = {",
+        "            'name': _wrn_source['name'],",
+        "            'url': _wrn_source['feedUrl'],",
+        "        }",
+        f"        {variable}.setdefault(_wrn_primary_category, []).append(_wrn_existing)",
+        "    _wrn_existing.setdefault('homepage', _wrn_source.get('homepage', ''))",
+        "    _wrn_existing.setdefault('language', _wrn_source.get('languages', ['und'])[0])",
+        "    _wrn_existing.setdefault('languages', list(_wrn_source.get('languages', ['und'])))",
+        "    _wrn_existing.setdefault('categories', list(_wrn_source.get('categories', ['Global'])))",
+        "    _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))",
+        "    _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))",
+        "    _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))",
         END,
         "",
     ]
@@ -124,7 +158,7 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
     lines[end_line:end_line] = block
     new_source = "\n".join(lines) + "\n"
 
-    changed = new_source != AGGREGATE.read_text(encoding="utf-8")
+    changed = new_source != original
     AGGREGATE.write_text(new_source, encoding="utf-8")
     return changed
 

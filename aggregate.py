@@ -369,33 +369,46 @@ quellen = {
         {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
     ]
 }
-# WRN MULTILINGUAL SOURCES 1.7.19 START
-_wrn_extra_sources_1719 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}]
-for _wrn_source in _wrn_extra_sources_1719:
-    for _wrn_category in _wrn_source.get('categories', ['Global']):
-        _wrn_bucket = quellen.setdefault(_wrn_category, [])
-        _wrn_name = str(_wrn_source.get('name', '')).lower()
-        _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').lower()
-        _wrn_exists = any(
-            str(_wrn_item.get('name', '')).lower() == _wrn_name
-            or str(
+# WRN MULTILINGUAL SOURCES 1.8.2 START
+# Additive and idempotent: the existing source dictionary is never replaced.
+_wrn_extra_sources_182 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}, {'name': 'Bianet Türkçe', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://bianet.org/', 'feedUrl': 'https://bianet.org/rss/bianet', 'categories': ['Europe', 'Labor Struggles', 'Antiracism', 'Queer-Feminism'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Evrensel', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://www.evrensel.net/', 'feedUrl': 'https://www.evrensel.net/rss/?do=rss', 'categories': ['Europe', 'Labor Struggles', 'Anticapitalism', 'No War'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Bianet Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://bianet.org/kurdi', 'feedUrl': 'https://bianet.org/rss/kurdi', 'categories': ['Europe', 'Anticolonialism', 'Antiracism', 'No Borders'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Pressin Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://pressin.info/kurdi', 'feedUrl': 'https://pressin.info/kurdi/rss/latest-posts', 'categories': ['Asia', 'Anticolonialism', 'Anti-Imperialism'], 'originCountry': 'Iraq', 'originCountryCode': 'IQ', 'originRegion': 'Kurdistan Region', 'status': 'approved', 'addedIn': '1.8.2'}]
+for _wrn_source in _wrn_extra_sources_182:
+    _wrn_name = str(_wrn_source.get('name', '')).casefold()
+    _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').casefold()
+    _wrn_existing = None
+    for _wrn_existing_bucket in quellen.values():
+        if not isinstance(_wrn_existing_bucket, list):
+            continue
+        for _wrn_item in _wrn_existing_bucket:
+            if not isinstance(_wrn_item, dict):
+                continue
+            _wrn_item_name = str(_wrn_item.get('name', '')).casefold()
+            _wrn_item_url = str(
                 _wrn_item.get('url')
                 or _wrn_item.get('feedUrl')
                 or _wrn_item.get('feed')
                 or ''
-            ).rstrip('/').lower() == _wrn_url
-            for _wrn_item in _wrn_bucket
-            if isinstance(_wrn_item, dict)
-        )
-        if not _wrn_exists:
-            _wrn_bucket.append({
-                'name': _wrn_source['name'],
-                'url': _wrn_source['feedUrl'],
-                'language': _wrn_source.get('languages', ['und'])[0],
-                'homepage': _wrn_source.get('homepage', ''),
-            })
-# WRN MULTILINGUAL SOURCES 1.7.19 END
-
+            ).rstrip('/').casefold()
+            if _wrn_item_name == _wrn_name or _wrn_item_url == _wrn_url:
+                _wrn_existing = _wrn_item
+                break
+        if _wrn_existing is not None:
+            break
+    if _wrn_existing is None:
+        _wrn_primary_category = _wrn_source.get('categories', ['Global'])[0]
+        _wrn_existing = {
+            'name': _wrn_source['name'],
+            'url': _wrn_source['feedUrl'],
+        }
+        quellen.setdefault(_wrn_primary_category, []).append(_wrn_existing)
+    _wrn_existing.setdefault('homepage', _wrn_source.get('homepage', ''))
+    _wrn_existing.setdefault('language', _wrn_source.get('languages', ['und'])[0])
+    _wrn_existing.setdefault('languages', list(_wrn_source.get('languages', ['und'])))
+    _wrn_existing.setdefault('categories', list(_wrn_source.get('categories', ['Global'])))
+    _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))
+    _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))
+    _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))
+# WRN MULTILINGUAL SOURCES 1.8.2 END
 
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
@@ -685,8 +698,32 @@ for kontinent, feeds in quellen.items():
                 # =========================================================
                 # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
                 # =========================================================
+                feed_categories = feed.get("categories", [kontinent])
+                if not isinstance(feed_categories, list):
+                    feed_categories = [feed_categories]
+                feed_categories = [
+                    safe_text(category)
+                    for category in feed_categories
+                    if safe_text(category)
+                ]
+                if kontinent not in feed_categories:
+                    feed_categories.append(kontinent)
+
+                feed_languages = feed.get(
+                    "languages",
+                    [feed.get("language", "und")],
+                )
+                if not isinstance(feed_languages, list):
+                    feed_languages = [feed_languages]
+                feed_languages = [
+                    safe_lower(language, "und")
+                    for language in feed_languages
+                    if safe_text(language)
+                ] or ["und"]
+
                 archiv_dict[link] = {
                     "kontinent": kontinent,
+                    "categories": feed_categories,
                     "quelleName": feed_name,
                     "author": author,
                     "title": title,
@@ -694,7 +731,13 @@ for kontinent, feeds in quellen.items():
                     "pubDate": pubDate,
                     "content": clean_text,
                     "contentComplete": True if is_radar else not content_is_incomplete(clean_text),
-                    "image": image_url
+                    "image": image_url,
+                    "language": feed_languages[0],
+                    "languages": feed_languages,
+                    "originCountry": safe_text(feed.get("originCountry")),
+                    "originCountryCode": safe_text(feed.get("originCountryCode")),
+                    "originRegion": safe_text(feed.get("originRegion")),
+                    "sourceHomepage": safe_text(feed.get("homepage")),
                 }
                 gesehene_titel.add(title_lower)
                 if is_radar: radar_count += 1

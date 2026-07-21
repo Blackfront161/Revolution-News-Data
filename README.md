@@ -3,21 +3,16 @@
 Unabhängige, mehrsprachige Nachrichten-, Termin-, Audio- und Video-App für
 revolutionäre, anarchistische und soziale Bewegungen.
 
-Aktueller Stand: **1.8.1**
+Aktueller Stand: **1.8.2**
 
-Neu in 1.8.1:
+Neu in 1.8.2:
 
-- „Entwicklungen“ ersetzt die missverständliche Bezeichnung „Geschichten“.
-- Audio ist klar in Original-Podcasts, Erzeugte Podcasts und Live-Radio
-  gegliedert.
-- Herkunftsfilter erscheinen nur bei Original-Podcasts und filtern tatsächlich
-  nach Region und Land.
-- Alle neun Oberflächensprachen sind ohne Beta-Kennzeichnung auswählbar.
-- Die Quellenprüfung unterscheidet zwischen defekten und noch nicht geprüften
-  Audioquellen.
-- Der neue Video-Hub erkennt YouTube-, Vimeo- und PeerTube-Beiträge lokal und
-  lädt externe Einbettungen erst nach ausdrücklicher Auswahl.
-- Briefing 2 bietet Morgen-, Abend-, Wochen- und Beobachtet-Modus.
+- Neue türkischsprachige Quellen: Bianet Türkçe und Evrensel.
+- Neue kurdischsprachige Quellen: Bianet Kurdî und Pressin Kurdî.
+- Nachrichtenfilter nach Quellsprache und Herkunft.
+- Quellenprüfung mit Sprach- und Herkunftsfiltern.
+- Verbindliches Language Audit für die Sprachcodes `tr` und `ku`.
+- Alle bestehenden Quellen bleiben erhalten; Democracy Now wird nicht erweitert.
 
 Live-App:
 

@@ -1,3 +1,32 @@
+ÄNDERUNGEN 1.8.2
+
+NEUE TÜRKISCHE UND KURDISCHE QUELLEN
+
+- Bianet Türkçe und Evrensel werden als türkischsprachige RSS-Quellen ergänzt.
+- Bianet Kurdî und Pressin Kurdî werden als kurdischsprachige RSS-Quellen ergänzt.
+- Alle bestehenden Quellen bleiben erhalten. Democracy Now wird weder entfernt noch erweitert.
+- Die neuen Quellen besitzen explizite Sprach-, Herkunfts- und Kategoriemetadaten.
+
+SPRACH- UND HERKUNFTSFILTER
+
+- Nachrichten können nach Quellsprache und Herkunft gefiltert werden.
+- Türkisch verwendet den Sprachcode tr, Kurdisch den Sprachcode ku.
+- Filterwerte werden lokal gespeichert und bleiben nach einem Neustart erhalten.
+- Alte Artikel ohne Metadaten bleiben sichtbar, solange kein entsprechender Filter aktiv ist.
+
+QUELLENPRÜFUNG UND AUDITS
+
+- Die Quellenprüfung zeigt Sprache und Herkunft und besitzt eigene Filter dafür.
+- Das deklarative Quellenregister ist nun die gemeinsame Kataloggrundlage.
+- Der Quellencheck liest auch die mehrsprachige Registry ein.
+- Das Language Audit verlangt ab 1.8.2 ausdrücklich Quellenabdeckung für tr und ku.
+
+STABILITÄT
+
+- App- und Service-Worker-Version sind auf 1.8.2 vereinheitlicht.
+- Neue Regressionstests schützen Quellenfilter, Registry und tr/ku-Abdeckung.
+- Der in 1.8.1c ergänzte Abhängigkeits-Schritt bleibt im App-Workflow erhalten.
+
 ÄNDERUNGEN 1.8.1
 
 ENTWICKLUNGEN STATT GESCHICHTEN

@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.8.1',
+        version: '1.8.2',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -153,9 +153,9 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.1',
-    build: '2026.07.21-video-audio-language-source-fixes',
-    releasedAt: '2026-07-21T18:00:00+02:00',
+    version: '1.8.2',
+    build: '2026.07.21-turkish-kurdish-source-coverage',
+    releasedAt: '2026-07-21T21:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
     recoveryStage: 14,
@@ -165,7 +165,7 @@ window.WRN_CONFIG = Object.freeze({
         podcasts: 'https://blackfront161.github.io/Revolution-News-Data/podcasts.json',
         radio: 'https://blackfront161.github.io/Revolution-News-Data/radio-stations.json',
         sourceHealth: 'https://blackfront161.github.io/Revolution-News-Data/source-health.json',
-        sourceCatalog: 'https://blackfront161.github.io/Revolution-News-Data/source-catalog.json',
+        sourceCatalog: 'https://blackfront161.github.io/Revolution-News-Data/sources-registry.json',
         podcastHealth: 'https://blackfront161.github.io/Revolution-News-Data/podcast-health.json',
         radioHealth: 'https://blackfront161.github.io/Revolution-News-Data/radio-health.json',
         podcastSources: 'https://blackfront161.github.io/Revolution-News-Data/podcast-sources.json',
@@ -638,6 +638,7 @@ window.WRN_CONFIG = Object.freeze({
             ['wrn-origin-safety.js', 'origin-safety-recovery-10'],
             ['app-safety.js', 'safety-recovery-10'],
             ['wrn-i18n.js', 'i18n-recovery-10'],
+            ['source-filters.js', 'source-filters-recovery-15'],
             ['audio-region-core.js', 'audio-region-recovery-14'],
             ['stories-core.js', 'stories-core-recovery-13'],
             ['briefing-2.js', 'briefing2-recovery-13'],

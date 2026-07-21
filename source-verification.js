@@ -1,4 +1,4 @@
-/* World Revolution News 1.8.1 – belastbare, mehrsprachige Quellenprüfung */
+/* World Revolution News 1.8.2 – Quellenprüfung mit Sprach- und Herkunftsfiltern */
 'use strict';
 
 (() => {
@@ -11,6 +11,8 @@
         rows: [],
         filter: 'all',
         search: '',
+        language: 'all',
+        origin: 'all',
         loadedAt: '',
         loading: false,
         summary: {
@@ -34,6 +36,18 @@
         tr: { title:'Kaynak doğrulama', open:'Kaynak doğrulama', refresh:'Tekrar kontrol et', close:'Kapat', search:'Kaynak ara …', all:'Tümü', ok:'Erişilebilir', warning:'Sınırlı', error:'Bozuk', unknown:'Kontrol edilmedi', total:'Kaynaklar', empty:'Eşleşen kaynak bulunamadı.', loading:'Kaynaklar kontrol ediliyor …', updated:'Kontrol edildi', news:'Haberler', podcast:'Podcastler', radio:'Radyo', catalog:'Katalog', unavailable:'Durum dosyasına erişilemiyor', limited:'Performans için en fazla 300 kayıt gösterilir.', pending:'Kontrol bekliyor' }
     };
 
+    const DIMENSION_TEXT = {
+        de: { language:'Sprache', origin:'Herkunft', allLanguages:'Alle Sprachen', allOrigins:'Alle Herkunftsorte' },
+        en: { language:'Language', origin:'Origin', allLanguages:'All languages', allOrigins:'All origins' },
+        es: { language:'Idioma', origin:'Origen', allLanguages:'Todos los idiomas', allOrigins:'Todos los orígenes' },
+        fr: { language:'Langue', origin:'Origine', allLanguages:'Toutes les langues', allOrigins:'Toutes les origines' },
+        it: { language:'Lingua', origin:'Origine', allLanguages:'Tutte le lingue', allOrigins:'Tutte le origini' },
+        pt: { language:'Idioma', origin:'Origem', allLanguages:'Todos os idiomas', allOrigins:'Todas as origens' },
+        ru: { language:'Язык', origin:'Происхождение', allLanguages:'Все языки', allOrigins:'Все регионы происхождения' },
+        el: { language:'Γλώσσα', origin:'Προέλευση', allLanguages:'Όλες οι γλώσσες', allOrigins:'Όλες οι προελεύσεις' },
+        tr: { language:'Dil', origin:'Köken', allLanguages:'Tüm diller', allOrigins:'Tüm kökenler' }
+    };
+
     const language = () => {
         const raw = window.WRNI18n?.currentLanguage?.()
             || document.getElementById('ui-language')?.value
@@ -44,6 +58,22 @@
     };
 
     const t = () => TEXT[language()] || TEXT.en;
+    const dimensionText = () => DIMENSION_TEXT[language()] || DIMENSION_TEXT.en;
+
+    const list = value => {
+        const values = Array.isArray(value) ? value : value ? [value] : [];
+        return [...new Set(values.map(item => String(item || '').trim()).filter(Boolean))];
+    };
+
+    const languagesOf = item => list(
+        item.languages || item.language || item.lang
+    ).map(value => value.toLowerCase().split(/[-_]/)[0]);
+
+    const originsOf = item => [...new Set([
+        ...list(item.originRegion),
+        ...list(item.originCountry),
+        ...list(item.originCountryCode)
+    ])];
 
     const escapeHtml = value => String(value ?? '')
         .replaceAll('&', '&amp;')
@@ -291,7 +321,9 @@
                 status: derived === 'unknown'
                     ? fallbackStatus
                     : derived,
-                detail: detailOf(source)
+                detail: detailOf(source),
+                languages: languagesOf(source),
+                origins: originsOf(source)
             };
         });
 
@@ -304,7 +336,9 @@
             status: 'unknown',
             detail: Array.isArray(item.streamCandidates) && item.streamCandidates.length
                 ? `${t().pending} · ${item.streamCandidates.length} Stream-Adresse(n)`
-                : t().pending
+                : t().pending,
+            languages: languagesOf(item),
+            origins: originsOf(item)
         }));
 
     const canonicalUrl = value => {
@@ -386,6 +420,15 @@
                     row.detail
                 ].filter(Boolean).join(' · ');
             }
+
+            current.languages = [...new Set([
+                ...list(current.languages),
+                ...list(row.languages)
+            ])];
+            current.origins = [...new Set([
+                ...list(current.origins),
+                ...list(row.origins)
+            ])];
         });
 
         return [...byKey.values()];
@@ -419,7 +462,15 @@
                     ...catalog,
                     ...health,
                     name: health.name || catalog.name,
-                    url: health.url || catalog.url
+                    url: health.url || catalog.url,
+                    languages: [...new Set([
+                        ...list(catalog.languages),
+                        ...list(health.languages)
+                    ])],
+                    origins: [...new Set([
+                        ...list(catalog.origins),
+                        ...list(health.origins)
+                    ])]
                 });
 
                 if (urlKey) healthByUrl.delete(urlKey);
@@ -551,6 +602,16 @@
                     class="wrn-source-filter-row"
                     id="wrn-source-filter-row"
                 ></div>
+                <div class="wrn-source-dimension-row">
+                    <label>
+                        <span id="wrn-source-language-label"></span>
+                        <select id="wrn-source-language-filter"></select>
+                    </label>
+                    <label>
+                        <span id="wrn-source-origin-label"></span>
+                        <select id="wrn-source-origin-filter"></select>
+                    </label>
+                </div>
             </div>
 
             <div
@@ -607,6 +668,18 @@
                 state.search = String(event.target.value || '')
                     .trim()
                     .toLowerCase();
+                renderList();
+            });
+
+        modal.querySelector('#wrn-source-language-filter')
+            ?.addEventListener('change', event => {
+                state.language = String(event.target.value || 'all');
+                renderList();
+            });
+
+        modal.querySelector('#wrn-source-origin-filter')
+            ?.addEventListener('change', event => {
+                state.origin = String(event.target.value || 'all');
                 renderList();
             });
 
@@ -690,6 +763,38 @@
         `).join('');
     };
 
+    const renderDimensionFilters = () => {
+        const labels = dimensionText();
+        const languageSelect = document.getElementById('wrn-source-language-filter');
+        const originSelect = document.getElementById('wrn-source-origin-filter');
+        if (!languageSelect || !originSelect) return;
+
+        const languages = [...new Set(
+            state.rows.flatMap(row => list(row.languages))
+        )].sort();
+        const origins = [...new Set(
+            state.rows.flatMap(row => list(row.origins))
+        )].sort((a, b) => a.localeCompare(b));
+
+        const languageValue = languages.includes(state.language) ? state.language : 'all';
+        const originValue = origins.includes(state.origin) ? state.origin : 'all';
+        state.language = languageValue;
+        state.origin = originValue;
+        languageSelect.innerHTML = [
+            `<option value="all">${escapeHtml(labels.allLanguages)}</option>`,
+            ...languages.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value.toUpperCase())}</option>`)
+        ].join('');
+        originSelect.innerHTML = [
+            `<option value="all">${escapeHtml(labels.allOrigins)}</option>`,
+            ...origins.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`)
+        ].join('');
+
+        if ([...languageSelect.options].some(option => option.value === languageValue)) languageSelect.value = languageValue;
+        if ([...originSelect.options].some(option => option.value === originValue)) originSelect.value = originValue;
+        document.getElementById('wrn-source-language-label').textContent = labels.language;
+        document.getElementById('wrn-source-origin-label').textContent = labels.origin;
+    };
+
     const visibleRows = () => {
         const search = state.search;
 
@@ -701,13 +806,25 @@
                 return false;
             }
 
+            if (
+                state.language !== 'all'
+                && !list(row.languages).includes(state.language)
+            ) return false;
+
+            if (
+                state.origin !== 'all'
+                && !list(row.origins).includes(state.origin)
+            ) return false;
+
             if (!search) return true;
 
             return [
                 row.name,
                 row.url,
                 row.detail,
-                row.kind
+                row.kind,
+                ...list(row.languages),
+                ...list(row.origins)
             ].some(value => String(value || '')
                 .toLowerCase()
                 .includes(search));
@@ -749,6 +866,14 @@
                                         : labels.news
                         )}
                     </span>
+                    ${(row.languages?.length || row.origins?.length) ? `
+                        <small class="wrn-source-meta">
+                            ${escapeHtml([
+                                ...list(row.languages).map(value => value.toUpperCase()),
+                                ...list(row.origins)
+                            ].join(' · '))}
+                        </small>
+                    ` : ''}
                 </div>
 
                 <span class="wrn-source-badge">
@@ -802,6 +927,7 @@
 
         renderSummary();
         renderFilters();
+        renderDimensionFilters();
         renderList();
     };
 

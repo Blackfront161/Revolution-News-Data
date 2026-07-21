@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 2,
-  "generatedAt": "2026-07-21T10:34:34.834688+00:00",
-  "version": "1.8.1",
-  "activeSourceRows": 379,
-  "knownLanguageRows": 122,
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-21T11:57:20.904318+00:00",
+  "version": "1.8.2",
+  "activeSourceRows": 383,
+  "knownLanguageRows": 126,
   "unknownLanguageRows": 276,
   "activeLanguages": {
     "ar": 2,
@@ -15,11 +15,13 @@
     "fr": 14,
     "id": 2,
     "it": 12,
+    "ku": 2,
     "map": 1,
     "pl": 2,
     "pt": 2,
     "ru": 2,
     "sl": 2,
+    "tr": 2,
     "und": 276,
     "zh": 2
   },
@@ -32,9 +34,11 @@
     "es": 5,
     "fr": 5,
     "it": 3,
+    "ku": 2,
     "map": 1,
     "pt": 1,
     "sl": 2,
+    "tr": 2,
     "und": 2
   },
   "inferredLanguages": {
@@ -72,10 +76,13 @@
     "tr"
   ],
   "missingInterfaceLanguages": [],
-  "missingSourceCoverageLanguages": [
-    "tr"
+  "missingSourceCoverageLanguages": [],
+  "requiredSourceLanguages": [
+    "tr",
+    "ku"
   ],
+  "missingRequiredSourceLanguages": [],
   "missingOfferedLanguages": [],
-  "sourceRegistryGeneratedAt": "2026-07-21T10:34:34.832003+00:00",
-  "sourceCount": 379
+  "sourceRegistryGeneratedAt": "2026-07-21T11:57:20.901637+00:00",
+  "sourceCount": 383
 }

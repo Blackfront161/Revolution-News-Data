@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.1';
-const DATA_CACHE = 'wrn-data-v1.8.1';
+const APP_CACHE = 'wrn-app-v1.8.2';
+const DATA_CACHE = 'wrn-data-v1.8.2';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -49,6 +49,7 @@ const APP_SHELL = [
   './status-center.js',
   './utils.js',
   './source-profiles.js',
+  './source-filters.js',
   './translation-tools.js',
   './accessibility.js',
   './media-player.js',

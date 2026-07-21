@@ -267,3 +267,42 @@ html.wrn-source-modal-open {
         flex-direction: column;
     }
 }
+
+
+/* WRN 1.8.2 – Sprach- und Herkunftsfilter */
+.wrn-source-dimension-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+}
+
+.wrn-source-dimension-row label {
+    display: grid;
+    gap: 0.25rem;
+    color: var(--text-muted, #aaa);
+    font-size: 0.72rem;
+}
+
+.wrn-source-dimension-row select {
+    min-height: 42px;
+    border: 1px solid #3a3e49;
+    border-radius: 5px;
+    background: #11131b;
+    color: #fff;
+    padding: 0.55rem;
+    font: inherit;
+}
+
+.wrn-source-meta {
+    display: block;
+    margin-top: 0.24rem;
+    color: var(--color-cyan, #00f0ff);
+    font-size: 0.68rem;
+}
+
+@media (max-width: 720px) {
+    .wrn-source-dimension-row {
+        grid-template-columns: 1fr;
+    }
+}
