@@ -64,19 +64,19 @@ for token in ['window.WRNVideoHub', 'youtube-nocookie.com', 'PeerTube', 'data-vi
 
 config = (ROOT / 'config.js').read_text(encoding='utf-8')
 worker = (ROOT / 'service-worker.js').read_text(encoding='utf-8')
-for token in ["version: '1.8.1'", 'video-hub.js', 'audio-region-core.js']:
+for token in ["version: '1.8.2'", 'video-hub.js', 'audio-region-core.js']:
     assert token in config, token
-for token in ['wrn-app-v1.8.1', 'wrn-data-v1.8.1', 'video-hub.js', 'audio-region-core.js']:
+for token in ['wrn-app-v1.8.2', 'wrn-data-v1.8.2', 'video-hub.js', 'audio-region-core.js']:
     assert token in worker, token
 
 feature = (ROOT / 'feature-audit.json').read_text(encoding='utf-8')
-assert '"version": "1.8.1"' in feature
+assert '"version": "1.8.2"' in feature
 assert '"video_hub"' in feature
 assert '"criticalMissing": 0' in feature
 
 language_audit = (ROOT / 'language-source-audit.json').read_text(encoding='utf-8')
-assert '"version": "1.8.1"' in language_audit
+assert '"version": "1.8.2"' in language_audit
 assert '"missingInterfaceLanguages": []' in language_audit
 assert '"missingOfferedLanguages": []' in language_audit
 
-print('WRN 1.8.1 Release-Verträge: OK')
+print('WRN 1.8.1 Funktionsverträge unter 1.8.2: OK')

@@ -104,3 +104,13 @@ Der Service Worker besitzt einen eigenen Fallback für diese Datei.
 
 Normale Datenworkflows sollen `requirements-wrn.lock.txt` verwenden.
 Versionsänderungen erfolgen nur bewusst in einem eigenen Wartungscommit.
+
+
+## Quellen- und Sprachregeln ab 1.8.2
+
+- Neue Quellen werden ausschließlich additiv in `multilingual-source-registry.json` und über den idempotenten Aggregator-Block ergänzt.
+- Das bestehende `quellen`-Wörterbuch darf nicht vollständig ersetzt werden.
+- Türkische Quellen verwenden `tr`, kurdische Quellen `ku`.
+- `language_source_audit.py` muss für beide Codes eine aktive Quellenabdeckung bestätigen.
+- `Democracy Now!` bleibt von Erweiterungen ausgeschlossen; ein bereits vorhandener Eintrag wird nicht gelöscht.
+- Herkunftsangaben beschreiben den Sitz bzw. Publikationskontext der Quelle und werden nicht aus der Artikelsprache geraten.

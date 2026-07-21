@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-07-21T10:36:06.643118+00:00",
-  "version": "1.8.1",
+  "generatedAt": "2026-07-21T11:57:19.851594+00:00",
+  "version": "1.8.2",
   "summary": {
     "groups": 11,
     "groupNames": [
@@ -32,7 +32,7 @@
           "file": "index.html",
           "critical": true,
           "present": true,
-          "sizeBytes": 39344,
+          "sizeBytes": 39667,
           "loadedByConfig": false,
           "cachedByServiceWorker": true
         },
@@ -40,7 +40,7 @@
           "file": "app.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 124624,
+          "sizeBytes": 124763,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -48,7 +48,7 @@
           "file": "config.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 26392,
+          "sizeBytes": 26457,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -56,7 +56,7 @@
           "file": "service-worker.js",
           "critical": true,
           "present": true,
-          "sizeBytes": 8593,
+          "sizeBytes": 8618,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -221,15 +221,15 @@
       ]
     },
     "news_and_sources": {
-      "total": 7,
-      "present": 7,
+      "total": 8,
+      "present": 8,
       "missing": 0,
       "files": [
         {
           "file": "aggregate.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 38679,
+          "sizeBytes": 42445,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -237,7 +237,7 @@
           "file": "check_news_sources.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 19188,
+          "sizeBytes": 21487,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -253,7 +253,7 @@
           "file": "source-verification.js",
           "critical": false,
           "present": true,
-          "sizeBytes": 34268,
+          "sizeBytes": 40404,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -261,7 +261,7 @@
           "file": "source-verification.css",
           "critical": false,
           "present": true,
-          "sizeBytes": 5188,
+          "sizeBytes": 5950,
           "loadedByConfig": true,
           "cachedByServiceWorker": true
         },
@@ -269,7 +269,7 @@
           "file": "multilingual-source-registry.json",
           "critical": false,
           "present": true,
-          "sizeBytes": 2619,
+          "sizeBytes": 4636,
           "loadedByConfig": false,
           "cachedByServiceWorker": true
         },
@@ -277,9 +277,17 @@
           "file": "build_sources_registry.py",
           "critical": false,
           "present": true,
-          "sizeBytes": 12567,
+          "sizeBytes": 13691,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
+        },
+        {
+          "file": "source-filters.js",
+          "critical": false,
+          "present": true,
+          "sizeBytes": 9594,
+          "loadedByConfig": true,
+          "cachedByServiceWorker": true
         }
       ]
     },
@@ -582,7 +590,7 @@
           "file": "feature_audit.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 7052,
+          "sizeBytes": 7085,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -590,7 +598,7 @@
           "file": "language_source_audit.py",
           "critical": true,
           "present": true,
-          "sizeBytes": 5330,
+          "sizeBytes": 5947,
           "loadedByConfig": false,
           "cachedByServiceWorker": false
         },
@@ -638,8 +646,8 @@
           "file": "sources-registry.json",
           "critical": false,
           "present": true,
-          "sizeBytes": 176587,
-          "loadedByConfig": false,
+          "sizeBytes": 211640,
+          "loadedByConfig": true,
           "cachedByServiceWorker": false
         }
       ]

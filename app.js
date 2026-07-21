@@ -1415,6 +1415,9 @@ function applyFilters(isBookmark = false) {
     if (contentType) {
         filtered = filtered.filter(article => window.WRNSourceProfiles?.matchesType(article, contentType) ?? true);
     }
+    if (window.WRNSourceFilters?.matches) {
+        filtered = filtered.filter(article => window.WRNSourceFilters.matches(article));
+    }
     
     if (searchQuery !== "") { filtered = filtered.filter(a => (a.title && a.title.toLowerCase().includes(searchQuery)) || (a.content && a.content.toLowerCase().includes(searchQuery)) || normalizedStringArray(a.eventTags).join(' ').toLowerCase().includes(searchQuery) || normalizedStringArray(a.eventCategories).join(' ').toLowerCase().includes(searchQuery) || String(a.eventCity || '').toLowerCase().includes(searchQuery)); }
 

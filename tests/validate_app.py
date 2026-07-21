@@ -58,6 +58,7 @@ def check_required_files() -> None:
         "video-hub.js",
         "video-hub.css",
         "audio-region-core.js",
+        "source-filters.js",
         "briefing-2.js",
         "briefing-2.css",
         "events.js",
@@ -501,7 +502,7 @@ def check_phase1k_release_fixes() -> None:
         error("config.js und service-worker.js verwenden unterschiedliche Release-Versionen.")
 
 
-def check_release_181() -> None:
+def check_release_182() -> None:
     config = (ROOT / "config.js").read_text(encoding="utf-8") if (ROOT / "config.js").is_file() else ""
     worker = (ROOT / "service-worker.js").read_text(encoding="utf-8") if (ROOT / "service-worker.js").is_file() else ""
     navigation = (ROOT / "release-1.5-nav.js").read_text(encoding="utf-8") if (ROOT / "release-1.5-nav.js").is_file() else ""
@@ -512,13 +513,13 @@ def check_release_181() -> None:
     source_verification = (ROOT / "source-verification.js").read_text(encoding="utf-8") if (ROOT / "source-verification.js").is_file() else ""
     release_languages = (ROOT / "release-1.4.js").read_text(encoding="utf-8") if (ROOT / "release-1.4.js").is_file() else ""
 
-    for token in ["version: '1.8.1'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
+    for token in ["version: '1.8.2'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
         if token not in config:
-            error(f"config.js enthält die 1.8.1-Verknüpfung nicht: {token}")
+            error(f"config.js enthält die 1.8.2-Verknüpfung nicht: {token}")
 
-    for token in ["wrn-app-v1.8.1", "wrn-data-v1.8.1", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
+    for token in ["wrn-app-v1.8.2", "wrn-data-v1.8.2", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
         if token not in worker:
-            error(f"service-worker.js enthält die 1.8.1-Datei nicht: {token}")
+            error(f"service-worker.js enthält die 1.8.2-Datei nicht: {token}")
 
     if "new URL('./generated-podcasts.json', self.location.href)" not in worker:
         error("service-worker.js enthält keinen gültigen Fallback für generated-podcasts.json.")
@@ -528,7 +529,7 @@ def check_release_181() -> None:
 
     for token in ["key: 'stories'", "Entwicklungen", "key: 'video'", "window.WRNVideoHub?.show?.()"]:
         if token not in navigation:
-            error(f"release-1.5-nav.js enthält die 1.8.1-Navigation nicht: {token}")
+            error(f"release-1.5-nav.js enthält die 1.8.2-Navigation nicht: {token}")
 
     for token in ["window.WRNAudioTab181", "wrn-audio-region-tabs-181", "WRNAudioRegionCore"]:
         if token not in audio:
@@ -537,6 +538,11 @@ def check_release_181() -> None:
     for token in ["radioCatalog", "pendingCheck", "streamCandidates"]:
         if token not in source_verification:
             error(f"source-verification.js enthält die robuste Statuslogik nicht: {token}")
+
+    source_filters = (ROOT / "source-filters.js").read_text(encoding="utf-8") if (ROOT / "source-filters.js").is_file() else ""
+    for token in ["window.WRNSourceFilters", "source-language-filter", "source-origin-filter", "Kurdî"]:
+        if token not in source_filters:
+            error(f"source-filters.js enthält den 1.8.2-Filtervertrag nicht: {token}")
 
     if "const BETA_LANGUAGES = new Set();" not in release_languages:
         error("release-1.4.js kennzeichnet zusätzliche Sprachen weiterhin als Beta.")
@@ -576,7 +582,7 @@ def main() -> int:
     check_translation_tools_module()
     check_data_control_module()
     check_phase1k_release_fixes()
-    check_release_181()
+    check_release_182()
     check_source_catalog()
     check_config()
 

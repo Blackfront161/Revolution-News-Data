@@ -55,13 +55,13 @@ jobs:
 
           python -m pip check
 
-      - name: App-Struktur und Release 1.8.1 prüfen
+      - name: App-Struktur und Release 1.8.2 prüfen
         shell: bash
         run: |
           set -euo pipefail
 
           python tests/validate_app.py
-          python tests/test_release_181.py
+          python tests/test_release_182.py
           PYTHONPATH=. python tests/test_audio_source_schema.py
 
       - name: JavaScript-Syntax und Kernlogik prüfen
@@ -79,7 +79,8 @@ jobs:
             audio-region-core.js \
             audio-tab.js \
             video-hub.js \
-            source-verification.js
+            source-verification.js \
+            source-filters.js
           do
             echo "Prüfe $file"
             node --check "$file"
@@ -87,6 +88,7 @@ jobs:
 
           node tests/test_stories_core.js
           node tests/test_audio_region_core.js
+          node tests/test_source_filters.js
 
       - name: Python-Dateien kompilieren
         shell: bash

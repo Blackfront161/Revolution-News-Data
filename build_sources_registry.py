@@ -122,6 +122,9 @@ def as_languages(value: Any) -> list[str]:
         "greek": "el",
         "türkçe": "tr",
         "turkish": "tr",
+        "kurdî": "ku",
+        "kurdi": "ku",
+        "kurdish": "ku",
     }
 
     for item in values:
@@ -176,7 +179,11 @@ def infer_languages(name: str, url: str) -> list[str]:
             "alerta gr",
         )),
         ("tr", (
-            ".tr/", "turkey", "turkish",
+            ".tr/", "turkey", "türkiye", "turkish", "türkçe",
+        )),
+        ("ku", (
+            "kurdî", "kurdish", "/kurdi",
+            "pressin",
         )),
         ("pl", (
             ".pl/", "poland", "polska", "federacja",
@@ -202,6 +209,19 @@ def infer_languages(name: str, url: str) -> list[str]:
 
 
 def first_value(
+    item: dict[str, Any],
+    fields: tuple[str, ...],
+) -> str:
+    for field in fields:
+        value = item.get(field)
+
+        if value not in (None, "", [], {}):
+            return str(value).strip()
+
+    return ""
+
+
+def first_geographic_value(
     item: dict[str, Any],
     fields: tuple[str, ...],
 ) -> str:
@@ -422,6 +442,19 @@ def normalize_record(
         "mediaType": media_type,
         "status": status,
         "active": active,
+        "originRegion": first_geographic_value(
+            item,
+            ("originRegion", "geographicRegion", "region"),
+        ),
+        "originCountry": first_geographic_value(
+            item,
+            ("originCountry", "country"),
+        ),
+        "originCountryCode": first_geographic_value(
+            item,
+            ("originCountryCode", "countryCode"),
+        ).upper(),
+        # Provenance files, not geographic origin.
         "origins": [origin],
     }
 
@@ -453,6 +486,14 @@ def merge_record(
 
     if not target["homepage"] and incoming["homepage"]:
         target["homepage"] = incoming["homepage"]
+
+    for field in (
+        "originRegion",
+        "originCountry",
+        "originCountryCode",
+    ):
+        if not target.get(field) and incoming.get(field):
+            target[field] = incoming[field]
 
     target["active"] = target["active"] or incoming["active"]
 
@@ -517,7 +558,8 @@ def build_registry() -> dict[str, Any]:
     })
 
     payload = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
+        "version": "1.8.2",
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),

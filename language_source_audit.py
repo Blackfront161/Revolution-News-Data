@@ -15,6 +15,7 @@ from build_sources_registry import build_registry
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT = ROOT / "language-source-audit.json"
+REQUIRED_SOURCE_LANGUAGES = ("tr", "ku")
 
 
 def offered_languages() -> list[str]:
@@ -125,6 +126,12 @@ def main() -> int:
         if counts.get(language, 0) == 0
     ]
 
+    missing_required_source_languages = [
+        language
+        for language in REQUIRED_SOURCE_LANGUAGES
+        if counts.get(language, 0) == 0
+    ]
+
     known_rows = sum(
         count
         for language, count in counts.items()
@@ -132,11 +139,11 @@ def main() -> int:
     )
 
     payload: dict[str, Any] = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.8.1",
+        "version": "1.8.2",
         "activeSourceRows": len(active),
         "knownLanguageRows": known_rows,
         "unknownLanguageRows": counts.get("und", 0),
@@ -154,6 +161,10 @@ def main() -> int:
         "missingInterfaceLanguages": missing_interface,
         "missingSourceCoverageLanguages":
             missing_source_coverage,
+        "requiredSourceLanguages":
+            list(REQUIRED_SOURCE_LANGUAGES),
+        "missingRequiredSourceLanguages":
+            missing_required_source_languages,
         # Backward-compatible field: an offered interface language is
         # missing only when the UI does not support it. Source-language
         # coverage is reported separately.
@@ -204,6 +215,15 @@ def main() -> int:
                 payload["missingSourceCoverageLanguages"]
             )
         )
+
+    if payload["missingRequiredSourceLanguages"]:
+        print(
+            "FEHLER: Erforderliche Quellenabdeckung fehlt: "
+            + ", ".join(
+                payload["missingRequiredSourceLanguages"]
+            )
+        )
+        return 1
 
     return 0
 

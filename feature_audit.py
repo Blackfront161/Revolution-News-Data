@@ -63,6 +63,7 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "source-verification.css",
             "multilingual-source-registry.json",
             "build_sources_registry.py",
+            "source-filters.js",
         ],
     },
     "briefing_and_summaries": {
@@ -236,7 +237,7 @@ def main() -> int:
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.8.1",
+        "version": "1.8.2",
         "summary": {
             "groups": len(groups),
             "groupNames": list(groups),
