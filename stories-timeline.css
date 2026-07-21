@@ -1,0 +1,223 @@
+/* World Revolution News 1.8.0 – Geschichten und Zeitleisten */
+.wrn-stories-view {
+  box-sizing: border-box;
+  width: min(100%, 1120px);
+  min-height: calc(100dvh - 106px);
+  margin: 0 auto;
+  padding: 14px 14px calc(96px + env(safe-area-inset-bottom));
+  color: var(--text-main, #f2f4f8);
+}
+
+.wrn-stories-view[hidden] { display: none !important; }
+
+body.wrn-stories-active #feed-container,
+body.wrn-stories-active #archive-container,
+body.wrn-stories-active #txt-archive-title,
+body.wrn-stories-active #event-filter-panel,
+body.wrn-stories-active #status-container,
+body.wrn-stories-active #wrn-briefing-view,
+body.wrn-stories-active #wrn-briefing-loading-panel {
+  display: none !important;
+}
+
+.wrn-stories-topbar {
+  position: sticky;
+  top: 106px;
+  z-index: 38;
+  margin: -14px -14px 14px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(0,240,255,.24);
+  background: rgba(5,8,13,.94);
+  backdrop-filter: blur(10px);
+}
+
+.wrn-stories-topbar h2 {
+  margin: 0;
+  color: var(--color-cyan, #00f0ff);
+  font-size: clamp(1.05rem, 4vw, 1.45rem);
+}
+
+.wrn-stories-topbar p {
+  margin: 5px 0 0;
+  color: rgba(255,255,255,.7);
+  font-size: .76rem;
+  line-height: 1.4;
+}
+
+.wrn-stories-controls {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(120px, auto));
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 13px;
+  background: rgba(7,10,17,.78);
+}
+
+.wrn-stories-controls input,
+.wrn-stories-controls select,
+.wrn-stories-controls button,
+.wrn-story-actions button,
+.wrn-story-timeline button {
+  min-height: 36px;
+  border: 1px solid rgba(0,240,255,.28);
+  border-radius: 9px;
+  background: rgba(5,8,13,.92);
+  color: inherit;
+  padding: 7px 10px;
+}
+
+.wrn-stories-controls button,
+.wrn-story-actions button,
+.wrn-story-timeline button { cursor: pointer; }
+
+.wrn-stories-list { display: grid; gap: 14px; }
+
+.wrn-story-card {
+  border: 1px solid rgba(0,240,255,.18);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(8,12,20,.93), rgba(13,8,16,.88));
+  box-shadow: 0 14px 32px rgba(0,0,0,.28);
+  overflow: hidden;
+}
+
+.wrn-story-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+}
+
+.wrn-story-heading h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.02rem;
+  line-height: 1.25;
+}
+
+.wrn-story-meta {
+  margin: 5px 0 0;
+  color: rgba(255,255,255,.62);
+  font-size: .7rem;
+}
+
+.wrn-story-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 0 0 auto;
+}
+
+.wrn-story-actions button[aria-pressed="true"] {
+  border-color: var(--wrn-red, #ff334f);
+  color: #fff;
+  background: rgba(255,51,79,.15);
+}
+
+.wrn-story-sources {
+  padding: 0 14px 12px;
+  color: var(--color-cyan, #00f0ff);
+  font-size: .72rem;
+  line-height: 1.4;
+}
+
+.wrn-story-card details {
+  border-top: 1px solid rgba(255,255,255,.09);
+}
+
+.wrn-story-card summary {
+  cursor: pointer;
+  padding: 11px 14px;
+  color: rgba(255,255,255,.88);
+  font-weight: 800;
+  font-size: .8rem;
+}
+
+.wrn-story-timeline {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 14px 15px 40px;
+}
+
+.wrn-story-timeline li {
+  padding: 10px;
+  border-left: 2px solid var(--color-cyan, #00f0ff);
+  border-radius: 0 10px 10px 0;
+  background: rgba(255,255,255,.035);
+}
+
+.wrn-story-timeline-head {
+  margin-bottom: 4px;
+  color: rgba(255,255,255,.62);
+  font-size: .67rem;
+}
+
+.wrn-story-timeline strong {
+  display: block;
+  color: #fff;
+  font-size: .84rem;
+  line-height: 1.35;
+}
+
+.wrn-story-timeline p {
+  margin: 7px 0;
+  color: rgba(255,255,255,.76);
+  font-size: .75rem;
+  line-height: 1.5;
+}
+
+.wrn-story-perspectives {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  padding: 0 14px 15px;
+}
+
+.wrn-story-perspectives section {
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 11px;
+  background: rgba(255,255,255,.035);
+}
+
+.wrn-story-perspectives h4 {
+  margin: 0 0 6px;
+  color: var(--wrn-red, #ff334f);
+  font-size: .76rem;
+}
+
+.wrn-story-perspectives strong {
+  display: block;
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.wrn-story-perspectives p {
+  margin: 7px 0 0;
+  color: rgba(255,255,255,.72);
+  font-size: .71rem;
+  line-height: 1.45;
+}
+
+.wrn-stories-empty {
+  padding: 24px;
+  border: 1px dashed rgba(255,255,255,.2);
+  border-radius: 14px;
+  color: rgba(255,255,255,.7);
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .wrn-stories-controls { grid-template-columns: 1fr 1fr; }
+  .wrn-stories-controls input { grid-column: 1 / -1; }
+  .wrn-story-heading { display: grid; }
+}
+
+@media (max-width: 480px) {
+  .wrn-stories-controls { grid-template-columns: 1fr; }
+  .wrn-story-actions { width: 100%; }
+  .wrn-story-actions button { flex: 1 1 120px; }
+}

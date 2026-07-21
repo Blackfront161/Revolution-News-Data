@@ -66,15 +66,28 @@ GROUPS: dict[str, dict[str, list[str]]] = {
         ],
     },
     "briefing_and_summaries": {
-        "critical": [],
-        "optional": [
+        "critical": [
             "briefing.js",
             "briefing.css",
             "briefing-loader.js",
+            "briefing-2.js",
+            "briefing-2.css",
+        ],
+        "optional": [
             "briefing-loader.css",
             "article-summary-core.js",
             "article-summary.js",
             "article-summary.css",
+        ],
+    },
+    "stories_and_timelines": {
+        "critical": [
+            "stories-core.js",
+            "stories-timeline.js",
+            "stories-timeline.css",
+        ],
+        "optional": [
+            "tests/test_stories_core.js",
         ],
     },
     "audio": {
@@ -215,7 +228,7 @@ def main() -> int:
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.7.22",
+        "version": "1.8.0",
         "summary": {
             "groups": len(groups),
             "groupNames": list(groups),

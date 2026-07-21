@@ -79,18 +79,43 @@ jobs:
           git config user.name "wrn-source-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          # Nur temporäre Python-Artefakte entfernen. Alle erzeugten
-          # Projekt- und Datendateien sollen danach eingecheckt werden.
           find . -type d -name __pycache__ -prune -exec rm -rf {} +
-          find . -type f             \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' \)             -delete
+          find . -type f \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' -o -name '*.log' \) -delete
           rm -rf .pytest_cache
 
-          echo "Arbeitsbaum vor dem Commit:"
-          git status --short
+          outputs=(
+            aggregate.py
+            multilingual-source-registry.json
+            news.json
+            events.json
+            news-feed.json
+            events-feed.json
+            podcasts.json
+            podcast-health.json
+            radio-health.json
+            audio-health.json
+            audio-source-report.json
+            source-health.json
+            source-health-report.json
+            discovered-feeds.json
+            language-source-audit.json
+            sources-registry.json
+            feature-audit.json
+          )
 
-          # Der Runner startet aus einem sauberen Checkout. Deshalb sind
-          # alle verbliebenen Änderungen Ergebnisse dieses Workflows.
-          git add -A -- .
+          for file in "${outputs[@]}"; do
+            if [ -e "$file" ]; then
+              git add -- "$file"
+            fi
+          done
+
+          git add -u
+          git restore --staged .github/workflows 2>/dev/null || true
+
+          if git diff --cached --name-only | grep -q '^\.github/workflows/'; then
+            echo "FEHLER: Workflow-Datei wurde vorgemerkt."
+            exit 1
+          fi
 
           if git diff --cached --quiet; then
             echo "Keine Änderungen."
@@ -98,37 +123,4 @@ jobs:
           fi
 
           git commit -m "Merge approved multilingual sources and refresh media"
-
-          # Sicherheitsnetz: Falls ein Prozess eine Datei nach dem ersten
-          # git add noch verändert hat, wird sie in denselben Commit aufgenommen.
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "Nachträgliche Änderungen werden in den Commit aufgenommen:"
-            git status --short
-            git add -A -- .
-            git commit --amend --no-edit
-          fi
-
-          if [ -n "$(git status --porcelain)" ]; then
-            echo "FEHLER: Arbeitsbaum ist vor dem Rebase nicht sauber."
-            git status --short
-            exit 1
-          fi
-
-          # Andere WRN-Datenworkflows werden über wrn-main-write serialisiert.
-          # Falls zwischen Checkout und Push trotzdem ein externer Commit kam,
-          # wird bis zu dreimal sauber rebasiert und erneut gepusht.
-          for attempt in 1 2 3; do
-            echo "Push-Versuch ${attempt}/3"
-            git fetch origin "${GITHUB_REF_NAME}"
-            git rebase "origin/${GITHUB_REF_NAME}"
-
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
-              echo "Änderungen erfolgreich gepusht."
-              exit 0
-            fi
-
-            sleep $((attempt * 4))
-          done
-
-          echo "FEHLER: Push nach drei Versuchen nicht möglich."
-          exit 1
+          bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"

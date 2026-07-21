@@ -2,6 +2,15 @@
 
 ## Aktive Schreibworkflows
 
+Dauerhaft aktiv bleiben:
+
+- `Update News`
+- `Update Podcasts`
+- `Merge Multilingual Sources`
+- `Repair Audio`
+- `WRN Quality Gate`
+- `App prüfen`
+
 Alle Workflows, die nach `main` schreiben, verwenden:
 
 ```yaml
@@ -15,12 +24,18 @@ automatisch verändern oder committen.
 
 ## Empfohlene Reihenfolge
 
-1. `Apply 1.7.23 aggregator hardening`
-2. `WRN Quality Gate`
-3. `Update News`
-4. `Repair and verify audio`, nur wenn Audioquellen geändert wurden
+1. Änderungen lokal oder auf einem separaten Branch einspielen.
+2. `WRN Quality Gate` abwarten.
+3. Erst danach `Update News` oder `Update Podcasts` manuell starten.
+4. `Repair Audio` nur bei Änderungen an Audioquellen ausführen.
 
-Nie zwei schreibende Workflows gleichzeitig manuell starten.
+Nie zwei schreibende Workflows gleichzeitig starten.
+
+## Release-Regel
+
+Neue Releases werden nicht mehr durch einmalige selbstverändernde
+Apply-Workflows installiert. Änderungen werden zuerst gegen eine vollständige
+Repository-Kopie getestet und anschließend als normaler Commit eingespielt.
 
 ## Aggregator-Sicherheit
 
@@ -33,30 +48,14 @@ Fehler werden nach `aggregate-errors.json` geschrieben.
 ## Generierte Podcasts
 
 `generated-podcasts.json` muss immer gültiges JSON und eine Liste enthalten.
-Existiert eine ältere kompatible Datei, wird deren Inhalt übernommen.
-Andernfalls wird eine leere Liste veröffentlicht, damit keine 404-Anfragen
-entstehen.
+Der Service Worker besitzt einen eigenen Fallback für diese Datei.
 
-## Repository-Hygiene
+## Geschichten und Briefing 2
 
-Automatisch entfernbar sind nur:
-
-- versionierte `.pyc`/`.pyo`-Dateien
-- Inhalte versionierter `__pycache__`-Ordner
-- identische Workflow-Kopien im Hauptverzeichnis
-- eine identische alte Kopie von `scripts/wrn-safe-push.sh`
-
-Abweichende Kopien werden nur in `repository-cleanup-report.json` gemeldet.
-
-## Wiederherstellung
-
-Vor einer Änderung an `aggregate.py` erzeugt der Patcher:
-
-```text
-aggregate.py.pre-1723.bak
-```
-
-Diese lokale Sicherung wird durch `.gitignore` nicht versioniert.
+- Story-Clustering erfolgt lokal im Browser.
+- Beobachtungsbegriffe liegen unter `wrn_story_watchlist_v1`.
+- Briefing-Verlauf und Briefing-2-Modus bleiben lokal.
+- Es werden dafür keine Nutzerkonten oder zusätzlichen Serverdaten benötigt.
 
 ## Abhängigkeiten
 

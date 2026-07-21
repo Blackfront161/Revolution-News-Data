@@ -52,6 +52,11 @@ def check_required_files() -> None:
         "accessibility.js",
         "media-player.js",
         "audio-tools.js",
+        "stories-core.js",
+        "stories-timeline.js",
+        "stories-timeline.css",
+        "briefing-2.js",
+        "briefing-2.css",
         "events.js",
         "reading-state.js",
         "app.js",
@@ -244,7 +249,7 @@ def check_service_worker() -> None:
             continue
         if not (ROOT / match).is_file():
             error(f"Service Worker referenziert eine fehlende Datei: {match}")
-    for required_script in ["config.js", "data-control.js", "status-center.js", "utils.js", "source-profiles.js", "translation-tools.js", "accessibility.js", "media-player.js", "audio-tools.js", "events.js", "reading-state.js"]:
+    for required_script in ["config.js", "data-control.js", "status-center.js", "utils.js", "source-profiles.js", "translation-tools.js", "accessibility.js", "media-player.js", "audio-tools.js", "stories-core.js", "briefing-2.js", "stories-timeline.js", "events.js", "reading-state.js"]:
         if required_script not in text:
             error(f"Service Worker muss {required_script} im App-Shell führen.")
 
@@ -492,6 +497,41 @@ def check_phase1k_release_fixes() -> None:
     elif config_version.group(1) != cache_version.group(1):
         error("config.js und service-worker.js verwenden unterschiedliche Release-Versionen.")
 
+
+def check_release_180() -> None:
+    config = (ROOT / "config.js").read_text(encoding="utf-8") if (ROOT / "config.js").is_file() else ""
+    worker = (ROOT / "service-worker.js").read_text(encoding="utf-8") if (ROOT / "service-worker.js").is_file() else ""
+    navigation = (ROOT / "release-1.5-nav.js").read_text(encoding="utf-8") if (ROOT / "release-1.5-nav.js").is_file() else ""
+    briefing = (ROOT / "briefing.js").read_text(encoding="utf-8") if (ROOT / "briefing.js").is_file() else ""
+    stories = (ROOT / "stories-timeline.js").read_text(encoding="utf-8") if (ROOT / "stories-timeline.js").is_file() else ""
+    core = (ROOT / "stories-core.js").read_text(encoding="utf-8") if (ROOT / "stories-core.js").is_file() else ""
+
+    for token in ["version: '1.8.0'", "stories-core.js", "briefing-2.js", "stories-timeline.js", "openLandingTab"]:
+        if token not in config:
+            error(f"config.js enthält die 1.8.0-Verknüpfung nicht: {token}")
+
+    for token in ["wrn-app-v1.8.0", "wrn-data-v1.8.0", "stories-core.js", "briefing-2.js", "stories-timeline.js"]:
+        if token not in worker:
+            error(f"service-worker.js enthält die 1.8.0-Datei nicht: {token}")
+
+    if "new URL('./generated-podcasts.json', self.location.href)" not in worker:
+        error("service-worker.js enthält keinen gültigen Fallback für generated-podcasts.json.")
+
+    if "new URL('./podcasts.json', './generated-podcasts.json'" in worker:
+        error("service-worker.js enthält weiterhin den fehlerhaften kombinierten Podcast-Fallback.")
+
+    for token in ["key: 'stories'", "window.WRNStories?.show?.()", "window.WRNStories?.hide?.()"]:
+        if token not in navigation:
+            error(f"release-1.5-nav.js enthält die Geschichten-Navigation nicht: {token}")
+
+    if "wrn-briefing-rendered" not in briefing:
+        error("briefing.js veröffentlicht das Briefing-2-Render-Ereignis nicht.")
+
+    for token in ["window.WRNStories", "clusterStories", "perspectiveRows"]:
+        if token not in stories and token not in core:
+            error(f"Geschichtenmodul enthält die erwartete Funktion nicht: {token}")
+
+
 def check_config() -> None:
     path = ROOT / "config.js"
     if not path.is_file():
@@ -520,6 +560,7 @@ def main() -> int:
     check_translation_tools_module()
     check_data_control_module()
     check_phase1k_release_fixes()
+    check_release_180()
     check_source_catalog()
     check_config()
 
