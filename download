@@ -1,0 +1,33 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Temporary and diagnostic files
+*.tmp
+*.temp
+*.log
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# WRN local backups
+aggregate.py.pre-*.bak
+
+# Editors
+.vscode/
+.idea/
+*.swp

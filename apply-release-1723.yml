@@ -1,0 +1,148 @@
+name: Apply 1.7.23 aggregator hardening
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-wrn.lock.txt
+
+      - name: Reproduzierbare Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-wrn.lock.txt
+          python -m pip check
+
+      - name: Aggregator sicher härten
+        run: python harden_aggregate_1723.py --apply
+
+      - name: Generated Podcasts normalisieren
+        run: python ensure_generated_podcasts_1723.py
+
+      - name: Version und Cache markieren
+        run: python bump_release_1723.py
+
+      - name: Sichere Repository-Bereinigung
+        run: python cleanup_repository_1723.py --apply-safe
+
+      - name: Release 1.7.23 prüfen
+        run: python validate_release_1723.py
+
+      - name: Bestehenden App-Validator ausführen
+        run: |
+          if [ -f tests/validate_app.py ]; then
+            python tests/validate_app.py
+          else
+            echo "Hinweis: tests/validate_app.py fehlt."
+          fi
+
+      - name: Keine Workflow-Selbstveränderung prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if ! git diff --quiet -- .github/workflows; then
+            echo "FEHLER: Workflow-Dateien wurden verändert."
+            git diff -- .github/workflows
+            exit 1
+          fi
+
+      - name: Änderungen speichern
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name "wrn-maintenance-bot"
+          git config user.email \
+            "actions@users.noreply.github.com"
+
+          find . -type d -name __pycache__ \
+            -prune -exec rm -rf {} +
+
+          find . -type f \
+            \( -name '*.pyc' \
+            -o -name '*.pyo' \
+            -o -name '*.tmp' \) \
+            -delete
+
+          runtime_files=(
+            aggregate.py
+            aggregate-hardening-report.json
+            aggregate-errors.json
+            generated-podcasts.json
+            generated-podcasts-report.json
+            repository-cleanup-report.json
+            release-version-report.json
+            config.js
+            service-worker.js
+            .gitignore
+            requirements-wrn.lock.txt
+            OPERATIONS.md
+          )
+
+          for file in "${runtime_files[@]}"; do
+            if [ -e "$file" ]; then
+              git add "$file"
+            fi
+          done
+
+          # Löschungen aus cleanup_repository_1723.py sind bereits
+          # durch git rm vorgemerkt.
+          git add -u
+
+          git restore --staged .github/workflows \
+            2>/dev/null || true
+
+          if git diff --cached --name-only \
+            | grep -q '^\.github/workflows/'
+          then
+            echo "FEHLER: Workflow-Datei wurde vorgemerkt."
+            exit 1
+          fi
+
+          if git diff --cached --quiet; then
+            echo "Keine neuen 1.7.23-Änderungen."
+            exit 0
+          fi
+
+          echo "Vorgemerkte Dateien:"
+          git diff --cached --name-only
+
+          git commit -m \
+            "Apply 1.7.23 aggregator hardening and repository cleanup"
+
+          find . -type d -name __pycache__ \
+            -prune -exec rm -rf {} +
+
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FEHLER: Arbeitsbaum nach Commit nicht sauber."
+            git status --short
+            exit 1
+          fi
+
+          bash wrn-safe-push.sh \
+            "${GITHUB_REF_NAME:-main}"
