@@ -1,8 +1,8 @@
-/* World Revolution News 1.4 – release compatibility and mobile navigation */
+/* World Revolution News 1.8.1 – vollständige Sprachen und mobile Navigation */
 'use strict';
 
 (() => {
-    const BETA_LANGUAGES = new Set(['es', 'fr', 'it', 'pt', 'ru', 'el', 'tr']);
+    const BETA_LANGUAGES = new Set();
     const nativeNames = {
         en: 'English', de: 'Deutsch', es: 'Español', fr: 'Français', it: 'Italiano',
         pt: 'Português', ru: 'Русский', el: 'Ελληνικά', tr: 'Türkçe'
@@ -82,16 +82,7 @@
     }
 
     function ensureBetaNote() {
-        let note = document.getElementById('language-beta-note');
-        if (!note) {
-            note = document.createElement('div');
-            note.id = 'language-beta-note';
-            note.className = 'language-beta-note';
-            note.setAttribute('role', 'status');
-            document.querySelector('header')?.after(note);
-        }
-        note.hidden = !BETA_LANGUAGES.has(lang());
-        note.textContent = text().beta;
+        document.getElementById('language-beta-note')?.remove();
     }
 
     const statusByLanguage = {

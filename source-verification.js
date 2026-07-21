@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.19 – vollständige Quellenübersicht */
+/* World Revolution News 1.8.1 – belastbare, mehrsprachige Quellenprüfung */
 'use strict';
 
 (() => {
@@ -23,57 +23,24 @@
     };
 
     const TEXT = {
-        de: {
-            title: 'Quellenprüfung',
-            open: 'Quellenprüfung',
-            refresh: 'Neu prüfen',
-            close: 'Schließen',
-            search: 'Quelle suchen …',
-            all: 'Alle',
-            ok: 'Erreichbar',
-            warning: 'Eingeschränkt',
-            error: 'Defekt',
-            unknown: 'Nicht geprüft',
-            total: 'Quellen',
-            empty: 'Keine passenden Quellen gefunden.',
-            loading: 'Quellen werden geprüft …',
-            updated: 'Geprüft',
-            news: 'Nachrichten',
-            podcast: 'Podcasts',
-            radio: 'Radio',
-            catalog: 'Katalog',
-            unavailable: 'Statusdatei nicht erreichbar',
-            limited: 'Aus Leistungsgründen werden höchstens 300 Einträge angezeigt.'
-        },
-        en: {
-            title: 'Source verification',
-            open: 'Source verification',
-            refresh: 'Check again',
-            close: 'Close',
-            search: 'Search sources …',
-            all: 'All',
-            ok: 'Available',
-            warning: 'Limited',
-            error: 'Broken',
-            unknown: 'Not checked',
-            total: 'Sources',
-            empty: 'No matching sources found.',
-            loading: 'Checking sources …',
-            updated: 'Checked',
-            news: 'News',
-            podcast: 'Podcasts',
-            radio: 'Radio',
-            catalog: 'Catalog',
-            unavailable: 'Status file unavailable',
-            limited: 'For performance, no more than 300 entries are shown.'
-        }
+        de: { title:'Quellenprüfung', open:'Quellenprüfung', refresh:'Neu prüfen', close:'Schließen', search:'Quelle suchen …', all:'Alle', ok:'Erreichbar', warning:'Eingeschränkt', error:'Defekt', unknown:'Nicht geprüft', total:'Quellen', empty:'Keine passenden Quellen gefunden.', loading:'Quellen werden geprüft …', updated:'Geprüft', news:'Nachrichten', podcast:'Podcasts', radio:'Radio', catalog:'Katalog', unavailable:'Statusdatei nicht erreichbar', limited:'Aus Leistungsgründen werden höchstens 300 Einträge angezeigt.', pending:'Prüfung ausstehend' },
+        en: { title:'Source verification', open:'Source verification', refresh:'Check again', close:'Close', search:'Search sources …', all:'All', ok:'Available', warning:'Limited', error:'Broken', unknown:'Not checked', total:'Sources', empty:'No matching sources found.', loading:'Checking sources …', updated:'Checked', news:'News', podcast:'Podcasts', radio:'Radio', catalog:'Catalog', unavailable:'Status file unavailable', limited:'For performance, no more than 300 entries are shown.', pending:'Check pending' },
+        es: { title:'Verificación de fuentes', open:'Verificación de fuentes', refresh:'Comprobar de nuevo', close:'Cerrar', search:'Buscar fuente …', all:'Todas', ok:'Disponible', warning:'Limitada', error:'Defectuosa', unknown:'No comprobada', total:'Fuentes', empty:'No se encontraron fuentes.', loading:'Comprobando fuentes …', updated:'Comprobado', news:'Noticias', podcast:'Pódcasts', radio:'Radio', catalog:'Catálogo', unavailable:'Archivo de estado no disponible', limited:'Por rendimiento se muestran como máximo 300 entradas.', pending:'Comprobación pendiente' },
+        fr: { title:'Vérification des sources', open:'Vérification des sources', refresh:'Vérifier à nouveau', close:'Fermer', search:'Rechercher une source …', all:'Toutes', ok:'Disponible', warning:'Limitée', error:'Défectueuse', unknown:'Non vérifiée', total:'Sources', empty:'Aucune source correspondante.', loading:'Vérification des sources …', updated:'Vérifié', news:'Actualités', podcast:'Podcasts', radio:'Radio', catalog:'Catalogue', unavailable:'Fichier d’état indisponible', limited:'Pour les performances, 300 entrées maximum sont affichées.', pending:'Vérification en attente' },
+        it: { title:'Verifica delle fonti', open:'Verifica delle fonti', refresh:'Controlla di nuovo', close:'Chiudi', search:'Cerca fonte …', all:'Tutte', ok:'Disponibile', warning:'Limitata', error:'Non funzionante', unknown:'Non verificata', total:'Fonti', empty:'Nessuna fonte corrispondente.', loading:'Verifica delle fonti …', updated:'Verificato', news:'Notizie', podcast:'Podcast', radio:'Radio', catalog:'Catalogo', unavailable:'File di stato non disponibile', limited:'Per le prestazioni vengono mostrate al massimo 300 voci.', pending:'Verifica in attesa' },
+        pt: { title:'Verificação de fontes', open:'Verificação de fontes', refresh:'Verificar novamente', close:'Fechar', search:'Pesquisar fonte …', all:'Todas', ok:'Disponível', warning:'Limitada', error:'Com defeito', unknown:'Não verificada', total:'Fontes', empty:'Nenhuma fonte correspondente.', loading:'A verificar fontes …', updated:'Verificado', news:'Notícias', podcast:'Podcasts', radio:'Rádio', catalog:'Catálogo', unavailable:'Ficheiro de estado indisponível', limited:'Por desempenho são mostradas no máximo 300 entradas.', pending:'Verificação pendente' },
+        ru: { title:'Проверка источников', open:'Проверка источников', refresh:'Проверить снова', close:'Закрыть', search:'Поиск источника …', all:'Все', ok:'Доступен', warning:'Ограничен', error:'Не работает', unknown:'Не проверен', total:'Источники', empty:'Подходящих источников нет.', loading:'Проверка источников …', updated:'Проверено', news:'Новости', podcast:'Подкасты', radio:'Радио', catalog:'Каталог', unavailable:'Файл состояния недоступен', limited:'Для производительности показывается не более 300 записей.', pending:'Проверка ожидается' },
+        el: { title:'Έλεγχος πηγών', open:'Έλεγχος πηγών', refresh:'Νέος έλεγχος', close:'Κλείσιμο', search:'Αναζήτηση πηγής …', all:'Όλες', ok:'Διαθέσιμη', warning:'Περιορισμένη', error:'Ελαττωματική', unknown:'Δεν ελέγχθηκε', total:'Πηγές', empty:'Δεν βρέθηκαν αντίστοιχες πηγές.', loading:'Έλεγχος πηγών …', updated:'Ελέγχθηκε', news:'Ειδήσεις', podcast:'Podcast', radio:'Ραδιόφωνο', catalog:'Κατάλογος', unavailable:'Το αρχείο κατάστασης δεν είναι διαθέσιμο', limited:'Για λόγους απόδοσης εμφανίζονται έως 300 εγγραφές.', pending:'Ο έλεγχος εκκρεμεί' },
+        tr: { title:'Kaynak doğrulama', open:'Kaynak doğrulama', refresh:'Tekrar kontrol et', close:'Kapat', search:'Kaynak ara …', all:'Tümü', ok:'Erişilebilir', warning:'Sınırlı', error:'Bozuk', unknown:'Kontrol edilmedi', total:'Kaynaklar', empty:'Eşleşen kaynak bulunamadı.', loading:'Kaynaklar kontrol ediliyor …', updated:'Kontrol edildi', news:'Haberler', podcast:'Podcastler', radio:'Radyo', catalog:'Katalog', unavailable:'Durum dosyasına erişilemiyor', limited:'Performans için en fazla 300 kayıt gösterilir.', pending:'Kontrol bekliyor' }
     };
 
     const language = () => {
-        const raw = document.getElementById('ui-language')?.value
+        const raw = window.WRNI18n?.currentLanguage?.()
+            || document.getElementById('ui-language')?.value
             || document.documentElement.lang
             || 'en';
-        return String(raw).toLowerCase().startsWith('de') ? 'de' : 'en';
+        const code = String(raw).toLowerCase().split(/[-_]/)[0];
+        return TEXT[code] ? code : 'en';
     };
 
     const t = () => TEXT[language()] || TEXT.en;
@@ -144,6 +111,7 @@
             || item.state
             || item.result
             || item.health
+            || item.audioStatus
             || ''
         ).toLowerCase();
 
@@ -153,6 +121,7 @@
             || item.message
             || item.reason
             || item.detail
+            || item.audioDetail
             || ''
         ).toLowerCase();
 
@@ -164,6 +133,17 @@
             || item.code
             || 0
         );
+
+        const pendingCheck = (
+            combined.includes('prüfung wird beim nächsten')
+            || combined.includes('check pending')
+            || combined.includes('not checked')
+            || combined.includes('noch nicht geprüft')
+            || combined.includes('keine audio-adresse')
+            || combined.includes('no audio address')
+        );
+
+        if (pendingCheck && !httpStatus) return 'unknown';
 
         if (
             item.ok === true
@@ -242,14 +222,22 @@
         || 'Unbekannte Quelle'
     ).trim();
 
-    const urlOf = item => String(
-        item.url
-        || item.feedUrl
-        || item.feed
-        || item.link
-        || item.homepage
-        || ''
-    ).trim();
+    const urlOf = item => {
+        const candidates = Array.isArray(item.streamCandidates)
+            ? item.streamCandidates
+            : [];
+        return String(
+            item.url
+            || item.feedUrl
+            || item.feed
+            || item.link
+            || item.homepage
+            || item.website
+            || item.workingStream
+            || candidates[0]
+            || ''
+        ).trim();
+    };
 
     const detailOf = item => {
         const parts = [];
@@ -269,6 +257,7 @@
             || item.message
             || item.reason
             || item.detail
+            || item.audioDetail
             || ''
         ).trim();
 
@@ -305,6 +294,18 @@
                 detail: detailOf(source)
             };
         });
+
+    const normalizeRadioCatalog = data =>
+        asArray(data).map((item, index) => ({
+            id: `radio-catalog-${index}-${nameOf(item, index)}`,
+            kind: 'radio',
+            name: nameOf(item, `Radio ${index + 1}`),
+            url: urlOf(item),
+            status: 'unknown',
+            detail: Array.isArray(item.streamCandidates) && item.streamCandidates.length
+                ? `${t().pending} · ${item.streamCandidates.length} Stream-Adresse(n)`
+                : t().pending
+        }));
 
     const canonicalUrl = value => {
         const raw = String(value || '').trim();
@@ -818,6 +819,7 @@
             ['catalog', urls.sourceCatalog],
             ['podcast', urls.podcastHealth],
             ['radio', urls.radioHealth],
+            ['radioCatalog', urls.radio],
             ['audio', urls.audioHealth]
         ].filter(([, url]) => Boolean(url));
 
@@ -833,6 +835,7 @@
             catalog: [],
             podcast: [],
             radio: [],
+            radioCatalog: [],
             audioPodcast: [],
             audioRadio: []
         };
@@ -852,6 +855,8 @@
                         'radio',
                         'unknown'
                     );
+                } else if (kind === 'radioCatalog') {
+                    grouped.radioCatalog = normalizeRadioCatalog(result.value.data);
                 } else {
                     grouped[kind] = normalize(
                         result.value.data,
@@ -859,13 +864,13 @@
                         'unknown'
                     );
                 }
-            } else if (kind !== 'audio') {
+            } else if (kind !== 'audio' && kind !== 'radioCatalog') {
                 grouped[kind] = [{
                     id: `${kind}-unavailable`,
                     kind,
                     name: t().unavailable,
                     url: endpoints[index][1],
-                    status: 'error',
+                    status: 'warning',
                     detail: String(
                         result.reason?.message || result.reason
                     )
@@ -882,9 +887,12 @@
             grouped.podcast,
             grouped.audioPodcast
         );
-        const radios = preferVerifiedAudio(
-            grouped.radio,
-            grouped.audioRadio
+        const radios = mergeCatalog(
+            grouped.radioCatalog,
+            preferVerifiedAudio(
+                grouped.radio,
+                grouped.audioRadio
+            )
         );
 
         state.rows = dedupeRows([

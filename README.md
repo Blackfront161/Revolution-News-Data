@@ -1,18 +1,23 @@
 # World Revolution News
 
-Unabhängige, mehrsprachige Nachrichten-, Termin- und Audio-App für
+Unabhängige, mehrsprachige Nachrichten-, Termin-, Audio- und Video-App für
 revolutionäre, anarchistische und soziale Bewegungen.
 
-Aktueller Stand: **1.8.0**
+Aktueller Stand: **1.8.1**
 
-Neu in 1.8.0:
+Neu in 1.8.1:
 
-- Geschichten werden lokal aus mehreren Quellen gebündelt.
-- Entwicklungen erhalten chronologische Zeitleisten.
-- Perspektiven verschiedener Quellen können nebeneinander verglichen werden.
+- „Entwicklungen“ ersetzt die missverständliche Bezeichnung „Geschichten“.
+- Audio ist klar in Original-Podcasts, Erzeugte Podcasts und Live-Radio
+  gegliedert.
+- Herkunftsfilter erscheinen nur bei Original-Podcasts und filtern tatsächlich
+  nach Region und Land.
+- Alle neun Oberflächensprachen sind ohne Beta-Kennzeichnung auswählbar.
+- Die Quellenprüfung unterscheidet zwischen defekten und noch nicht geprüften
+  Audioquellen.
+- Der neue Video-Hub erkennt YouTube-, Vimeo- und PeerTube-Beiträge lokal und
+  lädt externe Einbettungen erst nach ausdrücklicher Auswahl.
 - Briefing 2 bietet Morgen-, Abend-, Wochen- und Beobachtet-Modus.
-- Beobachtungsbegriffe bleiben ausschließlich auf dem Gerät.
-- Artikelzusammenfassungen, Audio-Favoriten und Warteschlange sind integriert.
 
 Live-App:
 

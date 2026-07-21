@@ -23,7 +23,7 @@ OUTPUT = ROOT / "audio-health.json"
 TIMEOUT = (8, 15)
 MAX_BYTES = 65536
 USER_AGENT = (
-    "Mozilla/5.0 (compatible; WorldRevolutionNews/1.7.17; "
+    "Mozilla/5.0 (compatible; WorldRevolutionNews/1.8.1; "
     "+https://blackfront161.github.io/Revolution-News-Data/)"
 )
 
@@ -89,11 +89,25 @@ def radio_name(item: dict[str, Any]) -> str:
         or "Unbekanntes Radio"
 
 
-def radio_url(item: dict[str, Any]) -> str:
-    return first(
+def radio_urls(item: dict[str, Any]) -> list[str]:
+    result: list[str] = []
+
+    candidates = item.get("streamCandidates")
+    if isinstance(candidates, list):
+        result.extend(
+            str(value).strip()
+            for value in candidates
+            if str(value or "").strip()
+        )
+
+    legacy = first(
         item,
         ("streamUrl", "stream_url", "audioUrl", "playlistUrl", "stream", "url"),
     )
+    if legacy:
+        result.append(legacy)
+
+    return list(dict.fromkeys(result))
 
 
 def client() -> requests.Session:
@@ -299,10 +313,35 @@ def main() -> int:
             })
 
         for station in radio_items:
-            checked = test_url(session, radio_url(station))
+            candidates = radio_urls(station)[:4]
+
+            if not candidates:
+                radio_checks.append({
+                    "name": radio_name(station),
+                    "url": "",
+                    "status": "unknown",
+                    "httpStatus": 0,
+                    "contentType": "",
+                    "detail": "Keine Stream-Adresse im Katalog.",
+                    "candidateChecks": [],
+                })
+                continue
+
+            candidate_checks = [
+                test_url(session, candidate)
+                for candidate in candidates
+            ]
+            selected = next(
+                (item for item in candidate_checks if item.get("status") == "playable"),
+                next(
+                    (item for item in candidate_checks if item.get("status") == "limited"),
+                    candidate_checks[0],
+                ),
+            )
             radio_checks.append({
                 "name": radio_name(station),
-                **checked,
+                **selected,
+                "candidateChecks": candidate_checks,
             })
     finally:
         session.close()

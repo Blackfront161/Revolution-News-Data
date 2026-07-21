@@ -80,7 +80,7 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "article-summary.css",
         ],
     },
-    "stories_and_timelines": {
+    "developments_and_timelines": {
         "critical": [
             "stories-core.js",
             "stories-timeline.js",
@@ -95,6 +95,7 @@ GROUPS: dict[str, dict[str, list[str]]] = {
         "optional": [
             "aggregate_podcasts.py",
             "check_audio_sources.py",
+            "audio-region-core.js",
             "audio-tab.js",
             "audio-tab.css",
             "audio-reliability.js",
@@ -102,6 +103,13 @@ GROUPS: dict[str, dict[str, list[str]]] = {
             "radio-stations.json",
             "podcasts.json",
         ],
+    },
+    "video_hub": {
+        "critical": [
+            "video-hub.js",
+            "video-hub.css",
+        ],
+        "optional": [],
     },
     "translation": {
         "critical": [],
@@ -228,7 +236,7 @@ def main() -> int:
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.8.0",
+        "version": "1.8.1",
         "summary": {
             "groups": len(groups),
             "groupNames": list(groups),

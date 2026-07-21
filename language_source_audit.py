@@ -51,6 +51,40 @@ def offered_languages() -> list[str]:
     return result
 
 
+def supported_interface_languages() -> list[str]:
+    path = ROOT / "wrn-i18n.js"
+
+    if not path.is_file():
+        return []
+
+    text = path.read_text(
+        encoding="utf-8",
+        errors="replace",
+    )
+
+    match = re.search(
+        r"SUPPORTED_LANGUAGES\s*=\s*"
+        r"Object\.freeze\(\[([^\]]+)\]\)",
+        text,
+    )
+
+    if not match:
+        return []
+
+    result: list[str] = []
+
+    for language in re.findall(
+        r'''["']([a-zA-Z]{2,3})["']''',
+        match.group(1),
+    ):
+        normalized = language.lower()
+
+        if normalized not in result:
+            result.append(normalized)
+
+    return result
+
+
 def main() -> int:
     registry = build_registry()
 
@@ -77,7 +111,15 @@ def main() -> int:
                 inferred_counts[normalized] += 1
 
     offered = offered_languages()
-    missing_offered = [
+    supported_interface = supported_interface_languages()
+
+    missing_interface = [
+        language
+        for language in offered
+        if language not in supported_interface
+    ]
+
+    missing_source_coverage = [
         language
         for language in offered
         if counts.get(language, 0) == 0
@@ -94,7 +136,7 @@ def main() -> int:
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.8.0",
+        "version": "1.8.1",
         "activeSourceRows": len(active),
         "knownLanguageRows": known_rows,
         "unknownLanguageRows": counts.get("und", 0),
@@ -108,7 +150,14 @@ def main() -> int:
             sorted(inferred_counts.items())
         ),
         "offeredInterfaceLanguages": offered,
-        "missingOfferedLanguages": missing_offered,
+        "supportedInterfaceLanguages": supported_interface,
+        "missingInterfaceLanguages": missing_interface,
+        "missingSourceCoverageLanguages":
+            missing_source_coverage,
+        # Backward-compatible field: an offered interface language is
+        # missing only when the UI does not support it. Source-language
+        # coverage is reported separately.
+        "missingOfferedLanguages": missing_interface,
         "sourceRegistryGeneratedAt":
             registry.get("generatedAt", ""),
         "sourceCount":
@@ -136,6 +185,25 @@ def main() -> int:
             "die Sprache und."
         )
         return 1
+
+    if payload["missingInterfaceLanguages"]:
+        print(
+            "FEHLER: Nicht unterstützte angebotene "
+            "Oberflächensprachen: "
+            + ", ".join(
+                payload["missingInterfaceLanguages"]
+            )
+        )
+        return 1
+
+    if payload["missingSourceCoverageLanguages"]:
+        print(
+            "HINWEIS: Für diese Oberflächensprachen "
+            "gibt es derzeit keine explizite Quellenabdeckung: "
+            + ", ".join(
+                payload["missingSourceCoverageLanguages"]
+            )
+        )
 
     return 0
 
