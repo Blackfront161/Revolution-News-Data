@@ -1,9 +1,9 @@
-/* World Revolution News 1.7.15 – sicheres Briefing-Lazy-Loading */
+/* World Revolution News 1.8.0 – sicheres Briefing-Lazy-Loading */
 'use strict';
 
 (() => {
-    if (window.__wrnBriefingLoader1715) return;
-    window.__wrnBriefingLoader1715 = true;
+    if (window.__wrnBriefingLoader180) return;
+    window.__wrnBriefingLoader180 = true;
 
     let loadingPromise = null;
     let replayingClick = false;
@@ -32,13 +32,13 @@
 
     const addStyle = () => {
         if (document.querySelector(
-            'link[data-wrn-briefing-style="1715"]'
+            'link[data-wrn-briefing-style="180"]'
         )) return;
 
         const link = document.createElement('link');
         link.rel = 'stylesheet';
-        link.href = './briefing.css?v=1715';
-        link.dataset.wrnBriefingStyle = '1715';
+        link.href = './briefing.css?v=180';
+        link.dataset.wrnBriefingStyle = '180';
         document.head.appendChild(link);
     };
 
@@ -48,7 +48,7 @@
 
         loadingPromise = new Promise(resolve => {
             const existing = document.querySelector(
-                'script[data-wrn-briefing-module="1715"]'
+                'script[data-wrn-briefing-module="180"]'
             );
 
             if (existing?.dataset.loaded === 'true') {
@@ -59,8 +59,8 @@
             const script = existing || document.createElement('script');
 
             if (!existing) {
-                script.src = './briefing.js?v=1715';
-                script.dataset.wrnBriefingModule = '1715';
+                script.src = './briefing.js?v=180';
+                script.dataset.wrnBriefingModule = '180';
             }
 
             let finished = false;

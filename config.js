@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.7.23',
+        version: '1.8.0',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -153,12 +153,12 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.7.21',
-    build: '2026.07.21-aggregator-hardening',
-    releasedAt: '2026-07-21T02:10:00+02:00',
+    version: '1.8.0',
+    build: '2026.07.21-stories-briefing2',
+    releasedAt: '2026-07-21T12:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 12,
+    recoveryStage: 13,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -506,14 +506,14 @@ window.WRN_CONFIG = Object.freeze({
  * - feststehende Dialog-Kopfzeilen
  * - vorhandenes Systemstatuszentrum
  *
- * Geschichten, Zeitleisten, Video-Hub, Aktionsradar,
- * Push-Mitteilungen und schwere Diagnose werden noch nicht automatisch geladen.
+ * Geschichten, Zeitleisten und Briefing 2 werden ab 1.8.0 geladen.
+ * Video-Hub, Aktionsradar und Push-Mitteilungen folgen in späteren Stufen.
  */
 (() => {
-    if (window.__wrnRecoveryCoreLoader1721) return;
-    window.__wrnRecoveryCoreLoader1721 = true;
+    if (window.__wrnRecoveryCoreLoader180) return;
+    window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '1721-origin-safety-workflow-locking';
+    const VERSION = '180-stories-briefing2';
 
     const addStyle = (file, marker) => {
         if (
@@ -591,18 +591,18 @@ window.WRN_CONFIG = Object.freeze({
         }
     };
 
-    const openStartTab = () => {
-        if (typeof window.WRNActivateTab === 'function') {
-            window.WRNActivateTab('start');
+    const openLandingTab = () => {
+        const briefingButton = document.querySelector(
+            '.wrn-top-tab[data-key="briefing"]'
+        );
+
+        if (briefingButton instanceof HTMLElement) {
+            briefingButton.click();
             return;
         }
 
-        const button = document.querySelector(
-            '.wrn-top-tab[data-key="start"]'
-        );
-
-        if (button instanceof HTMLElement) {
-            button.click();
+        if (typeof window.WRNActivateTab === 'function') {
+            window.WRNActivateTab('briefing');
             return;
         }
 
@@ -628,6 +628,8 @@ window.WRN_CONFIG = Object.freeze({
             ['runtime-selftest.css', 'runtime-selftest-recovery-10'],
             ['recovery-audit.css', 'recovery-audit-recovery-10'],
             ['language-source-status.css', 'language-source-status-recovery-10'],
+            ['briefing-2.css', 'briefing2-recovery-13'],
+            ['stories-timeline.css', 'stories-recovery-13'],
             ['zine-designer.css', 'zine-designer-recovery-10']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
@@ -635,6 +637,9 @@ window.WRN_CONFIG = Object.freeze({
             ['wrn-origin-safety.js', 'origin-safety-recovery-10'],
             ['app-safety.js', 'safety-recovery-10'],
             ['wrn-i18n.js', 'i18n-recovery-10'],
+            ['stories-core.js', 'stories-core-recovery-13'],
+            ['briefing-2.js', 'briefing2-recovery-13'],
+            ['stories-timeline.js', 'stories-recovery-13'],
             ['typography.js', 'typography-recovery-10'],
             ['wrn-header.js', 'future-header-recovery-10'],
             ['release-1.5-nav.js', 'navigation-recovery-10'],
@@ -653,16 +658,15 @@ window.WRN_CONFIG = Object.freeze({
         ]);
 
         /*
-         * Der vorherige Stand öffnete standardmäßig "Briefing", obwohl das
-         * Briefing im Notfallmodus noch nicht geladen wird. Das führte zu einer
-         * scheinbar leeren oder sehr dünnen Startansicht.
+         * Briefing ist wieder die erste Ansicht. Der vorhandene Lazy-Loader
+         * zeigt während des Ladens einen Status statt einer leeren Seite.
          */
-        openStartTab();
-        window.setTimeout(openStartTab, 700);
+        openLandingTab();
+        window.setTimeout(openLandingTab, 700);
 
         /*
          * Nur ein leichter Gesundheitscheck wird verzögert gestartet.
-         * Keine Diagnosebeobachter und keine Audio-/Briefing-Module.
+         * Schwere Diagnosebeobachter bleiben deaktiviert.
          */
         window.setTimeout(() => {
             void loadScript(

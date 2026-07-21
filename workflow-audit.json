@@ -1,67 +1,16 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-20T19:46:37.325441+00:00",
-  "workflowCount": 11,
-  "warningCount": 10,
+  "generatedAt": "2026-07-21T09:08:47.479942+00:00",
+  "workflowCount": 6,
+  "warningCount": 0,
   "workflows": [
-    {
-      "path": ".github/workflows/apply-origin-safety.yml",
-      "writer": true,
-      "commonConcurrency": true,
-      "safePush": true,
-      "modifiesWorkflows": false,
-      "warnings": []
-    },
-    {
-      "path": ".github/workflows/apply-release-1.4.yml",
-      "writer": true,
-      "commonConcurrency": false,
-      "safePush": false,
-      "modifiesWorkflows": false,
-      "warnings": [
-        "missing_wrn_main_write",
-        "missing_safe_push"
-      ]
-    },
-    {
-      "path": ".github/workflows/apply-release-1722.yml",
-      "writer": true,
-      "commonConcurrency": true,
-      "safePush": true,
-      "modifiesWorkflows": false,
-      "warnings": []
-    },
-    {
-      "path": ".github/workflows/design-1.4.1.yml",
-      "writer": true,
-      "commonConcurrency": false,
-      "safePush": false,
-      "modifiesWorkflows": false,
-      "warnings": [
-        "missing_wrn_main_write",
-        "missing_safe_push"
-      ]
-    },
-    {
-      "path": ".github/workflows/design-1.4.2.yml",
-      "writer": true,
-      "commonConcurrency": false,
-      "safePush": false,
-      "modifiesWorkflows": false,
-      "warnings": [
-        "missing_wrn_main_write",
-        "missing_safe_push"
-      ]
-    },
     {
       "path": ".github/workflows/merge-multilingual-sources.yml",
       "writer": true,
       "commonConcurrency": true,
       "safePush": true,
-      "modifiesWorkflows": true,
-      "warnings": [
-        "possible_workflow_self_modification"
-      ]
+      "modifiesWorkflows": false,
+      "warnings": []
     },
     {
       "path": ".github/workflows/quality-gate.yml",
@@ -76,21 +25,16 @@
       "writer": true,
       "commonConcurrency": true,
       "safePush": true,
-      "modifiesWorkflows": true,
-      "warnings": [
-        "possible_workflow_self_modification"
-      ]
+      "modifiesWorkflows": false,
+      "warnings": []
     },
     {
       "path": ".github/workflows/update-podcasts.yml",
       "writer": true,
-      "commonConcurrency": false,
-      "safePush": false,
+      "commonConcurrency": true,
+      "safePush": true,
       "modifiesWorkflows": false,
-      "warnings": [
-        "missing_wrn_main_write",
-        "missing_safe_push"
-      ]
+      "warnings": []
     },
     {
       "path": ".github/workflows/update.yml",

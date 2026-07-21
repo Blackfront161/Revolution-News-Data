@@ -8,6 +8,7 @@ on:
       - "**/*.js"
       - "**/*.json"
       - "**/*.html"
+      - "**/*.css"
       - "requirements*.txt"
       - ".github/workflows/**"
       - "service-worker.js"
@@ -20,6 +21,7 @@ on:
       - "**/*.js"
       - "**/*.json"
       - "**/*.html"
+      - "**/*.css"
       - "requirements*.txt"
       - ".github/workflows/**"
       - "service-worker.js"
@@ -89,6 +91,15 @@ jobs:
           )
 
           echo "$count JavaScript-Dateien geprüft."
+
+      - name: Geschichten- und Origin-Sicherheit testen
+        shell: bash
+        run: |
+          set -euo pipefail
+          node tests/test_stories_core.js
+          if [ -f tests/test_origin_safety.js ]; then
+            node tests/test_origin_safety.js
+          fi
 
       - name: Alle Python-Dateien prüfen
         shell: bash

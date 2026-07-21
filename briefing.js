@@ -1374,6 +1374,14 @@
     if (currentBriefing) renderBriefingContent(view, currentBriefing, settings);
     else renderLoading(view, language);
 
+    window.dispatchEvent(new CustomEvent('wrn-briefing-rendered', {
+      detail: {
+        view,
+        briefing: currentBriefing,
+        settings
+      }
+    }));
+
     window.requestAnimationFrame(() => {
       const positions = loadLocal(SCROLL_KEY, {});
       const stored = Number(positions[currentBriefing?.date] || 0);

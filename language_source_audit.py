@@ -37,6 +37,7 @@ def offered_languages() -> list[str]:
     )
 
     result: list[str] = []
+    supported = {"de", "en", "es", "fr", "it", "pt", "ru", "el", "tr"}
 
     for language in languages:
         normalized = re.split(
@@ -44,7 +45,7 @@ def offered_languages() -> list[str]:
             language.lower(),
         )[0]
 
-        if normalized not in result:
+        if normalized in supported and normalized not in result:
             result.append(normalized)
 
     return result
@@ -93,7 +94,7 @@ def main() -> int:
         "generatedAt": datetime.now(
             timezone.utc
         ).isoformat(),
-        "version": "1.7.22",
+        "version": "1.8.0",
         "activeSourceRows": len(active),
         "knownLanguageRows": known_rows,
         "unknownLanguageRows": counts.get("und", 0),
