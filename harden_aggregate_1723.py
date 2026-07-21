@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Semantically harden the current aggregate.py.
-
-WRN 1.7.23a no longer requires an exact historic archive block. It locates
-feed and entry loops through Python's AST and changes only required runtime
-statements. The complete source catalogue and category logic remain intact.
-"""
+# WRN 1.7.23b – tolerant aggregator hardener.
 
 from __future__ import annotations
 
@@ -21,7 +16,7 @@ import shutil
 
 ROOT = Path(__file__).resolve().parent
 TARGET = ROOT / "aggregate.py"
-BACKUP = ROOT / "aggregate.py.pre-1723a.bak"
+BACKUP = ROOT / "aggregate.py.pre-1723b.bak"
 REPORT = ROOT / "aggregate-hardening-report.json"
 MARKER = "# WRN 1.7.23 ENTRY SAFETY"
 
@@ -32,7 +27,6 @@ AGGREGATE_ENTRY_ERRORS = []
 
 
 def safe_text(value, fallback=""):
-    # Return a stripped string for arbitrary feed values.
     if value is None:
         return fallback
 
@@ -50,7 +44,6 @@ def safe_lower(value, fallback=""):
 
 
 def log_feed_entry_error(feed_name, entry, error):
-    # Record one malformed feed entry without stopping other entries.
     try:
         title_value = (
             entry.get("title")
@@ -100,11 +93,69 @@ def save_aggregate_error_report():
 '''
 
 
-def source_hash(text: str) -> str:
+def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def insert_helpers_after_imports(source: str) -> tuple[str, str]:
+def leading_spaces(line: str) -> int:
+    return len(line) - len(line.lstrip(" "))
+
+
+def is_name(node: ast.AST, name: str) -> bool:
+    return isinstance(node, ast.Name) and node.id == name
+
+
+def find_feed_loop(tree: ast.AST) -> ast.For:
+    matches = [
+        node
+        for node in ast.walk(tree)
+        if (
+            isinstance(node, ast.For)
+            and is_name(node.target, "feed")
+            and is_name(node.iter, "feeds")
+        )
+    ]
+
+    if len(matches) != 1:
+        raise RuntimeError(
+            "Feed-Schleife nicht eindeutig erkannt: "
+            f"{len(matches)} Treffer."
+        )
+
+    return matches[0]
+
+
+def entry_iter_is_parsed_entries(node: ast.AST) -> bool:
+    candidate = node.value if isinstance(node, ast.Subscript) else node
+
+    return (
+        isinstance(candidate, ast.Attribute)
+        and candidate.attr == "entries"
+        and is_name(candidate.value, "parsed")
+    )
+
+
+def find_entry_loop(tree: ast.AST) -> ast.For:
+    matches = [
+        node
+        for node in ast.walk(tree)
+        if (
+            isinstance(node, ast.For)
+            and is_name(node.target, "entry")
+            and entry_iter_is_parsed_entries(node.iter)
+        )
+    ]
+
+    if len(matches) != 1:
+        raise RuntimeError(
+            "Artikelschleife nicht eindeutig erkannt: "
+            f"{len(matches)} Treffer."
+        )
+
+    return matches[0]
+
+
+def insert_helpers(source: str) -> tuple[str, str]:
     tree = ast.parse(source, filename="aggregate.py")
     imports = [
         node
@@ -117,109 +168,35 @@ def insert_helpers_after_imports(source: str) -> tuple[str, str]:
             "Keine Importsektion in aggregate.py erkannt."
         )
 
-    insertion_line = max(
+    insert_after = max(
         int(node.end_lineno or node.lineno)
         for node in imports
     )
 
     lines = source.splitlines(keepends=True)
-    lines.insert(insertion_line, "\n" + HELPERS + "\n")
+    lines.insert(insert_after, "\n" + HELPERS + "\n")
 
     return "".join(lines), "safe_text_helpers"
 
 
-def is_name(node: ast.AST, name: str) -> bool:
-    return isinstance(node, ast.Name) and node.id == name
-
-
-def find_feed_loop(tree: ast.AST) -> ast.For:
-    candidates: list[ast.For] = []
-
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.For):
-            continue
-
-        if not is_name(node.target, "feed"):
-            continue
-
-        if is_name(node.iter, "feeds"):
-            candidates.append(node)
-
-    if len(candidates) != 1:
-        raise RuntimeError(
-            "Feed-Schleife nicht eindeutig erkannt: "
-            f"{len(candidates)} Treffer."
-        )
-
-    return candidates[0]
-
-
-def is_parsed_entries_slice(node: ast.AST) -> bool:
-    if not isinstance(node, ast.Subscript):
-        return False
-
-    value = node.value
-
-    return (
-        isinstance(value, ast.Attribute)
-        and value.attr == "entries"
-        and is_name(value.value, "parsed")
-    )
-
-
-def find_entry_loop(tree: ast.AST) -> ast.For:
-    candidates: list[ast.For] = []
-
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.For):
-            continue
-
-        if not is_name(node.target, "entry"):
-            continue
-
-        if is_parsed_entries_slice(node.iter):
-            candidates.append(node)
-
-    if len(candidates) != 1:
-        raise RuntimeError(
-            "Artikelschleife nicht eindeutig erkannt: "
-            f"{len(candidates)} Treffer."
-        )
-
-    return candidates[0]
-
-
-def leading_spaces(line: str) -> int:
-    return len(line) - len(line.lstrip(" "))
-
-
-def patch_feed_loop(source: str) -> tuple[str, str]:
+def insert_feed_guard(source: str) -> tuple[str, str]:
     tree = ast.parse(source, filename="aggregate.py")
     loop = find_feed_loop(tree)
     lines = source.splitlines(keepends=True)
 
-    start = loop.lineno - 1
-    body_start = start + 1
-    body_indent = leading_spaces(lines[start]) + 4
-    scan_end = min(len(lines), body_start + 20)
-    replace_end = None
-
-    for index in range(body_start, scan_end):
-        stripped = lines[index].strip()
-
-        if re.match(r"feed_url\s*=", stripped):
-            replace_end = index + 1
-            break
-
-    if replace_end is None:
-        raise RuntimeError(
-            "feed_url-Zuweisung direkt nach der Feed-Schleife "
-            "nicht erkannt."
-        )
-
+    loop_index = loop.lineno - 1
+    body_index = loop_index + 1
+    body_indent = leading_spaces(lines[loop_index]) + 4
     indent = " " * body_indent
 
-    replacement = [
+    window = "".join(
+        lines[body_index:min(body_index + 20, len(lines))]
+    )
+
+    if "feed_name = safe_text(" in window:
+        return source, "feed_guard_already_present"
+
+    guard = [
         f"{indent}if not isinstance(feed, dict):\n",
         f"{indent}    print(\n",
         f"{indent}        \"  [FEHLER] Ungültiger Quellen-Eintrag \"\n",
@@ -231,88 +208,80 @@ def patch_feed_loop(source: str) -> tuple[str, str]:
         f"{indent}    feed.get(\"name\"),\n",
         f"{indent}    \"Unbekannte Quelle\",\n",
         f"{indent})\n",
-        f"{indent}feed_url = safe_text(feed.get(\"url\"))\n",
         "\n",
-        f"{indent}if not feed_url:\n",
-        f"{indent}    print(\n",
-        f"{indent}        f\"  [FEHLER] {{feed_name}} besitzt keine \"\n",
-        f"{indent}        \"gültige Feedadresse.\"\n",
-        f"{indent}    )\n",
-        f"{indent}    continue\n",
-        "\n",
-        f"{indent}print(f\"-> Portal: {{feed_name}}...\")\n",
     ]
 
-    lines[body_start:replace_end] = replacement
-    return "".join(lines), "feed_value_normalization"
+    lines[body_index:body_index] = guard
+    return "".join(lines), "feed_guard_inserted"
 
 
-def replace_runtime_expressions(
+def tolerant_replacements(
     source: str,
-) -> tuple[str, list[str]]:
-    changes: list[str] = []
+) -> tuple[str, list[str], list[str]]:
+    changes = []
+    skipped = []
     text = source
 
     replacements = (
         (
             r"feed\[['\"]name['\"]\]",
             "feed_name",
-            "safe_feed_name",
+            "feed_name_references",
         ),
         (
             r"entry\.get\(\s*['\"]link['\"]\s*,\s*['\"]['\"]\s*\)"
             r"\.strip\(\)",
             'safe_text(entry.get("link"))',
-            "safe_entry_link",
+            "entry_link",
         ),
         (
             r"entry\.get\(\s*['\"]title['\"]\s*,\s*"
             r"['\"]Kein Titel['\"]\s*\)",
             'safe_text(entry.get("title"), "Kein Titel")',
-            "safe_entry_title",
+            "entry_title",
         ),
         (
             r"entry\.get\(\s*['\"]author['\"]\s*,\s*"
             r"['\"]Unknown['\"]\s*\)",
             'safe_text(entry.get("author"), "Unknown")',
-            "safe_entry_author",
+            "entry_author",
         ),
         (
             r"\bauthor\.lower\(\)",
             "safe_lower(author)",
-            "safe_author_lower",
-        ),
-        (
-            r"enc\.get\(\s*['\"]type['\"]\s*,\s*['\"]['\"]\s*\)"
-            r"\.startswith\(",
-            'safe_text(enc.get("type")).startswith(',
-            "safe_enclosure_type",
+            "author_lower",
         ),
         (
             r"href\s*=\s*enc\.get\(\s*['\"]href['\"]\s*,\s*"
             r"['\"]['\"]\s*\)",
             'href = safe_text(enc.get("href"))',
-            "safe_enclosure_href",
+            "enclosure_href",
+        ),
+        (
+            r"enc\.get\(\s*['\"]type['\"]\s*,\s*['\"]['\"]\s*\)"
+            r"\.startswith\(",
+            'safe_text(enc.get("type")).startswith(',
+            "enclosure_type",
         ),
         (
             r"clean_text\s*=\s*full_text\.strip\(\)",
             "clean_text = safe_text(full_text)",
-            "safe_clean_text",
+            "clean_text",
         ),
         (
             r"\bclean_text\.lower\(\)",
             "clean_text.casefold()",
-            "safe_clean_text_casefold",
-        ),
-        (
-            r"\btitle\.lower\(\)",
-            "title_lower",
-            "safe_title_comparison",
+            "clean_text_casefold",
         ),
         (
             r"\bfeed_name\.lower\(\)",
             "safe_lower(feed_name)",
-            "safe_feed_name_lower",
+            "feed_name_lower",
+        ),
+        (
+            r"\btitle\.lower\(\)",
+            "safe_lower(title)",
+            "title_lower",
         ),
     )
 
@@ -321,40 +290,10 @@ def replace_runtime_expressions(
 
         if count:
             changes.append(f"{label}:{count}")
+        else:
+            skipped.append(label)
 
-    publication_pattern = re.compile(
-        r"(?m)^(?P<indent>\s*)pubDate\s*=\s*"
-        r"entry\.get\(\s*['\"]published['\"]\s*,\s*"
-        r"entry\.get\(\s*['\"]updated['\"]\s*,\s*"
-        r"datetime\.now\(\)\.isoformat\(\)\s*\)\s*\)\s*$"
-    )
-
-    def publication_replacement(match: re.Match[str]) -> str:
-        indent = match.group("indent")
-        return "\n".join(
-            [
-                f"{indent}pubDate = safe_text(",
-                f"{indent}    entry.get(",
-                f'{indent}        "published",',
-                f"{indent}        entry.get(",
-                f'{indent}            "updated",',
-                f"{indent}            datetime.now().isoformat(),",
-                f"{indent}        ),",
-                f"{indent}    ),",
-                f"{indent}    datetime.now().isoformat(),",
-                f"{indent})",
-            ]
-        )
-
-    text, count = publication_pattern.subn(
-        publication_replacement,
-        text,
-    )
-
-    if count:
-        changes.append(f"safe_publication_date:{count}")
-
-    return text, changes
+    return text, changes, skipped
 
 
 def wrap_entry_loop(source: str) -> tuple[str, str]:
@@ -367,24 +306,24 @@ def wrap_entry_loop(source: str) -> tuple[str, str]:
         )
 
     lines = source.splitlines(keepends=True)
-    start = loop.lineno - 1
-    end = int(loop.end_lineno or loop.lineno)
-    body_start = start + 1
-    body_lines = lines[body_start:end]
+    loop_index = loop.lineno - 1
+    body_start = loop_index + 1
+    loop_end = int(loop.end_lineno or loop.lineno)
+    body_lines = lines[body_start:loop_end]
 
     if any(
         "except Exception as entry_error" in line
         for line in body_lines
     ):
-        return source, "per_entry_boundary_already_present"
+        return source, "entry_boundary_already_present"
 
-    base_indent = leading_spaces(lines[start])
+    base_indent = leading_spaces(lines[loop_index])
     body_indent = base_indent + 4
     nested_indent = body_indent + 4
     indent = " " * body_indent
     nested = " " * nested_indent
 
-    wrapped_body = [
+    shifted_body = [
         "    " + line
         if line.strip()
         else line
@@ -392,14 +331,14 @@ def wrap_entry_loop(source: str) -> tuple[str, str]:
     ]
 
     replacement = [
-        lines[start],
+        lines[loop_index],
         f"{indent}try:\n",
-        f'{nested}if not hasattr(entry, "get"):\n',
+        f"{nested}if not hasattr(entry, \"get\"):\n",
         f"{nested}    raise TypeError(\n",
-        f'{nested}        "Feed-Eintrag unterstützt keine "\n',
-        f'{nested}        "get()-Abfragen."\n',
+        f"{nested}        \"Feed-Eintrag unterstützt keine \"\n",
+        f"{nested}        \"get()-Abfragen.\"\n",
         f"{nested}    )\n",
-        *wrapped_body,
+        *shifted_body,
         f"{indent}except Exception as entry_error:\n",
         f"{nested}log_feed_entry_error(\n",
         f"{nested}    feed_name,\n",
@@ -409,11 +348,11 @@ def wrap_entry_loop(source: str) -> tuple[str, str]:
         f"{nested}continue\n",
     ]
 
-    lines[start:end] = replacement
+    lines[loop_index:loop_end] = replacement
     return "".join(lines), "per_entry_exception_boundary"
 
 
-def insert_error_report_call(source: str) -> tuple[str, str]:
+def insert_report_call(source: str) -> tuple[str, str]:
     if re.search(
         r"(?m)^\s*save_aggregate_error_report\(\)\s*$",
         source,
@@ -422,11 +361,10 @@ def insert_error_report_call(source: str) -> tuple[str, str]:
 
     lines = source.splitlines(keepends=True)
 
-    for index, line in enumerate(lines):
-        if (
-            ">>> ERFOLG: Es wurden " in line
-            and "radar_count" in line
-        ):
+    for index in range(len(lines) - 1, -1, -1):
+        line = lines[index]
+
+        if "ERFOLG" in line and "radar_count" in line:
             indent = " " * leading_spaces(line)
             lines.insert(
                 index,
@@ -434,35 +372,64 @@ def insert_error_report_call(source: str) -> tuple[str, str]:
             )
             return "".join(lines), "aggregate_error_report"
 
+    tree = ast.parse(source, filename="aggregate.py")
+    checkpoints = []
+
+    for node in tree.body:
+        if not isinstance(node, ast.Expr):
+            continue
+
+        call = node.value
+
+        if (
+            isinstance(call, ast.Call)
+            and isinstance(call.func, ast.Name)
+            and call.func.id == "save_checkpoint"
+        ):
+            checkpoints.append(node)
+
+    if checkpoints:
+        node = checkpoints[-1]
+        insertion = int(node.end_lineno or node.lineno)
+        lines.insert(
+            insertion,
+            "\nsave_aggregate_error_report()\n",
+        )
+        return "".join(lines), "aggregate_error_report_fallback"
+
     raise RuntimeError(
-        "Abschlussmeldung der Aggregation nicht erkannt."
+        "Kein sicherer Einfügepunkt für den Fehlerbericht erkannt."
     )
 
 
-def harden_source(source: str) -> tuple[str, list[str]]:
+def harden_source(
+    source: str,
+) -> tuple[str, list[str], list[str]]:
     if MARKER in source:
         ast.parse(source, filename="aggregate.py")
-        return source, []
+        return source, [], []
 
-    changes: list[str] = []
+    changes = []
+    skipped = []
 
-    text, label = insert_helpers_after_imports(source)
+    text, label = insert_helpers(source)
     changes.append(label)
 
-    text, label = patch_feed_loop(text)
+    text, label = insert_feed_guard(text)
     changes.append(label)
 
-    text, expression_changes = replace_runtime_expressions(text)
-    changes.extend(expression_changes)
+    text, found, missing = tolerant_replacements(text)
+    changes.extend(found)
+    skipped.extend(missing)
 
     text, label = wrap_entry_loop(text)
     changes.append(label)
 
-    text, label = insert_error_report_call(text)
+    text, label = insert_report_call(text)
     changes.append(label)
 
     ast.parse(text, filename="aggregate.py")
-    return text, changes
+    return text, changes, skipped
 
 
 def write_report(payload: dict) -> None:
@@ -486,15 +453,17 @@ def main() -> int:
         return 1
 
     original = TARGET.read_text(encoding="utf-8")
-    original_hash = source_hash(original)
+    original_hash = sha256_text(original)
 
     try:
-        hardened, changes = harden_source(original)
+        hardened, changes, skipped = harden_source(original)
     except Exception as error:
         payload = {
-            "schemaVersion": 2,
-            "generatedAt": datetime.now(timezone.utc).isoformat(),
-            "version": "1.7.23a",
+            "schemaVersion": 3,
+            "generatedAt": datetime.now(
+                timezone.utc
+            ).isoformat(),
+            "version": "1.7.23b",
             "status": "failed",
             "applied": False,
             "error": str(error),
@@ -517,16 +486,20 @@ def main() -> int:
             raise
 
     payload = {
-        "schemaVersion": 2,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.23a",
+        "schemaVersion": 3,
+        "generatedAt": datetime.now(
+            timezone.utc
+        ).isoformat(),
+        "version": "1.7.23b",
         "status": "ok",
         "applied": bool(args.apply and changed),
         "alreadyHardened": not changed,
         "changes": changes,
+        "optionalPatternsNotFound": skipped,
         "originalSha256": original_hash,
-        "resultSha256": source_hash(hardened),
+        "resultSha256": sha256_text(hardened),
         "backup": BACKUP.name if args.apply and changed else "",
+        "feedUrlStructure": "not_required",
         "archiveLogic": "preserved",
         "sourceCatalogue": "preserved",
     }
