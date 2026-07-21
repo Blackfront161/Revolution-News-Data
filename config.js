@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.7.21',
+        version: '1.7.23',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -154,11 +154,11 @@ window.WRN_EMERGENCY_MODE = false;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.7.21',
-    build: '2026.07.21-origin-safety-workflow-locking',
+    build: '2026.07.21-aggregator-hardening',
     releasedAt: '2026-07-21T02:10:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 10,
+    recoveryStage: 12,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',

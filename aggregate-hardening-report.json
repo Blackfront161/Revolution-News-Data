@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "generatedAt": "2026-07-21T08:28:51.575368+00:00",
+  "version": "1.7.23b",
+  "status": "ok",
+  "applied": true,
+  "alreadyHardened": false,
+  "changes": [
+    "safe_text_helpers",
+    "feed_guard_inserted",
+    "feed_name_references:4",
+    "entry_title:1",
+    "entry_author:1",
+    "author_lower:1",
+    "enclosure_href:1",
+    "enclosure_type:1",
+    "clean_text:1",
+    "clean_text_casefold:2",
+    "feed_name_lower:1",
+    "title_lower:2",
+    "per_entry_exception_boundary",
+    "aggregate_error_report"
+  ],
+  "optionalPatternsNotFound": [
+    "entry_link"
+  ],
+  "originalSha256": "eb1eebf0dc0dab8dcbe555480b4b6f197a92f5fb87eb9961adb677d49cbc36bd",
+  "resultSha256": "b8845abdfe6252966488ea107c3c3f90b31a062732bfa75deeb23b4eb021d850",
+  "backup": "aggregate.py.pre-1723b.bak",
+  "feedUrlStructure": "not_required",
+  "archiveLogic": "preserved",
+  "sourceCatalogue": "preserved"
+}

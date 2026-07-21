@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.7.21';
-const DATA_CACHE = 'wrn-data-v1.7.21';
+const APP_CACHE = 'wrn-app-v1.7.23';
+const DATA_CACHE = 'wrn-data-v1.7.23';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -91,7 +91,8 @@ const JSON_FALLBACKS = new Map([
   [new URL('./news-feed.json', self.location.href).pathname, '[]'],
   [new URL('./events.json', self.location.href).pathname, '[]'],
   [new URL('./events-feed.json', self.location.href).pathname, '[]'],
-  [new URL('./podcasts.json', self.location.href).pathname, '[]'],
+  [new URL('./podcasts.json',
+  './generated-podcasts.json', self.location.href).pathname, '[]'],
   [new URL('./radio-stations.json', self.location.href).pathname, '[]'],
   [new URL('./source-health.json', self.location.href).pathname, '{}'],
   [new URL('./source-catalog.json', self.location.href).pathname, '[]'],
