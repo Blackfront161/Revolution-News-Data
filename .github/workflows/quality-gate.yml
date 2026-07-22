@@ -100,6 +100,8 @@ jobs:
           node tests/test_stories_core.js
           node tests/test_audio_region_core.js
           node tests/test_source_filters.js
+          node tests/test_video_hub.js
+          python tests/test_video_assets.py
 
           if [ -f tests/test_origin_safety.js ]; then
             node tests/test_origin_safety.js
