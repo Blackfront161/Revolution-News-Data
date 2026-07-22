@@ -104,6 +104,9 @@ jobs:
           node tests/test_audio_tab_183.js
           python tests/test_video_assets.py
           python tests/test_audio_block2_assets.py
+          node tests/test_block3_interface.js
+          node tests/test_block3_runtime.js
+          python tests/test_block3_assets.py
 
           if [ -f tests/test_origin_safety.js ]; then
             node tests/test_origin_safety.js
