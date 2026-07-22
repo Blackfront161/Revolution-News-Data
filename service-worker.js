@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.2';
-const DATA_CACHE = 'wrn-data-v1.8.2';
+const APP_CACHE = 'wrn-app-v1.8.3-b5';
+const DATA_CACHE = 'wrn-data-v1.8.3-b5';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -31,6 +31,9 @@ const APP_SHELL = [
   './article-actions.css',
   './sticky-dialogs.css',
   './audio-tab.css',
+  './audio-tab-183.css',
+  './interface-block3.css',
+  './source-recovery-ui-183.css',
   './audio-reliability.css',
   './runtime-selftest.css',
   './intro-screen.css',
@@ -42,6 +45,7 @@ const APP_SHELL = [
   './wrn-logo.webp',
   './wrn-future-header.webp',
   './wrn-future-header.png',
+  './wrn-header-banner.webp',
   './config.js',
   './wrn-origin-safety.js',
   './offline-db.js',
@@ -77,6 +81,9 @@ const APP_SHELL = [
   './article-actions.js',
   './sticky-dialogs.js',
   './audio-tab.js',
+  './audio-tab-183.js',
+  './interface-block3.js',
+  './source-recovery-ui-183.js',
   './audio-reliability.js',
   './runtime-selftest.js',
   './intro-screen.js',
@@ -212,14 +219,25 @@ self.addEventListener('fetch', event => {
 
 async function networkFirstNavigation(request) {
   const cache = await caches.open(APP_CACHE);
+  const requestUrl = new URL(request.url);
+  const rootPath = new URL('./', self.location.href).pathname;
+  const indexPath = new URL('./index.html', self.location.href).pathname;
+  const isIndexNavigation = (
+    requestUrl.pathname === rootPath
+    || requestUrl.pathname === indexPath
+  );
+
   try {
     const response = await fetchWithTimeout(request, 5000);
     if (response?.ok) {
-      await cache.put('./index.html', response.clone());
+      await cache.put(
+        isIndexNavigation ? './index.html' : request,
+        response.clone()
+      );
     }
     return response;
   } catch {
-    return (await cache.match(request))
+    return (await cache.match(request, { ignoreSearch: true }))
       || (await cache.match('./index.html'))
       || new Response(
         'Offline: Die App-Oberfläche ist noch nicht gespeichert.',

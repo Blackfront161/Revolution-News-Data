@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.18 – Startanimation */
+/* World Revolution News 1.8.3 – Startanimation mit wiederhergestelltem Hintergrund */
 
 html.wrn-intro-active-1720 {
     overflow: hidden;
@@ -19,23 +19,15 @@ html.wrn-intro-active-1720 {
     transition: opacity 420ms ease !important;
 }
 
-.wrn-intro-screen-1720.wrn-intro-visible-1720 {
-    opacity: 1;
-}
-
-.wrn-intro-screen-1720.wrn-intro-leaving-1720 {
-    opacity: 0;
-    pointer-events: none;
-}
+.wrn-intro-screen-1720.wrn-intro-visible-1720 { opacity: 1; }
+.wrn-intro-screen-1720.wrn-intro-leaving-1720 { opacity: 0; pointer-events: none; }
 
 .wrn-intro-backdrop-1720 {
     position: absolute;
     inset: -3%;
     z-index: -3;
-    background:
-        url("./app-background.webp?v=1720")
-        center / cover no-repeat;
-    filter: saturate(0.82) contrast(1.08) brightness(0.52);
+    background: url("./app-background.webp?v=183") center center / cover no-repeat;
+    filter: saturate(0.86) contrast(1.08) brightness(0.54);
     transform: scale(1.045);
     animation: wrn-intro-drift-1720 5.5s ease-out both !important;
 }
@@ -45,16 +37,8 @@ html.wrn-intro-active-1720 {
     inset: 0;
     z-index: -2;
     background:
-        radial-gradient(
-            circle at 50% 42%,
-            rgba(0, 229, 239, 0.13),
-            transparent 34%
-        ),
-        linear-gradient(
-            180deg,
-            rgba(3, 4, 9, 0.54),
-            rgba(3, 4, 9, 0.88)
-        );
+        radial-gradient(circle at 54% 42%, rgba(0, 229, 239, 0.14), transparent 35%),
+        linear-gradient(180deg, rgba(3, 4, 9, 0.46), rgba(3, 4, 9, 0.82));
 }
 
 .wrn-intro-content-1720 {
@@ -66,16 +50,13 @@ html.wrn-intro-active-1720 {
     text-align: center;
     transform: translateY(12px);
     opacity: 0;
-    animation:
-        wrn-intro-rise-1720 700ms 80ms ease-out forwards !important;
+    animation: wrn-intro-rise-1720 700ms 80ms ease-out forwards !important;
 }
 
 .wrn-intro-logo-1720 {
     width: clamp(72px, 11vw, 118px);
     height: auto;
-    filter:
-        drop-shadow(0 0 16px rgba(0, 229, 239, 0.25))
-        drop-shadow(0 0 22px rgba(255, 49, 88, 0.12));
+    filter: drop-shadow(0 0 16px rgba(0, 229, 239, 0.25)) drop-shadow(0 0 22px rgba(255, 49, 88, 0.12));
 }
 
 .wrn-intro-wordmark-1720 {
@@ -100,12 +81,7 @@ html.wrn-intro-active-1720 {
     height: 100%;
     transform: scaleX(0);
     transform-origin: left center;
-    background: linear-gradient(
-        90deg,
-        #00e5ef 0%,
-        #66fff1 66%,
-        #ff3158 100%
-    );
+    background: linear-gradient(90deg, #00e5ef 0%, #66fff1 66%, #ff3158 100%);
     box-shadow: 0 0 14px rgba(0, 229, 239, 0.65);
     transition: transform 110ms linear !important;
 }
@@ -130,45 +106,20 @@ html.wrn-intro-active-1720 {
     cursor: pointer;
 }
 
-.wrn-intro-skip-1720:focus-visible {
-    outline: 2px solid #00e5ef;
-    outline-offset: 3px;
-}
+.wrn-intro-skip-1720:focus-visible { outline: 2px solid #00e5ef; outline-offset: 3px; }
 
-@keyframes wrn-intro-rise-1720 {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
+@keyframes wrn-intro-rise-1720 { to { transform: translateY(0); opacity: 1; } }
 @keyframes wrn-intro-drift-1720 {
-    from {
-        transform: scale(1.08) translate3d(0, 0, 0);
-    }
-    to {
-        transform: scale(1.025) translate3d(0, -0.4%, 0);
-    }
+    from { transform: scale(1.08) translate3d(0, 0, 0); }
+    to { transform: scale(1.025) translate3d(0, -0.4%, 0); }
 }
 
 @media (max-width: 520px) {
-    .wrn-intro-content-1720 {
-        width: 92vw;
-        gap: 0.7rem;
-    }
-
-    .wrn-intro-logo-1720 {
-        width: 78px;
-    }
-
-    .wrn-intro-wordmark-1720 {
-        width: min(94vw, 410px);
-        max-height: 70px;
-    }
-
-    .wrn-intro-progress-track-1720 {
-        width: min(78vw, 320px);
-    }
+    .wrn-intro-content-1720 { width: 92vw; gap: 0.7rem; }
+    .wrn-intro-logo-1720 { width: 78px; }
+    .wrn-intro-wordmark-1720 { width: min(94vw, 410px); max-height: 70px; }
+    .wrn-intro-progress-track-1720 { width: min(78vw, 320px); }
+    .wrn-intro-backdrop-1720 { background-position: center top; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -179,9 +130,5 @@ html.wrn-intro-active-1720 {
         animation: none !important;
         transition-duration: 1ms !important;
     }
-
-    .wrn-intro-content-1720 {
-        opacity: 1;
-        transform: none;
-    }
+    .wrn-intro-content-1720 { opacity: 1; transform: none; }
 }

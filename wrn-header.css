@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.20 – Header mit transparentem Banner */
+/* World Revolution News 1.8.3 – kompakter eigener Header-Banner */
 
 header {
     min-height: 88px;
@@ -15,12 +15,14 @@ header > div:first-child {
 
 header .wrn-future-header-image {
     display: block;
-    width: clamp(560px, 72vw, 1280px);
+    width: clamp(420px, 68vw, 980px);
     max-width: 100%;
-    height: auto;
-    max-height: 132px;
-    object-fit: contain;
-    object-position: left center;
+    height: clamp(76px, 8.2vw, 118px);
+    max-height: 118px;
+    object-fit: cover;
+    object-position: center 58%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
     pointer-events: none;
     user-select: none;
     filter: drop-shadow(0 0 10px rgba(0, 229, 239, 0.18)) drop-shadow(0 0 12px rgba(255, 49, 88, 0.14));
@@ -43,8 +45,9 @@ header.wrn-future-header-ready .app-version-inline {
 
 @media (max-width: 1100px) {
     header .wrn-future-header-image {
-        width: min(92vw, 1050px);
-        max-height: 118px;
+        width: min(88vw, 900px);
+        height: clamp(72px, 9.5vw, 104px);
+        max-height: 104px;
     }
 }
 
@@ -60,21 +63,25 @@ header.wrn-future-header-ready .app-version-inline {
     }
 
     header .wrn-future-header-image {
-        width: min(94vw, 760px);
-        max-height: 76px;
+        width: min(94vw, 720px);
+        height: 72px;
+        max-height: 72px;
+        object-position: center 58%;
     }
 }
 
 @media (max-width: 520px) {
     header .wrn-future-header-image {
         width: min(92vw, 560px);
-        max-height: 58px;
+        height: 60px;
+        max-height: 60px;
     }
 }
 
 @media (max-width: 380px) {
     header .wrn-future-header-image {
         width: min(90vw, 470px);
-        max-height: 50px;
+        height: 54px;
+        max-height: 54px;
     }
 }

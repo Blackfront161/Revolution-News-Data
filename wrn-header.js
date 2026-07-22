@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.20 – neuer Header mit transparentem Banner */
+/* World Revolution News 1.8.3 – kompakter eigener Header-Banner */
 'use strict';
 
 (() => {
@@ -24,8 +24,9 @@
 
         const image = document.createElement('img');
         image.className = 'wrn-future-header-image wrn-custom-header-banner';
-        image.src = './wrn-future-header.webp?v=1720';
-        image.alt = 'World Revolution News';
+        image.src = './wrn-header-banner.webp?v=183-b5';
+        image.alt = '';
+        image.setAttribute('aria-hidden', 'true');
         image.decoding = 'async';
         image.fetchPriority = 'high';
         image.draggable = false;

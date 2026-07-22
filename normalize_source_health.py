@@ -266,6 +266,19 @@ def normalize() -> dict[str, dict[str, Any]]:
             "categories",
             "pageUrl",
             "discovered",
+            "configuredUrl",
+            "previousUrl",
+            "replacementUrl",
+            "rawStatus",
+            "detailedState",
+            "failureKind",
+            "consecutiveFailures",
+            "consecutiveRestrictions",
+            "consecutiveSuccesses",
+            "firstFailureAt",
+            "lastFailureAt",
+            "lastSuccessAt",
+            "suspiciousRedirect",
         ):
             if field in item and item[field] not in (None, "", [], {}):
                 normalized[field] = item[field]
