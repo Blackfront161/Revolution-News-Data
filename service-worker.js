@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.3-b4';
-const DATA_CACHE = 'wrn-data-v1.8.3-b4';
+const APP_CACHE = 'wrn-app-v1.8.3-b5';
+const DATA_CACHE = 'wrn-data-v1.8.3-b5';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -45,6 +45,7 @@ const APP_SHELL = [
   './wrn-logo.webp',
   './wrn-future-header.webp',
   './wrn-future-header.png',
+  './wrn-header-banner.webp',
   './config.js',
   './wrn-origin-safety.js',
   './offline-db.js',
@@ -218,14 +219,25 @@ self.addEventListener('fetch', event => {
 
 async function networkFirstNavigation(request) {
   const cache = await caches.open(APP_CACHE);
+  const requestUrl = new URL(request.url);
+  const rootPath = new URL('./', self.location.href).pathname;
+  const indexPath = new URL('./index.html', self.location.href).pathname;
+  const isIndexNavigation = (
+    requestUrl.pathname === rootPath
+    || requestUrl.pathname === indexPath
+  );
+
   try {
     const response = await fetchWithTimeout(request, 5000);
     if (response?.ok) {
-      await cache.put('./index.html', response.clone());
+      await cache.put(
+        isIndexNavigation ? './index.html' : request,
+        response.clone()
+      );
     }
     return response;
   } catch {
-    return (await cache.match(request))
+    return (await cache.match(request, { ignoreSearch: true }))
       || (await cache.match('./index.html'))
       || new Response(
         'Offline: Die App-Oberfläche ist noch nicht gespeichert.',

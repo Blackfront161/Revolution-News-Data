@@ -115,13 +115,23 @@ jobs:
             node tests/test_origin_safety.js
           fi
 
-      - name: Audioquellen und Release 1.8.2 testen
+      - name: Audioquellen und bestehende Releaseverträge testen
         shell: bash
         run: |
           set -euo pipefail
 
           PYTHONPATH=. python tests/test_audio_source_schema.py
+          python tests/test_release_181.py
           python tests/test_release_182.py
+
+      - name: Release Candidate 1.8.3 prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python release_audit_183.py
+          node tests/test_runtime_selftest_183.js
+          python tests/test_release_candidate_183.py
 
       - name: Alle Python-Dateien prüfen
         shell: bash
@@ -212,6 +222,14 @@ jobs:
             >/dev/null
 
           curl --fail --silent \
+            http://127.0.0.1:8765/app-check.html \
+            >/dev/null
+
+          curl --fail --silent \
+            http://127.0.0.1:8765/runtime-selftest.js \
+            >/dev/null
+
+          curl --fail --silent \
             http://127.0.0.1:8765/feature-audit.json \
             >/dev/null
 
@@ -232,3 +250,4 @@ jobs:
             sources-registry.json
             csp-audit.json
             workflow-audit.json
+            release-readiness-183.json

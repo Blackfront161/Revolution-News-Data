@@ -154,11 +154,11 @@ window.WRN_EMERGENCY_MODE = false;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.8.3',
-    build: '2026.07.21-turkish-kurdish-source-coverage',
+    build: '2026.07.22-wrn-1.8.3-release-candidate',
     releasedAt: '2026-07-21T21:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
-    recoveryStage: 14,
+    recoveryStage: 15,
     dataUrls: Object.freeze({
         news: 'https://blackfront161.github.io/Revolution-News-Data/news-feed.json',
         events: 'https://blackfront161.github.io/Revolution-News-Data/events-feed.json',
@@ -513,7 +513,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '183-source-recovery';
+    const VERSION = '183-release-candidate';
 
     const addStyle = (file, marker) => {
         if (

@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.5 – App-Selbsttest */
+/* World Revolution News 1.8.3 – App-Selbsttest */
 'use strict';
 
 (() => {
@@ -60,11 +60,11 @@
     const key = '__wrn_diag_test__';
     try {
       localStorage.setItem(key, '1');
-      const ok = localStorage.getItem(key) === '1';
-      localStorage.removeItem(key);
-      return ok;
+      return localStorage.getItem(key) === '1';
     } catch {
       return false;
+    } finally {
+      try { localStorage.removeItem(key); } catch {}
     }
   }
 
@@ -85,7 +85,7 @@
 
     addResult(
       results,
-      version === '1.7.5' ? 'pass' : 'warn',
+      version === '1.8.3' ? 'pass' : 'warn',
       'App-Version',
       version
     );
@@ -97,11 +97,12 @@
       navigator.onLine ? 'online' : 'offline'
     );
 
+    const storageAvailable = storageCheck();
     addResult(
       results,
-      storageCheck() ? 'pass' : 'fail',
+      storageAvailable ? 'pass' : 'fail',
       'Lokaler Speicher',
-      storageCheck() ? 'verfügbar' : 'nicht verfügbar'
+      storageAvailable ? 'verfügbar' : 'nicht verfügbar'
     );
 
     const sw = await serviceWorkerCheck().catch(error => ({ error }));

@@ -16,10 +16,10 @@ registry = json.loads((ROOT / 'multilingual-source-registry.json').read_text(enc
 sources_registry = json.loads((ROOT / 'sources-registry.json').read_text(encoding='utf-8'))
 language_audit = json.loads((ROOT / 'language-source-audit.json').read_text(encoding='utf-8'))
 
-assert "version: '1.8.2'" in config
+assert "version: '1.8.3'" in config
 assert "sourceCatalog: 'https://blackfront161.github.io/Revolution-News-Data/sources-registry.json'" in config
 assert 'source-filters.js' in config
-assert 'wrn-app-v1.8.2' in worker and 'wrn-data-v1.8.2' in worker
+assert 'wrn-app-v1.8.3-b5' in worker and 'wrn-data-v1.8.3-b5' in worker
 assert 'source-filters.js' in worker
 assert 'source-language-filter' in index and 'source-origin-filter' in index
 assert 'WRN MULTILINGUAL SOURCES 1.8.2 START' in aggregate
@@ -54,4 +54,4 @@ assert language_audit['missingRequiredSourceLanguages'] == []
 assert language_audit['activeLanguages'].get('tr', 0) >= 2
 assert language_audit['activeLanguages'].get('ku', 0) >= 2
 
-print('WRN 1.8.2 Release-Verträge: OK')
+print('WRN 1.8.2 Funktionsverträge unter 1.8.3: OK')
