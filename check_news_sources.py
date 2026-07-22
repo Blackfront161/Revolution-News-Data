@@ -19,6 +19,15 @@ from typing import Any
 from urllib.parse import urljoin, urlsplit, urlunsplit
 import warnings
 
+from source_recovery import (
+    apply_history,
+    discover_replacement_feed,
+    merge_discovered_feeds,
+    read_json as read_recovery_json,
+    suspicious_redirect,
+    write_json as write_recovery_json,
+)
+
 import requests
 from requests.adapters import HTTPAdapter
 from urllib3.exceptions import InsecureRequestWarning
@@ -32,6 +41,8 @@ MULTILINGUAL_REGISTRY_PATH = ROOT / "multilingual-source-registry.json"
 OUTPUT_PATH = ROOT / "source-health.json"
 REPORT_PATH = ROOT / "source-health-report.json"
 DISCOVERED_PATH = ROOT / "discovered-feeds.json"
+HISTORY_PATH = ROOT / "source-health-history.json"
+RECOVERY_REPORT_PATH = ROOT / "source-recovery-report.json"
 
 USER_AGENT = (
     "Mozilla/5.0 (compatible; WorldRevolutionNews/1.7.17b; "
@@ -550,6 +561,8 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
     result: dict[str, Any] = {
         "name": name,
         "url": url,
+        "configuredUrl": url,
+        "pageUrl": page_url,
         "status": "unknown",
         "ok": False,
         "lastChecked": checked_at,
@@ -564,11 +577,23 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
 
     try:
         if not url:
-            url = discover_feed(session, page_url)
+            candidate = discover_replacement_feed(
+                session,
+                source,
+                page_url,
+            )
+            url = (
+                candidate["url"]
+                if candidate
+                else discover_feed(session, page_url)
+            )
 
             if url:
                 result["url"] = url
+                result["replacementUrl"] = url
                 result["discovered"] = True
+                if candidate:
+                    result["feedType"] = candidate.get("feedType", "")
                 result["warning"] = "Feed-Adresse automatisch erkannt."
             else:
                 result["warning"] = (
@@ -620,7 +645,32 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
             "",
         )
 
+        if suspicious_redirect(url, response.url):
+            result["status"] = "error"
+            result["suspiciousRedirect"] = True
+            result["error"] = (
+                "Unerwartete Weiterleitung auf eine andere Domain; "
+                "manuelle PrÃ¼fung erforderlich."
+            )
+            return finalize_result(result)
+
         if response.status_code in (404, 410):
+            response.close()
+            candidate = discover_replacement_feed(session, source, url)
+            if candidate:
+                result["previousUrl"] = url
+                result["url"] = candidate["url"]
+                result["replacementUrl"] = candidate["url"]
+                result["finalUrl"] = candidate["url"]
+                result["feedType"] = candidate.get("feedType", "")
+                result["discovered"] = True
+                result["status"] = "ok"
+                result["warning"] = (
+                    "Verschobene Feed-Adresse gefunden; "
+                    "Quellenregister bleibt unverÃ¤ndert."
+                )
+                return finalize_result(result)
+
             result["status"] = "error"
             result["error"] = (
                 f"Feed nicht gefunden (HTTP {response.status_code})."
@@ -654,10 +704,25 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
         if valid_feed:
             result["status"] = "ok"
         else:
-            result["status"] = "warning"
-            result["warning"] = (
-                "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
-            )
+            response.close()
+            candidate = discover_replacement_feed(session, source, url)
+            if candidate:
+                result["previousUrl"] = url
+                result["url"] = candidate["url"]
+                result["replacementUrl"] = candidate["url"]
+                result["finalUrl"] = candidate["url"]
+                result["feedType"] = candidate.get("feedType", "")
+                result["discovered"] = True
+                result["status"] = "ok"
+                result["warning"] = (
+                    "Alternative Feed-Adresse gefunden; "
+                    "Quellenregister bleibt unverÃ¤ndert."
+                )
+            else:
+                result["status"] = "warning"
+                result["warning"] = (
+                    "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt."
+                )
 
         return finalize_result(result)
     finally:
@@ -728,15 +793,11 @@ def write_results(results: list[dict[str, Any]]) -> None:
         encoding="utf-8",
     )
 
-    discovered = {
-        item["name"]: item["url"]
-        for item in results
-        if item.get("discovered") and item.get("url")
-    }
-    DISCOVERED_PATH.write_text(
-        json.dumps(discovered, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    discovered = merge_discovered_feeds(
+        read_recovery_json(DISCOVERED_PATH, {}),
+        results,
     )
+    write_recovery_json(DISCOVERED_PATH, discovered)
 
 
 def main() -> int:
@@ -784,6 +845,14 @@ def main() -> int:
                 f"[{result['status'].upper():7}] "
                 f"{result['name']}"
             )
+
+    previous_history = read_recovery_json(HISTORY_PATH, {})
+    results, history_document, recovery_report = apply_history(
+        results,
+        previous_history,
+    )
+    write_recovery_json(HISTORY_PATH, history_document)
+    write_recovery_json(RECOVERY_REPORT_PATH, recovery_report)
 
     priority = {
         "error": 0,

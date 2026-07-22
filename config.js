@@ -513,7 +513,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '183-interface-recovery';
+    const VERSION = '183-source-recovery';
 
     const addStyle = (file, marker) => {
         if (
@@ -626,6 +626,7 @@ window.WRN_CONFIG = Object.freeze({
             ['audio-tab.css', 'audio-tab-recovery-10'],
             ['audio-tab-183.css', 'audio-tab-recovery-183'],
             ['interface-block3.css', 'interface-block3-recovery-183'],
+            ['source-recovery-ui-183.css', 'source-recovery-ui-183'],
             ['audio-reliability.css', 'audio-reliability-recovery-10'],
             ['runtime-selftest.css', 'runtime-selftest-recovery-10'],
             ['recovery-audit.css', 'recovery-audit-recovery-10'],
@@ -656,6 +657,7 @@ window.WRN_CONFIG = Object.freeze({
             ['audio-tab.js', 'audio-tab-recovery-10'],
             ['audio-tab-183.js', 'audio-tab-recovery-183'],
             ['interface-block3.js', 'interface-block3-recovery-183'],
+            ['source-recovery-ui-183.js', 'source-recovery-ui-183'],
             ['audio-reliability.js', 'audio-reliability-recovery-10'],
             ['runtime-selftest.js', 'runtime-selftest-recovery-10'],
             ['recovery-audit.js', 'recovery-audit-recovery-10'],

@@ -13,7 +13,7 @@ assert 'audio-tab-183.css' in config
 assert 'audio-tab-183.js' in config
 assert 'audio-tab-183.css' in worker
 assert 'audio-tab-183.js' in worker
-assert "wrn-app-v1.8.3-b2" in worker
+assert "wrn-app-v1.8.3-b4" in worker
 assert 'seek: seekGlobalMedia' in media
 assert 'skip: skipGlobalMedia' in media
 assert 'node tests/test_audio_tab_183.js' in workflow

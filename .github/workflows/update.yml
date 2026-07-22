@@ -140,6 +140,8 @@ jobs:
             feature-audit.json
             language-source-audit.json
             source-discovery-report.json
+            source-health-history.json
+            source-recovery-report.json
           )
 
           for file in "${optional_outputs[@]}"; do
