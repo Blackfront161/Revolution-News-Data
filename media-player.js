@@ -500,6 +500,8 @@ function getGlobalMediaState() {
 window.WRNMediaPlayer = Object.freeze({
     getState: getGlobalMediaState,
     setPlaybackRate: setGlobalMediaPlaybackRate,
+    seek: seekGlobalMedia,
+    skip: skipGlobalMedia,
     play: playGlobalMedia,
     pause: pauseGlobalMedia,
     resume: resumeGlobalMedia,

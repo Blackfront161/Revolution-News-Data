@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.8.2',
+        version: '1.8.3',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -153,7 +153,7 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.2',
+    version: '1.8.3',
     build: '2026.07.21-turkish-kurdish-source-coverage',
     releasedAt: '2026-07-21T21:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
@@ -513,7 +513,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '180-stories-briefing2';
+    const VERSION = '183-audio-recovery';
 
     const addStyle = (file, marker) => {
         if (
@@ -624,6 +624,7 @@ window.WRN_CONFIG = Object.freeze({
             ['article-actions.css', 'article-actions-recovery-10'],
             ['sticky-dialogs.css', 'sticky-dialogs-recovery-10'],
             ['audio-tab.css', 'audio-tab-recovery-10'],
+            ['audio-tab-183.css', 'audio-tab-recovery-183'],
             ['audio-reliability.css', 'audio-reliability-recovery-10'],
             ['runtime-selftest.css', 'runtime-selftest-recovery-10'],
             ['recovery-audit.css', 'recovery-audit-recovery-10'],
@@ -652,6 +653,7 @@ window.WRN_CONFIG = Object.freeze({
             ['article-actions.js', 'article-actions-recovery-10'],
             ['sticky-dialogs.js', 'sticky-dialogs-recovery-10'],
             ['audio-tab.js', 'audio-tab-recovery-10'],
+            ['audio-tab-183.js', 'audio-tab-recovery-183'],
             ['audio-reliability.js', 'audio-reliability-recovery-10'],
             ['runtime-selftest.js', 'runtime-selftest-recovery-10'],
             ['recovery-audit.js', 'recovery-audit-recovery-10'],
