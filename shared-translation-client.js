@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.5 – gemeinsamer Übersetzungs-Cache */
+/* World Revolution News 1.8.4 – gemeinsamer Übersetzungs-Cache mit sicherem Rückfall */
 'use strict';
 
 (() => {
@@ -32,6 +32,32 @@
       || data?.result?.text
       || ''
     ).trim();
+  }
+
+  async function fallbackToOriginal(args, failure) {
+    const canFallback = typeof originalRequest === 'function';
+    dispatchState({
+      type: 'translation',
+      ok: false,
+      fallback: canFallback,
+      status: Number(failure?.status || 0),
+      error: String(failure?.message || 'Shared translation request failed.')
+    });
+
+    if (!canFallback) return failure;
+
+    try {
+      const result = await originalRequest(args);
+      if (result && typeof result === 'object') {
+        return { ...result, sharedFallback: true };
+      }
+      return result;
+    } catch (error) {
+      return {
+        ...failure,
+        fallbackError: String(error?.message || error)
+      };
+    }
   }
 
   async function request(args = {}) {
@@ -104,22 +130,20 @@
         };
       }
 
-      return {
+      return fallbackToOriginal(args, {
         error: true,
         status: response.status,
         message: data?.message || data?.error?.message || 'Shared translation request failed.',
         data
-      };
+      });
     } catch (error) {
-      dispatchState({ type: 'translation', ok: false, fallback: true, error: String(error?.message || error) });
-      if (typeof originalRequest === 'function') return originalRequest(args);
-      return {
+      return fallbackToOriginal(args, {
         error: true,
         status: 0,
         message: error?.name === 'AbortError'
           ? 'The shared translation request timed out.'
           : String(error?.message || error)
-      };
+      });
     } finally {
       window.clearTimeout(timer);
     }

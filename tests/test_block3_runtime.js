@@ -19,6 +19,26 @@ assert.strictEqual(api.matchesCorruption({ title: 'Neue Vorwürfe wegen Bestechu
 assert.strictEqual(api.matchesCorruption({ title: 'Caso de corrupción y soborno' }), true);
 assert.strictEqual(api.matchesCorruption({ title: 'Local community opens a library' }), false);
 
+const filterRows = [
+  { title: 'Current A', quelleName: 'A', pubDate: '2026-07-20T00:00:00Z' },
+  { title: 'Current B', quelleName: 'B', pubDate: '2026-07-19T00:00:00Z' },
+  { title: 'Old A', quelleName: 'A', pubDate: '2026-06-01T00:00:00Z' }
+];
+const sourceAndDateResult = api.test.filterRows(filterRows, {
+  category: 'Global',
+  selectedSources: ['A'],
+  days: 7,
+  now: new Date('2026-07-22T00:00:00Z').getTime()
+});
+assert.deepStrictEqual(sourceAndDateResult.map(row => row.title), ['Current A']);
+assert.strictEqual(filterRows.length, 3, 'source filtering must not mutate the global article list');
+
+const corruptionRows = api.test.rowsForCategory([
+  { title: 'Bribery investigation' },
+  { title: 'Community library' }
+], 'WRN Corruption');
+assert.deepStrictEqual(corruptionRows.map(row => row.title), ['Bribery investigation']);
+
 assert.deepStrictEqual(api.state().selectedSources, []);
 const merged = api.test.mergeRows(
   [{ id: 'keep', title: 'Existing article', pubDate: '2026-07-01T00:00:00Z' }],

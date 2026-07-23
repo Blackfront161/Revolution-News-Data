@@ -1406,8 +1406,17 @@ function applyFilters(isBookmark = false) {
     let baseList;
     if (activeKontinent === "Bookmarks" || isBookmark) baseList = getSavedBookmarks();
     else if (activeKontinent === "Read") baseList = window.WRNReading?.getReadArticleItems(allNewsData) || [];
-    else baseList = allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
+    else {
+        const customRows = window.WRNInterfaceBlock3?.rowsForCategory?.(allNewsData, activeKontinent);
+        baseList = Array.isArray(customRows)
+            ? customRows
+            : allNewsData.filter(item => articleMatchesCategory(item, activeKontinent));
+    }
     let filtered = (selPortal === "ALL") ? baseList : baseList.filter(a => a.quelleName === selPortal);
+
+    if (window.WRNInterfaceBlock3?.filterRows) {
+        filtered = window.WRNInterfaceBlock3.filterRows(filtered, { category: activeKontinent });
+    }
 
     if (activeKontinent === 'Radar') {
         filtered = filtered.filter(eventMatchesSpecialFilters);
