@@ -177,6 +177,57 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   font-size: .67rem;
 }
 
+.wrn-story-timeline-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .6rem;
+}
+
+.wrn-story-translate-184,
+.wrn-story-item-actions-184 button,
+.wrn-story-item-actions-184 a {
+  min-height: 28px;
+  padding: .25rem .55rem;
+  border: 1px solid rgba(255, 49, 88, .7);
+  border-radius: 999px;
+  background: rgba(255, 49, 88, .08);
+  color: #ff6079;
+  font: 800 .61rem/1.1 monospace;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wrn-story-translate-184 {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  flex: 0 0 auto;
+  border-color: rgba(0, 240, 255, .58);
+  color: var(--color-cyan, #00f0ff);
+  background: rgba(0, 240, 255, .06);
+}
+
+.wrn-rb-star-static-184,
+.wrn-story-translate-184 .wrn-rb-star-184 {
+  color: transparent;
+  background: linear-gradient(90deg, #050508 0 48%, #ff3158 52% 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: .45px #ff3158;
+}
+
+.wrn-story-item-actions-184 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+}
+
+.wrn-story-item-actions-184 a {
+  margin-left: auto;
+}
+
 .wrn-story-timeline strong {
   display: block;
   color: #fff;

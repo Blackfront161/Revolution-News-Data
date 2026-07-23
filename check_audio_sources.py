@@ -7,13 +7,19 @@ from datetime import datetime, timezone
 import configparser
 import io
 import json
+import os
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
 
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
+try:
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.util.retry import Retry
+except ImportError:  # The bundled maintenance runtime exposes pip's vendored client.
+    from pip._vendor import requests
+    from pip._vendor.requests.adapters import HTTPAdapter
+    from pip._vendor.urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parent
 PODCASTS = ROOT / "podcasts.json"
@@ -275,6 +281,8 @@ def summary(checks: list[dict[str, Any]]) -> dict[str, int]:
 def main() -> int:
     podcast_items = rows(read_json(PODCASTS, []))
     radio_items = rows(read_json(RADIOS, []))
+    previous = read_json(OUTPUT, {})
+    skip_podcasts = os.getenv("WRN_AUDIO_SKIP_PODCASTS", "").strip() == "1"
 
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in podcast_items:
@@ -285,7 +293,7 @@ def main() -> int:
     session = client()
 
     try:
-        for name, episodes in sorted(grouped.items()):
+        for name, episodes in ([] if skip_podcasts else sorted(grouped.items())):
             urls = [podcast_url(item) for item in episodes]
             urls = [url for url in urls if url][:2]
 
@@ -346,14 +354,21 @@ def main() -> int:
     finally:
         session.close()
 
-    payload = {
-        "schemaVersion": 1,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "podcasts": {
+    previous_podcasts = previous.get("podcasts") if isinstance(previous, dict) else None
+    podcast_payload = (
+        previous_podcasts
+        if skip_podcasts and isinstance(previous_podcasts, dict)
+        else {
             "summary": summary(podcast_checks),
             "checks": podcast_checks,
             "episodeCount": len(podcast_items),
-        },
+        }
+    )
+
+    payload = {
+        "schemaVersion": 1,
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "podcasts": podcast_payload,
         "radio": {
             "summary": summary(radio_checks),
             "checks": radio_checks,

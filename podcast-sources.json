@@ -683,33 +683,6 @@
     "contentPolicy": "metadata_and_links_only"
   },
   {
-      "id":  "amandla-media-za",
-      "name":  "Amandla! Media (South Africa)",
-      "homepage":  "https://www.amandla.org.za/series/amandla/",
-      "feedUrls":  [
-                       "https://www.amandla.org.za/series/amandla/feed/"
-                   ],
-      "language":  "en",
-      "country":  "ZA",
-      "region":  "Africa",
-      "license":  "Original source",
-      "sourceKind":  "independent-podcast",
-      "priority":  88,
-      "topics":  [
-                     "Anticapitalism",
-                     "Labor Struggles",
-                     "Global South"
-                 ],
-      "categories":  [
-                         "Anticapitalism",
-                         "Labor Struggles",
-                         "International"
-                     ],
-      "pageAudioFallback":  true,
-      "maxAgeDays":  3650,
-      "verificationNote":  "Official Amandla podcast series feed."
-  },
-  {
       "id":  "radio-ambulante",
       "name":  "Radio Ambulante",
       "homepage":  "https://radioambulante.org/",
@@ -736,31 +709,122 @@
       "verificationNote":  "Official public podcast feed and official programme website."
   },
   {
-      "id":  "new-naratif-podcasts",
-      "name":  "New Naratif Podcasts",
-      "homepage":  "https://newnaratif.com/podcast/",
-      "feedUrls":  [
-                       "https://newnaratif.com/category/podcasts/feed/"
-                   ],
-      "language":  "en",
-      "country":  "MY",
-      "region":  "Asia",
-      "license":  "Original source",
-      "sourceKind":  "independent-podcast",
-      "priority":  92,
-      "topics":  [
-                     "Southeast Asia",
-                     "Democracy",
-                     "Anticolonialism"
-                 ],
-      "categories":  [
-                         "Asia",
-                         "Anticolonialism",
-                         "Politics"
-                     ],
-      "pageAudioFallback":  true,
-      "maxAgeDays":  3650,
-      "verificationNote":  "Official New Naratif podcast category feed."
+      "id": "asian-labor-futures",
+      "name": "Asian Labor Futures Podcast",
+      "homepage": "https://asianlaborfutures.substack.com/",
+      "feedUrls": [
+          "https://api.substack.com/feed/podcast/4848712.rss"
+      ],
+      "language": "en",
+      "country": "TH",
+      "region": "Asia",
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 96,
+      "topics": ["Labor Struggles", "Asia", "Anticapitalism"],
+      "categories": ["Asia", "Labor Struggles", "Politics"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Substack podcast feed with public audio enclosures."
+  },
+  {
+      "id": "the-east-is-a-podcast",
+      "name": "The East is a Podcast",
+      "homepage": "https://www.eastpodcast.com/",
+      "feedUrls": [
+          "https://rss.libsyn.com/shows/134978/destinations/831728.xml"
+      ],
+      "language": "en",
+      "country": "LB",
+      "region": "Asia",
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 92,
+      "topics": ["West Asia", "Anticolonialism", "Anti-Imperialism"],
+      "categories": ["Asia", "Anticolonialism", "Anti-Imperialism"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Libsyn feed with public audio enclosures."
+  },
+  {
+      "id": "leftover-talk",
+      "name": "Leftover Talk / 边角聊",
+      "homepage": "https://leftovertalk.fm/",
+      "feedUrls": [
+          "https://leftovertalk.fm/rss"
+      ],
+      "language": "zh",
+      "languages": ["zh", "en"],
+      "country": "CN",
+      "region": "Asia",
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 88,
+      "topics": ["China", "Society", "Politics"],
+      "categories": ["Asia", "Politics", "Culture"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Fireside RSS feed with public audio enclosures."
+  },
+  {
+      "id": "real-sankara-hours",
+      "name": "Real Sankara Hours",
+      "homepage": "https://realsankarahours.org/",
+      "feedUrls": [
+          "https://feed.podbean.com/realsankarahours/feed.xml"
+      ],
+      "language": "en",
+      "country": "US",
+      "region": "Africa",
+      "regions": ["Africa", "North America"],
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 94,
+      "topics": ["Pan-Africanism", "Black Radical Thought", "Anticapitalism"],
+      "categories": ["Africa", "Anticolonialism", "Politics"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Podbean RSS feed with public audio enclosures; Africa is the primary coverage region."
+  },
+  {
+      "id": "wise-the-dome",
+      "name": "Wise The Dome TV",
+      "homepage": "https://podcasters.spotify.com/pod/show/rakeem34",
+      "feedUrls": [
+          "https://anchor.fm/s/e0971054/podcast/rss"
+      ],
+      "language": "en",
+      "country": "US",
+      "region": "Africa",
+      "regions": ["Africa", "North America"],
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 90,
+      "topics": ["Pan-Africanism", "Decolonization", "Liberation"],
+      "categories": ["Africa", "Anticolonialism", "Theory & Strategy"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Spotify for Creators RSS feed with public audio enclosures; Africa is the primary coverage region."
+  },
+  {
+      "id": "the-dugout-black-anarchist",
+      "name": "The Dugout – a Black anarchist podcast",
+      "homepage": "https://www.thedugoutpodcast.com/",
+      "feedUrls": [
+          "https://anchor.fm/s/e8e55a68/podcast/rss"
+      ],
+      "language": "en",
+      "country": "US",
+      "region": "Africa",
+      "regions": ["Africa", "North America"],
+      "license": "Original source",
+      "sourceKind": "independent-podcast",
+      "priority": 96,
+      "topics": ["Black Anarchism", "Decolonization", "Queer Politics"],
+      "categories": ["Africa", "Anarchism", "Anticolonialism"],
+      "pageAudioFallback": false,
+      "maxAgeDays": 3650,
+      "verificationNote": "Official Spotify for Creators RSS feed with public audio enclosures; Africa is the primary coverage region."
   },
   {
       "id":  "yeah-nah-pasaran",

@@ -48,6 +48,48 @@
             motionFull: 'Normal',
             searchFocused: 'Suchfeld fokussiert',
             modalClosed: 'Dialog geschlossen'
+        },
+        es: {
+            skip:'Ir a los artículos', design:'Diseño', motion:'Movimiento', dark:'Oscuro',
+            light:'Claro', oled:'Negro OLED', contrast:'Alto contraste', soft:'Suave para la vista',
+            motionAuto:'Ajuste del sistema', motionReduced:'Reducido', motionFull:'Normal',
+            searchFocused:'Campo de búsqueda enfocado', modalClosed:'Diálogo cerrado'
+        },
+        fr: {
+            skip:'Aller aux articles', design:'Design', motion:'Mouvement', dark:'Sombre',
+            light:'Clair', oled:'Noir OLED', contrast:'Contraste élevé', soft:'Doux pour les yeux',
+            motionAuto:'Réglage système', motionReduced:'Réduit', motionFull:'Normal',
+            searchFocused:'Champ de recherche sélectionné', modalClosed:'Fenêtre fermée'
+        },
+        it: {
+            skip:'Vai agli articoli', design:'Design', motion:'Movimento', dark:'Scuro',
+            light:'Chiaro', oled:'Nero OLED', contrast:'Contrasto elevato', soft:'Riposante',
+            motionAuto:'Impostazione di sistema', motionReduced:'Ridotto', motionFull:'Normale',
+            searchFocused:'Campo di ricerca selezionato', modalClosed:'Finestra chiusa'
+        },
+        pt: {
+            skip:'Ir para os artigos', design:'Design', motion:'Movimento', dark:'Escuro',
+            light:'Claro', oled:'Preto OLED', contrast:'Alto contraste', soft:'Suave para os olhos',
+            motionAuto:'Definição do sistema', motionReduced:'Reduzido', motionFull:'Normal',
+            searchFocused:'Campo de pesquisa selecionado', modalClosed:'Janela fechada'
+        },
+        ru: {
+            skip:'Перейти к статьям', design:'Оформление', motion:'Движение', dark:'Тёмная',
+            light:'Светлая', oled:'Чёрная OLED', contrast:'Высокая контрастность', soft:'Мягкая',
+            motionAuto:'Настройка системы', motionReduced:'Уменьшено', motionFull:'Обычно',
+            searchFocused:'Поле поиска выбрано', modalClosed:'Окно закрыто'
+        },
+        el: {
+            skip:'Μετάβαση στα άρθρα', design:'Σχεδίαση', motion:'Κίνηση', dark:'Σκούρο',
+            light:'Φωτεινό', oled:'Μαύρο OLED', contrast:'Υψηλή αντίθεση', soft:'Ξεκούραστο',
+            motionAuto:'Ρύθμιση συστήματος', motionReduced:'Μειωμένη', motionFull:'Κανονική',
+            searchFocused:'Επιλέχθηκε το πεδίο αναζήτησης', modalClosed:'Το παράθυρο έκλεισε'
+        },
+        tr: {
+            skip:'Makalelere geç', design:'Tasarım', motion:'Hareket', dark:'Koyu',
+            light:'Açık', oled:'OLED siyah', contrast:'Yüksek kontrast', soft:'Göz dostu',
+            motionAuto:'Sistem ayarı', motionReduced:'Azaltılmış', motionFull:'Normal',
+            searchFocused:'Arama alanı seçildi', modalClosed:'Pencere kapatıldı'
         }
     };
 

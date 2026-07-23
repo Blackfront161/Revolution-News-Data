@@ -14,56 +14,65 @@
       search: 'Thema oder Quelle suchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
       refresh: 'Neu laden', moreFilters: 'Weitere Filter', empty: 'Im gewählten Zeitraum wurde noch kein Thema von mehreren Quellen berichtet.', articles: 'Beiträge', perspectives: 'Was die Quellen unterschiedlich berichten',
       timeline: 'Zeitleiste', watch: 'Beobachten', watching: 'Beobachtet', share: 'Teilen', copy: 'Kopiert', open: 'Artikel öffnen',
-      sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste'
+      sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste',
+      translate: 'Übersetzen', translating: 'Wird übersetzt…', original: 'Original', translationError: 'Übersetzung fehlgeschlagen'
     },
     en: {
       title: 'Understand developments', intro: 'Reports from different sources about the same topic are combined into an easy-to-follow timeline.',
       search: 'Search developments…', period: 'Period', sources: 'Minimum sources', days7: '7 days', days14: '14 days', days30: '30 days',
       refresh: 'Reload', moreFilters: 'More filters', empty: 'No topic was reported by multiple sources in the selected period.', articles: 'articles', perspectives: 'How sources differ',
       timeline: 'Timeline', watch: 'Watch', watching: 'Watching', share: 'Share', copy: 'Copied', open: 'Open article',
-      sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist'
+      sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist',
+      translate: 'Translate', translating: 'Translating…', original: 'Original', translationError: 'Translation failed'
     },
     es: {
       title:'Desarrollos y cronologías', intro:'Varios informes se agrupan localmente. No se suben datos.', search:'Buscar desarrollos…', period:'Periodo',
       sources:'Fuentes mínimas', days7:'7 días', days14:'14 días', days30:'30 días', refresh:'Recalcular', empty:'Aún no hay un desarrollo con varias fuentes.',
       articles:'artículos', perspectives:'Comparar perspectivas', timeline:'Cronología', watch:'Seguir', watching:'Siguiendo', share:'Compartir', copy:'Copiado',
-      open:'Abrir artículo', sourcesLabel:'Fuentes', first:'Inicio', latest:'Último estado', local:'Análisis local', terms:'Lista de seguimiento'
+      open:'Abrir artículo', sourcesLabel:'Fuentes', first:'Inicio', latest:'Último estado', local:'Análisis local', terms:'Lista de seguimiento',
+      translate:'Traducir', translating:'Traduciendo…', original:'Original', translationError:'Error de traducción'
     },
     fr: {
       title:'Évolutions et chronologies', intro:'Plusieurs articles sont regroupés localement. Aucune donnée n’est envoyée.', search:'Rechercher…', period:'Période',
       sources:'Sources minimum', days7:'7 jours', days14:'14 jours', days30:'30 jours', refresh:'Recalculer', empty:'Aucune évolution multi-source trouvée.',
       articles:'articles', perspectives:'Comparer les perspectives', timeline:'Chronologie', watch:'Suivre', watching:'Suivi', share:'Partager', copy:'Copié',
-      open:'Ouvrir l’article', sourcesLabel:'Sources', first:'Début', latest:'Dernier état', local:'Analyse locale', terms:'Liste de suivi'
+      open:'Ouvrir l’article', sourcesLabel:'Sources', first:'Début', latest:'Dernier état', local:'Analyse locale', terms:'Liste de suivi',
+      translate:'Traduire', translating:'Traduction…', original:'Original', translationError:'Échec de la traduction'
     },
     it: {
       title:'Sviluppi e cronologie', intro:'Più articoli vengono raggruppati localmente. Nessun dato viene caricato.', search:'Cerca sviluppi…', period:'Periodo',
       sources:'Fonti minime', days7:'7 giorni', days14:'14 giorni', days30:'30 giorni', refresh:'Ricalcola', empty:'Nessuno sviluppo con più fonti trovato.',
       articles:'articoli', perspectives:'Confronto delle prospettive', timeline:'Cronologia', watch:'Segui', watching:'Seguita', share:'Condividi', copy:'Copiato',
-      open:'Apri articolo', sourcesLabel:'Fonti', first:'Inizio', latest:'Ultimo stato', local:'Analisi locale', terms:'Lista osservata'
+      open:'Apri articolo', sourcesLabel:'Fonti', first:'Inizio', latest:'Ultimo stato', local:'Analisi locale', terms:'Lista osservata',
+      translate:'Traduci', translating:'Traduzione…', original:'Originale', translationError:'Traduzione non riuscita'
     },
     pt: {
       title:'Desenvolvimentos e cronologias', intro:'Várias notícias são agrupadas localmente. Nenhum dado é enviado.', search:'Pesquisar desenvolvimentos…', period:'Período',
       sources:'Fontes mínimas', days7:'7 dias', days14:'14 dias', days30:'30 dias', refresh:'Recalcular', empty:'Ainda não foi encontrado um desenvolvimento com várias fontes.',
       articles:'artigos', perspectives:'Comparar perspetivas', timeline:'Cronologia', watch:'Observar', watching:'Observada', share:'Partilhar', copy:'Copiado',
-      open:'Abrir artigo', sourcesLabel:'Fontes', first:'Início', latest:'Último estado', local:'Análise local', terms:'Lista de observação'
+      open:'Abrir artigo', sourcesLabel:'Fontes', first:'Início', latest:'Último estado', local:'Análise local', terms:'Lista de observação',
+      translate:'Traduzir', translating:'A traduzir…', original:'Original', translationError:'Falha na tradução'
     },
     ru: {
       title:'Развитие событий и хронология', intro:'Материалы группируются локально. Данные не загружаются.', search:'Поиск событий…', period:'Период',
       sources:'Минимум источников', days7:'7 дней', days14:'14 дней', days30:'30 дней', refresh:'Пересчитать', empty:'События из нескольких источников пока не найдены.',
       articles:'материалов', perspectives:'Сравнение взглядов', timeline:'Хронология', watch:'Наблюдать', watching:'Отслеживается', share:'Поделиться', copy:'Скопировано',
-      open:'Открыть статью', sourcesLabel:'Источники', first:'Начало', latest:'Последнее', local:'Локальный анализ', terms:'Список наблюдения'
+      open:'Открыть статью', sourcesLabel:'Источники', first:'Начало', latest:'Последнее', local:'Локальный анализ', terms:'Список наблюдения',
+      translate:'Перевести', translating:'Перевод…', original:'Оригинал', translationError:'Ошибка перевода'
     },
     el: {
       title:'Εξελίξεις και χρονολόγια', intro:'Πολλαπλές αναφορές ομαδοποιούνται τοπικά. Δεν αποστέλλονται δεδομένα.', search:'Αναζήτηση εξελίξεων…', period:'Περίοδος',
       sources:'Ελάχιστες πηγές', days7:'7 ημέρες', days14:'14 ημέρες', days30:'30 ημέρες', refresh:'Επανυπολογισμός', empty:'Δεν βρέθηκε ακόμη εξέλιξη με πολλές πηγές.',
       articles:'άρθρα', perspectives:'Σύγκριση οπτικών', timeline:'Χρονολόγιο', watch:'Παρακολούθηση', watching:'Παρακολουθείται', share:'Κοινοποίηση', copy:'Αντιγράφηκε',
-      open:'Άνοιγμα άρθρου', sourcesLabel:'Πηγές', first:'Αρχή', latest:'Τελευταία εξέλιξη', local:'Τοπική ανάλυση', terms:'Λίστα παρακολούθησης'
+      open:'Άνοιγμα άρθρου', sourcesLabel:'Πηγές', first:'Αρχή', latest:'Τελευταία εξέλιξη', local:'Τοπική ανάλυση', terms:'Λίστα παρακολούθησης',
+      translate:'Μετάφραση', translating:'Μετάφραση…', original:'Πρωτότυπο', translationError:'Αποτυχία μετάφρασης'
     },
     tr: {
       title:'Gelişmeler ve zaman çizelgeleri', intro:'Birden çok haber yerel olarak gruplanır. Veri yüklenmez.', search:'Gelişme ara…', period:'Dönem',
       sources:'En az kaynak', days7:'7 gün', days14:'14 gün', days30:'30 gün', refresh:'Yeniden hesapla', empty:'Henüz çok kaynaklı bir gelişme bulunamadı.',
       articles:'yazı', perspectives:'Bakış açılarını karşılaştır', timeline:'Zaman çizelgesi', watch:'İzle', watching:'İzleniyor', share:'Paylaş', copy:'Kopyalandı',
-      open:'Makaleyi aç', sourcesLabel:'Kaynaklar', first:'Başlangıç', latest:'Son durum', local:'Yerel analiz', terms:'İzleme listesi'
+      open:'Makaleyi aç', sourcesLabel:'Kaynaklar', first:'Başlangıç', latest:'Son durum', local:'Yerel analiz', terms:'İzleme listesi',
+      translate:'Çevir', translating:'Çevriliyor…', original:'Orijinal', translationError:'Çeviri başarısız'
     }
   };
 
@@ -220,6 +229,43 @@
     } catch {}
 
     return window.WRNStoriesCore.summarizeText(source, 320);
+  }
+
+  function parseTranslation(value, fallbackTitle) {
+    const cleanValue = String(value || '').trim();
+    const parts = cleanValue.split('---');
+    if (parts.length < 2) return { title: fallbackTitle, text: cleanValue };
+    return {
+      title: parts.shift().trim() || fallbackTitle,
+      text: parts.join('---').trim()
+    };
+  }
+
+  async function translateTimelineItem(item, titleNode, summaryNode, button) {
+    const copy = text();
+    if (button.disabled) return;
+    button.disabled = true;
+    button.classList.add('is-loading');
+    button.innerHTML = `<span class="wrn-rb-star-184" aria-hidden="true">★</span><span>${copy.translating}</span>`;
+    try {
+      const result = await window.fetchTranslationRequest?.({
+        title: item?.title || '',
+        text: String(item?.content || item?.description || item?.summary || '').slice(0, 1400),
+        mode: 'title_and_text'
+      });
+      if (!result || result.error || !result.text) throw new Error(result?.message || copy.translationError);
+      const translated = parseTranslation(result.text, item?.title || '');
+      if (translated.title) titleNode.textContent = translated.title;
+      if (translated.text) summaryNode.textContent = translated.text;
+      button.textContent = `✓ ${copy.translate}`;
+      button.title = result.provider || '';
+    } catch (error) {
+      button.textContent = copy.translationError;
+      button.title = String(error?.message || error);
+    } finally {
+      button.disabled = false;
+      button.classList.remove('is-loading');
+    }
   }
 
   function usefulTitle(value) {
@@ -381,16 +427,36 @@
       const row = document.createElement('li');
       const rowHead = document.createElement('div');
       rowHead.className = 'wrn-story-timeline-head';
-      rowHead.textContent = `${index === 0 ? copy.first : (index === story.items.length - 1 ? copy.latest : formatDate(window.WRNStoriesCore.dateMs(item)))} · ${window.WRNStoriesCore.sourceName(item)}`;
+      const rowMeta = document.createElement('span');
+      rowMeta.textContent = `${index === 0 ? copy.first : (index === story.items.length - 1 ? copy.latest : formatDate(window.WRNStoriesCore.dateMs(item)))} · ${window.WRNStoriesCore.sourceName(item)}`;
       const rowTitle = document.createElement('strong');
       rowTitle.textContent = window.WRNStoriesCore.cleanText(item.title);
       const summary = document.createElement('p');
       summary.textContent = articleSummary(item);
+      const translate = document.createElement('button');
+      translate.type = 'button';
+      translate.className = 'wrn-story-translate-184';
+      translate.innerHTML = `<span class="wrn-rb-star-static-184" aria-hidden="true">★</span><span>${copy.translate}</span>`;
+      translate.addEventListener('click', () => translateTimelineItem(item, rowTitle, summary, translate));
+      rowHead.append(rowMeta, translate);
       const open = document.createElement('button');
       open.type = 'button';
       open.textContent = copy.open;
       open.addEventListener('click', () => openArticle(item));
-      row.append(rowHead, rowTitle, summary, open);
+      const itemActions = document.createElement('div');
+      itemActions.className = 'wrn-story-item-actions-184';
+      itemActions.appendChild(open);
+      const originalUrl = String(item?.link || '');
+      if (/^https?:\/\//i.test(originalUrl)) {
+        const original = document.createElement('a');
+        original.href = originalUrl;
+        original.target = '_blank';
+        original.rel = 'noopener noreferrer';
+        original.referrerPolicy = 'no-referrer';
+        original.textContent = copy.original;
+        itemActions.appendChild(original);
+      }
+      row.append(rowHead, rowTitle, summary, itemActions);
       list.appendChild(row);
     });
 

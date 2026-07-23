@@ -28,15 +28,16 @@
         settings = { ...defaults };
     }
 
-    const text = () => {
-        const de = String(
+    const currentLanguage = () => String(
             document.getElementById('ui-language')?.value
             || document.documentElement.lang
-            || ''
-        ).toLowerCase().startsWith('de');
+            || 'en'
+        ).toLowerCase().split(/[-_]/)[0];
 
-        return de
-            ? {
+    const text = () => {
+        const language = currentLanguage();
+        const translations = {
+            de: {
                 title: '3. Ausgabe gestalten und exportieren',
                 workflow: '1. Artikel auswählen  ·  2. Texte bearbeiten  ·  3. Gestaltung wählen und als PDF speichern',
                 headline: 'Titel der Ausgabe',
@@ -62,8 +63,8 @@
                 none: 'Ohne Bilder',
                 compact: 'Kompakt',
                 comfortable: 'Luftig'
-            }
-            : {
+            },
+            en: {
                 title: '3. Design and export',
                 workflow: '1. Select articles  ·  2. Edit the text  ·  3. Choose a design and save as PDF',
                 headline: 'Issue title',
@@ -89,7 +90,72 @@
                 none: 'No images',
                 compact: 'Compact',
                 comfortable: 'Comfortable'
-            };
+            },
+            es: {
+                title:'3. Diseñar y exportar', workflow:'1. Selecciona artículos · 2. Edita el texto · 3. Elige el diseño y guarda en PDF',
+                headline:'Título de la edición', intro:'Introducción breve (opcional)', footer:'Pie / contacto (opcional)',
+                format:'Formato', style:'Estilo', columns:'Columnas', images:'Imágenes', density:'Espaciado',
+                print:'Imprimir / guardar PDF', reset:'Restablecer', a4:'A4 vertical', a5:'A5 vertical',
+                square:'Cuadrado', story:'Historia 9:16', cyber:'Cyberpunk', newspaper:'Periódico',
+                minimal:'Minimalista', contrast:'Alto contraste', normal:'Normal', gray:'Escala de grises',
+                none:'Sin imágenes', compact:'Compacto', comfortable:'Amplio'
+            },
+            fr: {
+                title:'3. Mise en page et export', workflow:'1. Sélectionnez les articles · 2. Modifiez le texte · 3. Choisissez la mise en page et enregistrez en PDF',
+                headline:'Titre du numéro', intro:'Courte introduction (facultative)', footer:'Pied de page / contact (facultatif)',
+                format:'Format', style:'Style', columns:'Colonnes', images:'Images', density:'Espacement',
+                print:'Imprimer / enregistrer en PDF', reset:'Réinitialiser', a4:'A4 portrait', a5:'A5 portrait',
+                square:'Carré', story:'Story 9:16', cyber:'Cyberpunk', newspaper:'Journal',
+                minimal:'Minimal', contrast:'Contraste élevé', normal:'Normal', gray:'Niveaux de gris',
+                none:'Sans images', compact:'Compact', comfortable:'Aéré'
+            },
+            it: {
+                title:'3. Impagina ed esporta', workflow:'1. Seleziona gli articoli · 2. Modifica il testo · 3. Scegli il design e salva in PDF',
+                headline:'Titolo del numero', intro:'Breve introduzione (facoltativa)', footer:'Piè di pagina / contatto (facoltativo)',
+                format:'Formato', style:'Stile', columns:'Colonne', images:'Immagini', density:'Spaziatura',
+                print:'Stampa / salva PDF', reset:'Reimposta', a4:'A4 verticale', a5:'A5 verticale',
+                square:'Quadrato', story:'Storia 9:16', cyber:'Cyberpunk', newspaper:'Giornale',
+                minimal:'Minimale', contrast:'Contrasto elevato', normal:'Normale', gray:'Scala di grigi',
+                none:'Senza immagini', compact:'Compatto', comfortable:'Ampio'
+            },
+            pt: {
+                title:'3. Criar e exportar', workflow:'1. Selecionar artigos · 2. Editar o texto · 3. Escolher o design e guardar em PDF',
+                headline:'Título da edição', intro:'Introdução breve (opcional)', footer:'Rodapé / contacto (opcional)',
+                format:'Formato', style:'Estilo', columns:'Colunas', images:'Imagens', density:'Espaçamento',
+                print:'Imprimir / guardar PDF', reset:'Repor', a4:'A4 vertical', a5:'A5 vertical',
+                square:'Quadrado', story:'Story 9:16', cyber:'Cyberpunk', newspaper:'Jornal',
+                minimal:'Minimalista', contrast:'Alto contraste', normal:'Normal', gray:'Tons de cinzento',
+                none:'Sem imagens', compact:'Compacto', comfortable:'Espaçoso'
+            },
+            ru: {
+                title:'3. Оформление и экспорт', workflow:'1. Выберите статьи · 2. Измените текст · 3. Выберите оформление и сохраните PDF',
+                headline:'Название выпуска', intro:'Краткое введение (необязательно)', footer:'Нижний колонтитул / контакт (необязательно)',
+                format:'Формат', style:'Стиль', columns:'Колонки', images:'Изображения', density:'Интервалы',
+                print:'Печать / сохранить PDF', reset:'Сбросить', a4:'A4, книжная', a5:'A5, книжная',
+                square:'Квадрат', story:'История 9:16', cyber:'Киберпанк', newspaper:'Газета',
+                minimal:'Минимализм', contrast:'Высокая контрастность', normal:'Обычные', gray:'Оттенки серого',
+                none:'Без изображений', compact:'Компактно', comfortable:'Свободно'
+            },
+            el: {
+                title:'3. Σχεδίαση και εξαγωγή', workflow:'1. Επιλέξτε άρθρα · 2. Επεξεργαστείτε το κείμενο · 3. Επιλέξτε σχεδίαση και αποθηκεύστε PDF',
+                headline:'Τίτλος έκδοσης', intro:'Σύντομη εισαγωγή (προαιρετικά)', footer:'Υποσέλιδο / επικοινωνία (προαιρετικά)',
+                format:'Μορφή', style:'Στυλ', columns:'Στήλες', images:'Εικόνες', density:'Απόσταση',
+                print:'Εκτύπωση / αποθήκευση PDF', reset:'Επαναφορά', a4:'A4 κατακόρυφο', a5:'A5 κατακόρυφο',
+                square:'Τετράγωνο', story:'Story 9:16', cyber:'Cyberpunk', newspaper:'Εφημερίδα',
+                minimal:'Λιτό', contrast:'Υψηλή αντίθεση', normal:'Κανονικές', gray:'Κλίμακα του γκρι',
+                none:'Χωρίς εικόνες', compact:'Συμπαγές', comfortable:'Άνετο'
+            },
+            tr: {
+                title:'3. Tasarla ve dışa aktar', workflow:'1. Makaleleri seç · 2. Metni düzenle · 3. Tasarımı seç ve PDF olarak kaydet',
+                headline:'Sayı başlığı', intro:'Kısa giriş (isteğe bağlı)', footer:'Alt bilgi / iletişim (isteğe bağlı)',
+                format:'Biçim', style:'Stil', columns:'Sütunlar', images:'Görseller', density:'Boşluk',
+                print:'Yazdır / PDF kaydet', reset:'Sıfırla', a4:'A4 dikey', a5:'A5 dikey',
+                square:'Kare', story:'Hikâye 9:16', cyber:'Siberpunk', newspaper:'Gazete',
+                minimal:'Minimal', contrast:'Yüksek kontrast', normal:'Normal', gray:'Gri tonlama',
+                none:'Görselsiz', compact:'Kompakt', comfortable:'Ferah'
+            }
+        };
+        return translations[language] || translations.en;
     };
 
     const findTarget = () => document.querySelector(
@@ -142,15 +208,18 @@
 
         if (!target) return false;
 
-        if (document.getElementById('wrn-zine-designer-1719')) {
+        const existing = document.getElementById('wrn-zine-designer-1719');
+        if (existing && existing.dataset.language === currentLanguage()) {
             apply(target);
             return true;
         }
+        existing?.remove();
 
         const t = text();
         const panel = document.createElement('section');
         panel.id = 'wrn-zine-designer-1719';
         panel.className = 'wrn-zine-designer-1719';
+        panel.dataset.language = currentLanguage();
         panel.innerHTML = `
             <header>
                 <h2>${t.title}</h2>

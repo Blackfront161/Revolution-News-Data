@@ -1,10 +1,10 @@
-/* World Revolution News 1.8.3 – Block 3 interface recovery */
+/* World Revolution News 1.8.4 – prerelease interface improvements */
 'use strict';
 
 (() => {
   if (typeof window === 'undefined' || window.WRNInterfaceBlock3) return;
 
-  const VERSION = '1.8.3-b3';
+  const VERSION = '1.8.4-rc1';
   const CORRUPTION_CATEGORY = 'WRN Corruption';
   const SOURCE_BAR_ID = 'wrn-source-range-bar-183';
   const ZINE_EDITOR_CLASS = 'wrn-zine-editor-183';
@@ -26,7 +26,9 @@
       loaded30: '30-day archive loaded', loadFailed: 'The archive could not be loaded. Current data remains available.',
       selected: 'selected', translate: 'Translate', zineTitle: 'Edit Zine before printing',
       title: 'Title', text: 'Article text', up: 'Move up', down: 'Move down', remove: 'Remove',
-      saved: 'Changes saved locally', switching: 'Opening developments…'
+      image: 'Article image', imageUrl: 'Image URL', chooseImage: 'Choose an image',
+      removeImage: 'Remove image', saved: 'Changes saved locally',
+      imageFailed: 'The image could not be processed.', switching: 'Opening developments…'
     },
     de: {
       corruption: 'Korruption', sources: 'Quellen', allSources: 'Alle Quellen', period: 'Zeitraum',
@@ -35,7 +37,9 @@
       loaded30: '30-Tage-Archiv geladen', loadFailed: 'Das Archiv konnte nicht geladen werden. Die aktuellen Daten bleiben erhalten.',
       selected: 'ausgewählt', translate: 'Übersetzen', zineTitle: 'Zine vor dem Druck bearbeiten',
       title: 'Titel', text: 'Artikeltext', up: 'Nach oben', down: 'Nach unten', remove: 'Entfernen',
-      saved: 'Änderungen lokal gespeichert', switching: 'Entwicklungen werden geöffnet…'
+      image: 'Artikelbild', imageUrl: 'Bildadresse', chooseImage: 'Bild auswählen',
+      removeImage: 'Bild entfernen', saved: 'Änderungen lokal gespeichert',
+      imageFailed: 'Das Bild konnte nicht verarbeitet werden.', switching: 'Entwicklungen werden geöffnet…'
     },
     es: {
       corruption: 'Corrupción', sources: 'Fuentes', allSources: 'Todas las fuentes', period: 'Periodo',
@@ -44,7 +48,9 @@
       loaded30: 'Archivo de 30 días cargado', loadFailed: 'No se pudo cargar el archivo. Los datos actuales siguen disponibles.',
       selected: 'seleccionadas', translate: 'Traducir', zineTitle: 'Editar el zine antes de imprimir',
       title: 'Título', text: 'Texto del artículo', up: 'Subir', down: 'Bajar', remove: 'Eliminar',
-      saved: 'Cambios guardados localmente', switching: 'Abriendo desarrollos…'
+      image: 'Imagen del artículo', imageUrl: 'URL de la imagen', chooseImage: 'Elegir imagen',
+      removeImage: 'Quitar imagen', saved: 'Cambios guardados localmente',
+      imageFailed: 'No se pudo procesar la imagen.', switching: 'Abriendo desarrollos…'
     },
     fr: {
       corruption: 'Corruption', sources: 'Sources', allSources: 'Toutes les sources', period: 'Période',
@@ -53,7 +59,9 @@
       loaded30: 'Archive de 30 jours chargée', loadFailed: 'L’archive n’a pas pu être chargée. Les données actuelles restent disponibles.',
       selected: 'sélectionnées', translate: 'Traduire', zineTitle: 'Modifier le zine avant impression',
       title: 'Titre', text: 'Texte de l’article', up: 'Monter', down: 'Descendre', remove: 'Retirer',
-      saved: 'Modifications enregistrées localement', switching: 'Ouverture des évolutions…'
+      image: 'Image de l’article', imageUrl: 'Adresse de l’image', chooseImage: 'Choisir une image',
+      removeImage: 'Retirer l’image', saved: 'Modifications enregistrées localement',
+      imageFailed: 'L’image n’a pas pu être traitée.', switching: 'Ouverture des évolutions…'
     },
     it: {
       corruption: 'Corruzione', sources: 'Fonti', allSources: 'Tutte le fonti', period: 'Periodo',
@@ -62,7 +70,9 @@
       loaded30: 'Archivio di 30 giorni caricato', loadFailed: 'Impossibile caricare l’archivio. I dati attuali restano disponibili.',
       selected: 'selezionate', translate: 'Traduci', zineTitle: 'Modifica lo zine prima della stampa',
       title: 'Titolo', text: 'Testo dell’articolo', up: 'Sposta su', down: 'Sposta giù', remove: 'Rimuovi',
-      saved: 'Modifiche salvate localmente', switching: 'Apertura sviluppi…'
+      image: 'Immagine dell’articolo', imageUrl: 'Indirizzo immagine', chooseImage: 'Scegli immagine',
+      removeImage: 'Rimuovi immagine', saved: 'Modifiche salvate localmente',
+      imageFailed: 'Non è stato possibile elaborare l’immagine.', switching: 'Apertura sviluppi…'
     },
     pt: {
       corruption: 'Corrupção', sources: 'Fontes', allSources: 'Todas as fontes', period: 'Período',
@@ -71,7 +81,9 @@
       loaded30: 'Arquivo de 30 dias carregado', loadFailed: 'Não foi possível carregar o arquivo. Os dados atuais continuam disponíveis.',
       selected: 'selecionadas', translate: 'Traduzir', zineTitle: 'Editar o zine antes de imprimir',
       title: 'Título', text: 'Texto do artigo', up: 'Mover para cima', down: 'Mover para baixo', remove: 'Remover',
-      saved: 'Alterações guardadas localmente', switching: 'A abrir desenvolvimentos…'
+      image: 'Imagem do artigo', imageUrl: 'Endereço da imagem', chooseImage: 'Escolher imagem',
+      removeImage: 'Remover imagem', saved: 'Alterações guardadas localmente',
+      imageFailed: 'Não foi possível processar a imagem.', switching: 'A abrir desenvolvimentos…'
     },
     ru: {
       corruption: 'Коррупция', sources: 'Источники', allSources: 'Все источники', period: 'Период',
@@ -80,7 +92,9 @@
       loaded30: 'Архив за 30 дней загружен', loadFailed: 'Не удалось загрузить архив. Текущие данные остаются доступными.',
       selected: 'выбрано', translate: 'Перевести', zineTitle: 'Редактировать зин перед печатью',
       title: 'Заголовок', text: 'Текст статьи', up: 'Выше', down: 'Ниже', remove: 'Удалить',
-      saved: 'Изменения сохранены локально', switching: 'Открываются события…'
+      image: 'Изображение статьи', imageUrl: 'Адрес изображения', chooseImage: 'Выбрать изображение',
+      removeImage: 'Удалить изображение', saved: 'Изменения сохранены локально',
+      imageFailed: 'Не удалось обработать изображение.', switching: 'Открываются события…'
     },
     el: {
       corruption: 'Διαφθορά', sources: 'Πηγές', allSources: 'Όλες οι πηγές', period: 'Περίοδος',
@@ -89,7 +103,9 @@
       loaded30: 'Το αρχείο 30 ημερών φορτώθηκε', loadFailed: 'Δεν ήταν δυνατή η φόρτωση του αρχείου. Τα τρέχοντα δεδομένα παραμένουν διαθέσιμα.',
       selected: 'επιλεγμένες', translate: 'Μετάφραση', zineTitle: 'Επεξεργασία zine πριν από την εκτύπωση',
       title: 'Τίτλος', text: 'Κείμενο άρθρου', up: 'Πάνω', down: 'Κάτω', remove: 'Αφαίρεση',
-      saved: 'Οι αλλαγές αποθηκεύτηκαν τοπικά', switching: 'Άνοιγμα εξελίξεων…'
+      image: 'Εικόνα άρθρου', imageUrl: 'Διεύθυνση εικόνας', chooseImage: 'Επιλογή εικόνας',
+      removeImage: 'Αφαίρεση εικόνας', saved: 'Οι αλλαγές αποθηκεύτηκαν τοπικά',
+      imageFailed: 'Δεν ήταν δυνατή η επεξεργασία της εικόνας.', switching: 'Άνοιγμα εξελίξεων…'
     },
     tr: {
       corruption: 'Yolsuzluk', sources: 'Kaynaklar', allSources: 'Tüm kaynaklar', period: 'Dönem',
@@ -98,7 +114,9 @@
       loaded30: '30 günlük arşiv yüklendi', loadFailed: 'Arşiv yüklenemedi. Mevcut veriler kullanılabilir durumda.',
       selected: 'seçili', translate: 'Çevir', zineTitle: 'Yazdırmadan önce zine’i düzenle',
       title: 'Başlık', text: 'Makale metni', up: 'Yukarı taşı', down: 'Aşağı taşı', remove: 'Kaldır',
-      saved: 'Değişiklikler yerel olarak kaydedildi', switching: 'Gelişmeler açılıyor…'
+      image: 'Makale görseli', imageUrl: 'Görsel adresi', chooseImage: 'Görsel seç',
+      removeImage: 'Görseli kaldır', saved: 'Değişiklikler yerel olarak kaydedildi',
+      imageFailed: 'Görsel işlenemedi.', switching: 'Gelişmeler açılıyor…'
     }
   });
 
@@ -169,9 +187,16 @@
   }
 
   function matchesCorruption(item) {
+    const categories = getArticleCategoriesSafe(item);
+    if (
+      item?.type === 'event'
+      || item?.sourceType === 'radar-api'
+      || clean(item?.kontinent) === 'Radar'
+      || categories.includes('Radar')
+    ) return false;
     const values = [
       item?.title, item?.summary, item?.description, item?.content,
-      item?.kategorie, item?.category, item?.categories, item?.topics, item?.tags
+      item?.kategorie, item?.category, categories, item?.topics, item?.tags
     ];
     const haystack = normalize(values.flatMap(value => Array.isArray(value) ? value : [value]).join(' '));
     return CORRUPTION_TERMS.some(term => haystack.includes(normalize(term)));
@@ -510,7 +535,7 @@
     const bar = document.querySelector('.wrn-subtabs');
     if (!bar) return;
 
-    let button = bar.querySelector('[data-subkey="wrn-corruption"]');
+    let button = bar.querySelector('[data-subkey="WRN Corruption"], [data-subkey="wrn-corruption"]');
     if (!button) {
       button = document.createElement('button');
       button.type = 'button';
@@ -594,11 +619,7 @@
         compact.type = 'button';
         compact.className = 'wrn-card-language-action-183';
         compact.dataset.wrnCardOnly = 'true';
-        compact.innerHTML = `
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path fill="url(#rbGrad)" stroke="currentColor" stroke-width=".7"
-              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>`;
+        compact.innerHTML = '<span class="wrn-rb-star-184" aria-hidden="true">★</span>';
         compact.addEventListener('click', event => {
           event.preventDefault();
           event.stopPropagation();
@@ -624,7 +645,6 @@
         new MutationObserver(sync).observe(originalTranslate, { childList: true, characterData: true, subtree: true });
       }
     }
-
     const originalAction = typed.get('original');
     if (originalAction && !card.classList.contains('wrn-detail-card')) {
       let quickRow = card.querySelector(':scope > .wrn-card-quick-actions-184');
@@ -744,8 +764,11 @@
       if (!Number.isInteger(index) || !list[index]) return;
       const title = row.querySelector('[data-zine-edit-title]')?.value;
       const content = row.querySelector('[data-zine-edit-content]')?.value;
+      const imageControl = row.querySelector('[data-zine-edit-image]');
+      const image = imageControl?.dataset?.zineImageValue ?? imageControl?.value;
       if (typeof title === 'string') list[index].title = title;
       if (typeof content === 'string') list[index].content = content;
+      if (typeof image === 'string') list[index].image = zineUrl(image);
     });
     commitZine(list);
     return list;
@@ -761,10 +784,53 @@
   }
 
   function zineUrl(value) {
+    const raw = String(value || '').trim();
+    if (
+      raw.length <= 4500000
+      && /^data:image\/(?:png|jpe?g|webp|gif);base64,/i.test(raw)
+    ) return raw;
     try {
-      const url = new URL(String(value || ''));
+      const url = new URL(raw);
       return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
     } catch { return ''; }
+  }
+
+  function compressedZineImage(file) {
+    return new Promise((resolve, reject) => {
+      if (!file || !file.type.startsWith('image/')) {
+        reject(new Error('invalid-image'));
+        return;
+      }
+      const reader = new FileReader();
+      reader.addEventListener('error', () => reject(reader.error || new Error('read-failed')), { once: true });
+      reader.addEventListener('load', () => {
+        const image = new Image();
+        image.addEventListener('error', () => reject(new Error('decode-failed')), { once: true });
+        image.addEventListener('load', () => {
+          const maxSide = 1600;
+          const ratio = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(image.naturalWidth * ratio));
+          canvas.height = Math.max(1, Math.round(image.naturalHeight * ratio));
+          const context = canvas.getContext('2d', { alpha: false });
+          if (!context) {
+            reject(new Error('canvas-unavailable'));
+            return;
+          }
+          context.fillStyle = '#ffffff';
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          const result = canvas.toDataURL('image/jpeg', 0.82);
+          if (!zineUrl(result)) {
+            reject(new Error('image-too-large'));
+            return;
+          }
+          resolve(result);
+        }, { once: true });
+        image.src = String(reader.result || '');
+      }, { once: true });
+      reader.readAsDataURL(file);
+    });
   }
 
   function printDesignedZine() {
@@ -933,6 +999,48 @@
       textarea.dataset.zineEditContent = 'true';
       textLabel.append(textSpan, textarea);
 
+      const imageGroup = document.createElement('div');
+      imageGroup.className = 'wrn-zine-editor-image-184';
+      const preview = document.createElement('img');
+      preview.alt = '';
+      const updatePreview = value => {
+        const safe = zineUrl(value);
+        preview.hidden = !safe;
+        if (safe) preview.src = safe;
+        else preview.removeAttribute('src');
+      };
+      updatePreview(article.image);
+
+      const imageControls = document.createElement('div');
+      const imageLabel = document.createElement('label');
+      const imageSpan = document.createElement('span');
+      imageSpan.textContent = copy.imageUrl;
+      const imageInput = document.createElement('input');
+      imageInput.type = 'url';
+      imageInput.inputMode = 'url';
+      imageInput.placeholder = 'https://…';
+      const existingImage = zineUrl(article.image);
+      imageInput.value = existingImage.startsWith('data:') ? '' : existingImage;
+      imageInput.dataset.zineImageValue = existingImage;
+      imageInput.dataset.zineEditImage = 'true';
+      imageLabel.append(imageSpan, imageInput);
+
+      const fileLabel = document.createElement('label');
+      fileLabel.className = 'wrn-zine-file-label-184';
+      const fileSpan = document.createElement('span');
+      fileSpan.textContent = copy.chooseImage;
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/png,image/jpeg,image/webp,image/gif';
+      fileLabel.append(fileSpan, fileInput);
+
+      const removeImage = document.createElement('button');
+      removeImage.type = 'button';
+      removeImage.className = 'danger';
+      removeImage.textContent = copy.removeImage;
+      imageControls.append(imageLabel, fileLabel, removeImage);
+      imageGroup.append(preview, imageControls);
+
       const saved = document.createElement('small');
       saved.className = 'wrn-zine-editor-saved-183';
       const saveOnChange = () => {
@@ -942,8 +1050,38 @@
       };
       titleInput.addEventListener('change', saveOnChange);
       textarea.addEventListener('change', saveOnChange);
+      imageInput.addEventListener('change', () => {
+        imageInput.value = zineUrl(imageInput.value);
+        imageInput.dataset.zineImageValue = imageInput.value;
+        updatePreview(imageInput.dataset.zineImageValue);
+        saveOnChange();
+      });
+      fileInput.addEventListener('change', async () => {
+        const file = fileInput.files?.[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        fileInput.disabled = true;
+        try {
+          const result = await compressedZineImage(file);
+          imageInput.value = '';
+          imageInput.dataset.zineImageValue = result;
+          updatePreview(imageInput.dataset.zineImageValue);
+          saveOnChange();
+        } catch {
+          window.alert(copy.imageFailed);
+        } finally {
+          fileInput.disabled = false;
+          fileInput.value = '';
+        }
+      });
+      removeImage.addEventListener('click', () => {
+        imageInput.value = '';
+        imageInput.dataset.zineImageValue = '';
+        fileInput.value = '';
+        updatePreview('');
+        saveOnChange();
+      });
 
-      row.append(heading, titleLabel, textLabel, saved);
+      row.append(heading, titleLabel, textLabel, imageGroup, saved);
       container.appendChild(row);
     });
 

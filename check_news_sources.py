@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 import json
+import os
 from pathlib import Path
 import re
 from typing import Any
@@ -28,10 +29,16 @@ from source_recovery import (
     write_json as write_recovery_json,
 )
 
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.exceptions import InsecureRequestWarning
-from urllib3.util.retry import Retry
+try:
+    import requests
+    from requests.adapters import HTTPAdapter
+    from urllib3.exceptions import InsecureRequestWarning
+    from urllib3.util.retry import Retry
+except ImportError:  # The bundled maintenance runtime exposes pip's vendored client.
+    from pip._vendor import requests
+    from pip._vendor.requests.adapters import HTTPAdapter
+    from pip._vendor.urllib3.exceptions import InsecureRequestWarning
+    from pip._vendor.urllib3.util.retry import Retry
 
 
 ROOT = Path(__file__).resolve().parent
@@ -801,7 +808,20 @@ def write_results(results: list[dict[str, Any]]) -> None:
 
 
 def main() -> int:
-    sources = load_sources()
+    configured_sources = load_sources()
+    requested_names = {
+        value.strip().casefold()
+        for value in os.getenv("WRN_NEWS_SOURCE_NAMES", "").split("|")
+        if value.strip()
+    }
+    sources = (
+        [
+            source for source in configured_sources
+            if source["name"].casefold() in requested_names
+        ]
+        if requested_names
+        else configured_sources
+    )
 
     if not sources:
         raise SystemExit(
@@ -845,6 +865,77 @@ def main() -> int:
                 f"[{result['status'].upper():7}] "
                 f"{result['name']}"
             )
+
+    if requested_names:
+        previous_results = as_catalog_sources(
+            read_json(REPORT_PATH, {})
+        )
+
+        def identities(item: dict[str, Any]) -> tuple[str, str]:
+            return (
+                canonical_url(str(item.get("url") or "")),
+                str(item.get("name") or "").strip().casefold(),
+            )
+
+        checked_by_url = {
+            identities(item)[0]: item
+            for item in results
+            if identities(item)[0]
+        }
+        checked_by_name = {
+            identities(item)[1]: item
+            for item in results
+            if identities(item)[1]
+        }
+        previous_by_url = {
+            identities(item)[0]: item
+            for item in previous_results
+            if identities(item)[0]
+        }
+        previous_by_name = {
+            identities(item)[1]: item
+            for item in previous_results
+            if identities(item)[1]
+        }
+
+        merged_results: list[dict[str, Any]] = []
+        for source in configured_sources:
+            url_key, name_key = identities(source)
+            existing = (
+                checked_by_url.get(url_key)
+                or checked_by_name.get(name_key)
+                or previous_by_url.get(url_key)
+                or previous_by_name.get(name_key)
+            )
+            if existing:
+                item = {**existing}
+                item["name"] = source["name"]
+                item["url"] = source.get("url", "")
+                item["categories"] = source.get("categories", [])
+                item["languages"] = source.get("languages", [])
+                for field in (
+                    "originRegion",
+                    "originCountry",
+                    "originCountryCode",
+                ):
+                    item[field] = source.get(field, item.get(field, ""))
+            else:
+                item = {
+                    "name": source["name"],
+                    "url": source.get("url", ""),
+                    "status": "unknown",
+                    "ok": False,
+                    "lastChecked": "",
+                    "warning": "Prüfung wird beim nächsten vollständigen Lauf ergänzt.",
+                    "categories": source.get("categories", []),
+                    "languages": source.get("languages", []),
+                    "originRegion": source.get("originRegion", ""),
+                    "originCountry": source.get("originCountry", ""),
+                    "originCountryCode": source.get("originCountryCode", ""),
+                }
+            merged_results.append(item)
+
+        results = merged_results
 
     previous_history = read_recovery_json(HISTORY_PATH, {})
     results, history_document, recovery_report = apply_history(

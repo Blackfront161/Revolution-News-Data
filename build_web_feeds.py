@@ -28,6 +28,20 @@ NEWS_LIMIT = max(50, int(os.environ.get("WRN_NEWS_FEED_LIMIT", "500")))
 EVENT_LIMIT = max(50, int(os.environ.get("WRN_EVENT_FEED_LIMIT", "1000")))
 NEWS_CONTENT_LIMIT = max(1000, int(os.environ.get("WRN_NEWS_CONTENT_LIMIT", "4500")))
 EVENT_CONTENT_LIMIT = max(800, int(os.environ.get("WRN_EVENT_CONTENT_LIMIT", "2800")))
+NEWS_CATEGORY_MINIMUM = max(
+    4,
+    int(os.environ.get("WRN_NEWS_CATEGORY_MINIMUM", "12")),
+)
+NEWS_CATEGORIES = (
+    "Global", "Europe", "Africa", "North America", "Latin America",
+    "Asia", "Australia & NZ", "Labor Struggles", "Antifascism",
+    "Antisexism", "Queer-Feminism", "Antiracism", "No Borders",
+    "Anticapitalism", "Theory & Strategy", "Anticolonialism",
+    "Anti-Imperialism", "Squatting & Housing", "Demonstrations",
+    "Anti-Rep & Prisons", "Cyberactivism", "No War",
+    "Animal Liberation", "Eco-Anarchism", "Indigenous Struggles",
+    "Radical Health & Disability", "Libraries",
+)
 CONFIG_UPDATE_ENABLED = os.environ.get("WRN_UPDATE_CONFIG", "").strip().lower() in {
     "1", "true", "yes", "on"
 }
@@ -136,6 +150,51 @@ def prepare(
     return output
 
 
+def article_categories(item: dict[str, Any]) -> set[str]:
+    categories = item.get("categories")
+    values = categories if isinstance(categories, list) else [categories]
+    values = [*values, item.get("kontinent")]
+    return {
+        clean_text(value)
+        for value in values
+        if clean_text(value)
+    }
+
+
+def balanced_news_rows(
+    rows: list[dict[str, Any]],
+    *,
+    limit: int,
+) -> list[dict[str, Any]]:
+    """Keep the quick feed recent while guaranteeing useful category coverage."""
+    ordered = sorted(rows, key=date_value, reverse=True)
+    selected: list[dict[str, Any]] = []
+    selected_keys: set[str] = set()
+
+    def add(item: dict[str, Any]) -> None:
+        key = stable_key(item)
+        if key and key in selected_keys:
+            return
+        if key:
+            selected_keys.add(key)
+        selected.append(item)
+
+    for category in NEWS_CATEGORIES:
+        matches = [
+            item for item in ordered
+            if category in article_categories(item)
+        ][:NEWS_CATEGORY_MINIMUM]
+        for item in matches:
+            add(item)
+
+    for item in ordered:
+        if len(selected) >= limit:
+            break
+        add(item)
+
+    return selected[:limit]
+
+
 def prepare_events(
     rows: list[dict[str, Any]],
     *,
@@ -217,7 +276,11 @@ def activate_config() -> bool:
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
-    news_feed = prepare(news, limit=NEWS_LIMIT, content_limit=NEWS_CONTENT_LIMIT)
+    news_feed = prepare(
+        balanced_news_rows(news, limit=NEWS_LIMIT),
+        limit=NEWS_LIMIT,
+        content_limit=NEWS_CONTENT_LIMIT,
+    )
     event_feed = prepare_events(
         events,
         limit=EVENT_LIMIT,
@@ -237,12 +300,13 @@ def main() -> int:
     status = {
         "ok": True,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.7.12",
+        "version": "1.8.4",
         "news": {
             "archiveCount": len(news),
             "feedCount": len(news_feed),
             "bytes": news_bytes,
             "contentLimit": NEWS_CONTENT_LIMIT,
+            "categoryMinimum": NEWS_CATEGORY_MINIMUM,
         },
         "events": {
             "archiveCount": len(events),

@@ -5,31 +5,23 @@
     if (window.WRNAudioReliability) return;
 
     const getLabels = () => {
-        const de = String(
+        const language = String(
             document.getElementById('ui-language')?.value
             || document.documentElement.lang
-            || ''
-        ).toLowerCase().startsWith('de');
-
-        return de
-            ? {
-                open: 'Audio prüfen',
-                title: 'Podcast- und Radio-Test',
-                close: 'Schließen',
-                reload: 'Neu laden',
-                empty: 'Noch kein Prüfbericht. Starte zuerst den Audio-Workflow.',
-                podcasts: 'Original-Podcasts',
-                radio: 'Live-Radio'
-            }
-            : {
-                open: 'Check audio',
-                title: 'Podcast and radio test',
-                close: 'Close',
-                reload: 'Reload',
-                empty: 'No report yet. Run the audio workflow first.',
-                podcasts: 'Original podcasts',
-                radio: 'Live radio'
-            };
+            || 'en'
+        ).toLowerCase().split(/[-_]/)[0];
+        const labels = {
+            en: { open:'Check audio', title:'Podcast and radio test', close:'Close', reload:'Reload', empty:'No report yet. Run the audio workflow first.', podcasts:'Original podcasts', radio:'Live radio', playable:'Playable', limited:'Limited', broken:'Broken', unknown:'Not checked' },
+            de: { open:'Audio prüfen', title:'Podcast- und Radio-Test', close:'Schließen', reload:'Neu laden', empty:'Noch kein Prüfbericht. Starte zuerst den Audio-Workflow.', podcasts:'Original-Podcasts', radio:'Live-Radio', playable:'Abspielbar', limited:'Eingeschränkt', broken:'Defekt', unknown:'Nicht geprüft' },
+            es: { open:'Comprobar audio', title:'Prueba de pódcasts y radio', close:'Cerrar', reload:'Recargar', empty:'Todavía no hay informe.', podcasts:'Pódcasts originales', radio:'Radio en directo', playable:'Reproducible', limited:'Limitado', broken:'Defectuoso', unknown:'No comprobado' },
+            fr: { open:'Tester l’audio', title:'Test des podcasts et radios', close:'Fermer', reload:'Recharger', empty:'Aucun rapport pour le moment.', podcasts:'Podcasts originaux', radio:'Radio en direct', playable:'Lisible', limited:'Limité', broken:'Défectueux', unknown:'Non vérifié' },
+            it: { open:'Verifica audio', title:'Test podcast e radio', close:'Chiudi', reload:'Ricarica', empty:'Nessun rapporto disponibile.', podcasts:'Podcast originali', radio:'Radio dal vivo', playable:'Riproducibile', limited:'Limitato', broken:'Non funzionante', unknown:'Non verificato' },
+            pt: { open:'Verificar áudio', title:'Teste de podcasts e rádio', close:'Fechar', reload:'Recarregar', empty:'Ainda não existe relatório.', podcasts:'Podcasts originais', radio:'Rádio em direto', playable:'Reproduzível', limited:'Limitado', broken:'Com defeito', unknown:'Não verificado' },
+            ru: { open:'Проверить аудио', title:'Проверка подкастов и радио', close:'Закрыть', reload:'Обновить', empty:'Отчёт пока отсутствует.', podcasts:'Оригинальные подкасты', radio:'Радио', playable:'Воспроизводится', limited:'Ограничено', broken:'Не работает', unknown:'Не проверено' },
+            el: { open:'Έλεγχος ήχου', title:'Έλεγχος podcast και ραδιοφώνου', close:'Κλείσιμο', reload:'Επαναφόρτωση', empty:'Δεν υπάρχει ακόμη αναφορά.', podcasts:'Πρωτότυπα podcast', radio:'Ζωντανό ραδιόφωνο', playable:'Αναπαράγεται', limited:'Περιορισμένο', broken:'Ελαττωματικό', unknown:'Δεν ελέγχθηκε' },
+            tr: { open:'Sesi denetle', title:'Podcast ve radyo testi', close:'Kapat', reload:'Yenile', empty:'Henüz denetim raporu yok.', podcasts:'Orijinal podcastler', radio:'Canlı radyo', playable:'Oynatılabilir', limited:'Sınırlı', broken:'Bozuk', unknown:'Kontrol edilmedi' }
+        };
+        return labels[language] || labels.en;
     };
 
     let data = null;
@@ -78,10 +70,11 @@
 
     const cards = section => {
         const summary = section?.summary || {};
+        const labels = getLabels();
         return ['playable', 'limited', 'broken', 'unknown']
             .map(key => `
                 <div data-state="${key}">
-                    <span>${key}</span>
+                    <span>${labels[key]}</span>
                     <strong>${Number(summary[key] || 0)}</strong>
                 </div>
             `).join('');
@@ -150,7 +143,8 @@
 
     const install = () => {
         if (document.getElementById('wrn-audio-health-open')) return true;
-        const target = document.querySelector('.wrn-more-grid');
+        const target = document.querySelector('.wrn-more-admin-tools-184')
+            || document.querySelector('.wrn-more-grid');
         if (!target) return false;
 
         const button = document.createElement('button');

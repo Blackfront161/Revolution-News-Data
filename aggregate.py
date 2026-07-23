@@ -4,7 +4,7 @@ import cloudscraper
 from bs4 import BeautifulSoup
 import json
 from datetime import datetime, timezone
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 import os
 import re
 import time
@@ -134,18 +134,22 @@ quellen = {
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
-        {"name": "Amandla! Magazine", "url": "https://aidc.org.za/category/amandla-magazine/feed/"},
         {"name": "Abahlali baseMjondolo (South Africa)", "url": "https://abahlali.org/feed/"},
         {"name": "Black Agenda Report", "url": "https://www.blackagendareport.com/feed"}
     ],
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
-        {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "SubMedia", "url": "https://sub.media/feed/"},
         {"name": "Black Rose / Rosa Negra", "url": "https://blackrosefed.org/feed/"},
         {"name": "C4SS", "url": "https://c4ss.org/feed"},
-        {"name": "CrimethInc. (USA)", "url": "https://crimethinc.com/category/north-america/feed"}
+        {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"},
+        {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
+        {"name": "Indigenous Action", "url": "https://www.indigenousaction.org/feed/"},
+        {"name": "The Appeal", "url": "https://theappeal.org/feed/"},
+        {"name": "Truthout", "url": "https://truthout.org/feed/"},
+        {"name": "Waging Nonviolence", "url": "https://wagingnonviolence.org/feed/"},
+        {"name": "Slingshot Collective", "url": "https://slingshotcollective.org/feed/"}
     ],
     "Latin America": [
         {"name": "Enlace Zapatista (EZLN)", "url": "https://enlacezapatista.ezln.org.mx/feed/"},
@@ -173,7 +177,6 @@ quellen = {
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
         {"name": "Mekong Review", "url": "https://mekongreview.com/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"},
         {"name": "Thozhilalar Koodam (India)", "url": "https://tnlabor.in/feed/"},
         {"name": "Radical Socialist (India)", "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss"},
         {"name": "Palang Hitam (Indonesia)", "url": "https://palanghitam.noblogs.org/feed/"},
@@ -205,7 +208,7 @@ quellen = {
         {"name": "Thozhilalar Koodam", "url": "https://tnlabor.in/feed/"}
     ],
     "Antifascism": [
-        {"name": "Rose City Antifa", "url": "https://rosecityantifa.org/feed.xml"},
+        {"name": "Unicorn Riot", "url": "https://unicornriot.ninja/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Montreal Antifasciste", "url": "https://montreal-antifasciste.info/fr/feed/"},
         {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
@@ -227,7 +230,17 @@ quellen = {
         {"name": "Black Rose (Feminism)", "url": "https://blackrosefed.org/category/anarcha-feminism/feed/"},
         {"name": "GenderIT (Technofeminism)", "url": "https://www.genderit.org/rss.xml"},
         {"name": "Transgender Europe (TGEU)", "url": "https://tgeu.org/feed/"},
-        {"name": "Autostraddle", "url": "https://www.autostraddle.com/feed/"},
+        {
+            "name": "Autostraddle News",
+            "url": "https://www.autostraddle.com/category/news/feed/",
+            "homepage": "https://www.autostraddle.com/category/news/",
+            "categories": ["Queer-Feminism", "North America"],
+            "language": "en",
+            "originCountry": "United States",
+            "originCountryCode": "US",
+            "originRegion": "North America",
+            "imageHosts": ["autostraddle.com", "www.autostraddle.com"]
+        },
         {"name": "Make Rojava Green Again", "url": "https://makerojavagreenagain.org/feed/"},
         {"name": "Pinko Magazine", "url": "https://pinko.online/feed/"},
         {"name": "Feminist Anti-War Resistance", "url": "https://femagainstwar.org/feed/"}
@@ -269,7 +282,7 @@ quellen = {
     "Anti-Imperialism": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
-        {"name": "Worker's Spatula", "url": "https://workersspatula.wordpress.com/feed/"}
+        {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
     ],
     "Squatting & Housing": [
         {"name": "Squat!net", "url": "https://de.squat.net/feed/"},
@@ -660,6 +673,15 @@ except Exception as e:
     print("Starte mit leerem Archiv (Erster Durchlauf).")
 
 radar_count = 0 
+TARGET_SOURCE_NAMES = {
+    name.strip().casefold()
+    for name in os.environ.get("WRN_NEWS_SOURCE_NAMES", "").split(",")
+    if name.strip()
+}
+if "autostraddle news" in TARGET_SOURCE_NAMES:
+    for archive_key, archive_item in list(archiv_dict.items()):
+        if safe_lower(archive_item.get("quelleName")) == "autostraddle":
+            archiv_dict.pop(archive_key, None)
 
 
 def radar_terms(value):
@@ -874,6 +896,8 @@ def fetch_radar_events():
 
 
 try:
+    if TARGET_SOURCE_NAMES:
+        raise LookupError("targeted-news-refresh")
     radar_events, radar_metadata = fetch_radar_events()
     # Replace stale Radar/API rows on every successful run. Non-Radar event
     # feeds remain intact and are refreshed by the normal loop below.
@@ -899,11 +923,28 @@ try:
         f"Schweiz vollständig {radar_metadata['switzerlandReportedCount']})."
     )
 except Exception as radar_error:
-    print(
-        "\n--- Radar.squat API ---\n"
-        "  [FEHLER] Strukturierter Abruf fehlgeschlagen; "
-        f"bestehende Radar-Termine bleiben erhalten: {radar_error}"
-    )
+    if TARGET_SOURCE_NAMES:
+        radar_count = sum(
+            1
+            for archive_item in archiv_dict.values()
+            if (
+                archive_item.get("sourceType") == "radar-api"
+                or safe_lower(archive_item.get("quelleName")).startswith(
+                    "radar squat.net"
+                )
+            )
+        )
+        print(
+            "\n--- Radar.squat API ---\n"
+            "  [ÜBERSPRUNGEN] Gezielte Nachrichten-Aktualisierung; "
+            f"{radar_count} vorhandene Termine bleiben erhalten."
+        )
+    else:
+        print(
+            "\n--- Radar.squat API ---\n"
+            "  [FEHLER] Strukturierter Abruf fehlgeschlagen; "
+            f"bestehende Radar-Termine bleiben erhalten: {radar_error}"
+        )
 
 # HILFSFUNKTION: CHECKPOINTS SPEICHERN (Sicherheit gegen Abstürze)
 def save_checkpoint():
@@ -977,6 +1018,11 @@ for kontinent, feeds in quellen.items():
                 "übersprungen."
             )
             continue
+        if (
+            TARGET_SOURCE_NAMES
+            and safe_lower(feed.get("name")) not in TARGET_SOURCE_NAMES
+        ):
+            continue
 
         feed_name = safe_text(
             feed.get("name"),
@@ -1028,6 +1074,36 @@ for kontinent, feeds in quellen.items():
 
                 # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
                 if link in archiv_dict:
+                    existing_article = archiv_dict[link]
+                    configured_categories = feed.get("categories", [kontinent])
+                    if not isinstance(configured_categories, list):
+                        configured_categories = [configured_categories]
+                    existing_categories = existing_article.get("categories", [])
+                    if not isinstance(existing_categories, list):
+                        existing_categories = [existing_categories]
+                    existing_article["categories"] = list(dict.fromkeys(
+                        [
+                            safe_text(category)
+                            for category in (
+                                existing_categories
+                                + configured_categories
+                            )
+                            if safe_text(category)
+                        ]
+                    ))
+                    for existing_key, configured_key in (
+                        ("sourceHomepage", "homepage"),
+                        ("originCountry", "originCountry"),
+                        ("originCountryCode", "originCountryCode"),
+                        ("originRegion", "originRegion"),
+                    ):
+                        configured_value = safe_text(
+                            feed.get(configured_key)
+                        )
+                        if configured_value:
+                            existing_article[existing_key] = (
+                                configured_value
+                            )
                     if is_radar: radar_count += 1
                     continue
                 
@@ -1128,6 +1204,16 @@ for kontinent, feeds in quellen.items():
 
                 if not image_url or not image_url.startswith('http'):
                     image_url = ""
+
+                allowed_image_hosts = {
+                    safe_lower(host)
+                    for host in feed.get("imageHosts", [])
+                    if safe_text(host)
+                }
+                if image_url and allowed_image_hosts:
+                    image_host = safe_lower(urlparse(image_url).hostname)
+                    if image_host not in allowed_image_hosts:
+                        image_url = ""
 
                 # =========================================================
                 # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN

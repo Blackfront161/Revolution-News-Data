@@ -9,6 +9,7 @@
     de: {
       briefing: 'Briefing', stories: 'Entwicklungen', video: 'Video', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
+      about: 'Über die App',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
       contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'App zurücksetzen',
@@ -18,6 +19,7 @@
     en: {
       briefing: 'Briefing', stories: 'Developments', video: 'Video', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
+      about: 'About',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
       contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Reset app',
@@ -91,7 +93,8 @@
         ['Eco-Anarchism','Ökologie & Klima'],
         ['Indigenous Struggles','Indigene Kämpfe'],
         ['Radical Health & Disability','Radical Health'],
-        ['Libraries','Bibliotheken']
+        ['Libraries','Bibliotheken'],
+        ['WRN Corruption','Korruption']
       ],
       activate: subKey => {
         prepareArticleView();
@@ -144,6 +147,13 @@
         closeAuxiliaryPanels();
         if (typeof openZineManager === 'function') openZineManager();
       }
+    },
+    {
+      key: 'about',
+      activate: () => {
+        closeAuxiliaryPanels();
+        window.WRNAbout184?.show?.();
+      }
     }
   ];
 
@@ -185,6 +195,13 @@
 
   function subTabLabel(tab, key, fallback) {
     const language = languageKey();
+    if (key === 'WRN Corruption') {
+      return ({
+        de: 'Korruption', en: 'Corruption', es: 'Corrupción',
+        fr: 'Corruption', it: 'Corruzione', pt: 'Corrupção',
+        ru: 'Коррупция', el: 'Διαφθορά', tr: 'Yolsuzluk'
+      })[language] || 'Corruption';
+    }
     if (tab?.key === 'topics') return window.WRNI18n?.topicLabel?.(key, language) || fallback || key;
     if (tab?.key === 'regions') return window.WRNI18n?.regionLabel?.(key, language) || fallback || key;
     if (tab?.key === 'audio' || tab?.key === 'saved') return texts()[fallback] || fallback || key;
@@ -196,6 +213,7 @@
     if (panel) panel.hidden = true;
     window.WRNAudioTab181?.close?.();
     window.WRNVideoHub?.hide?.();
+    window.WRNAbout184?.hide?.();
   }
 
   function prepareArticleView() {
@@ -447,7 +465,9 @@
       )
     );
 
-    panel.append(head, grid, actions);
+    const adminTools = document.createElement('div');
+    adminTools.className = 'wrn-more-admin-tools-184';
+    panel.append(head, grid, actions, adminTools);
     document.body.appendChild(panel);
 
     const sourceVerification = document.getElementById(
@@ -455,7 +475,7 @@
     );
     if (sourceVerification) {
       sourceVerification.hidden = false;
-      grid.appendChild(sourceVerification);
+      adminTools.appendChild(sourceVerification);
     }
 
     return panel;
@@ -478,6 +498,7 @@
     const menuButton = $('.wrn-header-menu');
     if (panel) panel.hidden = true;
     if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('wrn-more-open');
   }
 
   function toggleMorePanel() {
@@ -488,6 +509,7 @@
     if (search) search.hidden = true;
     panel.hidden = !panel.hidden;
     if (!panel.hidden) syncMoreControls();
+    document.body.classList.toggle('wrn-more-open', !panel.hidden);
     if (menuButton) menuButton.setAttribute('aria-expanded', String(!panel.hidden));
   }
 
@@ -549,7 +571,10 @@
     topTabs.setAttribute('aria-label', 'Hauptnavigation');
 
     TABS.forEach(tab => {
-      const button = makeButton('wrn-top-tab', texts()[tab.key] || tab.key);
+      const label = tab.key === 'about'
+        ? window.WRNAbout184?.label?.(languageKey()) || texts()[tab.key] || 'About'
+        : texts()[tab.key] || tab.key;
+      const button = makeButton('wrn-top-tab', label);
       button.dataset.key = tab.key;
       button.addEventListener('click', () => activateTab(tab.key));
       topTabs.appendChild(button);
@@ -649,7 +674,9 @@
     const copy = texts();
 
     $all('.wrn-top-tab').forEach(button => {
-      button.textContent = copy[button.dataset.key] || button.dataset.key;
+      button.textContent = button.dataset.key === 'about'
+        ? window.WRNAbout184?.label?.(languageKey()) || copy.about || 'About'
+        : copy[button.dataset.key] || button.dataset.key;
     });
 
     const menuButton = $('.wrn-header-menu');
@@ -744,8 +771,16 @@
     const buttonPlaceholder = document.createElement('div');
     buttonPlaceholder.className = 'wrn-button-row-placeholder';
     const actionHost = $('.wrn-detail-actions', detail);
+    const summaryButton = buttonRow?.querySelector('.wrn-summary-action') || null;
+    const summaryPlaceholder = document.createComment('wrn-summary-action');
+    const meta = card.querySelector('.meta');
 
     if (buttonRow && actionHost) {
+      if (summaryButton && meta) {
+        buttonRow.insertBefore(summaryPlaceholder, summaryButton);
+        summaryButton.classList.add('wrn-summary-meta-action-184');
+        meta.appendChild(summaryButton);
+      }
       buttonRow.parentNode.insertBefore(buttonPlaceholder, buttonRow);
       actionHost.appendChild(buttonRow);
 
@@ -772,6 +807,8 @@
       savedScrollY,
       buttonRow,
       buttonPlaceholder,
+      summaryButton,
+      summaryPlaceholder,
       historyPushed: false
     };
 
@@ -795,6 +832,8 @@
       savedScrollY,
       buttonRow,
       buttonPlaceholder,
+      summaryButton,
+      summaryPlaceholder,
       externalRestore
     } = detailState;
     const detail = $('.wrn-article-detail');
@@ -805,6 +844,10 @@
 
     if (buttonPlaceholder?.parentNode && buttonRow) {
       buttonPlaceholder.parentNode.replaceChild(buttonRow, buttonPlaceholder);
+    }
+    if (summaryButton && summaryPlaceholder?.parentNode) {
+      summaryButton.classList.remove('wrn-summary-meta-action-184');
+      summaryPlaceholder.parentNode.replaceChild(summaryButton, summaryPlaceholder);
     }
 
     card?.classList.remove('wrn-detail-card');
@@ -1161,7 +1204,10 @@
 
     window.changeLanguage = function(...args) {
       const result = original.apply(this, args);
-      window.setTimeout(updateLanguage, 0);
+      window.setTimeout(() => {
+        updateLanguage();
+        window.dispatchEvent(new CustomEvent('wrn-language-change'));
+      }, 0);
       return result;
     };
   }

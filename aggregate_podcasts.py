@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import time
 from datetime import datetime, timezone, timedelta
@@ -255,8 +256,44 @@ def parse_iso(value: str) -> datetime | None:
 
 def main() -> int:
     sources = json.loads(SOURCES_FILE.read_text(encoding="utf-8"))
+    catalog_source_ids = {
+        source.get("id")
+        for source in sources
+        if source.get("id")
+    }
+    requested_ids = {
+        value.strip()
+        for value in os.environ.get("WRN_PODCAST_SOURCE_IDS", "").split(",")
+        if value.strip()
+    }
+    if requested_ids:
+        sources = [
+            source for source in sources
+            if source.get("id") in requested_ids
+        ]
+        missing = requested_ids - {
+            source.get("id") for source in sources
+        }
+        if missing:
+            raise SystemExit(
+                "Unbekannte Podcast-Quellen: "
+                + ", ".join(sorted(missing))
+            )
     all_items: list[dict] = []
     health: dict[str, dict] = {}
+    if requested_ids and HEALTH_FILE.exists():
+        try:
+            existing_health = json.loads(
+                HEALTH_FILE.read_text(encoding="utf-8")
+            )
+            if isinstance(existing_health, dict):
+                health.update({
+                    key: value
+                    for key, value in existing_health.items()
+                    if key in catalog_source_ids
+                })
+        except Exception:
+            pass
 
     for source in sources:
         source_id = source.get("id", source.get("name", "unknown"))
@@ -337,6 +374,24 @@ def main() -> int:
                 ]
         except Exception as exc:
             print(f"[PODCAST] bisherige Datei konnte nicht gelesen werden: {exc}")
+
+    if requested_ids and previous_items:
+        retained = [
+            item for item in previous_items
+            if item.get("sourceId") not in requested_ids
+        ]
+        targeted = {
+            item.get("audioUrl"): item
+            for item in items
+            if item.get("audioUrl")
+        }
+        for item in retained:
+            targeted.setdefault(item.get("audioUrl"), item)
+        items = sorted(
+            targeted.values(),
+            key=lambda item: item.get("published") or "",
+            reverse=True,
+        )
 
     if items:
         output_items = items[:MAX_TOTAL]
