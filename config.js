@@ -109,7 +109,7 @@
     }
 
     window.WRNOriginSafety = Object.freeze({
-        version: '1.8.3',
+        version: '1.8.4',
         scopePath,
         isOwnedCacheName,
         isOwnedStorageKey,
@@ -153,9 +153,9 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.3',
-    build: '2026.07.22-wrn-1.8.3-release-candidate',
-    releasedAt: '2026-07-21T21:00:00+02:00',
+    version: '1.8.4',
+    build: '2026.07.23-wrn-1.8.4-prerelease-rc10',
+    releasedAt: '2026-07-23T21:30:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
     recoveryStage: 15,
@@ -514,7 +514,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '183-release-candidate';
+    const VERSION = '184-prerelease-rc10';
 
     const addStyle = (file, marker) => {
         if (
@@ -635,6 +635,9 @@ window.WRN_CONFIG = Object.freeze({
             ['briefing-2.css', 'briefing2-recovery-13'],
             ['stories-timeline.css', 'stories-recovery-13'],
             ['video-hub.css', 'video-hub-recovery-14'],
+            ['lexicon-tab.css', 'lexicon-tab-recovery-184'],
+            ['about-tab.css', 'about-tab-recovery-184'],
+            ['article-summary.css', 'article-summary-recovery-184'],
             ['zine-designer.css', 'zine-designer-recovery-10']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
@@ -648,6 +651,10 @@ window.WRN_CONFIG = Object.freeze({
             ['briefing-2.js', 'briefing2-recovery-13'],
             ['stories-timeline.js', 'stories-recovery-13'],
             ['video-hub.js', 'video-hub-recovery-14'],
+            ['lexicon-tab.js', 'lexicon-tab-recovery-184'],
+            ['about-tab.js', 'about-tab-recovery-184'],
+            ['article-summary-core.js', 'article-summary-core-recovery-184'],
+            ['article-summary.js', 'article-summary-recovery-184'],
             ['typography.js', 'typography-recovery-10'],
             ['wrn-header.js', 'future-header-recovery-10'],
             ['release-1.5-nav.js', 'navigation-recovery-10'],

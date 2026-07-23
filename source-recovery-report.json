@@ -1,0 +1,488 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-23T11:43:46.252685+00:00",
+  "policy": {
+    "automaticDeletion": false,
+    "permanentFailureThreshold": 4,
+    "permanentFailureMinimumHours": 12,
+    "crossDomainReplacementRequiresReview": true
+  },
+  "summary": {
+    "available": 238,
+    "recovered": 0,
+    "temporarily_restricted": 40,
+    "website_reachable_feed_broken": 14,
+    "feed_broken_unconfirmed": 29,
+    "permanently_broken": 0,
+    "not_checked": 13
+  },
+  "replacementCandidates": [
+    {
+      "name": "Asian Labour Review",
+      "configuredUrl": "https://labourreview.org/feed/",
+      "replacementUrl": "https://labourreview.org/feed/",
+      "checkedAt": "2026-07-23T11:43:42.256378+00:00"
+    },
+    {
+      "name": "Asian Labour Review",
+      "configuredUrl": "",
+      "replacementUrl": "https://labourreview.org/feed/",
+      "checkedAt": "2026-07-23T11:43:42.256378+00:00"
+    },
+    {
+      "name": "CrimethInc.",
+      "configuredUrl": "",
+      "replacementUrl": "https://crimethinc.com/feed",
+      "checkedAt": "2026-07-23T11:43:42.256925+00:00"
+    },
+    {
+      "name": "CrimethInc. (Global)",
+      "configuredUrl": "https://crimethinc.com/feed",
+      "replacementUrl": "https://crimethinc.com/feed",
+      "checkedAt": "2026-07-23T11:43:42.256925+00:00"
+    },
+    {
+      "name": "Indigenous Action",
+      "configuredUrl": "https://www.indigenousaction.org/feed/",
+      "replacementUrl": "https://www.indigenousaction.org/feed/",
+      "checkedAt": "2026-07-23T11:43:42.259767+00:00"
+    },
+    {
+      "name": "Indigenous Action",
+      "configuredUrl": "",
+      "replacementUrl": "https://www.indigenousaction.org/feed/",
+      "checkedAt": "2026-07-23T11:43:42.259767+00:00"
+    },
+    {
+      "name": "Slingshot Collective",
+      "configuredUrl": "https://slingshotcollective.org/feed/",
+      "replacementUrl": "https://slingshotcollective.org/feed/",
+      "checkedAt": "2026-07-23T11:43:43.110355+00:00"
+    },
+    {
+      "name": "Slingshot Collective",
+      "configuredUrl": "",
+      "replacementUrl": "https://slingshotcollective.org/feed/",
+      "checkedAt": "2026-07-23T11:43:43.110355+00:00"
+    },
+    {
+      "name": "Unicorn Riot",
+      "configuredUrl": "https://unicornriot.ninja/feed/",
+      "replacementUrl": "https://unicornriot.ninja/feed/",
+      "checkedAt": "2026-07-23T11:43:43.355001+00:00"
+    },
+    {
+      "name": "Unicorn Riot",
+      "configuredUrl": "",
+      "replacementUrl": "https://unicornriot.ninja/feed/",
+      "checkedAt": "2026-07-23T11:43:43.355001+00:00"
+    },
+    {
+      "name": "Unicorn Riot",
+      "configuredUrl": "",
+      "replacementUrl": "https://unicornriot.ninja/feed/",
+      "checkedAt": "2026-07-23T11:43:43.355001+00:00"
+    },
+    {
+      "name": "Waging Nonviolence",
+      "configuredUrl": "https://wagingnonviolence.org/feed/",
+      "replacementUrl": "https://wagingnonviolence.org/feed/",
+      "checkedAt": "2026-07-23T11:43:43.400321+00:00"
+    },
+    {
+      "name": "Waging Nonviolence",
+      "configuredUrl": "",
+      "replacementUrl": "https://wagingnonviolence.org/feed/",
+      "checkedAt": "2026-07-23T11:43:43.400321+00:00"
+    }
+  ],
+  "manualReview": [
+    {
+      "name": "Anarchist Library (RU)",
+      "url": "https://ru.theanarchistlibrary.org/feed",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://ru.anarchistlibraries.net/special/index"
+    },
+    {
+      "name": "Anarchist Library (SV)",
+      "url": "https://sv.theanarchistlibrary.org/feed",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.anarkistiskabiblioteket.se/special/index"
+    },
+    {
+      "name": "Antifa.cz",
+      "url": "https://www.antifa.cz/rss.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.antifa.cz/rss.xml"
+    },
+    {
+      "name": "Autistici/Inventati",
+      "url": "https://www.autistici.org/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.autistici.org/feed/"
+    },
+    {
+      "name": "Barrikade (CH)",
+      "url": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves"
+    },
+    {
+      "name": "Biblioteca Anarquista (ES)",
+      "url": "https://es.theanarchistlibrary.org/feed",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://es.anarchistlibraries.net/special/index"
+    },
+    {
+      "name": "Bibliothèque Anarchiste (FR)",
+      "url": "https://fr.theanarchistlibrary.org/feed",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://fr.anarchistlibraries.net/special/index"
+    },
+    {
+      "name": "Black Agenda Report",
+      "url": "https://www.blackagendareport.com/feed",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.blackagendareport.com/feed"
+    },
+    {
+      "name": "Black Rose (Anti-Colonial)",
+      "url": "https://blackrosefed.org/category/anti-colonialism/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://blackrosefed.org/category/anti-colonialism/feed/"
+    },
+    {
+      "name": "Black Rose (Anti-Racism)",
+      "url": "https://blackrosefed.org/category/anti-racism/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://blackrosefed.org/category/anti-racism/feed/"
+    },
+    {
+      "name": "Black Rose (Feminism)",
+      "url": "https://blackrosefed.org/category/anarcha-feminism/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://blackrosefed.org/category/anarcha-feminism/feed/"
+    },
+    {
+      "name": "Chuang (CN)",
+      "url": "https://chuangcn.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://chuangcn.org/feed/"
+    },
+    {
+      "name": "Colorlines",
+      "url": "https://colorlines.com/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://colorlines.com/feed/"
+    },
+    {
+      "name": "Cultural Survival",
+      "url": "https://www.culturalsurvival.org/news/rss.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.culturalsurvival.org/news/rss.xml"
+    },
+    {
+      "name": "Desinformémonos",
+      "url": "https://desinformemonos.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://desinformemonos.org/feed/"
+    },
+    {
+      "name": "Direct Action Everywhere (DxE)",
+      "url": "https://www.directactioneverywhere.com/rss.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.directactioneverywhere.com/rss.xml"
+    },
+    {
+      "name": "Enough is Enough",
+      "url": "https://enoughisenough14.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://enoughisenough14.org/feed/"
+    },
+    {
+      "name": "Fajfa (Antifa)",
+      "url": "https://fajfa.noblogs.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=fajfa"
+    },
+    {
+      "name": "Fauda",
+      "url": "https://fauda.noblogs.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=fauda"
+    },
+    {
+      "name": "Housing Action",
+      "url": "https://housingaction.noblogs.org/feed/",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://noblogs.org/wp-signup.php?new=housingaction"
+    },
+    {
+      "name": "Ill Will",
+      "url": "https://illwill.com/feed",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://illwill.com/feed"
+    },
+    {
+      "name": "Jineolojî Academy",
+      "url": "https://jineoloji.org/en/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://pin-up-casino-tr.org/en/feed/"
+    },
+    {
+      "name": "Kontrapolis (Berlin)",
+      "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://morss.it/https://kontrapolis.info/category/termine/feed/"
+    },
+    {
+      "name": "Libcom (Workplace)",
+      "url": "https://libcom.org/workplace/feed",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://libcom.org/workplace/feed"
+    },
+    {
+      "name": "Libcom Library",
+      "url": "https://libcom.org/library/feed",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://libcom.org/library/feed"
+    },
+    {
+      "name": "Megafon Bern",
+      "url": "https://megafon.ch/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://megafon.ch/feed/"
+    },
+    {
+      "name": "Mutiny Blog",
+      "url": "https://mu-tiny.blogspot.com/feeds/posts/default",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://mu-tiny.blogspot.com/feeds/posts/default"
+    },
+    {
+      "name": "Nadir.org",
+      "url": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml"
+    },
+    {
+      "name": "Native News Online",
+      "url": "https://nativenewsonline.net/?format=feed&type=rss",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://nativenewsonline.net/?format=feed&type=rss"
+    },
+    {
+      "name": "Organise Magazine",
+      "url": "",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://organisemagazine.org.uk/wp-json/oembed/1.0/embed?url=https%3A%2F%2Forganisemagazine.org.uk%2F&format=xml"
+    },
+    {
+      "name": "Paris-Luttes (Agenda FR)",
+      "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"
+    },
+    {
+      "name": "Pramen (BY)",
+      "url": "https://pramen.io/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://pramen.io/feed/"
+    },
+    {
+      "name": "Pueblos en Camino",
+      "url": "https://pueblosencamino.org/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://pueblosencamino.org/feed/"
+    },
+    {
+      "name": "Radical Socialist (India)",
+      "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://radicalsocialist.in/?format=feed&type=rss"
+    },
+    {
+      "name": "Riseup Networks",
+      "url": "https://riseup.net/en/feed",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://riseup.net/en/feed"
+    },
+    {
+      "name": "SoliNetz",
+      "url": "https://solinetz.ch/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://solinetz.ch/feed/"
+    },
+    {
+      "name": "Sprout Distro",
+      "url": "https://www.sproutdistro.com/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.sproutdistro.com/feed/"
+    },
+    {
+      "name": "Stop the War Coalition",
+      "url": "https://www.stopwar.org.uk/feed/",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.stopwar.org.uk/feed/"
+    },
+    {
+      "name": "Stressfaktor (Berlin)",
+      "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://morss.it/https://stressfaktor.squat.net/termine.rss"
+    },
+    {
+      "name": "Systemli",
+      "url": "https://www.systemli.org/feed.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.systemli.org/feed.xml"
+    },
+    {
+      "name": "VGT Schweiz",
+      "url": "https://vgt.ch/news/rss.xml",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://vgt.ch/news/rss.xml"
+    },
+    {
+      "name": "War Resisters' International",
+      "url": "https://wri-irg.org/en/feed",
+      "state": "website_reachable_feed_broken",
+      "failureKind": "website_feed_broken",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://wri-irg.org/en/feed"
+    },
+    {
+      "name": "Wildcat",
+      "url": "https://www.wildcat-www.de/wildcat.rss",
+      "state": "feed_broken_unconfirmed",
+      "failureKind": "missing_feed",
+      "consecutiveFailures": 1,
+      "replacementUrl": "",
+      "finalUrl": "https://www.wildcat-www.de/wildcat.rss"
+    }
+  ]
+}

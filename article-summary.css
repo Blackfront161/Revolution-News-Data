@@ -167,5 +167,15 @@ body.theme-soft .wrn-summary-length {
 
 /* 1.7.3: Zusammenfassen bleibt als Hauptaktion voll breit. */
 .wrn-detail-actions .button-row > .wrn-summary-action {
-  grid-column: 1 / -1 !important;
+  grid-column: auto !important;
+}
+
+.card:not(.wrn-detail-card) .wrn-summary-action {
+  display: none !important;
+}
+
+.wrn-detail-card .wrn-summary-meta-action-184 {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
 }

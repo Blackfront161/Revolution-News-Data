@@ -163,16 +163,18 @@
   }
 
   function canonicalRegion(value, country = '') {
+    const normalized = key(value);
+    if (normalized) {
+      if (['global', 'world', 'weltweit', 'international'].includes(normalized)) return 'global';
+      if (/oceania|ozeanien|okyanusya|okeanija|океания|ωκεania|australia|aotearoa|new zealand|pacific/.test(normalized)) return 'oceania';
+      if (/latin america|lateinamerika|latinoamerica|america latina|amerique latine|latinskaja amerika/.test(normalized)) return 'latin-america';
+      if (/north america|nordamerika|norteamerica|amerique du nord|america do norte|kuzey amerika/.test(normalized)) return 'north-america';
+      if (/africa|afrika|afrique|afriki/.test(normalized)) return 'africa';
+      if (/asia|asien|asie|azija|asya/.test(normalized)) return 'asia';
+      if (/europe|europa|evropa|evropi|dach/.test(normalized)) return 'europe';
+    }
     const code = clean(country).toUpperCase();
     if (COUNTRY_REGION[code]) return COUNTRY_REGION[code];
-    const normalized = key(value);
-    if (!normalized || ['global', 'world', 'weltweit', 'international'].includes(normalized)) return 'global';
-    if (/oceania|ozeanien|okyanusya|okeanija|океания|ωκεania|australia|aotearoa|new zealand|pacific/.test(normalized)) return 'oceania';
-    if (/latin america|lateinamerika|latinoamerica|america latina|amerique latine|latinskaja amerika/.test(normalized)) return 'latin-america';
-    if (/north america|nordamerika|norteamerica|amerique du nord|america do norte|kuzey amerika/.test(normalized)) return 'north-america';
-    if (/africa|afrika|afrique|afriki/.test(normalized)) return 'africa';
-    if (/asia|asien|asie|azija|asya/.test(normalized)) return 'asia';
-    if (/europe|europa|evropa|evropi|dach/.test(normalized)) return 'europe';
     return 'global';
   }
 
@@ -417,6 +419,13 @@
     const button = document.createElement('button'); button.type = 'button'; button.className = className; button.textContent = label; button.addEventListener('click', handler); return button;
   }
 
+  function firstSentence(value, limit = 240) {
+    const content = clean(value).replace(/\s+/g, ' ').trim();
+    if (!content) return '';
+    const sentence = content.match(/^.{1,240}?[.!?](?:\s|$)/)?.[0] || content.slice(0, limit);
+    return sentence.trim() + (sentence.length < content.length && !/[.!?]$/.test(sentence.trim()) ? '…' : '');
+  }
+
   function appendMedia(card, item) {
     const statusId = `media-status-${clean(item.id).replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 120)}`;
     const config = { id:item.id, kind:item.kind, title:item.title, artist:item.sourceName, candidates:item.candidates, artwork:item.artwork, statusId, showPause:item.kind !== 'radio', showProgress:item.kind !== 'radio' };
@@ -433,7 +442,12 @@
     const meta = document.createElement('div'); meta.className = 'wrn-audio-meta-183';
     const parts = [item.sourceName, item.createdAt ? new Date(item.createdAt).toLocaleDateString(languageCode()) : '', item.language && item.language !== 'und' ? item.language.toUpperCase() : '', item.duration, regionLabel(item.region)].filter(Boolean);
     meta.textContent = parts.join(' · '); card.append(meta);
-    if (item.description) { const desc = document.createElement('p'); desc.textContent = item.description.slice(0, 700); card.append(desc); }
+    if (item.description) {
+      const desc = document.createElement('p');
+      desc.className = 'wrn-audio-first-sentence-184';
+      desc.textContent = firstSentence(item.description);
+      card.append(desc);
+    }
     if (item.candidates.length) appendMedia(card, item);
     else {
       const unavailable = document.createElement('p');

@@ -216,8 +216,8 @@ header h1 {
 
 .wrn-subtab {
   flex: 0 0 auto;
-  min-height: 42px;
-  padding: 0 15px;
+  min-height: 36px;
+  padding: 0 12px;
   border: 1px solid rgba(255, 51, 79, 0.34);
   border-radius: 999px;
   background: rgba(255, 51, 79, 0.045);
@@ -227,10 +227,10 @@ header h1 {
 }
 
 .wrn-subtab.active {
-  color: var(--color-cyan);
-  border-color: rgba(0, 240, 255, 0.68);
-  background: var(--wrn-cyan-soft);
-  box-shadow: 0 0 11px rgba(0, 240, 255, 0.11);
+  color: #08090d;
+  border-color: var(--wrn-red, #ff3158);
+  background: var(--wrn-red, #ff3158);
+  box-shadow: 0 0 11px rgba(255, 49, 88, 0.16);
 }
 
 /* Die alten Filter bleiben für die Programmlogik erhalten, sind aber unsichtbar. */
@@ -411,6 +411,36 @@ body[data-wrn-tab="events"] #event-filter-panel {
   background: rgba(0, 240, 255, 0.045);
 }
 
+.wrn-more-admin-tools-184 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: .45rem;
+  margin-top: .9rem;
+  padding-top: .7rem;
+  border-top: 1px dashed rgba(255,255,255,.1);
+}
+
+.wrn-more-admin-tools-184 .wrn-source-verification-open,
+.wrn-more-admin-tools-184 .wrn-selftest-open,
+.wrn-more-admin-tools-184 .wrn-audio-health-open {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  max-height: 28px !important;
+  grid-column: auto !important;
+  padding: .25rem .5rem !important;
+  border-radius: 999px !important;
+  opacity: .74;
+  font-size: .58rem !important;
+}
+
+body.wrn-more-open .wrn-source-range-bar-183 {
+  display: none !important;
+}
+
 /* Kompakte Artikelliste */
 .card {
   border-radius: 19px !important;
@@ -554,24 +584,38 @@ body.wrn-detail-open {
   display: none !important;
 }
 
-/* Helle Designs */
-body.theme-light .wrn-more-panel,
-body.theme-soft .wrn-more-panel {
+/* Helles Design */
+body.theme-light .wrn-more-panel {
   background: rgba(248, 249, 253, 0.97);
 }
 
-body.theme-light .wrn-more-field select,
-body.theme-soft .wrn-more-field select {
+body.theme-light .wrn-more-field select {
   background: #fff;
   color: #111118;
 }
 
-body.theme-light .wrn-article-detail,
-body.theme-soft .wrn-article-detail {
+body.theme-light .wrn-article-detail {
   background:
     linear-gradient(rgba(244,244,249,0.76), rgba(244,244,249,0.88)),
     url('./app-background.webp?v=152') center top / cover fixed no-repeat,
     #f4f4f9;
+}
+
+/* Augenfreundlich bleibt warm und dunkel, damit der helle Text lesbar ist. */
+body.theme-soft .wrn-more-panel {
+  background: rgba(35, 34, 29, 0.98);
+}
+
+body.theme-soft .wrn-more-field select {
+  background: var(--bg-input, #2c2a24);
+  color: var(--text-main, #eee8d8);
+}
+
+body.theme-soft .wrn-article-detail {
+  background:
+    linear-gradient(rgba(23,23,20,0.72), rgba(23,23,20,0.88)),
+    url('./app-background.webp?v=152') center top / cover fixed no-repeat,
+    #171714;
 }
 
 /* Smartphones */

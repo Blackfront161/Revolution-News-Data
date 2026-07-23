@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only static release audit for World Revolution News 1.8.3.
+"""Read-only static release audit for World Revolution News 1.8.4 prerelease.
 
 The audit only writes release-readiness-183.json when write_report is true.
 It never edits application files, workflows, registries, or user data.
@@ -16,9 +16,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
-EXPECTED_VERSION = "1.8.3"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.3-b5"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.3-b5"
+EXPECTED_VERSION = "1.8.4"
+EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc10"
+EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc10"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
@@ -32,6 +32,8 @@ REQUIRED_FILES = (
     "runtime-selftest.css",
     "video-hub.js",
     "video-hub.css",
+    "lexicon-tab.js",
+    "lexicon-tab.css",
     "audio-tab-183.js",
     "audio-tab-183.css",
     "interface-block3.js",
@@ -55,6 +57,8 @@ APP_SHELL_FILES = (
     "runtime-selftest.css",
     "video-hub.js",
     "video-hub.css",
+    "lexicon-tab.js",
+    "lexicon-tab.css",
     "audio-tab-183.js",
     "audio-tab-183.css",
     "interface-block3.js",
@@ -154,16 +158,16 @@ class ReleaseAudit:
         self.add(
             "config-version",
             "release",
-            "version: '1.8.3'" in source,
-            "config.js declares version 1.8.3",
+            "version: '1.8.4'" in source,
+            "config.js declares version 1.8.4",
         )
         build = re.search(r"\bbuild:\s*['\"]([^'\"]+)", source)
         build_value = build.group(1) if build else ""
         self.add(
             "config-build",
             "release",
-            EXPECTED_VERSION in build_value and "release-candidate" in build_value,
-            "Build is marked as a 1.8.3 release candidate",
+            EXPECTED_VERSION in build_value and "prerelease" in build_value,
+            "Build is marked as a 1.8.4 prerelease",
             detail=build_value,
         )
         self.add(
@@ -175,8 +179,8 @@ class ReleaseAudit:
         self.add(
             "config-loader",
             "release",
-            "const VERSION = '183-release-candidate';" in source,
-            "Dynamic loader uses 183-release-candidate",
+            "const VERSION = '184-prerelease-rc10';" in source,
+            "Dynamic loader uses 184-prerelease-rc10",
         )
         for token in ("dataUrls:", "proxyUrl:", "sharedTranslationUrl:"):
             self.add(
@@ -192,13 +196,13 @@ class ReleaseAudit:
             "worker-app-cache",
             "offline",
             EXPECTED_APP_CACHE in source,
-            "Service worker uses the b5 app cache",
+            "Service worker uses the rc10 app cache",
         )
         self.add(
             "worker-data-cache",
             "offline",
             EXPECTED_DATA_CACHE in source,
-            "Service worker uses the b5 data cache",
+            "Service worker uses the rc10 data cache",
         )
         for relative in APP_SHELL_FILES:
             self.add(
@@ -292,8 +296,8 @@ class ReleaseAudit:
         self.add(
             "selftest-version",
             "selftest",
-            "const EXPECTED_VERSION = '1.8.3';" in source,
-            "Runtime self-test expects 1.8.3",
+            "const EXPECTED_VERSION = '1.8.4';" in source,
+            "Runtime self-test expects 1.8.4",
         )
         self.add(
             "selftest-no-old-version",
@@ -336,7 +340,7 @@ class ReleaseAudit:
             ("app-check-version", "WRN_CONFIG.version === EXPECTED_VERSION", "Release page checks WRN_CONFIG.version"),
             ("app-check-build", "EXPECTED_BUILD_MARKER", "Release page checks the RC build"),
             ("app-check-manifest", "'./manifest.json'", "Release page checks manifest.json"),
-            ("app-check-cache", "wrn-app-v1.8.3-b5", "Release page checks b5 app cache"),
+            ("app-check-cache", "wrn-app-v1.8.4-rc8", "Release page checks prerelease app cache"),
             ("app-check-runtime", "runtime-selftest.js", "Release page checks runtime self-test"),
             ("app-check-no-store", "cache:'no-store'", "Release page bypasses caches"),
             ("app-check-read-only", "keine App- oder Browserdaten verändert", "Release page states its read-only behavior"),
@@ -348,8 +352,8 @@ class ReleaseAudit:
         self.add(
             "diagnostics-version",
             "diagnostics",
-            "version === '1.8.3'" in source,
-            "App diagnostics expects 1.8.3",
+            "version === '1.8.4'" in source,
+            "App diagnostics expects 1.8.4",
         )
         self.add(
             "diagnostics-no-175",
@@ -488,7 +492,7 @@ def main() -> int:
     report = run_audit()
     summary = report["summary"]
     print(
-        "WRN 1.8.3 release audit: "
+        "WRN 1.8.4 prerelease audit: "
         f"{summary['pass']} passed, "
         f"{summary['warning']} warnings, "
         f"{summary['fail']} failed, "

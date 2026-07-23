@@ -516,11 +516,11 @@ def check_release_182() -> None:
     source_verification = (ROOT / "source-verification.js").read_text(encoding="utf-8") if (ROOT / "source-verification.js").is_file() else ""
     release_languages = (ROOT / "release-1.4.js").read_text(encoding="utf-8") if (ROOT / "release-1.4.js").is_file() else ""
 
-    for token in ["version: '1.8.3'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
+    for token in ["version: '1.8.4'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
         if token not in config:
             error(f"config.js enthält die 1.8.2-Verknüpfung nicht: {token}")
 
-    for token in ["wrn-app-v1.8.3-b5", "wrn-data-v1.8.3-b5", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
+    for token in ["wrn-app-v1.8.4-rc10", "wrn-data-v1.8.4-rc10", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
         if token not in worker:
             error(f"service-worker.js enthält die 1.8.2-Datei nicht: {token}")
 

@@ -688,14 +688,15 @@
 
     const insertButton = () => {
         const existing = document.getElementById('wrn-source-verification-open');
-        const moreGrid = document.querySelector('.wrn-more-grid');
+        const target = document.querySelector('.wrn-more-admin-tools-184')
+            || document.querySelector('.wrn-more-grid');
 
         if (existing) {
-            if (moreGrid && existing.parentElement !== moreGrid) {
-                moreGrid.appendChild(existing);
+            if (target && existing.parentElement !== target) {
+                target.appendChild(existing);
             }
-            existing.hidden = !moreGrid;
-            return Boolean(moreGrid);
+            existing.hidden = !target;
+            return Boolean(target);
         }
 
         const button = document.createElement('button');
@@ -705,8 +706,8 @@
         button.textContent = t().open;
         button.addEventListener('click', open);
 
-        if (moreGrid) {
-            moreGrid.appendChild(button);
+        if (target) {
+            target.appendChild(button);
             return true;
         }
 
@@ -1104,10 +1105,11 @@
             const button = document.getElementById(
                 'wrn-source-verification-open'
             );
-            const moreGrid = document.querySelector('.wrn-more-grid');
+            const target = document.querySelector('.wrn-more-admin-tools-184')
+                || document.querySelector('.wrn-more-grid');
 
             if (
-                (button && moreGrid && button.parentElement === moreGrid)
+                (button && target && button.parentElement === target)
                 || attempts >= 30
             ) {
                 window.clearInterval(timer);

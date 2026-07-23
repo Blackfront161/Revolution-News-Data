@@ -40,8 +40,8 @@ def main() -> None:
     )
 
     worker = read("service-worker.js")
-    assert "wrn-app-v1.8.3-b5" in worker
-    assert "wrn-data-v1.8.3-b5" in worker
+    assert "wrn-app-v1.8.4-rc10" in worker
+    assert "wrn-data-v1.8.4-rc10" in worker
     assert "./video-hub.js" in worker
     assert "./video-hub.css" in worker
     assert "./app-background.webp" in worker

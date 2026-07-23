@@ -3,7 +3,7 @@
 
 (() => {
     const records = new Map();
-    let activeReportId = null;
+    let activeReportKey = null;
 
     const texts = {
         en: {
@@ -120,7 +120,11 @@
         return `${articleKey(article)}::${language}`;
     }
 
-    function findRecord(idNum) {
+    function findRecord(idNum, container = null) {
+        const tools = container || document.getElementById(`translation-tools-${idNum}`);
+        const explicitKey = String(tools?.dataset?.translationRecordKey || '');
+        if (explicitKey && records.has(explicitKey)) return records.get(explicitKey);
+
         const article = articleAt(idNum);
         if (!article) return null;
         return records.get(recordKey(article, currentLanguage())) || null;
@@ -135,8 +139,8 @@
     }
 
     function applyCardValues(idNum, mode) {
-        const article = articleAt(idNum);
         const record = findRecord(idNum);
+        const article = record?.article || articleAt(idNum);
         const card = document.getElementById(`card-${idNum}`);
         const title = document.getElementById(`title-${idNum}`);
         const teaser = document.getElementById(`teaser-${idNum}`);
@@ -183,38 +187,29 @@
         const t = textSet();
         container.hidden = false;
         container.textContent = '';
+        container.dataset.translationRecordKey = recordKey(record.article, record.language);
 
         const buttonRow = document.createElement('div');
         buttonRow.className = 'translation-view-buttons';
 
-        const makeButton = (label, view, handler) => {
+        const makeButton = (label, action, view = '') => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'translation-view-button';
             button.textContent = label;
+            button.dataset.translationAction = action;
             if (view) button.dataset.translationView = view;
-            button.addEventListener('click', handler);
             return button;
         };
 
         buttonRow.append(
-            makeButton(t.original, 'original', () => showOriginal(idNum)),
-            makeButton(t.translation, 'translated', () => showTranslated(idNum)),
-            makeButton(t.compare, '', () => openCompare(idNum)),
-            makeButton(t.report, '', () => openReport(idNum))
+            makeButton(t.original, 'original', 'original'),
+            makeButton(t.translation, 'translated', 'translated'),
+            makeButton(t.compare, 'compare'),
+            makeButton(t.report, 'report')
         );
 
-        const meta = document.createElement('div');
-        meta.className = 'translation-view-meta';
-        const scopeLabel = record.scope === 'full' ? t.full : t.teaserOnly;
-        const provider = record.provider ? ` · ${t.provider}: ${record.provider}` : '';
-        meta.textContent = `${scopeLabel} · ${t.originalLanguage}: ${originalLanguage(record.article)} · ${t.targetLanguage}: ${String(record.language || '').toUpperCase()}${provider}`;
-
-        const cacheNote = document.createElement('div');
-        cacheNote.className = 'translation-cache-note';
-        cacheNote.textContent = t.cache;
-
-        container.append(buttonRow, meta, cacheNote);
+        container.append(buttonRow);
     }
 
     function registerTranslation(idNum, article, translated, scope = 'full') {
@@ -293,7 +288,7 @@
     function openReport(idNum) {
         const record = findRecord(idNum);
         if (!record) return;
-        activeReportId = idNum;
+        activeReportKey = recordKey(record.article, record.language);
         const t = textSet();
         const setText = (id, value) => {
             const element = document.getElementById(id);
@@ -315,8 +310,8 @@
     }
 
     function sendReport() {
-        if (!Number.isInteger(activeReportId)) return;
-        const record = findRecord(activeReportId);
+        if (!activeReportKey) return;
+        const record = records.get(activeReportKey);
         if (!record) return;
         const select = document.getElementById('translation-report-issue');
         const note = document.getElementById('translation-report-note');
@@ -349,19 +344,35 @@
         });
         const overlay = document.getElementById('fb-overlay');
         if (overlay) overlay.style.display = 'none';
-        activeReportId = null;
+        activeReportKey = null;
     }
 
     function refreshTexts() {
-        records.forEach(record => {
-            if (record.language !== currentLanguage()) return;
-            document.querySelectorAll('[id^="translation-tools-"]').forEach(container => {
-                const idNum = Number(container.id.replace('translation-tools-', ''));
-                const matching = findRecord(idNum);
-                if (matching) ensureControls(idNum, matching);
-            });
+        document.querySelectorAll('[id^="translation-tools-"]').forEach(container => {
+            const idNum = Number(container.id.replace('translation-tools-', ''));
+            const matching = findRecord(idNum, container);
+            if (matching && matching.language === currentLanguage()) ensureControls(idNum, matching);
         });
     }
+
+    function handleControlClick(event) {
+        const button = event.target.closest?.('[data-translation-action]');
+        const container = button?.closest?.('[id^="translation-tools-"]');
+        if (!button || !container) return;
+        const idNum = Number(container.id.replace('translation-tools-', ''));
+        if (!Number.isInteger(idNum)) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const action = button.dataset.translationAction;
+        if (action === 'original') showOriginal(idNum);
+        if (action === 'translated') showTranslated(idNum);
+        if (action === 'compare') openCompare(idNum);
+        if (action === 'report') openReport(idNum);
+    }
+
+    document.addEventListener('click', handleControlClick);
 
     window.closeTranslationModals = closeModals;
     window.sendTranslationReport = sendReport;
