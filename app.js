@@ -1217,7 +1217,9 @@ function closeAllModals() {
     window.WRNSourceProfiles?.close();
     window.WRNTranslationTools?.closeModals();
     window.WRNDataControl?.close();
-    pausePodcastLibraryAudio();
+    if (typeof pausePodcastLibraryAudio === 'function') {
+        pausePodcastLibraryAudio();
+    }
 }
 function submitFeedback() {
     const ca = document.getElementById('captcha-answer'); const ft = document.getElementById('fb-text'); if(!ca || !ft) return;
@@ -1558,7 +1560,7 @@ function renderNextBatch() {
                     <button class="btn-translate btn-read-later ${isSaved ? 'is-bookmarked' : ''}" id="bmark-${globalIndex}" onclick="toggleBookmark(${globalIndex})" aria-pressed="${isSaved}">${bookmarkTxt}</button>
                     <button class="btn-translate btn-read-state ${isRead ? 'is-read' : ''}" id="readstate-${globalIndex}" onclick="toggleReadState(${globalIndex})" aria-pressed="${isRead}">${readStateTxt}</button>
                     <button class="btn-translate btn-zine-article ${isInZine(item) ? 'is-in-zine' : ''}" id="zine-${globalIndex}" onclick="toggleZine(${globalIndex})" aria-pressed="${isInZine(item)}">${escapeHtml(zineButtonLabel(item))}</button>
-                    <button class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${encodedArticleTitle}', '${encodedArticleLink}')">[ SHARE 🔗 ]</button>
+                    <button type="button" class="btn-translate" style="border-color: var(--color-cyan); color: var(--color-cyan);" onclick="shareArticle('${encodedArticleTitle}', '${encodedArticleLink}')">[ SHARE 🔗 ]</button>
                     ${safeArticleUrl ? `<a href="${escapeHtml(safeArticleUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" class="btn-translate" style="border-color: var(--color-accent); color: var(--color-accent); text-decoration:none;">[ ${escapeHtml(t.btnReadMore)} ]</a>` : ''}
                 </div>
             </div>
@@ -1576,12 +1578,72 @@ function renderNextBatch() {
     isRendering = false;
 }
 
-function shareArticle(encodedTitle, encodedLink) {
+function getShareUiText() {
+    const messages = {
+        en: { copied: 'Link copied.', failed: 'The link could not be copied.' },
+        de: { copied: 'Link kopiert.', failed: 'Der Link konnte nicht kopiert werden.' },
+        es: { copied: 'Enlace copiado.', failed: 'No se pudo copiar el enlace.' },
+        fr: { copied: 'Lien copié.', failed: 'Impossible de copier le lien.' },
+        it: { copied: 'Link copiato.', failed: 'Impossibile copiare il link.' },
+        pt: { copied: 'Ligação copiada.', failed: 'Não foi possível copiar a ligação.' },
+        ru: { copied: 'Ссылка скопирована.', failed: 'Не удалось скопировать ссылку.' },
+        el: { copied: 'Ο σύνδεσμος αντιγράφηκε.', failed: 'Δεν ήταν δυνατή η αντιγραφή του συνδέσμου.' },
+        tr: { copied: 'Bağlantı kopyalandı.', failed: 'Bağlantı kopyalanamadı.' }
+    };
+    return messages[currentLang] || messages.en;
+}
+
+function getShareableArticleUrl(value) {
+    const originalUrl = getSafeHttpUrl(value);
+    if (originalUrl) return originalUrl;
     try {
-        const title = decodeText(encodedTitle); const link = decodeText(encodedLink);
-        if (navigator.share) { navigator.share({ title: title, url: link }).catch(console.error); } 
-        else { navigator.clipboard.writeText(title + " - " + link); alert("Link copied to clipboard!"); }
-    } catch(e) {}
+        const appUrl = new URL(window.location.href);
+        appUrl.hash = '';
+        return appUrl.href;
+    } catch {
+        return '';
+    }
+}
+
+async function copyShareUrl(url) {
+    if (!url) return false;
+    if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+        return true;
+    }
+
+    const field = document.createElement('textarea');
+    field.value = url;
+    field.setAttribute('readonly', '');
+    field.style.position = 'fixed';
+    field.style.opacity = '0';
+    document.body.appendChild(field);
+    field.select();
+    const copied = document.execCommand?.('copy') === true;
+    field.remove();
+    return copied;
+}
+
+async function shareArticle(encodedTitle, encodedLink) {
+    try {
+        const title = decodeText(encodedTitle);
+        const link = getShareableArticleUrl(decodeText(encodedLink));
+        if (!link) throw new Error('No shareable URL');
+
+        if (navigator.share) {
+            try {
+                await navigator.share({ title, url: link });
+                return;
+            } catch (error) {
+                if (error?.name === 'AbortError') return;
+            }
+        }
+
+        const copied = await copyShareUrl(link);
+        alert(copied ? getShareUiText().copied : getShareUiText().failed);
+    } catch {
+        alert(getShareUiText().failed);
+    }
 }
 
 // === DER REPARIERTE KLICK-BLOCK ===

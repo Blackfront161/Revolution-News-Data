@@ -1606,34 +1606,52 @@ body.view-headlines .editorial-badges { margin-bottom: 5px; }
 
 /* Phase 1I: transparente Übersetzungsansichten */
 .translation-tools {
-    display: grid;
-    gap: 6px;
-    margin: 2px 0 12px;
-    padding: 8px;
-    border: 1px dashed rgba(110, 168, 255, 0.62);
-    background: rgba(110, 168, 255, 0.055);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 3px 0 9px;
+    padding: 0;
+    border: 0;
+    background: transparent;
 }
 .translation-tools[hidden] { display: none !important; }
 .translation-view-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
 }
 .translation-view-button {
-    min-height: 34px;
-    padding: 5px 10px;
-    border: 1px solid var(--border-read);
-    background: transparent;
-    color: var(--text-muted);
+    min-height: 28px;
+    padding: 3px 7px;
+    border: 1px solid rgba(0, 240, 255, 0.55);
+    border-radius: 999px;
+    background: rgba(0, 240, 255, 0.045);
+    color: var(--color-cyan);
     font: inherit;
-    font-size: 0.75rem;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1.05;
     cursor: pointer;
+    white-space: nowrap;
 }
 .translation-view-button:hover,
 .translation-view-button.active {
-    border-color: #6ea8ff;
-    color: #a9cbff;
-    background: rgba(110, 168, 255, 0.12);
+    border-color: var(--color-cyan);
+    color: #05070b;
+    background: var(--color-cyan);
+}
+.translation-view-button[data-translation-action="compare"],
+.translation-view-button[data-translation-action="report"] {
+    border-color: rgba(255, 49, 88, 0.7);
+    background: rgba(255, 49, 88, 0.06);
+    color: #ff6b82;
+}
+.translation-view-button[data-translation-action="compare"]:hover,
+.translation-view-button[data-translation-action="report"]:hover {
+    border-color: #ff3158;
+    background: #ff3158;
+    color: #05070b;
 }
 .translation-view-meta,
 .translation-cache-note,
@@ -1698,7 +1716,7 @@ body.view-headlines .editorial-badges { margin-bottom: 5px; }
 .translation-report-field textarea { resize: vertical; min-height: 110px; }
 @media (max-width: 760px) {
     .translation-compare-grid { grid-template-columns: 1fr; }
-    .translation-view-button { flex: 1 1 130px; }
+    .translation-view-button { flex: 0 1 auto; }
 }
 
 /* === Phase 1J: Datenschutz- und Datenkontrollzentrum === */

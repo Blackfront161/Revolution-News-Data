@@ -17,8 +17,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
 EXPECTED_VERSION = "1.8.4"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc9"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc9"
+EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc10"
+EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc10"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
@@ -179,8 +179,8 @@ class ReleaseAudit:
         self.add(
             "config-loader",
             "release",
-            "const VERSION = '184-prerelease-rc9';" in source,
-            "Dynamic loader uses 184-prerelease-rc9",
+            "const VERSION = '184-prerelease-rc10';" in source,
+            "Dynamic loader uses 184-prerelease-rc10",
         )
         for token in ("dataUrls:", "proxyUrl:", "sharedTranslationUrl:"):
             self.add(
@@ -196,13 +196,13 @@ class ReleaseAudit:
             "worker-app-cache",
             "offline",
             EXPECTED_APP_CACHE in source,
-            "Service worker uses the rc9 app cache",
+            "Service worker uses the rc10 app cache",
         )
         self.add(
             "worker-data-cache",
             "offline",
             EXPECTED_DATA_CACHE in source,
-            "Service worker uses the rc9 data cache",
+            "Service worker uses the rc10 data cache",
         )
         for relative in APP_SHELL_FILES:
             self.add(

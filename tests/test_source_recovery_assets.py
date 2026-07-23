@@ -45,14 +45,14 @@ assert "source-recovery-report.json" in workflow
 assert "python tests/test_source_recovery.py" in quality
 assert "node tests/test_source_recovery_ui.js" in quality
 assert "python tests/test_source_recovery_assets.py" in quality
-assert "const VERSION = '184-prerelease-rc9';" in config
+assert "const VERSION = '184-prerelease-rc10';" in config
 assert "source-recovery-ui-183.js" in config
 assert "source-recovery-ui-183.css" in config
-assert "wrn-app-v1.8.4-rc9" in worker
-assert "wrn-data-v1.8.4-rc9" in worker
+assert "wrn-app-v1.8.4-rc10" in worker
+assert "wrn-data-v1.8.4-rc10" in worker
 assert "source-recovery-ui-183.js" in worker
 assert "source-recovery-ui-183.css" in worker
-assert 'wrn-app-v1.8.4-rc9' in audio_assets_test
+assert 'wrn-app-v1.8.4-rc10' in audio_assets_test
 assert 'wrn-app-v1.8.3-b2' not in audio_assets_test
 
 assert '"automaticDeletion": False' in module
