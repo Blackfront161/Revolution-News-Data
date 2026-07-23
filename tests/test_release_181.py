@@ -37,6 +37,16 @@ assert "SUPPORTED_LANGUAGES = Object.freeze(['de', 'en', 'es', 'fr', 'it', 'pt',
 for token in ['Entwicklungen', 'Developments', 'Desarrollos', 'Évolutions', 'Sviluppi', 'Desenvolvimentos', 'Развитие событий', 'Εξελίξεις', 'Gelişmeler']:
     assert token in i18n, token
 
+navigation = (ROOT / 'release-1.5-nav.js').read_text(encoding='utf-8')
+tabs = navigation[navigation.index('const TABS = ['):navigation.index('const state = {')]
+tab_order = [
+    tabs.index("key: 'regions'"),
+    tabs.index("key: 'topics'"),
+    tabs.index("key: 'video'"),
+    tabs.index("key: 'events'"),
+]
+assert tab_order == sorted(tab_order), tab_order
+
 release = (ROOT / 'release-1.4.js').read_text(encoding='utf-8')
 assert 'const BETA_LANGUAGES = new Set();' in release
 assert "document.getElementById('language-beta-note')?.remove();" in release
