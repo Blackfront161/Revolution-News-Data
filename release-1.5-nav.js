@@ -44,13 +44,6 @@
       }
     },
     {
-      key: 'video',
-      activate: () => {
-        closeAuxiliaryPanels();
-        window.WRNVideoHub?.show?.();
-      }
-    },
-    {
       key: 'start',
       activate: () => {
         prepareArticleView();
@@ -101,6 +94,13 @@
         const target = subKey || state.subSelections.topics || 'Labor Struggles';
         state.subSelections.topics = target;
         if (typeof ladeKontinentNews === 'function') ladeKontinentNews(target);
+      }
+    },
+    {
+      key: 'video',
+      activate: () => {
+        closeAuxiliaryPanels();
+        window.WRNVideoHub?.show?.();
       }
     },
     {
