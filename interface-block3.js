@@ -169,8 +169,8 @@
     return CORRUPTION_TERMS.some(term => haystack.includes(normalize(term)));
   }
 
-  function baseArticlesForCategory(category = currentCategory()) {
-    const rows = articles();
+  function rowsForCategory(input, category = currentCategory()) {
+    const rows = Array.isArray(input) ? input : [];
     if (category === CORRUPTION_CATEGORY) return rows.filter(matchesCorruption);
     if (category === 'Global' || !category) return rows;
     if (['Bookmarks', 'Read'].includes(category)) return [];
@@ -178,6 +178,32 @@
       try { return rows.filter(item => articleMatchesCategory(item, category)); } catch {}
     }
     return rows;
+  }
+
+  function baseArticlesForCategory(category = currentCategory()) {
+    return rowsForCategory(articles(), category);
+  }
+
+  function filterRows(input, options = {}) {
+    const rows = Array.isArray(input) ? input : [];
+    const category = String(options.category || currentCategory());
+    if (['Bookmarks', 'Read', 'Radar'].includes(category)) return [...rows];
+
+    const selected = options.selectedSources === undefined
+      ? state.selectedSources
+      : new Set(options.selectedSources || []);
+    const days = Number(options.days === undefined ? state.appliedDays : options.days) || 0;
+    let result = category === CORRUPTION_CATEGORY
+      ? rows.filter(matchesCorruption)
+      : [...rows];
+
+    if (selected.size) result = result.filter(item => selected.has(sourceName(item)));
+    if (days > 0) {
+      const now = Number(options.now || Date.now());
+      const cutoff = now - days * DAY_MS;
+      result = result.filter(item => dateMs(item) >= cutoff);
+    }
+    return result;
   }
 
   function shouldShowSourceBar() {
@@ -234,9 +260,11 @@
     if (state.fullArchiveLoaded || state.archiveLoading) return state.fullArchiveLoaded;
     state.archiveLoading = true;
     status(text().loading30, 'loading');
-    const baseUrl = window.WRN_CONFIG?.dataUrls?.news || './news-feed.json';
+    const configuredArchive = window.WRN_CONFIG?.dataUrls?.newsArchive;
+    const currentFeed = window.WRN_CONFIG?.dataUrls?.news || './news-feed.json';
+    const baseUrl = configuredArchive || currentFeed.replace(/news-feed\.json(?:\?.*)?$/i, 'news.json');
     const separator = baseUrl.includes('?') ? '&' : '?';
-    const url = `${baseUrl}${separator}wrn_full=1&range=30&v=${Date.now()}`;
+    const url = `${baseUrl}${separator}v=${Date.now()}`;
 
     try {
       const rows = await fetchJsonWithXhr(url);
@@ -403,45 +431,10 @@
     const originalApplyFilters = window.applyFilters;
 
     window.applyFilters = function(...args) {
-      const category = currentCategory();
-      const selected = new Set(state.selectedSources);
-      const days = Number(state.appliedDays || 0);
-      const needsCustom = category === CORRUPTION_CATEGORY || selected.size > 0 || days > 0;
-      if (!needsCustom) {
-        const result = originalApplyFilters.apply(this, args);
-        queueCardDecoration();
-        queueSourceBarRefresh();
-        return result;
-      }
-
-      const originalRows = articles();
-      let originalSource = 'ALL';
-      let originalCategory = category;
-      try { originalSource = currentSourceFilter; } catch {}
-
-      let rows = originalRows;
-      if (category === CORRUPTION_CATEGORY) rows = rows.filter(matchesCorruption);
-      if (selected.size) rows = rows.filter(item => selected.has(sourceName(item)));
-      if (days > 0) {
-        const cutoff = Date.now() - days * DAY_MS;
-        rows = rows.filter(item => dateMs(item) >= cutoff);
-      }
-
-      try { allNewsData = rows; } catch {}
-      try { currentSourceFilter = 'ALL'; } catch {}
-      if (category === CORRUPTION_CATEGORY) {
-        try { activeKontinent = 'Global'; } catch {}
-      }
-
-      try {
-        return originalApplyFilters.apply(this, args);
-      } finally {
-        try { allNewsData = originalRows; } catch {}
-        try { currentSourceFilter = originalSource; } catch {}
-        try { activeKontinent = originalCategory; } catch {}
-        queueCardDecoration();
-        queueSourceBarRefresh();
-      }
+      const result = originalApplyFilters.apply(this, args);
+      queueCardDecoration();
+      queueSourceBarRefresh();
+      return result;
     };
   }
 
@@ -882,6 +875,8 @@
     applySourceRange,
     resetSourceRange,
     ensureThirtyDayArchive,
+    rowsForCategory,
+    filterRows,
     matchesCorruption,
     renderZineEditor,
     state: () => ({
@@ -890,7 +885,7 @@
       appliedDays: state.appliedDays,
       fullArchiveLoaded: state.fullArchiveLoaded
     }),
-    test: Object.freeze({ actionType, mergeRows, articleKey })
+    test: Object.freeze({ actionType, mergeRows, articleKey, rowsForCategory, filterRows })
   });
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });

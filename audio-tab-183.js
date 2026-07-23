@@ -1,9 +1,12 @@
-/* World Revolution News 1.8.3 - public podcasts and regional audio recovery */
+/* World Revolution News 1.8.4 - stable public podcasts and regional audio */
 'use strict';
 
 (() => {
   if (window.__wrnAudioTab183) return;
   window.__wrnAudioTab183 = true;
+
+  const legacyAudioTab181 = window.WRNAudioTab181;
+  try { legacyAudioTab181?.close?.(); } catch {}
 
   const VIEW_ID = 'wrn-audio-tab-183';
   const SOURCE_URL = './podcast-sources.json';
@@ -43,7 +46,7 @@
       empty: 'No matching audio found.', configured: 'source configured; episodes appear after the next data update.',
       configuredMany: 'sources configured; episodes appear after the next data update.', publicLibrary: 'Public library',
       workerFallback: 'The public library is temporarily unavailable. Cached items are shown.', originalLink: 'Open original',
-      feedLink: 'Open feed', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Public generated podcasts are listed for up to 30 days.',
+      feedLink: 'Open feed', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Public generated podcasts are listed for up to 30 days.', streamUnavailable: 'No direct browser stream is currently available. Open the station website.',
       global: 'All regions', europe: 'Europe', africa: 'Africa', northAmerica: 'North America', latinAmerica: 'Latin America', asia: 'Asia', oceania: 'Oceania'
     },
     de: {
@@ -53,7 +56,7 @@
       empty: 'Keine passenden Audios gefunden.', configured: 'Quelle eingerichtet; Folgen erscheinen nach der naechsten Datenaktualisierung.',
       configuredMany: 'Quellen eingerichtet; Folgen erscheinen nach der naechsten Datenaktualisierung.', publicLibrary: 'Oeffentliche Bibliothek',
       workerFallback: 'Die oeffentliche Bibliothek ist voruebergehend nicht erreichbar. Zwischengespeicherte Eintraege werden angezeigt.', originalLink: 'Original oeffnen',
-      feedLink: 'Feed oeffnen', source: 'Quelle', episodes: 'Folgen', sources: 'Quellen', privacy: 'Oeffentlich erzeugte Podcasts werden bis zu 30 Tage angezeigt.',
+      feedLink: 'Feed oeffnen', source: 'Quelle', episodes: 'Folgen', sources: 'Quellen', privacy: 'Oeffentlich erzeugte Podcasts werden bis zu 30 Tage angezeigt.', streamUnavailable: 'Derzeit ist kein direkter Browser-Stream verfuegbar. Oeffne die Senderseite.',
       global: 'Alle Regionen', europe: 'Europa', africa: 'Afrika', northAmerica: 'Nordamerika', latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Ozeanien'
     },
     es: {
@@ -63,7 +66,7 @@
       empty: 'No se encontro audio.', configured: 'fuente configurada; los episodios apareceran tras la proxima actualizacion.',
       configuredMany: 'fuentes configuradas; los episodios apareceran tras la proxima actualizacion.', publicLibrary: 'Biblioteca publica',
       workerFallback: 'La biblioteca publica no esta disponible temporalmente. Se muestran elementos en cache.', originalLink: 'Abrir original',
-      feedLink: 'Abrir feed', source: 'Fuente', episodes: 'episodios', sources: 'fuentes', privacy: 'Los podcasts publicos generados se muestran hasta 30 dias.',
+      feedLink: 'Abrir feed', source: 'Fuente', episodes: 'episodios', sources: 'fuentes', privacy: 'Los podcasts publicos generados se muestran hasta 30 dias.', streamUnavailable: 'No hay un stream directo disponible. Abre la pagina de la emisora.',
       global: 'Todas las regiones', europe: 'Europa', africa: 'Africa', northAmerica: 'Norteamerica', latinAmerica: 'Latinoamerica', asia: 'Asia', oceania: 'Oceania'
     },
     fr: {
@@ -73,7 +76,7 @@
       empty: 'Aucun audio correspondant.', configured: 'source configuree; les episodes apparaitront apres la prochaine mise a jour.',
       configuredMany: 'sources configurees; les episodes apparaitront apres la prochaine mise a jour.', publicLibrary: 'Bibliotheque publique',
       workerFallback: 'La bibliotheque publique est temporairement indisponible. Les elements en cache sont affiches.', originalLink: 'Ouvrir l original',
-      feedLink: 'Ouvrir le flux', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Les podcasts generes publics sont affiches pendant 30 jours maximum.',
+      feedLink: 'Ouvrir le flux', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Les podcasts generes publics sont affiches pendant 30 jours maximum.', streamUnavailable: 'Aucun flux direct n est disponible. Ouvrez le site de la station.',
       global: 'Toutes les regions', europe: 'Europe', africa: 'Afrique', northAmerica: 'Amerique du Nord', latinAmerica: 'Amerique latine', asia: 'Asie', oceania: 'Oceanie'
     },
     it: {
@@ -83,7 +86,7 @@
       empty: 'Nessun audio corrispondente.', configured: 'fonte configurata; gli episodi appariranno dopo il prossimo aggiornamento.',
       configuredMany: 'fonti configurate; gli episodi appariranno dopo il prossimo aggiornamento.', publicLibrary: 'Biblioteca pubblica',
       workerFallback: 'La biblioteca pubblica e temporaneamente non disponibile. Sono mostrati gli elementi in cache.', originalLink: 'Apri originale',
-      feedLink: 'Apri feed', source: 'Fonte', episodes: 'episodi', sources: 'fonti', privacy: 'I podcast pubblici generati sono mostrati per un massimo di 30 giorni.',
+      feedLink: 'Apri feed', source: 'Fonte', episodes: 'episodi', sources: 'fonti', privacy: 'I podcast pubblici generati sono mostrati per un massimo di 30 giorni.', streamUnavailable: 'Nessuno stream diretto e disponibile. Apri il sito della stazione.',
       global: 'Tutte le regioni', europe: 'Europa', africa: 'Africa', northAmerica: 'Nord America', latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Oceania'
     },
     pt: {
@@ -93,7 +96,7 @@
       empty: 'Nenhum audio correspondente.', configured: 'fonte configurada; os episodios aparecerao apos a proxima atualizacao.',
       configuredMany: 'fontes configuradas; os episodios aparecerao apos a proxima atualizacao.', publicLibrary: 'Biblioteca publica',
       workerFallback: 'A biblioteca publica esta temporariamente indisponivel. Itens em cache sao exibidos.', originalLink: 'Abrir original',
-      feedLink: 'Abrir feed', source: 'Fonte', episodes: 'episodios', sources: 'fontes', privacy: 'Podcasts publicos gerados ficam visiveis por ate 30 dias.',
+      feedLink: 'Abrir feed', source: 'Fonte', episodes: 'episodios', sources: 'fontes', privacy: 'Podcasts publicos gerados ficam visiveis por ate 30 dias.', streamUnavailable: 'Nao ha stream direto disponivel. Abra o site da estacao.',
       global: 'Todas as regioes', europe: 'Europa', africa: 'Africa', northAmerica: 'America do Norte', latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Oceania'
     },
     ru: {
@@ -103,7 +106,7 @@
       empty: 'Podhodjaschee audio ne najdeno.', configured: 'istochnik nastroen; vypuski pojavjatsja posle sledujuschego obnovlenija.',
       configuredMany: 'istochniki nastroeny; vypuski pojavjatsja posle sledujuschego obnovlenija.', publicLibrary: 'Publichnaja biblioteka',
       workerFallback: 'Publichnaja biblioteka vremenno nedostupna. Pokazany keshirovannye zapisi.', originalLink: 'Otkryt original',
-      feedLink: 'Otkryt lentu', source: 'Istochnik', episodes: 'vypuskov', sources: 'istochnikov', privacy: 'Publichnye sozdannye podkasty pokazyvajutsja do 30 dnej.',
+      feedLink: 'Otkryt lentu', source: 'Istochnik', episodes: 'vypuskov', sources: 'istochnikov', privacy: 'Publichnye sozdannye podkasty pokazyvajutsja do 30 dnej.', streamUnavailable: 'Prjamoj potok nedostupen. Otkrojte sajt stancii.',
       global: 'Vse regiony', europe: 'Evropa', africa: 'Afrika', northAmerica: 'Severnaja Amerika', latinAmerica: 'Latinskaja Amerika', asia: 'Azija', oceania: 'Okeanija'
     },
     el: {
@@ -113,7 +116,7 @@
       empty: 'Den vrethike ichos.', configured: 'pigi rythmismeni; ta epeisodia tha emfanistoun meta tin epomeni enimerosi.',
       configuredMany: 'piges rythmismenes; ta epeisodia tha emfanistoun meta tin epomeni enimerosi.', publicLibrary: 'Dimosia vivliothiki',
       workerFallback: 'I dimosia vivliothiki den einai prosorina diathesimi. Emfanizontai apothikevmena stoicheia.', originalLink: 'Anoigma prototypou',
-      feedLink: 'Anoigma rois', source: 'Pigi', episodes: 'epeisodia', sources: 'piges', privacy: 'Ta dimosia paragomena podcast emfanizontai eos 30 imeres.',
+      feedLink: 'Anoigma rois', source: 'Pigi', episodes: 'epeisodia', sources: 'piges', privacy: 'Ta dimosia paragomena podcast emfanizontai eos 30 imeres.', streamUnavailable: 'Den yparchei amesi roi. Anoikste ton istotopo tou stathmou.',
       global: 'Oles oi perioxes', europe: 'Evropi', africa: 'Afriki', northAmerica: 'Voreia Ameriki', latinAmerica: 'Latiniki Ameriki', asia: 'Asia', oceania: 'Okeania'
     },
     tr: {
@@ -123,7 +126,7 @@
       empty: 'Eslesen ses bulunamadi.', configured: 'kaynak yapilandirildi; bolumler sonraki veri guncellemesinden sonra gorunecek.',
       configuredMany: 'kaynak yapilandirildi; bolumler sonraki veri guncellemesinden sonra gorunecek.', publicLibrary: 'Herkese acik kutuphane',
       workerFallback: 'Herkese acik kutuphane gecici olarak kullanilamiyor. Onbellekteki ogeler gosteriliyor.', originalLink: 'Orijinali ac',
-      feedLink: 'Akisi ac', source: 'Kaynak', episodes: 'bolum', sources: 'kaynak', privacy: 'Herkese acik olusturulan podcastler 30 güne kadar gosterilir.',
+      feedLink: 'Akisi ac', source: 'Kaynak', episodes: 'bolum', sources: 'kaynak', privacy: 'Herkese acik olusturulan podcastler 30 güne kadar gosterilir.', streamUnavailable: 'Dogrudan yayin kullanilamiyor. Istasyon sitesini acin.',
       global: 'Tum bolgeler', europe: 'Avrupa', africa: 'Afrika', northAmerica: 'Kuzey Amerika', latinAmerica: 'Latin Amerika', asia: 'Asya', oceania: 'Okyanusya'
     }
   };
@@ -232,14 +235,15 @@
   function normalizeRadio(item) {
     if (!item || typeof item !== 'object' || item.enabled === false) return null;
     const candidates = unique([...(Array.isArray(item.streamCandidates) ? item.streamCandidates : []), item.streamUrl, item.url]).map(safeUrl).filter(Boolean);
-    if (!candidates.length) return null;
+    const originalUrl = safeUrl(item.website);
+    if (!candidates.length && !originalUrl) return null;
     return {
       id: `radio:${clean(item.id || item.name || candidates[0])}`,
       rawId: clean(item.id || item.name || candidates[0]),
       kind: 'radio', title: clean(item.name || 'Live radio'), description: clean(item.description),
       sourceName: clean(item.name), language: clean((item.languages || [item.language]).filter(Boolean).join(', ')).toLowerCase(),
       country: clean(item.country).toUpperCase(), region: canonicalRegion(item.region, item.country), candidates,
-      artwork: safeUrl(item.artwork), originalUrl: safeUrl(item.website), createdAt: ''
+      artwork: safeUrl(item.artwork), originalUrl, createdAt: ''
     };
   }
 
@@ -367,7 +371,6 @@
   }
 
   function ensureRoot() {
-    window.WRNAudioTab181?.close?.();
     document.getElementById('wrn-audio-tab-181')?.remove();
     let root = document.getElementById(VIEW_ID);
     if (root) return root;
@@ -412,7 +415,13 @@
     const parts = [item.sourceName, item.createdAt ? new Date(item.createdAt).toLocaleDateString(languageCode()) : '', item.language && item.language !== 'und' ? item.language.toUpperCase() : '', item.duration, regionLabel(item.region)].filter(Boolean);
     meta.textContent = parts.join(' · '); card.append(meta);
     if (item.description) { const desc = document.createElement('p'); desc.textContent = item.description.slice(0, 700); card.append(desc); }
-    appendMedia(card, item);
+    if (item.candidates.length) appendMedia(card, item);
+    else {
+      const unavailable = document.createElement('p');
+      unavailable.className = 'wrn-audio-warning-183';
+      unavailable.textContent = t.streamUnavailable;
+      card.append(unavailable);
+    }
     const links = document.createElement('div'); links.className = 'wrn-audio-links-183';
     if (item.originalUrl) { const link = document.createElement('a'); link.href=item.originalUrl; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; link.textContent=t.originalLink; links.append(link); }
     if (item.feedUrl) { const link = document.createElement('a'); link.href=item.feedUrl; link.target='_blank'; link.rel='noopener noreferrer'; link.referrerPolicy='no-referrer'; link.textContent=t.feedLink; links.append(link); }
@@ -446,7 +455,9 @@
       const episodes=episodeCounts(); const sources=configuredSourceCounts();
       REGIONS.forEach(region=>{
         const count=episodes[region]||0; const sourceCount=sources[region]||0;
-        const suffix=count>0?String(count):(sourceCount>0?`${sourceCount}Q`:'0');
+        const suffix=count>0
+          ?String(count)
+          :(sourceCount>0?`${sourceCount} ${sourceCount===1?t.source:t.sources}`:'0');
         const button=makeButton(`${regionLabel(region)} (${suffix})`, `wrn-audio-region-183${state.region===region?' active':''}`,()=>{state.region=region; renderList(); document.querySelectorAll('.wrn-audio-region-183').forEach(node=>node.classList.toggle('active',node===button));});
         button.title=count>0?`${count} ${t.episodes}`:`${sourceCount} ${t.sources}`; regions.append(button);
       }); root.append(regions);
@@ -481,7 +492,7 @@
   }
   function close(){state.active=false; const root=document.getElementById(VIEW_ID); if(root){root.hidden=true;root.style.display='none';} if(document.body.dataset.wrnTab==='audio')delete document.body.dataset.wrnTab; restoreStandardViews();}
 
-  const api=Object.freeze({ version:'1.8.3', open, close, show:open, hide:close, render, refresh:()=>loadView(true), identifyRegion:canonicalRegion, normalizePodcast:(item,kind='original')=>normalizePodcast(item,kind,sourceMaps(state.sources)), getState:()=>({active:state.active,view:state.view,counts:{original:state.original.length,generated:state.generated.length,radio:state.radio.length}}) });
+  const api=Object.freeze({ version:'1.8.4', open, close, show:open, hide:close, render, refresh:()=>loadView(true), identifyRegion:canonicalRegion, normalizePodcast:(item,kind='original')=>normalizePodcast(item,kind,sourceMaps(state.sources)), getState:()=>({active:state.active,view:state.view,counts:{original:state.original.length,generated:state.generated.length,radio:state.radio.length}}) });
   window.WRNAudioTab181=api; window.WRNAudioTab183=api;
   window.openAudioHub=(tab='original',highlightId='')=>open(tab,highlightId);
   window.openPodcastLibrary=(highlightId='')=>open(highlightId?'generated':'original',highlightId);
