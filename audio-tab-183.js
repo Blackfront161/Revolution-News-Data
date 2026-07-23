@@ -51,33 +51,33 @@
     },
     de: {
       title: 'Audio-Hub', original: 'Original-Podcasts', generated: 'Erzeugte Podcasts', radio: 'Live-Radio',
-      intro: 'Unabhaengige Podcasts, oeffentliche Azure-Audios und Live-Radio in einem Player.', search: 'Audio durchsuchen...',
+      intro: 'Unabhängige Podcasts, öffentliche Azure-Audios und Live-Radio in einem Player.', search: 'Audio durchsuchen...',
       allSources: 'Alle Quellen', allLanguages: 'Alle Sprachen', refresh: 'Neu laden', loading: 'Audio wird geladen...',
-      empty: 'Keine passenden Audios gefunden.', configured: 'Quelle eingerichtet; Folgen erscheinen nach der naechsten Datenaktualisierung.',
-      configuredMany: 'Quellen eingerichtet; Folgen erscheinen nach der naechsten Datenaktualisierung.', publicLibrary: 'Oeffentliche Bibliothek',
-      workerFallback: 'Die oeffentliche Bibliothek ist voruebergehend nicht erreichbar. Zwischengespeicherte Eintraege werden angezeigt.', originalLink: 'Original oeffnen',
-      feedLink: 'Feed oeffnen', source: 'Quelle', episodes: 'Folgen', sources: 'Quellen', privacy: 'Oeffentlich erzeugte Podcasts werden bis zu 30 Tage angezeigt.', streamUnavailable: 'Derzeit ist kein direkter Browser-Stream verfuegbar. Oeffne die Senderseite.',
+      empty: 'Keine passenden Audios gefunden.', configured: 'Quelle eingerichtet; Folgen erscheinen nach der nächsten Datenaktualisierung.',
+      configuredMany: 'Quellen eingerichtet; Folgen erscheinen nach der nächsten Datenaktualisierung.', publicLibrary: 'Öffentliche Bibliothek',
+      workerFallback: 'Die öffentliche Bibliothek ist vorübergehend nicht erreichbar. Zwischengespeicherte Einträge werden angezeigt.', originalLink: 'Original öffnen',
+      feedLink: 'Feed öffnen', source: 'Quelle', episodes: 'Folgen', sources: 'Quellen', privacy: 'Öffentlich erzeugte Podcasts werden bis zu 30 Tage angezeigt.', streamUnavailable: 'Derzeit ist kein direkter Browser-Stream verfügbar. Öffne die Senderseite.',
       global: 'Alle Regionen', europe: 'Europa', africa: 'Afrika', northAmerica: 'Nordamerika', latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Ozeanien'
     },
     es: {
       title: 'Centro de audio', original: 'Podcasts originales', generated: 'Podcasts generados', radio: 'Radio en directo',
-      intro: 'Podcasts independientes, audios publicos de Azure y radio en un solo reproductor.', search: 'Buscar audio...',
+      intro: 'Podcasts independientes, audios públicos de Azure y radio en un solo reproductor.', search: 'Buscar audio...',
       allSources: 'Todas las fuentes', allLanguages: 'Todos los idiomas', refresh: 'Actualizar', loading: 'Cargando audio...',
-      empty: 'No se encontro audio.', configured: 'fuente configurada; los episodios apareceran tras la proxima actualizacion.',
-      configuredMany: 'fuentes configuradas; los episodios apareceran tras la proxima actualizacion.', publicLibrary: 'Biblioteca publica',
-      workerFallback: 'La biblioteca publica no esta disponible temporalmente. Se muestran elementos en cache.', originalLink: 'Abrir original',
-      feedLink: 'Abrir feed', source: 'Fuente', episodes: 'episodios', sources: 'fuentes', privacy: 'Los podcasts publicos generados se muestran hasta 30 dias.', streamUnavailable: 'No hay un stream directo disponible. Abre la pagina de la emisora.',
-      global: 'Todas las regiones', europe: 'Europa', africa: 'Africa', northAmerica: 'Norteamerica', latinAmerica: 'Latinoamerica', asia: 'Asia', oceania: 'Oceania'
+      empty: 'No se encontró audio.', configured: 'fuente configurada; los episodios aparecerán tras la próxima actualización.',
+      configuredMany: 'fuentes configuradas; los episodios aparecerán tras la próxima actualización.', publicLibrary: 'Biblioteca pública',
+      workerFallback: 'La biblioteca pública no está disponible temporalmente. Se muestran elementos en caché.', originalLink: 'Abrir original',
+      feedLink: 'Abrir feed', source: 'Fuente', episodes: 'episodios', sources: 'fuentes', privacy: 'Los podcasts públicos generados se muestran hasta 30 días.', streamUnavailable: 'No hay un stream directo disponible. Abre la página de la emisora.',
+      global: 'Todas las regiones', europe: 'Europa', africa: 'África', northAmerica: 'Norteamérica', latinAmerica: 'Latinoamérica', asia: 'Asia', oceania: 'Oceanía'
     },
     fr: {
-      title: 'Espace audio', original: 'Podcasts originaux', generated: 'Podcasts generes', radio: 'Radio en direct',
-      intro: 'Podcasts independants, audios Azure publics et radio dans un lecteur unique.', search: 'Rechercher un audio...',
+      title: 'Espace audio', original: 'Podcasts originaux', generated: 'Podcasts générés', radio: 'Radio en direct',
+      intro: 'Podcasts indépendants, audios Azure publics et radio dans un lecteur unique.', search: 'Rechercher un audio...',
       allSources: 'Toutes les sources', allLanguages: 'Toutes les langues', refresh: 'Actualiser', loading: 'Chargement audio...',
-      empty: 'Aucun audio correspondant.', configured: 'source configuree; les episodes apparaitront apres la prochaine mise a jour.',
-      configuredMany: 'sources configurees; les episodes apparaitront apres la prochaine mise a jour.', publicLibrary: 'Bibliotheque publique',
-      workerFallback: 'La bibliotheque publique est temporairement indisponible. Les elements en cache sont affiches.', originalLink: 'Ouvrir l original',
-      feedLink: 'Ouvrir le flux', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Les podcasts generes publics sont affiches pendant 30 jours maximum.', streamUnavailable: 'Aucun flux direct n est disponible. Ouvrez le site de la station.',
-      global: 'Toutes les regions', europe: 'Europe', africa: 'Afrique', northAmerica: 'Amerique du Nord', latinAmerica: 'Amerique latine', asia: 'Asie', oceania: 'Oceanie'
+      empty: 'Aucun audio correspondant.', configured: 'source configurée ; les épisodes apparaîtront après la prochaine mise à jour.',
+      configuredMany: 'sources configurées ; les épisodes apparaîtront après la prochaine mise à jour.', publicLibrary: 'Bibliothèque publique',
+      workerFallback: 'La bibliothèque publique est temporairement indisponible. Les éléments en cache sont affichés.', originalLink: 'Ouvrir l’original',
+      feedLink: 'Ouvrir le flux', source: 'Source', episodes: 'épisodes', sources: 'sources', privacy: 'Les podcasts générés publics sont affichés pendant 30 jours maximum.', streamUnavailable: 'Aucun flux direct n’est disponible. Ouvrez le site de la station.',
+      global: 'Toutes les régions', europe: 'Europe', africa: 'Afrique', northAmerica: 'Amérique du Nord', latinAmerica: 'Amérique latine', asia: 'Asie', oceania: 'Océanie'
     },
     it: {
       title: 'Hub audio', original: 'Podcast originali', generated: 'Podcast generati', radio: 'Radio in diretta',
@@ -85,49 +85,49 @@
       allSources: 'Tutte le fonti', allLanguages: 'Tutte le lingue', refresh: 'Aggiorna', loading: 'Caricamento audio...',
       empty: 'Nessun audio corrispondente.', configured: 'fonte configurata; gli episodi appariranno dopo il prossimo aggiornamento.',
       configuredMany: 'fonti configurate; gli episodi appariranno dopo il prossimo aggiornamento.', publicLibrary: 'Biblioteca pubblica',
-      workerFallback: 'La biblioteca pubblica e temporaneamente non disponibile. Sono mostrati gli elementi in cache.', originalLink: 'Apri originale',
-      feedLink: 'Apri feed', source: 'Fonte', episodes: 'episodi', sources: 'fonti', privacy: 'I podcast pubblici generati sono mostrati per un massimo di 30 giorni.', streamUnavailable: 'Nessuno stream diretto e disponibile. Apri il sito della stazione.',
+      workerFallback: 'La biblioteca pubblica è temporaneamente non disponibile. Sono mostrati gli elementi in cache.', originalLink: 'Apri originale',
+      feedLink: 'Apri feed', source: 'Fonte', episodes: 'episodi', sources: 'fonti', privacy: 'I podcast pubblici generati sono mostrati per un massimo di 30 giorni.', streamUnavailable: 'Nessuno stream diretto è disponibile. Apri il sito della stazione.',
       global: 'Tutte le regioni', europe: 'Europa', africa: 'Africa', northAmerica: 'Nord America', latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Oceania'
     },
     pt: {
-      title: 'Central de audio', original: 'Podcasts originais', generated: 'Podcasts gerados', radio: 'Radio ao vivo',
-      intro: 'Podcasts independentes, audios publicos do Azure e radio num unico leitor.', search: 'Pesquisar audio...',
-      allSources: 'Todas as fontes', allLanguages: 'Todos os idiomas', refresh: 'Atualizar', loading: 'Carregando audio...',
-      empty: 'Nenhum audio correspondente.', configured: 'fonte configurada; os episodios aparecerao apos a proxima atualizacao.',
-      configuredMany: 'fontes configuradas; os episodios aparecerao apos a proxima atualizacao.', publicLibrary: 'Biblioteca publica',
-      workerFallback: 'A biblioteca publica esta temporariamente indisponivel. Itens em cache sao exibidos.', originalLink: 'Abrir original',
-      feedLink: 'Abrir feed', source: 'Fonte', episodes: 'episodios', sources: 'fontes', privacy: 'Podcasts publicos gerados ficam visiveis por ate 30 dias.', streamUnavailable: 'Nao ha stream direto disponivel. Abra o site da estacao.',
-      global: 'Todas as regioes', europe: 'Europa', africa: 'Africa', northAmerica: 'America do Norte', latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Oceania'
+      title: 'Central de áudio', original: 'Podcasts originais', generated: 'Podcasts gerados', radio: 'Rádio ao vivo',
+      intro: 'Podcasts independentes, áudios públicos do Azure e rádio num único leitor.', search: 'Pesquisar áudio...',
+      allSources: 'Todas as fontes', allLanguages: 'Todos os idiomas', refresh: 'Atualizar', loading: 'Carregando áudio...',
+      empty: 'Nenhum áudio correspondente.', configured: 'fonte configurada; os episódios aparecerão após a próxima atualização.',
+      configuredMany: 'fontes configuradas; os episódios aparecerão após a próxima atualização.', publicLibrary: 'Biblioteca pública',
+      workerFallback: 'A biblioteca pública está temporariamente indisponível. Itens em cache são exibidos.', originalLink: 'Abrir original',
+      feedLink: 'Abrir feed', source: 'Fonte', episodes: 'episódios', sources: 'fontes', privacy: 'Podcasts públicos gerados ficam visíveis por até 30 dias.', streamUnavailable: 'Não há stream direto disponível. Abra o site da estação.',
+      global: 'Todas as regiões', europe: 'Europa', africa: 'África', northAmerica: 'América do Norte', latinAmerica: 'América Latina', asia: 'Ásia', oceania: 'Oceania'
     },
     ru: {
-      title: 'Audiohub', original: 'Originalnye podkasty', generated: 'Sozdannye podkasty', radio: 'Prjamoe radio',
-      intro: 'Nezavisimye podkasty, publichnye audio Azure i radio v odnom proigryvatele.', search: 'Poisk audio...',
-      allSources: 'Vse istochniki', allLanguages: 'Vse jazyki', refresh: 'Obnovit', loading: 'Zagruzka audio...',
-      empty: 'Podhodjaschee audio ne najdeno.', configured: 'istochnik nastroen; vypuski pojavjatsja posle sledujuschego obnovlenija.',
-      configuredMany: 'istochniki nastroeny; vypuski pojavjatsja posle sledujuschego obnovlenija.', publicLibrary: 'Publichnaja biblioteka',
-      workerFallback: 'Publichnaja biblioteka vremenno nedostupna. Pokazany keshirovannye zapisi.', originalLink: 'Otkryt original',
-      feedLink: 'Otkryt lentu', source: 'Istochnik', episodes: 'vypuskov', sources: 'istochnikov', privacy: 'Publichnye sozdannye podkasty pokazyvajutsja do 30 dnej.', streamUnavailable: 'Prjamoj potok nedostupen. Otkrojte sajt stancii.',
-      global: 'Vse regiony', europe: 'Evropa', africa: 'Afrika', northAmerica: 'Severnaja Amerika', latinAmerica: 'Latinskaja Amerika', asia: 'Azija', oceania: 'Okeanija'
+      title: 'Аудиоцентр', original: 'Оригинальные подкасты', generated: 'Созданные подкасты', radio: 'Прямой эфир',
+      intro: 'Независимые подкасты, общедоступные аудио Azure и радио в одном проигрывателе.', search: 'Поиск аудио...',
+      allSources: 'Все источники', allLanguages: 'Все языки', refresh: 'Обновить', loading: 'Загрузка аудио...',
+      empty: 'Подходящие аудио не найдены.', configured: 'источник настроен; выпуски появятся после следующего обновления данных.',
+      configuredMany: 'источники настроены; выпуски появятся после следующего обновления данных.', publicLibrary: 'Общедоступная библиотека',
+      workerFallback: 'Общедоступная библиотека временно недоступна. Показаны сохранённые записи.', originalLink: 'Открыть оригинал',
+      feedLink: 'Открыть ленту', source: 'Источник', episodes: 'выпусков', sources: 'источников', privacy: 'Общедоступные созданные подкасты показываются до 30 дней.', streamUnavailable: 'Прямой поток недоступен. Откройте сайт станции.',
+      global: 'Все регионы', europe: 'Европа', africa: 'Африка', northAmerica: 'Северная Америка', latinAmerica: 'Латинская Америка', asia: 'Азия', oceania: 'Океания'
     },
     el: {
-      title: 'Kentro ichou', original: 'Prototypa podcast', generated: 'Paragomena podcast', radio: 'Zontano radiofono',
-      intro: 'Anexartita podcast, dimosia audio Azure kai radio se enan anaparagogea.', search: 'Anazitisi ichou...',
-      allSources: 'Oles oi piges', allLanguages: 'Oles oi glosses', refresh: 'Ananeosi', loading: 'Fortosi ichou...',
-      empty: 'Den vrethike ichos.', configured: 'pigi rythmismeni; ta epeisodia tha emfanistoun meta tin epomeni enimerosi.',
-      configuredMany: 'piges rythmismenes; ta epeisodia tha emfanistoun meta tin epomeni enimerosi.', publicLibrary: 'Dimosia vivliothiki',
-      workerFallback: 'I dimosia vivliothiki den einai prosorina diathesimi. Emfanizontai apothikevmena stoicheia.', originalLink: 'Anoigma prototypou',
-      feedLink: 'Anoigma rois', source: 'Pigi', episodes: 'epeisodia', sources: 'piges', privacy: 'Ta dimosia paragomena podcast emfanizontai eos 30 imeres.', streamUnavailable: 'Den yparchei amesi roi. Anoikste ton istotopo tou stathmou.',
-      global: 'Oles oi perioxes', europe: 'Evropi', africa: 'Afriki', northAmerica: 'Voreia Ameriki', latinAmerica: 'Latiniki Ameriki', asia: 'Asia', oceania: 'Okeania'
+      title: 'Κέντρο ήχου', original: 'Πρωτότυπα podcast', generated: 'Παραγόμενα podcast', radio: 'Ζωντανό ραδιόφωνο',
+      intro: 'Ανεξάρτητα podcast, δημόσια ηχητικά Azure και ραδιόφωνο σε ένα πρόγραμμα αναπαραγωγής.', search: 'Αναζήτηση ήχου...',
+      allSources: 'Όλες οι πηγές', allLanguages: 'Όλες οι γλώσσες', refresh: 'Ανανέωση', loading: 'Φόρτωση ήχου...',
+      empty: 'Δεν βρέθηκε αντίστοιχο ηχητικό.', configured: 'η πηγή ρυθμίστηκε· τα επεισόδια θα εμφανιστούν μετά την επόμενη ενημέρωση.',
+      configuredMany: 'οι πηγές ρυθμίστηκαν· τα επεισόδια θα εμφανιστούν μετά την επόμενη ενημέρωση.', publicLibrary: 'Δημόσια βιβλιοθήκη',
+      workerFallback: 'Η δημόσια βιβλιοθήκη δεν είναι προσωρινά διαθέσιμη. Εμφανίζονται αποθηκευμένες εγγραφές.', originalLink: 'Άνοιγμα πρωτοτύπου',
+      feedLink: 'Άνοιγμα ροής', source: 'Πηγή', episodes: 'επεισόδια', sources: 'πηγές', privacy: 'Τα δημόσια παραγόμενα podcast εμφανίζονται έως 30 ημέρες.', streamUnavailable: 'Δεν υπάρχει άμεση ροή. Ανοίξτε τον ιστότοπο του σταθμού.',
+      global: 'Όλες οι περιοχές', europe: 'Ευρώπη', africa: 'Αφρική', northAmerica: 'Βόρεια Αμερική', latinAmerica: 'Λατινική Αμερική', asia: 'Ασία', oceania: 'Ωκεανία'
     },
     tr: {
-      title: 'Ses merkezi', original: 'Orijinal podcastler', generated: 'Olusturulan podcastler', radio: 'Canli radyo',
-      intro: 'Bagimsiz podcastler, herkese acik Azure sesleri ve radyo tek oynaticida.', search: 'Ses ara...',
-      allSources: 'Tum kaynaklar', allLanguages: 'Tum diller', refresh: 'Yenile', loading: 'Ses yukleniyor...',
-      empty: 'Eslesen ses bulunamadi.', configured: 'kaynak yapilandirildi; bolumler sonraki veri guncellemesinden sonra gorunecek.',
-      configuredMany: 'kaynak yapilandirildi; bolumler sonraki veri guncellemesinden sonra gorunecek.', publicLibrary: 'Herkese acik kutuphane',
-      workerFallback: 'Herkese acik kutuphane gecici olarak kullanilamiyor. Onbellekteki ogeler gosteriliyor.', originalLink: 'Orijinali ac',
-      feedLink: 'Akisi ac', source: 'Kaynak', episodes: 'bolum', sources: 'kaynak', privacy: 'Herkese acik olusturulan podcastler 30 güne kadar gosterilir.', streamUnavailable: 'Dogrudan yayin kullanilamiyor. Istasyon sitesini acin.',
-      global: 'Tum bolgeler', europe: 'Avrupa', africa: 'Afrika', northAmerica: 'Kuzey Amerika', latinAmerica: 'Latin Amerika', asia: 'Asya', oceania: 'Okyanusya'
+      title: 'Ses merkezi', original: 'Orijinal podcastler', generated: 'Oluşturulan podcastler', radio: 'Canlı radyo',
+      intro: 'Bağımsız podcastler, herkese açık Azure sesleri ve radyo tek oynatıcıda.', search: 'Ses ara...',
+      allSources: 'Tüm kaynaklar', allLanguages: 'Tüm diller', refresh: 'Yenile', loading: 'Ses yükleniyor...',
+      empty: 'Eşleşen ses bulunamadı.', configured: 'kaynak yapılandırıldı; bölümler sonraki veri güncellemesinden sonra görünecek.',
+      configuredMany: 'kaynaklar yapılandırıldı; bölümler sonraki veri güncellemesinden sonra görünecek.', publicLibrary: 'Herkese açık kütüphane',
+      workerFallback: 'Herkese açık kütüphane geçici olarak kullanılamıyor. Önbellekteki öğeler gösteriliyor.', originalLink: 'Orijinali aç',
+      feedLink: 'Akışı aç', source: 'Kaynak', episodes: 'bölüm', sources: 'kaynak', privacy: 'Herkese açık oluşturulan podcastler 30 güne kadar gösterilir.', streamUnavailable: 'Doğrudan yayın kullanılamıyor. İstasyon sitesini açın.',
+      global: 'Tüm bölgeler', europe: 'Avrupa', africa: 'Afrika', northAmerica: 'Kuzey Amerika', latinAmerica: 'Latin Amerika', asia: 'Asya', oceania: 'Okyanusya'
     }
   };
 
@@ -257,6 +257,25 @@
     });
   }
 
+  function dedupeGenerated(items) {
+    const sorted = [...items].sort((a, b) =>
+      new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+    );
+    const seen = new Set();
+    return sorted.filter(item => {
+      const identity = key([
+        item.title,
+        item.originalUrl,
+        item.language,
+        item.mode,
+        item.voice
+      ].join('|')) || key(item.candidates?.[0] || item.rawId);
+      if (!identity || seen.has(identity)) return false;
+      seen.add(identity);
+      return true;
+    });
+  }
+
   async function fetchJson(url, options = {}) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), options.timeout || 9000);
@@ -314,7 +333,7 @@
       } catch {}
     }
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
-    state.generated = dedupe(collected.map(item => normalizePodcast(item, 'generated', maps)).filter(Boolean).filter(item => {
+    state.generated = dedupeGenerated(collected.map(item => normalizePodcast(item, 'generated', maps)).filter(Boolean).filter(item => {
       if (!item.createdAt) return true;
       const time = new Date(item.createdAt).getTime();
       return !Number.isFinite(time) || time >= cutoff;

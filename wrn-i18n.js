@@ -404,7 +404,7 @@
 
   const FALLBACK_REGIONS = Object.freeze({
     Global:'Global', Europe:'Europe', Africa:'Africa', 'North America':'North America',
-    'Latin America':'Latin America', Asia:'Asia', 'Australia & NZ':'Australia & New Zealand'
+    'Latin America':'Latin America', Asia:'Asia', 'Australia & NZ':'Oceania'
   });
 
   function normalizeLanguage(value) {

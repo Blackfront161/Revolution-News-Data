@@ -4,6 +4,9 @@
 .wrn-video-head { display:flex; justify-content:space-between; gap:1rem; align-items:flex-start; margin-bottom:1rem; }
 .wrn-video-head h2 { margin:0 0 .35rem; }
 .wrn-video-head p { margin:0; max-width:70ch; opacity:.82; }
+.wrn-video-modes { display:flex; flex-wrap:wrap; gap:.6rem; margin:0 0 .8rem; }
+.wrn-video-modes button { min-height:2.7rem; padding:.5rem 1rem; border:1px solid var(--color-red,#ff3157); border-radius:999px; background:transparent; color:inherit; cursor:pointer; font-weight:800; }
+.wrn-video-modes button.active { background:var(--color-red,#ff3157); color:#080a0d; }
 .wrn-video-controls { display:grid; grid-template-columns:minmax(0,1fr) minmax(11rem,auto) minmax(11rem,auto); gap:.6rem; margin-bottom:.7rem; }
 .wrn-video-controls input, .wrn-video-controls select { width:100%; min-height:2.8rem; border:1px solid var(--border-color,rgba(255,255,255,.2)); border-radius:.65rem; background:var(--card-bg,#171717); color:inherit; padding:.55rem .7rem; }
 .wrn-video-privacy { margin:.4rem 0 1rem; font-size:.9rem; opacity:.78; }

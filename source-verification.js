@@ -687,8 +687,15 @@
     };
 
     const insertButton = () => {
-        if (document.getElementById('wrn-source-verification-open')) {
-            return true;
+        const existing = document.getElementById('wrn-source-verification-open');
+        const moreGrid = document.querySelector('.wrn-more-grid');
+
+        if (existing) {
+            if (moreGrid && existing.parentElement !== moreGrid) {
+                moreGrid.appendChild(existing);
+            }
+            existing.hidden = !moreGrid;
+            return Boolean(moreGrid);
         }
 
         const button = document.createElement('button');
@@ -698,22 +705,13 @@
         button.textContent = t().open;
         button.addEventListener('click', open);
 
-        const moreGrid = document.querySelector('.wrn-more-grid');
-
         if (moreGrid) {
             moreGrid.appendChild(button);
             return true;
         }
 
-        const headerButtons = document.querySelector(
-            '.wrn-header-actions, .header-controls, header'
-        );
-
-        if (headerButtons) {
-            headerButtons.appendChild(button);
-            return true;
-        }
-
+        button.hidden = true;
+        document.body.appendChild(button);
         return false;
     };
 
@@ -1091,17 +1089,30 @@
 
     function init() {
         ensureModal();
+        insertButton();
 
-        if (!insertButton()) {
-            let attempts = 0;
-            const timer = window.setInterval(() => {
-                attempts += 1;
+        /*
+         * Die neue Navigation erzeugt das Mehr-Menü teilweise erst nach
+         * diesem Modul. Deshalb auch dann kurz weiterprüfen, wenn der
+         * Übergangsbutton bereits im Header angelegt werden konnte.
+         */
+        let attempts = 0;
+        const timer = window.setInterval(() => {
+            attempts += 1;
+            insertButton();
 
-                if (insertButton() || attempts >= 30) {
-                    window.clearInterval(timer);
-                }
-            }, 250);
-        }
+            const button = document.getElementById(
+                'wrn-source-verification-open'
+            );
+            const moreGrid = document.querySelector('.wrn-more-grid');
+
+            if (
+                (button && moreGrid && button.parentElement === moreGrid)
+                || attempts >= 30
+            ) {
+                window.clearInterval(timer);
+            }
+        }, 250);
 
         document.getElementById('ui-language')
             ?.addEventListener('change', () => {

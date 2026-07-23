@@ -456,7 +456,9 @@ class ReleaseAudit:
         self.add(
             "header-responsive-size",
             "header",
-            "object-fit: cover" in css and "max-height" in css,
+            "object-fit: contain" in css
+            and "aspect-ratio:" in css
+            and "max-height" in css,
             "Header banner has bounded responsive sizing",
         )
         self.add(

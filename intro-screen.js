@@ -46,12 +46,9 @@
                     decoding="async"
                 >
 
-                <img
-                    class="wrn-intro-wordmark-1720"
-                    src="./wrn-future-header.webp?v=1720"
-                    alt="World Revolution News"
-                    decoding="async"
-                >
+                <div class="wrn-intro-wordmark-1720">
+                    WORLD REVOLUTION NEWS
+                </div>
 
                 <div
                     class="wrn-intro-progress-track-1720"

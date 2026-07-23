@@ -9,6 +9,14 @@
   const SOURCE_BAR_ID = 'wrn-source-range-bar-183';
   const ZINE_EDITOR_CLASS = 'wrn-zine-editor-183';
   const DAY_MS = 86400000;
+  const TOPIC_CATEGORIES = new Set([
+    'Labor Struggles', 'Antifascism', 'Antisexism', 'Queer-Feminism', 'Antiracism',
+    'No Borders', 'Anticapitalism', 'Theory & Strategy', 'Anticolonialism',
+    'Anti-Imperialism', 'Squatting & Housing', 'Demonstrations', 'Anti-Rep & Prisons',
+    'Cyberactivism', 'No War', 'Animal Liberation', 'Eco-Anarchism',
+    'Indigenous Struggles', 'Radical Health & Disability', 'Libraries',
+    CORRUPTION_CATEGORY
+  ]);
 
   const TEXTS = Object.freeze({
     en: {
@@ -172,12 +180,27 @@
   function rowsForCategory(input, category = currentCategory()) {
     const rows = Array.isArray(input) ? input : [];
     if (category === CORRUPTION_CATEGORY) return rows.filter(matchesCorruption);
-    if (category === 'Global' || !category) return rows;
+    if (category === 'Global' || !category) {
+      return rows.filter(item => (
+        item?.type !== 'event'
+        && item?.sourceType !== 'radar-api'
+        && !getArticleCategoriesSafe(item).includes('Radar')
+      ));
+    }
     if (['Bookmarks', 'Read'].includes(category)) return [];
     if (typeof articleMatchesCategory === 'function') {
       try { return rows.filter(item => articleMatchesCategory(item, category)); } catch {}
     }
     return rows;
+  }
+
+  function getArticleCategoriesSafe(item) {
+    if (typeof getArticleCategories === 'function') {
+      try { return getArticleCategories(item); } catch {}
+    }
+    const categories = Array.isArray(item?.categories) ? item.categories : [];
+    const legacy = clean(item?.kontinent);
+    return legacy ? [...categories, legacy] : categories;
   }
 
   function baseArticlesForCategory(category = currentCategory()) {
@@ -355,7 +378,7 @@
           <label><span data-source-range-period></span>
             <select data-source-range-days>
               <option value="1"></option>
-              <option value="7"></option>
+              <option value="7" selected></option>
               <option value="30"></option>
             </select>
           </label>
@@ -411,6 +434,16 @@
     if (days === 30) await ensureThirtyDayArchive();
     state.appliedDays = days;
     try { window.applyFilters?.(); } catch (error) { console.error(error); }
+    const selected = [...state.selectedSources];
+    const periodLabel = document.querySelector(
+      `#${SOURCE_BAR_ID} [data-source-range-days]`
+    )?.selectedOptions?.[0]?.textContent || `${days} days`;
+    status(
+      selected.length
+        ? `${selected.join(' · ')} — ${periodLabel}`
+        : `${text().allSources} — ${periodLabel}`,
+      'ok'
+    );
     renderSourceChoices();
   }
 
@@ -454,6 +487,16 @@
       const result = originalLoad.call(this, value, ...rest);
       queueSourceBarRefresh();
       queueCorruptionTab();
+      const sparseTopic = TOPIC_CATEGORIES.has(value)
+        && baseArticlesForCategory(value).length < 12;
+      if (sparseTopic && !state.fullArchiveLoaded && !state.archiveLoading) {
+        ensureThirtyDayArchive().then(loaded => {
+          if (!loaded || currentCategory() !== value) return;
+          originalLoad.call(window, value, ...rest);
+          queueSourceBarRefresh();
+          queueCorruptionTab();
+        });
+      }
       return result;
     };
   }
@@ -506,7 +549,13 @@
     if (id.startsWith('zine-') || classes.includes('btn-zine-article') || /zine/.test(label)) return 'zine';
     if (id.startsWith('readstate-') || classes.includes('btn-read-state') || /gelesen|mark read|\bread\b|leido|okun/.test(label)) return 'read';
     if (/share|teilen|partag|compart|condiv|paylas|κοινο/.test(label)) return 'share';
-    if (node.matches('a[href], [data-link], [data-url]') && /original|quelle|source/.test(label)) return 'original';
+    if (
+      node.matches('a[href], [data-link], [data-url]')
+      && (
+        classes.includes('original')
+        || /original|quelle|source|оригинал|πρωτότυπ|orijinal/.test(label)
+      )
+    ) return 'original';
     if (id.startsWith('btn-') || /ubersetz|translate|traduc|tradu|перев|μεταφ|cevir/.test(label)) return 'translate';
     return '';
   }
@@ -545,7 +594,11 @@
         compact.type = 'button';
         compact.className = 'wrn-card-language-action-183';
         compact.dataset.wrnCardOnly = 'true';
-        compact.textContent = '文';
+        compact.innerHTML = `
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="url(#rbGrad)" stroke="currentColor" stroke-width=".7"
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>`;
         compact.addEventListener('click', event => {
           event.preventDefault();
           event.stopPropagation();
@@ -557,11 +610,52 @@
         compact.dataset.label = compactTranslateLabel(originalTranslate);
         compact.title = compact.dataset.label;
         compact.setAttribute('aria-label', compact.dataset.label);
+        compact.classList.toggle(
+          'is-loading',
+          Boolean(originalTranslate.disabled)
+          || /loading|laden|charg|carg|загруз|φόρτ|yüklen/.test(
+            normalize(originalTranslate.textContent)
+          )
+        );
       };
       sync();
       if (!originalTranslate.dataset.wrnCompactObserver) {
         originalTranslate.dataset.wrnCompactObserver = '183';
         new MutationObserver(sync).observe(originalTranslate, { childList: true, characterData: true, subtree: true });
+      }
+    }
+
+    const originalAction = typed.get('original');
+    if (originalAction && !card.classList.contains('wrn-detail-card')) {
+      let quickRow = card.querySelector(':scope > .wrn-card-quick-actions-184');
+      if (!quickRow) {
+        quickRow = document.createElement('div');
+        quickRow.className = 'wrn-card-quick-actions-184';
+        card.appendChild(quickRow);
+      }
+      let quickOriginal = quickRow.querySelector('[data-wrn-quick-original]');
+      if (!quickOriginal) {
+        quickOriginal = document.createElement('a');
+        quickOriginal.dataset.wrnQuickOriginal = 'true';
+        quickOriginal.className = 'wrn-card-original-action-184';
+        quickOriginal.target = '_blank';
+        quickOriginal.rel = 'noopener noreferrer';
+        quickRow.appendChild(quickOriginal);
+      }
+      quickOriginal.textContent = clean(originalAction.textContent) || 'Original';
+      const href = originalAction.getAttribute?.('href')
+        || originalAction.dataset?.link
+        || originalAction.dataset?.url
+        || '';
+      if (href) {
+        quickOriginal.href = href;
+        quickOriginal.onclick = null;
+      } else {
+        quickOriginal.removeAttribute('href');
+        quickOriginal.onclick = event => {
+          event.preventDefault();
+          originalAction.click();
+        };
       }
     }
     card.dataset.wrnBlock3Decorated = VERSION;
@@ -655,6 +749,109 @@
     });
     commitZine(list);
     return list;
+  }
+
+  function zineHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+  }
+
+  function zineUrl(value) {
+    try {
+      const url = new URL(String(value || ''));
+      return ['http:', 'https:'].includes(url.protocol) ? url.href : '';
+    } catch { return ''; }
+  }
+
+  function printDesignedZine() {
+    const items = syncZineEditor();
+    if (!items.length) return;
+    const settings = window.WRNZineDesigner1719?.settings?.() || {};
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      window.alert(language() === 'de'
+        ? 'Bitte erlaube das Druckfenster für diese App.'
+        : 'Please allow the print window for this app.');
+      return;
+    }
+
+    const format = ['a4', 'a5', 'square', 'story'].includes(settings.format)
+      ? settings.format : 'a4';
+    const style = ['cyber', 'newspaper', 'minimal', 'contrast'].includes(settings.style)
+      ? settings.style : 'cyber';
+    const columns = ['1', '2', '3'].includes(String(settings.columns))
+      ? String(settings.columns) : '2';
+    const images = ['normal', 'gray', 'none'].includes(settings.images)
+      ? settings.images : 'normal';
+    const density = settings.density === 'compact' ? 'compact' : 'comfortable';
+    const pageSize = {
+      a4:'A4 portrait', a5:'A5 portrait', square:'210mm 210mm', story:'108mm 192mm'
+    }[format];
+    const title = zineHtml(settings.headline || 'WORLD REVOLUTION NEWS');
+    const intro = zineHtml(settings.intro || '');
+    const footer = zineHtml(settings.footer || '');
+    const labelSource = language() === 'de' ? 'Quelle' : 'Source';
+    const labelOriginal = language() === 'de' ? 'Original' : 'Original';
+
+    const rows = items.map(article => {
+      const articleTitle = zineHtml(article.title || (language() === 'de' ? 'Ohne Titel' : 'Untitled'));
+      const content = zineHtml(article.content || article.description || article.summary || '')
+        .replace(/\r?\n\r?\n+/g, '</p><p>')
+        .replace(/\r?\n/g, '<br>');
+      const source = zineHtml(sourceName(article) || '—');
+      const date = zineHtml(String(article.pubDate || article.published || '').slice(0, 10));
+      const original = zineUrl(article.link);
+      const image = images === 'none' ? '' : zineUrl(article.image);
+      return `<article class="zine-article">
+        ${image ? `<img class="hero" src="${zineHtml(image)}" alt="">` : ''}
+        <h2>${articleTitle}</h2>
+        <div class="meta">${zineHtml(labelSource)}: ${source}${date ? ` · ${date}` : ''}</div>
+        <div class="copy"><p>${content}</p></div>
+        ${original ? `<p class="original"><strong>${zineHtml(labelOriginal)}:</strong> ${zineHtml(original)}</p>` : ''}
+      </article>`;
+    }).join('');
+
+    const html = `<!doctype html><html><head><meta charset="utf-8"><title>${title}</title>
+      <style>
+        @page { size:${pageSize}; margin:0; }
+        * { box-sizing:border-box; }
+        html,body { margin:0; padding:0; }
+        body { font-family:Arial,sans-serif; line-height:${density === 'compact' ? '1.28' : '1.45'}; }
+        main { min-height:100vh; padding:${density === 'compact' ? '8mm' : '12mm'}; }
+        .issue { margin:0 0 9mm; padding:0 0 5mm; border-bottom:3px solid currentColor; text-align:center; }
+        .issue h1 { margin:0; font-size:24pt; letter-spacing:.04em; }
+        .issue p { margin:3mm auto 0; max-width:75ch; }
+        .zine-article { break-after:page; padding-bottom:7mm; }
+        .zine-article:last-of-type { break-after:auto; }
+        .zine-article h2 { margin:0 0 3mm; font-size:18pt; line-height:1.12; }
+        .meta { margin-bottom:4mm; font-size:9pt; opacity:.75; }
+        .copy { columns:${columns}; column-gap:8mm; }
+        .copy p { margin:0 0 3mm; orphans:3; widows:3; }
+        .hero { width:100%; max-height:70mm; object-fit:cover; margin:0 0 5mm; filter:${images === 'gray' ? 'grayscale(1) contrast(1.05)' : 'none'}; }
+        .original { margin-top:6mm; padding-top:3mm; border-top:1px solid currentColor; font-size:8pt; overflow-wrap:anywhere; }
+        footer { position:fixed; left:8mm; right:8mm; bottom:4mm; text-align:center; font-size:7.5pt; opacity:.7; }
+        body.cyber { background:#05060b; color:#f5f7ff; }
+        body.cyber main { border:2px solid #00e5ef; }
+        body.cyber h1, body.cyber h2 { color:#00e5ef; }
+        body.newspaper { background:#f5f0df; color:#17130d; font-family:Georgia,serif; }
+        body.minimal { background:#fff; color:#151515; }
+        body.contrast { background:#fff; color:#000; font-weight:600; }
+        body.contrast main { border:4px solid #000; }
+        @media screen { main { width:${format === 'a5' ? '148mm' : format === 'story' ? '108mm' : '210mm'}; margin:auto; } }
+      </style></head><body class="${style}"><main>
+        <header class="issue"><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ''}</header>
+        ${rows}
+        ${footer ? `<footer>${footer}</footer>` : ''}
+      </main></body></html>`;
+    printWindow.document.open();
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    window.setTimeout(() => printWindow.print(), 350);
   }
 
   function renderZineEditor() {
@@ -758,20 +955,22 @@
     if (window.__wrnBlock3ZineEditorInstalled) return;
     window.__wrnBlock3ZineEditorInstalled = true;
     const originalOpen = window.openZineManager;
-    const originalPrint = window.printZine;
 
     window.renderZineList = renderZineEditor;
     window.openZineManager = function(...args) {
       const result = typeof originalOpen === 'function' ? originalOpen.apply(this, args) : undefined;
       const title = document.getElementById('zine-modal-title');
       if (title) title.textContent = text().zineTitle;
+      const hint = document.getElementById('zine-modal-hint');
+      if (hint) {
+        hint.textContent = language() === 'de'
+          ? '1. Artikel sammeln · 2. Überschriften und Texte bearbeiten · 3. Format gestalten und als PDF speichern.'
+          : '1. Collect articles · 2. Edit titles and text · 3. Choose a format and save as PDF.';
+      }
       window.setTimeout(renderZineEditor, 0);
       return result;
     };
-    window.printZine = function(...args) {
-      syncZineEditor();
-      return typeof originalPrint === 'function' ? originalPrint.apply(this, args) : undefined;
-    };
+    window.printZine = printDesignedZine;
   }
 
   function showStoriesIndicator(button) {
@@ -786,7 +985,9 @@
       indicator.className = 'wrn-stories-switch-indicator-183';
       document.body.appendChild(indicator);
     }
-    indicator.textContent = text().switching;
+    indicator.innerHTML = `
+      <span class="wrn-rb-star-184" aria-hidden="true">★</span>
+      <span>${text().switching}</span>`;
     indicator.hidden = false;
   }
 

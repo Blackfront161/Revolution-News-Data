@@ -29,7 +29,7 @@
       open: 'Original öffnen', loading: 'Audiodaten werden geladen …', empty: 'Keine passenden Einträge gefunden.',
       failed: 'Audiodaten konnten nicht geladen werden.', retry: 'Erneut laden', noDescription: 'Eine aktuelle Folge dieser unabhängigen Quelle.',
       live: 'LIVE', origin: 'Herkunft', all: 'Global', europe: 'Europa', africa: 'Afrika', northAmerica: 'Nordamerika',
-      latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Australien & Ozeanien', unknown: 'Ohne Zuordnung'
+      latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Ozeanien', unknown: 'Ohne Zuordnung'
     },
     en: {
       title: 'Audio', original: 'Original podcasts', generated: 'Generated podcasts', radio: 'Live radio',
@@ -37,7 +37,7 @@
       open: 'Open original', loading: 'Loading audio data …', empty: 'No matching items found.',
       failed: 'Audio data could not be loaded.', retry: 'Reload', noDescription: 'A current episode from this independent source.',
       live: 'LIVE', origin: 'Origin', all: 'Global', europe: 'Europe', africa: 'Africa', northAmerica: 'North America',
-      latinAmerica: 'Latin America', asia: 'Asia', oceania: 'Australia & Oceania', unknown: 'Unassigned'
+      latinAmerica: 'Latin America', asia: 'Asia', oceania: 'Oceania', unknown: 'Unassigned'
     },
     es: {
       title: 'Audio', original: 'Pódcasts originales', generated: 'Pódcasts generados', radio: 'Radio en directo',
@@ -45,7 +45,7 @@
       open: 'Abrir original', loading: 'Cargando audio …', empty: 'No se encontraron elementos.',
       failed: 'No se pudieron cargar los datos de audio.', retry: 'Volver a cargar', noDescription: 'Un episodio actual de esta fuente independiente.',
       live: 'EN DIRECTO', origin: 'Origen', all: 'Global', europe: 'Europa', africa: 'África', northAmerica: 'Norteamérica',
-      latinAmerica: 'Latinoamérica', asia: 'Asia', oceania: 'Australia y Oceanía', unknown: 'Sin asignar'
+      latinAmerica: 'Latinoamérica', asia: 'Asia', oceania: 'Oceanía', unknown: 'Sin asignar'
     },
     fr: {
       title: 'Audio', original: 'Podcasts originaux', generated: 'Podcasts générés', radio: 'Radio en direct',
@@ -61,7 +61,7 @@
       open: 'Apri originale', loading: 'Caricamento audio …', empty: 'Nessun elemento corrispondente.',
       failed: 'Impossibile caricare i dati audio.', retry: 'Ricarica', noDescription: 'Un episodio recente di questa fonte indipendente.',
       live: 'DAL VIVO', origin: 'Origine', all: 'Globale', europe: 'Europa', africa: 'Africa', northAmerica: 'Nord America',
-      latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Australia e Oceania', unknown: 'Non assegnato'
+      latinAmerica: 'America Latina', asia: 'Asia', oceania: 'Oceania', unknown: 'Non assegnato'
     },
     pt: {
       title: 'Áudio', original: 'Podcasts originais', generated: 'Podcasts gerados', radio: 'Rádio ao vivo',

@@ -3,7 +3,7 @@ import requests
 import cloudscraper
 from bs4 import BeautifulSoup
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import urljoin
 import os
 import re
@@ -159,9 +159,6 @@ quellen = {
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
     "Radar": [
-        {"name": "Radar Squat.net (Global)", "url": "https://morss.it/https://radar.squat.net/de/events/rss"},
-        {"name": "Radar Squat.net (Europa)", "url": "https://morss.it/https://radar.squat.net/de/events/region/Europe/rss"},
-        {"name": "Radar Squat.net (Nordamerika)", "url": "https://morss.it/https://radar.squat.net/de/events/region/North%20America/rss"},
         {"name": "Kontrapolis (Berlin)", "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/"},
         {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
@@ -435,6 +432,152 @@ INCOMPLETE_MARKERS = (
     "full text of this article is protected",
 )
 
+REGION_CATEGORIES = {
+    "Global", "Europe", "Africa", "North America",
+    "Latin America", "Asia", "Australia & NZ",
+}
+TOPIC_CATEGORY_PATTERNS = {
+    "Labor Struggles": (
+        r"\bstrike\b", r"\bstrikers?\b", r"\bworkers?\b", r"\btrade union\b",
+        r"\blabou?r\b", r"\bunionis", r"\bstreik", r"\barbeiter", r"\bgewerkschaft",
+        r"\bgr[eè]ve", r"\bsyndicat", r"\bhuelga", r"\bsindicat", r"\bgrev",
+    ),
+    "Antifascism": (
+        r"\banti[- ]?fasc", r"\bfascis", r"\bneo[- ]?nazi", r"\bfar[- ]right\b",
+        r"\bextreme droite\b", r"\bextrema derecha\b", r"\bultradestra\b",
+        r"\brechtsextrem", r"\bafd\b",
+    ),
+    "Antisexism": (
+        r"\bsexism", r"\bmisogyn", r"\bpatriarch", r"\bsexual violence\b",
+        r"\bsexual assault\b", r"\bharassment\b", r"\bsexismus", r"\bviolaci[oó]n",
+        r"\bviolence sexuelle\b", r"\bviolenza sessuale\b",
+    ),
+    "Queer-Feminism": (
+        r"\bqueer\b", r"\blgbt", r"\btrans(?:gender|phob| rights?)?\b",
+        r"\blesbian", r"\bhomophob", r"\bfeminis", r"\bnon[- ]?binary\b",
+    ),
+    "Antiracism": (
+        r"\banti[- ]?rac", r"\bracis", r"\bwhite supremacy\b",
+        r"\bxenophob", r"\bapartheid\b", r"\brassismus\b",
+    ),
+    "No Borders": (
+        r"\bmigran", r"\brefugee", r"\basylum\b", r"\bborder", r"\bdeport",
+        r"\bimmigration\b", r"\bfl[uü]cht", r"\babschieb", r"\br[eé]fugi",
+    ),
+    "Anticapitalism": (
+        r"\banti[- ]?capital", r"\bcapitalis", r"\bclass struggle\b",
+        r"\bworking class\b", r"\bneoliberal", r"\bkapitalis", r"\bcapitalismo\b",
+    ),
+    "Theory & Strategy": (
+        r"\banarchis", r"\blibertarian communis", r"\bmutual aid\b",
+        r"\bdirect action\b", r"\bsyndicalis", r"\bpolitical theory\b",
+        r"\brevolutionary strateg", r"\bbook review\b",
+    ),
+    "Anticolonialism": (
+        r"\banti[- ]?coloni", r"\bdecoloni", r"\bcolonialis",
+        r"\bsettler colon", r"\bcolonial rule\b",
+    ),
+    "Anti-Imperialism": (
+        r"\banti[- ]?imperial", r"\bimperialis", r"\bimperial power\b",
+    ),
+    "Squatting & Housing": (
+        r"\bsquat", r"\bhousing\b", r"\btenant", r"\brent strike\b",
+        r"\beviction", r"\bhausbesetz", r"\bmiet", r"\blogement\b",
+    ),
+    "Demonstrations": (
+        r"\bprotest", r"\bdemonstrat", r"\brally\b", r"\bmarch\b",
+        r"\bmobilis", r"\bkundgebung", r"\bmanifestaci[oó]n\b",
+    ),
+    "Anti-Rep & Prisons": (
+        r"\bprison", r"\bpolice\b", r"\barrest", r"\brepress",
+        r"\bdetention\b", r"\bincarcer", r"\bpolitical prisoner",
+        r"\bcourt\b", r"\btrial\b", r"\bknast\b", r"\bgef[aä]ng",
+    ),
+    "Cyberactivism": (
+        r"\bcyber", r"\bdigital rights?\b", r"\bsurveillance\b", r"\bencryption\b",
+        r"\bhack(?:er|ing)?\b", r"\bprivacy\b", r"\bopen[- ]source\b",
+    ),
+    "No War": (
+        r"\banti[- ]?war\b", r"\bwar\b", r"\bmilitar", r"\barmy\b",
+        r"\bweapons?\b", r"\bconscription\b", r"\bceasefire\b", r"\bkrieg",
+        r"\baufr[uü]st", r"\barmement\b",
+    ),
+    "Animal Liberation": (
+        r"\banimal liberation\b", r"\banimal rights?\b", r"\bvegan",
+        r"\bslaughterhouse\b", r"\bhunt sab", r"\btierbefrei", r"\bvivisection\b",
+    ),
+    "Eco-Anarchism": (
+        r"\bclimate\b", r"\becolog", r"\benvironment", r"\bforest\b",
+        r"\bpipeline\b", r"\bfossil fuel", r"\bmining\b", r"\bklima",
+    ),
+    "Indigenous Struggles": (
+        r"\bindigenous\b", r"\bfirst nations?\b", r"\bnative peoples?\b",
+        r"\bmapuche\b", r"\bzapatist", r"\baboriginal\b", r"\bindigen",
+    ),
+    "Radical Health & Disability": (
+        r"\bdisabil", r"\bmental health\b", r"\bpsychiatr", r"\bhealth care\b",
+        r"\bhealthcare\b", r"\bclinic\b", r"\bableis", r"\bbehinder",
+    ),
+    "Libraries": (
+        r"\banarchist librar", r"\bbiblioth[eè]que anarch", r"\bbiblioteca anarqu",
+        r"\banarchistische bibliothek\b",
+    ),
+}
+
+
+def infer_article_categories(title, content, configured, primary):
+    configured_list = [
+        safe_text(category)
+        for category in (configured if isinstance(configured, list) else [configured])
+        if safe_text(category)
+    ]
+    text = f"{safe_text(title)} {safe_text(content)}".casefold()
+    categories = []
+    for category in configured_list:
+        if category in REGION_CATEGORIES and category not in categories:
+            categories.append(category)
+    if primary in REGION_CATEGORIES and primary not in categories:
+        categories.append(primary)
+
+    matched_topics = []
+    for category, patterns in TOPIC_CATEGORY_PATTERNS.items():
+        if any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns):
+            matched_topics.append(category)
+
+    for category in matched_topics:
+        if category not in categories:
+            categories.append(category)
+
+    configured_topics = [
+        category for category in configured_list
+        if category in TOPIC_CATEGORY_PATTERNS
+    ]
+    if not matched_topics:
+        fallback = primary if primary in TOPIC_CATEGORY_PATTERNS else (
+            configured_topics[0] if len(configured_topics) == 1 else ""
+        )
+        if fallback and fallback not in categories:
+            categories.append(fallback)
+    return categories or [safe_text(primary, "Global")]
+
+
+def repair_overbroad_archive_categories(article):
+    if article.get("kontinent") == "Radar":
+        return article
+    current = article.get("categories", [article.get("kontinent", "Global")])
+    current = current if isinstance(current, list) else [current]
+    topic_count = sum(
+        1 for category in current if category in TOPIC_CATEGORY_PATTERNS
+    )
+    if topic_count >= 3:
+        article["categories"] = infer_article_categories(
+            article.get("title"),
+            article.get("content"),
+            current,
+            article.get("kontinent", "Global"),
+        )
+    return article
+
 
 def content_is_incomplete(text):
     clean = re.sub(r"\s+", " ", str(text or "")).strip().lower()
@@ -462,6 +605,26 @@ http.mount("http://", adapter)
 
 session = requests.Session()
 session.mount("https://", adapter)
+
+RADAR_API_URL = "https://radar.squat.net/api/1.2/search/events.json"
+RADAR_API_FIELDS = ",".join((
+    "body",
+    "category",
+    "date_time",
+    "image",
+    "price",
+    "link",
+    "offline",
+    "offline:address",
+    "offline:map",
+    "offline:timezone",
+    "topic",
+    "title",
+    "language",
+    "url",
+    "created",
+    "uuid",
+))
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
@@ -498,6 +661,250 @@ except Exception as e:
 
 radar_count = 0 
 
+
+def radar_terms(value):
+    if not isinstance(value, list):
+        return []
+    return [
+        safe_text(item.get("name"))
+        for item in value
+        if isinstance(item, dict) and safe_text(item.get("name"))
+    ]
+
+
+def radar_iso_date(raw_value):
+    try:
+        return datetime.fromtimestamp(
+            int(str(raw_value)),
+            tz=timezone.utc,
+        ).isoformat().replace("+00:00", "Z")
+    except (TypeError, ValueError, OSError):
+        return ""
+
+
+def radar_image_url(event):
+    image = event.get("image")
+    if not isinstance(image, dict):
+        return ""
+    file_ref = image.get("file")
+    if not isinstance(file_ref, dict):
+        return ""
+    uri = safe_text(file_ref.get("uri"))
+    if not uri:
+        return ""
+    file_id = safe_text(file_ref.get("id"))
+    filename = safe_text(file_ref.get("filename"))
+    if file_id and filename:
+        return (
+            "https://radar.squat.net/sites/default/files/"
+            f"styles/large/public/{filename}"
+        )
+    return ""
+
+
+def radar_price_text(value):
+    if value is None:
+        return ""
+    if isinstance(value, (str, int, float)):
+        return safe_text(value)
+    if isinstance(value, dict):
+        parts = [
+            safe_text(value.get(key))
+            for key in ("value", "amount", "description", "summary")
+        ]
+        return " · ".join(part for part in parts if part)
+    if isinstance(value, list):
+        return " · ".join(
+            part for part in (radar_price_text(item) for item in value) if part
+        )
+    return ""
+
+
+def fetch_radar_events():
+    """Fetch the current structured Radar.squat event search.
+
+    Radar's public search already limits results to events whose end time is
+    current or in the future. The global query provides the worldwide
+    near-term window. Switzerland is additionally fetched as a complete
+    country facet because its events otherwise disappear behind Radar's
+    500-result global API limit. Results are merged by Radar's stable API id.
+    """
+    payloads = {}
+    raw_results = {}
+    queries = (
+        ("global", {}),
+        ("switzerland", {"facets[country][]": "CH"}),
+    )
+    for query_name, extra_params in queries:
+        response = session.get(
+            RADAR_API_URL,
+            params={
+                "limit": 500,
+                "fields": RADAR_API_FIELDS,
+                **extra_params,
+            },
+            headers={
+                **HEADERS,
+                "Accept": "application/json",
+            },
+            timeout=(10, 65),
+        )
+        response.raise_for_status()
+        payload = response.json()
+        result = payload.get("result")
+        if not isinstance(result, dict):
+            raise ValueError(
+                f"Radar API returned no result object for {query_name}."
+            )
+        payloads[query_name] = payload
+        raw_results.update(result)
+
+    global_payload = payloads["global"]
+    swiss_payload = payloads["switzerland"]
+
+    fetched = []
+    for api_id, event in raw_results.items():
+        if not isinstance(event, dict):
+            continue
+
+        dates = event.get("date_time")
+        if not isinstance(dates, list) or not dates:
+            continue
+        date_info = dates[0] if isinstance(dates[0], dict) else {}
+        event_start = radar_iso_date(date_info.get("value"))
+        event_end = radar_iso_date(date_info.get("value2"))
+        if not event_start:
+            continue
+
+        locations = event.get("offline")
+        location = (
+            locations[0]
+            if isinstance(locations, list)
+            and locations
+            and isinstance(locations[0], dict)
+            else {}
+        )
+        address = location.get("address")
+        if not isinstance(address, dict):
+            address = {}
+        map_data = location.get("map")
+        if not isinstance(map_data, dict):
+            map_data = {}
+
+        body = event.get("body")
+        body_html = (
+            safe_text(body.get("value"))
+            if isinstance(body, dict)
+            else safe_text(body)
+        )
+        content = BeautifulSoup(
+            body_html,
+            "html.parser",
+        ).get_text(separator="\n\n").strip()
+        if not content:
+            content = "Weitere Informationen auf der Radar.squat-Originalseite."
+
+        title = safe_text(event.get("title"), "Termin ohne Titel")
+        canonical_url = safe_text(
+            event.get("url"),
+            f"https://radar.squat.net/en/node/{api_id}",
+        )
+        categories = radar_terms(event.get("category"))
+        topics = radar_terms(event.get("topic"))
+        language = safe_lower(event.get("language"), "und")
+        venue = safe_text(address.get("name_line"), safe_text(location.get("title")))
+        city = safe_text(address.get("locality"))
+        country = safe_text(address.get("country")).upper()
+        street = safe_text(address.get("thoroughfare"))
+        postal = safe_text(address.get("postal_code"))
+        external_links = [
+            safe_text(item.get("url"))
+            for item in event.get("link", [])
+            if isinstance(item, dict) and safe_text(item.get("url"))
+        ]
+
+        fetched.append({
+            "kontinent": "Radar",
+            "categories": ["Radar"],
+            "quelleName": "Radar.squat",
+            "author": "Radar.squat",
+            "title": title,
+            "link": canonical_url,
+            "pubDate": event_start,
+            "content": content,
+            "contentComplete": True,
+            "image": radar_image_url(event),
+            "language": language,
+            "languages": [language],
+            "sourceType": "radar-api",
+            "eventApiId": safe_text(api_id),
+            "eventUuid": safe_text(event.get("uuid")),
+            "eventStart": event_start,
+            "eventEnd": event_end or event_start,
+            "eventTimezone": safe_text(location.get("timezone")),
+            "eventCountry": country,
+            "eventCity": city,
+            "eventVenue": venue,
+            "eventAddress": street,
+            "eventPostal": postal,
+            "eventLatitude": safe_text(map_data.get("lat")),
+            "eventLongitude": safe_text(map_data.get("lon")),
+            "eventCategories": categories,
+            "eventTags": topics,
+            "eventGroups": [],
+            "eventPrice": radar_price_text(event.get("price")),
+            "eventExternalLinks": external_links,
+            "eventRecurrence": safe_text(date_info.get("rrule")),
+            "sourceHomepage": "https://radar.squat.net",
+        })
+
+    fetched.sort(key=lambda item: item.get("eventStart", ""))
+    return fetched, {
+        "reportedCount": int(global_payload.get("count") or len(fetched)),
+        "switzerlandReportedCount": int(
+            swiss_payload.get("count") or 0
+        ),
+        "loadedCount": len(fetched),
+        "facets": (
+            global_payload.get("facets")
+            if isinstance(global_payload.get("facets"), dict)
+            else {}
+        ),
+    }
+
+
+try:
+    radar_events, radar_metadata = fetch_radar_events()
+    # Replace stale Radar/API rows on every successful run. Non-Radar event
+    # feeds remain intact and are refreshed by the normal loop below.
+    for archive_key, archive_item in list(archiv_dict.items()):
+        old_source = safe_lower(archive_item.get("quelleName"))
+        old_link = safe_lower(archive_item.get("link"))
+        if (
+            archive_item.get("sourceType") in {"radar-api", "radar-api-meta"}
+            or old_source.startswith("radar squat.net")
+            or (
+                archive_item.get("kontinent") == "Radar"
+                and "radar.squat.net" in old_link
+            )
+        ):
+            archiv_dict.pop(archive_key, None)
+    for radar_event in radar_events:
+        archiv_dict[radar_event["link"]] = radar_event
+    radar_count = len(radar_events)
+    print(
+        "\n--- Radar.squat API ---\n"
+        f"  [OK] {radar_count} aktuelle Termine geladen "
+        f"(global bis zu 500 von {radar_metadata['reportedCount']}; "
+        f"Schweiz vollständig {radar_metadata['switzerlandReportedCount']})."
+    )
+except Exception as radar_error:
+    print(
+        "\n--- Radar.squat API ---\n"
+        "  [FEHLER] Strukturierter Abruf fehlgeschlagen; "
+        f"bestehende Radar-Termine bleiben erhalten: {radar_error}"
+    )
+
 # HILFSFUNKTION: CHECKPOINTS SPEICHERN (Sicherheit gegen Abstürze)
 def save_checkpoint():
     alle = list(archiv_dict.values())
@@ -507,8 +914,23 @@ def save_checkpoint():
     except:
         pass
     
-    events = [item for item in alle if item.get('kontinent') == 'Radar'][:1000]
-    news_candidates = [item for item in alle if item.get('kontinent') != 'Radar']
+    events = [item for item in alle if item.get('kontinent') == 'Radar']
+    try:
+        events.sort(
+            key=lambda item: (
+                item.get("eventStart")
+                or item.get("pubDate")
+                or ""
+            )
+        )
+    except Exception:
+        pass
+    events = events[:1000]
+    news_candidates = [
+        repair_overbroad_archive_categories(item)
+        for item in alle
+        if item.get('kontinent') != 'Radar'
+    ]
 
     # Von abgeschnittenen Vorschautexten bleiben pro Quelle nur die aktuellsten
     # Einträge. So verdrängen Feeds mit ständigem „Read more“ keine Volltexte.
@@ -531,6 +953,18 @@ def save_checkpoint():
         json.dump(news, f, ensure_ascii=False, indent=2)
     with open('events.json', 'w', encoding='utf-8') as f:
         json.dump(events, f, ensure_ascii=False, indent=2)
+
+
+if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {
+    "1", "true", "yes", "on"
+}:
+    save_checkpoint()
+    save_aggregate_error_report()
+    print(
+        "\n[ERFOLG] Radar.squat wurde separat aktualisiert: "
+        f"{radar_count} strukturierte Termine."
+    )
+    raise SystemExit(0)
 
 for kontinent, feeds in quellen.items():
     print(f"\n--- Kategorie: {kontinent} ---")
@@ -698,16 +1132,12 @@ for kontinent, feeds in quellen.items():
                 # =========================================================
                 # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
                 # =========================================================
-                feed_categories = feed.get("categories", [kontinent])
-                if not isinstance(feed_categories, list):
-                    feed_categories = [feed_categories]
-                feed_categories = [
-                    safe_text(category)
-                    for category in feed_categories
-                    if safe_text(category)
-                ]
-                if kontinent not in feed_categories:
-                    feed_categories.append(kontinent)
+                feed_categories = infer_article_categories(
+                    title,
+                    clean_text,
+                    feed.get("categories", [kontinent]),
+                    kontinent,
+                )
 
                 feed_languages = feed.get(
                     "languages",
