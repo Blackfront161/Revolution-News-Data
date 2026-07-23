@@ -6,11 +6,21 @@
 }
 
 .wrn-about-184 > header {
-  padding: clamp(1rem, 4vw, 2rem);
+  position: relative !important;
+  top: auto !important;
+  z-index: auto !important;
+  display: block !important;
+  grid-template-columns: none !important;
+  width: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: clamp(1rem, 4vw, 2rem) !important;
   border: 1px solid rgba(0, 240, 255, .36);
   border-left: 5px solid var(--color-cyan);
   border-radius: 16px;
   background: color-mix(in srgb, var(--bg-card) 92%, transparent);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .wrn-about-184 > header span {

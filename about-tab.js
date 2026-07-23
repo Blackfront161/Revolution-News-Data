@@ -6,26 +6,26 @@
 
   const COPY = {
     de: {
-      nav: 'Über die App', title: 'Warum es World Revolution News gibt',
-      lead: 'World Revolution News macht unabhängige, anarchistische, links-libertäre und antiautoritäre Berichte aus vielen Regionen leichter auffindbar.',
+      nav: 'Über das Projekt', title: 'Warum es World Revolution News gibt',
+      lead: 'World Revolution News bündelt Nachrichten, Termine, Videos, Podcasts und freie Radios aus anarchistischen, antiautoritären, antikolonialen, feministischen, ökologischen und anderen linksrevolutionären Zusammenhängen.',
       why: 'Warum wir die App machen',
-      whyText: 'Wichtige Stimmen sind über viele kleine Seiten, Sprachen und Formate verteilt. Die App führt sie an einem Ort zusammen, ohne die Originalquellen zu ersetzen.',
+      whyText: 'Die App soll Kämpfe, Ideen und Perspektiven sichtbar machen, die in kommerziellen Medien häufig verkürzt, verzerrt oder gar nicht vorkommen. Sie erleichtert es, Entwicklungen über Regionen und Bewegungen hinweg zu verfolgen und die jeweiligen Originalquellen zu finden.',
       found: 'Was du hier findest',
-      items: ['Nachrichten nach Regionen und Themen', 'Termine aus Radar.squat und weiteren Kalendern', 'Podcasts, erzeugte Audiofassungen, Radio und Videos', 'Werkzeuge zum Übersetzen, Zusammenfassen, Speichern und Gestalten eines eigenen Zines'],
-      principles: 'Wie wir arbeiten',
-      principlesText: 'Quellen bleiben sichtbar und verlinkt. Automatische Übersetzungen und Zusammenfassungen können Fehler enthalten. Auswahl und Einordnung sind offen für Kritik und Veränderung.',
+      items: ['Nachrichten nach Regionen und Themen', 'Termine aus Radar.squat und weiteren Kalendern', 'Podcasts, erzeugte Audiofassungen, freie Radios und Videos', 'Werkzeuge zum Übersetzen, Zusammenfassen, Speichern und Gestalten eines eigenen Zines', 'Ein wachsendes Begriffslexikon mit Quellen und weiterführenden Materialien'],
+      principles: 'Transparenz und Grenzen',
+      principlesText: 'World Revolution News ist keine neutrale Nachrichtenagentur und keine abschließende Instanz für politische Wahrheit. Auswahl, automatische Zuordnung, Übersetzungen und Zusammenfassungen können Fehler enthalten. Deshalb bleiben Quelle, Datum und Link zum Original sichtbar.',
       feedback: 'Hilf mit', feedbackText: 'Kennst du eine fehlende Quelle, entdeckst du einen Fehler oder hast du eine Idee? Schreib uns. Besonders freuen wir uns über Hinweise aus Regionen und Sprachen, die noch wenig vertreten sind.',
       button: 'Feedback senden',
-      note: 'Die Sammlung erhebt keinen Anspruch auf Vollständigkeit. Begriffe, Perspektiven und Bewegungen verändern sich – diese App soll gemeinsam mit ihren Nutzer*innen wachsen.'
+      note: 'Begriffe, Bewegungen und politische Einschätzungen verändern sich. Wir erheben keinen Anspruch auf Vollständigkeit. World Revolution News ist ein gemeinsames, lernendes Projekt, das mit Kritik, Ergänzungen und neuen Perspektiven wachsen soll.'
     },
     en: {
-      nav: 'About', title: 'Why World Revolution News exists',
-      lead: 'World Revolution News makes independent, anarchist, left-libertarian and anti-authoritarian reporting from many regions easier to find.',
-      why: 'Why we build it', whyText: 'Important voices are spread across many small sites, languages and formats. The app brings them together without replacing the original sources.',
-      found: 'What you can find', items: ['News by region and topic', 'Events from Radar.squat and other calendars', 'Podcasts, generated audio, radio and videos', 'Tools to translate, summarize, save and design your own zine'],
-      principles: 'How we work', principlesText: 'Sources remain visible and linked. Automated translations and summaries can contain errors. Selection and framing remain open to criticism and change.',
+      nav: 'About the project', title: 'Why World Revolution News exists',
+      lead: 'World Revolution News brings together news, events, videos, podcasts and free radio from anarchist, anti-authoritarian, anti-colonial, feminist, ecological and other revolutionary left contexts.',
+      why: 'Why we build it', whyText: 'The app aims to make struggles, ideas and perspectives visible when commercial media shorten, distort or ignore them. It helps people follow developments across regions and movements and find the respective original sources.',
+      found: 'What you can find', items: ['News by region and topic', 'Events from Radar.squat and other calendars', 'Podcasts, generated audio, free radio and videos', 'Tools to translate, summarize, save and design your own zine', 'A growing movement glossary with sources and further reading'],
+      principles: 'Transparency and limits', principlesText: 'World Revolution News is not a neutral news agency or a final authority on political truth. Selection, automatic classification, translations and summaries can contain errors. The source, date and original link therefore remain visible.',
       feedback: 'Take part', feedbackText: 'Know a missing source, found a mistake or have an idea? Write to us. We especially welcome suggestions from underrepresented regions and languages.',
-      button: 'Send feedback', note: 'This collection is not complete. Words, perspectives and movements change – the app should grow together with its users.'
+      button: 'Send feedback', note: 'Terms, movements and political assessments change. We do not claim completeness. World Revolution News is a shared learning project intended to grow through criticism, additions and new perspectives.'
     },
     es: {
       nav: 'Sobre la app', title: 'Por qué existe World Revolution News',
@@ -162,7 +162,7 @@
   }
 
   function hideStandard() {
-    ['feed-container', 'archive-container', 'event-filter-panel', 'status-container', 'txt-archive-title', 'wrn-video-hub', 'wrn-stories-view', 'wrn-audio-tab-183', 'wrn-briefing-2'].forEach(id => {
+    ['feed-container', 'archive-container', 'event-filter-panel', 'status-container', 'txt-archive-title', 'wrn-video-hub', 'wrn-stories-view', 'wrn-audio-tab-183', 'wrn-briefing-2', 'wrn-lexicon-184'].forEach(id => {
       const node = document.getElementById(id);
       if (!node || node.id === 'wrn-about-184') return;
       if (!hiddenNodes.has(node)) hiddenNodes.set(node, { hidden: node.hidden, display: node.style.display });

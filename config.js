@@ -154,7 +154,7 @@ window.WRN_EMERGENCY_MODE = false;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.8.4',
-    build: '2026.07.23-wrn-1.8.4-prerelease-rc8',
+    build: '2026.07.23-wrn-1.8.4-prerelease-rc9',
     releasedAt: '2026-07-23T15:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
@@ -514,7 +514,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '184-prerelease-rc8';
+    const VERSION = '184-prerelease-rc9';
 
     const addStyle = (file, marker) => {
         if (
@@ -635,6 +635,7 @@ window.WRN_CONFIG = Object.freeze({
             ['briefing-2.css', 'briefing2-recovery-13'],
             ['stories-timeline.css', 'stories-recovery-13'],
             ['video-hub.css', 'video-hub-recovery-14'],
+            ['lexicon-tab.css', 'lexicon-tab-recovery-184'],
             ['about-tab.css', 'about-tab-recovery-184'],
             ['article-summary.css', 'article-summary-recovery-184'],
             ['zine-designer.css', 'zine-designer-recovery-10']
@@ -650,6 +651,7 @@ window.WRN_CONFIG = Object.freeze({
             ['briefing-2.js', 'briefing2-recovery-13'],
             ['stories-timeline.js', 'stories-recovery-13'],
             ['video-hub.js', 'video-hub-recovery-14'],
+            ['lexicon-tab.js', 'lexicon-tab-recovery-184'],
             ['about-tab.js', 'about-tab-recovery-184'],
             ['article-summary-core.js', 'article-summary-core-recovery-184'],
             ['article-summary.js', 'article-summary-recovery-184'],

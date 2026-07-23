@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.4-rc8';
-const DATA_CACHE = 'wrn-data-v1.8.4-rc8';
+const APP_CACHE = 'wrn-app-v1.8.4-rc9';
+const DATA_CACHE = 'wrn-data-v1.8.4-rc9';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -19,6 +19,7 @@ const APP_SHELL = [
   './briefing-2.css',
   './stories-timeline.css',
   './video-hub.css',
+  './lexicon-tab.css',
   './about-tab.css',
   './audio-catalog.css',
   './article-summary.css',
@@ -79,6 +80,7 @@ const APP_SHELL = [
   './briefing-2.js',
   './stories-timeline.js',
   './video-hub.js',
+  './lexicon-tab.js',
   './about-tab.js',
   './article-actions.js',
   './sticky-dialogs.js',

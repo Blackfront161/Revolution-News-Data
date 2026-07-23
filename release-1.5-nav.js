@@ -9,7 +9,7 @@
     de: {
       briefing: 'Briefing', stories: 'Entwicklungen', video: 'Video', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
-      about: 'Über die App',
+      lexicon: 'Lexikon', about: 'Über das Projekt',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
       contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'App zurücksetzen',
@@ -19,7 +19,7 @@
     en: {
       briefing: 'Briefing', stories: 'Developments', video: 'Video', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
-      about: 'About',
+      lexicon: 'Glossary', about: 'About the project',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
       contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Reset app',
@@ -149,7 +149,25 @@
       }
     },
     {
+      key: 'lexicon',
+      subTabs: [
+        ['basics', 'basics'],
+        ['organisation', 'organisation'],
+        ['justice', 'justice'],
+        ['struggles', 'struggles'],
+        ['all', 'all'],
+        ['sources', 'sources']
+      ],
+      activate: subKey => {
+        closeAuxiliaryPanels();
+        const target = subKey || state.subSelections.lexicon || 'basics';
+        state.subSelections.lexicon = target;
+        window.WRNLexicon184?.show?.(target);
+      }
+    },
+    {
       key: 'about',
+      menuOnly: true,
       activate: () => {
         closeAuxiliaryPanels();
         window.WRNAbout184?.show?.();
@@ -163,7 +181,8 @@
       regions: 'Global',
       topics: 'Labor Struggles',
       audio: 'original',
-      saved: 'bookmarks'
+      saved: 'bookmarks',
+      lexicon: 'basics'
     }
   };
 
@@ -205,6 +224,7 @@
     if (tab?.key === 'topics') return window.WRNI18n?.topicLabel?.(key, language) || fallback || key;
     if (tab?.key === 'regions') return window.WRNI18n?.regionLabel?.(key, language) || fallback || key;
     if (tab?.key === 'audio' || tab?.key === 'saved') return texts()[fallback] || fallback || key;
+    if (tab?.key === 'lexicon') return window.WRNLexicon184?.sectionLabel?.(key, language) || fallback || key;
     return fallback || key;
   }
 
@@ -214,6 +234,7 @@
     window.WRNAudioTab181?.close?.();
     window.WRNVideoHub?.hide?.();
     window.WRNAbout184?.hide?.();
+    window.WRNLexicon184?.hide?.();
   }
 
   function prepareArticleView() {
@@ -428,6 +449,12 @@
         () => typeof openSourcesModal === 'function' && openSourcesModal()
       ),
       actionButton(
+        window.WRNAbout184?.label?.(languageKey()) || texts().about || 'About the project',
+        'ⓘ',
+        'about',
+        () => activateTab('about')
+      ),
+      actionButton(
         texts().info,
         'ℹ️',
         'info',
@@ -570,9 +597,11 @@
     topTabs.className = 'wrn-top-tabs';
     topTabs.setAttribute('aria-label', 'Hauptnavigation');
 
-    TABS.forEach(tab => {
+    TABS.filter(tab => !tab.menuOnly).forEach(tab => {
       const label = tab.key === 'about'
         ? window.WRNAbout184?.label?.(languageKey()) || texts()[tab.key] || 'About'
+        : tab.key === 'lexicon'
+          ? window.WRNLexicon184?.label?.(languageKey()) || texts()[tab.key] || 'Glossary'
         : texts()[tab.key] || tab.key;
       const button = makeButton('wrn-top-tab', label);
       button.dataset.key = tab.key;
@@ -659,6 +688,8 @@
     else window.WRNVideoHub?.hide?.();
 
     if (key !== 'audio') window.WRNAudioTab181?.close?.();
+    if (key !== 'lexicon') window.WRNLexicon184?.hide?.();
+    if (key !== 'about') window.WRNAbout184?.hide?.();
 
     if (!runAction) return;
 
@@ -676,6 +707,8 @@
     $all('.wrn-top-tab').forEach(button => {
       button.textContent = button.dataset.key === 'about'
         ? window.WRNAbout184?.label?.(languageKey()) || copy.about || 'About'
+        : button.dataset.key === 'lexicon'
+          ? window.WRNLexicon184?.label?.(languageKey()) || copy.lexicon || 'Glossary'
         : copy[button.dataset.key] || button.dataset.key;
     });
 
@@ -705,6 +738,8 @@
 
     const activeTab = TABS.find(tab => tab.key === state.activeTab);
     if (activeTab) renderSubTabs(activeTab);
+    if (state.activeTab === 'lexicon') window.WRNLexicon184?.render?.();
+    if (state.activeTab === 'about') window.WRNAbout184?.render?.();
 
     const morePanel = $('.wrn-more-panel');
     if (morePanel) morePanel.remove();
@@ -1066,15 +1101,16 @@
       if (horizontal < vertical * 1.18) return;
       if (duration > 1100) return;
 
-      const index = TABS.findIndex(tab => tab.key === state.activeTab);
+      const swipeTabs = TABS.filter(tab => !tab.menuOnly);
+      const index = swipeTabs.findIndex(tab => tab.key === state.activeTab);
       if (index < 0) return;
 
       suppressCardClickUntil = Date.now() + 480;
 
-      if (dx < 0 && index < TABS.length - 1) {
-        activateTab(TABS[index + 1].key, true);
+      if (dx < 0 && index < swipeTabs.length - 1) {
+        activateTab(swipeTabs[index + 1].key, true);
       } else if (dx > 0 && index > 0) {
-        activateTab(TABS[index - 1].key, true);
+        activateTab(swipeTabs[index - 1].key, true);
       }
     };
 
