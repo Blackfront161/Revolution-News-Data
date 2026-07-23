@@ -1,4 +1,4 @@
-/* World Revolution News – Offline Service Worker */
+/* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
 const APP_CACHE = 'wrn-app-v1.8.3-b5';

@@ -27,8 +27,8 @@ html.wrn-intro-active-1720 {
     inset: -3%;
     z-index: -3;
     background: url("./app-background.webp?v=183") center center / cover no-repeat;
-    filter: saturate(0.86) contrast(1.08) brightness(0.54);
-    transform: scale(1.045);
+    filter: none;
+    transform: scale(1.02);
     animation: wrn-intro-drift-1720 5.5s ease-out both !important;
 }
 
@@ -37,8 +37,7 @@ html.wrn-intro-active-1720 {
     inset: 0;
     z-index: -2;
     background:
-        radial-gradient(circle at 54% 42%, rgba(0, 229, 239, 0.14), transparent 35%),
-        linear-gradient(180deg, rgba(3, 4, 9, 0.46), rgba(3, 4, 9, 0.82));
+        linear-gradient(180deg, transparent 0 54%, rgba(3, 4, 9, 0.12) 70%, rgba(3, 4, 9, 0.48));
 }
 
 .wrn-intro-content-1720 {
@@ -50,7 +49,7 @@ html.wrn-intro-active-1720 {
     text-align: center;
     transform: translateY(12px);
     opacity: 0;
-    animation: wrn-intro-rise-1720 700ms 80ms ease-out forwards !important;
+    animation: wrn-intro-rise-1720 620ms 520ms ease-out forwards !important;
 }
 
 .wrn-intro-logo-1720 {
@@ -60,30 +59,29 @@ html.wrn-intro-active-1720 {
 }
 
 .wrn-intro-wordmark-1720 {
-    width: min(88vw, 670px);
-    max-height: 100px;
-    object-fit: contain;
-    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.72));
+    color: #26f5ff;
+    font: 700 clamp(1.05rem, 3.7vw, 2.25rem)/1.15 "Courier New", monospace;
+    letter-spacing: clamp(.08em, .9vw, .22em);
+    text-shadow: 0 0 14px rgba(0, 229, 239, .55), 0 3px 12px #000;
 }
 
 .wrn-intro-progress-track-1720 {
     width: min(72vw, 430px);
     height: 4px;
     overflow: hidden;
-    border: 1px solid rgba(0, 229, 239, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 999px;
     background: rgba(2, 5, 12, 0.72);
 }
 
 .wrn-intro-progress-1720 {
     display: block;
-    width: 100%;
+    width: 38%;
     height: 100%;
-    transform: scaleX(0);
-    transform-origin: left center;
-    background: linear-gradient(90deg, #00e5ef 0%, #66fff1 66%, #ff3158 100%);
-    box-shadow: 0 0 14px rgba(0, 229, 239, 0.65);
-    transition: transform 110ms linear !important;
+    transform: translateX(-120%);
+    background: linear-gradient(90deg, #ff3158 0%, #ff3158 35%, #00e5ef 68%, #7affff 100%);
+    box-shadow: 0 0 14px rgba(0, 229, 239, 0.65), 0 0 9px rgba(255, 49, 88, .55);
+    animation: wrn-intro-sweep-1720 1.15s 520ms ease-in-out infinite !important;
 }
 
 .wrn-intro-status-1720 {
@@ -113,11 +111,15 @@ html.wrn-intro-active-1720 {
     from { transform: scale(1.08) translate3d(0, 0, 0); }
     to { transform: scale(1.025) translate3d(0, -0.4%, 0); }
 }
+@keyframes wrn-intro-sweep-1720 {
+    from { transform: translateX(-120%); }
+    to { transform: translateX(300%); }
+}
 
 @media (max-width: 520px) {
     .wrn-intro-content-1720 { width: 92vw; gap: 0.7rem; }
     .wrn-intro-logo-1720 { width: 78px; }
-    .wrn-intro-wordmark-1720 { width: min(94vw, 410px); max-height: 70px; }
+    .wrn-intro-wordmark-1720 { font-size: clamp(.95rem, 5.5vw, 1.4rem); }
     .wrn-intro-progress-track-1720 { width: min(78vw, 320px); }
     .wrn-intro-backdrop-1720 { background-position: center top; }
 }

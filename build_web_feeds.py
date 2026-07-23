@@ -25,7 +25,7 @@ STATUS_TARGET = ROOT / "feed-status.json"
 CONFIG_PATH = ROOT / "config.js"
 
 NEWS_LIMIT = max(50, int(os.environ.get("WRN_NEWS_FEED_LIMIT", "500")))
-EVENT_LIMIT = max(50, int(os.environ.get("WRN_EVENT_FEED_LIMIT", "500")))
+EVENT_LIMIT = max(50, int(os.environ.get("WRN_EVENT_FEED_LIMIT", "1000")))
 NEWS_CONTENT_LIMIT = max(1000, int(os.environ.get("WRN_NEWS_CONTENT_LIMIT", "4500")))
 EVENT_CONTENT_LIMIT = max(800, int(os.environ.get("WRN_EVENT_CONTENT_LIMIT", "2800")))
 CONFIG_UPDATE_ENABLED = os.environ.get("WRN_UPDATE_CONFIG", "").strip().lower() in {
@@ -136,6 +136,47 @@ def prepare(
     return output
 
 
+def prepare_events(
+    rows: list[dict[str, Any]],
+    *,
+    limit: int,
+    content_limit: int,
+) -> list[dict[str, Any]]:
+    """Publish only usable current events, nearest event first."""
+    now = datetime.now(timezone.utc).timestamp()
+    current = [
+        item for item in rows
+        if date_value({
+            "eventStart": item.get("eventEnd")
+            or item.get("eventStart")
+            or item.get("pubDate")
+        }) >= now - (2 * 60 * 60)
+    ]
+    ordered = sorted(current, key=date_value)
+    output: list[dict[str, Any]] = []
+    seen: set[str] = set()
+
+    for source in ordered:
+        key = stable_key(source)
+        if key and key in seen:
+            continue
+        if key:
+            seen.add(key)
+
+        item = dict(source)
+        content, truncated = shorten(item.get("content"), content_limit)
+        item["content"] = content
+        if truncated:
+            item["contentComplete"] = False
+            item["webFeedTruncated"] = True
+            item["webFeedOriginalLength"] = len(clean_text(source.get("content")))
+        output.append(item)
+        if len(output) >= limit:
+            break
+
+    return output
+
+
 def atomic_json(path: Path, data: Any) -> int:
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n"
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -177,7 +218,11 @@ def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
     news_feed = prepare(news, limit=NEWS_LIMIT, content_limit=NEWS_CONTENT_LIMIT)
-    event_feed = prepare(events, limit=EVENT_LIMIT, content_limit=EVENT_CONTENT_LIMIT)
+    event_feed = prepare_events(
+        events,
+        limit=EVENT_LIMIT,
+        content_limit=EVENT_CONTENT_LIMIT,
+    )
 
     if not news_feed:
         raise SystemExit(

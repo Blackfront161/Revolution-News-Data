@@ -15,12 +15,13 @@ header > div:first-child {
 
 header .wrn-future-header-image {
     display: block;
-    width: clamp(420px, 68vw, 980px);
-    max-width: 100%;
-    height: clamp(76px, 8.2vw, 118px);
-    max-height: 118px;
-    object-fit: cover;
-    object-position: center 58%;
+    width: auto;
+    max-width: min(100%, 520px);
+    height: auto;
+    max-height: 154px;
+    aspect-ratio: 1024 / 341;
+    object-fit: contain;
+    object-position: left center;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     pointer-events: none;
@@ -45,9 +46,10 @@ header.wrn-future-header-ready .app-version-inline {
 
 @media (max-width: 1100px) {
     header .wrn-future-header-image {
-        width: min(88vw, 900px);
-        height: clamp(72px, 9.5vw, 104px);
-        max-height: 104px;
+        width: auto;
+        max-width: min(100%, 470px);
+        height: auto;
+        max-height: 142px;
     }
 }
 
@@ -63,25 +65,25 @@ header.wrn-future-header-ready .app-version-inline {
     }
 
     header .wrn-future-header-image {
-        width: min(94vw, 720px);
-        height: 72px;
-        max-height: 72px;
-        object-position: center 58%;
+        width: min(100%, 460px);
+        height: auto;
+        max-height: none;
+        object-position: center;
     }
 }
 
 @media (max-width: 520px) {
     header .wrn-future-header-image {
-        width: min(92vw, 560px);
-        height: 60px;
-        max-height: 60px;
+        width: 100%;
+        height: auto;
+        max-height: none;
     }
 }
 
 @media (max-width: 380px) {
     header .wrn-future-header-image {
-        width: min(90vw, 470px);
-        height: 54px;
-        max-height: 54px;
+        width: 100%;
+        height: auto;
+        max-height: none;
     }
 }

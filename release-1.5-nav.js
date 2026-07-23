@@ -51,7 +51,7 @@
     {
       key: 'start',
       activate: () => {
-        closeAuxiliaryPanels();
+        prepareArticleView();
         if (typeof ladeKontinentNews === 'function') ladeKontinentNews('Global');
       }
     },
@@ -60,10 +60,10 @@
       subTabs: [
         ['Global','Global'], ['Europe','Europa'], ['Africa','Afrika'],
         ['North America','Nordamerika'], ['Latin America','Lateinamerika'],
-        ['Asia','Asien'], ['Australia & NZ','Australien']
+        ['Asia','Asien'], ['Australia & NZ','Ozeanien']
       ],
       activate: subKey => {
-        closeAuxiliaryPanels();
+        prepareArticleView();
         const target = subKey || state.subSelections.regions || 'Global';
         state.subSelections.regions = target;
         if (typeof ladeKontinentNews === 'function') ladeKontinentNews(target);
@@ -94,7 +94,7 @@
         ['Libraries','Bibliotheken']
       ],
       activate: subKey => {
-        closeAuxiliaryPanels();
+        prepareArticleView();
         const target = subKey || state.subSelections.topics || 'Labor Struggles';
         state.subSelections.topics = target;
         if (typeof ladeKontinentNews === 'function') ladeKontinentNews(target);
@@ -103,7 +103,7 @@
     {
       key: 'events',
       activate: () => {
-        closeAuxiliaryPanels();
+        prepareArticleView();
         if (typeof ladeKontinentNews === 'function') ladeKontinentNews('Radar');
         const panel = document.getElementById('event-filter-panel');
         if (panel) panel.hidden = false;
@@ -131,7 +131,7 @@
         ['read','read']
       ],
       activate: subKey => {
-        closeAuxiliaryPanels();
+        prepareArticleView();
         const target = subKey || state.subSelections.saved || 'bookmarks';
         state.subSelections.saved = target;
         if (target === 'bookmarks' && typeof ladeBookmarks === 'function') ladeBookmarks();
@@ -196,6 +196,16 @@
     if (panel) panel.hidden = true;
     window.WRNAudioTab181?.close?.();
     window.WRNVideoHub?.hide?.();
+  }
+
+  function prepareArticleView() {
+    closeAuxiliaryPanels();
+    ['feed-container', 'status-container'].forEach(id => {
+      const node = document.getElementById(id);
+      if (!node) return;
+      node.hidden = false;
+      node.style.removeProperty('display');
+    });
   }
 
   function makeButton(className, text, title) {
@@ -439,6 +449,15 @@
 
     panel.append(head, grid, actions);
     document.body.appendChild(panel);
+
+    const sourceVerification = document.getElementById(
+      'wrn-source-verification-open'
+    );
+    if (sourceVerification) {
+      sourceVerification.hidden = false;
+      grid.appendChild(sourceVerification);
+    }
+
     return panel;
   }
 
@@ -953,6 +972,8 @@
     let startY = 0;
     let startTime = 0;
     let horizontalIntent = false;
+    let swipeMode = '';
+    let suppressSubtabClickUntil = 0;
 
     const interactive = [
       'button', 'a', 'input', 'select', 'textarea', 'summary', 'label',
@@ -963,6 +984,36 @@
     const isSwipeSurface = target => Boolean(
       target?.closest?.('#feed-container, #archive-container')
     );
+
+    const isSubtabSurface = target => Boolean(target?.closest?.('.wrn-subtabs'));
+
+    const changeSubtabFromDistance = (dx, dy, duration) => {
+      const horizontal = Math.abs(dx);
+      const vertical = Math.abs(dy);
+      if (horizontal < 44 || horizontal < vertical * 1.15 || duration > 1100) return;
+
+      const tab = TABS.find(item => item.key === state.activeTab);
+      if (!tab?.subTabs?.length) return;
+      const selected = state.subSelections[tab.key] || tab.subTabs[0][0];
+      const index = tab.subTabs.findIndex(([key]) => key === selected);
+      const nextIndex = dx < 0
+        ? Math.min(tab.subTabs.length - 1, index + 1)
+        : Math.max(0, index - 1);
+      if (index < 0 || nextIndex === index) return;
+
+      const nextKey = tab.subTabs[nextIndex][0];
+      suppressSubtabClickUntil = Date.now() + 420;
+      state.subSelections[tab.key] = nextKey;
+      renderSubTabs(tab);
+      tab.activate(nextKey);
+    };
+
+    document.addEventListener('click', event => {
+      if (Date.now() >= suppressSubtabClickUntil) return;
+      if (!event.target.closest?.('.wrn-subtabs')) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }, true);
 
     const changeTabFromDistance = (dx, dy, duration) => {
       const horizontal = Math.abs(dx);
@@ -988,10 +1039,12 @@
       document.addEventListener('pointerdown', event => {
         if (detailState || tracking) return;
         if (event.pointerType === 'mouse') return;
-        if (!isSwipeSurface(event.target)) return;
-        if (event.target.closest(interactive)) return;
+        const onSubtabs = isSubtabSurface(event.target);
+        if (!onSubtabs && !isSwipeSurface(event.target)) return;
+        if (!onSubtabs && event.target.closest(interactive)) return;
 
         tracking = true;
+        swipeMode = onSubtabs ? 'subtabs' : 'tabs';
         pointerId = event.pointerId;
         startX = event.clientX;
         startY = event.clientY;
@@ -1027,8 +1080,10 @@
         pointerId = null;
 
         if (horizontalIntent && !detailState) {
-          changeTabFromDistance(dx, dy, duration);
+          if (swipeMode === 'subtabs') changeSubtabFromDistance(dx, dy, duration);
+          else changeTabFromDistance(dx, dy, duration);
         }
+        swipeMode = '';
       };
 
       document.addEventListener('pointerup', finishPointer, { passive: true });
@@ -1036,6 +1091,7 @@
         tracking = false;
         pointerId = null;
         horizontalIntent = false;
+        swipeMode = '';
       }, { passive: true });
 
       return;
@@ -1045,10 +1101,12 @@
     document.addEventListener('touchstart', event => {
       if (detailState || tracking) return;
       const touch = event.changedTouches?.[0];
-      if (!touch || !isSwipeSurface(event.target)) return;
-      if (event.target.closest(interactive)) return;
+      const onSubtabs = isSubtabSurface(event.target);
+      if (!touch || (!onSubtabs && !isSwipeSurface(event.target))) return;
+      if (!onSubtabs && event.target.closest(interactive)) return;
 
       tracking = true;
+      swipeMode = onSubtabs ? 'subtabs' : 'tabs';
       startX = touch.clientX;
       startY = touch.clientY;
       startTime = performance.now();
@@ -1079,16 +1137,18 @@
 
       if (!touch || !horizontalIntent) return;
 
-      changeTabFromDistance(
-        touch.clientX - startX,
-        touch.clientY - startY,
-        performance.now() - startTime
-      );
+      const dx = touch.clientX - startX;
+      const dy = touch.clientY - startY;
+      const duration = performance.now() - startTime;
+      if (swipeMode === 'subtabs') changeSubtabFromDistance(dx, dy, duration);
+      else changeTabFromDistance(dx, dy, duration);
+      swipeMode = '';
     }, { passive: true });
 
     document.addEventListener('touchcancel', () => {
       tracking = false;
       horizontalIntent = false;
+      swipeMode = '';
     }, { passive: true });
   }
 

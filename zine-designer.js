@@ -11,7 +11,10 @@
         style: 'cyber',
         columns: '2',
         images: 'normal',
-        density: 'comfortable'
+        density: 'comfortable',
+        headline: 'WORLD REVOLUTION NEWS',
+        intro: '',
+        footer: 'worldrevnews'
     };
 
     let settings = { ...defaults };
@@ -34,7 +37,11 @@
 
         return de
             ? {
-                title: 'Flyer gestalten',
+                title: '3. Ausgabe gestalten und exportieren',
+                workflow: '1. Artikel auswählen  ·  2. Texte bearbeiten  ·  3. Gestaltung wählen und als PDF speichern',
+                headline: 'Titel der Ausgabe',
+                intro: 'Kurze Einleitung (optional)',
+                footer: 'Fußzeile / Kontakt (optional)',
                 format: 'Format',
                 style: 'Stil',
                 columns: 'Spalten',
@@ -57,7 +64,11 @@
                 comfortable: 'Luftig'
             }
             : {
-                title: 'Design flyer',
+                title: '3. Design and export',
+                workflow: '1. Select articles  ·  2. Edit the text  ·  3. Choose a design and save as PDF',
+                headline: 'Issue title',
+                intro: 'Short introduction (optional)',
+                footer: 'Footer / contact (optional)',
                 format: 'Format',
                 style: 'Style',
                 columns: 'Columns',
@@ -119,6 +130,13 @@
         </label>
     `;
 
+    const textControl = (label, name) => `
+        <label class="wrn-zine-designer-text-1719">
+            <span>${label}</span>
+            <input type="text" data-zine-text="${name}">
+        </label>
+    `;
+
     const install = () => {
         const target = findTarget();
 
@@ -136,8 +154,14 @@
         panel.innerHTML = `
             <header>
                 <h2>${t.title}</h2>
+                <p>${t.workflow}</p>
             </header>
 
+            <div class="wrn-zine-designer-copy-1719">
+                ${textControl(t.headline, 'headline')}
+                ${textControl(t.intro, 'intro')}
+                ${textControl(t.footer, 'footer')}
+            </div>
             <div class="wrn-zine-designer-grid-1719">
                 ${control(t.format, 'format', [
                     ['a4', t.a4],
@@ -194,6 +218,15 @@
                 });
             });
 
+        panel.querySelectorAll('[data-zine-text]').forEach(input => {
+            const name = input.dataset.zineText;
+            input.value = settings[name] || '';
+            input.addEventListener('input', () => {
+                settings[name] = input.value.slice(0, 180);
+                apply(target);
+            });
+        });
+
         panel.addEventListener('click', event => {
             const action = event.target.closest(
                 '[data-zine-action]'
@@ -215,6 +248,9 @@
                         const name = select.dataset.zineSetting;
                         select.value = settings[name];
                     });
+                panel.querySelectorAll('[data-zine-text]').forEach(input => {
+                    input.value = settings[input.dataset.zineText] || '';
+                });
 
                 apply(target);
             }

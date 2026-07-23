@@ -10,16 +10,16 @@
 
   const TEXTS = {
     de: {
-      title: 'Entwicklungen & Zeitleisten', intro: 'Mehrere Berichte werden lokal zu Entwicklungen gebündelt. Keine Daten werden hochgeladen.',
-      search: 'Entwicklungen durchsuchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
-      refresh: 'Neu berechnen', empty: 'Noch keine Entwicklung mit mehreren Quellen gefunden.', articles: 'Beiträge', perspectives: 'Perspektivenvergleich',
+      title: 'Entwicklungen verstehen', intro: 'Hier werden Berichte verschiedener Quellen zum selben Thema als verständlicher Verlauf zusammengefasst.',
+      search: 'Thema oder Quelle suchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
+      refresh: 'Neu laden', moreFilters: 'Weitere Filter', empty: 'Im gewählten Zeitraum wurde noch kein Thema von mehreren Quellen berichtet.', articles: 'Beiträge', perspectives: 'Was die Quellen unterschiedlich berichten',
       timeline: 'Zeitleiste', watch: 'Beobachten', watching: 'Beobachtet', share: 'Teilen', copy: 'Kopiert', open: 'Artikel öffnen',
       sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste'
     },
     en: {
-      title: 'Developments & timelines', intro: 'Multiple reports are grouped locally into developments. No data is uploaded.',
+      title: 'Understand developments', intro: 'Reports from different sources about the same topic are combined into an easy-to-follow timeline.',
       search: 'Search developments…', period: 'Period', sources: 'Minimum sources', days7: '7 days', days14: '14 days', days30: '30 days',
-      refresh: 'Recalculate', empty: 'No multi-source development was found yet.', articles: 'articles', perspectives: 'Perspective comparison',
+      refresh: 'Reload', moreFilters: 'More filters', empty: 'No topic was reported by multiple sources in the selected period.', articles: 'articles', perspectives: 'How sources differ',
       timeline: 'Timeline', watch: 'Watch', watching: 'Watching', share: 'Share', copy: 'Copied', open: 'Open article',
       sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist'
     },
@@ -222,10 +222,23 @@
     return window.WRNStoriesCore.summarizeText(source, 320);
   }
 
+  function usefulTitle(value) {
+    const title = window.WRNStoriesCore?.cleanText?.(value) || '';
+    return title && !/^(kein titel|ohne titel|no title|untitled|sans titre|sin t[ií]tulo)$/i.test(title)
+      ? title
+      : '';
+  }
+
+  function displayTitle(story) {
+    return usefulTitle(story?.title)
+      || story?.items?.map(item => usefulTitle(item?.title)).find(Boolean)
+      || text().latest;
+  }
+
   function shareStory(story, button) {
     const copy = text();
     const lines = [
-      story.title,
+      displayTitle(story),
       `${copy.sourcesLabel}: ${story.sources.join(', ')}`,
       ''
     ];
@@ -240,7 +253,7 @@
     const payload = lines.join('\n').trim();
 
     if (navigator.share) {
-      navigator.share({ title: story.title, text: payload }).catch(() => {});
+      navigator.share({ title: displayTitle(story), text: payload }).catch(() => {});
       return;
     }
 
@@ -285,6 +298,12 @@
       renderStories();
     });
 
+    const advanced = document.createElement('details');
+    advanced.className = 'wrn-stories-advanced';
+    const advancedLabel = document.createElement('summary');
+    advancedLabel.textContent = copy.moreFilters || copy.sources;
+    const advancedBody = document.createElement('div');
+
     const minimum = document.createElement('select');
     minimum.setAttribute('aria-label', copy.sources);
     [2, 3, 4].forEach(value => {
@@ -305,7 +324,9 @@
     refresh.textContent = `↻ ${copy.refresh}`;
     refresh.addEventListener('click', renderStories);
 
-    controls.append(search, period, minimum, refresh);
+    advancedBody.append(minimum, refresh);
+    advanced.append(advancedLabel, advancedBody);
+    controls.append(search, period, advanced);
     container.appendChild(controls);
   }
 
@@ -320,7 +341,7 @@
 
     const titleWrap = document.createElement('div');
     const title = document.createElement('h3');
-    title.textContent = story.title;
+    title.textContent = displayTitle(story);
     const meta = document.createElement('p');
     meta.className = 'wrn-story-meta';
     meta.textContent = `${story.itemCount} ${copy.articles} · ${story.sourceCount} ${copy.sourcesLabel.toLocaleLowerCase()} · ${formatDate(story.oldest)} → ${formatDate(story.newest)}`;
@@ -350,7 +371,7 @@
     card.appendChild(sourceLine);
 
     const timeline = document.createElement('details');
-    timeline.open = true;
+    timeline.open = false;
     const timelineSummary = document.createElement('summary');
     timelineSummary.textContent = copy.timeline;
     const list = document.createElement('ol');

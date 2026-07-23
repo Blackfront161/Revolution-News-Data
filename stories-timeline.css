@@ -46,7 +46,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
 
 .wrn-stories-controls {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(120px, auto));
+  grid-template-columns: minmax(180px, 1fr) minmax(140px, auto) minmax(140px, auto);
   gap: 8px;
   margin-bottom: 14px;
   padding: 10px;
@@ -71,6 +71,28 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
 .wrn-stories-controls button,
 .wrn-story-actions button,
 .wrn-story-timeline button { cursor: pointer; }
+
+.wrn-stories-advanced {
+  position: relative;
+  min-height: 36px;
+  border: 1px solid rgba(0,240,255,.28);
+  border-radius: 9px;
+  background: rgba(5,8,13,.92);
+}
+
+.wrn-stories-advanced > summary {
+  box-sizing: border-box;
+  min-height: 36px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: .82rem;
+}
+
+.wrn-stories-advanced > div {
+  display: grid;
+  gap: 8px;
+  padding: 0 8px 8px;
+}
 
 .wrn-stories-list { display: grid; gap: 14px; }
 
