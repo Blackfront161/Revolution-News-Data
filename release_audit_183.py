@@ -17,8 +17,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
 EXPECTED_VERSION = "1.8.4"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc10"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc10"
+EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc11"
+EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc11"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
@@ -38,12 +38,13 @@ REQUIRED_FILES = (
     "audio-tab-183.css",
     "interface-block3.js",
     "interface-block3.css",
+    "light-theme.css",
     "source-recovery-ui-183.js",
     "source-recovery-ui-183.css",
     "source-verification.js",
     "source_recovery.py",
     "app-background.webp",
-    "wrn-header-banner.webp",
+    "wrn-future-header.webp",
     "tests/test_video_assets.py",
     "tests/test_audio_block2_assets.py",
     "tests/test_source_recovery_assets.py",
@@ -63,10 +64,11 @@ APP_SHELL_FILES = (
     "audio-tab-183.css",
     "interface-block3.js",
     "interface-block3.css",
+    "light-theme.css",
     "source-recovery-ui-183.js",
     "source-recovery-ui-183.css",
     "app-background.webp",
-    "wrn-header-banner.webp",
+    "wrn-future-header.webp",
 )
 
 SELFTEST_LANGUAGES = ("en", "de", "es", "fr", "it", "pt", "ru", "el", "tr")
@@ -179,8 +181,8 @@ class ReleaseAudit:
         self.add(
             "config-loader",
             "release",
-            "const VERSION = '184-prerelease-rc10';" in source,
-            "Dynamic loader uses 184-prerelease-rc10",
+            "const VERSION = '184-prerelease-rc11';" in source,
+            "Dynamic loader uses 184-prerelease-rc11",
         )
         for token in ("dataUrls:", "proxyUrl:", "sharedTranslationUrl:"):
             self.add(
@@ -196,13 +198,13 @@ class ReleaseAudit:
             "worker-app-cache",
             "offline",
             EXPECTED_APP_CACHE in source,
-            "Service worker uses the rc10 app cache",
+            "Service worker uses the rc11 app cache",
         )
         self.add(
             "worker-data-cache",
             "offline",
             EXPECTED_DATA_CACHE in source,
-            "Service worker uses the rc10 data cache",
+            "Service worker uses the rc11 data cache",
         )
         for relative in APP_SHELL_FILES:
             self.add(
@@ -448,14 +450,14 @@ class ReleaseAudit:
         self.add(
             "header-asset-reference",
             "header",
-            "wrn-header-banner.webp" in script,
-            "Header script uses the dedicated banner",
+            "wrn-future-header.webp" in script,
+            "Header script uses the transparent banner",
         )
         self.add(
             "header-asset-offline",
             "header",
-            "'./wrn-header-banner.webp'" in worker,
-            "Header banner is in the app shell",
+            "'./wrn-future-header.webp'" in worker,
+            "Transparent header banner is in the app shell",
         )
         self.add(
             "header-responsive-size",

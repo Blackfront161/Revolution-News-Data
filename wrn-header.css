@@ -1,9 +1,16 @@
-/* World Revolution News 1.8.3 – kompakter eigener Header-Banner */
+/* World Revolution News 1.8.4 – transparenter, leuchtender Header */
 
 header {
-    min-height: 88px;
+    min-height: 76px;
     position: relative;
-    backdrop-filter: blur(2px);
+}
+
+header.wrn-future-header-ready {
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border-radius: 0;
 }
 
 header > div:first-child {
@@ -11,24 +18,29 @@ header > div:first-child {
     align-items: center;
     justify-content: center;
     min-width: 0;
-    flex: 1 1 760px;
+    flex: 1 1 940px;
 }
 
 header .wrn-future-header-image {
     display: block;
-    width: min(100%, 960px);
-    max-width: 960px;
+    width: min(100%, 1240px);
+    max-width: 1240px;
     height: auto;
-    max-height: 180px;
+    max-height: 172px;
     margin-inline: auto;
-    aspect-ratio: 1024 / 341;
+    aspect-ratio: 1908 / 327;
     object-fit: contain;
-    object-position: left center;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
+    object-position: center;
+    border: 0;
+    border-radius: 0;
     pointer-events: none;
     user-select: none;
-    filter: drop-shadow(0 0 10px rgba(0, 229, 239, 0.18)) drop-shadow(0 0 12px rgba(255, 49, 88, 0.14));
+    filter:
+        saturate(1.38)
+        brightness(1.2)
+        contrast(1.08)
+        drop-shadow(0 0 13px rgba(0, 240, 255, 0.72))
+        drop-shadow(0 0 17px rgba(255, 26, 74, 0.56));
 }
 
 header.wrn-future-header-ready h1,
@@ -48,10 +60,10 @@ header.wrn-future-header-ready .app-version-inline {
 
 @media (max-width: 1100px) {
     header .wrn-future-header-image {
-        width: min(100%, 760px);
-        max-width: 760px;
+        width: min(100%, 980px);
+        max-width: 980px;
         height: auto;
-        max-height: 168px;
+        max-height: 148px;
     }
 }
 
@@ -67,9 +79,9 @@ header.wrn-future-header-ready .app-version-inline {
     }
 
     header .wrn-future-header-image {
-        width: min(100%, 460px);
+        width: min(100%, 720px);
         height: auto;
-        max-height: none;
+        max-height: 116px;
         object-position: center;
     }
 }
@@ -78,7 +90,7 @@ header.wrn-future-header-ready .app-version-inline {
     header .wrn-future-header-image {
         width: 100%;
         height: auto;
-        max-height: none;
+        max-height: 94px;
     }
 }
 
@@ -86,6 +98,6 @@ header.wrn-future-header-ready .app-version-inline {
     header .wrn-future-header-image {
         width: 100%;
         height: auto;
-        max-height: none;
+        max-height: 82px;
     }
 }

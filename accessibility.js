@@ -8,7 +8,7 @@
     const MOTION_MODES = new Set(['auto', 'reduced', 'full']);
     const THEME_COLORS = {
         'theme-dark': '#050508',
-        'theme-light': '#f4f4f9',
+        'theme-light': '#f1e9dc',
         'theme-oled': '#000000',
         'theme-contrast': '#000000',
         'theme-soft': '#171714'
