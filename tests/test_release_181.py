@@ -76,7 +76,7 @@ config = (ROOT / 'config.js').read_text(encoding='utf-8')
 worker = (ROOT / 'service-worker.js').read_text(encoding='utf-8')
 for token in ["version: '1.8.4'", 'video-hub.js', 'audio-region-core.js']:
     assert token in config, token
-for token in ['wrn-app-v1.8.4-rc11', 'wrn-data-v1.8.4-rc11', 'video-hub.js', 'audio-region-core.js']:
+for token in ['wrn-app-v1.8.4-release-1', 'wrn-data-v1.8.4-release-1', 'video-hub.js', 'audio-region-core.js']:
     assert token in worker, token
 
 feature = (ROOT / 'feature-audit.json').read_text(encoding='utf-8')

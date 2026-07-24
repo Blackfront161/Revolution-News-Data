@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only static release audit for World Revolution News 1.8.4 prerelease.
+"""Read-only static release audit for World Revolution News 1.8.4.
 
 The audit only writes release-readiness-183.json when write_report is true.
 It never edits application files, workflows, registries, or user data.
@@ -17,8 +17,8 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
 EXPECTED_VERSION = "1.8.4"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.4-rc11"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-rc11"
+EXPECTED_APP_CACHE = "wrn-app-v1.8.4-release-1"
+EXPECTED_DATA_CACHE = "wrn-data-v1.8.4-release-1"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
@@ -44,7 +44,7 @@ REQUIRED_FILES = (
     "source-verification.js",
     "source_recovery.py",
     "app-background.webp",
-    "wrn-future-header.webp",
+    "wrn-future-header-white.png",
     "tests/test_video_assets.py",
     "tests/test_audio_block2_assets.py",
     "tests/test_source_recovery_assets.py",
@@ -68,7 +68,7 @@ APP_SHELL_FILES = (
     "source-recovery-ui-183.js",
     "source-recovery-ui-183.css",
     "app-background.webp",
-    "wrn-future-header.webp",
+    "wrn-future-header-white.png",
 )
 
 SELFTEST_LANGUAGES = ("en", "de", "es", "fr", "it", "pt", "ru", "el", "tr")
@@ -168,8 +168,8 @@ class ReleaseAudit:
         self.add(
             "config-build",
             "release",
-            EXPECTED_VERSION in build_value and "prerelease" in build_value,
-            "Build is marked as a 1.8.4 prerelease",
+            EXPECTED_VERSION in build_value and "release" in build_value,
+            "Build is marked as the 1.8.4 release",
             detail=build_value,
         )
         self.add(
@@ -181,8 +181,8 @@ class ReleaseAudit:
         self.add(
             "config-loader",
             "release",
-            "const VERSION = '184-prerelease-rc11';" in source,
-            "Dynamic loader uses 184-prerelease-rc11",
+            "const VERSION = '184-release-1';" in source,
+            "Dynamic loader uses 184-release-1",
         )
         for token in ("dataUrls:", "proxyUrl:", "sharedTranslationUrl:"):
             self.add(
@@ -198,13 +198,13 @@ class ReleaseAudit:
             "worker-app-cache",
             "offline",
             EXPECTED_APP_CACHE in source,
-            "Service worker uses the rc11 app cache",
+            "Service worker uses the release app cache",
         )
         self.add(
             "worker-data-cache",
             "offline",
             EXPECTED_DATA_CACHE in source,
-            "Service worker uses the rc11 data cache",
+            "Service worker uses the release data cache",
         )
         for relative in APP_SHELL_FILES:
             self.add(
@@ -340,9 +340,9 @@ class ReleaseAudit:
         source = read_text(self.root, "app-check.html")
         for check_id, token, message in (
             ("app-check-version", "WRN_CONFIG.version === EXPECTED_VERSION", "Release page checks WRN_CONFIG.version"),
-            ("app-check-build", "EXPECTED_BUILD_MARKER", "Release page checks the RC build"),
+            ("app-check-build", "EXPECTED_BUILD_MARKER", "Release page checks the release build"),
             ("app-check-manifest", "'./manifest.json'", "Release page checks manifest.json"),
-            ("app-check-cache", "wrn-app-v1.8.4-rc8", "Release page checks prerelease app cache"),
+            ("app-check-cache", EXPECTED_APP_CACHE, "Release page checks the release app cache"),
             ("app-check-runtime", "runtime-selftest.js", "Release page checks runtime self-test"),
             ("app-check-no-store", "cache:'no-store'", "Release page bypasses caches"),
             ("app-check-read-only", "keine App- oder Browserdaten verändert", "Release page states its read-only behavior"),
@@ -450,14 +450,14 @@ class ReleaseAudit:
         self.add(
             "header-asset-reference",
             "header",
-            "wrn-future-header.webp" in script,
-            "Header script uses the transparent banner",
+            "wrn-future-header-white.png" in script,
+            "Header script uses the white-title transparent banner",
         )
         self.add(
             "header-asset-offline",
             "header",
-            "'./wrn-future-header.webp'" in worker,
-            "Transparent header banner is in the app shell",
+            "'./wrn-future-header-white.png'" in worker,
+            "White-title transparent header banner is in the app shell",
         )
         self.add(
             "header-responsive-size",
@@ -494,7 +494,7 @@ def main() -> int:
     report = run_audit()
     summary = report["summary"]
     print(
-        "WRN 1.8.4 prerelease audit: "
+        "WRN 1.8.4 release audit: "
         f"{summary['pass']} passed, "
         f"{summary['warning']} warnings, "
         f"{summary['fail']} failed, "

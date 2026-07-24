@@ -33,6 +33,10 @@ def main() -> None:
     assert "btnEl.classList.add('is-loading')" in app
     assert "btnEl.classList.remove('is-loading')" in app
     assert "attributeFilter: ['class', 'disabled']" in script
+    assert 'btnTranslate: "Übersetzen"' in app
+    assert "translate: 'Übersetzen'" in script
+    assert 'btnTranslate: "Ubersetzen"' not in app
+    assert "translate: 'Ubersetzen'" not in script
 
     print('Block 3 assets: OK')
 

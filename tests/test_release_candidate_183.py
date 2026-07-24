@@ -47,7 +47,7 @@ assert "release-readiness-183.json" in quality
 assert audit.REPORT_PATH.name == "release-readiness-183.json"
 
 print(
-    "WRN 1.8.4 prerelease: "
+    "WRN 1.8.4 release: "
     f"{summary['pass']} passed, "
     f"{summary['warning']} warnings, "
     f"{summary['total']} total"

@@ -24,7 +24,7 @@
 
         const image = document.createElement('img');
         image.className = 'wrn-future-header-image wrn-custom-header-banner';
-        image.src = './wrn-future-header.webp?v=184-b6';
+        image.src = './wrn-future-header-white.png?v=184-release-1';
         image.alt = '';
         image.setAttribute('aria-hidden', 'true');
         image.decoding = 'async';

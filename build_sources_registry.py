@@ -498,6 +498,32 @@ def merge_record(
     target["active"] = target["active"] or incoming["active"]
 
 
+def propagate_geography_by_name(
+    records: list[dict[str, Any]],
+) -> None:
+    """Keep geographic metadata on alternate URLs of the same source."""
+    geography: dict[str, dict[str, str]] = {}
+
+    for record in records:
+        key = record["name"].casefold()
+        shared = geography.setdefault(key, {})
+
+        for field in (
+            "originRegion",
+            "originCountry",
+            "originCountryCode",
+        ):
+            if not shared.get(field) and record.get(field):
+                shared[field] = record[field]
+
+    for record in records:
+        shared = geography.get(record["name"].casefold(), {})
+
+        for field, value in shared.items():
+            if not record.get(field):
+                record[field] = value
+
+
 def build_registry() -> dict[str, Any]:
     rows = extract_aggregate_rows()
 
@@ -540,8 +566,10 @@ def build_registry() -> dict[str, Any]:
         else:
             merge_record(merged[key], record)
 
+    records = list(merged.values())
+    propagate_geography_by_name(records)
     records = sorted(
-        merged.values(),
+        records,
         key=lambda item: item["name"].casefold(),
     )
 
