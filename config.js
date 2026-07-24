@@ -135,7 +135,7 @@
 
     const style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = './intro-screen.css?v=1718';
+    style.href = './intro-screen.css?v=184';
     style.dataset.wrnIntroAsset = 'style';
     document.head.appendChild(style);
 
@@ -514,7 +514,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '184-prerelease-rc10';
+    const VERSION = '184-prerelease-rc11';
 
     const addStyle = (file, marker) => {
         if (
@@ -638,7 +638,8 @@ window.WRN_CONFIG = Object.freeze({
             ['lexicon-tab.css', 'lexicon-tab-recovery-184'],
             ['about-tab.css', 'about-tab-recovery-184'],
             ['article-summary.css', 'article-summary-recovery-184'],
-            ['zine-designer.css', 'zine-designer-recovery-10']
+            ['zine-designer.css', 'zine-designer-recovery-10'],
+            ['light-theme.css', 'light-theme-recovery-184']
         ].forEach(([file, marker]) => addStyle(file, marker));
 
         await loadSequentially([

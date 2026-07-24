@@ -440,6 +440,14 @@
   font-size: 1.3rem;
   line-height: 1;
   text-shadow: 2px 0 #050508, 0 0 8px rgba(255, 49, 88, .55);
+  animation: none;
+  transform: rotate(0);
+}
+
+.wrn-card-language-action-183.is-loading .wrn-rb-star-184,
+[data-wrn-article-action="translate"].is-loading .wrn-rb-star-184,
+.wrn-story-translate-184.is-loading .wrn-rb-star-184,
+.wrn-stories-switch-indicator-183 .wrn-rb-star-184 {
   animation: wrn-rb-spin-184 .8s linear infinite;
 }
 

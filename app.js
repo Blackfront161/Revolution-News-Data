@@ -1689,20 +1689,54 @@ async function translateArticle(idNum) {
     if (card.dataset.translated === 'full' && card.dataset.translationLanguage === currentLang) return;
 
     card.dataset.translated = 'translating';
+    btnEl.disabled = true;
+    btnEl.classList.add('is-loading');
 
-    const isExpanded = card.dataset.expanded === 'true' || contentEl.style.display === 'block';
-    if (!isExpanded) {
+    try {
+        const isExpanded = card.dataset.expanded === 'true' || contentEl.style.display === 'block';
+        if (!isExpanded) {
+            btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
+
+            const originalText = String(article.content || '').trim();
+            let originalTeaser = originalText.slice(0, 500);
+            const sentence = originalText.match(/[^.!?]+[.!?]+/)?.[0];
+            if (sentence) originalTeaser = sentence;
+
+            const result = await fetchTranslationRequest({
+                title: article.title || "",
+                text: originalTeaser,
+                mode: "title_and_text"
+            });
+
+            if (result.error || !result.text) {
+                showTranslationError(btnEl, card, result);
+                return;
+            }
+
+            const parsed = parseTranslatedTitleAndText(result.text, article.title || '');
+            if (parsed.title) titleEl.textContent = parsed.title;
+            if (parsed.text) teaserEl.textContent = parsed.text;
+            titleEl.classList.add('translated');
+            btnEl.innerHTML = `[ ${t.btnDone} ]`;
+            btnEl.removeAttribute('title');
+            card.dataset.translated = 'teaser';
+            card.dataset.translationLanguage = currentLang;
+            window.WRNSourceProfiles?.markTranslated(card, article, currentLang);
+            window.WRNTranslationTools?.registerTranslation(idNum, article, {
+                title: parsed.title,
+                teaser: parsed.text,
+                text: '',
+                language: currentLang,
+                provider: result.provider || '',
+                translatedAt: new Date().toISOString()
+            }, 'teaser');
+            return;
+        }
+
         btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
-
-        const originalText = String(article.content || '').trim();
-        let originalTeaser = originalText.slice(0, 500);
-        const sentence = originalText.match(/[^.!?]+[.!?]+/)?.[0];
-        if (sentence) originalTeaser = sentence;
-
-        const result = await fetchTranslationRequest({
-            title: article.title || "",
-            text: originalTeaser,
-            mode: "title_and_text"
+        const result = await translateFullArticleForLanguage(idNum, (current, total) => {
+            const progressText = total > 1 ? `[ ${t.btnLoading} ${current}/${total} ]` : `[ ${t.btnLoading} ]`;
+            btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
         });
 
         if (result.error || !result.text) {
@@ -1710,38 +1744,15 @@ async function translateArticle(idNum) {
             return;
         }
 
-        const parsed = parseTranslatedTitleAndText(result.text, article.title || '');
-        if (parsed.title) titleEl.textContent = parsed.title;
-        if (parsed.text) teaserEl.textContent = parsed.text;
-        titleEl.classList.add('translated');
-        btnEl.innerHTML = `[ ${t.btnDone} ]`;
-        btnEl.removeAttribute('title');
-        card.dataset.translated = 'teaser';
-        card.dataset.translationLanguage = currentLang;
-        window.WRNSourceProfiles?.markTranslated(card, article, currentLang);
-        window.WRNTranslationTools?.registerTranslation(idNum, article, {
-            title: parsed.title,
-            teaser: parsed.text,
-            text: '',
-            language: currentLang,
-            provider: result.provider || '',
-            translatedAt: new Date().toISOString()
-        }, 'teaser');
-        return;
+        applyFullTranslationToCard(idNum, result);
+    } catch (error) {
+        showTranslationError(btnEl, card, {
+            message: error?.message || String(error)
+        });
+    } finally {
+        btnEl.disabled = false;
+        btnEl.classList.remove('is-loading');
     }
-
-    btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">[ ${t.btnLoading} ]</span>`;
-    const result = await translateFullArticleForLanguage(idNum, (current, total) => {
-        const progressText = total > 1 ? `[ ${t.btnLoading} ${current}/${total} ]` : `[ ${t.btnLoading} ]`;
-        btnEl.innerHTML = `${starSpinner} <span style="margin-left: 8px;">${progressText}</span>`;
-    });
-
-    if (result.error || !result.text) {
-        showTranslationError(btnEl, card, result);
-        return;
-    }
-
-    applyFullTranslationToCard(idNum, result);
 }
 
 window.addEventListener('scroll', () => {

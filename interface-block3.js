@@ -642,7 +642,13 @@
       sync();
       if (!originalTranslate.dataset.wrnCompactObserver) {
         originalTranslate.dataset.wrnCompactObserver = '183';
-        new MutationObserver(sync).observe(originalTranslate, { childList: true, characterData: true, subtree: true });
+        new MutationObserver(sync).observe(originalTranslate, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['class', 'disabled']
+        });
       }
     }
     const originalAction = typed.get('original');

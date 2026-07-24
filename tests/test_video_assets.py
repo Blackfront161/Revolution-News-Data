@@ -29,8 +29,21 @@ def main() -> None:
     background_css = read("app-background.css")
     intro_css = read("intro-screen.css")
     assert 'app-background.webp?v=183' in background_css
-    assert 'app-background.webp?v=183' in intro_css
+    assert 'app-background.webp?v=184' in intro_css
+    assert '/ contain no-repeat' in intro_css
+    assert 'from { transform: scale(1.012)' in intro_css
     assert "background-image" in background_css
+
+    header_script = read("wrn-header.js")
+    header_css = read("wrn-header.css")
+    light_css = read("light-theme.css")
+    config = read("config.js")
+    assert "wrn-future-header.webp?v=184-b6" in header_script
+    assert "background: transparent !important" in header_css
+    assert "saturate(1.38)" in header_css
+    assert "body.theme-light" in light_css
+    assert "#f1e9dc" in light_css
+    assert "['light-theme.css', 'light-theme-recovery-184']" in config
 
     image = ROOT / "app-background.webp"
     data = image.read_bytes()
@@ -40,11 +53,13 @@ def main() -> None:
     )
 
     worker = read("service-worker.js")
-    assert "wrn-app-v1.8.4-rc10" in worker
-    assert "wrn-data-v1.8.4-rc10" in worker
+    assert "wrn-app-v1.8.4-rc11" in worker
+    assert "wrn-data-v1.8.4-rc11" in worker
     assert "./video-hub.js" in worker
     assert "./video-hub.css" in worker
     assert "./app-background.webp" in worker
+    assert "./wrn-future-header.webp" in worker
+    assert "./light-theme.css" in worker
 
     video = read("video-hub.js")
     assert "(?:watch|embed)" in video

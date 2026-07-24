@@ -13,6 +13,7 @@ def main() -> None:
     workflow = read('.github/workflows/quality-gate.yml')
     script = read('interface-block3.js')
     style = read('interface-block3.css')
+    app = read('app.js')
 
     assert "['interface-block3.css', 'interface-block3-recovery-183']" in config
     assert "['interface-block3.js', 'interface-block3-recovery-183']" in config
@@ -25,6 +26,13 @@ def main() -> None:
     assert 'wrn-zine-editor-183' in style
     assert 'ensureThirtyDayArchive' in script
     assert 'matchesCorruption' in script
+    assert '.wrn-rb-star-184 {' in style
+    assert 'animation: none;' in style
+    assert '.wrn-card-language-action-183.is-loading .wrn-rb-star-184' in style
+    assert '[data-wrn-article-action="translate"].is-loading .wrn-rb-star-184' in style
+    assert "btnEl.classList.add('is-loading')" in app
+    assert "btnEl.classList.remove('is-loading')" in app
+    assert "attributeFilter: ['class', 'disabled']" in script
 
     print('Block 3 assets: OK')
 

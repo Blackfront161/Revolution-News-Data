@@ -24,11 +24,11 @@ html.wrn-intro-active-1720 {
 
 .wrn-intro-backdrop-1720 {
     position: absolute;
-    inset: -3%;
+    inset: 0;
     z-index: -3;
-    background: url("./app-background.webp?v=183") center center / cover no-repeat;
+    background: #030409 url("./app-background.webp?v=184") center center / contain no-repeat;
     filter: none;
-    transform: scale(1.02);
+    transform: scale(1);
     animation: wrn-intro-drift-1720 5.5s ease-out both !important;
 }
 
@@ -108,8 +108,8 @@ html.wrn-intro-active-1720 {
 
 @keyframes wrn-intro-rise-1720 { to { transform: translateY(0); opacity: 1; } }
 @keyframes wrn-intro-drift-1720 {
-    from { transform: scale(1.08) translate3d(0, 0, 0); }
-    to { transform: scale(1.025) translate3d(0, -0.4%, 0); }
+    from { transform: scale(1.012) translate3d(0, 0, 0); }
+    to { transform: scale(1) translate3d(0, 0, 0); }
 }
 @keyframes wrn-intro-sweep-1720 {
     from { transform: translateX(-120%); }
@@ -121,7 +121,7 @@ html.wrn-intro-active-1720 {
     .wrn-intro-logo-1720 { width: 78px; }
     .wrn-intro-wordmark-1720 { font-size: clamp(.95rem, 5.5vw, 1.4rem); }
     .wrn-intro-progress-track-1720 { width: min(78vw, 320px); }
-    .wrn-intro-backdrop-1720 { background-position: center top; }
+    .wrn-intro-backdrop-1720 { background-position: center center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
