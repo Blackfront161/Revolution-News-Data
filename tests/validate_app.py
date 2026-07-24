@@ -520,7 +520,7 @@ def check_release_182() -> None:
         if token not in config:
             error(f"config.js enthält die 1.8.2-Verknüpfung nicht: {token}")
 
-    for token in ["wrn-app-v1.8.4-rc11", "wrn-data-v1.8.4-rc11", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
+    for token in ["wrn-app-v1.8.4-release-1", "wrn-data-v1.8.4-release-1", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
         if token not in worker:
             error(f"service-worker.js enthält die 1.8.2-Datei nicht: {token}")
 

@@ -1,4 +1,4 @@
-/* World Revolution News 1.8.4 – prerelease interface improvements */
+/* World Revolution News 1.8.4 – release interface improvements */
 'use strict';
 
 (() => {
