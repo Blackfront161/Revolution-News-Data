@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-07-23T11:45:18.077925+00:00",
-  "sourceCount": 386,
-  "activeSourceCount": 386,
+  "generatedAt": "2026-07-24T02:37:25.744262+00:00",
+  "sourceCount": 389,
+  "activeSourceCount": 389,
   "knownLanguages": [
     "ar",
     "ca",
@@ -304,9 +304,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "No Borders",
+        "Anti-Rep & Prisons",
+        "Cyberactivism",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -416,10 +419,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Antifascism",
+        "Anticapitalism",
+        "Theory & Strategy",
+        "Anti-Rep & Prisons",
+        "Libraries",
         "Global",
+        "Labor Struggles",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -443,13 +452,12 @@
       "languageSource": "unknown",
       "categories": [
         "Africa",
-        "Anticolonialism",
         "Demonstrations",
-        "Anti-Rep & Prisons",
-        "Eco-Anarchism",
-        "Antiracism",
+        "Anticolonialism",
         "Labor Struggles",
+        "Anti-Rep & Prisons",
         "No War",
+        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -541,11 +549,13 @@
       "languages": [
         "pt"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Latin America",
         "Environment",
         "Investigative",
+        "No War",
+        "Queer-Feminism",
         "sources"
       ],
       "mediaType": "news",
@@ -704,10 +714,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Anti-Rep & Prisons",
         "Global",
+        "No War",
+        "Antifascism",
+        "Theory & Strategy",
+        "Anti-Imperialism",
+        "Animal Liberation",
+        "Indigenous Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -750,11 +766,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
-        "Global",
         "No War",
+        "Global",
+        "Labor Struggles",
+        "Antifascism",
+        "Antisexism",
+        "Antiracism",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -1152,11 +1173,18 @@
       "canonicalUrl": "https://anred.org/",
       "homepage": "https://www.anred.org/",
       "languages": [
-        "es"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Latin America",
+        "Labor Struggles",
+        "Antiracism",
+        "Antifascism",
+        "Queer-Feminism",
+        "No Borders",
+        "Demonstrations",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -1431,6 +1459,7 @@
       "languageSource": "unknown",
       "categories": [
         "Asia",
+        "Anti-Imperialism",
         "sources"
       ],
       "mediaType": "news",
@@ -1562,32 +1591,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Global",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
-      "name": "Autostraddle",
-      "url": "https://www.autostraddle.com/",
-      "canonicalUrl": "https://autostraddle.com/",
-      "homepage": "https://www.autostraddle.com/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "unknown",
-      "categories": [
-        "Queer-Feminism",
+        "No War",
+        "Antifascism",
+        "Anticapitalism",
+        "Theory & Strategy",
+        "Squatting & Housing",
+        "Anti-Rep & Prisons",
+        "Labor Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -1606,11 +1619,43 @@
       "canonicalUrl": "https://autostraddle.com/category/news/feed",
       "homepage": "https://www.autostraddle.com/category/news/",
       "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Queer-Feminism",
+        "North America"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "North America",
+      "originCountry": "United States",
+      "originCountryCode": "US",
+      "origins": [
+        "aggregate.py"
+      ]
+    },
+    {
+      "name": "Autostraddle News",
+      "url": "https://www.autostraddle.com/",
+      "canonicalUrl": "https://autostraddle.com/",
+      "homepage": "https://www.autostraddle.com/",
+      "languages": [
+        "en",
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
-        "Queer-Feminism"
+        "North America",
+        "Queer-Feminism",
+        "Cyberactivism",
+        "Labor Struggles",
+        "Antifascism",
+        "Anti-Rep & Prisons",
+        "Antisexism",
+        "Squatting & Housing",
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -1619,7 +1664,7 @@
       "originCountry": "",
       "originCountryCode": "",
       "origins": [
-        "aggregate.py"
+        "source-catalog.json"
       ]
     },
     {
@@ -1654,11 +1699,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Latin America",
-        "Anticolonialism",
         "Indigenous Struggles",
+        "Anticolonialism",
+        "Antisexism",
+        "Anti-Imperialism",
+        "Demonstrations",
+        "No War",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -1762,32 +1812,6 @@
       ]
     },
     {
-      "name": "Barrikade",
-      "url": "https://barrikade.info/",
-      "canonicalUrl": "https://barrikade.info/",
-      "homepage": "https://barrikade.info/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "unknown",
-      "categories": [
-        "Squatting & Housing",
-        "Europe",
-        "Antifascism",
-        "sources",
-        "Anti-Rep & Prisons"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "Barrikade (CH)",
       "url": "https://barrikade.info/spip.php?page=backend",
       "canonicalUrl": "https://barrikade.info/spip.php?page=backend",
@@ -1831,6 +1855,36 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "Barrikade (CH)",
+      "url": "https://barrikade.info/",
+      "canonicalUrl": "https://barrikade.info/",
+      "homepage": "https://barrikade.info/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Europe",
+        "Antifascism",
+        "Squatting & Housing",
+        "Theory & Strategy",
+        "No War",
+        "Anti-Rep & Prisons",
+        "Antiracism",
+        "Demonstrations",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -1878,6 +1932,32 @@
       "origins": [
         "aggregate.py",
         "multilingual-source-registry.json"
+      ]
+    },
+    {
+      "name": "Bianet Kurdî",
+      "url": "https://bianet.org/",
+      "canonicalUrl": "https://bianet.org/",
+      "homepage": "https://bianet.org/",
+      "languages": [
+        "ku",
+        "tr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Europe",
+        "sources",
+        "Demonstrations",
+        "No War"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -2139,9 +2219,15 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "North America",
+        "Labor Struggles",
+        "Antifascism",
+        "Queer-Feminism",
+        "No Borders",
+        "Theory & Strategy",
+        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -2184,9 +2270,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Indigenous Struggles",
+        "Labor Struggles",
+        "Cyberactivism",
+        "Anti-Rep & Prisons",
         "sources",
         "Asia"
       ],
@@ -2253,9 +2342,11 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "North America",
+        "Queer-Feminism",
+        "Anticapitalism",
         "sources"
       ],
       "mediaType": "news",
@@ -2362,11 +2453,12 @@
       "canonicalUrl": "https://cnt.es/",
       "homepage": "https://www.cnt.es/",
       "languages": [
-        "es"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Labor Struggles",
+        "Antifascism",
         "sources"
       ],
       "mediaType": "news",
@@ -2473,32 +2565,6 @@
       ]
     },
     {
-      "name": "CrimethInc.",
-      "url": "https://crimethinc.com/",
-      "canonicalUrl": "https://crimethinc.com/",
-      "homepage": "https://crimethinc.com/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "unknown",
-      "categories": [
-        "Anticapitalism",
-        "sources",
-        "Global",
-        "Radar",
-        "Theory & Strategy"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "CrimethInc. (Events)",
       "url": "https://morss.it/https://crimethinc.com/categories/events/feed",
       "canonicalUrl": "https://morss.it/https:/crimethinc.com/categories/events/feed",
@@ -2542,6 +2608,32 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "CrimethInc. (Global)",
+      "url": "https://crimethinc.com/",
+      "canonicalUrl": "https://crimethinc.com/",
+      "homepage": "https://crimethinc.com/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "unknown",
+      "categories": [
+        "Global",
+        "North America",
+        "Radar",
+        "Anticapitalism",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -2798,9 +2890,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "No War",
+        "Anti-Rep & Prisons",
+        "No Borders",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -3046,29 +3141,6 @@
       ]
     },
     {
-      "name": "El Libertario",
-      "url": "http://periodicoellibertario.blogspot.com/",
-      "canonicalUrl": "http://periodicoellibertario.blogspot.com/",
-      "homepage": "http://periodicoellibertario.blogspot.com/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "unknown",
-      "categories": [
-        "Latin America",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "Electronic Frontier Foundation",
       "url": "https://www.eff.org/rss/updates.xml",
       "canonicalUrl": "https://eff.org/rss/updates.xml",
@@ -3098,9 +3170,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Cyberactivism",
+        "No Borders",
+        "Anti-Rep & Prisons",
+        "Labor Struggles",
+        "Eco-Anarchism",
+        "Queer-Feminism",
+        "Radical Health & Disability",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -3211,10 +3290,10 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
-        "Latin America",
         "Indigenous Struggles",
+        "Latin America",
         "sources"
       ],
       "mediaType": "news",
@@ -3741,6 +3820,7 @@
       "categories": [
         "Europe",
         "No War",
+        "Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -3783,9 +3863,15 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Australia & NZ",
+        "Demonstrations",
+        "Eco-Anarchism",
+        "Labor Struggles",
+        "Anti-Rep & Prisons",
+        "Anti-Imperialism",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -3828,9 +3914,14 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Indigenous Struggles",
+        "Eco-Anarchism",
+        "No Borders",
+        "No War",
+        "Demonstrations",
+        "Anticolonialism",
         "sources"
       ],
       "mediaType": "news",
@@ -3855,11 +3946,11 @@
       "categories": [
         "Africa",
         "Anti-Rep & Prisons",
-        "Demonstrations",
-        "No Borders",
-        "Squatting & Housing",
         "Labor Struggles",
+        "Squatting & Housing",
+        "Demonstrations",
         "Antiracism",
+        "No Borders",
         "Eco-Anarchism",
         "sources"
       ],
@@ -4041,6 +4132,7 @@
       ],
       "languageSource": "unknown",
       "categories": [
+        "North America",
         "Indigenous Struggles",
         "sources"
       ],
@@ -4153,11 +4245,13 @@
       "canonicalUrl": "https://argentina.indymedia.org/",
       "homepage": "https://argentina.indymedia.org/",
       "languages": [
-        "es"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Latin America",
+        "Labor Struggles",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -4604,9 +4698,11 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Cyberactivism",
+        "Labor Struggles",
+        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -4631,7 +4727,13 @@
       "categories": [
         "Demonstrations",
         "Europe",
-        "sources"
+        "sources",
+        "No War",
+        "Labor Struggles",
+        "Squatting & Housing",
+        "Antifascism",
+        "Antisexism",
+        "Queer-Feminism"
       ],
       "mediaType": "news",
       "status": "active",
@@ -4763,9 +4865,10 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Labor Struggles",
+        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -4806,11 +4909,18 @@
       "canonicalUrl": "https://labournet.de/",
       "homepage": "https://www.labournet.de/",
       "languages": [
-        "de"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Labor Struggles",
+        "Demonstrations",
+        "No War",
+        "Anticapitalism",
+        "No Borders",
+        "Anti-Rep & Prisons",
+        "Squatting & Housing",
+        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -4901,9 +5011,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Global",
+        "No War",
+        "Antifascism",
+        "Indigenous Struggles",
+        "Labor Struggles",
+        "No Borders",
+        "Anticapitalism",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -5036,9 +5153,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
+        "No War",
+        "Labor Struggles",
+        "Anticapitalism",
+        "Radical Health & Disability",
+        "Antifascism",
+        "No Borders",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -5193,9 +5317,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Africa",
+        "No War",
+        "Labor Struggles",
+        "Anti-Rep & Prisons",
+        "Demonstrations",
+        "Eco-Anarchism",
+        "No Borders",
+        "Anticolonialism",
         "sources"
       ],
       "mediaType": "news",
@@ -5328,7 +5459,7 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Indigenous Struggles",
         "sources"
@@ -5438,11 +5569,17 @@
       "canonicalUrl": "https://mars-infos.org/",
       "homepage": "https://mars-infos.org/",
       "languages": [
-        "fr"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
+        "Antifascism",
+        "Theory & Strategy",
+        "Anti-Rep & Prisons",
+        "Labor Struggles",
+        "No Borders",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -5809,9 +5946,13 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Asia",
+        "Demonstrations",
+        "Anti-Rep & Prisons",
+        "Indigenous Struggles",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -5898,9 +6039,14 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Anticapitalism",
+        "No War",
+        "No Borders",
+        "Anti-Rep & Prisons",
+        "Labor Struggles",
+        "Radical Health & Disability",
         "sources"
       ],
       "mediaType": "news",
@@ -5941,9 +6087,9 @@
       "canonicalUrl": "https://omniatv.com/",
       "homepage": "https://omniatv.com/",
       "languages": [
-        "el"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
         "sources"
@@ -6149,11 +6295,18 @@
       "canonicalUrl": "https://paris-luttes.info/",
       "homepage": "https://paris-luttes.info/",
       "languages": [
-        "fr"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
+        "Anticapitalism",
+        "Labor Struggles",
+        "Demonstrations",
+        "Antifascism",
+        "Antiracism",
+        "Theory & Strategy",
+        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -6282,6 +6435,29 @@
       ]
     },
     {
+      "name": "Pressin Kurdî",
+      "url": "https://pressin.info/",
+      "canonicalUrl": "https://pressin.info/",
+      "homepage": "https://pressin.info/",
+      "languages": [
+        "ku"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Asia",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "Pueblos en Camino",
       "url": "https://pueblosencamino.org/feed/",
       "canonicalUrl": "https://pueblosencamino.org/feed",
@@ -6333,9 +6509,10 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Queer-Feminism",
+        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -6927,11 +7104,18 @@
       "canonicalUrl": "https://rebellyon.info/",
       "homepage": "https://rebellyon.info/",
       "languages": [
-        "fr"
+        "und"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
+        "Anti-Rep & Prisons",
+        "Demonstrations",
+        "Labor Struggles",
+        "Antifascism",
+        "Antiracism",
+        "No Borders",
+        "Anticapitalism",
         "sources"
       ],
       "mediaType": "news",
@@ -7019,9 +7203,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Australia & NZ",
+        "Antiracism",
+        "Anti-Rep & Prisons",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -7201,13 +7388,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Africa",
         "Anti-Imperialism",
         "No War",
         "Eco-Anarchism",
-        "Radical Health & Disability",
+        "Labor Struggles",
+        "Antiracism",
+        "No Borders",
+        "Anticapitalism",
         "sources"
       ],
       "mediaType": "news",
@@ -7434,6 +7624,7 @@
       "languageSource": "unknown",
       "categories": [
         "Global",
+        "North America",
         "sources"
       ],
       "mediaType": "news",
@@ -7679,10 +7870,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "North America",
         "Eco-Anarchism",
+        "Theory & Strategy",
+        "Anticolonialism",
         "sources"
       ],
       "mediaType": "news",
@@ -7792,9 +7985,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Libraries",
+        "Demonstrations",
+        "Theory & Strategy",
+        "Labor Struggles",
+        "Antiracism",
+        "Anticapitalism",
+        "Squatting & Housing",
+        "Cyberactivism",
         "sources"
       ],
       "mediaType": "news",
@@ -7827,6 +8027,35 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "The Appeal",
+      "url": "https://theappeal.org/",
+      "canonicalUrl": "https://theappeal.org/",
+      "homepage": "https://theappeal.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "North America",
+        "Anti-Rep & Prisons",
+        "Radical Health & Disability",
+        "Antisexism",
+        "Queer-Feminism",
+        "Squatting & Housing",
+        "Labor Struggles",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -8108,9 +8337,12 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Queer-Feminism",
+        "No Borders",
+        "Anti-Rep & Prisons",
+        "Radical Health & Disability",
         "sources"
       ],
       "mediaType": "news",
@@ -8196,6 +8428,33 @@
       ]
     },
     {
+      "name": "Truthout",
+      "url": "https://truthout.org/",
+      "canonicalUrl": "https://truthout.org/",
+      "homepage": "https://truthout.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "North America",
+        "No War",
+        "Anti-Rep & Prisons",
+        "No Borders",
+        "Demonstrations",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "Umanita Nova (IT)",
       "url": "http://www.umanitanova.org/feed/",
       "canonicalUrl": "http://umanitanova.org/feed",
@@ -8252,6 +8511,8 @@
       "languageSource": "unknown",
       "categories": [
         "Global",
+        "North America",
+        "Antifascism",
         "sources"
       ],
       "mediaType": "news",
@@ -8363,10 +8624,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Global",
-        "Anticapitalism",
+        "North America",
+        "Labor Struggles",
+        "Theory & Strategy",
+        "Anticolonialism",
+        "Demonstrations",
+        "Anti-Rep & Prisons",
+        "Cyberactivism",
         "sources"
       ],
       "mediaType": "news",
@@ -8591,9 +8858,15 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "No War",
+        "Labor Struggles",
+        "Demonstrations",
+        "Antiracism",
+        "Eco-Anarchism",
+        "Queer-Feminism",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -8768,13 +9041,16 @@
       "languages": [
         "und"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Anticapitalism",
         "Global",
+        "No War",
         "sources",
-        "Labor Struggles",
-        "No War"
+        "Eco-Anarchism",
+        "Squatting & Housing",
+        "Anti-Rep & Prisons",
+        "Labor Struggles"
       ],
       "mediaType": "news",
       "status": "active",
