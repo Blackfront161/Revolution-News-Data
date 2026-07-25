@@ -177,7 +177,9 @@ quellen = {
         {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
         {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
         {"name": "Barrikade (CH)", "url": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves"},
-        {"name": "CrimethInc. (Events)", "url": "https://morss.it/https://crimethinc.com/categories/events/feed"}
+        {"name": "CrimethInc. (Events)", "url": "https://morss.it/https://crimethinc.com/categories/events/feed"},
+        {"name": "Gancio Cisti", "url": "https://gancio.cisti.org/feed/rss"},
+        {"name": "Nantes Révoltée Agenda", "url": "https://nantes.indymedia.org/events/feed/"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -440,6 +442,149 @@ for _wrn_source in _wrn_extra_sources_182:
     _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))
 # WRN MULTILINGUAL SOURCES 1.8.2 END
 
+# WRN SOURCE EXPANSION 1.8.5 START
+_wrn_extra_sources_185 = [
+    {
+        "name": "Africa Is a Country",
+        "url": "https://africasacountry.com/feed",
+        "homepage": "https://africasacountry.com/",
+        "language": "en",
+        "categories": ["Africa", "Anticolonialism", "Anti-Imperialism", "Theory & Strategy"],
+        "originRegion": "Africa",
+    },
+    {
+        "name": "African Feminism",
+        "url": "https://africanfeminism.com/feed/",
+        "homepage": "https://africanfeminism.com/",
+        "language": "en",
+        "categories": ["Africa", "Antisexism", "Queer-Feminism", "Anticolonialism"],
+        "originRegion": "Africa",
+    },
+    {
+        "name": "Minority Africa",
+        "url": "https://minorityafrica.org/feed/",
+        "homepage": "https://minorityafrica.org/",
+        "language": "en",
+        "categories": ["Africa", "Antisexism", "Queer-Feminism", "Antiracism", "Indigenous Struggles", "Radical Health & Disability", "No Borders"],
+        "originRegion": "Africa",
+    },
+    {
+        "name": "Elitsha",
+        "url": "https://elitshanews.org.za/en/feed/",
+        "homepage": "https://elitshanews.org.za/",
+        "language": "en",
+        "categories": ["Africa", "Labor Struggles", "Squatting & Housing", "Antiracism"],
+        "originCountry": "South Africa",
+        "originCountryCode": "ZA",
+        "originRegion": "Southern Africa",
+    },
+    {
+        "name": "African Arguments",
+        "url": "https://africanarguments.org/feed/",
+        "homepage": "https://africanarguments.org/",
+        "language": "en",
+        "categories": ["Africa", "Anticolonialism", "Anti-Imperialism"],
+        "originRegion": "Africa",
+    },
+    {
+        "name": "WoMin African Alliance",
+        "url": "https://womin.africa/feed/",
+        "homepage": "https://womin.africa/",
+        "language": "en",
+        "categories": ["Africa", "Antisexism", "Eco-Anarchism", "Indigenous Struggles", "Anticapitalism"],
+        "originRegion": "Africa",
+    },
+    {
+        "name": "APTN News",
+        "url": "https://www.aptnnews.ca/feed/",
+        "homepage": "https://www.aptnnews.ca/",
+        "language": "en",
+        "categories": ["Indigenous Struggles", "North America", "Anticolonialism"],
+        "originCountry": "Canada",
+        "originCountryCode": "CA",
+        "originRegion": "North America",
+    },
+    {
+        "name": "IndigiNews",
+        "url": "https://indiginews.com/feed/",
+        "homepage": "https://indiginews.com/",
+        "language": "en",
+        "categories": ["Indigenous Struggles", "North America", "Anticolonialism"],
+        "originCountry": "Canada",
+        "originCountryCode": "CA",
+        "originRegion": "North America",
+    },
+    {
+        "name": "Nunatsiaq News",
+        "url": "https://nunatsiaq.com/feed/",
+        "homepage": "https://nunatsiaq.com/",
+        "language": "en",
+        "categories": ["Indigenous Struggles", "North America", "Anticolonialism"],
+        "originCountry": "Canada",
+        "originCountryCode": "CA",
+        "originRegion": "Inuit Nunangat",
+    },
+    {
+        "name": "The Feminist Wire",
+        "url": "https://thefeministwire.com/feed/",
+        "homepage": "https://thefeministwire.com/",
+        "language": "en",
+        "categories": ["Antisexism", "Queer-Feminism", "Antiracism", "North America"],
+        "originRegion": "North America",
+    },
+    {
+        "name": "Feminist Newswire",
+        "url": "https://feminist.org/news/feed/",
+        "homepage": "https://feminist.org/news/",
+        "language": "en",
+        "categories": ["Antisexism", "Queer-Feminism", "North America"],
+        "originRegion": "North America",
+    },
+    {
+        "name": "AWID",
+        "url": "https://www.awid.org/rss.xml",
+        "homepage": "https://www.awid.org/",
+        "language": "en",
+        "categories": ["Antisexism", "Queer-Feminism", "Anticapitalism", "Global"],
+        "originRegion": "Global",
+    },
+    {
+        "name": "Equality Now",
+        "url": "https://equalitynow.org/feed/",
+        "homepage": "https://equalitynow.org/",
+        "language": "en",
+        "categories": ["Antisexism", "Global"],
+        "originRegion": "Global",
+    },
+    {
+        "name": "Women Enabled International",
+        "url": "https://womenenabled.org/feed/",
+        "homepage": "https://womenenabled.org/",
+        "language": "en",
+        "categories": ["Antisexism", "Radical Health & Disability", "Global"],
+        "originRegion": "Global",
+    },
+]
+
+_wrn_known_source_names_185 = {
+    safe_lower(item.get("name"))
+    for bucket in quellen.values()
+    for item in bucket
+    if isinstance(item, dict)
+}
+for _wrn_source in _wrn_extra_sources_185:
+    if safe_lower(_wrn_source.get("name")) in _wrn_known_source_names_185:
+        continue
+    _wrn_primary_category = _wrn_source.get("categories", ["Global"])[0]
+    quellen.setdefault(_wrn_primary_category, []).append(_wrn_source)
+    _wrn_known_source_names_185.add(safe_lower(_wrn_source.get("name")))
+
+for _wrn_bucket in quellen.values():
+    for _wrn_source in _wrn_bucket:
+        if safe_lower(_wrn_source.get("name")).startswith("bianet "):
+            _wrn_source["maxNewItems"] = 2
+# WRN SOURCE EXPANSION 1.8.5 END
+
 SPAM_BLACKLIST = [
     "sicherheitslage verschlimmert",
     "mordeaffen",
@@ -531,9 +676,11 @@ TOPIC_CATEGORY_PATTERNS = {
         r"\bprotesto", r"\beylem", r"\byürüyüş", r"\bmiting",
     ),
     "Anti-Rep & Prisons": (
-        r"\bprison", r"\bpolice\b", r"\barrest", r"\brepress",
+        r"\bprison", r"\barrest", r"\brepress",
         r"\bdetention\b", r"\bincarcer", r"\bpolitical prisoner",
-        r"\bcourt\b", r"\btrial\b", r"\bknast\b", r"\bgef[aä]ng",
+        r"\bprisoner support\b", r"\babolition(?:ist|ism)?\b",
+        r"\bpolice (?:violence|brutality|killing|raid|repression)\b",
+        r"\bstate repression\b", r"\bknast\b", r"\bgef[aä]ng",
         r"\bcezaevi", r"\bhapishane", r"\bgözaltı", r"\btutuk", r"\bmahkeme",
     ),
     "Cyberactivism": (
@@ -569,6 +716,7 @@ TOPIC_CATEGORY_PATTERNS = {
         r"\banarchist librar", r"\bbiblioth[eè]que anarch", r"\bbiblioteca anarqu",
         r"\banarchistische bibliothek\b",
     ),
+    "Movement News": (),
 }
 
 
@@ -578,7 +726,8 @@ def infer_article_categories(title, content, configured, primary):
         for category in (configured if isinstance(configured, list) else [configured])
         if safe_text(category)
     ]
-    text = f"{safe_text(title)} {safe_text(content)}".casefold()
+    title_text = safe_text(title).casefold()
+    text = f"{title_text} {safe_text(content)}".casefold()
     categories = []
     for category in configured_list:
         if category in REGION_CATEGORIES and category not in categories:
@@ -586,25 +735,54 @@ def infer_article_categories(title, content, configured, primary):
     if primary in REGION_CATEGORIES and primary not in categories:
         categories.append(primary)
 
+    configured_topics = [
+        category for category in configured_list
+        if category in TOPIC_CATEGORY_PATTERNS
+    ]
     matched_topics = []
+    if primary in TOPIC_CATEGORY_PATTERNS:
+        matched_topics.append(primary)
+
     for category, patterns in TOPIC_CATEGORY_PATTERNS.items():
-        if any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns):
+        matches = [
+            pattern for pattern in patterns
+            if re.search(pattern, text, flags=re.IGNORECASE)
+        ]
+        if not matches:
+            continue
+        if category == "Anti-Rep & Prisons" and primary != category:
+            title_match = any(
+                re.search(pattern, title_text, flags=re.IGNORECASE)
+                for pattern in patterns
+            )
+            strong_match = any(
+                marker in pattern
+                for marker in (
+                    "political prisoner", "prisoner support", "police ",
+                    "state repression", "incarcer", "cezaevi", "hapishane",
+                    "gözaltı", "tutuk",
+                )
+                for pattern in matches
+            )
+            if not title_match and not strong_match and len(matches) < 2:
+                continue
+        if category not in matched_topics:
             matched_topics.append(category)
 
     for category in matched_topics:
         if category not in categories:
             categories.append(category)
 
-    configured_topics = [
-        category for category in configured_list
-        if category in TOPIC_CATEGORY_PATTERNS
-    ]
     if not matched_topics:
         fallback = primary if primary in TOPIC_CATEGORY_PATTERNS else (
             configured_topics[0] if len(configured_topics) == 1 else ""
         )
         if fallback and fallback not in categories:
             categories.append(fallback)
+        if not fallback:
+            categories.append("Movement News")
+    if not any(category in REGION_CATEGORIES for category in categories):
+        categories.insert(0, "Global")
     return categories or [safe_text(primary, "Global")]
 
 
@@ -685,7 +863,7 @@ def clean_image_url(url, base_url):
     return full_url
 
 
-def collect_image_urls(soup, base_url, limit=6):
+def collect_image_urls(soup, base_url, limit=24):
     images = []
     if not soup:
         return images
@@ -1120,7 +1298,10 @@ for kontinent, feeds in quellen.items():
         # =========================================================
         # DAS NEUE SPEED-LIMIT (Macht den Code rasend schnell)
         # =========================================================
-        MAX_NEUE_SCRAPES = 4 # Maximal 4 tief recherchierte Artikel pro Quelle!
+        MAX_NEUE_SCRAPES = max(
+            1,
+            int(feed.get("maxNewItems", 4)),
+        )
         tiefe_scrapes_gemacht = 0
 
         for entry in parsed.entries[:limit]: 
@@ -1145,19 +1326,12 @@ for kontinent, feeds in quellen.items():
                     configured_categories = feed.get("categories", [kontinent])
                     if not isinstance(configured_categories, list):
                         configured_categories = [configured_categories]
-                    existing_categories = existing_article.get("categories", [])
-                    if not isinstance(existing_categories, list):
-                        existing_categories = [existing_categories]
-                    existing_article["categories"] = list(dict.fromkeys(
-                        [
-                            safe_text(category)
-                            for category in (
-                                existing_categories
-                                + configured_categories
-                            )
-                            if safe_text(category)
-                        ]
-                    ))
+                    existing_article["categories"] = infer_article_categories(
+                        existing_article.get("title", ""),
+                        existing_article.get("content", ""),
+                        configured_categories,
+                        kontinent,
+                    )
                     for existing_key, configured_key in (
                         ("sourceHomepage", "homepage"),
                         ("originCountry", "originCountry"),
@@ -1347,7 +1521,7 @@ for kontinent, feeds in quellen.items():
                     "content": clean_text,
                     "contentComplete": True if is_radar else not content_is_incomplete(clean_text),
                     "image": image_url,
-                    "images": image_urls[:6],
+                    "images": image_urls[:24],
                     "language": feed_languages[0],
                     "languages": feed_languages,
                     "originCountry": safe_text(feed.get("originCountry")),

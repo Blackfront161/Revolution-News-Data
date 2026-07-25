@@ -154,7 +154,7 @@ window.WRN_EMERGENCY_MODE = false;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.8.4',
-    build: '2026.07.24-wrn-1.8.4-release',
+    build: '2026.07.25-wrn-1.8.4-release-2',
     releasedAt: '2026-07-24T12:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
@@ -338,16 +338,9 @@ window.WRN_CONFIG = Object.freeze({
                 contain-intrinsic-size: 240px;
             }
 
-            #feed-container img,
-            #archive-container img,
-            #feed-container picture,
-            #archive-container picture,
             #feed-container video,
             #archive-container video,
-            .article-image,
-            .article-thumbnail,
-            .news-image,
-            .card-image {
+            .article-video {
                 display: none !important;
             }
         }

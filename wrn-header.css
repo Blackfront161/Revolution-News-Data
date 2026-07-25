@@ -2,7 +2,9 @@
 
 header {
     min-height: 76px;
-    position: relative;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 60 !important;
 }
 
 header.wrn-future-header-ready {

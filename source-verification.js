@@ -384,7 +384,8 @@
         rows.forEach(row => {
             const urlKey = canonicalUrl(row.url);
             const nameKey = canonicalName(row.name);
-            const key = urlKey || nameKey || row.id;
+            const kindKey = String(row.kind || 'source').toLowerCase();
+            const key = `${kindKey}:${nameKey || urlKey || row.id}`;
 
             if (!byKey.has(key)) {
                 byKey.set(key, { ...row });
@@ -393,9 +394,9 @@
 
             const current = byKey.get(key);
             const priority = {
-                error: 4,
+                ok: 4,
                 warning: 3,
-                ok: 2,
+                error: 2,
                 unknown: 1
             };
 

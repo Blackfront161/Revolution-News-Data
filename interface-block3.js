@@ -14,7 +14,7 @@
     'No Borders', 'Anticapitalism', 'Theory & Strategy', 'Anticolonialism',
     'Anti-Imperialism', 'Squatting & Housing', 'Demonstrations', 'Anti-Rep & Prisons',
     'Cyberactivism', 'No War', 'Animal Liberation', 'Eco-Anarchism',
-    'Indigenous Struggles', 'Radical Health & Disability', 'Libraries',
+    'Indigenous Struggles', 'Radical Health & Disability', 'Libraries', 'Movement News',
     CORRUPTION_CATEGORY
   ]);
 
@@ -456,7 +456,7 @@
       || 7
     );
     state.pendingDays = days;
-    if (days === 30) await ensureThirtyDayArchive();
+    if (days > 0) await ensureThirtyDayArchive();
     state.appliedDays = days;
     try { window.applyFilters?.(); } catch (error) { console.error(error); }
     const selected = [...state.selectedSources];
@@ -860,10 +860,14 @@
     const images = ['normal', 'gray', 'none'].includes(settings.images)
       ? settings.images : 'normal';
     const density = settings.density === 'compact' ? 'compact' : 'comfortable';
+    const font = ['sans', 'serif', 'mono'].includes(settings.font) ? settings.font : 'sans';
+    const accent = {
+      cyan:'#00e5ef', red:'#ff3158', purple:'#9c74ff', black:'#111'
+    }[settings.accent] || '#00e5ef';
     const pageSize = {
       a4:'A4 portrait', a5:'A5 portrait', square:'210mm 210mm', story:'108mm 192mm'
     }[format];
-    const title = zineHtml(settings.headline || 'WORLD REVOLUTION NEWS');
+    const title = zineHtml(settings.headline || '');
     const intro = zineHtml(settings.intro || '');
     const footer = zineHtml(settings.footer || '');
     const labelSource = language() === 'de' ? 'Quelle' : 'Source';
@@ -892,7 +896,7 @@
         @page { size:${pageSize}; margin:0; }
         * { box-sizing:border-box; }
         html,body { margin:0; padding:0; }
-        body { font-family:Arial,sans-serif; line-height:${density === 'compact' ? '1.28' : '1.45'}; }
+        body { font-family:${font === 'serif' ? 'Georgia,serif' : font === 'mono' ? 'Consolas,monospace' : 'Arial,sans-serif'}; line-height:${density === 'compact' ? '1.28' : '1.45'}; }
         main { min-height:100vh; padding:${density === 'compact' ? '8mm' : '12mm'}; }
         .issue { margin:0 0 9mm; padding:0 0 5mm; border-bottom:3px solid currentColor; text-align:center; }
         .issue h1 { margin:0; font-size:24pt; letter-spacing:.04em; }
@@ -907,15 +911,15 @@
         .original { margin-top:6mm; padding-top:3mm; border-top:1px solid currentColor; font-size:8pt; overflow-wrap:anywhere; }
         footer { position:fixed; left:8mm; right:8mm; bottom:4mm; text-align:center; font-size:7.5pt; opacity:.7; }
         body.cyber { background:#05060b; color:#f5f7ff; }
-        body.cyber main { border:2px solid #00e5ef; }
-        body.cyber h1, body.cyber h2 { color:#00e5ef; }
+        body.cyber main { border:2px solid ${accent}; }
+        body.cyber h1, body.cyber h2 { color:${accent}; }
         body.newspaper { background:#f5f0df; color:#17130d; font-family:Georgia,serif; }
         body.minimal { background:#fff; color:#151515; }
         body.contrast { background:#fff; color:#000; font-weight:600; }
         body.contrast main { border:4px solid #000; }
         @media screen { main { width:${format === 'a5' ? '148mm' : format === 'story' ? '108mm' : '210mm'}; margin:auto; } }
       </style></head><body class="${style}"><main>
-        <header class="issue"><h1>${title}</h1>${intro ? `<p>${intro}</p>` : ''}</header>
+        ${title || intro ? `<header class="issue">${title ? `<h1>${title}</h1>` : ''}${intro ? `<p>${intro}</p>` : ''}</header>` : ''}
         ${rows}
         ${footer ? `<footer>${footer}</footer>` : ''}
       </main></body></html>`;
