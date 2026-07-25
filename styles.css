@@ -167,6 +167,9 @@ details.filter-dropdown summary { cursor: pointer; font-weight: bold; color: var
 
 .feedback-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 998; }
 .feedback-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--bg-card); border: 2px solid var(--color-accent); padding: 20px; border-radius: 8px; width: 90%; max-width: 450px; z-index: 999; box-shadow: 0 0 20px var(--shadow-accent); overflow-y: auto; max-height: 90vh; }
+body.wrn-translation-modal-open #fb-overlay { z-index: 15100 !important; }
+body.wrn-translation-modal-open #translation-compare-modal,
+body.wrn-translation-modal-open #translation-report-modal { z-index: 15110 !important; }
 .feedback-modal h3 { color: var(--color-cyan); margin-top: 0; text-transform: uppercase; border-bottom: 1px dashed var(--color-cyan); padding-bottom: 8px; font-size: 1.1rem;}
 .feedback-textarea { width: 100%; height: 120px; background: var(--bg-input); color: var(--text-main); border: 1px solid var(--border-read); padding: 10px; font-family: monospace; resize: none; margin-bottom: 10px; box-sizing: border-box; }
 .captcha-box { background: var(--bg-input); border: 1px dashed var(--border-dashed); padding: 10px; margin-bottom: 15px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }

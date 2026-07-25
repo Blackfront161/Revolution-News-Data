@@ -16,6 +16,7 @@ import json
 import os
 from pathlib import Path
 import re
+import sys
 from typing import Any
 from urllib.parse import urljoin, urlsplit, urlunsplit
 import warnings
@@ -62,6 +63,11 @@ MAX_BYTES = 131072
 MAX_WORKERS = 8
 
 warnings.simplefilter("ignore", InsecureRequestWarning)
+
+if hasattr(sys.stdout, "reconfigure"):
+    # Windows PowerShell may expose a legacy cp1252 console. Source names such
+    # as Anarşist Haberler must not abort an otherwise successful full check.
+    sys.stdout.reconfigure(errors="replace")
 
 
 class FeedLinkParser(HTMLParser):
@@ -498,8 +504,34 @@ def load_sources(
 
         merge_source_metadata(current, source_metadata(item))
 
+    # Some legacy registries describe the same publisher once with a feed URL
+    # and once with only a homepage. URL-based deduplication kept the homepage
+    # row as a separate "not checked" source. Collapse those rows by source
+    # name and retain the technically checkable feed record.
+    by_name: dict[str, dict[str, Any]] = {}
+    for source in merged.values():
+        name_key = re.sub(
+            r"[^a-z0-9]+",
+            "",
+            str(source.get("name") or "").casefold(),
+        )
+        if not name_key:
+            continue
+        if name_key not in by_name:
+            by_name[name_key] = source
+            continue
+        current = by_name[name_key]
+        if not current.get("url") and source.get("url"):
+            current["url"] = source["url"]
+        if not current.get("pageUrl") and source.get("pageUrl"):
+            current["pageUrl"] = source["pageUrl"]
+        for category in source.get("categories", []):
+            if category not in current.setdefault("categories", []):
+                current["categories"].append(category)
+        merge_source_metadata(current, source_metadata(source))
+
     return sorted(
-        merged.values(),
+        by_name.values(),
         key=lambda item: item["name"].lower(),
     )
 
@@ -524,6 +556,10 @@ def make_session() -> requests.Session:
     session = requests.Session()
     session.headers.update({
         "User-Agent": USER_AGENT,
+        # The bundled Windows HTTP stack may advertise Brotli but return the
+        # compressed bytes unchanged for streamed responses. Restricting the
+        # encoding keeps RSS detection reliable (notably for Chuang).
+        "Accept-Encoding": "gzip, deflate",
         "Accept": (
             "application/rss+xml, application/atom+xml, "
             "application/feed+json, application/xml, text/xml, "
@@ -561,6 +597,16 @@ def looks_like_feed(
     if not sample:
         return False, "empty"
 
+    if any(token in content_type for token in (
+        "application/rss+xml",
+        "application/atom+xml",
+        "application/feed+json",
+    )):
+        # Some CDNs return a cached Brotli body even when the client did not
+        # request Brotli. The explicit feed media type remains checkable and
+        # avoids treating the compressed bytes as an HTML failure.
+        return True, "declared-feed"
+
     if any(token in lowered for token in (
         b"<rss",
         b"<feed",
@@ -579,6 +625,22 @@ def looks_like_feed(
         return True, "json"
 
     return False, "unexpected"
+
+
+def looks_like_access_challenge(payload: bytes) -> bool:
+    """Recognise bot challenges that deliberately answer with HTTP 200."""
+
+    lowered = bytes(payload or b"").lower()
+    return any(token in lowered for token in (
+        b"making sure you&#39;re not a bot",
+        b"making sure you're not a bot",
+        b"protected by anubis",
+        b"enable javascript and cookies",
+        b"just a moment...",
+        b"<title>verifying connection</title>",
+        b"verifying your browser before connecting",
+        b'action="/_challenge"',
+    ))
 
 
 def discover_feed(
@@ -675,9 +737,43 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                     result["feedType"] = candidate.get("feedType", "")
                 result["warning"] = "Feed-Adresse automatisch erkannt."
             else:
-                result["warning"] = (
-                    "Keine technische Feed-Adresse vorhanden."
-                )
+                if page_url:
+                    try:
+                        page_response = session.get(
+                            page_url,
+                            timeout=(CONNECT_TIMEOUT, READ_TIMEOUT),
+                            allow_redirects=True,
+                            stream=True,
+                        )
+                        result["httpStatus"] = page_response.status_code
+                        result["finalUrl"] = page_response.url
+                        result["contentType"] = page_response.headers.get(
+                            "Content-Type",
+                            "",
+                        )
+                        result["pageOnly"] = True
+                        result["status"] = "warning"
+                        result["warning"] = (
+                            "Website geprüft und erreichbar; "
+                            "kein technischer Feed vorhanden."
+                            if 200 <= page_response.status_code < 400
+                            else (
+                                "Website geprüft; automatischer Abruf "
+                                f"eingeschränkt (HTTP "
+                                f"{page_response.status_code})."
+                            )
+                        )
+                    except requests.RequestException as error:
+                        result["status"] = "warning"
+                        result["pageOnly"] = True
+                        result["warning"] = (
+                            "Website ohne technischen Feed geprüft; "
+                            f"Abruf derzeit eingeschränkt: {error}"
+                        )
+                else:
+                    result["warning"] = (
+                        "Keine technische Feed- oder Website-Adresse vorhanden."
+                    )
                 return finalize_result(result)
 
         try:
@@ -774,6 +870,15 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
             return finalize_result(result)
 
         payload = read_limited(response)
+        if looks_like_access_challenge(payload):
+            result["status"] = "warning"
+            result["accessRestricted"] = True
+            result["warning"] = (
+                "Quelle erreichbar, automatischer Abruf wird jedoch "
+                "durch einen Bot-Schutz eingeschränkt."
+            )
+            return finalize_result(result)
+
         valid_feed, feed_type = looks_like_feed(
             payload,
             result["contentType"],

@@ -148,6 +148,46 @@ def test_unknown_does_not_count_as_failure():
     assert classified[0]["consecutiveFailures"] == 0
 
 
+def test_page_only_source_is_checked_without_becoming_defective():
+    classified, _, _ = module.apply_history([raw(
+        "Page only",
+        "warning",
+        pageOnly=True,
+        httpStatus=200,
+        warning="Website geprüft und erreichbar; kein technischer Feed vorhanden.",
+    )], {}, now=NOW)
+    assert classified[0]["detailedState"] == "website_available_without_feed"
+    assert classified[0]["status"] == "warning"
+    assert classified[0]["consecutiveFailures"] == 0
+    assert classified[0]["consecutiveRestrictions"] == 0
+
+
+def test_http_200_bot_challenge_remains_temporary():
+    row = raw(
+        "Protected",
+        "warning",
+        accessRestricted=True,
+        httpStatus=200,
+        feedType="unexpected",
+        warning="Quelle erreichbar, automatischer Abruf durch Bot-Schutz eingeschränkt.",
+    )
+    identity = module.source_identity(row)
+    previous = {
+        "sources": {
+            identity: {
+                "name": "Protected",
+                "url": row["url"],
+                "consecutiveFailures": 12,
+                "firstFailureAt": (NOW - timedelta(days=7)).isoformat(),
+            }
+        }
+    }
+    classified, _, _ = module.apply_history([row], previous, now=NOW)
+    assert classified[0]["detailedState"] == "temporarily_restricted"
+    assert classified[0]["status"] == "warning"
+    assert classified[0]["consecutiveFailures"] == 0
+
+
 def test_cross_domain_redirect_is_suspicious():
     assert module.suspicious_redirect(
         "https://example.org/feed",

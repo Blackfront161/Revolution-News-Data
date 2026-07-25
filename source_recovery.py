@@ -383,6 +383,10 @@ def failure_kind(result: dict[str, Any]) -> str:
 
     if raw_status == "ok" or result.get("ok") is True:
         return "available"
+    if result.get("pageOnly"):
+        return "page_only"
+    if result.get("accessRestricted"):
+        return "temporary_restriction"
     if raw_status == "unknown" or "keine technische feed-adresse" in message:
         return "not_checked"
     if result.get("suspiciousRedirect"):
@@ -482,6 +486,13 @@ def classify_result(
     elif kind == "not_checked":
         detailed = "not_checked"
         legacy_status = "unknown"
+        successes = 0
+        failures = 0
+        restrictions = 0
+        first_failure = None
+    elif kind == "page_only":
+        detailed = "website_available_without_feed"
+        legacy_status = "warning"
         successes = 0
         failures = 0
         restrictions = 0

@@ -154,7 +154,7 @@ window.WRN_EMERGENCY_MODE = false;
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
     version: '1.8.4',
-    build: '2026.07.25-wrn-1.8.4-release-2',
+    build: '2026.07.25-wrn-1.8.4-release-2-wrn185',
     releasedAt: '2026-07-24T12:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,

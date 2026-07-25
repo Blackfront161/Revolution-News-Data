@@ -61,7 +61,9 @@ assert "https://securestream.o94.at/live.mp3" in orange["streamCandidates"]
 app_js = (ROOT / "app.js").read_text(encoding="utf-8")
 aggregate_py = (ROOT / "aggregate.py").read_text(encoding="utf-8")
 assert "const ITEMS_PER_PAGE = 10;" in app_js
-assert '_wrn_source["maxNewItems"] = 2' in aggregate_py
+assert '_wrn_source["maxNewItems"] = 1' in aggregate_py
+assert '_wrn_source["maxNewItems"] = 15' in aggregate_py
+assert '"minArticleTextLength"] = 1200' in aggregate_py
 assert 'categories.append("Movement News")' in aggregate_py
 
 print(
