@@ -24,12 +24,36 @@
   backdrop-filter: none;
 }
 
-.wrn-lexicon-184 > header > span {
-  grid-column: 1 / -1;
+.wrn-lexicon-kicker-184 {
+  grid-column: 1;
   grid-row: 1;
   color: var(--wrn-red, #ff3158);
   font: 800 .68rem/1 monospace;
   letter-spacing: .13em;
+}
+
+@media (max-width: 620px) {
+  .wrn-lexicon-184 > header {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+  }
+
+  .wrn-lexicon-kicker-184 {
+    align-self: center;
+  }
+}
+
+.wrn-lexicon-building-184 {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  padding: .35rem .58rem;
+  border: 1px solid color-mix(in srgb, var(--wrn-red, #ff3158) 64%, transparent);
+  border-radius: 999px;
+  color: #fff;
+  background: color-mix(in srgb, var(--wrn-red, #ff3158) 72%, #090b10);
+  font: 850 .65rem/1 monospace;
+  letter-spacing: .03em;
+  text-transform: uppercase;
 }
 
 .wrn-lexicon-184 h2 {

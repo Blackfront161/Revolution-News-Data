@@ -180,6 +180,7 @@
       },
       summary: {
         button:'Summarize', title:'Local summary', short:'Short', standard:'Standard',
+        back:'Back', chooseTitle:'Choose summary length', chooseHint:'Select a length. The article remains unchanged.',
         detailed:'Detailed', regenerate:'Regenerate', copy:'Copy', share:'Share', listen:'Listen',
         stop:'Stop', close:'Close', local:'On this device', notice:'Automatically extracted from the article text. Check the original source for important details.',
         noText:'This article does not contain enough text for a useful summary.', compression:'Summary',
@@ -203,6 +204,7 @@
       },
       summary: {
         button:'Zusammenfassen', title:'Lokale Zusammenfassung', short:'Kurz', standard:'Standard',
+        back:'Zurück', chooseTitle:'Umfang wählen', chooseHint:'Wähle zuerst den gewünschten Umfang. Der Artikel bleibt unverändert.',
         detailed:'Ausführlich', regenerate:'Neu erstellen', copy:'Kopieren', share:'Teilen', listen:'Anhören',
         stop:'Stoppen', close:'Schließen', local:'Auf diesem Gerät',
         notice:'Automatisch aus dem Artikeltext extrahiert. Prüfe bei wichtigen Angaben die Originalquelle.',
@@ -227,6 +229,7 @@
       },
       summary: {
         button:'Resumir', title:'Resumen local', short:'Breve', standard:'Estándar', detailed:'Detallado',
+        back:'Atrás', chooseTitle:'Elegir longitud', chooseHint:'Elige primero la longitud. El artículo no se modifica.',
         regenerate:'Volver a crear', copy:'Copiar', share:'Compartir', listen:'Escuchar', stop:'Detener',
         close:'Cerrar', local:'En este dispositivo',
         notice:'Extraído automáticamente del texto. Consulta la fuente original para datos importantes.',
@@ -250,6 +253,7 @@
       },
       summary: {
         button:'Résumer', title:'Résumé local', short:'Court', standard:'Standard', detailed:'Détaillé',
+        back:'Retour', chooseTitle:'Choisir la longueur', chooseHint:'Choisissez d’abord la longueur. L’article reste inchangé.',
         regenerate:'Recréer', copy:'Copier', share:'Partager', listen:'Écouter', stop:'Arrêter',
         close:'Fermer', local:'Sur cet appareil',
         notice:'Extrait automatiquement du texte. Vérifiez la source originale pour les informations importantes.',
@@ -273,6 +277,7 @@
       },
       summary: {
         button:'Riassumi', title:'Riassunto locale', short:'Breve', standard:'Standard', detailed:'Dettagliato',
+        back:'Indietro', chooseTitle:'Scegli la lunghezza', chooseHint:'Scegli prima la lunghezza. L’articolo rimane invariato.',
         regenerate:'Ricrea', copy:'Copia', share:'Condividi', listen:'Ascolta', stop:'Ferma',
         close:'Chiudi', local:'Su questo dispositivo',
         notice:'Estratto automaticamente dal testo. Controlla la fonte originale per i dettagli importanti.',
@@ -296,6 +301,7 @@
       },
       summary: {
         button:'Resumir', title:'Resumo local', short:'Curto', standard:'Normal', detailed:'Detalhado',
+        back:'Voltar', chooseTitle:'Escolher extensão', chooseHint:'Escolhe primeiro a extensão. O artigo não é alterado.',
         regenerate:'Criar novamente', copy:'Copiar', share:'Partilhar', listen:'Ouvir', stop:'Parar',
         close:'Fechar', local:'Neste dispositivo',
         notice:'Extraído automaticamente do texto. Confirma a fonte original para detalhes importantes.',
@@ -319,6 +325,7 @@
       },
       summary: {
         button:'Сводка', title:'Локальная сводка', short:'Кратко', standard:'Обычно', detailed:'Подробно',
+        back:'Назад', chooseTitle:'Выберите объём', chooseHint:'Сначала выберите объём. Текст статьи не изменится.',
         regenerate:'Создать заново', copy:'Копировать', share:'Поделиться', listen:'Слушать', stop:'Стоп',
         close:'Закрыть', local:'На этом устройстве',
         notice:'Автоматически извлечено из текста. Важные детали проверяйте в оригинальном источнике.',
@@ -342,6 +349,7 @@
       },
       summary: {
         button:'Περίληψη', title:'Τοπική περίληψη', short:'Σύντομη', standard:'Κανονική', detailed:'Αναλυτική',
+        back:'Πίσω', chooseTitle:'Επιλογή έκτασης', chooseHint:'Επιλέξτε πρώτα την έκταση. Το άρθρο παραμένει αμετάβλητο.',
         regenerate:'Νέα δημιουργία', copy:'Αντιγραφή', share:'Κοινοποίηση', listen:'Ακρόαση', stop:'Διακοπή',
         close:'Κλείσιμο', local:'Σε αυτή τη συσκευή',
         notice:'Αυτόματη εξαγωγή από το κείμενο. Ελέγξτε την αρχική πηγή για σημαντικές λεπτομέρειες.',
@@ -365,6 +373,7 @@
       },
       summary: {
         button:'Özetle', title:'Yerel özet', short:'Kısa', standard:'Standart', detailed:'Ayrıntılı',
+        back:'Geri', chooseTitle:'Özet uzunluğunu seç', chooseHint:'Önce uzunluğu seç. Makale değiştirilmez.',
         regenerate:'Yeniden oluştur', copy:'Kopyala', share:'Paylaş', listen:'Dinle', stop:'Durdur',
         close:'Kapat', local:'Bu cihazda',
         notice:'Makaleden otomatik çıkarılmıştır. Önemli ayrıntıları özgün kaynaktan doğrula.',

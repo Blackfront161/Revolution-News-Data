@@ -1214,6 +1214,7 @@ function closeAllModals() {
     const m6 = document.getElementById('podcast-library-modal'); if(m6) m6.style.display = 'none';
     const m7 = document.getElementById('system-status-modal'); if(m7) m7.style.display = 'none';
     const m8 = document.getElementById('zine-modal'); if(m8) m8.style.display = 'none';
+    document.body.classList.remove('wrn-podcast-options-open');
     window.WRNSourceProfiles?.close();
     window.WRNTranslationTools?.closeModals();
     window.WRNDataControl?.close();
@@ -1221,6 +1222,30 @@ function closeAllModals() {
         pausePodcastLibraryAudio();
     }
 }
+
+function articlePublisherKey(article) {
+    return String(article?.quelleName || article?.source || '')
+        .trim()
+        .toLocaleLowerCase();
+}
+
+function interleaveArticlesByPublisher(items) {
+    const remaining = Array.isArray(items) ? [...items] : [];
+    const mixed = [];
+    let previous = '';
+
+    while (remaining.length) {
+        let nextIndex = remaining.findIndex(article => articlePublisherKey(article) !== previous);
+        if (nextIndex < 0) nextIndex = 0;
+        const [next] = remaining.splice(nextIndex, 1);
+        mixed.push(next);
+        previous = articlePublisherKey(next);
+    }
+
+    return mixed;
+}
+
+window.WRNFeedOrder = Object.freeze({ interleaveArticlesByPublisher });
 function submitFeedback() {
     const ca = document.getElementById('captcha-answer'); const ft = document.getElementById('fb-text'); if(!ca || !ft) return;
     const userAnswer = parseInt(ca.value); const text = ft.value.trim(); const t = uiTexte[currentLang] || uiTexte['en'];
@@ -1443,6 +1468,10 @@ function applyFilters(isBookmark = false) {
         else return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
     });
 
+    if (activeKontinent !== 'Radar' && selPortal === 'ALL') {
+        filtered = interleaveArticlesByPublisher(filtered);
+    }
+
     if (activeKontinent === 'Radar') {
         const t = uiTexte[currentLang] || uiTexte.en;
         setTxt('event-filter-count', `${filtered.length} ${t.eventCount}`);
@@ -1456,6 +1485,55 @@ function applyFilters(isBookmark = false) {
     if(archiveContainer) archiveContainer.innerHTML = "";
     
     renderNextBatch();
+}
+
+function articleMediaLabel() {
+    const labels = {
+        en: 'Images from the original article',
+        de: 'Bilder aus dem Originalartikel',
+        es: 'Imágenes del artículo original',
+        fr: 'Images de l’article original',
+        it: 'Immagini dell’articolo originale',
+        pt: 'Imagens do artigo original',
+        ru: 'Изображения из оригинальной статьи',
+        el: 'Εικόνες από το αρχικό άρθρο',
+        tr: 'Özgün makaledeki görseller'
+    };
+    return labels[currentLang] || labels.en;
+}
+
+function articleMediaMarkup(item, idNum, heroUrl) {
+    const seen = new Set(heroUrl ? [heroUrl] : []);
+    const images = (Array.isArray(item?.images) ? item.images : [])
+        .map(getSafeHttpUrl)
+        .filter(url => {
+            if (!url || seen.has(url)) return false;
+            seen.add(url);
+            return true;
+        })
+        .slice(0, 5);
+    if (!images.length) return '';
+    const label = articleMediaLabel();
+    return `
+        <section class="article-inline-media" id="article-media-${idNum}" hidden aria-label="${escapeHtml(label)}">
+            <div class="article-inline-media-label">${escapeHtml(label)}</div>
+            <div class="article-inline-media-grid">
+                ${images.map((url, imageIndex) => `
+                    <img data-src="${escapeHtml(url)}" alt="${escapeHtml(`${item.title || label} · ${imageIndex + 1}`)}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+                `).join('')}
+            </div>
+        </section>
+    `;
+}
+
+function loadArticleMedia(idNum) {
+    const media = document.getElementById(`article-media-${idNum}`);
+    if (!media) return;
+    media.querySelectorAll('img[data-src]').forEach(image => {
+        image.src = image.dataset.src;
+        image.removeAttribute('data-src');
+    });
+    media.hidden = false;
 }
 
 // === DER REPARIERTE RENDER-BLOCK FÜR ABSÄTZE UND HTML-SCHUTZ ===
@@ -1511,6 +1589,7 @@ function renderNextBatch() {
         const imgHtml = safeImageUrl
             ? `<img src="${escapeHtml(safeImageUrl)}" class="article-img" style="display:block;" loading="lazy" referrerpolicy="no-referrer" alt="${escapeHtml(item.title || '')}">`
             : '';
+        const articleMediaHtml = articleMediaMarkup(item, globalIndex, safeImageUrl);
 
         let isSaved = window.WRNReading?.isBookmarked(item) ?? bookmarks.some(b => b.link === item.link);
         let bookmarkTxt = window.WRNReading?.bookmarkButtonHtml(isSaved) || (isSaved ? t.btnUnbookmark : t.btnBookmark);
@@ -1553,6 +1632,7 @@ function renderNextBatch() {
                 ${imgHtml}
                 <div class="teaser" id="teaser-${globalIndex}">${safeTeaserText}</div>
                 <div class="full-content" id="content-${globalIndex}">${safeFullText}</div>
+                ${articleMediaHtml}
                 <div class="button-row">
                     <button class="btn-expand" id="expand-${globalIndex}" onclick="toggleArticle(${globalIndex}, event)">${t.btnExpand}</button>
                     <button class="btn-translate" id="btn-${globalIndex}" onclick="translateArticle(${globalIndex})"><span>[ ${t.btnTranslate} ]</span></button>
@@ -1662,9 +1742,12 @@ async function toggleArticle(idNum, event) {
     if (card.dataset.expanded === "true") {
         window.WRNReading?.onCollapse(idNum, article, fullContent);
         teaser.style.display = "block"; fullContent.style.display = "none";
+        const media = document.getElementById(`article-media-${idNum}`);
+        if (media) media.hidden = true;
         btn.innerText = t.btnExpand; card.dataset.expanded = "false";
     } else {
         teaser.style.display = "none"; fullContent.style.display = "block";
+        loadArticleMedia(idNum);
         btn.innerText = t.btnCollapse; card.dataset.expanded = "true";
         window.WRNReading?.onExpand(idNum, article, card, fullContent);
         if (card.dataset.translated === 'teaser' && card.dataset.translationLanguage === currentLang) {

@@ -7,6 +7,7 @@
   const UI = {
     de: {
       nav: 'Lexikon',
+      building: 'Im Aufbau',
       title: 'Begriffe in Bewegung',
       lead: 'Kurze, einordnende Erklärungen zu Begriffen aus anarchistischen, antiautoritären und linksrevolutionären Bewegungen.',
       note: 'Dieses Lexikon erhebt keinen Anspruch auf Vollständigkeit. Begriffe entstehen in politischen Kämpfen, verändern sich und werden in unterschiedlichen Strömungen verschieden verwendet. Die Texte sind Einladungen zur gemeinsamen Klärung – keine endgültigen Festlegungen.',
@@ -36,6 +37,7 @@
     },
     en: {
       nav: 'Glossary',
+      building: 'Under construction',
       title: 'Words in motion',
       lead: 'Short, contextual explanations of terms used in anarchist, anti-authoritarian and revolutionary left movements.',
       note: 'This glossary does not claim to be complete. Terms emerge through political struggle, change over time and are used differently across tendencies. These texts invite shared clarification; they are not final rulings.',
@@ -64,7 +66,7 @@
       }
     },
     es: {
-      nav: 'Glosario', title: 'Palabras en movimiento',
+      nav: 'Glosario', building: 'En desarrollo', title: 'Palabras en movimiento',
       lead: 'Explicaciones breves y contextualizadas de términos de movimientos anarquistas, antiautoritarios y de la izquierda revolucionaria.',
       note: 'Este glosario no pretende ser completo. Los términos surgen en las luchas políticas, cambian y se usan de forma diferente según las corrientes.',
       search: 'Buscar términos, nombres alternativos o contenidos …', noResults: 'No se encontró ningún término.',
@@ -77,7 +79,7 @@
       sections: { basics:'Fundamentos', organisation:'Organización', justice:'Justicia y cuidados', struggles:'Luchas y crítica', all:'Todos', sources:'Fuentes' }
     },
     fr: {
-      nav: 'Lexique', title: 'Des mots en mouvement',
+      nav: 'Lexique', building: 'En construction', title: 'Des mots en mouvement',
       lead: 'Des explications courtes et contextualisées de termes issus des mouvements anarchistes, antiautoritaires et de la gauche révolutionnaire.',
       note: 'Ce lexique ne prétend pas être complet. Les termes naissent dans les luttes politiques, évoluent et sont employés différemment selon les courants.',
       search: 'Rechercher des termes, variantes ou contenus …', noResults: 'Aucun terme trouvé.',
@@ -90,7 +92,7 @@
       sections: { basics:'Fondements', organisation:'Organisation', justice:'Justice et soin', struggles:'Luttes et critique', all:'Tous les termes', sources:'Sources' }
     },
     it: {
-      nav: 'Glossario', title: 'Parole in movimento',
+      nav: 'Glossario', building: 'In costruzione', title: 'Parole in movimento',
       lead: 'Spiegazioni brevi e contestualizzate di termini dei movimenti anarchici, antiautoritari e della sinistra rivoluzionaria.',
       note: 'Questo glossario non pretende di essere completo. I termini nascono nelle lotte politiche, cambiano e sono usati diversamente nelle varie correnti.',
       search: 'Cerca termini, nomi alternativi o contenuti …', noResults: 'Nessun termine trovato.',
@@ -103,7 +105,7 @@
       sections: { basics:'Fondamenti', organisation:'Organizzazione', justice:'Giustizia e cura', struggles:'Lotte e critica', all:'Tutti i termini', sources:'Fonti' }
     },
     pt: {
-      nav: 'Glossário', title: 'Palavras em movimento',
+      nav: 'Glossário', building: 'Em construção', title: 'Palavras em movimento',
       lead: 'Explicações breves e contextualizadas de termos de movimentos anarquistas, antiautoritários e da esquerda revolucionária.',
       note: 'Este glossário não pretende ser completo. Os termos nascem nas lutas políticas, mudam e são usados de forma diferente entre correntes.',
       search: 'Pesquisar termos, nomes alternativos ou conteúdos …', noResults: 'Nenhum termo encontrado.',
@@ -116,7 +118,7 @@
       sections: { basics:'Fundamentos', organisation:'Organização', justice:'Justiça e cuidado', struggles:'Lutas e crítica', all:'Todos os termos', sources:'Fontes' }
     },
     ru: {
-      nav: 'Словарь', title: 'Слова в движении',
+      nav: 'Словарь', building: 'В разработке', title: 'Слова в движении',
       lead: 'Краткие контекстные объяснения терминов анархистских, антиавторитарных и левореволюционных движений.',
       note: 'Этот словарь не претендует на полноту. Термины рождаются в политической борьбе, меняются и по-разному используются различными течениями.',
       search: 'Поиск терминов, вариантов названий или описаний …', noResults: 'Термин не найден.',
@@ -129,7 +131,7 @@
       sections: { basics:'Основы', organisation:'Организация', justice:'Справедливость и забота', struggles:'Борьба и критика', all:'Все термины', sources:'Источники' }
     },
     el: {
-      nav: 'Γλωσσάρι', title: 'Λέξεις σε κίνηση',
+      nav: 'Γλωσσάρι', building: 'Υπό ανάπτυξη', title: 'Λέξεις σε κίνηση',
       lead: 'Σύντομες, πλαισιωμένες εξηγήσεις όρων από αναρχικά, αντιεξουσιαστικά και επαναστατικά αριστερά κινήματα.',
       note: 'Το γλωσσάρι δεν ισχυρίζεται ότι είναι πλήρες. Οι όροι γεννιούνται σε πολιτικούς αγώνες, αλλάζουν και χρησιμοποιούνται διαφορετικά.',
       search: 'Αναζήτηση όρων, εναλλακτικών ονομάτων ή περιεχομένου …', noResults: 'Δεν βρέθηκε όρος.',
@@ -142,7 +144,7 @@
       sections: { basics:'Βάσεις', organisation:'Οργάνωση', justice:'Δικαιοσύνη και φροντίδα', struggles:'Αγώνες και κριτική', all:'Όλοι οι όροι', sources:'Πηγές' }
     },
     tr: {
-      nav: 'Sözlük', title: 'Hareket hâlindeki sözcükler',
+      nav: 'Sözlük', building: 'Yapım aşamasında', title: 'Hareket hâlindeki sözcükler',
       lead: 'Anarşist, otorite karşıtı ve devrimci sol hareketlerde kullanılan terimlere ilişkin kısa ve bağlamsal açıklamalar.',
       note: 'Bu sözlük eksiksiz olma iddiasında değildir. Kavramlar siyasi mücadelelerde doğar, değişir ve farklı akımlarda farklı kullanılır.',
       search: 'Terim, alternatif ad veya açıklama ara …', noResults: 'Aramayla eşleşen terim bulunamadı.',
@@ -813,17 +815,21 @@
 
     const header = document.createElement('header');
     const kicker = document.createElement('span');
+    const building = document.createElement('span');
     const title = document.createElement('h2');
     const lead = document.createElement('p');
     const note = document.createElement('p');
     const stateLabel = document.createElement('small');
+    kicker.className = 'wrn-lexicon-kicker-184';
     kicker.textContent = 'WORLD REVOLUTION NEWS · MOVEMENT GLOSSARY';
+    building.className = 'wrn-lexicon-building-184';
+    building.textContent = t.building;
     title.textContent = t.title;
     lead.textContent = t.lead;
     note.className = 'wrn-lexicon-note-184';
     note.textContent = t.note;
     stateLabel.textContent = t.editorialState;
-    header.append(kicker, title, lead, note, stateLabel);
+    header.append(kicker, building, title, lead, note, stateLabel);
     root.appendChild(header);
 
     if (lang() !== 'de' && lang() !== 'en' && t.fallback) {

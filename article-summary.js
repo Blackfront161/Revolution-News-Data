@@ -1,4 +1,4 @@
-/* World Revolution News 1.7.5 – Artikel-Zusammenfassung */
+/* World Revolution News 1.8.4 – eigenständige Artikel-Zusammenfassung */
 'use strict';
 
 (() => {
@@ -9,6 +9,8 @@
   const MAX_CACHE_ITEMS = 80;
   let observer = null;
   let activeUtterance = null;
+  let activeView = null;
+  let returnFocus = null;
 
   function language() {
     return window.WRNI18n?.currentLanguage?.() || 'en';
@@ -130,15 +132,13 @@
   function speakSummary(summary, button) {
     if (!('speechSynthesis' in window) || !summary?.plainText) return;
     stopSpeaking();
-
     const utterance = new SpeechSynthesisUtterance(summary.plainText);
     utterance.lang = summary.language || language();
     const prefix = String(utterance.lang).split('-')[0].toLowerCase();
     const voices = window.speechSynthesis.getVoices?.() || [];
-    const voice = voices.find(item => item.localService && String(item.lang || '').toLowerCase().startsWith(prefix))
-      || voices.find(item => String(item.lang || '').toLowerCase().startsWith(prefix));
-    if (voice) utterance.voice = voice;
-
+    utterance.voice = voices.find(item => item.localService && String(item.lang || '').toLowerCase().startsWith(prefix))
+      || voices.find(item => String(item.lang || '').toLowerCase().startsWith(prefix))
+      || null;
     utterance.onend = stopSpeaking;
     utterance.onerror = stopSpeaking;
     activeUtterance = utterance;
@@ -182,75 +182,110 @@
     return button;
   }
 
-  function closePanel(card) {
-    stopSpeaking();
-    card?.querySelector('.wrn-article-summary-panel')?.remove();
+  function setActionExpanded(card, expanded) {
     const index = indexFromCard(card);
     const action = card?.querySelector('.wrn-summary-action')
       || (Number.isInteger(index) ? document.getElementById(`summary-${index}`) : null);
-    if (action) action.setAttribute('aria-expanded', 'false');
+    action?.setAttribute('aria-expanded', String(expanded));
   }
 
-  function renderPanel(card, length = preferences().length, force = false) {
-    const article = articleForCard(card);
-    const text = window.WRNSummaryCore.cleanText(visibleArticleText(card, article));
-    const title = visibleTitle(card, article);
-    const source = article?.quelleName || article?.source || '';
-    const lang = articleLanguage(card, article);
+  function ensureView() {
+    let view = document.getElementById('wrn-summary-view');
+    if (view) return view;
 
-    let panel = card.querySelector('.wrn-article-summary-panel');
-    if (!panel) {
-      panel = document.createElement('section');
-      panel.className = 'wrn-article-summary-panel';
-      panel.setAttribute('aria-live', 'polite');
-      const anchor = card.querySelector('.full-content') || card.querySelector('.teaser');
-      if (anchor) anchor.insertAdjacentElement('afterend', panel);
-      else card.appendChild(panel);
+    view = document.createElement('section');
+    view.id = 'wrn-summary-view';
+    view.className = 'wrn-summary-view';
+    view.hidden = true;
+    view.setAttribute('role', 'dialog');
+    view.setAttribute('aria-modal', 'true');
+    view.setAttribute('aria-labelledby', 'wrn-summary-view-title');
+    view.innerHTML = `
+      <header class="wrn-summary-view-header">
+        <button type="button" class="wrn-summary-back" data-summary-close></button>
+        <div>
+          <span class="wrn-summary-kicker"></span>
+          <h2 id="wrn-summary-view-title"></h2>
+        </div>
+        <span class="wrn-summary-private"></span>
+      </header>
+      <main class="wrn-summary-view-main">
+        <section class="wrn-summary-chooser">
+          <h3></h3>
+          <p></p>
+          <div class="wrn-summary-lengths"></div>
+        </section>
+        <section class="wrn-summary-result" aria-live="polite"></section>
+      </main>
+    `;
+    view.querySelector('[data-summary-close]').addEventListener('click', () => closePanel());
+    document.body.appendChild(view);
+    return view;
+  }
+
+  function updateViewLabels() {
+    const view = ensureView();
+    view.querySelector('.wrn-summary-back').textContent = `← ${t('back')}`;
+    view.querySelector('.wrn-summary-kicker').textContent = `✦ ${t('title')}`;
+    view.querySelector('.wrn-summary-private').textContent = `🔒 ${t('local')}`;
+    view.querySelector('.wrn-summary-chooser h3').textContent = t('chooseTitle');
+    view.querySelector('.wrn-summary-chooser p').textContent = t('chooseHint');
+  }
+
+  function closePanel(card = null) {
+    if (card && activeView?.card && card !== activeView.card) return;
+    stopSpeaking();
+    if (activeView?.card) setActionExpanded(activeView.card, false);
+    const view = document.getElementById('wrn-summary-view');
+    if (view) {
+      view.hidden = true;
+      view.querySelector('.wrn-summary-result').textContent = '';
     }
+    document.body.classList.remove('wrn-summary-view-open');
+    activeView = null;
+    const focusTarget = returnFocus;
+    returnFocus = null;
+    focusTarget?.focus?.({ preventScroll: true });
+  }
 
-    const action = card.querySelector('.wrn-summary-action');
-    if (action) action.setAttribute('aria-expanded', 'true');
-
-    panel.textContent = '';
-
-    const heading = document.createElement('div');
-    heading.className = 'wrn-summary-heading';
-    const titleElement = document.createElement('h3');
-    titleElement.textContent = `✦ ${t('title')}`;
-    const privateBadge = document.createElement('span');
-    privateBadge.className = 'wrn-summary-private';
-    privateBadge.textContent = `🔒 ${t('local')}`;
-    heading.append(titleElement, privateBadge);
-    panel.appendChild(heading);
-
-    if (text.length < 120) {
-      const empty = document.createElement('p');
-      empty.className = 'wrn-summary-empty';
-      empty.textContent = t('noText');
-      panel.appendChild(empty);
-      panel.appendChild(createButton('wrn-summary-secondary', t('close'), () => closePanel(card)));
-      return;
-    }
-
-    const controls = document.createElement('div');
-    controls.className = 'wrn-summary-lengths';
+  function renderLengthChoices() {
+    if (!activeView) return;
+    const view = ensureView();
+    const lengths = view.querySelector('.wrn-summary-lengths');
+    lengths.textContent = '';
     [
       ['short', t('short')],
       ['standard', t('standard')],
       ['detailed', t('detailed')]
     ].forEach(([value, label]) => {
+      const selected = activeView.length === value;
       const button = createButton(
-        `wrn-summary-length${value === length ? ' active' : ''}`,
+        `wrn-summary-length${selected ? ' active' : ''}`,
         label,
-        () => {
-          savePreferences({ length: value });
-          renderPanel(card, value, false);
-        }
+        () => renderSummary(value, false)
       );
-      button.setAttribute('aria-pressed', String(value === length));
-      controls.appendChild(button);
+      button.setAttribute('aria-pressed', String(selected));
+      lengths.appendChild(button);
     });
-    panel.appendChild(controls);
+  }
+
+  function renderSummary(length, force = false) {
+    if (!activeView) return;
+    activeView.length = length;
+    savePreferences({ length });
+    renderLengthChoices();
+
+    const { card, article, text, title, source, lang } = activeView;
+    const result = ensureView().querySelector('.wrn-summary-result');
+    result.textContent = '';
+
+    if (text.length < 120) {
+      const empty = document.createElement('p');
+      empty.className = 'wrn-summary-empty';
+      empty.textContent = t('noText');
+      result.appendChild(empty);
+      return;
+    }
 
     const cacheKey = articleKey(card, article, text, title);
     let summary = !force ? getCached(cacheKey, length) : null;
@@ -260,13 +295,12 @@
       saveCached(cacheKey, length, summary, title, source);
     }
 
-    const body = document.createElement('div');
+    const body = document.createElement('article');
     body.className = 'wrn-summary-body';
     const lead = document.createElement('p');
     lead.className = 'wrn-summary-lead';
     lead.textContent = summary.lead;
     body.appendChild(lead);
-
     if (summary.bullets.length) {
       const list = document.createElement('ul');
       summary.bullets.forEach(value => {
@@ -276,55 +310,72 @@
       });
       body.appendChild(list);
     }
-    panel.appendChild(body);
 
-    const meta = document.createElement('div');
+    const meta = document.createElement('p');
     meta.className = 'wrn-summary-meta';
     meta.textContent = `${t('compression')}: ${summary.summaryWords}/${summary.sourceWords} ${t('words')} · ${summary.compressionPercent}%`;
-    panel.appendChild(meta);
-
     const notice = document.createElement('p');
     notice.className = 'wrn-summary-notice';
     notice.textContent = t('notice');
-    panel.appendChild(notice);
-
     const status = document.createElement('div');
     status.className = 'wrn-summary-status';
     status.setAttribute('role', 'status');
-
     const actions = document.createElement('div');
     actions.className = 'wrn-summary-actions';
     actions.append(
-      createButton('wrn-summary-secondary', `↻ ${t('regenerate')}`, () => renderPanel(card, length, true)),
+      createButton('wrn-summary-secondary', `↻ ${t('regenerate')}`, () => renderSummary(length, true)),
       createButton('wrn-summary-secondary', `⧉ ${t('copy')}`, () => copySummary(title, summary, status)),
       createButton('wrn-summary-secondary', `↗ ${t('share')}`, () => shareSummary(title, summary, status))
     );
-
     const listen = createButton('wrn-summary-secondary wrn-summary-listen', `▶ ${t('listen')}`, () => {
       if (activeUtterance) stopSpeaking();
       else speakSummary(summary, listen);
     });
     listen.setAttribute('aria-pressed', 'false');
-    actions.append(
-      listen,
-      createButton('wrn-summary-close', t('close'), () => closePanel(card))
-    );
-    panel.append(actions, status);
+    actions.appendChild(listen);
+    result.append(body, meta, notice, actions, status);
+    result.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
 
-    panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  function openView(card, length = null, force = false) {
+    if (!card) return;
+    const article = articleForCard(card);
+    const text = window.WRNSummaryCore.cleanText(visibleArticleText(card, article));
+    const title = visibleTitle(card, article);
+    returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    activeView = {
+      card,
+      article,
+      text,
+      title,
+      source: article?.quelleName || article?.source || '',
+      lang: articleLanguage(card, article),
+      length
+    };
+
+    const view = ensureView();
+    updateViewLabels();
+    view.querySelector('#wrn-summary-view-title').textContent = title || t('title');
+    view.querySelector('.wrn-summary-result').textContent = '';
+    view.hidden = false;
+    document.body.classList.add('wrn-summary-view-open');
+    setActionExpanded(card, true);
+    renderLengthChoices();
+    view.scrollTop = 0;
+    view.querySelector('.wrn-summary-back')?.focus({ preventScroll: true });
+    if (length) renderSummary(length, force);
   }
 
   function toggleSummary(card) {
     if (!card) return;
-    if (card.querySelector('.wrn-article-summary-panel')) closePanel(card);
-    else renderPanel(card);
+    if (activeView?.card === card) closePanel(card);
+    else openView(card);
   }
 
   function ensureSummaryButton(card) {
     if (!(card instanceof Element) || card.querySelector('.wrn-summary-action')) return;
     const row = card.querySelector('.button-row');
     if (!row) return;
-
     const index = indexFromCard(card);
     const button = createButton('btn-translate wrn-summary-action', `[ ✦ ${t('button')} ]`, event => {
       event.preventDefault();
@@ -333,7 +384,6 @@
     });
     button.id = Number.isInteger(index) ? `summary-${index}` : '';
     button.setAttribute('aria-expanded', 'false');
-
     const translate = Number.isInteger(index) ? row.querySelector(`#btn-${index}`) : row.querySelector('.btn-translate');
     if (translate?.nextSibling) row.insertBefore(button, translate.nextSibling);
     else row.appendChild(button);
@@ -348,15 +398,17 @@
     document.querySelectorAll('.wrn-summary-action').forEach(button => {
       button.textContent = `[ ✦ ${t('button')} ]`;
     });
-    document.querySelectorAll('.wrn-article-summary-panel').forEach(panel => {
-      const card = panel.closest('.card');
-      if (card) renderPanel(card, preferences().length, false);
-    });
+    if (activeView) {
+      const selectedLength = activeView.length;
+      updateViewLabels();
+      renderLengthChoices();
+      if (selectedLength) renderSummary(selectedLength, false);
+    }
   }
 
   function init() {
     scan();
-
+    ensureView();
     observer = new MutationObserver(mutations => {
       for (const mutation of mutations) {
         mutation.addedNodes.forEach(node => {
@@ -367,15 +419,20 @@
       }
     });
     observer.observe(document.body, { childList: true, subtree: true });
-
     document.getElementById('ui-language')?.addEventListener('change', () => {
       window.setTimeout(refreshLabels, 30);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && activeView) {
+        event.preventDefault();
+        closePanel();
+      }
     });
   }
 
   window.WRNSummary = Object.freeze({
     toggleForCard: toggleSummary,
-    renderForCard: renderPanel,
+    renderForCard: (card, length = preferences().length, force = false) => openView(card, length, force),
     closeForCard: closePanel,
     refreshLabels,
     summarizeText: (...args) => window.WRNSummaryCore.summarizeText(...args),

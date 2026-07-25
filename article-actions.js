@@ -66,42 +66,16 @@
         return '';
     };
 
-    const commonAncestor = nodes => {
-        if (!nodes.length) return null;
-
-        let candidate = nodes[0].parentElement;
-
-        while (candidate) {
-            if (nodes.every(node => candidate.contains(node))) {
-                return candidate;
-            }
-            candidate = candidate.parentElement;
-        }
-
-        return null;
-    };
-
-    const directGroupsBetween = (root, nodes) => {
-        const groups = new Set();
-
-        nodes.forEach(node => {
-            let current = node.parentElement;
-
-            while (current && current !== root) {
-                groups.add(current);
-                current = current.parentElement;
-            }
-        });
-
-        return [...groups];
-    };
-
     const markActionGrid = detail => {
-        const candidates = [
-            ...detail.querySelectorAll(
-                'button, a[href], [role="button"]'
-            )
-        ];
+        const root = detail.querySelector(
+            '.wrn-detail-actions .button-row, '
+            + '.wrn-detail-actions, '
+            + '.wrn-detail-card > .button-row, '
+            + '.button-row'
+        );
+        if (!root || root.matches('.card, .wrn-detail-card')) return;
+
+        const candidates = [...root.querySelectorAll('button, a[href], [role="button"]')];
 
         const mapped = candidates
             .map(node => ({ node, type: actionType(node) }))
@@ -113,19 +87,9 @@
             if (!byType.has(item.type)) byType.set(item.type, item.node);
         });
 
-        const actions = [...byType.values()];
-
-        if (actions.length < 4) return;
-
-        const root = commonAncestor(actions);
-
-        if (!root || root === detail) return;
+        if (byType.size < 4) return;
 
         root.classList.add('wrn-article-action-grid-1716');
-
-        directGroupsBetween(root, actions).forEach(group => {
-            group.classList.add('wrn-action-group-1716');
-        });
 
         byType.forEach((node, type) => {
             node.dataset.wrnArticleAction = type;
