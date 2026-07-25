@@ -40,7 +40,7 @@ NEWS_CATEGORIES = (
     "Anti-Imperialism", "Squatting & Housing", "Demonstrations",
     "Anti-Rep & Prisons", "Cyberactivism", "No War",
     "Animal Liberation", "Eco-Anarchism", "Indigenous Struggles",
-    "Radical Health & Disability", "Libraries",
+    "Radical Health & Disability", "Libraries", "Movement News",
 )
 CONFIG_UPDATE_ENABLED = os.environ.get("WRN_UPDATE_CONFIG", "").strip().lower() in {
     "1", "true", "yes", "on"
@@ -119,8 +119,9 @@ def prepare(
     *,
     limit: int,
     content_limit: int,
+    preserve_order: bool = False,
 ) -> list[dict[str, Any]]:
-    ordered = sorted(rows, key=date_value, reverse=True)
+    ordered = rows if preserve_order else sorted(rows, key=date_value, reverse=True)
     output: list[dict[str, Any]] = []
     seen: set[str] = set()
 
@@ -179,12 +180,39 @@ def balanced_news_rows(
             selected_keys.add(key)
         selected.append(item)
 
-    for category in NEWS_CATEGORIES:
+    def diversified_category_matches(category: str) -> list[dict[str, Any]]:
         matches = [
             item for item in ordered
             if category in article_categories(item)
-        ][:NEWS_CATEGORY_MINIMUM]
+        ]
+        by_source: dict[str, list[dict[str, Any]]] = {}
         for item in matches:
+            source = clean_text(
+                item.get("quelleName")
+                or item.get("sourceName")
+                or item.get("source")
+                or "unknown"
+            ).casefold()
+            by_source.setdefault(source, []).append(item)
+
+        result: list[dict[str, Any]] = []
+        source_rows = list(by_source.values())
+        depth = 0
+        while len(result) < NEWS_CATEGORY_MINIMUM:
+            added = False
+            for rows_for_source in source_rows:
+                if depth < len(rows_for_source):
+                    result.append(rows_for_source[depth])
+                    added = True
+                    if len(result) >= NEWS_CATEGORY_MINIMUM:
+                        break
+            if not added:
+                break
+            depth += 1
+        return result
+
+    for category in NEWS_CATEGORIES:
+        for item in diversified_category_matches(category):
             add(item)
 
     for item in ordered:
@@ -280,6 +308,7 @@ def main() -> int:
         balanced_news_rows(news, limit=NEWS_LIMIT),
         limit=NEWS_LIMIT,
         content_limit=NEWS_CONTENT_LIMIT,
+        preserve_order=True,
     )
     event_feed = prepare_events(
         events,

@@ -224,6 +224,36 @@ def literal_source_mapping(path: Path) -> dict[str, Any]:
     return {}
 
 
+def literal_source_lists(path: Path) -> list[dict[str, Any]]:
+    """Extract additional literal source lists appended to aggregate.py."""
+
+    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    sources: list[dict[str, Any]] = []
+    for node in tree.body:
+        if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+            continue
+        value_node = node.value
+        if value_node is None:
+            continue
+        try:
+            value = ast.literal_eval(value_node)
+        except Exception:
+            continue
+        if not isinstance(value, list):
+            continue
+        for item in value:
+            if not isinstance(item, dict):
+                continue
+            if not item.get("name"):
+                continue
+            if not any(item.get(field) for field in (
+                "feedUrl", "feed", "rss", "url", "homepage",
+            )):
+                continue
+            sources.append(item)
+    return sources
+
+
 def string_list(value: Any) -> list[str]:
     if isinstance(value, str):
         values = [value]
@@ -347,6 +377,48 @@ def load_sources(
                 current["pageUrl"] = page_url
 
             merge_source_metadata(current, source_metadata(item))
+
+    for item in literal_source_lists(aggregate_path):
+        name = str(item.get("name") or "Unbekannte Quelle").strip()
+        url = str(
+            item.get("feedUrl")
+            or item.get("feed")
+            or item.get("rss")
+            or item.get("url")
+            or ""
+        ).strip()
+        page_url = str(
+            item.get("homepage")
+            or item.get("website")
+            or item.get("pageUrl")
+            or ""
+        ).strip()
+        key = (
+            canonical_url(url)
+            or canonical_url(page_url)
+            or re.sub(r"[^a-z0-9]+", "", name.lower())
+        )
+        if not key:
+            continue
+        categories = string_list(item.get("categories", []))
+        if key not in merged:
+            merged[key] = {
+                "name": name,
+                "url": url,
+                "pageUrl": page_url,
+                "categories": categories,
+                **source_metadata(item),
+            }
+            continue
+        current = merged[key]
+        for category in categories:
+            if category not in current["categories"]:
+                current["categories"].append(category)
+        if not current["url"] and url:
+            current["url"] = url
+        if not current["pageUrl"] and page_url:
+            current["pageUrl"] = page_url
+        merge_source_metadata(current, source_metadata(item))
 
     # Enrich with declarative registries without deleting aggregate.py sources.
     registry_items: list[dict[str, Any]] = []

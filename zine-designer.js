@@ -12,9 +12,11 @@
         columns: '2',
         images: 'normal',
         density: 'comfortable',
-        headline: 'WORLD REVOLUTION NEWS',
+        font: 'sans',
+        accent: 'cyan',
+        headline: '',
         intro: '',
-        footer: 'worldrevnews'
+        footer: ''
     };
 
     let settings = { ...defaults };
@@ -27,6 +29,9 @@
     } catch {
         settings = { ...defaults };
     }
+
+    if (settings.headline === 'WORLD REVOLUTION NEWS') settings.headline = '';
+    if (settings.footer === 'worldrevnews') settings.footer = '';
 
     const currentLanguage = () => String(
             document.getElementById('ui-language')?.value
@@ -48,6 +53,8 @@
                 columns: 'Spalten',
                 images: 'Bilder',
                 density: 'Abstand',
+                font: 'Schrift',
+                accent: 'Akzentfarbe',
                 print: 'Drucken / als PDF',
                 reset: 'Zurücksetzen',
                 a4: 'A4 Hochformat',
@@ -75,6 +82,8 @@
                 columns: 'Columns',
                 images: 'Images',
                 density: 'Spacing',
+                font: 'Typography',
+                accent: 'Accent colour',
                 print: 'Print / save PDF',
                 reset: 'Reset',
                 a4: 'A4 portrait',
@@ -172,6 +181,8 @@
         target.dataset.zineColumns = settings.columns;
         target.dataset.zineImages = settings.images;
         target.dataset.zineDensity = settings.density;
+        target.dataset.zineFont = settings.font;
+        target.dataset.zineAccent = settings.accent;
 
         try {
             localStorage.setItem(
@@ -261,6 +272,19 @@
                 ${control(t.density, 'density', [
                     ['comfortable', t.comfortable],
                     ['compact', t.compact]
+                ])}
+
+                ${control(t.font || 'Typography', 'font', [
+                    ['sans', 'Sans'],
+                    ['serif', 'Serif'],
+                    ['mono', 'Mono']
+                ])}
+
+                ${control(t.accent || 'Accent', 'accent', [
+                    ['cyan', 'Cyan'],
+                    ['red', 'Rot / Red'],
+                    ['purple', 'Violett / Purple'],
+                    ['black', 'Schwarz / Black']
                 ])}
             </div>
 

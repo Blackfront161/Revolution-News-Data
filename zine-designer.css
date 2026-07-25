@@ -23,7 +23,7 @@
 
 .wrn-zine-designer-copy-1719 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
     gap: 0.45rem;
     margin-bottom: 0.65rem;
 }
@@ -31,6 +31,8 @@
 .wrn-zine-designer-copy-1719 label,
 .wrn-zine-designer-copy-1719 span {
     display: block;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .wrn-zine-designer-copy-1719 span {
@@ -52,13 +54,15 @@
 
 .wrn-zine-designer-grid-1719 {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
     gap: 0.45rem;
 }
 
 .wrn-zine-designer-grid-1719 label,
 .wrn-zine-designer-grid-1719 span {
     display: block;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .wrn-zine-designer-grid-1719 span {
@@ -198,10 +202,22 @@
     line-height: 1.3;
 }
 
+.wrn-zine-design-target-1719[data-zine-font="sans"] { font-family: Arial, sans-serif; }
+.wrn-zine-design-target-1719[data-zine-font="serif"] { font-family: Georgia, "Times New Roman", serif; }
+.wrn-zine-design-target-1719[data-zine-font="mono"] { font-family: ui-monospace, Consolas, monospace; }
+
+.wrn-zine-design-target-1719[data-zine-accent="cyan"] { --wrn-zine-accent: #00e5ef; }
+.wrn-zine-design-target-1719[data-zine-accent="red"] { --wrn-zine-accent: #ff3158; }
+.wrn-zine-design-target-1719[data-zine-accent="purple"] { --wrn-zine-accent: #9c74ff; }
+.wrn-zine-design-target-1719[data-zine-accent="black"] { --wrn-zine-accent: #111; }
+.wrn-zine-design-target-1719[data-zine-accent] :is(h1, h2, h3, strong) {
+    color: var(--wrn-zine-accent);
+}
+
 @media (max-width: 760px) {
     .wrn-zine-designer-copy-1719,
     .wrn-zine-designer-grid-1719 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
     }
 
     .wrn-zine-design-target-1719 {

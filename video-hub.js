@@ -383,10 +383,6 @@
         <div><h2>${escapeHtml(t.title)}</h2><p>${escapeHtml(t.intro)}</p></div>
         <strong>${rows.length} ${escapeHtml(t.found)}</strong>
       </header>
-      <div class="wrn-video-modes" role="tablist" aria-label="${escapeHtml(t.title)}">
-        <button type="button" role="tab" data-video-mode="current" aria-selected="${state.mode === 'current'}" class="${state.mode === 'current' ? 'active' : ''}">${escapeHtml(t.current)}</button>
-        <button type="button" role="tab" data-video-mode="information" aria-selected="${state.mode === 'information'}" class="${state.mode === 'information' ? 'active' : ''}">${escapeHtml(t.information)}</button>
-      </div>
       <div class="wrn-video-controls">
         <input type="search" data-video-search placeholder="${escapeHtml(t.search)}" value="${escapeHtml(state.search)}">
         <select data-video-platform>
@@ -415,12 +411,6 @@
           </article>`).join('') : `<p class="wrn-video-empty">${escapeHtml(t.empty)}</p>`}
       </div>`;
 
-    view.querySelectorAll('[data-video-mode]').forEach(button => button.addEventListener('click', () => {
-      state.mode = button.dataset.videoMode === 'information' ? 'information' : 'current';
-      state.platform = 'all';
-      state.region = 'all';
-      render();
-    }));
     view.querySelector('[data-video-search]')?.addEventListener('input', event => {
       state.search = String(event.target.value || ''); render();
     });
@@ -446,8 +436,11 @@
     hiddenNodes.clear();
   }
 
-  function show() {
+  function show(mode = state.mode) {
     active = true;
+    state.mode = mode === 'information' ? 'information' : 'current';
+    state.platform = 'all';
+    state.region = 'all';
     hideNews();
     const view = ensureRoot();
     view.hidden = false;
@@ -465,6 +458,16 @@
 
   window.addEventListener('wrn-language-change', () => { if (active) render(); });
   window.WRNVideoHub = Object.freeze({
-    version:'1.8.4', show, hide, render, rows:videoRows, informationRows, identify
+    version:'1.8.5',
+    show,
+    hide,
+    render,
+    rows:videoRows,
+    informationRows,
+    identify,
+    modeLabel:key => {
+      const copy = text();
+      return key === 'information' ? copy.information : copy.current;
+    }
   });
 })();

@@ -22,7 +22,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
 
 .wrn-stories-topbar {
   position: sticky;
-  top: 106px;
+  top: calc(var(--wrn-sticky-header-height, 76px) + 48px);
   z-index: 38;
   margin: -14px -14px 14px;
   padding: 12px 14px;
@@ -35,6 +35,8 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   margin: 0;
   color: var(--color-cyan, #00f0ff);
   font-size: clamp(1.05rem, 4vw, 1.45rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .wrn-stories-topbar p {
@@ -42,6 +44,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   color: rgba(255,255,255,.7);
   font-size: .76rem;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .wrn-stories-controls {
@@ -110,6 +113,11 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   justify-content: space-between;
   gap: 12px;
   padding: 14px;
+  min-width: 0;
+}
+
+.wrn-story-heading > div {
+  min-width: 0;
 }
 
 .wrn-story-heading h3 {
@@ -117,6 +125,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   color: #fff;
   font-size: 1.02rem;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .wrn-story-meta {
@@ -240,6 +249,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   color: rgba(255,255,255,.76);
   font-size: .75rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .wrn-story-perspectives {

@@ -107,6 +107,12 @@ def update_item(
         "detail",
         check.get("warning", check.get("error", ""))
     )
+    if (
+        check.get("status") == "playable"
+        and check.get("url")
+        and "workingStream" in item
+    ):
+        item["workingStream"] = check["url"]
 
     return item
 

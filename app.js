@@ -350,7 +350,7 @@ let allNewsData = [];
 
 let currentFilteredItems = []; 
 let currentlyDisplayedCount = 0;
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 10;
 let isRendering = false;
 
 let currentSourceFilter = "ALL"; 
@@ -1361,6 +1361,25 @@ async function loadDatasetWithOfflineFallback(datasetKey, url, legacyLocalStorag
     }
 }
 
+function mergeArticleDatasets(...datasets) {
+    const rows = new Map();
+    datasets.flat().filter(Boolean).forEach(item => {
+        let readingKey = '';
+        try { readingKey = window.WRNReading?.articleKey?.(item) || ''; } catch {}
+        const key = String(
+            item?.link
+            || readingKey
+            || `${item?.quelleName || ''}::${item?.title || ''}::${item?.pubDate || ''}`
+        );
+        if (!key) return;
+        rows.set(key, { ...(rows.get(key) || {}), ...item });
+    });
+    return [...rows.values()].sort((left, right) =>
+        new Date(right?.pubDate || right?.eventStart || 0)
+        - new Date(left?.pubDate || left?.eventStart || 0)
+    );
+}
+
 async function initialisiereApp() {
     setTxt('status-container', "Lade Nachrichten und Events...");
 
@@ -1378,9 +1397,22 @@ async function initialisiereApp() {
         loadDatasetWithOfflineFallback('events', GITHUB_EVENTS_URL, 'cached_event_data')
     ]);
 
-    const newsItems = newsResult.data;
+    let newsItems = newsResult.data;
     const eventItems = eventsResult.data;
-    allNewsData = [...newsItems, ...eventItems];
+    if (window.WRNStorage) {
+        try {
+            const storedArchive = await window.WRNStorage.getDataset('news-30-day');
+            const cutoff = Date.now() - (31 * 24 * 60 * 60 * 1000);
+            const recentStored = (Array.isArray(storedArchive) ? storedArchive : []).filter(item => {
+                const stamp = new Date(item?.pubDate || item?.published || item?.date || 0).getTime();
+                return Number.isFinite(stamp) && stamp >= cutoff;
+            });
+            newsItems = mergeArticleDatasets(newsItems, recentStored);
+        } catch (error) {
+            console.warn('30-Tage-Archiv konnte beim Start nicht ergänzt werden:', error);
+        }
+    }
+    allNewsData = mergeArticleDatasets(newsItems, eventItems);
     window.WRNSourceProfiles?.setArticles(allNewsData);
 
     window.WRNStatusCenter?.noteDataset('news', newsResult);
@@ -1510,8 +1542,7 @@ function articleMediaMarkup(item, idNum, heroUrl) {
             if (!url || seen.has(url)) return false;
             seen.add(url);
             return true;
-        })
-        .slice(0, 5);
+        });
     if (!images.length) return '';
     const label = articleMediaLabel();
     return `
@@ -1838,9 +1869,26 @@ async function translateArticle(idNum) {
     }
 }
 
+function additionalArticleLoadingIsRequested() {
+    let rangeState = null;
+    try { rangeState = window.WRNInterfaceBlock3?.state?.(); } catch {}
+    const search = String(document.getElementById('search-input')?.value || '').trim();
+    return Boolean(
+        Number(rangeState?.appliedDays || 0) > 0
+        || String(currentSourceFilter || 'ALL') !== 'ALL'
+        || search
+        || ['Bookmarks', 'Read', 'Radar'].includes(String(activeKontinent || ''))
+    );
+}
+
 window.addEventListener('scroll', () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 800) {
-        if (currentlyDisplayedCount < currentFilteredItems.length) { renderNextBatch(); }
+        if (
+            additionalArticleLoadingIsRequested()
+            && currentlyDisplayedCount < currentFilteredItems.length
+        ) {
+            renderNextBatch();
+        }
     }
 });
 

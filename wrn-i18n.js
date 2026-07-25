@@ -391,7 +391,8 @@
     'Squatting & Housing': 'catSquatting', 'Demonstrations': 'catDemos',
     'Anti-Rep & Prisons': 'catAntirepression', 'Cyberactivism': 'catCyber', 'No War': 'catNoWar',
     'Animal Liberation': 'catAnimal', 'Eco-Anarchism': 'catEco',
-    'Indigenous Struggles': 'catIndigenous', 'Radical Health & Disability': 'catHealth', 'Libraries': 'catLibraries'
+    'Indigenous Struggles': 'catIndigenous', 'Radical Health & Disability': 'catHealth',
+    'Libraries': 'catLibraries', 'Movement News': 'catMovementNews'
   });
 
   const REGION_UI_KEYS = Object.freeze({
@@ -408,7 +409,7 @@
     'Anti-Rep & Prisons':'Anti-repression & prisons', 'Cyberactivism':'Cyberactivism', 'No War':'No war',
     'Animal Liberation':'Animal liberation', 'Eco-Anarchism':'Ecology & climate',
     'Indigenous Struggles':'Indigenous struggles', 'Radical Health & Disability':'Radical health & disability',
-    Libraries:'Libraries'
+    Libraries:'Libraries', 'Movement News':'Movement news'
   });
 
   const FALLBACK_REGIONS = Object.freeze({
@@ -470,6 +471,14 @@
   }
 
   function topicLabel(topic, language) {
+    if (topic === 'Movement News') {
+      return ({
+        de:'Bewegungsnews', en:'Movement news', es:'Noticias de movimientos',
+        fr:'Actualités des mouvements', it:'Notizie dei movimenti',
+        pt:'Notícias dos movimentos', ru:'Новости движений',
+        el:'Νέα κινημάτων', tr:'Hareket haberleri'
+      })[normalizeLanguage(language)] || 'Movement news';
+    }
     const key = TOPIC_UI_KEYS[topic];
     return (key && legacyText(language, key)) || FALLBACK_TOPICS[topic] || topic;
   }

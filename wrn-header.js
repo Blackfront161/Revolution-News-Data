@@ -13,6 +13,30 @@
         ).forEach(node => node.remove());
     };
 
+    let observedHeader = null;
+    let headerObserver = null;
+
+    const updateStickyHeight = () => {
+        const header = document.querySelector('header');
+        if (!header) return;
+        const height = Math.max(1, Math.ceil(header.getBoundingClientRect().height));
+        document.documentElement.style.setProperty('--wrn-sticky-header-height', `${height}px`);
+    };
+
+    const installStickyHeightObserver = header => {
+        if (!header || observedHeader === header) {
+            updateStickyHeight();
+            return;
+        }
+        headerObserver?.disconnect?.();
+        observedHeader = header;
+        if ('ResizeObserver' in window) {
+            headerObserver = new ResizeObserver(updateStickyHeight);
+            headerObserver.observe(header);
+        }
+        updateStickyHeight();
+    };
+
     const install = () => {
         const header = document.querySelector('header');
         const heading = header?.querySelector('h1');
@@ -33,6 +57,7 @@
 
         image.addEventListener('load', () => {
             header.classList.add('wrn-future-header-ready');
+            updateStickyHeight();
         }, { once: true });
 
         image.addEventListener('error', () => {
@@ -41,6 +66,7 @@
         }, { once: true });
 
         brandArea.appendChild(image);
+        installStickyHeightObserver(header);
         return true;
     };
 
@@ -63,4 +89,5 @@
     }
 
     window.addEventListener('pageshow', install);
+    window.addEventListener('resize', updateStickyHeight, { passive: true });
 })();

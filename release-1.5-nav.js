@@ -87,6 +87,7 @@
         ['Indigenous Struggles','Indigene Kämpfe'],
         ['Radical Health & Disability','Radical Health'],
         ['Libraries','Bibliotheken'],
+        ['Movement News','Bewegungsnews'],
         ['WRN Corruption','Korruption']
       ],
       activate: subKey => {
@@ -98,9 +99,15 @@
     },
     {
       key: 'video',
-      activate: () => {
+      subTabs: [
+        ['current', 'current'],
+        ['information', 'information']
+      ],
+      activate: subKey => {
         closeAuxiliaryPanels();
-        window.WRNVideoHub?.show?.();
+        const target = subKey || state.subSelections.video || 'current';
+        state.subSelections.video = target;
+        window.WRNVideoHub?.show?.(target);
       }
     },
     {
@@ -180,6 +187,7 @@
     subSelections: {
       regions: 'Global',
       topics: 'Labor Struggles',
+      video: 'current',
       audio: 'original',
       saved: 'bookmarks',
       lexicon: 'basics'
@@ -223,6 +231,7 @@
     }
     if (tab?.key === 'topics') return window.WRNI18n?.topicLabel?.(key, language) || fallback || key;
     if (tab?.key === 'regions') return window.WRNI18n?.regionLabel?.(key, language) || fallback || key;
+    if (tab?.key === 'video') return window.WRNVideoHub?.modeLabel?.(key) || fallback || key;
     if (tab?.key === 'audio' || tab?.key === 'saved') return texts()[fallback] || fallback || key;
     if (tab?.key === 'lexicon') return window.WRNLexicon184?.sectionLabel?.(key, language) || fallback || key;
     return fallback || key;
@@ -846,6 +855,8 @@
       summaryPlaceholder,
       historyPushed: false
     };
+    card.dataset.wrnActiveArticle = 'true';
+    installPublisherContinuation(currentFilteredItems[index]);
 
     try {
       history.pushState({ wrnArticleDetail: true }, '', location.href);
@@ -869,6 +880,7 @@
       buttonPlaceholder,
       summaryButton,
       summaryPlaceholder,
+      publisherObserver,
       externalRestore
     } = detailState;
     const detail = $('.wrn-article-detail');
@@ -886,6 +898,7 @@
     }
 
     card?.classList.remove('wrn-detail-card');
+    card?.removeAttribute('data-wrn-active-article');
     card?.setAttribute('role', 'button');
     card?.setAttribute('tabindex', '0');
 
@@ -893,6 +906,8 @@
       placeholder.parentNode.replaceChild(card, placeholder);
     }
 
+    publisherObserver?.disconnect?.();
+    $('.wrn-publisher-continuation', detail)?.remove();
     if (detail) detail.hidden = true;
     document.body.classList.remove('wrn-detail-open');
     detailState = null;
@@ -912,6 +927,121 @@
         || String(article?.link || `${article?.quelleName || ''}::${article?.title || ''}::${article?.pubDate || ''}`);
     } catch {
       return String(article?.link || article?.title || '');
+    }
+  }
+
+  function publisherForArticle(article) {
+    return String(
+      article?.quelleName
+      || article?.sourceName
+      || article?.source
+      || ''
+    ).trim();
+  }
+
+  function publisherContinuationLabel(source) {
+    const labels = {
+      de: `Weitere Artikel von ${source}`,
+      en: `More articles from ${source}`,
+      es: `Más artículos de ${source}`,
+      fr: `Plus d’articles de ${source}`,
+      it: `Altri articoli di ${source}`,
+      pt: `Mais artigos de ${source}`,
+      ru: `Другие статьи: ${source}`,
+      el: `Περισσότερα άρθρα από ${source}`,
+      tr: `${source} kaynağından diğer yazılar`
+    };
+    return labels[languageKey()] || labels.en;
+  }
+
+  function installPublisherContinuation(article) {
+    if (!detailState?.card || !article) return;
+    const source = publisherForArticle(article);
+    const currentKey = keyForArticle(article);
+    if (!source) return;
+
+    let available = [];
+    try {
+      const cutoff = Date.now() - (31 * 24 * 60 * 60 * 1000);
+      available = (Array.isArray(allNewsData) ? allNewsData : [])
+        .filter(item => {
+          if (publisherForArticle(item).toLocaleLowerCase() !== source.toLocaleLowerCase()) return false;
+          if (keyForArticle(item) === currentKey) return false;
+          const stamp = new Date(item?.pubDate || item?.published || item?.date || 0).getTime();
+          return !Number.isFinite(stamp) || stamp >= cutoff;
+        })
+        .sort((left, right) =>
+          new Date(right?.pubDate || right?.published || 0)
+          - new Date(left?.pubDate || left?.published || 0)
+        );
+    } catch {
+      available = [];
+    }
+    if (!available.length) return;
+
+    const unique = new Map();
+    available.forEach(item => unique.set(keyForArticle(item), item));
+    available = [...unique.values()];
+
+    const section = document.createElement('section');
+    section.className = 'wrn-publisher-continuation';
+    const heading = document.createElement('h2');
+    heading.textContent = publisherContinuationLabel(source);
+    const list = document.createElement('div');
+    list.className = 'wrn-publisher-continuation-list';
+    const sentinel = document.createElement('div');
+    sentinel.className = 'wrn-publisher-continuation-sentinel';
+    sentinel.setAttribute('aria-hidden', 'true');
+    section.append(heading, list, sentinel);
+    $('.wrn-detail-host')?.appendChild(section);
+
+    let displayed = 0;
+
+    const renderMore = () => {
+      const batch = available.slice(displayed, displayed + 10);
+      batch.forEach(item => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'wrn-publisher-article-title';
+        button.dataset.articleKey = keyForArticle(item);
+        const date = new Date(item?.pubDate || item?.published || 0);
+        const dateText = Number.isFinite(date.getTime())
+          ? date.toLocaleDateString(languageKey())
+          : '';
+        const title = document.createElement('strong');
+        title.textContent = String(item?.title || texts().article);
+        button.appendChild(title);
+        if (dateText) {
+          const dateLabel = document.createElement('span');
+          dateLabel.textContent = dateText;
+          button.appendChild(dateLabel);
+        }
+        list.appendChild(button);
+      });
+      displayed += batch.length;
+      if (displayed >= available.length) sentinel.hidden = true;
+    };
+
+    section.addEventListener('click', event => {
+      const button = event.target.closest('.wrn-publisher-article-title');
+      if (!button) return;
+      const key = button.dataset.articleKey;
+      closeArticleDetail(false);
+      window.setTimeout(() => openArticleByKey(key), 0);
+    });
+
+    renderMore();
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) renderMore();
+      }, {
+        root: $('.wrn-detail-scroll'),
+        rootMargin: '320px 0px'
+      });
+      observer.observe(sentinel);
+      detailState.publisherObserver = observer;
+    } else {
+      while (displayed < available.length) renderMore();
     }
   }
 
