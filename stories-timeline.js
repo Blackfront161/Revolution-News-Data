@@ -10,12 +10,13 @@
 
   const TEXTS = {
     de: {
-      title: 'Entwicklungen verstehen', intro: 'Hier werden Berichte verschiedener Quellen zum selben Thema als verständlicher Verlauf zusammengefasst.',
+      title: 'Entwicklungen:', intro: 'Hier werden Berichte verschiedener Quellen zum selben Thema als verständlicher Verlauf zusammengefasst.',
       search: 'Thema oder Quelle suchen…', period: 'Zeitraum', sources: 'Mindestens Quellen', days7: '7 Tage', days14: '14 Tage', days30: '30 Tage',
       refresh: 'Neu laden', moreFilters: 'Weitere Filter', empty: 'Im gewählten Zeitraum wurde noch kein Thema von mehreren Quellen berichtet.', articles: 'Beiträge', perspectives: 'Was die Quellen unterschiedlich berichten',
       timeline: 'Zeitleiste', watch: 'Beobachten', watching: 'Beobachtet', share: 'Teilen', copy: 'Kopiert', open: 'Artikel öffnen',
       sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste',
-      translate: 'Übersetzen', translating: 'Wird übersetzt…', original: 'Original', translationError: 'Übersetzung fehlgeschlagen'
+      translate: 'Übersetzen', translating: 'Wird übersetzt…', original: 'Original', translationError: 'Übersetzung fehlgeschlagen',
+      watchedOnly: 'Beobachtete', showAll: 'Alle', reset: 'Übersicht'
     },
     en: {
       title: 'Understand developments', intro: 'Reports from different sources about the same topic are combined into an easy-to-follow timeline.',
@@ -23,7 +24,8 @@
       refresh: 'Reload', moreFilters: 'More filters', empty: 'No topic was reported by multiple sources in the selected period.', articles: 'articles', perspectives: 'How sources differ',
       timeline: 'Timeline', watch: 'Watch', watching: 'Watching', share: 'Share', copy: 'Copied', open: 'Open article',
       sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist',
-      translate: 'Translate', translating: 'Translating…', original: 'Original', translationError: 'Translation failed'
+      translate: 'Translate', translating: 'Translating…', original: 'Original', translationError: 'Translation failed',
+      watchedOnly: 'Watched', showAll: 'All', reset: 'Overview'
     },
     es: {
       title:'Desarrollos y cronologías', intro:'Varios informes se agrupan localmente. No se suben datos.', search:'Buscar desarrollos…', period:'Periodo',
@@ -75,10 +77,41 @@
       translate:'Çevir', translating:'Çevriliyor…', original:'Orijinal', translationError:'Çeviri başarısız'
     }
   };
+  const CONTROL_TEXTS = {
+    en: { watchedOnly: 'Watched', showAll: 'All', reset: 'Overview' },
+    de: { watchedOnly: 'Beobachtete', showAll: 'Alle', reset: 'Übersicht' },
+    es: { watchedOnly: 'Seguidos', showAll: 'Todos', reset: 'Vista general' },
+    fr: { watchedOnly: 'Suivis', showAll: 'Tout', reset: 'Vue d’ensemble' },
+    it: { watchedOnly: 'Seguiti', showAll: 'Tutti', reset: 'Panoramica' },
+    pt: { watchedOnly: 'Observados', showAll: 'Todos', reset: 'Visão geral' },
+    ru: { watchedOnly: 'Отслеживаемые', showAll: 'Все', reset: 'Обзор' },
+    el: { watchedOnly: 'Παρακολουθούμενα', showAll: 'Όλα', reset: 'Επισκόπηση' },
+    tr: { watchedOnly: 'İzlenenler', showAll: 'Tümü', reset: 'Genel görünüm' }
+  };
 
   let root = null;
   let active = false;
-  let state = readLocal(STATE_KEY, { days: 30, minSources: 2, search: '' });
+  const DEFAULT_STATE = Object.freeze({
+    days: 30,
+    minSources: 2,
+    search: '',
+    watchedOnly: false
+  });
+  let state = normalizeState(readLocal(STATE_KEY, DEFAULT_STATE));
+
+  function normalizeState(value) {
+    const candidate = value && typeof value === 'object' ? value : {};
+    return {
+      days: [7, 14, 30].includes(Number(candidate.days))
+        ? Number(candidate.days)
+        : DEFAULT_STATE.days,
+      minSources: [2, 3, 4].includes(Number(candidate.minSources))
+        ? Number(candidate.minSources)
+        : DEFAULT_STATE.minSources,
+      search: String(candidate.search || ''),
+      watchedOnly: candidate.watchedOnly === true
+    };
+  }
 
   function language() {
     return window.WRNI18n?.currentLanguage?.()
@@ -87,7 +120,12 @@
   }
 
   function text() {
-    return TEXTS[language()] || TEXTS.en;
+    const code = language();
+    return {
+      ...TEXTS.en,
+      ...(TEXTS[code] || {}),
+      ...(CONTROL_TEXTS[code] || CONTROL_TEXTS.en)
+    };
   }
 
   function readLocal(key, fallback) {
@@ -127,7 +165,17 @@
   function watchStory(story) {
     const existing = currentWatchlist();
     const candidate = (story.keywords || []).slice(0, 3).join(' ');
-    const normalized = setWatchlist([...existing, candidate]);
+    const candidateToken = window.WRNStoriesCore.normalizeToken(candidate);
+    const alreadyWatching = existing.some(value =>
+      window.WRNStoriesCore.normalizeToken(value) === candidateToken
+    );
+    const normalized = setWatchlist(
+      alreadyWatching
+        ? existing.filter(value =>
+            window.WRNStoriesCore.normalizeToken(value) !== candidateToken
+          )
+        : [...existing, candidate]
+    );
     render();
     return normalized;
   }
@@ -197,13 +245,14 @@
 
   function openArticle(item) {
     try {
-      const index = articles().findIndex(article =>
-        window.WRNStoriesCore.itemKey(article)
-        === window.WRNStoriesCore.itemKey(item)
-      );
-
-      if (index >= 0 && typeof openArticleDetail === 'function') {
-        openArticleDetail(index);
+      const articleKey = window.WRNReading?.articleKey?.(item)
+        || window.WRNStoriesCore.itemKey(item)
+        || item?.link;
+      if (
+        articleKey
+        && typeof window.WRNOpenArticleByKey === 'function'
+        && window.WRNOpenArticleByKey(articleKey)
+      ) {
         return;
       }
     } catch {}
@@ -248,17 +297,25 @@
     button.classList.add('is-loading');
     button.innerHTML = `<span class="wrn-rb-star-184" aria-hidden="true">★</span><span>${copy.translating}</span>`;
     try {
-      const result = await window.fetchTranslationRequest?.({
-        title: item?.title || '',
-        text: String(item?.content || item?.description || item?.summary || '').slice(0, 1400),
-        mode: 'title_and_text'
-      });
+      const cached = await window.WRNArticleTranslation?.getCached?.(
+        item,
+        language()
+      );
+      const result = cached?.text
+        ? { error: false, ...cached }
+        : await window.WRNArticleTranslation?.translate?.(
+            item,
+            null,
+            language()
+          );
       if (!result || result.error || !result.text) throw new Error(result?.message || copy.translationError);
-      const translated = parseTranslation(result.text, item?.title || '');
-      if (translated.title) titleNode.textContent = translated.title;
-      if (translated.text) summaryNode.textContent = translated.text;
+      if (result.title) titleNode.textContent = result.title;
+      if (result.text) summaryNode.textContent = articleSummary({
+        ...item,
+        title: result.title || item?.title,
+        content: result.text
+      });
       button.textContent = `✓ ${copy.translate}`;
-      button.title = result.provider || '';
     } catch (error) {
       button.textContent = copy.translationError;
       button.title = String(error?.message || error);
@@ -372,7 +429,31 @@
 
     advancedBody.append(minimum, refresh);
     advanced.append(advancedLabel, advancedBody);
-    controls.append(search, period, advanced);
+
+    const watched = document.createElement('button');
+    watched.type = 'button';
+    watched.className = 'wrn-stories-watched-toggle';
+    watched.setAttribute('aria-pressed', String(state.watchedOnly));
+    watched.textContent = state.watchedOnly
+      ? `★ ${copy.showAll}`
+      : `☆ ${copy.watchedOnly}`;
+    watched.addEventListener('click', () => {
+      state.watchedOnly = !state.watchedOnly;
+      writeLocal(STATE_KEY, state);
+      render();
+    });
+
+    const reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'wrn-stories-reset';
+    reset.textContent = `↶ ${copy.reset}`;
+    reset.addEventListener('click', () => {
+      state = { ...DEFAULT_STATE };
+      writeLocal(STATE_KEY, state);
+      render();
+    });
+
+    controls.append(search, period, watched, advanced, reset);
     container.appendChild(controls);
   }
 
@@ -398,8 +479,10 @@
 
     const watch = document.createElement('button');
     watch.type = 'button';
-    watch.textContent = isWatching(story) ? `★ ${copy.watching}` : `☆ ${copy.watch}`;
-    watch.setAttribute('aria-pressed', String(isWatching(story)));
+    const watching = isWatching(story);
+    watch.className = 'wrn-story-watch';
+    watch.innerHTML = `<span class="wrn-story-watch-star" aria-hidden="true">${watching ? '★' : '☆'}</span><span>${watching ? copy.watching : copy.watch}</span>`;
+    watch.setAttribute('aria-pressed', String(watching));
     watch.addEventListener('click', () => watchStory(story));
 
     const share = document.createElement('button');
@@ -497,20 +580,33 @@
     });
 
     const query = window.WRNStoriesCore.normalizeToken(state.search || '');
-    const filtered = query
+    let filtered = query
       ? stories.filter(story =>
           window.WRNStoriesCore.normalizeToken(
             `${story.title} ${story.sources.join(' ')} ${story.keywords.join(' ')}`
           ).includes(query)
         )
       : stories;
+    if (state.watchedOnly) {
+      filtered = filtered.filter(isWatching);
+    }
 
     list.textContent = '';
 
     if (!filtered.length) {
       const empty = document.createElement('div');
       empty.className = 'wrn-stories-empty';
-      empty.textContent = text().empty;
+      const message = document.createElement('p');
+      message.textContent = text().empty;
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.textContent = `↶ ${text().reset}`;
+      reset.addEventListener('click', () => {
+        state = { ...DEFAULT_STATE };
+        writeLocal(STATE_KEY, state);
+        render();
+      });
+      empty.append(message, reset);
       list.appendChild(empty);
       return;
     }

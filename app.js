@@ -163,7 +163,12 @@ async function performTranslationFetch({ headers, body, timeoutMs = 45000 }) {
     }
 }
 
-async function fetchTranslationRequest({ title = "", text = "", mode = "title_and_text" }) {
+async function fetchTranslationRequest({
+    title = "",
+    text = "",
+    mode = "title_and_text",
+    targetLanguage = currentLang,
+}) {
     const safeTitle = String(title || "").slice(0, 500);
     const safeText = String(text || "").slice(0, 6000);
 
@@ -175,7 +180,7 @@ async function fetchTranslationRequest({ title = "", text = "", mode = "title_an
         },
         body: {
             action: "translate",
-            targetLanguage: currentLang,
+            targetLanguage,
             mode,
             title: safeTitle,
             text: safeText
@@ -238,7 +243,7 @@ const uiTexte = {
         donateBody: "Dieses Projekt läuft unabhängig. Spenden von Unterstützer*innen sind freiwillig.", donateWarning: "⚠️ HINWEIS: Wenn du fortfährst, verlässt du die anonyme App-Umgebung und wirst zu PayPal weitergeleitet.",
         btnPaypal: "Weiter zu PayPal", btnDonateCancel: "Schließen", dateLabel: "DATUM:", langLabel: "Sprache:",
         searchPlace: "Artikel suchen...", bookmarkCat: "Lesezeichen", btnBookmark: "Merken" + rbStar, btnUnbookmark: "Gemerkt" + rbStar,
-        themeLabel: "Design:", themeDark: "Dunkel", themeLight: "Hell", clearBtn: "Cache löschen 🗑️",
+        themeLabel: "Design:", themeDark: "Dunkel", themeLight: "Hell", clearBtn: "Cache leeren 🗑️",
         catGlobal: "Global", catEurope: "Europa", catAfrica: "Afrika", catNorthAmerica: "Nordam.", catLatinAmerica: "Lateinam.", catAsia: "Asien", catAustralia: "Ozeanien",
         catLabor: "Arbeitskämpfe", catAntifascism: "Antifaschismus", catAntisexism: "Antisexismus", catQueer: "Queer-Feminismus", catAntiracism: "Antirassismus", catNoBorders: "No Borders", catAnticapitalism: "Antikapitalismus", catTheory: "Theorie & Strategie", catAnticolonialism: "Antikolonialismus", catAntiimperialism: "Anti-Imperialismus", catSquatting: "Hausbesetzungen", catDemos: "Demonstrationen", catAntirepression: "Anti-Rep & Knast", catCyber: "Cyber-Aktivismus", catNoWar: "Kriegsdienstverweigerung", catAnimal: "Tierbefreiung", catEco: "Ökologie & Klima", catIndigenous: "Indigene Kämpfe", catHealth: "Radical Health", catLibraries: "Bibliotheken",
         fbBtn: "💬 Kontakt", fbTitle: "Kontakt", fbPlace: "Schreibe hier Ideen, Fehler oder neue Quellen...", fbCaptcha: "Captcha: Was ist", fbCancel: "Abbrechen", fbSend: "Senden (Mail)", fbErrCap: "Captcha ist falsch!", fbErrEmpty: "Bitte schreibe zuerst einen Text.",
@@ -420,9 +425,9 @@ function createArticleChunks(rawText, maxLength = 1800) {
     return chunks;
 }
 
-function translationCacheKey(article) {
+function translationCacheKey(article, language = currentLang) {
     const fingerprint = window.WRNTranslationTools?.articleFingerprint(article) || '';
-    return `translation-full::${article?.link || article?.title || 'article'}::${currentLang}::${fingerprint}`;
+    return `translation-full::${article?.link || article?.title || 'article'}::${language}::${fingerprint}`;
 }
 
 function parseTranslatedTitleAndText(value, fallbackTitle = '') {
@@ -437,13 +442,11 @@ function parseTranslatedTitleAndText(value, fallbackTitle = '') {
     return { title: fallbackTitle, text: cleanValue };
 }
 
-async function translateFullArticleForLanguage(idNum, onProgress = null) {
-    const article = currentFilteredItems[idNum];
-    if (!article) return { error: true, message: 'Artikel nicht gefunden.' };
-
-    const key = translationCacheKey(article);
+async function getStoredFullTranslation(article, language = currentLang) {
+    if (!article) return null;
+    const key = translationCacheKey(article, language);
     if (translationCache.has(key)) {
-        return { error: false, ...translationCache.get(key), cached: true };
+        return { ...translationCache.get(key), cached: true };
     }
 
     if (window.WRNStorage) {
@@ -451,19 +454,34 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
             const storedTranslation = await window.WRNStorage.getTranslation(key);
             if (storedTranslation?.text) {
                 translationCache.set(key, storedTranslation);
-                return { error: false, ...storedTranslation, cached: true };
+                return { ...storedTranslation, cached: true };
             }
         } catch (error) {
             console.warn("Gespeicherte Übersetzung konnte nicht gelesen werden:", error);
         }
     }
+    return null;
+}
+
+async function translateFullArticle(
+    article,
+    onProgress = null,
+    language = currentLang,
+) {
+    if (!article) return { error: true, message: 'Artikel nicht gefunden.' };
+
+    const cached = await getStoredFullTranslation(article, language);
+    if (cached?.text) {
+        return { error: false, ...cached, cached: true };
+    }
+    const key = translationCacheKey(article, language);
 
     const originalTitle = String(article.title || '').trim();
     const originalText = String(article.content || '').trim();
     if (!originalText) {
         return {
             error: true,
-            message: currentLang === 'de'
+            message: language === 'de'
                 ? 'Dieser Artikel enthält keinen übersetzbaren Text.'
                 : 'This article contains no text to translate.'
         };
@@ -477,15 +495,16 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
     for (let index = 0; index < chunks.length; index++) {
         if (typeof onProgress === 'function') onProgress(index + 1, chunks.length);
 
-        let result = await window.WRNTranslationTools?.getCachedChunk(article, currentLang, index, chunks[index]);
+        let result = await window.WRNTranslationTools?.getCachedChunk(article, language, index, chunks[index]);
         if (!result) {
             result = await fetchTranslationRequest({
                 title: index === 0 ? originalTitle : "",
                 text: chunks[index],
-                mode: index === 0 ? "title_and_text" : "continuation"
+                mode: index === 0 ? "title_and_text" : "continuation",
+                targetLanguage: language,
             });
             if (!result.error && result.text) {
-                window.WRNTranslationTools?.putCachedChunk(article, currentLang, index, chunks[index], result);
+                window.WRNTranslationTools?.putCachedChunk(article, language, index, chunks[index], result);
             }
         }
         if (result.error || !result.text) return result;
@@ -503,7 +522,7 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
     const translated = {
         title: translatedTitle,
         text: translatedParts.filter(Boolean).join('\n\n'),
-        language: currentLang,
+        language,
         providers: [...translationProviders],
         translatedAt: new Date().toISOString()
     };
@@ -514,6 +533,14 @@ async function translateFullArticleForLanguage(idNum, onProgress = null) {
         });
     }
     return { error: false, ...translated };
+}
+
+async function translateFullArticleForLanguage(idNum, onProgress = null) {
+    return translateFullArticle(
+        currentFilteredItems[idNum],
+        onProgress,
+        currentLang,
+    );
 }
 
 function applyFullTranslationToCard(idNum, translated) {
@@ -546,6 +573,11 @@ function applyFullTranslationToCard(idNum, translated) {
         window.WRNTranslationTools?.registerTranslation(idNum, currentFilteredItems[idNum], translated, 'full');
     }
 }
+
+window.WRNArticleTranslation = Object.freeze({
+    getCached: getStoredFullTranslation,
+    translate: translateFullArticle,
+});
 
 function splitTextForSpeech(value, maxLength = 280) {
     const cleanText = String(value || '')
@@ -1246,6 +1278,22 @@ function interleaveArticlesByPublisher(items) {
 }
 
 window.WRNFeedOrder = Object.freeze({ interleaveArticlesByPublisher });
+
+function limitDominantPublishersForSection(items, sourceFilter = 'ALL') {
+    if (sourceFilter !== 'ALL') return items;
+    if (['Bookmarks', 'Read', 'Radar'].includes(activeKontinent)) return items;
+    const bianetCounts = new Map();
+    return items.filter(article => {
+        const publisher = articlePublisherKey(article);
+        if (!['bianet türkçe', 'bianet kurdî'].includes(publisher)) {
+            return true;
+        }
+        const count = bianetCounts.get(publisher) || 0;
+        if (count >= 1) return false;
+        bianetCounts.set(publisher, count + 1);
+        return true;
+    });
+}
 function submitFeedback() {
     const ca = document.getElementById('captcha-answer'); const ft = document.getElementById('fb-text'); if(!ca || !ft) return;
     const userAnswer = parseInt(ca.value); const text = ft.value.trim(); const t = uiTexte[currentLang] || uiTexte['en'];
@@ -1500,6 +1548,8 @@ function applyFilters(isBookmark = false) {
         else return (isNaN(db) ? 0 : db) - (isNaN(da) ? 0 : da); 
     });
 
+    filtered = limitDominantPublishersForSection(filtered, selPortal);
+
     if (activeKontinent !== 'Radar' && selPortal === 'ALL') {
         filtered = interleaveArticlesByPublisher(filtered);
     }
@@ -1679,6 +1729,16 @@ function renderNextBatch() {
 
         if (isOld) { archiveContainer.insertAdjacentHTML('beforeend', articleHTML); archiveCount++; } 
         else { container.insertAdjacentHTML('beforeend', articleHTML); }
+
+        getStoredFullTranslation(item, currentLang).then(stored => {
+            if (
+                stored?.text
+                && currentFilteredItems[globalIndex] === item
+                && document.getElementById(`card-${globalIndex}`)
+            ) {
+                applyFullTranslationToCard(globalIndex, stored);
+            }
+        }).catch(() => {});
     });
 
     if (archiveTitle) { if (archiveCount > 0) { archiveTitle.style.display = "block"; } else { archiveTitle.style.display = "none"; } }

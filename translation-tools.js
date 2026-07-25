@@ -235,8 +235,14 @@
     function showModal(id) {
         const overlay = document.getElementById('fb-overlay');
         const modal = document.getElementById(id);
+        document.body.classList.add('wrn-translation-modal-open');
         if (overlay) overlay.style.display = 'block';
-        if (modal) modal.style.display = 'block';
+        if (modal) {
+            modal.style.display = 'block';
+            window.setTimeout(() => {
+                modal.querySelector('button, [href], input, select, textarea')?.focus();
+            }, 0);
+        }
     }
 
     function openCompare(idNum) {
@@ -344,6 +350,7 @@
         });
         const overlay = document.getElementById('fb-overlay');
         if (overlay) overlay.style.display = 'none';
+        document.body.classList.remove('wrn-translation-modal-open');
         activeReportKey = null;
     }
 

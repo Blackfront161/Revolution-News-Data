@@ -138,6 +138,7 @@ def main() -> int:
             article.get("content", ""),
             configured,
             primary,
+            article.get("sourceTags", []),
         )
 
         article_regions = [

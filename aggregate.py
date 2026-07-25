@@ -111,20 +111,18 @@ quellen = {
         {"name": "Avtonom (RU)", "url": "https://avtonom.org/rss.xml"},
         {"name": "Pramen (BY)", "url": "https://pramen.io/feed/"},
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
-        {"name": "Apatris (GR)", "url": "https://apatris.info/feed/"},
+        {"name": "Apatris (GR)", "url": "https://apatris.org/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
         {"name": "Infolibre (GR)", "url": "https://infolibre.gr/feed/"},
         {"name": "OmniaTV (GR)", "url": "https://omniatv.com/feed/"},
         {"name": "Antifa Infoblatt", "url": "https://www.antifainfoblatt.de/rss.xml"},
         {"name": "Freedom News", "url": "https://freedomnews.org.uk/feed/"},
-        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "A-Radio Berlin", "url": "https://www.aradio-berlin.org/feed/"},
         {"name": "A Las Barricadas (ES)", "url": "https://www.alasbarricadas.org/noticias/rss.xml"},
         {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"},
         {"name": "Federacja Anarchistyczna (PL)", "url": "https://federacja-anarchistyczna.pl/feed/"},
         {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"},
         {"name": "Lower Class Magazine", "url": "https://lowerclassmag.com/feed/"},
-        {"name": "Megafon Bern", "url": "https://megafon.ch/feed/"},
         {"name": "Anarchist Communist Group", "url": "https://www.anarchistcommunism.org/feed/"}
     ],
     "Africa": [
@@ -173,10 +171,12 @@ quellen = {
         {"name": "Subversiones (Mexico)", "url": "https://subversiones.org/feed/"}
     ],
     "Radar": [
-        {"name": "Kontrapolis (Berlin)", "url": "https://morss.it/https://kontrapolis.info/category/termine/feed/"},
-        {"name": "Stressfaktor (Berlin)", "url": "https://morss.it/https://stressfaktor.squat.net/termine.rss"},
-        {"name": "Paris-Luttes (Agenda FR)", "url": "https://morss.it/https://paris-luttes.info/spip.php?page=backend-agenda"},
-        {"name": "Barrikade (CH)", "url": "https://morss.it/https://barrikade.info/spip.php?page=backend-breves"},
+        {"name": "Kontrapolis (Berlin)", "url": "https://kontrapolis.info/feed/"},
+        # Stressfaktor-Termine werden bereits über die öffentliche
+        # Radar.squat-API geladen. Der frühere Direkt-Feed liefert inzwischen
+        # nur noch eine Bot-Schutzseite und würde dieselben Termine doppeln.
+        {"name": "Paris-Luttes (Agenda FR)", "url": "https://paris-luttes.info/spip.php?page=backend-agenda"},
+        {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "CrimethInc. (Events)", "url": "https://morss.it/https://crimethinc.com/categories/events/feed"},
         {"name": "Gancio Cisti", "url": "https://gancio.cisti.org/feed/rss"},
         {"name": "Nantes Révoltée Agenda", "url": "https://nantes.indymedia.org/events/feed/"}
@@ -194,7 +194,11 @@ quellen = {
             "originRegion": "South Asia",
         },
         {"name": "Rojava Info Center", "url": "https://rojavainformationcenter.org/feed/"},
-        {"name": "ANF English (Kurdistan)", "url": "https://anfenglish.com/rss"},
+        {
+            "name": "ANF English (Kurdistan)",
+            "url": "https://english.anf-news.com/feed.rss",
+            "homepage": "https://english.anf-news.com/",
+        },
         {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"},
         {"name": "Chuang (CN)", "url": "https://chuangcn.org/feed/"},
         {"name": "New Bloom (TW)", "url": "https://newbloommag.net/feed/"},
@@ -215,7 +219,6 @@ quellen = {
         {"name": "Slackbastard", "url": "https://slackbastard.anarchobase.com/?feed=rss2"},
         {"name": "Green Left", "url": "https://www.greenleft.org.au/rss.xml"},
         {"name": "AWSM", "url": "https://awsm.nz/feed/"},
-        {"name": "Mutiny Blog", "url": "https://mu-tiny.blogspot.com/feeds/posts/default"},
         {"name": "Red Flag (Aus)", "url": "https://redflag.org.au/feed"},
         {"name": "Overland", "url": "https://overland.org.au/feed/"}
     ],
@@ -226,7 +229,7 @@ quellen = {
         {"name": "Labor Notes", "url": "https://labornotes.org/feed"},
         {"name": "AngryWorkers", "url": "https://angryworkers.org/feed/"},
         {"name": "LabourNet DE", "url": "https://www.labournet.de/feed/"},
-        {"name": "Libcom (Workplace)", "url": "https://libcom.org/workplace/feed"},
+        {"name": "Libcom (Workplace)", "url": "https://libcom.org/news/feed"},
         {"name": "Thozhilalar Koodam", "url": "https://tnlabor.in/feed/"}
     ],
     "Antifascism": [
@@ -240,9 +243,8 @@ quellen = {
         {"name": "Antifa Bern", "url": "https://antifa-bern.ch/feed/"}
     ],
     "Antisexism": [
-        {"name": "Gods & Radicals", "url": "https://abeautifulresistance.org/site?format=rss"},
         {"name": "Anarkismo (Gender)", "url": "http://www.anarkismo.net/backend?topic=gender"},
-        {"name": "Jineolojî Academy", "url": "https://jineoloji.org/en/feed/"},
+        {"name": "Jineolojî Academy", "url": "https://jineoloji.eu/en/feed/"},
         {"name": "Ni Una Menos", "url": "https://niunamenos.org.ar/feed/"},
         {"name": "Feministische Antifa", "url": "https://fantifa.noblogs.org/feed/"},
         {"name": "Missy Magazine (DE)", "url": "https://missy-magazine.de/feed/"}
@@ -281,7 +283,6 @@ quellen = {
         {"name": "Migrant Solidarity Network (CH)", "url": "https://migrant-solidarity-network.ch/feed/"}
     ],
     "Anticapitalism": [
-        {"name": "Enough is Enough", "url": "https://enoughisenough14.org/feed/"},
         {"name": "CrimethInc.", "url": "https://crimethinc.com/feed"},
         {"name": "Comunizar", "url": "https://comunizar.com.ar/feed/"},
         {"name": "ZNet (Global)", "url": "https://znetwork.org/feed/"},
@@ -327,15 +328,10 @@ quellen = {
         {"name": "Rote Hilfe", "url": "https://www.rote-hilfe.de/rss.xml"},
         {"name": "Anarchist Black Cross", "url": "https://www.abcf.net/feed/"},
         {"name": "ABC Belarus", "url": "https://abc-belarus.org/?feed=rss2&lang=en"},
-        {"name": "Solidarity Network", "url": "https://enoughisenough14.org/feed/"},
         {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"},
-        {"name": "SoliNetz", "url": "https://solinetz.ch/feed/"}
     ],
     "Cyberactivism": [
-        {"name": "Riseup Networks", "url": "https://riseup.net/en/feed"},
         {"name": "Systemli", "url": "https://www.systemli.org/feed.xml"},
-        {"name": "Autistici/Inventati", "url": "https://www.autistici.org/feed/"},
-        {"name": "Nadir.org", "url": "https://www.nadir.org/nadir/aktuell/rss/nadir.xml"},
         {"name": "DDoSecrets", "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss"},
         {"name": "Kolektiva Media (Video)", "url": "https://kolektiva.media/feeds/videos.xml?videoFilter=local"},
         {"name": "Electronic Frontier Foundation", "url": "https://www.eff.org/rss/updates.xml"}
@@ -354,8 +350,6 @@ quellen = {
         {"name": "Unoffensive Animal", "url": "https://unoffensiveanimal.is/feed/"},
         {"name": "ALF Press Office (North America)", "url": "https://animalliberationpressoffice.org/NAALPO/feed/"},
         {"name": "Hunt Saboteurs Association (UK)", "url": "https://www.huntsabs.org.uk/feed/"},
-        {"name": "VGT Schweiz", "url": "https://vgt.ch/news/rss.xml"},
-        {"name": "Direct Action Everywhere (DxE)", "url": "https://www.directactioneverywhere.com/rss.xml"}
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},
@@ -385,25 +379,25 @@ quellen = {
         {"name": "Disability Visibility", "url": "https://disabilityvisibilityproject.com/feed/"}
     ],
     "Libraries": [
-        {"name": "Anarchistische Bibliothek (DE)", "url": "https://anarchistischebibliothek.org/feed"},
+        {"name": "Anarchistische Bibliothek (DE)", "url": "https://de.anarchistlibraries.net/feed/"},
         {"name": "The Anarchist Library (EN)", "url": "https://theanarchistlibrary.org/feed"},
-        {"name": "Biblioteca Anarquista (ES)", "url": "https://es.theanarchistlibrary.org/feed"},
-        {"name": "Bibliothèque Anarchiste (FR)", "url": "https://fr.theanarchistlibrary.org/feed"},
+        {"name": "Biblioteca Anarquista (ES)", "url": "https://es.anarchistlibraries.net/feed/"},
+        {"name": "Bibliothèque Anarchiste (FR)", "url": "https://fr.anarchistlibraries.net/feed/"},
         {"name": "Libreria Anarchica (IT)", "url": "https://it.theanarchistlibrary.org/feed"},
         {"name": "Biblioteca Anarquista (PT)", "url": "https://pt.theanarchistlibrary.org/feed"},
-        {"name": "Anarchist Library (RU)", "url": "https://ru.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (RU)", "url": "https://ru.anarchistlibraries.net/feed/"},
         {"name": "Anarchist Library (TR)", "url": "https://tr.theanarchistlibrary.org/feed"},
         {"name": "Anarchist Library (PL)", "url": "https://pl.theanarchistlibrary.org/feed"},
-        {"name": "Anarchist Library (SV)", "url": "https://sv.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (SV)", "url": "https://www.anarkistiskabiblioteket.se/feed/"},
         {"name": "RevoltLib", "url": "https://revoltlib.com/feed"},
         {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/feed/"},
         {"name": "Zabalaza Books (Africa)", "url": "https://zabalazabooks.net/feed/"},
-        {"name": "Libcom Library", "url": "https://libcom.org/library/feed"}
+        {"name": "Libcom Library", "url": "https://libcom.org/news/feed"}
     ]
 }
 # WRN MULTILINGUAL SOURCES 1.8.2 START
 # Additive and idempotent: the existing source dictionary is never replaced.
-_wrn_extra_sources_182 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}, {'name': 'Bianet Türkçe', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://bianet.org/', 'feedUrl': 'https://bianet.org/rss/bianet', 'categories': ['Europe', 'Labor Struggles', 'Antiracism', 'Queer-Feminism'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Evrensel', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://www.evrensel.net/', 'feedUrl': 'https://www.evrensel.net/rss/?do=rss', 'categories': ['Europe', 'Labor Struggles', 'Anticapitalism', 'No War'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Bianet Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://bianet.org/kurdi', 'feedUrl': 'https://bianet.org/rss/kurdi', 'categories': ['Europe', 'Anticolonialism', 'Antiracism', 'No Borders'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Pressin Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://pressin.info/kurdi', 'feedUrl': 'https://pressin.info/kurdi/rss/latest-posts', 'categories': ['Asia', 'Anticolonialism', 'Anti-Imperialism'], 'originCountry': 'Iraq', 'originCountryCode': 'IQ', 'originRegion': 'Kurdistan Region', 'status': 'approved', 'addedIn': '1.8.2'}]
+_wrn_extra_sources_182 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}, {'name': 'Bianet Türkçe', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://bianet.org/', 'feedUrl': 'https://bianet.org/rss/bianet', 'categories': ['Europe', 'Labor Struggles', 'Antiracism', 'Queer-Feminism'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Evrensel', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://www.evrensel.net/', 'feedUrl': 'https://www.evrensel.net/rss/haber.xml', 'categories': ['Europe', 'Labor Struggles', 'Anticapitalism', 'No War'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Bianet Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://bianet.org/kurdi', 'feedUrl': 'https://bianet.org/rss/kurdi', 'categories': ['Europe', 'Anticolonialism', 'Antiracism', 'No Borders'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Pressin Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://pressin.info/kurdi', 'feedUrl': 'https://pressin.info/kurdi/rss/latest-posts', 'categories': ['Asia', 'Anticolonialism', 'Anti-Imperialism'], 'originCountry': 'Iraq', 'originCountryCode': 'IQ', 'originRegion': 'Kurdistan Region', 'status': 'approved', 'addedIn': '1.8.2'}]
 for _wrn_source in _wrn_extra_sources_182:
     _wrn_name = str(_wrn_source.get('name', '')).casefold()
     _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').casefold()
@@ -564,6 +558,42 @@ _wrn_extra_sources_185 = [
         "categories": ["Antisexism", "Radical Health & Disability", "Global"],
         "originRegion": "Global",
     },
+    {
+        "name": "Anarşist Haberler",
+        "url": "https://www.anarsisthaberler.net/feed/",
+        "homepage": "https://www.anarsisthaberler.net/",
+        "language": "tr",
+        "categories": ["Europe", "Theory & Strategy", "Anticapitalism", "Antifascism"],
+        "originCountry": "Türkiye",
+        "originCountryCode": "TR",
+        "originRegion": "Türkiye",
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Radikal Perspektif",
+        "url": "https://rpkolektif.wordpress.com/feed/",
+        "homepage": "https://rpkolektif.wordpress.com/",
+        "language": "tr",
+        "categories": ["Europe", "Theory & Strategy", "Anticapitalism"],
+        "originCountry": "Türkiye",
+        "originCountryCode": "TR",
+        "originRegion": "Türkiye",
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Yeryüzü Postası",
+        "url": "https://www.yeryuzupostasi.org/feed/",
+        "homepage": "https://www.yeryuzupostasi.org/",
+        "language": "tr",
+        "categories": ["Europe", "Anticapitalism", "Labor Struggles", "Theory & Strategy", "No War"],
+        "originCountry": "Türkiye",
+        "originCountryCode": "TR",
+        "originRegion": "Türkiye",
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
 ]
 
 _wrn_known_source_names_185 = {
@@ -582,7 +612,29 @@ for _wrn_source in _wrn_extra_sources_185:
 for _wrn_bucket in quellen.values():
     for _wrn_source in _wrn_bucket:
         if safe_lower(_wrn_source.get("name")).startswith("bianet "):
-            _wrn_source["maxNewItems"] = 2
+            _wrn_source["maxNewItems"] = 1
+        if safe_lower(_wrn_source.get("name")) == "truthout":
+            # Truthouts Feed enthält nur Anreißer. Der erste Reparaturlauf
+            # darf deshalb alle im Feed sichtbaren Auszüge nachladen; danach
+            # werden vollständige Artikel weiterhin sofort übersprungen.
+            _wrn_source["maxNewItems"] = 15
+            _wrn_source["minArticleTextLength"] = 1200
+            _wrn_source["articleSelectors"] = [
+                "[itemprop='articleBody']",
+                ".article-content",
+                ".entry-content",
+                "article",
+                "main",
+            ]
+ARTICLE_MIN_LENGTHS = {
+    safe_lower(source.get("name")): max(
+        350,
+        int(source.get("minArticleTextLength", 700)),
+    )
+    for bucket in quellen.values()
+    for source in bucket
+    if isinstance(source, dict) and safe_text(source.get("name"))
+}
 # WRN SOURCE EXPANSION 1.8.5 END
 
 SPAM_BLACKLIST = [
@@ -620,60 +672,84 @@ TOPIC_CATEGORY_PATTERNS = {
         r"\blabou?r\b", r"\bunionis", r"\bstreik", r"\barbeiter", r"\bgewerkschaft",
         r"\bgr[eè]ve", r"\bsyndicat", r"\bhuelga", r"\bsindicat", r"\bgrev",
         r"\bişçi", r"\bemekçi", r"\bsendika", r"\bdireniş",
+        r"\btrabajador", r"\btrabalhador", r"\bεργαζ", r"\bαπεργ",
+        r"\bрабоч", r"\bзабастов", r"\bعامل", r"\bإضراب", r"\bkarker",
     ),
     "Antifascism": (
         r"\banti[- ]?fasc", r"\bfascis", r"\bneo[- ]?nazi", r"\bfar[- ]right\b",
         r"\bextreme droite\b", r"\bextrema derecha\b", r"\bultradestra\b",
         r"\brechtsextrem", r"\bafd\b", r"\bfaşis", r"\başırı sağ",
+        r"\bantifascis", r"\bantifascist", r"\bαντιφασ", r"\bфашис",
+        r"\bfaşîst",
     ),
     "Antisexism": (
         r"\bsexism", r"\bmisogyn", r"\bpatriarch", r"\bsexual violence\b",
         r"\bsexual assault\b", r"\bharassment\b", r"\bsexismus", r"\bviolaci[oó]n",
         r"\bviolence sexuelle\b", r"\bviolenza sessuale\b", r"\bcinsiyetçi",
         r"\bcinsel şiddet", r"\bkadına yönelik şiddet", r"\btaciz",
+        r"\bviolencia machista", r"\bfeminicid", r"\bfemicid",
+        r"\bέμφυλη βία", r"\bпатриарх", r"\bнасилие над женщ",
+        r"\bعنف ضد المرأة", r"\bkadın cinayet",
     ),
     "Queer-Feminism": (
         r"\bqueer\b", r"\blgbt", r"\btrans(?:gender|phob| rights?)?\b",
         r"\blesbian", r"\bhomophob", r"\bfeminis", r"\bnon[- ]?binary\b",
         r"\blgbti", r"\bkuir", r"\btransfobi",
+        r"\bmujeres?\b", r"\bderechos reproductiv", r"\bγυναικ",
+        r"\bфемини", r"\bженщин", r"\bنسوي", r"\bjin\b",
     ),
     "Antiracism": (
         r"\banti[- ]?rac", r"\bracis", r"\bwhite supremacy\b",
         r"\bxenophob", r"\bapartheid\b", r"\brassismus\b",
         r"\bırkçı", r"\bırkçılık", r"\bnefret suçu",
+        r"\bdiscriminaci[oó]n racial", r"\bρατσισ", r"\bрасизм",
+        r"\bعنصري", r"\birqperest",
     ),
     "No Borders": (
         r"\bmigran", r"\brefugee", r"\basylum\b", r"\bborder", r"\bdeport",
         r"\bimmigration\b", r"\bfl[uü]cht", r"\babschieb", r"\br[eé]fugi",
         r"\bgöçmen", r"\bmülteci", r"\bsığınmacı", r"\bsınır dışı",
+        r"\bfrontera", r"\brefugiado", r"\bμετανάστ", r"\bπρόσφυγ",
+        r"\bмигран", r"\bбежен", r"\bلاجئ", r"\bمهاجر", r"\bpenaber",
     ),
     "Anticapitalism": (
         r"\banti[- ]?capital", r"\bcapitalis", r"\bclass struggle\b",
         r"\bworking class\b", r"\bneoliberal", r"\bkapitalis", r"\bcapitalismo\b",
         r"\bsermaye", r"\bözelleştir",
+        r"\blucha de clases", r"\banticapitalis", r"\bκαπιταλισ",
+        r"\bкапитализм", r"\bرأسمالي", r"\bkapîtalîzm",
     ),
     "Theory & Strategy": (
         r"\banarchis", r"\blibertarian communis", r"\bmutual aid\b",
         r"\bdirect action\b", r"\bsyndicalis", r"\bpolitical theory\b",
         r"\brevolutionary strateg", r"\bbook review\b", r"\banarş",
         r"\bdayanışma", r"\bdoğrudan eylem",
+        r"\bautogesti[oó]n", r"\bcomunismo libertario", r"\bαναρχ",
+        r"\bанарх", r"\bанархи", r"\bلاسلطوي", r"\bئەنارشی",
     ),
     "Anticolonialism": (
         r"\banti[- ]?coloni", r"\bdecoloni", r"\bcolonialis",
         r"\bsettler colon", r"\bcolonial rule\b", r"\bsömürge", r"\bkolonyal",
+        r"\bcolonialismo", r"\bdescolon", r"\bαποικιοκρα", r"\bколониал",
+        r"\bاستعمار", r"\bkolonyalîzm",
     ),
     "Anti-Imperialism": (
         r"\banti[- ]?imperial", r"\bimperialis", r"\bimperial power\b", r"\bemperyal",
+        r"\bαντιιμπεριαλ", r"\bимпериал", r"\bإمبريال", r"\bîmperyal",
     ),
     "Squatting & Housing": (
         r"\bsquat", r"\bhousing\b", r"\btenant", r"\brent strike\b",
         r"\beviction", r"\bhausbesetz", r"\bmiet", r"\blogement\b",
         r"\bbarınma", r"\bkonut", r"\bkira", r"\btahliye",
+        r"\bdesalojo", r"\bocupaci[oó]n", r"\bστέγα", r"\bκατάληψη",
+        r"\bвыселен", r"\bсквот", r"\bإسكان",
     ),
     "Demonstrations": (
         r"\bprotest", r"\bdemonstrat", r"\brally\b", r"\bmarch\b",
         r"\bmobilis", r"\bkundgebung", r"\bmanifestaci[oó]n\b",
         r"\bprotesto", r"\beylem", r"\byürüyüş", r"\bmiting",
+        r"\bmarcha\b", r"\bδιαδήλω", r"\bпротест", r"\bмитинг",
+        r"\bاحتجاج", r"\bخۆپیشاندان",
     ),
     "Anti-Rep & Prisons": (
         r"\bprison", r"\barrest", r"\brepress",
@@ -682,30 +758,42 @@ TOPIC_CATEGORY_PATTERNS = {
         r"\bpolice (?:violence|brutality|killing|raid|repression)\b",
         r"\bstate repression\b", r"\bknast\b", r"\bgef[aä]ng",
         r"\bcezaevi", r"\bhapishane", r"\bgözaltı", r"\btutuk", r"\bmahkeme",
+        r"\bc[aá]rcel", r"\bprisi[oó]n", r"\bdetenid", r"\brepresi[oó]n",
+        r"\bφυλακ", r"\bαστυνομ", r"\bтюрьм", r"\bарест", r"\bполици",
+        r"\bسجن", r"\bاعتقال", r"\bشرطة", r"\bzindan", r"\bgirtî",
     ),
     "Cyberactivism": (
         r"\bcyber", r"\bdigital rights?\b", r"\bsurveillance\b", r"\bencryption\b",
         r"\bhack(?:er|ing)?\b", r"\bprivacy\b", r"\bopen[- ]source\b",
         r"\bdijital hak", r"\bgözetim", r"\bsansür", r"\bsiber",
+        r"\bvigilancia digital", r"\bλογοκρισ", r"\bнаблюден", r"\bцензур",
+        r"\bمراقبة", r"\bسانسور",
     ),
     "No War": (
         r"\banti[- ]?war\b", r"\bwar\b", r"\bmilitar", r"\barmy\b",
         r"\bweapons?\b", r"\bconscription\b", r"\bceasefire\b", r"\bkrieg",
         r"\baufr[uü]st", r"\barmement\b", r"\bsavaş", r"\bsilah", r"\basker",
+        r"\bguerra\b", r"\bαντιπολεμ", r"\bвойн", r"\bвоенн",
+        r"\bحرب", r"\bسلاح", r"\bşer\b",
     ),
     "Animal Liberation": (
         r"\banimal liberation\b", r"\banimal rights?\b", r"\bvegan",
         r"\bslaughterhouse\b", r"\bhunt sab", r"\btierbefrei", r"\bvivisection\b",
         r"\bhayvan hak", r"\bmezbaha",
+        r"\bliberaci[oó]n animal", r"\bαπελευθέρωση ζώων", r"\bживотн",
+        r"\bحقوق الحيوان",
     ),
     "Eco-Anarchism": (
         r"\bclimate\b", r"\becolog", r"\benvironment", r"\bforest\b",
         r"\bpipeline\b", r"\bfossil fuel", r"\bmining\b", r"\bklima",
         r"\biklim", r"\bekoloji", r"\bçevre", r"\bmaden",
+        r"\bcambio clim[aá]tico", r"\bmedio ambiente", r"\bκλίμα",
+        r"\bокружающей сред", r"\bклимат", r"\bمناخ", r"\bژینگە",
     ),
     "Indigenous Struggles": (
         r"\bindigenous\b", r"\bfirst nations?\b", r"\bnative peoples?\b",
         r"\bmapuche\b", r"\bzapatist", r"\baboriginal\b", r"\bindigen", r"\byerli halk",
+        r"\bpueblos? originarios?", r"\bιθαγεν", r"\bкоренн", r"\bالسكان الأصلي",
     ),
     "Radical Health & Disability": (
         r"\bdisabil", r"\bmental health\b", r"\bpsychiatr", r"\bhealth care\b",
@@ -720,14 +808,22 @@ TOPIC_CATEGORY_PATTERNS = {
 }
 
 
-def infer_article_categories(title, content, configured, primary):
+def infer_article_categories(title, content, configured, primary, source_tags=None):
     configured_list = [
         safe_text(category)
         for category in (configured if isinstance(configured, list) else [configured])
         if safe_text(category)
     ]
     title_text = safe_text(title).casefold()
-    text = f"{title_text} {safe_text(content)}".casefold()
+    tags_text = " ".join(
+        safe_text(tag.get("term") if isinstance(tag, dict) else tag)
+        for tag in (source_tags or [])
+    )
+    # Topic detection needs representative text, not an entire long-form
+    # archive item. Bounding the sample keeps full-archive reclassification
+    # predictable even for book-length library entries.
+    content_sample = safe_text(content)[:16000]
+    text = f"{title_text} {content_sample} {tags_text}".casefold()
     categories = []
     for category in configured_list:
         if category in REGION_CATEGORIES and category not in categories:
@@ -740,31 +836,47 @@ def infer_article_categories(title, content, configured, primary):
         if category in TOPIC_CATEGORY_PATTERNS
     ]
     matched_topics = []
+    regex_cache = globals().setdefault("_WRN_TOPIC_REGEX_CACHE", {})
+
+    def compiled(pattern):
+        return regex_cache.setdefault(
+            pattern,
+            re.compile(pattern, flags=re.IGNORECASE),
+        )
+
     if primary in TOPIC_CATEGORY_PATTERNS:
         matched_topics.append(primary)
 
     for category, patterns in TOPIC_CATEGORY_PATTERNS.items():
-        matches = [
-            pattern for pattern in patterns
-            if re.search(pattern, text, flags=re.IGNORECASE)
-        ]
-        if not matches:
+        if not patterns:
+            continue
+        combined_pattern = "(?:" + ")|(?:".join(patterns) + ")"
+        if not compiled(combined_pattern).search(text):
             continue
         if category == "Anti-Rep & Prisons" and primary != category:
-            title_match = any(
-                re.search(pattern, title_text, flags=re.IGNORECASE)
+            title_match = bool(
+                compiled(combined_pattern).search(title_text)
+            )
+            strong_patterns = [
+                pattern
                 for pattern in patterns
-            )
-            strong_match = any(
-                marker in pattern
-                for marker in (
-                    "political prisoner", "prisoner support", "police ",
-                    "state repression", "incarcer", "cezaevi", "hapishane",
-                    "gözaltı", "tutuk",
+                if any(
+                    marker in pattern
+                    for marker in (
+                        "political prisoner", "prisoner support", "police ",
+                        "state repression", "incarcer", "cezaevi", "hapishane",
+                        "gözaltı", "tutuk", "c[aá]rcel", "prisi[oó]n",
+                        "φυλακ", "тюрьм", "сجن", "zindan",
+                    )
                 )
-                for pattern in matches
+            ]
+            strong_match = bool(
+                strong_patterns
+                and compiled(
+                    "(?:" + ")|(?:".join(strong_patterns) + ")"
+                ).search(text)
             )
-            if not title_match and not strong_match and len(matches) < 2:
+            if not title_match and not strong_match:
                 continue
         if category not in matched_topics:
             matched_topics.append(category)
@@ -804,9 +916,13 @@ def repair_overbroad_archive_categories(article):
     return article
 
 
-def content_is_incomplete(text):
+def content_is_incomplete(text, min_length=350):
     clean = re.sub(r"\s+", " ", str(text or "")).strip().lower()
-    if len(clean) < 350:
+    try:
+        required_length = max(350, int(min_length or 350))
+    except (TypeError, ValueError):
+        required_length = 350
+    if len(clean) < required_length:
         return True
     return any(marker in clean for marker in INCOMPLETE_MARKERS)
 
@@ -877,6 +993,8 @@ def collect_image_urls(soup, base_url, limit=24):
         src = (
             image.get('data-src')
             or image.get('data-lazy-src')
+            or image.get('data-original')
+            or image.get('data-lazy')
             or image.get('src')
         )
         srcset = safe_text(image.get('data-srcset') or image.get('srcset'))
@@ -894,6 +1012,136 @@ def collect_image_urls(soup, base_url, limit=24):
         if len(images) >= limit:
             break
     return images
+
+
+DEFAULT_ARTICLE_SELECTORS = (
+    "[itemprop='articleBody']",
+    ".article-content",
+    ".entry-content",
+    ".post-content",
+    ".story-content",
+    ".article-body",
+    "article",
+    "main",
+)
+
+
+def select_article_root(soup, configured_selectors=None):
+    selectors = [
+        safe_text(selector)
+        for selector in (configured_selectors or [])
+        if safe_text(selector)
+    ]
+    for selector in (*selectors, *DEFAULT_ARTICLE_SELECTORS):
+        try:
+            candidate = soup.select_one(selector)
+        except Exception:
+            candidate = None
+        if candidate and len(candidate.get_text(" ", strip=True)) >= 250:
+            return candidate
+    return soup
+
+
+def extract_article_text(root):
+    if not root:
+        return ""
+    for unwanted in root.select(
+        "script, style, nav, footer, aside, form, noscript, "
+        ".newsletter, .related, .recommended, .social-share, .advertisement"
+    ):
+        unwanted.decompose()
+    paragraphs = [
+        paragraph.get_text(" ", strip=True)
+        for paragraph in root.find_all(("p", "li"))
+    ]
+    text_blocks = [
+        paragraph
+        for paragraph in paragraphs
+        if len(paragraph) > 30
+    ]
+    return "\n\n".join(text_blocks)
+
+
+def scrape_article_page(
+    link,
+    feed,
+    existing_text="",
+    existing_image="",
+    existing_images=None,
+):
+    """Load a publisher page once and preserve its full text and media."""
+
+    full_text = safe_text(existing_text)
+    image_url = clean_image_url(existing_image, link)
+    image_urls = list(existing_images or [])
+
+    try:
+        time.sleep(1.5)
+        html_req = http.get(
+            link,
+            headers=HEADERS,
+            timeout=AUTONOMOUS_TIMEOUT,
+        )
+        html_req.raise_for_status()
+        soup = BeautifulSoup(html_req.text, "html.parser")
+        article_root = select_article_root(
+            soup,
+            feed.get("articleSelectors"),
+        )
+
+        for candidate in collect_image_urls(article_root, link):
+            if candidate not in image_urls:
+                image_urls.append(candidate)
+
+        if not image_url:
+            og_img = (
+                soup.find("meta", property="og:image")
+                or soup.find("meta", attrs={"name": "twitter:image"})
+            )
+            if og_img:
+                image_url = clean_image_url(
+                    og_img.get("content"),
+                    link,
+                )
+                if image_url and image_url not in image_urls:
+                    image_urls.insert(0, image_url)
+
+        if not image_url:
+            for img in soup.find_all("img"):
+                src = (
+                    img.get("src")
+                    or img.get("data-src")
+                    or img.get("data-lazy-src")
+                    or img.get("data-original")
+                    or img.get("data-lazy")
+                )
+                image_url = clean_image_url(src, link)
+                if image_url:
+                    if image_url not in image_urls:
+                        image_urls.append(image_url)
+                    break
+
+        page_text = extract_article_text(article_root)
+        if len(page_text) > len(full_text):
+            full_text = page_text
+
+        waf_phrases = (
+            "Please wait a moment while we ensure the security",
+            "Protected by Anubis",
+            "Enable JavaScript and cookies",
+            "Verifying your browser before connecting",
+            "Making sure you're not a bot",
+        )
+        if any(
+            phrase.casefold() in full_text.casefold()
+            for phrase in waf_phrases
+        ):
+            full_text = safe_text(existing_text)
+    except Exception:
+        return full_text, image_url, image_urls
+
+    return full_text, image_url, image_urls
+
 
 # =================================================================
 # 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
@@ -1224,7 +1472,17 @@ def save_checkpoint():
     news = []
     for article in news_candidates:
         source = str(article.get('quelleName') or 'Unbekannte Quelle')
-        incomplete = article.get('contentComplete') is False or content_is_incomplete(article.get('content'))
+        minimum_length = ARTICLE_MIN_LENGTHS.get(
+            safe_lower(source),
+            700,
+        )
+        incomplete = (
+            article.get('contentComplete') is False
+            or content_is_incomplete(
+                article.get('content'),
+                minimum_length,
+            )
+        )
         article['contentComplete'] = not incomplete
         if incomplete:
             count = incomplete_counts.get(source, 0)
@@ -1303,6 +1561,7 @@ for kontinent, feeds in quellen.items():
             int(feed.get("maxNewItems", 4)),
         )
         tiefe_scrapes_gemacht = 0
+        attempted_links = set()
 
         for entry in parsed.entries[:limit]: 
             try:
@@ -1315,14 +1574,18 @@ for kontinent, feeds in quellen.items():
                 title = safe_text(entry.get("title"), "Kein Titel")
                 title_lower = safe_lower(title).strip()
                 author = safe_text(entry.get("author"), "Unknown")
+                source_tags = entry.get("tags", [])
+                minimum_article_length = int(
+                    feed.get("minArticleTextLength", 700)
+                )
             
                 # Spam rausfiltern
                 if any(bad in title_lower or bad in safe_lower(author) for bad in SPAM_BLACKLIST):
                     continue
 
                 # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
-                if link in archiv_dict:
-                    existing_article = archiv_dict[link]
+                existing_article = archiv_dict.get(link)
+                if existing_article:
                     configured_categories = feed.get("categories", [kontinent])
                     if not isinstance(configured_categories, list):
                         configured_categories = [configured_categories]
@@ -1331,6 +1594,7 @@ for kontinent, feeds in quellen.items():
                         existing_article.get("content", ""),
                         configured_categories,
                         kontinent,
+                        source_tags,
                     )
                     for existing_key, configured_key in (
                         ("sourceHomepage", "homepage"),
@@ -1345,24 +1609,62 @@ for kontinent, feeds in quellen.items():
                             existing_article[existing_key] = (
                                 configured_value
                             )
-                    if is_radar: radar_count += 1
-                    continue
+                    existing_article["sourceTags"] = [
+                        safe_text(
+                            tag.get("term")
+                            if isinstance(tag, dict)
+                            else tag
+                        )
+                        for tag in source_tags
+                        if safe_text(
+                            tag.get("term")
+                            if isinstance(tag, dict)
+                            else tag
+                        )
+                    ]
+                    if is_radar:
+                        radar_count += 1
+                        continue
+                    if not content_is_incomplete(
+                        existing_article.get("content", ""),
+                        minimum_article_length,
+                    ):
+                        existing_article["contentComplete"] = True
+                        continue
                 
-                if title_lower in gesehene_titel and not is_radar:
+                if (
+                    not existing_article
+                    and title_lower in gesehene_titel
+                    and not is_radar
+                ):
                     continue
 
-                # SPEED-LIMIT CHECK FÜR KOMPLETT NEUE ARTIKEL
+                # Pro Quelle werden neue und unvollständige bestehende
+                # Artikel gemeinsam begrenzt. So werden ältere Feed-Auszüge
+                # schrittweise repariert, ohne die Quellseite zu überlasten.
                 if not is_radar:
                     if tiefe_scrapes_gemacht >= MAX_NEUE_SCRAPES:
-                        # Wir haben die 4 neuesten Artikel dieser Quelle gezogen. 
-                        # Den Rest holen wir bequem beim nächsten GitHub-Lauf in 2 Stunden!
                         continue 
                     tiefe_scrapes_gemacht += 1
+                    attempted_links.add(link)
             
                 pubDate = entry.get('published', entry.get('updated', datetime.now().isoformat()))
-                full_text = ""
-                image_url = None
-                image_urls = []
+                full_text = safe_text(
+                    existing_article.get("content")
+                    if existing_article
+                    else ""
+                )
+                image_url = (
+                    existing_article.get("image")
+                    if existing_article
+                    else None
+                )
+                image_urls = list(
+                    existing_article.get("images", [])
+                    if existing_article
+                    and isinstance(existing_article.get("images"), list)
+                    else []
+                )
 
                 if is_radar:
                     radar_desc = entry.get('summary', entry.get('description', ''))
@@ -1404,44 +1706,29 @@ for kontinent, feeds in quellen.items():
                                     image_urls.append(candidate)
                             if not image_url and image_urls:
                                 image_url = image_urls[0]
-                            full_text = content_soup.get_text(separator="\n\n").strip()
+                            feed_text = content_soup.get_text(separator="\n\n").strip()
+                            if len(feed_text) > len(full_text):
+                                full_text = feed_text
                     except:
                         pass
 
-                if link and not is_radar and len(full_text) < 300:
-                    try:
-                        time.sleep(1.5) # Pflichtpause, damit wir nicht blockiert werden
-                        html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                        soup = BeautifulSoup(html_req.text, 'html.parser')
-                        for candidate in collect_image_urls(soup, link):
-                            if candidate not in image_urls:
-                                image_urls.append(candidate)
-                    
-                        if not image_url:
-                            og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
-                            if og_img:
-                                image_url = clean_image_url(og_img.get('content'), link)
-                                if image_url and image_url not in image_urls:
-                                    image_urls.insert(0, image_url)
-                    
-                        if not image_url:
-                            for img in soup.find_all('img'):
-                                src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
-                                image_url = clean_image_url(src, link)
-                                if image_url:
-                                    if image_url not in image_urls:
-                                        image_urls.append(image_url)
-                                    break
-
-                        paragraphs = soup.find_all('p')
-                        text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
-                        full_text = "\n\n".join(text_blocks)
-                    
-                        waf_phrases = ["Please wait a moment while we ensure the security", "Protected by Anubis", "Enable JavaScript and cookies"]
-                        if any(phrase.lower() in full_text.lower() for phrase in waf_phrases):
-                            full_text = "" 
-                    except:
-                        pass
+                if (
+                    link
+                    and not is_radar
+                    and content_is_incomplete(
+                        full_text,
+                        minimum_article_length,
+                    )
+                ):
+                    full_text, image_url, image_urls = (
+                        scrape_article_page(
+                            link,
+                            feed,
+                            full_text,
+                            image_url,
+                            image_urls,
+                        )
+                    )
             
                 if not is_radar and (not full_text or len(full_text) < 150) and 'description' in entry:
                     try:
@@ -1496,6 +1783,7 @@ for kontinent, feeds in quellen.items():
                     clean_text,
                     feed.get("categories", [kontinent]),
                     kontinent,
+                    source_tags,
                 )
 
                 feed_languages = feed.get(
@@ -1519,7 +1807,10 @@ for kontinent, feeds in quellen.items():
                     "link": link,
                     "pubDate": pubDate,
                     "content": clean_text,
-                    "contentComplete": True if is_radar else not content_is_incomplete(clean_text),
+                    "contentComplete": True if is_radar else not content_is_incomplete(
+                        clean_text,
+                        minimum_article_length,
+                    ),
                     "image": image_url,
                     "images": image_urls[:24],
                     "language": feed_languages[0],
@@ -1528,6 +1819,19 @@ for kontinent, feeds in quellen.items():
                     "originCountryCode": safe_text(feed.get("originCountryCode")),
                     "originRegion": safe_text(feed.get("originRegion")),
                     "sourceHomepage": safe_text(feed.get("homepage")),
+                    "sourceTags": [
+                        safe_text(
+                            tag.get("term")
+                            if isinstance(tag, dict)
+                            else tag
+                        )
+                        for tag in source_tags
+                        if safe_text(
+                            tag.get("term")
+                            if isinstance(tag, dict)
+                            else tag
+                        )
+                    ],
                 }
                 gesehene_titel.add(title_lower)
                 if is_radar: radar_count += 1
@@ -1538,6 +1842,62 @@ for kontinent, feeds in quellen.items():
                     entry_error,
                 )
                 continue
+
+        # Unvollständige ältere Artikel können aus dem aktuellen RSS-Fenster
+        # herausfallen. Nutze freie Abrufplätze, um auch diese Archiv-Einträge
+        # schrittweise zu reparieren, statt sie dauerhaft als Anreißer zu
+        # belassen.
+        if not is_radar and tiefe_scrapes_gemacht < MAX_NEUE_SCRAPES:
+            minimum_article_length = int(
+                feed.get("minArticleTextLength", 700)
+            )
+            repair_candidates = [
+                (archive_link, article)
+                for archive_link, article in archiv_dict.items()
+                if (
+                    safe_lower(article.get("quelleName"))
+                    == safe_lower(feed_name)
+                    and archive_link not in attempted_links
+                    and content_is_incomplete(
+                        article.get("content", ""),
+                        minimum_article_length,
+                    )
+                )
+            ]
+            repair_candidates.sort(
+                key=lambda pair: safe_text(
+                    pair[1].get("pubDate")
+                ),
+                reverse=True,
+            )
+            for archive_link, article in repair_candidates:
+                if tiefe_scrapes_gemacht >= MAX_NEUE_SCRAPES:
+                    break
+                tiefe_scrapes_gemacht += 1
+                repaired_text, repaired_image, repaired_images = (
+                    scrape_article_page(
+                        archive_link,
+                        feed,
+                        article.get("content", ""),
+                        article.get("image", ""),
+                        article.get("images", []),
+                    )
+                )
+                if len(repaired_text) > len(
+                    safe_text(article.get("content"))
+                ):
+                    article["content"] = safe_text(repaired_text)
+                if repaired_image:
+                    article["image"] = repaired_image
+                article["images"] = list(dict.fromkeys(
+                    candidate
+                    for candidate in repaired_images
+                    if candidate
+                ))[:24]
+                article["contentComplete"] = not content_is_incomplete(
+                    article.get("content", ""),
+                    minimum_article_length,
+                )
             
         # =========================================================
         # CHECKPOINT NACH JEDER QUELLE SPEICHERN (Sichert die Daten)

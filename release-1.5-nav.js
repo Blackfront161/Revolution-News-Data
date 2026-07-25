@@ -12,7 +12,7 @@
       lexicon: 'Lexikon', about: 'Über das Projekt',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
-      contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'App zurücksetzen',
+      contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'Cache leeren',
       searchPlaceholder: 'Artikel durchsuchen…', originalPodcasts: 'Original-Podcasts',
       generatedPodcasts: 'Erzeugte Podcasts', liveRadio: 'Live-Radio', bookmarks: 'Später lesen', read: 'Gelesen'
     },
@@ -22,7 +22,7 @@
       lexicon: 'Glossary', about: 'About the project',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
-      contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Reset app',
+      contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Clear cache',
       searchPlaceholder: 'Search articles…', originalPodcasts: 'Original podcasts',
       generatedPodcasts: 'Generated podcasts', liveRadio: 'Live radio', bookmarks: 'Read later', read: 'Read'
     }
