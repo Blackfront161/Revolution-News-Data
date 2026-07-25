@@ -213,7 +213,12 @@ function showPodcastModal(modalId) {
     const overlay = document.getElementById('fb-overlay');
     const modal = document.getElementById(modalId);
     if (overlay) overlay.style.display = 'block';
-    if (modal) modal.style.display = 'block';
+    if (modalId === 'podcast-options-modal') {
+        document.body.classList.add('wrn-podcast-options-open');
+        if (modal) modal.style.display = 'flex';
+    } else if (modal) {
+        modal.style.display = 'block';
+    }
 }
 
 async function openPodcastOptions(idNum) {

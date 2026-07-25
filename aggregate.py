@@ -129,6 +129,16 @@ quellen = {
     ],
     "Africa": [
         {"name": "Pambazuka News", "url": "https://www.pambazuka.org/rss.xml"},
+        {
+            "name": "The Elephant (Kenya)",
+            "url": "https://www.theelephant.info/feed/",
+            "homepage": "https://www.theelephant.info/",
+            "language": "en",
+            "categories": ["Africa", "Anticolonialism", "Anti-Imperialism"],
+            "originCountry": "Kenya",
+            "originCountryCode": "KE",
+            "originRegion": "East Africa",
+        },
         {"name": "Mada Masr (Egypt)", "url": "https://madamasr.com/en/feed"},
         {"name": "Attac / CADTM Maroc", "url": "https://www.cadtm.org/spip.php?page=backend"},
         {"name": "Zabalaza", "url": "https://zabalaza.net/feed/"},
@@ -171,6 +181,16 @@ quellen = {
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
+        {
+            "name": "The Polis Project (India)",
+            "url": "https://www.thepolisproject.com/feed/",
+            "homepage": "https://www.thepolisproject.com/",
+            "language": "en",
+            "categories": ["Asia", "Antifascism", "Anticolonialism", "Anti-Rep & Prisons"],
+            "originCountry": "India",
+            "originCountryCode": "IN",
+            "originRegion": "South Asia",
+        },
         {"name": "Rojava Info Center", "url": "https://rojavainformationcenter.org/feed/"},
         {"name": "ANF English (Kurdistan)", "url": "https://anfenglish.com/rss"},
         {"name": "Lausan (HK)", "url": "https://lausan.hk/feed/"},
@@ -454,82 +474,96 @@ TOPIC_CATEGORY_PATTERNS = {
         r"\bstrike\b", r"\bstrikers?\b", r"\bworkers?\b", r"\btrade union\b",
         r"\blabou?r\b", r"\bunionis", r"\bstreik", r"\barbeiter", r"\bgewerkschaft",
         r"\bgr[eè]ve", r"\bsyndicat", r"\bhuelga", r"\bsindicat", r"\bgrev",
+        r"\bişçi", r"\bemekçi", r"\bsendika", r"\bdireniş",
     ),
     "Antifascism": (
         r"\banti[- ]?fasc", r"\bfascis", r"\bneo[- ]?nazi", r"\bfar[- ]right\b",
         r"\bextreme droite\b", r"\bextrema derecha\b", r"\bultradestra\b",
-        r"\brechtsextrem", r"\bafd\b",
+        r"\brechtsextrem", r"\bafd\b", r"\bfaşis", r"\başırı sağ",
     ),
     "Antisexism": (
         r"\bsexism", r"\bmisogyn", r"\bpatriarch", r"\bsexual violence\b",
         r"\bsexual assault\b", r"\bharassment\b", r"\bsexismus", r"\bviolaci[oó]n",
-        r"\bviolence sexuelle\b", r"\bviolenza sessuale\b",
+        r"\bviolence sexuelle\b", r"\bviolenza sessuale\b", r"\bcinsiyetçi",
+        r"\bcinsel şiddet", r"\bkadına yönelik şiddet", r"\btaciz",
     ),
     "Queer-Feminism": (
         r"\bqueer\b", r"\blgbt", r"\btrans(?:gender|phob| rights?)?\b",
         r"\blesbian", r"\bhomophob", r"\bfeminis", r"\bnon[- ]?binary\b",
+        r"\blgbti", r"\bkuir", r"\btransfobi",
     ),
     "Antiracism": (
         r"\banti[- ]?rac", r"\bracis", r"\bwhite supremacy\b",
         r"\bxenophob", r"\bapartheid\b", r"\brassismus\b",
+        r"\bırkçı", r"\bırkçılık", r"\bnefret suçu",
     ),
     "No Borders": (
         r"\bmigran", r"\brefugee", r"\basylum\b", r"\bborder", r"\bdeport",
         r"\bimmigration\b", r"\bfl[uü]cht", r"\babschieb", r"\br[eé]fugi",
+        r"\bgöçmen", r"\bmülteci", r"\bsığınmacı", r"\bsınır dışı",
     ),
     "Anticapitalism": (
         r"\banti[- ]?capital", r"\bcapitalis", r"\bclass struggle\b",
         r"\bworking class\b", r"\bneoliberal", r"\bkapitalis", r"\bcapitalismo\b",
+        r"\bsermaye", r"\bözelleştir",
     ),
     "Theory & Strategy": (
         r"\banarchis", r"\blibertarian communis", r"\bmutual aid\b",
         r"\bdirect action\b", r"\bsyndicalis", r"\bpolitical theory\b",
-        r"\brevolutionary strateg", r"\bbook review\b",
+        r"\brevolutionary strateg", r"\bbook review\b", r"\banarş",
+        r"\bdayanışma", r"\bdoğrudan eylem",
     ),
     "Anticolonialism": (
         r"\banti[- ]?coloni", r"\bdecoloni", r"\bcolonialis",
-        r"\bsettler colon", r"\bcolonial rule\b",
+        r"\bsettler colon", r"\bcolonial rule\b", r"\bsömürge", r"\bkolonyal",
     ),
     "Anti-Imperialism": (
-        r"\banti[- ]?imperial", r"\bimperialis", r"\bimperial power\b",
+        r"\banti[- ]?imperial", r"\bimperialis", r"\bimperial power\b", r"\bemperyal",
     ),
     "Squatting & Housing": (
         r"\bsquat", r"\bhousing\b", r"\btenant", r"\brent strike\b",
         r"\beviction", r"\bhausbesetz", r"\bmiet", r"\blogement\b",
+        r"\bbarınma", r"\bkonut", r"\bkira", r"\btahliye",
     ),
     "Demonstrations": (
         r"\bprotest", r"\bdemonstrat", r"\brally\b", r"\bmarch\b",
         r"\bmobilis", r"\bkundgebung", r"\bmanifestaci[oó]n\b",
+        r"\bprotesto", r"\beylem", r"\byürüyüş", r"\bmiting",
     ),
     "Anti-Rep & Prisons": (
         r"\bprison", r"\bpolice\b", r"\barrest", r"\brepress",
         r"\bdetention\b", r"\bincarcer", r"\bpolitical prisoner",
         r"\bcourt\b", r"\btrial\b", r"\bknast\b", r"\bgef[aä]ng",
+        r"\bcezaevi", r"\bhapishane", r"\bgözaltı", r"\btutuk", r"\bmahkeme",
     ),
     "Cyberactivism": (
         r"\bcyber", r"\bdigital rights?\b", r"\bsurveillance\b", r"\bencryption\b",
         r"\bhack(?:er|ing)?\b", r"\bprivacy\b", r"\bopen[- ]source\b",
+        r"\bdijital hak", r"\bgözetim", r"\bsansür", r"\bsiber",
     ),
     "No War": (
         r"\banti[- ]?war\b", r"\bwar\b", r"\bmilitar", r"\barmy\b",
         r"\bweapons?\b", r"\bconscription\b", r"\bceasefire\b", r"\bkrieg",
-        r"\baufr[uü]st", r"\barmement\b",
+        r"\baufr[uü]st", r"\barmement\b", r"\bsavaş", r"\bsilah", r"\basker",
     ),
     "Animal Liberation": (
         r"\banimal liberation\b", r"\banimal rights?\b", r"\bvegan",
         r"\bslaughterhouse\b", r"\bhunt sab", r"\btierbefrei", r"\bvivisection\b",
+        r"\bhayvan hak", r"\bmezbaha",
     ),
     "Eco-Anarchism": (
         r"\bclimate\b", r"\becolog", r"\benvironment", r"\bforest\b",
         r"\bpipeline\b", r"\bfossil fuel", r"\bmining\b", r"\bklima",
+        r"\biklim", r"\bekoloji", r"\bçevre", r"\bmaden",
     ),
     "Indigenous Struggles": (
         r"\bindigenous\b", r"\bfirst nations?\b", r"\bnative peoples?\b",
-        r"\bmapuche\b", r"\bzapatist", r"\baboriginal\b", r"\bindigen",
+        r"\bmapuche\b", r"\bzapatist", r"\baboriginal\b", r"\bindigen", r"\byerli halk",
     ),
     "Radical Health & Disability": (
         r"\bdisabil", r"\bmental health\b", r"\bpsychiatr", r"\bhealth care\b",
         r"\bhealthcare\b", r"\bclinic\b", r"\bableis", r"\bbehinder",
+        r"\bengelli", r"\bruh sağlığı", r"\bsağlık",
     ),
     "Libraries": (
         r"\banarchist librar", r"\bbiblioth[eè]que anarch", r"\bbiblioteca anarqu",
@@ -649,6 +683,39 @@ def clean_image_url(url, base_url):
     if any(kw in filename for kw in LAYOUT_FILES): return None
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
     return full_url
+
+
+def collect_image_urls(soup, base_url, limit=6):
+    images = []
+    if not soup:
+        return images
+    for image in soup.find_all('img'):
+        width = safe_text(image.get('width'))
+        height = safe_text(image.get('height'))
+        if width.isdigit() and int(width) < 180:
+            continue
+        if height.isdigit() and int(height) < 100:
+            continue
+        src = (
+            image.get('data-src')
+            or image.get('data-lazy-src')
+            or image.get('src')
+        )
+        srcset = safe_text(image.get('data-srcset') or image.get('srcset'))
+        if srcset:
+            srcset_candidates = [
+                part.strip().split(' ')[0]
+                for part in srcset.split(',')
+                if part.strip()
+            ]
+            if srcset_candidates:
+                src = srcset_candidates[-1]
+        candidate = clean_image_url(src, base_url)
+        if candidate and candidate.startswith(('http://', 'https://')) and candidate not in images:
+            images.append(candidate)
+        if len(images) >= limit:
+            break
+    return images
 
 # =================================================================
 # 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
@@ -1121,6 +1188,7 @@ for kontinent, feeds in quellen.items():
                 pubDate = entry.get('published', entry.get('updated', datetime.now().isoformat()))
                 full_text = ""
                 image_url = None
+                image_urls = []
 
                 if is_radar:
                     radar_desc = entry.get('summary', entry.get('description', ''))
@@ -1129,22 +1197,26 @@ for kontinent, feeds in quellen.items():
                 # Bilder abgreifen
                 if 'media_content' in entry and len(entry.media_content) > 0:
                     image_url = clean_image_url(entry.media_content[0].get('url', ''), link)
+                    if image_url:
+                        image_urls.append(image_url)
 
                 if not image_url and 'enclosures' in entry and len(entry.enclosures) > 0:
                     for enc in entry.enclosures:
                         href = safe_text(enc.get("href"))
                         if safe_text(enc.get("type")).startswith('image/') or any(ext in href.lower() for ext in IMAGE_EXTENSIONS):
                             image_url = clean_image_url(href, link)
-                            if image_url: break
+                            if image_url:
+                                image_urls.append(image_url)
+                                break
 
-                if not image_url:
-                    for content_key in ['description', 'summary']:
-                        if content_key in entry and isinstance(entry[content_key], str):
-                            desc_soup = BeautifulSoup(entry[content_key], 'html.parser')
-                            img_tag = desc_soup.find('img')
-                            if img_tag:
-                                image_url = clean_image_url(img_tag.get('src') or img_tag.get('data-src'), link)
-                                if image_url: break
+                for content_key in ['description', 'summary']:
+                    if content_key in entry and isinstance(entry[content_key], str):
+                        desc_soup = BeautifulSoup(entry[content_key], 'html.parser')
+                        for candidate in collect_image_urls(desc_soup, link):
+                            if candidate not in image_urls:
+                                image_urls.append(candidate)
+                        if not image_url and image_urls:
+                            image_url = image_urls[0]
 
                 # Text extrahieren (Der langsame Teil - aber auf 4 Limitiert!)
                 if not is_radar:
@@ -1152,7 +1224,13 @@ for kontinent, feeds in quellen.items():
                         if 'content' in entry and len(entry.content) > 0:
                             c_obj = entry.content[0]
                             val = c_obj.value if hasattr(c_obj, 'value') else (c_obj.get('value', '') if isinstance(c_obj, dict) else '')
-                            full_text = BeautifulSoup(str(val), 'html.parser').get_text(separator="\n\n").strip()
+                            content_soup = BeautifulSoup(str(val), 'html.parser')
+                            for candidate in collect_image_urls(content_soup, link):
+                                if candidate not in image_urls:
+                                    image_urls.append(candidate)
+                            if not image_url and image_urls:
+                                image_url = image_urls[0]
+                            full_text = content_soup.get_text(separator="\n\n").strip()
                     except:
                         pass
 
@@ -1161,17 +1239,25 @@ for kontinent, feeds in quellen.items():
                         time.sleep(1.5) # Pflichtpause, damit wir nicht blockiert werden
                         html_req = http.get(link, headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                         soup = BeautifulSoup(html_req.text, 'html.parser')
+                        for candidate in collect_image_urls(soup, link):
+                            if candidate not in image_urls:
+                                image_urls.append(candidate)
                     
                         if not image_url:
                             og_img = soup.find('meta', property='og:image') or soup.find('meta', attrs={'name': 'twitter:image'})
                             if og_img:
                                 image_url = clean_image_url(og_img.get('content'), link)
+                                if image_url and image_url not in image_urls:
+                                    image_urls.insert(0, image_url)
                     
                         if not image_url:
                             for img in soup.find_all('img'):
                                 src = img.get('src') or img.get('data-src') or img.get('data-lazy-src')
                                 image_url = clean_image_url(src, link)
-                                if image_url: break
+                                if image_url:
+                                    if image_url not in image_urls:
+                                        image_urls.append(image_url)
+                                    break
 
                         paragraphs = soup.find_all('p')
                         text_blocks = [p.get_text().strip() for p in paragraphs if len(p.get_text().strip()) > 30]
@@ -1204,16 +1290,29 @@ for kontinent, feeds in quellen.items():
 
                 if not image_url or not image_url.startswith('http'):
                     image_url = ""
+                image_urls = [
+                    candidate
+                    for candidate in image_urls
+                    if candidate and candidate.startswith(('http://', 'https://'))
+                ]
+                if image_url and image_url not in image_urls:
+                    image_urls.insert(0, image_url)
 
                 allowed_image_hosts = {
                     safe_lower(host)
                     for host in feed.get("imageHosts", [])
                     if safe_text(host)
                 }
-                if image_url and allowed_image_hosts:
-                    image_host = safe_lower(urlparse(image_url).hostname)
-                    if image_host not in allowed_image_hosts:
-                        image_url = ""
+                if allowed_image_hosts:
+                    if image_url:
+                        image_host = safe_lower(urlparse(image_url).hostname)
+                        if image_host not in allowed_image_hosts:
+                            image_url = ""
+                    image_urls = [
+                        candidate
+                        for candidate in image_urls
+                        if safe_lower(urlparse(candidate).hostname) in allowed_image_hosts
+                    ]
 
                 # =========================================================
                 # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
@@ -1248,6 +1347,7 @@ for kontinent, feeds in quellen.items():
                     "content": clean_text,
                     "contentComplete": True if is_radar else not content_is_incomplete(clean_text),
                     "image": image_url,
+                    "images": image_urls[:6],
                     "language": feed_languages[0],
                     "languages": feed_languages,
                     "originCountry": safe_text(feed.get("originCountry")),
