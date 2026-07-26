@@ -246,6 +246,7 @@
   function closeAuxiliaryPanels() {
     const panel = document.getElementById('event-filter-panel');
     if (panel) panel.hidden = true;
+    window.WRNBriefing?.hide?.();
     window.WRNAudioTab181?.close?.();
     window.WRNVideoHub?.hide?.();
     window.WRNAbout184?.hide?.();
@@ -704,6 +705,11 @@
       tab.activate();
     } catch (error) {
       console.error(error);
+    } finally {
+      if (state.activeTab === key) {
+        if (key === 'briefing') window.WRNBriefing?.show?.();
+        else window.WRNBriefing?.hide?.();
+      }
     }
   }
 
@@ -1567,6 +1573,9 @@
     patchLanguageFunction();
     updateLanguage();
     observeStatusMessage();
+    window.addEventListener('wrn-briefing-rendered', () => {
+      if (state.activeTab !== 'briefing') window.WRNBriefing?.hide?.();
+    });
 
     const hashKey = location.hash?.replace('#tab=', '');
     if (hashKey && TABS.some(tab => tab.key === hashKey)) state.activeTab = hashKey;

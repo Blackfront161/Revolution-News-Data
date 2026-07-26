@@ -18,6 +18,16 @@ assert.strictEqual(api.matchesCorruption({ title: 'Minister faces bribery invest
 assert.strictEqual(api.matchesCorruption({ title: 'Neue Vorwürfe wegen Bestechung' }), true);
 assert.strictEqual(api.matchesCorruption({ title: 'Caso de corrupción y soborno' }), true);
 assert.strictEqual(api.matchesCorruption({ title: 'Local community opens a library' }), false);
+assert.strictEqual(
+  api.matchesCorruption({ title: 'Community report', content: 'The appendix mentions corruption once.' }),
+  false,
+  'One incidental body mention must not classify an article as corruption news.'
+);
+assert.strictEqual(
+  api.matchesCorruption({ title: 'Community report', tags: ['anti-corruption'] }),
+  true,
+  'Explicit editorial tags must classify an article as corruption news.'
+);
 
 const filterRows = [
   { title: 'Current A', quelleName: 'A', pubDate: '2026-07-20T00:00:00Z' },

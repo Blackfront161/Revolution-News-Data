@@ -1261,6 +1261,13 @@ function articlePublisherKey(article) {
         .toLocaleLowerCase();
 }
 
+function articlePublisherFamilyKey(article) {
+    const publisher = articlePublisherKey(article);
+    return publisher === 'bianet türkçe' || publisher === 'bianet kurdî'
+        ? 'bianet'
+        : publisher;
+}
+
 function normalizedArticleUrl(value) {
     try {
         const url = new URL(String(value || ''));
@@ -1335,18 +1342,19 @@ function interleaveArticlesByPublisher(items, options = {}) {
         const inFirstTen = mixed.length < 10;
         let nextIndex = remaining.findIndex(article => {
             const publisher = articlePublisherKey(article);
-            if (publisher === previous) return false;
+            const family = articlePublisherFamilyKey(article);
+            if (family === previous) return false;
             if (!inFirstTen) return true;
-            const limit = ['bianet türkçe', 'bianet kurdî'].includes(publisher) ? 1 : 2;
-            return (firstTenCounts.get(publisher) || 0) < limit;
+            const limit = family === 'bianet' ? 1 : 2;
+            return (firstTenCounts.get(family) || 0) < limit;
         });
         if (nextIndex < 0) {
-            nextIndex = remaining.findIndex(article => articlePublisherKey(article) !== previous);
+            nextIndex = remaining.findIndex(article => articlePublisherFamilyKey(article) !== previous);
         }
         if (nextIndex < 0) nextIndex = 0;
         const [next] = remaining.splice(nextIndex, 1);
         mixed.push(next);
-        previous = articlePublisherKey(next);
+        previous = articlePublisherFamilyKey(next);
         if (mixed.length <= 10) {
             firstTenCounts.set(previous, (firstTenCounts.get(previous) || 0) + 1);
         }

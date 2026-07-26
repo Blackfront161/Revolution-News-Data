@@ -63,6 +63,27 @@ assert.equal(
   'Tracking variants of the same URL must be deduplicated.'
 );
 
+const bianetFamily = feedOrder.interleaveArticlesByPublisher([
+  { quelleName: 'Bianet Türkçe', id: 'bt-1', link: 'https://bianet.org/a' },
+  { quelleName: 'Bianet Kurdî', id: 'bk-1', link: 'https://bianet.org/ku/a' },
+  { quelleName: 'Bianet Türkçe', id: 'bt-2', link: 'https://bianet.org/b' },
+  { quelleName: 'India Source', id: 'in-1', link: 'https://india.example/a' },
+  { quelleName: 'Brazil Source', id: 'br-1', link: 'https://brazil.example/a' },
+  { quelleName: 'Italy Source', id: 'it-1', link: 'https://italy.example/a' },
+  { quelleName: 'Cyber Source', id: 'cy-1', link: 'https://cyber.example/a' },
+  { quelleName: 'Animal Source', id: 'an-1', link: 'https://animal.example/a' },
+  { quelleName: 'Africa Source', id: 'af-1', link: 'https://africa.example/a' },
+  { quelleName: 'Other Source', id: 'ot-1', link: 'https://other.example/a' },
+  { quelleName: 'More Source', id: 'mo-1', link: 'https://more.example/a' },
+  { quelleName: 'Extra Source', id: 'ex-1', link: 'https://extra.example/a' }
+]);
+assert.equal(
+  bianetFamily.slice(0, 10).filter(item => String(item.quelleName).startsWith('Bianet ')).length,
+  1,
+  'Both Bianet language feeds together may occupy only one of the first ten positions.'
+);
+assert.equal(bianetFamily.length, 12, 'The Bianet family limit must not delete archived articles.');
+
 for (const marker of [
   "view.id = 'wrn-summary-view'",
   "view.setAttribute('aria-modal', 'true')",

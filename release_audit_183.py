@@ -16,9 +16,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
-EXPECTED_VERSION = "1.8.5"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.5-quality-release"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.5-quality-release"
+EXPECTED_VERSION = "1.8.6"
+EXPECTED_APP_CACHE = "wrn-app-v1.8.6-source-balance"
+EXPECTED_DATA_CACHE = "wrn-data-v1.8.6-source-balance"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
