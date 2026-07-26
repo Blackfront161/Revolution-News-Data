@@ -42,10 +42,19 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
                         item for item in value
                         if isinstance(item, dict) and item.get("name")
                     )
-            if names & {"REGION_CATEGORIES", "TOPIC_CATEGORY_PATTERNS"}:
+            if names & {
+                "REGION_CATEGORIES",
+                "TOPIC_CATEGORY_PATTERNS",
+                "TOPIC_CATEGORY_STRONG_PATTERNS",
+                "TOPIC_CATEGORY_MIN_SCORES",
+                "TOPIC_DEFAULT_MIN_SCORE",
+                "TOPIC_MAX_ASSIGNMENTS",
+                "TOPIC_SOURCE_FALLBACKS",
+            }:
                 selected_nodes.append(node)
         elif isinstance(node, ast.FunctionDef) and node.name in {
             "safe_text",
+            "score_article_topics",
             "infer_article_categories",
         }:
             selected_nodes.append(node)

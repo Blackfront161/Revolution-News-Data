@@ -179,7 +179,16 @@ quellen = {
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "CrimethInc. (Events)", "url": "https://morss.it/https://crimethinc.com/categories/events/feed"},
         {"name": "Gancio Cisti", "url": "https://gancio.cisti.org/feed/rss"},
-        {"name": "Nantes Révoltée Agenda", "url": "https://nantes.indymedia.org/events/feed/"}
+        {"name": "Nantes Révoltée Agenda", "url": "https://nantes.indymedia.org/events/feed/"},
+        {"name": "LaPunta Firenze", "url": "https://lapunta.org/feed/rss", "homepage": "https://lapunta.org/"},
+        {"name": "Convoca-la Barcelona", "url": "https://bcn.convoca.la/feed/rss", "homepage": "https://bcn.convoca.la/"},
+        {"name": "Convócala Madrid", "url": "https://mad.convoca.la/feed/rss", "homepage": "https://mad.convoca.la/"},
+        {"name": "Rhein-Main Events", "url": "https://events.rheinmain.social/feed/rss", "homepage": "https://events.rheinmain.social/"},
+        {"name": "Akce Nolog Praha", "url": "https://akce.nolog.cz/feed/rss", "homepage": "https://akce.nolog.cz/"},
+        {"name": "Vagancio Buenos Aires", "url": "https://vagancio.partidopirata.com.ar/feed/rss", "homepage": "https://vagancio.partidopirata.com.ar/"},
+        {"name": "Enredad.es", "url": "https://enredad.es/feed/rss", "homepage": "https://enredad.es/"},
+        {"name": "ALÉ Montpellier", "url": "https://www.aleale.org/feed/rss", "homepage": "https://www.aleale.org/"},
+        {"name": "Agenda des Luttes Rouen", "url": "https://agenda.rouen-luttes.org/feed/rss", "homepage": "https://agenda.rouen-luttes.org/"}
     ],
     "Asia": [
         {"name": "Bulatlat (Philippines)", "url": "https://www.bulatlat.com/feed/"},
@@ -807,35 +816,149 @@ TOPIC_CATEGORY_PATTERNS = {
     "Movement News": (),
 }
 
+TOPIC_CATEGORY_STRONG_PATTERNS = {
+    "Labor Struggles": (
+        r"\bgeneral strike\b", r"\bwildcat strike\b", r"\bstrike action\b",
+        r"\bpicket line\b", r"\bcollective bargaining\b", r"\bworkers'? control\b",
+        r"\bgenel grev\b", r"\biş bırakma\b", r"\bgreve générale\b",
+    ),
+    "Antifascism": (
+        r"\banti[- ]?fascist action\b", r"\bfascist attack\b",
+        r"\bneo[- ]?nazi attack\b", r"\bwhite nationalist\b",
+        r"\bantifaschistische aktion\b", r"\bfaşist saldır",
+    ),
+    "Antisexism": (
+        r"\bgender[- ]based violence\b", r"\bdomestic violence\b",
+        r"\bsexual abuse\b", r"\bviolence against women\b",
+        r"\bpatriarchal violence\b", r"\bfeminist strike\b",
+        r"\berkek şiddeti\b", r"\bkadın cinayet",
+    ),
+    "Queer-Feminism": (
+        r"\btrans liberation\b", r"\bqueer liberation\b",
+        r"\breproductive justice\b", r"\babortion rights?\b",
+        r"\blgbtqia?\+? rights?\b", r"\bpride march\b", r"\bkürtaj hakkı\b",
+    ),
+    "Antiracism": (
+        r"\bracial justice\b", r"\bpolice racism\b", r"\bracist attack\b",
+        r"\bwhite supremacist\b", r"\banti[- ]?racist action\b",
+        r"\bırkçı saldır",
+    ),
+    "No Borders": (
+        r"\bno borders?\b", r"\brefugee solidarity\b",
+        r"\bmigrant solidarity\b", r"\bdeportation flight\b",
+        r"\bdetention cent(?:er|re)\b", r"\bsınır dışı edil",
+    ),
+    "Anticapitalism": (
+        r"\bclass war\b", r"\babolish capitalism\b",
+        r"\bcapitalist crisis\b", r"\bsocial revolution\b",
+        r"\bkapitalist sistem\b",
+    ),
+    "Theory & Strategy": (
+        r"\bpolitical strategy\b", r"\bmovement strategy\b",
+        r"\bprefigurative politics\b", r"\bdual power\b",
+        r"\bcounter[- ]power\b", r"\banarchist theory\b",
+        r"\blibertarian communism\b", r"\bdevrimci strateji\b",
+    ),
+    "Anticolonialism": (
+        r"\bsettler colonialism\b", r"\bcolonial occupation\b",
+        r"\bdecolonial struggle\b", r"\bcolonial violence\b",
+        r"\bsömürgecilik karşıtı\b",
+    ),
+    "Anti-Imperialism": (
+        r"\banti[- ]?imperialist struggle\b", r"\bimperialist war\b",
+        r"\bforeign occupation\b", r"\beconomic imperialism\b",
+        r"\bemperyalist savaş\b",
+    ),
+    "Squatting & Housing": (
+        r"\bhousing crisis\b", r"\btenant union\b", r"\brent resistance\b",
+        r"\beviction resistance\b", r"\bsquat eviction\b",
+        r"\bzwangsräum", r"\bkira grevi\b",
+    ),
+    "Demonstrations": (
+        r"\bmass protest\b", r"\bstreet protest\b", r"\bprotest march\b",
+        r"\bsolidarity demonstration\b", r"\bbasın açıklaması\b",
+        r"\bkitlesel eylem\b",
+    ),
+    "Anti-Rep & Prisons": (
+        r"\bpolitical prisoner", r"\bprisoner support\b",
+        r"\bprison abolition\b", r"\bpolice raid\b",
+        r"\bpolice violence\b", r"\bstate repression\b",
+        r"\bsolitary confinement\b", r"\banti[- ]?repression\b",
+        r"\bcezaevi direnişi\b", r"\bpolis şiddeti\b",
+    ),
+    "Cyberactivism": (
+        r"\bdigital surveillance\b", r"\bstate surveillance\b",
+        r"\bdigital repression\b", r"\binternet shutdown\b",
+        r"\bdata protection\b", r"\bfree software\b",
+    ),
+    "No War": (
+        r"\banti[- ]?war movement\b", r"\bwar resistance\b",
+        r"\bconscientious object", r"\bmilitary occupation\b",
+        r"\barms shipment\b", r"\bweapons export\b",
+        r"\bceasefire now\b", r"\bsavaş karşıtı\b", r"\bvicdani ret\b",
+    ),
+    "Animal Liberation": (
+        r"\banimal liberation front\b", r"\bfactory farming\b",
+        r"\banimal exploitation\b", r"\bslaughterhouse blockade\b",
+        r"\bhayvan özgürleş",
+    ),
+    "Eco-Anarchism": (
+        r"\bclimate justice\b", r"\becological crisis\b",
+        r"\benvironmental justice\b", r"\bforest occupation\b",
+        r"\banti[- ]?mining\b", r"\bfossil infrastructure\b",
+        r"\biklim adaleti\b", r"\bekolojik yıkım\b",
+    ),
+    "Indigenous Struggles": (
+        r"\bindigenous sovereignty\b", r"\bindigenous resistance\b",
+        r"\bland back\b", r"\btribal sovereignty\b",
+        r"\bnative land\b", r"\byerli halkların\b",
+    ),
+    "Radical Health & Disability": (
+        r"\bdisability justice\b", r"\bmad pride\b",
+        r"\bpsychiatric abolition\b", r"\bcollective access\b",
+        r"\bhealth workers? strike\b", r"\bsağlık emekçi",
+    ),
+    "Libraries": (
+        r"\banarchist archive\b", r"\binfoshop\b",
+        r"\bradical librar", r"\bmovement archive\b",
+    ),
+    "Movement News": (),
+}
 
-def infer_article_categories(title, content, configured, primary, source_tags=None):
+TOPIC_CATEGORY_MIN_SCORES = {
+    "Labor Struggles": 4.2,
+    "Queer-Feminism": 4.3,
+    "Theory & Strategy": 4.7,
+    "Demonstrations": 4.4,
+    "Anti-Rep & Prisons": 4.5,
+    "No War": 4.5,
+    "Radical Health & Disability": 4.5,
+}
+TOPIC_DEFAULT_MIN_SCORE = 4.0
+TOPIC_MAX_ASSIGNMENTS = 3
+# Some outlets are explicitly scoped to a movement field (for example
+# Anarchist Black Cross prison-support groups). Their source profile remains a
+# valid fallback, while broad magazines still require evidence in the article.
+TOPIC_SOURCE_FALLBACKS = {
+    "Anti-Rep & Prisons",
+    "Indigenous Struggles",
+    "Animal Liberation",
+    "Libraries",
+}
+
+
+def score_article_topics(title, content, configured, primary, source_tags=None):
     configured_list = [
         safe_text(category)
         for category in (configured if isinstance(configured, list) else [configured])
         if safe_text(category)
     ]
     title_text = safe_text(title).casefold()
+    content_text = safe_text(content)[:16000].casefold()
     tags_text = " ".join(
         safe_text(tag.get("term") if isinstance(tag, dict) else tag)
         for tag in (source_tags or [])
-    )
-    # Topic detection needs representative text, not an entire long-form
-    # archive item. Bounding the sample keeps full-archive reclassification
-    # predictable even for book-length library entries.
-    content_sample = safe_text(content)[:16000]
-    text = f"{title_text} {content_sample} {tags_text}".casefold()
-    categories = []
-    for category in configured_list:
-        if category in REGION_CATEGORIES and category not in categories:
-            categories.append(category)
-    if primary in REGION_CATEGORIES and primary not in categories:
-        categories.append(primary)
-
-    configured_topics = [
-        category for category in configured_list
-        if category in TOPIC_CATEGORY_PATTERNS
-    ]
-    matched_topics = []
+    ).casefold()
     regex_cache = globals().setdefault("_WRN_TOPIC_REGEX_CACHE", {})
 
     def compiled(pattern):
@@ -844,58 +967,133 @@ def infer_article_categories(title, content, configured, primary, source_tags=No
             re.compile(pattern, flags=re.IGNORECASE),
         )
 
-    if primary in TOPIC_CATEGORY_PATTERNS:
-        matched_topics.append(primary)
-
-    for category, patterns in TOPIC_CATEGORY_PATTERNS.items():
+    def combined(patterns):
         if not patterns:
+            return None
+        return compiled("(?:" + ")|(?:".join(patterns) + ")")
+
+    def occurrences(regex, value, limit=3):
+        if regex is None or not value:
+            return 0
+        count = 0
+        for _ in regex.finditer(value):
+            count += 1
+            if count >= limit:
+                break
+        return count
+
+    scores = {}
+    for category, patterns in TOPIC_CATEGORY_PATTERNS.items():
+        if category == "Movement News":
             continue
-        combined_pattern = "(?:" + ")|(?:".join(patterns) + ")"
-        if not compiled(combined_pattern).search(text):
-            continue
-        if category == "Anti-Rep & Prisons" and primary != category:
-            title_match = bool(
-                compiled(combined_pattern).search(title_text)
+        score = 0.0
+        if category in configured_list:
+            score += 0.75
+        if category == primary:
+            score += 0.75
+        general_regex = combined(patterns)
+        if general_regex and general_regex.search(title_text):
+            score += 3.25
+        if general_regex and tags_text and general_regex.search(tags_text):
+            score += 2.5
+        content_hits = occurrences(general_regex, content_text, limit=5)
+        if content_hits:
+            score += 1.55 + (content_hits - 1) * 0.65
+
+        strong_regex = combined(
+            TOPIC_CATEGORY_STRONG_PATTERNS.get(category, ())
+        )
+        if strong_regex and strong_regex.search(title_text):
+            score += 5.5
+        if strong_regex and tags_text and strong_regex.search(tags_text):
+            score += 4.0
+        content_hits = occurrences(strong_regex, content_text)
+        if content_hits:
+            score += 3.0 + (content_hits - 1) * 0.9
+        if score:
+            scores[category] = round(score, 2)
+    return scores
+
+
+def infer_article_categories(title, content, configured, primary, source_tags=None):
+    configured_list = [
+        safe_text(category)
+        for category in (configured if isinstance(configured, list) else [configured])
+        if safe_text(category)
+    ]
+    categories = []
+    for category in configured_list:
+        if category in REGION_CATEGORIES and category not in categories:
+            categories.append(category)
+    if primary in REGION_CATEGORIES and primary not in categories:
+        categories.append(primary)
+
+    scores = score_article_topics(
+        title,
+        content,
+        configured_list,
+        primary,
+        source_tags,
+    )
+    ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
+    best_score = ranked[0][1] if ranked else 0.0
+    matched_topics = [
+        category
+        for category, score in ranked
+        if (
+            score >= TOPIC_CATEGORY_MIN_SCORES.get(
+                category,
+                TOPIC_DEFAULT_MIN_SCORE,
             )
-            strong_patterns = [
-                pattern
-                for pattern in patterns
-                if any(
-                    marker in pattern
-                    for marker in (
-                        "political prisoner", "prisoner support", "police ",
-                        "state repression", "incarcer", "cezaevi", "hapishane",
-                        "gözaltı", "tutuk", "c[aá]rcel", "prisi[oó]n",
-                        "φυλακ", "тюрьм", "сجن", "zindan",
-                    )
-                )
-            ]
-            strong_match = bool(
-                strong_patterns
-                and compiled(
-                    "(?:" + ")|(?:".join(strong_patterns) + ")"
-                ).search(text)
-            )
-            if not title_match and not strong_match:
-                continue
-        if category not in matched_topics:
-            matched_topics.append(category)
+            and score >= best_score - 1.6
+        )
+    ][:TOPIC_MAX_ASSIGNMENTS]
 
     for category in matched_topics:
         if category not in categories:
             categories.append(category)
 
     if not matched_topics:
-        fallback = primary if primary in TOPIC_CATEGORY_PATTERNS else (
-            configured_topics[0] if len(configured_topics) == 1 else ""
+        # A source profile is only a weak prior. If title, tags and body do not
+        # substantiate a topic, assigning every item from a specialised outlet
+        # to that topic produces misleading sections (for example culture
+        # reviews from a feminist magazine). Keep such items discoverable in
+        # Movement News instead of inventing topical certainty.
+        configured_topics = [
+            category for category in configured_list
+            if category in TOPIC_SOURCE_FALLBACKS
+        ]
+        fallback = (
+            primary
+            if primary in TOPIC_SOURCE_FALLBACKS
+            else configured_topics[0] if len(configured_topics) == 1 else ""
         )
-        if fallback and fallback not in categories:
+        if fallback:
             categories.append(fallback)
-        if not fallback:
+        else:
             categories.append("Movement News")
     if not any(category in REGION_CATEGORIES for category in categories):
         categories.insert(0, "Global")
     return categories or [safe_text(primary, "Global")]
+
+
+GANCIO_EVENT_DATE_RE = re.compile(
+    r"^\[(?P<date>\d{4}-\d{2}-\d{2})(?:[ T][^\]]+)?\]\s*"
+)
+
+
+def normalize_feed_event(title, published):
+    clean_title = safe_text(title, "Termin ohne Titel")
+    match = GANCIO_EVENT_DATE_RE.match(clean_title)
+    if not match:
+        return clean_title, safe_text(
+            published,
+            datetime.now().isoformat(),
+        )
+    return (
+        GANCIO_EVENT_DATE_RE.sub("", clean_title).strip() or clean_title,
+        f"{match.group('date')}T12:00:00Z",
+    )
 
 
 def repair_overbroad_archive_categories(article):
@@ -1572,6 +1770,16 @@ for kontinent, feeds in quellen.items():
                     )
                 link = entry.get('link', '')
                 title = safe_text(entry.get("title"), "Kein Titel")
+                entry_published = entry.get(
+                    'published',
+                    entry.get('updated', datetime.now().isoformat()),
+                )
+                event_start = ""
+                if is_radar:
+                    title, event_start = normalize_feed_event(
+                        title,
+                        entry_published,
+                    )
                 title_lower = safe_lower(title).strip()
                 author = safe_text(entry.get("author"), "Unknown")
                 source_tags = entry.get("tags", [])
@@ -1623,6 +1831,12 @@ for kontinent, feeds in quellen.items():
                         )
                     ]
                     if is_radar:
+                        existing_article["title"] = title
+                        existing_article["pubDate"] = event_start
+                        existing_article["eventStart"] = event_start
+                        existing_article["eventEnd"] = event_start
+                        existing_article["type"] = "event"
+                        existing_article["sourceType"] = "rss-event"
                         radar_count += 1
                         continue
                     if not content_is_incomplete(
@@ -1648,7 +1862,7 @@ for kontinent, feeds in quellen.items():
                     tiefe_scrapes_gemacht += 1
                     attempted_links.add(link)
             
-                pubDate = entry.get('published', entry.get('updated', datetime.now().isoformat()))
+                pubDate = event_start if is_radar else entry_published
                 full_text = safe_text(
                     existing_article.get("content")
                     if existing_article
@@ -1833,6 +2047,13 @@ for kontinent, feeds in quellen.items():
                         )
                     ],
                 }
+                if is_radar:
+                    archiv_dict[link].update({
+                        "type": "event",
+                        "sourceType": "rss-event",
+                        "eventStart": event_start,
+                        "eventEnd": event_start,
+                    })
                 gesehene_titel.add(title_lower)
                 if is_radar: radar_count += 1
             except Exception as entry_error:

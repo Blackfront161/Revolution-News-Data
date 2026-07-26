@@ -161,6 +161,9 @@
         ['basics', 'basics'],
         ['organisation', 'organisation'],
         ['justice', 'justice'],
+        ['power', 'power'],
+        ['tactics', 'tactics'],
+        ['ecology', 'ecology'],
         ['struggles', 'struggles'],
         ['all', 'all'],
         ['sources', 'sources']

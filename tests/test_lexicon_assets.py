@@ -21,13 +21,27 @@ def test_lexicon_assets_are_loaded_and_cached():
 def test_lexicon_has_sections_sources_and_downloads():
     script = read("lexicon-tab.js")
 
-    for section in ("basics", "organisation", "justice", "struggles", "all", "sources"):
+    for section in (
+        "basics", "organisation", "justice", "power", "tactics",
+        "ecology", "struggles", "all", "sources",
+    ):
         assert f"{section}:" in script or f"'{section}'" in script
 
-    assert "TransformHarm" in script
-    assert "Creative Interventions Toolkit" in script
-    assert "An Anarchist FAQ" in script
-    assert "Libcom · Anarchism reading guide" in script
+    for source in (
+        "TransformHarm",
+        "Creative Interventions Toolkit",
+        "An Anarchist FAQ",
+        "Libcom · Anarchism reading guide",
+        "The Anarchist Library",
+        "Sins Invalid · Disability Justice",
+        "Critical Resistance",
+        "INCITE! Community Accountability",
+        "Indigenous Action",
+        "Beautiful Trouble Toolbox",
+    ):
+        assert source in script
+
+    assert script.count("extraTerm(") >= 25
     assert "wrn-begriffslexikon.json" in script
     assert "noopener noreferrer" in script
 
