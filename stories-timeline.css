@@ -25,6 +25,10 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   position: sticky;
   top: calc(var(--wrn-sticky-header-height, 76px) + 48px);
   z-index: 38;
+  display: block !important;
+  grid-template-columns: none !important;
+  width: auto;
+  min-height: 0 !important;
   margin: -14px -14px 14px;
   padding: 12px 14px;
   border-bottom: 1px solid rgba(0,240,255,.24);
@@ -37,7 +41,11 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   color: var(--color-cyan, #00f0ff);
   font-size: clamp(1.05rem, 4vw, 1.45rem);
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: normal;
+  writing-mode: horizontal-tb;
 }
 
 .wrn-stories-topbar p {
