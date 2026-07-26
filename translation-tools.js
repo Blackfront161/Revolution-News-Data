@@ -16,7 +16,7 @@
             issueLabel: 'Problem', issueWrongMeaning: 'Meaning is wrong', issueMissing: 'Text is missing', issueNames: 'Names or quotations changed',
             issueLanguage: 'Wrong target language', issueFormatting: 'Formatting or paragraphs are broken', issueOther: 'Other problem',
             noteLabel: 'Optional note', notePlaceholder: 'Briefly describe the problem…', send: 'Prepare email',
-            cache: 'Sections already translated are reused locally.'
+            cache: 'Sections already translated are reused locally.', machineTranslated: 'Machine translated', openOriginal: 'Open original'
         },
         de: {
             original: 'Original', translation: 'Übersetzung', compare: 'Vergleichen', report: 'Übersetzung melden',
@@ -28,7 +28,35 @@
             issueLabel: 'Problem', issueWrongMeaning: 'Bedeutung ist falsch', issueMissing: 'Text fehlt', issueNames: 'Namen oder Zitate wurden verändert',
             issueLanguage: 'Falsche Zielsprache', issueFormatting: 'Formatierung oder Absätze sind beschädigt', issueOther: 'Anderes Problem',
             noteLabel: 'Optionale Notiz', notePlaceholder: 'Beschreibe das Problem kurz …', send: 'E-Mail vorbereiten',
-            cache: 'Bereits übersetzte Abschnitte werden lokal wiederverwendet.'
+            cache: 'Bereits übersetzte Abschnitte werden lokal wiederverwendet.', machineTranslated: 'Maschinell übersetzt', openOriginal: 'Original öffnen'
+        },
+        es: {
+            original:'Original', translation:'Traducción', compare:'Comparar', report:'Informar de un error',
+            originalLanguage:'Idioma original', machineTranslated:'Traducción automática', openOriginal:'Abrir original'
+        },
+        fr: {
+            original:'Original', translation:'Traduction', compare:'Comparer', report:'Signaler la traduction',
+            originalLanguage:'Langue d’origine', machineTranslated:'Traduit automatiquement', openOriginal:'Ouvrir l’original'
+        },
+        it: {
+            original:'Originale', translation:'Traduzione', compare:'Confronta', report:'Segnala la traduzione',
+            originalLanguage:'Lingua originale', machineTranslated:'Traduzione automatica', openOriginal:'Apri originale'
+        },
+        pt: {
+            original:'Original', translation:'Tradução', compare:'Comparar', report:'Comunicar erro de tradução',
+            originalLanguage:'Idioma original', machineTranslated:'Tradução automática', openOriginal:'Abrir original'
+        },
+        ru: {
+            original:'Оригинал', translation:'Перевод', compare:'Сравнить', report:'Сообщить об ошибке',
+            originalLanguage:'Язык оригинала', machineTranslated:'Машинный перевод', openOriginal:'Открыть оригинал'
+        },
+        el: {
+            original:'Πρωτότυπο', translation:'Μετάφραση', compare:'Σύγκριση', report:'Αναφορά μετάφρασης',
+            originalLanguage:'Γλώσσα πρωτοτύπου', machineTranslated:'Μηχανική μετάφραση', openOriginal:'Άνοιγμα πρωτοτύπου'
+        },
+        tr: {
+            original:'Özgün metin', translation:'Çeviri', compare:'Karşılaştır', report:'Çeviri hatası bildir',
+            originalLanguage:'Özgün dil', machineTranslated:'Makine çevirisi', openOriginal:'Özgün metni aç'
         }
     };
 
@@ -41,7 +69,7 @@
     }
 
     function textSet() {
-        return texts[currentLanguage()] || texts.en;
+        return { ...texts.en, ...(texts[currentLanguage()] || {}) };
     }
 
     function articleAt(idNum) {
@@ -209,7 +237,22 @@
             makeButton(t.report, 'report')
         );
 
-        container.append(buttonRow);
+        const status = document.createElement('p');
+        status.className = 'translation-machine-status-185';
+        status.textContent = `${t.originalLanguage}: ${originalLanguage(record.article)} · ${t.machineTranslated} → ${String(record.language || '').toUpperCase()}`;
+        container.append(status, buttonRow);
+
+        const originalUrl = String(record.article?.link || '');
+        if (/^https?:\/\//i.test(originalUrl)) {
+            const link = document.createElement('a');
+            link.className = 'translation-original-link-185';
+            link.href = originalUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.referrerPolicy = 'no-referrer';
+            link.textContent = t.openOriginal;
+            container.appendChild(link);
+        }
     }
 
     function registerTranslation(idNum, article, translated, scope = 'full') {

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import ast
 from collections import Counter
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import re
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parent
 AGGREGATE = ROOT / "aggregate.py"
 NEWS = ROOT / "news.json"
 REPORT = ROOT / "source-category-audit.json"
+REVIEW_QUEUE = ROOT / "editorial-review.json"
 SOURCE_CATALOG = ROOT / "source-catalog.json"
 
 
@@ -44,6 +46,7 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
                     )
             if names & {
                 "REGION_CATEGORIES",
+                "COUNTRY_PRIMARY_REGIONS",
                 "TOPIC_CATEGORY_PATTERNS",
                 "TOPIC_CATEGORY_STRONG_PATTERNS",
                 "TOPIC_CATEGORY_MIN_SCORES",
@@ -55,6 +58,7 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
         elif isinstance(node, ast.FunctionDef) and node.name in {
             "safe_text",
             "score_article_topics",
+            "classify_article",
             "infer_article_categories",
         }:
             selected_nodes.append(node)
@@ -71,7 +75,7 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
     return (
         base_sources,
         extra_sources,
-        namespace["infer_article_categories"],
+        namespace["classify_article"],
         namespace["REGION_CATEGORIES"],
         namespace["TOPIC_CATEGORY_PATTERNS"],
     )
@@ -97,7 +101,7 @@ def configured_sources(
 
 
 def main() -> int:
-    base, extras, infer, regions, topics = definitions()
+    base, extras, classify, regions, topics = definitions()
     if SOURCE_CATALOG.is_file():
         catalog = json.loads(SOURCE_CATALOG.read_text(encoding="utf-8"))
         catalog_rows = catalog.get("sources", []) if isinstance(catalog, dict) else []
@@ -114,6 +118,7 @@ def main() -> int:
     source_assignments: dict[str, dict[str, Any]] = {}
     without_region = 0
     without_topic = 0
+    review_rows: list[dict[str, Any]] = []
 
     for article in rows:
         source_name = str(article.get("quelleName") or "").strip()
@@ -142,13 +147,24 @@ def main() -> int:
                 configured.insert(0, current_primary)
             primary = configured[0] if configured else "Global"
 
-        article["categories"] = infer(
+        classification = classify(
             article.get("title", ""),
             article.get("content", ""),
             configured,
             primary,
             article.get("sourceTags", []),
+            article.get("originCountryCode", ""),
         )
+        article.update({
+            "categories": classification["categories"],
+            "primaryRegion": classification["primaryRegion"],
+            "primaryTopic": classification["primaryTopic"],
+            "secondaryTopics": classification["secondaryTopics"],
+            "classificationConfidence": classification["classificationConfidence"],
+            "classificationMethod": classification["classificationMethod"],
+            "editorialReview": classification["editorialReview"],
+            "editorialReviewReasons": classification["editorialReviewReasons"],
+        })
 
         article_regions = [
             category for category in article["categories"]
@@ -168,6 +184,17 @@ def main() -> int:
         summary["articles"] += 1
         summary["regions"].update(article_regions)
         summary["topics"].update(article_topics)
+        if article["editorialReview"]:
+            review_rows.append({
+                "link": article.get("link", ""),
+                "title": article.get("title", ""),
+                "source": source_name,
+                "primaryRegion": article["primaryRegion"],
+                "primaryTopic": article["primaryTopic"],
+                "confidence": article["classificationConfidence"],
+                "reasons": article["editorialReviewReasons"],
+                "suggestedTopics": list(classification.get("topicScores", {}))[:5],
+            })
 
     NEWS.write_text(
         json.dumps(rows, ensure_ascii=False, indent=2) + "\n",
@@ -191,6 +218,18 @@ def main() -> int:
     }
     REPORT.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    REVIEW_QUEUE.write_text(
+        json.dumps({
+            "schemaVersion": 1,
+            "generatedAt": datetime.now(timezone.utc).isoformat(),
+            "count": len(review_rows),
+            "items": sorted(
+                review_rows,
+                key=lambda row: (row["confidence"], row["source"], row["title"]),
+            ),
+        }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
     print(

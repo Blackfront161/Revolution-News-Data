@@ -153,9 +153,9 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.4',
-    build: '2026.07.26-wrn-1.8.4-release-3-topics-lexicon-events',
-    releasedAt: '2026-07-26T12:00:00+02:00',
+    version: '1.8.5',
+    build: '2026.07.26-wrn-1.8.5-quality-release',
+    releasedAt: '2026-07-26T18:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
     recoveryStage: 15,
@@ -174,6 +174,8 @@ window.WRN_CONFIG = Object.freeze({
         audioHealth: 'https://blackfront161.github.io/Revolution-News-Data/audio-health.json',
         featureAudit: 'https://blackfront161.github.io/Revolution-News-Data/feature-audit.json',
         languageSourceAudit: 'https://blackfront161.github.io/Revolution-News-Data/language-source-audit.json',
+        editorialReview: './editorial-review.json',
+        alternativeSocialMedia: './alternative-social-media.json',
         generatedPodcasts: 'https://blackfront161.github.io/Revolution-News-Data/generated-podcasts.json'
     }),
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev',
@@ -507,7 +509,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '184-release-1';
+    const VERSION = '185-quality-2';
 
     const addStyle = (file, marker) => {
         if (

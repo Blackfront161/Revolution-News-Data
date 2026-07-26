@@ -127,6 +127,15 @@ jobs:
           python tests/test_release_181.py
           python tests/test_release_182.py
 
+      - name: Qualitätsrelease 1.8.5 prüfen
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python tests/test_feed_ux_185.py
+          python tests/test_quality_release_185.py
+          python tests/validate_app.py
+
       - name: Release Candidate 1.8.3 prüfen
         shell: bash
         run: |
@@ -254,3 +263,4 @@ jobs:
             csp-audit.json
             workflow-audit.json
             release-readiness-183.json
+            editorial-review.json

@@ -404,3 +404,18 @@
     scroll-behavior: auto !important;
   }
 }
+.wrn-lexicon-export-actions-185 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+
+.wrn-lexicon-export-actions-185 button {
+  min-height: 44px;
+  padding: .55rem .75rem;
+  border: 1px solid var(--color-cyan, #00f0ff);
+  border-radius: .55rem;
+  background: rgba(0,240,255,.06);
+  color: var(--color-cyan, #00f0ff);
+  cursor: pointer;
+}

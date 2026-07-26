@@ -675,6 +675,39 @@ REGION_CATEGORIES = {
     "Global", "Europe", "Africa", "North America",
     "Latin America", "Asia", "Australia & NZ",
 }
+COUNTRY_PRIMARY_REGIONS = {
+    "DZ": "Africa", "AO": "Africa", "BJ": "Africa", "BW": "Africa",
+    "BF": "Africa", "BI": "Africa", "CM": "Africa", "CD": "Africa",
+    "CG": "Africa", "CI": "Africa", "EG": "Africa", "ET": "Africa",
+    "GH": "Africa", "KE": "Africa", "MA": "Africa", "MZ": "Africa",
+    "NG": "Africa", "RW": "Africa", "SN": "Africa", "SO": "Africa",
+    "ZA": "Africa", "SD": "Africa", "TZ": "Africa", "TN": "Africa",
+    "UG": "Africa", "ZM": "Africa", "ZW": "Africa",
+    "US": "North America", "CA": "North America", "GL": "North America",
+    "MX": "Latin America", "AR": "Latin America", "BO": "Latin America",
+    "BR": "Latin America", "CL": "Latin America", "CO": "Latin America",
+    "CR": "Latin America", "CU": "Latin America", "EC": "Latin America",
+    "GT": "Latin America", "HT": "Latin America", "HN": "Latin America",
+    "NI": "Latin America", "PA": "Latin America", "PE": "Latin America",
+    "PY": "Latin America", "SV": "Latin America", "UY": "Latin America",
+    "VE": "Latin America",
+    "CN": "Asia", "HK": "Asia", "IN": "Asia", "ID": "Asia",
+    "JP": "Asia", "KR": "Asia", "KP": "Asia", "MY": "Asia",
+    "MM": "Asia", "NP": "Asia", "PK": "Asia", "PH": "Asia",
+    "SG": "Asia", "LK": "Asia", "TH": "Asia", "TW": "Asia",
+    "VN": "Asia", "BD": "Asia", "KH": "Asia", "AF": "Asia",
+    "IQ": "Asia", "IR": "Asia", "IL": "Asia", "PS": "Asia",
+    "LB": "Asia", "SY": "Asia", "JO": "Asia", "YE": "Asia",
+    "AU": "Australia & NZ", "NZ": "Australia & NZ", "FJ": "Australia & NZ",
+    "PG": "Australia & NZ", "WS": "Australia & NZ", "VU": "Australia & NZ",
+    "AL": "Europe", "AT": "Europe", "BE": "Europe", "BG": "Europe",
+    "CH": "Europe", "CZ": "Europe", "DE": "Europe", "DK": "Europe",
+    "ES": "Europe", "FI": "Europe", "FR": "Europe", "GB": "Europe",
+    "GR": "Europe", "HR": "Europe", "HU": "Europe", "IE": "Europe",
+    "IT": "Europe", "NL": "Europe", "NO": "Europe", "PL": "Europe",
+    "PT": "Europe", "RO": "Europe", "RS": "Europe", "SE": "Europe",
+    "TR": "Europe", "UA": "Europe",
+}
 TOPIC_CATEGORY_PATTERNS = {
     "Labor Struggles": (
         r"\bstrike\b", r"\bstrikers?\b", r"\bworkers?\b", r"\btrade union\b",
@@ -1015,18 +1048,39 @@ def score_article_topics(title, content, configured, primary, source_tags=None):
     return scores
 
 
-def infer_article_categories(title, content, configured, primary, source_tags=None):
+def classify_article(
+    title,
+    content,
+    configured,
+    primary,
+    source_tags=None,
+    origin_country_code="",
+):
     configured_list = [
         safe_text(category)
         for category in (configured if isinstance(configured, list) else [configured])
         if safe_text(category)
     ]
-    categories = []
-    for category in configured_list:
-        if category in REGION_CATEGORIES and category not in categories:
-            categories.append(category)
-    if primary in REGION_CATEGORIES and primary not in categories:
-        categories.append(primary)
+    configured_regions = [
+        category for category in configured_list
+        if category in REGION_CATEGORIES
+    ]
+    country_region = COUNTRY_PRIMARY_REGIONS.get(
+        safe_text(origin_country_code).upper()
+    )
+    non_global_regions = [
+        category for category in configured_regions
+        if category != "Global"
+    ]
+    primary_region = (
+        country_region
+        or (primary if primary in REGION_CATEGORIES and primary != "Global" else "")
+        or (non_global_regions[0] if non_global_regions else "")
+        or (primary if primary in REGION_CATEGORIES else "")
+        or (configured_regions[0] if configured_regions else "")
+        or "Global"
+    )
+    categories = [primary_region]
 
     scores = score_article_topics(
         title,
@@ -1053,6 +1107,7 @@ def infer_article_categories(title, content, configured, primary, source_tags=No
         if category not in categories:
             categories.append(category)
 
+    assignment_method = "content"
     if not matched_topics:
         # A source profile is only a weak prior. If title, tags and body do not
         # substantiate a topic, assigning every item from a specialised outlet
@@ -1070,11 +1125,62 @@ def infer_article_categories(title, content, configured, primary, source_tags=No
         )
         if fallback:
             categories.append(fallback)
+            matched_topics = [fallback]
+            assignment_method = "specialised-source"
         else:
             categories.append("Movement News")
-    if not any(category in REGION_CATEGORIES for category in categories):
-        categories.insert(0, "Global")
-    return categories or [safe_text(primary, "Global")]
+            matched_topics = ["Movement News"]
+            assignment_method = "editorial-review"
+
+    primary_topic = matched_topics[0]
+    secondary_topics = matched_topics[1:]
+    best_topic_score = float(scores.get(primary_topic, 0.0))
+    if assignment_method == "content":
+        confidence = max(0.58, min(0.98, best_topic_score / 8.0))
+    elif assignment_method == "specialised-source":
+        confidence = 0.58
+    else:
+        confidence = 0.35
+
+    review_reasons = []
+    if confidence < 0.6:
+        review_reasons.append("low-topic-confidence")
+    if primary_region == "Global" and safe_text(origin_country_code):
+        review_reasons.append("country-without-region-map")
+    if primary_topic == "Movement News":
+        review_reasons.append("no-specific-topic-evidence")
+
+    return {
+        "categories": categories,
+        "primaryRegion": primary_region,
+        "primaryTopic": primary_topic,
+        "secondaryTopics": secondary_topics,
+        "classificationConfidence": round(confidence, 3),
+        "classificationMethod": assignment_method,
+        "topicScores": {
+            key: value for key, value in ranked[:6]
+        },
+        "editorialReview": bool(review_reasons),
+        "editorialReviewReasons": review_reasons,
+    }
+
+
+def infer_article_categories(
+    title,
+    content,
+    configured,
+    primary,
+    source_tags=None,
+    origin_country_code="",
+):
+    return classify_article(
+        title,
+        content,
+        configured,
+        primary,
+        source_tags,
+        origin_country_code,
+    )["categories"]
 
 
 GANCIO_EVENT_DATE_RE = re.compile(
@@ -1992,13 +2098,15 @@ for kontinent, feeds in quellen.items():
                 # =========================================================
                 # ARTIKEL ZUM GEDÄCHTNIS HINZUFÜGEN
                 # =========================================================
-                feed_categories = infer_article_categories(
+                classification = classify_article(
                     title,
                     clean_text,
                     feed.get("categories", [kontinent]),
                     kontinent,
                     source_tags,
+                    feed.get("originCountryCode"),
                 )
+                feed_categories = classification["categories"]
 
                 feed_languages = feed.get(
                     "languages",
@@ -2015,6 +2123,13 @@ for kontinent, feeds in quellen.items():
                 archiv_dict[link] = {
                     "kontinent": kontinent,
                     "categories": feed_categories,
+                    "primaryRegion": classification["primaryRegion"],
+                    "primaryTopic": classification["primaryTopic"],
+                    "secondaryTopics": classification["secondaryTopics"],
+                    "classificationConfidence": classification["classificationConfidence"],
+                    "classificationMethod": classification["classificationMethod"],
+                    "editorialReview": classification["editorialReview"],
+                    "editorialReviewReasons": classification["editorialReviewReasons"],
                     "quelleName": feed_name,
                     "author": author,
                     "title": title,

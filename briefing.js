@@ -30,6 +30,17 @@
     de: 'de-DE', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT',
     pt: 'pt-PT', ru: 'ru-RU', el: 'el-GR', tr: 'tr-TR'
   });
+  const WIZARD_TEXTS = Object.freeze({
+    de: ['Themen & Regionen', 'Sprache & Länge', 'Anhören & erstellen', 'Zurück', 'Weiter', 'Erweiterte Einstellungen'],
+    en: ['Topics & regions', 'Language & length', 'Listen & create', 'Back', 'Next', 'Advanced settings'],
+    es: ['Temas y regiones', 'Idioma y duración', 'Escuchar y crear', 'Atrás', 'Siguiente', 'Ajustes avanzados'],
+    fr: ['Thèmes et régions', 'Langue et longueur', 'Écouter et créer', 'Retour', 'Suivant', 'Réglages avancés'],
+    it: ['Temi e regioni', 'Lingua e durata', 'Ascolta e crea', 'Indietro', 'Avanti', 'Impostazioni avanzate'],
+    pt: ['Temas e regiões', 'Idioma e duração', 'Ouvir e criar', 'Voltar', 'Seguinte', 'Definições avançadas'],
+    ru: ['Темы и регионы', 'Язык и объём', 'Прослушать и создать', 'Назад', 'Далее', 'Расширенные настройки'],
+    el: ['Θέματα και περιοχές', 'Γλώσσα και έκταση', 'Ακρόαση και δημιουργία', 'Πίσω', 'Επόμενο', 'Προχωρημένες ρυθμίσεις'],
+    tr: ['Konular ve bölgeler', 'Dil ve uzunluk', 'Dinle ve oluştur', 'Geri', 'İleri', 'Gelişmiş ayarlar']
+  });
 
   const STOPWORDS = new Set([
     'the','and','for','with','from','that','this','into','over','after','against','about','their','they','are','was','were',
@@ -958,8 +969,19 @@
     const privacy = createElement('p', 'wrn-briefing-privacy', `🔒 ${t('personalizationPrivate', language)}`);
     const form = document.createElement('form');
     form.className = 'wrn-briefing-form';
+    const wizardText = WIZARD_TEXTS[language] || WIZARD_TEXTS.en;
+    let wizardStep = 1;
+    const progress = createElement('ol', 'wrn-briefing-wizard-progress-185');
+    wizardText.slice(0, 3).forEach((label, index) => {
+      const item = createElement('li', '', label);
+      item.dataset.step = String(index + 1);
+      progress.appendChild(item);
+    });
+    form.appendChild(progress);
 
-    form.append(
+    const stepOne = createElement('section', 'wrn-briefing-wizard-step-185');
+    stepOne.dataset.step = '1';
+    stepOne.append(
       chipGroup(
         t('topicsQuestion', language), TOPICS, settings.topics,
         value => i18n()?.topicLabel?.(value, language) || value, 'topics'
@@ -978,7 +1000,9 @@
     const languageField = selectField(t('language', language), 'language', languageOptions, settings.language);
     const lengthField = selectField(t('length', language), 'length', lengthOptions, settings.length);
     row.append(languageField, lengthField);
-    form.appendChild(row);
+    const stepTwo = createElement('section', 'wrn-briefing-wizard-step-185');
+    stepTwo.dataset.step = '2';
+    stepTwo.appendChild(row);
 
     const optionsFieldset = createElement('fieldset', 'wrn-briefing-fieldset wrn-briefing-options');
     optionsFieldset.appendChild(createElement('legend', '', t('includeTitle', language)));
@@ -989,8 +1013,15 @@
       toggleField(t('includeUpdates', language), 'updates', settings.options.updates),
       toggleField(t('avoidRead', language), 'avoidRead', settings.options.avoidRead)
     );
-    form.appendChild(optionsFieldset);
+    const advanced = document.createElement('details');
+    advanced.className = 'wrn-briefing-advanced-185';
+    const advancedSummary = document.createElement('summary');
+    advancedSummary.textContent = wizardText[5];
+    advanced.append(advancedSummary, optionsFieldset);
+    stepTwo.appendChild(advanced);
 
+    const stepThree = createElement('section', 'wrn-briefing-wizard-step-185');
+    stepThree.dataset.step = '3';
     const speech = createElement('fieldset', 'wrn-briefing-fieldset wrn-briefing-speech-settings');
     speech.appendChild(createElement('legend', '', t('listen', language)));
     const voiceState = currentVoiceOptions(settings.language, settings.voices?.[settings.language]);
@@ -1016,7 +1047,7 @@
       createElement('p', 'wrn-briefing-note', t('deviceVoiceNote', language)),
       createElement('p', 'wrn-briefing-note wrn-briefing-voice-note', t('voiceQualityNote', language))
     );
-    form.appendChild(speech);
+    stepThree.appendChild(speech);
 
     const message = createElement('div', 'wrn-briefing-form-message');
     message.setAttribute('role', 'alert');
@@ -1047,7 +1078,41 @@
       importInput
     );
 
-    form.append(message, formActions, transfer);
+    stepThree.append(message, formActions, transfer);
+    form.append(stepOne, stepTwo, stepThree);
+
+    const setWizardStep = value => {
+      wizardStep = Math.min(3, Math.max(1, Number(value) || 1));
+      form.querySelectorAll('.wrn-briefing-wizard-step-185').forEach(section => {
+        section.hidden = Number(section.dataset.step) !== wizardStep;
+      });
+      progress.querySelectorAll('li').forEach(item => {
+        const itemStep = Number(item.dataset.step);
+        item.classList.toggle('active', itemStep === wizardStep);
+        item.classList.toggle('done', itemStep < wizardStep);
+        item.setAttribute('aria-current', itemStep === wizardStep ? 'step' : 'false');
+      });
+    };
+    const navigation = (step, includeBack, includeNext) => {
+      const nav = createElement('div', 'wrn-briefing-wizard-nav-185');
+      if (includeBack) nav.appendChild(button('wrn-briefing-secondary', `← ${wizardText[3]}`, () => setWizardStep(step - 1)));
+      if (includeNext) nav.appendChild(button('wrn-briefing-primary', `${wizardText[4]} →`, () => {
+        if (step === 1) {
+          const selected = form.querySelectorAll('input[name="topics"]:checked, input[name="regions"]:checked');
+          if (!selected.length) {
+            message.textContent = t('noneSelected', language);
+            return;
+          }
+        }
+        message.textContent = '';
+        setWizardStep(step + 1);
+      }));
+      return nav;
+    };
+    stepOne.appendChild(navigation(1, false, true));
+    stepTwo.appendChild(navigation(2, true, true));
+    stepThree.insertBefore(navigation(3, true, false), message);
+    setWizardStep(1);
 
     const languageSelect = languageField.querySelector('select');
     languageSelect.addEventListener('change', () => {

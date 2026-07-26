@@ -1261,38 +1261,112 @@ function articlePublisherKey(article) {
         .toLocaleLowerCase();
 }
 
-function interleaveArticlesByPublisher(items) {
-    const remaining = Array.isArray(items) ? [...items] : [];
+function normalizedArticleUrl(value) {
+    try {
+        const url = new URL(String(value || ''));
+        [
+            'utm_source', 'utm_medium', 'utm_campaign', 'utm_term',
+            'utm_content', 'fbclid', 'gclid', 'mc_cid', 'mc_eid'
+        ].forEach(key => url.searchParams.delete(key));
+        url.hash = '';
+        return `${url.origin}${url.pathname.replace(/\/+$/, '')}${url.search}`.toLocaleLowerCase();
+    } catch {
+        return '';
+    }
+}
+
+function normalizedArticleText(value) {
+    return String(value || '')
+        .normalize('NFKD')
+        .replace(/\p{M}/gu, '')
+        .toLocaleLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+}
+
+function articleDedupeKeys(article) {
+    const url = normalizedArticleUrl(article?.link);
+    const source = articlePublisherKey(article);
+    const title = normalizedArticleText(article?.title);
+    const content = normalizedArticleText(article?.content).slice(0, 700);
+    return [
+        url ? `url:${url}` : '',
+        title ? `title:${source}:${title}` : '',
+        content.length >= 160 ? `content:${content}` : ''
+    ].filter(Boolean);
+}
+
+function deduplicateArticles(items) {
+    const result = [];
+    const keyToIndex = new Map();
+    (Array.isArray(items) ? items : []).forEach(article => {
+        const keys = articleDedupeKeys(article);
+        const existingIndex = keys
+            .map(key => keyToIndex.get(key))
+            .find(index => Number.isInteger(index));
+        if (!Number.isInteger(existingIndex)) {
+            const index = result.length;
+            result.push(article);
+            keys.forEach(key => keyToIndex.set(key, index));
+            return;
+        }
+        const existing = result[existingIndex] || {};
+        const existingLength = String(existing.content || '').length;
+        const nextLength = String(article?.content || '').length;
+        result[existingIndex] = nextLength >= existingLength
+            ? { ...existing, ...article }
+            : { ...article, ...existing };
+        articleDedupeKeys(result[existingIndex]).forEach(key => keyToIndex.set(key, existingIndex));
+    });
+    return result;
+}
+
+function interleaveArticlesByPublisher(items, options = {}) {
+    const explicitSource = options.explicitSource === true;
+    const deduped = deduplicateArticles(items);
+    if (explicitSource) return deduped;
+
+    const remaining = [...deduped];
     const mixed = [];
     let previous = '';
+    const firstTenCounts = new Map();
 
     while (remaining.length) {
-        let nextIndex = remaining.findIndex(article => articlePublisherKey(article) !== previous);
+        const inFirstTen = mixed.length < 10;
+        let nextIndex = remaining.findIndex(article => {
+            const publisher = articlePublisherKey(article);
+            if (publisher === previous) return false;
+            if (!inFirstTen) return true;
+            const limit = ['bianet türkçe', 'bianet kurdî'].includes(publisher) ? 1 : 2;
+            return (firstTenCounts.get(publisher) || 0) < limit;
+        });
+        if (nextIndex < 0) {
+            nextIndex = remaining.findIndex(article => articlePublisherKey(article) !== previous);
+        }
         if (nextIndex < 0) nextIndex = 0;
         const [next] = remaining.splice(nextIndex, 1);
         mixed.push(next);
         previous = articlePublisherKey(next);
+        if (mixed.length <= 10) {
+            firstTenCounts.set(previous, (firstTenCounts.get(previous) || 0) + 1);
+        }
     }
 
     return mixed;
 }
 
-window.WRNFeedOrder = Object.freeze({ interleaveArticlesByPublisher });
+window.WRNFeedOrder = Object.freeze({
+    interleaveArticlesByPublisher,
+    deduplicateArticles,
+    normalizedArticleUrl
+});
 
 function limitDominantPublishersForSection(items, sourceFilter = 'ALL') {
-    if (sourceFilter !== 'ALL') return items;
-    if (['Bookmarks', 'Read', 'Radar'].includes(activeKontinent)) return items;
-    const bianetCounts = new Map();
-    return items.filter(article => {
-        const publisher = articlePublisherKey(article);
-        if (!['bianet türkçe', 'bianet kurdî'].includes(publisher)) {
-            return true;
-        }
-        const count = bianetCounts.get(publisher) || 0;
-        if (count >= 1) return false;
-        bianetCounts.set(publisher, count + 1);
-        return true;
-    });
+    // Keinen Beitrag löschen: dominante Quellen werden ausschließlich
+    // umsortiert. Bei einer expliziten Quellenwahl bleibt die Reihenfolge.
+    return sourceFilter === 'ALL'
+        ? interleaveArticlesByPublisher(items)
+        : deduplicateArticles(items);
 }
 function submitFeedback() {
     const ca = document.getElementById('captcha-answer'); const ft = document.getElementById('fb-text'); if(!ca || !ft) return;
@@ -1410,19 +1484,7 @@ async function loadDatasetWithOfflineFallback(datasetKey, url, legacyLocalStorag
 }
 
 function mergeArticleDatasets(...datasets) {
-    const rows = new Map();
-    datasets.flat().filter(Boolean).forEach(item => {
-        let readingKey = '';
-        try { readingKey = window.WRNReading?.articleKey?.(item) || ''; } catch {}
-        const key = String(
-            item?.link
-            || readingKey
-            || `${item?.quelleName || ''}::${item?.title || ''}::${item?.pubDate || ''}`
-        );
-        if (!key) return;
-        rows.set(key, { ...(rows.get(key) || {}), ...item });
-    });
-    return [...rows.values()].sort((left, right) =>
+    return deduplicateArticles(datasets.flat().filter(Boolean)).sort((left, right) =>
         new Date(right?.pubDate || right?.eventStart || 0)
         - new Date(left?.pubDate || left?.eventStart || 0)
     );
@@ -1527,6 +1589,9 @@ function applyFilters(isBookmark = false) {
 
     if (activeKontinent === 'Radar') {
         filtered = filtered.filter(eventMatchesSpecialFilters);
+        if (typeof window.WRNCollapseRecurringEvents === 'function') {
+            filtered = window.WRNCollapseRecurringEvents(filtered);
+        }
     }
     if (contentType) {
         filtered = filtered.filter(article => window.WRNSourceProfiles?.matchesType(article, contentType) ?? true);
@@ -1549,10 +1614,6 @@ function applyFilters(isBookmark = false) {
     });
 
     filtered = limitDominantPublishersForSection(filtered, selPortal);
-
-    if (activeKontinent !== 'Radar' && selPortal === 'ALL') {
-        filtered = interleaveArticlesByPublisher(filtered);
-    }
 
     if (activeKontinent === 'Radar') {
         const t = uiTexte[currentLang] || uiTexte.en;

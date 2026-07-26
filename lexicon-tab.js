@@ -22,6 +22,9 @@
       sourceOpen: 'Quelle öffnen',
       pdfOpen: 'PDF öffnen / herunterladen',
       downloadLexicon: 'WRN-Lexikon als JSON sichern',
+      printLexicon: 'PDF / Drucken',
+      epubLexicon: 'EPUB herunterladen',
+      revision: 'Änderungsverlauf',
       downloadHint: 'Die WRN-Kurztexte sind eigene redaktionelle Zusammenfassungen. Externe Texte werden nicht kopiert. Offizielle Downloads öffnen direkt beim jeweiligen Projekt.',
       editorialState: 'Redaktioneller Entwurf · Rückmeldungen willkommen',
       feedback: 'Ergänzung oder Korrektur vorschlagen',
@@ -55,6 +58,9 @@
       sourceOpen: 'Open source',
       pdfOpen: 'Open / download PDF',
       downloadLexicon: 'Save WRN glossary as JSON',
+      printLexicon: 'PDF / print',
+      epubLexicon: 'Download EPUB',
+      revision: 'Revision history',
       downloadHint: 'WRN entries are original editorial summaries. External texts are not copied. Official downloads open directly at the respective project.',
       editorialState: 'Editorial draft · feedback welcome',
       feedback: 'Suggest an addition or correction',
@@ -702,7 +708,8 @@
     summary: { de: deSummary, en: enSummary },
     practice: { de: dePractice, en: enPractice },
     debate: { de: deDebate, en: enDebate },
-    related
+    related,
+    revision: { version: '1.8.5', date: '2026-07-26', note: 'Editorial draft added or reviewed.' }
   });
 
   TERMS.push(
@@ -998,6 +1005,225 @@
     )
   );
 
+  TERMS.push(
+    extraTerm('anti-authoritarianism','basics',['afaq','libcom'],'Antiautoritarismus','Anti-authoritarianism',
+      'Die Ablehnung gesellschaftlicher Verhältnisse, in denen Menschen ohne wirksame Kontrolle, Zustimmung oder Abwahl über andere bestimmen.',
+      'Opposition to social arrangements in which people rule others without effective control, consent or recall.',
+      'Antiautoritäre Praxis verteilt Entscheidungsmacht, macht Ämter widerrufbar und prüft auch informelle Macht.',
+      'Anti-authoritarian practice distributes decision-making, makes roles recallable and examines informal power.',
+      'Nicht jede Koordination oder Grenze ist autoritär; entscheidend sind Zweck, Kontrolle, Rechenschaft und reale Wahlmöglichkeiten.',
+      'Not every form of coordination or boundary is authoritarian; purpose, control, accountability and real choice matter.',
+      ['anarchism','hierarchy','horizontal-organisation']),
+    extraTerm('hierarchy','power',['afaq','libcom'],'Hierarchie','Hierarchy',
+      'Eine dauerhafte Rangordnung, in der manche Menschen systematisch mehr Entscheidungsmacht, Ressourcen oder gesellschaftlichen Wert erhalten.',
+      'A durable ranking that systematically gives some people more decision-making power, resources or social value.',
+      'Hierarchien werden in Staat, Betrieb, Familie, Bewegung und Alltag sichtbar gemacht und möglichst abgebaut.',
+      'Hierarchies are identified in the state, workplace, family, movements and daily life and reduced where possible.',
+      'Fachwissen oder zeitweilige Rollen sind nicht automatisch Herrschaft, müssen aber transparent und kontrollierbar bleiben.',
+      'Expertise or temporary roles are not automatically domination, but must remain transparent and accountable.',
+      ['anti-authoritarianism','domination','informal-hierarchy']),
+    extraTerm('domination','power',['afaq'],'Herrschaft','Domination',
+      'Ein Verhältnis, in dem Menschen oder Institutionen dauerhaft die Handlungsmöglichkeiten anderer kontrollieren und Zwang absichern können.',
+      'A relation in which people or institutions durably control others’ possibilities and can enforce coercion.',
+      'Herrschaftskritik untersucht Gesetze, Eigentum, Gewalt, Abhängigkeit und kulturelle Normalisierung gemeinsam.',
+      'Critiques of domination examine law, property, violence, dependency and cultural normalisation together.',
+      'Macht ist nicht in jeder Form Herrschaft; kollektive Handlungsfähigkeit kann gerade dem Abbau von Herrschaft dienen.',
+      'Power is not always domination; collective capacity can be used to dismantle domination.',
+      ['hierarchy','state','counter-power']),
+    extraTerm('state','power',['afaq','anarchist-library'],'Staat','State',
+      'Ein Gefüge zentralisierter Institutionen, das verbindliche Regeln setzt, Territorium verwaltet und ein Gewaltmonopol beansprucht.',
+      'A set of centralised institutions that makes binding rules, administers territory and claims a monopoly of force.',
+      'Anarchistische Politik sucht föderale und selbstverwaltete Alternativen für Versorgung, Konfliktbearbeitung und gemeinsame Entscheidungen.',
+      'Anarchist politics seeks federated and self-managed alternatives for provision, conflict work and shared decisions.',
+      'Staaten unterscheiden sich historisch; die Kritik richtet sich nicht gegen gemeinschaftliche Organisation, sondern gegen verselbständigte Herrschaft.',
+      'States differ historically; the critique targets autonomous structures of domination, not collective organisation itself.',
+      ['domination','federation','social-revolution']),
+    extraTerm('platformism','organisation',['anarchist-library','libcom'],'Plattformismus','Platformism',
+      'Eine anarchistisch-kommunistische Organisationsidee mit theoretischer und taktischer Einheit, kollektiver Verantwortung und föderaler Struktur.',
+      'An anarchist-communist organisational approach stressing theoretical and tactical unity, collective responsibility and federalism.',
+      'Gruppen entwickeln eine gemeinsame Analyse und handeln koordiniert, ohne eine zentralistische Partei zu bilden.',
+      'Groups develop a shared analysis and coordinated practice without forming a centralist party.',
+      'Kritisiert werden mögliche Vereinheitlichung und Organisationsfixierung; Befürwortende betonen Verbindlichkeit und Lernfähigkeit.',
+      'Critics warn of uniformity and organisational fixation; supporters stress commitment and collective learning.',
+      ['especifismo','federation','libertarian-communism']),
+    extraTerm('especifismo','organisation',['anarchist-library'],'Especifismo','Especifismo',
+      'Eine vor allem in Lateinamerika entwickelte Organisationsströmung, die spezifisch anarchistische Organisation und soziale Einfügung verbindet.',
+      'An organisational current developed especially in Latin America, linking specific anarchist organisation with social insertion.',
+      'Anarchistische Gruppen arbeiten langfristig in sozialen Bewegungen, ohne diese zu kontrollieren oder zu ersetzen.',
+      'Anarchist groups work long-term within social movements without controlling or replacing them.',
+      'Die Grenze zwischen solidarischer Einfügung und politischer Steuerung muss kontinuierlich reflektiert werden.',
+      'The line between solidaristic insertion and political direction requires continual reflection.',
+      ['platformism','federation','self-organisation']),
+    extraTerm('informal-hierarchy','organisation',['afaq','sins-invalid'],'Informelle Hierarchie','Informal hierarchy',
+      'Ungleich verteilte Macht, die nicht in offiziellen Ämtern steht, sondern über Wissen, Beziehungen, Redezeit oder Zugang wirkt.',
+      'Unequal power not written into formal roles but exercised through knowledge, relationships, speaking time or access.',
+      'Transparente Aufgaben, Rotation, Dokumentation, Barrierefreiheit und Feedback können informelle Macht begrenzen.',
+      'Transparent tasks, rotation, documentation, accessibility and feedback can limit informal power.',
+      'Strukturlosigkeit beseitigt Hierarchien selten; zugleich lösen formale Regeln allein das Problem nicht.',
+      'Lack of structure rarely removes hierarchy, while formal rules alone do not solve it.',
+      ['hierarchy','rotation','facilitation']),
+    extraTerm('rotation','organisation',['afaq'],'Rotation','Rotation',
+      'Der geplante Wechsel von Rollen, Aufgaben und Verantwortung, damit Wissen und Einfluss nicht dauerhaft bei wenigen Personen bleiben.',
+      'The planned circulation of roles, tasks and responsibility so knowledge and influence do not remain with a few people.',
+      'Übergaben, Begleitung und Dokumentation machen Rotation praktisch lernbar statt nur symbolisch.',
+      'Handover, mentoring and documentation make rotation learnable rather than symbolic.',
+      'Zu schnelle Rotation kann Kontinuität und Fachwissen schwächen; sie braucht Zeit und Ressourcen.',
+      'Rotation that is too rapid can weaken continuity and expertise; it needs time and resources.',
+      ['informal-hierarchy','delegation-mandate','facilitation']),
+    extraTerm('facilitation','organisation',['creative-interventions'],'Moderation','Facilitation',
+      'Die Unterstützung eines Gruppenprozesses, damit Beteiligung, Zeit, Konflikte und Entscheidungen nachvollziehbar gestaltet werden.',
+      'Support for a group process so participation, time, conflict and decisions are handled transparently.',
+      'Moderation achtet auf Redelisten, Verständnis, Barrieren, Ziele und die Umsetzung von Beschlüssen.',
+      'Facilitation attends to speaking order, understanding, barriers, goals and follow-through.',
+      'Moderation ist selbst eine Machtposition und sollte begrenzt, rotierend und kritisierbar sein.',
+      'Facilitation is itself a position of power and should be limited, rotated and open to criticism.',
+      ['assembly','consensus','rotation']),
+    extraTerm('conflict-transformation','justice',['transformharm','creative-interventions'],'Konflikttransformation','Conflict transformation',
+      'Ein Ansatz, der nicht nur einen Streit beendet, sondern Beziehungen, Bedürfnisse und zugrunde liegende Machtverhältnisse verändert.',
+      'An approach that seeks not merely to end a dispute but to change relationships, needs and underlying power.',
+      'Er verbindet Gespräch, Schutz, materielle Veränderung, Verantwortungsübernahme und langfristige Vereinbarungen.',
+      'It combines dialogue, safeguards, material change, accountability and long-term agreements.',
+      'Nicht jeder Konflikt ist symmetrisch; bei Gewalt dürfen Sicherheit und Machtunterschiede nicht relativiert werden.',
+      'Not every conflict is symmetrical; violence, safety and power differences must not be relativised.',
+      ['transformative-justice','community-accountability','consent']),
+    extraTerm('accountability','justice',['transformharm','creative-interventions'],'Verantwortungsübernahme','Accountability',
+      'Ein Prozess, in dem Menschen die Auswirkungen ihres Handelns anerkennen, Schaden begrenzen und überprüfbare Veränderungen umsetzen.',
+      'A process in which people recognise the effects of their actions, limit harm and make verifiable changes.',
+      'Konkrete Schritte, Unterstützung, Grenzen und regelmäßige Überprüfung ersetzen bloße Entschuldigungen.',
+      'Concrete steps, support, boundaries and review replace apology alone.',
+      'Verantwortung darf weder zu öffentlicher Bestrafung noch zu folgenloser Selbstbeschreibung verkürzt werden.',
+      'Accountability should be reduced neither to public punishment nor to consequence-free self-description.',
+      ['community-accountability','conflict-transformation','transformative-justice']),
+    extraTerm('social-reproduction','power',['libcom','incite'],'Soziale Reproduktion','Social reproduction',
+      'Arbeit und Beziehungen, durch die Menschen, Alltag und Gesellschaft erhalten werden, etwa Sorge, Ernährung, Bildung und Wohnen.',
+      'Work and relationships that sustain people and society, including care, food, education and housing.',
+      'Bewegungen machen unbezahlte und schlecht bezahlte Reproduktionsarbeit sichtbar und organisieren sie kollektiv.',
+      'Movements make unpaid and underpaid reproductive labour visible and organise it collectively.',
+      'Der Begriff darf Fürsorge nicht romantisieren; entscheidend sind Zwang, Geschlecht, Klasse, Migration und Verteilung.',
+      'The term must not romanticise care; coercion, gender, class, migration and distribution are central.',
+      ['reproductive-labour','collective-care','anti-capitalism']),
+    extraTerm('reproductive-labour','power',['libcom','incite'],'Reproduktionsarbeit','Reproductive labour',
+      'Bezahlte oder unbezahlte Tätigkeiten, die Leben und Arbeitskraft täglich und über Generationen erhalten.',
+      'Paid or unpaid activities that sustain life and labour day to day and across generations.',
+      'Dazu zählen Pflege, Haushalt, emotionale Arbeit, Kinderbetreuung, Bildung und gemeinschaftliche Versorgung.',
+      'It includes care, housework, emotional labour, childcare, education and communal provision.',
+      'Die Anerkennung darf nicht zu einer natürlichen Zuschreibung an Frauen oder Familien führen.',
+      'Recognition must not turn into a naturalised assignment to women or families.',
+      ['social-reproduction','collective-care','patriarchy']),
+    extraTerm('care-strike','tactics',['libcom','incite'],'Care-Streik','Care strike',
+      'Die kollektive Unterbrechung oder Sichtbarmachung von Sorge- und Reproduktionsarbeit als politische Arbeitskampfform.',
+      'Collective interruption or public visibility of care and reproductive labour as a form of struggle.',
+      'Care-Streiks verbinden Verweigerung mit Notfallversorgung, Solidaritätsnetzen und Forderungen nach Umverteilung.',
+      'Care strikes combine refusal with emergency provision, solidarity networks and demands for redistribution.',
+      'Vollständige Verweigerung kann Schutzbedürftige treffen; Planung und kollektive Absicherung sind deshalb zentral.',
+      'Total withdrawal can harm people who depend on care, making planning and collective safeguards essential.',
+      ['strike','social-reproduction','collective-care']),
+    extraTerm('prison-abolition','justice',['critical-resistance','transformharm'],'Gefängnisabolition','Prison abolition',
+      'Eine Bewegung für die Abschaffung von Gefängnissen und der Bedingungen, die Einsperrung als Standardantwort hervorbringen.',
+      'A movement to abolish prisons and the conditions that make confinement a default response.',
+      'Sie baut Wohnraum, Versorgung, Konfliktbearbeitung, Prävention und nicht-strafende Formen von Sicherheit aus.',
+      'It builds housing, care, prevention, conflict work and non-punitive forms of safety.',
+      'Abolition bedeutet nicht, Schaden zu leugnen; sie verlangt konkrete Schutzkonzepte und langfristige institutionelle Veränderung.',
+      'Abolition does not deny harm; it requires concrete safeguards and long-term institutional change.',
+      ['abolition','carceral-logic','police-abolition']),
+    extraTerm('police-abolition','justice',['critical-resistance'],'Polizeiabolition','Police abolition',
+      'Eine Bewegung, die polizeiliche Gewalt und Aufgaben abbauen und Ressourcen in gemeinschaftliche Sicherheit und Versorgung verlagern will.',
+      'A movement seeking to dismantle policing and shift resources toward community safety and provision.',
+      'Praktisch geht es um Entkriminalisierung, Krisenhilfe, Gewaltprävention, Wohnraum und demokratisch kontrollierte Alternativen.',
+      'In practice it includes decriminalisation, crisis response, violence prevention, housing and democratically controlled alternatives.',
+      'Reformen können Schaden mindern, aber auch Institutionen stabilisieren; darüber bestehen strategische Konflikte.',
+      'Reforms may reduce harm but also stabilise institutions, creating strategic disagreements.',
+      ['prison-abolition','carceral-logic','community-accountability']),
+    extraTerm('border-abolition','struggles',['libcom','afaq'],'Grenzabolition','Border abolition',
+      'Die Forderung, Bewegungsfreiheit nicht durch Staatsangehörigkeit, Haft, Abschiebung oder tödliche Grenzregime zu hierarchisieren.',
+      'A demand to end hierarchies of movement based on citizenship, detention, deportation and lethal border regimes.',
+      'Sie verbindet sichere Wege, gleiche soziale Rechte, Entkriminalisierung und den Abbau von Abschiebeinfrastruktur.',
+      'It links safe routes, equal social rights, decriminalisation and dismantling deportation infrastructure.',
+      'Offene Grenzen lösen globale Ungleichheit nicht allein; Arbeitsrechte, Wohnen und Antirassismus gehören dazu.',
+      'Open borders alone do not solve global inequality; labour rights, housing and anti-racism are also required.',
+      ['internationalism','anti-colonialism','no-borders']),
+    extraTerm('mutualism','basics',['afaq','anarchist-library'],'Mutualismus','Mutualism',
+      'Eine vielfältige anarchistische Tradition, die Gegenseitigkeit, freie Vereinbarung, Selbstverwaltung und Kritik an Monopol und Ausbeutung betont.',
+      'A diverse anarchist tradition stressing reciprocity, free agreement, self-management and opposition to monopoly and exploitation.',
+      'Vorschläge reichen von Genossenschaften und gemeinschaftlichem Kredit bis zu föderierten Gemeingütern.',
+      'Proposals range from cooperatives and mutual credit to federated commons.',
+      'Eigentum, Märkte und Lohnarbeit werden innerhalb mutualistischer Strömungen unterschiedlich bewertet.',
+      'Property, markets and wage labour are assessed differently across mutualist currents.',
+      ['mutual-aid','federation','commons']),
+    extraTerm('anarcho-syndicalism','organisation',['afaq','libcom'],'Anarchosyndikalismus','Anarcho-syndicalism',
+      'Eine Strömung, die revolutionäre Gewerkschaften zugleich als Kampforganisation und mögliche Grundlage selbstverwalteter Gesellschaft versteht.',
+      'A current viewing revolutionary unions as both fighting organisations and a possible basis for a self-managed society.',
+      'Direkte Aktion, föderale Organisation, Klassenkampf und Kontrolle der Produktion stehen im Mittelpunkt.',
+      'Direct action, federal organisation, class struggle and workers’ control are central.',
+      'Diskutiert werden Grenzen betrieblicher Organisierung und das Verhältnis zu Care-Arbeit, Erwerbslosen und anderen Kämpfen.',
+      'Debates concern workplace-centred organising and relations to care work, unemployed people and other struggles.',
+      ['syndicalism','strike','federation']),
+    extraTerm('council-communism','organisation',['libcom','anarchist-library'],'Rätekommunismus','Council communism',
+      'Eine antiautoritäre kommunistische Strömung, die Arbeiter*innenräte statt Partei- oder Staatsführung als Grundlage gesellschaftlicher Macht sieht.',
+      'An anti-authoritarian communist current that centres workers’ councils rather than party or state leadership.',
+      'Delegierte bleiben gebunden und abwählbar; Produktion und gesellschaftliche Entscheidungen sollen von unten koordiniert werden.',
+      'Delegates remain mandated and recallable; production and social decisions are coordinated from below.',
+      'Anarchistische Kritik fragt, ob der Fokus auf Betrieb und Klasse andere Herrschaftsverhältnisse ausreichend erfasst.',
+      'Anarchist critiques ask whether the focus on workplace and class adequately addresses other forms of domination.',
+      ['assembly','delegation-mandate','libertarian-communism']),
+    extraTerm('autonomous-space','tactics',['libcom','anarchist-library'],'Autonomer Raum','Autonomous space',
+      'Ein selbstorganisierter Ort, der sich staatlicher, kommerzieller oder institutioneller Kontrolle teilweise entzieht.',
+      'A self-organised place that partially withdraws from state, commercial or institutional control.',
+      'Solche Räume können politische Treffen, Kultur, Wohnen, Versorgung und Infrastruktur verbinden.',
+      'Such spaces can combine political meetings, culture, housing, care and infrastructure.',
+      'Autonomie ist nie vollständig; Eigentum, Geld, Nachbarschaft, Zugänglichkeit und informelle Macht bleiben relevant.',
+      'Autonomy is never complete; property, money, neighbourhood relations, accessibility and informal power remain relevant.',
+      ['occupation','commons','self-organisation']),
+    extraTerm('rent-strike','tactics',['libcom','beautiful-trouble'],'Mietstreik','Rent strike',
+      'Die kollektiv organisierte Verweigerung von Mietzahlungen, um Forderungen gegenüber Eigentümer*innen oder Politik durchzusetzen.',
+      'Collectively organised refusal to pay rent in order to enforce demands against landlords or government.',
+      'Er braucht gemeinsame Beschlüsse, Rechtsberatung, Streikkassen, Schutz vor Räumung und Nachbarschaftsorganisierung.',
+      'It requires collective decisions, legal support, strike funds, eviction defence and neighbourhood organising.',
+      'Ungleiche Verträge und Risiken können Beteiligte unterschiedlich treffen; Solidarität darf nicht nur symbolisch bleiben.',
+      'Unequal contracts and risks affect participants differently; solidarity must be material rather than symbolic.',
+      ['strike','squatting-housing','solidarity']),
+    extraTerm('boycott','tactics',['beautiful-trouble'],'Boykott','Boycott',
+      'Die koordinierte Verweigerung von Kauf, Nutzung oder Zusammenarbeit, um ökonomischen oder politischen Druck auszuüben.',
+      'Coordinated refusal to buy, use or cooperate in order to exert economic or political pressure.',
+      'Klare Ziele, überprüfbare Forderungen und Alternativen helfen, Beteiligung über symbolische Gesten hinaus aufzubauen.',
+      'Clear targets, verifiable demands and alternatives help build participation beyond symbolic gestures.',
+      'Boykotte können Beschäftigte oder abhängige Gruppen treffen und benötigen deshalb eine konkrete Folgenabschätzung.',
+      'Boycotts can affect workers or dependent groups and therefore require concrete assessment of consequences.',
+      ['direct-action','solidarity','blockade']),
+    extraTerm('sabotage','tactics',['anarchist-library','libcom'],'Sabotage','Sabotage',
+      'Die gezielte Störung von Produktion, Infrastruktur oder Kontrolle, um Ausbeutung, Krieg oder Zerstörung zu behindern.',
+      'Deliberate disruption of production, infrastructure or control in order to hinder exploitation, war or destruction.',
+      'Historisch reichen Formen von langsamer Arbeit und Maschinenstillstand bis zu digitalen Eingriffen.',
+      'Historical forms range from slowdowns and machine stoppages to digital intervention.',
+      'Risiken für Menschen, ökologische Folgen, Zielgenauigkeit und Repression müssen besonders streng bewertet werden.',
+      'Risks to people, ecological effects, precision and repression require especially strict assessment.',
+      ['direct-action','security-culture','blockade']),
+    extraTerm('digital-autonomy','tactics',['anarchist-library'],'Digitale Autonomie','Digital autonomy',
+      'Die kollektive Fähigkeit, Kommunikation, Daten und technische Infrastruktur möglichst selbstbestimmt zu kontrollieren.',
+      'Collective capacity to control communication, data and technical infrastructure as independently as possible.',
+      'Dazu gehören freie Software, Verschlüsselung, dezentrale Dienste, Datensparsamkeit und gemeinsames Wissen.',
+      'It includes free software, encryption, decentralised services, data minimisation and shared knowledge.',
+      'Technische Selbstverwaltung löst soziale Macht nicht automatisch und kann neue Zugangsbarrieren schaffen.',
+      'Technical self-management does not automatically solve social power and can create new barriers.',
+      ['free-software','security-culture','commons']),
+    extraTerm('free-software','tactics',['anarchist-library'],'Freie Software','Free software',
+      'Software, deren Nutzung, Untersuchung, Veränderung und Weitergabe durch entsprechende Lizenzen erlaubt ist.',
+      'Software whose use, study, modification and redistribution are permitted by its licence.',
+      'Freie Software kann gemeinschaftliche Infrastruktur, überprüfbare Sicherheit und Unabhängigkeit von Plattformkonzernen unterstützen.',
+      'Free software can support communal infrastructure, auditable security and independence from platform corporations.',
+      'Eine freie Lizenz garantiert weder Zugänglichkeit noch demokratische Projektkultur oder Datenschutz.',
+      'A free licence guarantees neither accessibility nor democratic project culture nor privacy.',
+      ['digital-autonomy','commons','decentralisation']),
+    extraTerm('direct-democracy','organisation',['afaq'],'Direkte Demokratie','Direct democracy',
+      'Entscheidungsverfahren, in denen Betroffene selbst beraten und entscheiden, statt dauerhafte Repräsentant*innen damit zu beauftragen.',
+      'Decision-making in which affected people deliberate and decide themselves rather than assigning permanent representatives.',
+      'Versammlungen, imperative Mandate, Rotation und Föderation können direkte Beteiligung über lokale Ebenen hinaus verbinden.',
+      'Assemblies, mandated delegates, rotation and federation can connect direct participation beyond the local level.',
+      'Mehrheitsentscheide können Minderheiten übergehen; Verfahren brauchen Rechte, Zugang und Konfliktbearbeitung.',
+      'Majority decisions can override minorities; processes need rights, access and conflict work.',
+      ['assembly','delegation-mandate','federation'])
+  );
+
   const hiddenNodes = new Map();
   const state = { section: 'basics', query: '' };
 
@@ -1008,7 +1234,7 @@
     || 'en'
   ).toLowerCase().split(/[-_]/)[0];
 
-  const ui = code => UI[lang(code)] || UI.en;
+  const ui = code => ({ ...UI.en, ...(UI[lang(code)] || {}) });
   const editorialLanguage = () => lang() === 'de' ? 'de' : 'en';
   const textFor = value => value?.[editorialLanguage()] || value?.en || value?.de || '';
   const sourceById = id => SOURCES.find(source => source.id === id);
@@ -1121,6 +1347,19 @@
       body.appendChild(section);
     }
 
+    const revision = term.revision || {
+      version: '1.8.4',
+      date: '2026-07-24',
+      note: 'Initial editorial draft.'
+    };
+    const revisionSection = document.createElement('section');
+    const revisionHeading = document.createElement('h4');
+    const revisionText = document.createElement('p');
+    revisionHeading.textContent = t.revision;
+    revisionText.textContent = `${revision.date} · ${revision.version} · ${revision.note}`;
+    revisionSection.append(revisionHeading, revisionText);
+    body.appendChild(revisionSection);
+
     const feedback = document.createElement('button');
     feedback.type = 'button';
     feedback.className = 'wrn-lexicon-feedback-184';
@@ -1156,19 +1395,134 @@
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
+  function exportMarkup() {
+    const escape = value => String(value || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return TERMS
+      .slice()
+      .sort((left, right) => textFor(left.title).localeCompare(textFor(right.title), editorialLanguage()))
+      .map(term => `<article><h2>${escape(textFor(term.title))}</h2><p>${escape(textFor(term.summary))}</p><h3>${escape(ui().practice)}</h3><p>${escape(textFor(term.practice))}</p><h3>${escape(ui().debate)}</h3><p>${escape(textFor(term.debate))}</p></article>`)
+      .join('');
+  }
+
+  function printLexicon() {
+    const popup = window.open('', '_blank');
+    if (!popup) return;
+    popup.document.open();
+    popup.document.write(`<!doctype html><html lang="${editorialLanguage()}"><head><meta charset="utf-8"><title>WRN Begriffslexikon</title><style>@page{size:A4;margin:16mm}body{font:11pt/1.45 Georgia,serif;color:#111}h1,h2,h3{font-family:Arial,sans-serif}h1{border-bottom:3px solid #111}article{break-inside:avoid;margin:0 0 9mm}h2{font-size:15pt;margin:0 0 2mm}h3{font-size:10pt;margin:3mm 0 1mm}p{margin:0 0 2mm}</style></head><body><h1>World Revolution News – Begriffslexikon</h1><p>${UI.de.note}</p>${exportMarkup()}</body></html>`);
+    popup.document.close();
+    popup.focus();
+    window.setTimeout(() => popup.print(), 300);
+  }
+
+  function crc32(bytes) {
+    let crc = 0xffffffff;
+    for (const byte of bytes) {
+      crc ^= byte;
+      for (let bit = 0; bit < 8; bit += 1) {
+        crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+      }
+    }
+    return (crc ^ 0xffffffff) >>> 0;
+  }
+
+  function zipStored(files) {
+    const encoder = new TextEncoder();
+    const localParts = [];
+    const centralParts = [];
+    let offset = 0;
+    const write16 = (view, at, value) => view.setUint16(at, value, true);
+    const write32 = (view, at, value) => view.setUint32(at, value >>> 0, true);
+    files.forEach(file => {
+      const name = encoder.encode(file.name);
+      const data = typeof file.data === 'string' ? encoder.encode(file.data) : file.data;
+      const checksum = crc32(data);
+      const local = new Uint8Array(30 + name.length);
+      const localView = new DataView(local.buffer);
+      write32(localView, 0, 0x04034b50);
+      write16(localView, 4, 20);
+      write16(localView, 6, 0);
+      write16(localView, 8, 0);
+      write32(localView, 14, checksum);
+      write32(localView, 18, data.length);
+      write32(localView, 22, data.length);
+      write16(localView, 26, name.length);
+      local.set(name, 30);
+      localParts.push(local, data);
+
+      const central = new Uint8Array(46 + name.length);
+      const centralView = new DataView(central.buffer);
+      write32(centralView, 0, 0x02014b50);
+      write16(centralView, 4, 20);
+      write16(centralView, 6, 20);
+      write16(centralView, 8, 0);
+      write16(centralView, 10, 0);
+      write32(centralView, 16, checksum);
+      write32(centralView, 20, data.length);
+      write32(centralView, 24, data.length);
+      write16(centralView, 28, name.length);
+      write32(centralView, 42, offset);
+      central.set(name, 46);
+      centralParts.push(central);
+      offset += local.length + data.length;
+    });
+    const centralSize = centralParts.reduce((sum, part) => sum + part.length, 0);
+    const end = new Uint8Array(22);
+    const endView = new DataView(end.buffer);
+    write32(endView, 0, 0x06054b50);
+    write16(endView, 8, files.length);
+    write16(endView, 10, files.length);
+    write32(endView, 12, centralSize);
+    write32(endView, 16, offset);
+    return new Blob([...localParts, ...centralParts, end], { type: 'application/epub+zip' });
+  }
+
+  function downloadEpub() {
+    const identifier = `urn:uuid:${crypto.randomUUID?.() || `wrn-${Date.now()}`}`;
+    const content = `<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" lang="${editorialLanguage()}"><head><title>WRN Begriffslexikon</title><meta charset="utf-8"/><style>body{font-family:serif;line-height:1.45}article{margin-bottom:2em}h2{border-bottom:1px solid #999}</style></head><body><h1>World Revolution News – Begriffslexikon</h1>${exportMarkup()}</body></html>`;
+    const container = '<?xml version="1.0"?><container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles><rootfile full-path="OEBPS/package.opf" media-type="application/oebps-package+xml"/></rootfiles></container>';
+    const packageFile = `<?xml version="1.0" encoding="utf-8"?><package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="book-id"><metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:identifier id="book-id">${identifier}</dc:identifier><dc:title>World Revolution News – Begriffslexikon</dc:title><dc:language>${editorialLanguage()}</dc:language><meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta></metadata><manifest><item id="content" href="content.xhtml" media-type="application/xhtml+xml"/></manifest><spine><itemref idref="content"/></spine></package>`;
+    const blob = zipStored([
+      { name: 'mimetype', data: 'application/epub+zip' },
+      { name: 'META-INF/container.xml', data: container },
+      { name: 'OEBPS/package.opf', data: packageFile },
+      { name: 'OEBPS/content.xhtml', data: content }
+    ]);
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'wrn-begriffslexikon.epub';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
   function renderSources(host) {
     const t = ui();
     const header = document.createElement('div');
     header.className = 'wrn-lexicon-sources-head-184';
     const heading = document.createElement('h3');
     const hint = document.createElement('p');
+    const actions = document.createElement('div');
+    actions.className = 'wrn-lexicon-export-actions-185';
     const download = document.createElement('button');
+    const print = document.createElement('button');
+    const epub = document.createElement('button');
     heading.textContent = t.sources;
     hint.textContent = t.downloadHint;
     download.type = 'button';
     download.textContent = t.downloadLexicon;
     download.addEventListener('click', downloadLexicon);
-    header.append(heading, hint, download);
+    print.type = 'button';
+    print.textContent = t.printLexicon;
+    print.addEventListener('click', printLexicon);
+    epub.type = 'button';
+    epub.textContent = t.epubLexicon;
+    epub.addEventListener('click', downloadEpub);
+    actions.append(download, print, epub);
+    header.append(heading, hint, actions);
     host.appendChild(header);
 
     const grid = document.createElement('div');
@@ -1321,6 +1675,8 @@
     label: code => ui(code).nav,
     sectionLabel: (section, code) => ui(code).sections[section] || section,
     exportData: downloadLexicon,
+    exportEpub: downloadEpub,
+    printPdf: printLexicon,
     termCount: TERMS.length,
     sourceCount: SOURCES.length
   });

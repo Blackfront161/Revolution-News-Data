@@ -16,7 +16,7 @@ spec.loader.exec_module(audit)
 report = audit.run_audit(root=ROOT, write_report=False)
 summary = report["summary"]
 
-assert report["version"] == "1.8.4"
+assert report["version"] == audit.EXPECTED_VERSION
 assert report["readOnlyAudit"] is True
 assert summary["fail"] == 0, [
     item for item in report["checks"] if item["status"] == "fail"
@@ -47,7 +47,7 @@ assert "release-readiness-183.json" in quality
 assert audit.REPORT_PATH.name == "release-readiness-183.json"
 
 print(
-    "WRN 1.8.4 release: "
+    f"WRN {audit.EXPECTED_VERSION} release: "
     f"{summary['pass']} passed, "
     f"{summary['warning']} warnings, "
     f"{summary['total']} total"

@@ -12,7 +12,7 @@
       lexicon: 'Lexikon', about: 'Über das Projekt',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
-      contact: 'Kontakt', donate: 'Spenden', storage: 'Speicher', status: 'Status', clear: 'Cache leeren',
+      contact: 'Feedback', donate: 'Spenden', storage: 'Speicher', status: 'App-Selbsttest', diagnostics: 'Diagnose', clear: 'Cache leeren',
       searchPlaceholder: 'Artikel durchsuchen…', originalPodcasts: 'Original-Podcasts',
       generatedPodcasts: 'Erzeugte Podcasts', liveRadio: 'Live-Radio', bookmarks: 'Später lesen', read: 'Gelesen'
     },
@@ -22,7 +22,7 @@
       lexicon: 'Glossary', about: 'About the project',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
-      contact: 'Contact', donate: 'Donate', storage: 'Storage', status: 'Status', clear: 'Clear cache',
+      contact: 'Feedback', donate: 'Donate', storage: 'Storage', status: 'App self-test', diagnostics: 'Diagnostics', clear: 'Clear cache',
       searchPlaceholder: 'Search articles…', originalPodcasts: 'Original podcasts',
       generatedPodcasts: 'Generated podcasts', liveRadio: 'Live radio', bookmarks: 'Read later', read: 'Read'
     }
@@ -218,9 +218,12 @@
   }
 
   function texts() {
-    return window.WRNI18n?.dictionary?.(languageKey())?.nav
-      || NAV_TEXTS[languageKey()]
-      || NAV_TEXTS.en;
+    const language = languageKey();
+    return {
+      ...NAV_TEXTS.en,
+      ...(window.WRNI18n?.dictionary?.(language)?.nav || {}),
+      ...(NAV_TEXTS[language] || {})
+    };
   }
 
   function subTabLabel(tab, key, fallback) {
@@ -467,12 +470,6 @@
         () => activateTab('about')
       ),
       actionButton(
-        texts().info,
-        'ℹ️',
-        'info',
-        () => typeof openInfo === 'function' && openInfo()
-      ),
-      actionButton(
         texts().contact,
         '💬',
         'contact',
@@ -491,12 +488,6 @@
         () => typeof openDataControl === 'function' && openDataControl()
       ),
       actionButton(
-        texts().status,
-        '●',
-        'status',
-        () => typeof openSystemStatus === 'function' && openSystemStatus()
-      ),
-      actionButton(
         texts().clear,
         '🗑️',
         'clear',
@@ -506,6 +497,10 @@
 
     const adminTools = document.createElement('div');
     adminTools.className = 'wrn-more-admin-tools-184';
+    const diagnosticsTitle = document.createElement('strong');
+    diagnosticsTitle.className = 'wrn-more-diagnostics-title-185';
+    diagnosticsTitle.textContent = texts().diagnostics || 'Diagnostics';
+    adminTools.append(diagnosticsTitle);
     panel.append(head, grid, actions, adminTools);
     document.body.appendChild(panel);
 

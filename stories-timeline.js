@@ -16,7 +16,10 @@
       timeline: 'Zeitleiste', watch: 'Beobachten', watching: 'Beobachtet', share: 'Teilen', copy: 'Kopiert', open: 'Artikel öffnen',
       sourcesLabel: 'Quellen', first: 'Beginn', latest: 'Neuester Stand', local: 'Lokal analysiert', terms: 'Beobachtungsliste',
       translate: 'Übersetzen', translating: 'Wird übersetzt…', original: 'Original', translationError: 'Übersetzung fehlgeschlagen',
-      watchedOnly: 'Beobachtete', showAll: 'Alle', reset: 'Übersicht'
+      watchedOnly: 'Beobachtete', showAll: 'Alle', reset: 'Übersicht',
+      kind: 'Art', allKinds: 'Nachrichten & Termine', newsKind: 'Nachrichten', eventKind: 'Termine',
+      beta: 'Beta', linkedBecause: 'Verbunden wegen', confidence: 'Übereinstimmung',
+      betaHint: 'Nur Nachrichten oder nur Termine werden bei hoher inhaltlicher Übereinstimmung gruppiert.'
     },
     en: {
       title: 'Understand developments', intro: 'Reports from different sources about the same topic are combined into an easy-to-follow timeline.',
@@ -25,7 +28,10 @@
       timeline: 'Timeline', watch: 'Watch', watching: 'Watching', share: 'Share', copy: 'Copied', open: 'Open article',
       sourcesLabel: 'Sources', first: 'Beginning', latest: 'Latest', local: 'Analyzed locally', terms: 'Watchlist',
       translate: 'Translate', translating: 'Translating…', original: 'Original', translationError: 'Translation failed',
-      watchedOnly: 'Watched', showAll: 'All', reset: 'Overview'
+      watchedOnly: 'Watched', showAll: 'All', reset: 'Overview',
+      kind: 'Type', allKinds: 'News & events', newsKind: 'News', eventKind: 'Events',
+      beta: 'Beta', linkedBecause: 'Linked because of', confidence: 'Match',
+      betaHint: 'Only news with news or events with events are grouped, and only with strong content overlap.'
     },
     es: {
       title:'Desarrollos y cronologías', intro:'Varios informes se agrupan localmente. No se suben datos.', search:'Buscar desarrollos…', period:'Periodo',
@@ -78,15 +84,15 @@
     }
   };
   const CONTROL_TEXTS = {
-    en: { watchedOnly: 'Watched', showAll: 'All', reset: 'Overview' },
-    de: { watchedOnly: 'Beobachtete', showAll: 'Alle', reset: 'Übersicht' },
-    es: { watchedOnly: 'Seguidos', showAll: 'Todos', reset: 'Vista general' },
-    fr: { watchedOnly: 'Suivis', showAll: 'Tout', reset: 'Vue d’ensemble' },
-    it: { watchedOnly: 'Seguiti', showAll: 'Tutti', reset: 'Panoramica' },
-    pt: { watchedOnly: 'Observados', showAll: 'Todos', reset: 'Visão geral' },
-    ru: { watchedOnly: 'Отслеживаемые', showAll: 'Все', reset: 'Обзор' },
-    el: { watchedOnly: 'Παρακολουθούμενα', showAll: 'Όλα', reset: 'Επισκόπηση' },
-    tr: { watchedOnly: 'İzlenenler', showAll: 'Tümü', reset: 'Genel görünüm' }
+    en: { watchedOnly:'Watched', showAll:'All', reset:'Overview', kind:'Type', allKinds:'News & events', newsKind:'News', eventKind:'Events' },
+    de: { watchedOnly:'Beobachtete', showAll:'Alle', reset:'Übersicht', kind:'Art', allKinds:'Nachrichten & Termine', newsKind:'Nachrichten', eventKind:'Termine' },
+    es: { watchedOnly:'Seguidos', showAll:'Todos', reset:'Vista general', kind:'Tipo', allKinds:'Noticias y eventos', newsKind:'Noticias', eventKind:'Eventos' },
+    fr: { watchedOnly:'Suivis', showAll:'Tout', reset:'Vue d’ensemble', kind:'Type', allKinds:'Actualités et événements', newsKind:'Actualités', eventKind:'Événements' },
+    it: { watchedOnly:'Seguiti', showAll:'Tutti', reset:'Panoramica', kind:'Tipo', allKinds:'Notizie ed eventi', newsKind:'Notizie', eventKind:'Eventi' },
+    pt: { watchedOnly:'Observados', showAll:'Todos', reset:'Visão geral', kind:'Tipo', allKinds:'Notícias e eventos', newsKind:'Notícias', eventKind:'Eventos' },
+    ru: { watchedOnly:'Отслеживаемые', showAll:'Все', reset:'Обзор', kind:'Тип', allKinds:'Новости и события', newsKind:'Новости', eventKind:'События' },
+    el: { watchedOnly:'Παρακολουθούμενα', showAll:'Όλα', reset:'Επισκόπηση', kind:'Τύπος', allKinds:'Ειδήσεις και εκδηλώσεις', newsKind:'Ειδήσεις', eventKind:'Εκδηλώσεις' },
+    tr: { watchedOnly:'İzlenenler', showAll:'Tümü', reset:'Genel görünüm', kind:'Tür', allKinds:'Haberler ve etkinlikler', newsKind:'Haberler', eventKind:'Etkinlikler' }
   };
 
   let root = null;
@@ -94,6 +100,7 @@
   const DEFAULT_STATE = Object.freeze({
     days: 30,
     minSources: 2,
+    kind: 'all',
     search: '',
     watchedOnly: false
   });
@@ -108,6 +115,9 @@
       minSources: [2, 3, 4].includes(Number(candidate.minSources))
         ? Number(candidate.minSources)
         : DEFAULT_STATE.minSources,
+      kind: ['all', 'news', 'event'].includes(candidate.kind)
+        ? candidate.kind
+        : DEFAULT_STATE.kind,
       search: String(candidate.search || ''),
       watchedOnly: candidate.watchedOnly === true
     };
@@ -401,6 +411,25 @@
       renderStories();
     });
 
+    const kind = document.createElement('select');
+    kind.setAttribute('aria-label', copy.kind);
+    [
+      ['all', copy.allKinds],
+      ['news', copy.newsKind],
+      ['event', copy.eventKind]
+    ].forEach(([value, label]) => {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = label;
+      kind.appendChild(option);
+    });
+    kind.value = state.kind || 'all';
+    kind.addEventListener('change', () => {
+      state.kind = kind.value;
+      writeLocal(STATE_KEY, state);
+      renderStories();
+    });
+
     const advanced = document.createElement('details');
     advanced.className = 'wrn-stories-advanced';
     const advancedLabel = document.createElement('summary');
@@ -453,7 +482,7 @@
       render();
     });
 
-    controls.append(search, period, watched, advanced, reset);
+    controls.append(search, period, kind, watched, advanced, reset);
     container.appendChild(controls);
   }
 
@@ -471,7 +500,7 @@
     title.textContent = displayTitle(story);
     const meta = document.createElement('p');
     meta.className = 'wrn-story-meta';
-    meta.textContent = `${story.itemCount} ${copy.articles} · ${story.sourceCount} ${copy.sourcesLabel.toLocaleLowerCase()} · ${formatDate(story.oldest)} → ${formatDate(story.newest)}`;
+    meta.textContent = `${story.kind === 'event' ? copy.eventKind : copy.newsKind} · ${story.itemCount} ${copy.articles} · ${story.sourceCount} ${copy.sourcesLabel} · ${formatDate(story.oldest)} → ${formatDate(story.newest)}`;
     titleWrap.append(title, meta);
 
     const actions = document.createElement('div');
@@ -498,6 +527,14 @@
     sourceLine.className = 'wrn-story-sources';
     sourceLine.textContent = `${copy.sourcesLabel}: ${story.sources.join(' · ')}`;
     card.appendChild(sourceLine);
+
+    if (story.matchReasons?.length) {
+      const reason = document.createElement('p');
+      reason.className = 'wrn-story-match-reason-185';
+      const confidence = Math.round(Number(story.matchConfidence || 0) * 100);
+      reason.textContent = `${copy.linkedBecause}: ${story.matchReasons.join(' · ')} · ${copy.confidence}: ${confidence}%`;
+      card.appendChild(reason);
+    }
 
     const timeline = document.createElement('details');
     timeline.open = false;
@@ -590,6 +627,9 @@
     if (state.watchedOnly) {
       filtered = filtered.filter(isWatching);
     }
+    if (state.kind !== 'all') {
+      filtered = filtered.filter(story => story.kind === state.kind);
+    }
 
     list.textContent = '';
 
@@ -624,6 +664,11 @@
     head.className = 'wrn-stories-topbar';
     const title = document.createElement('h2');
     title.textContent = copy.title;
+    const beta = document.createElement('span');
+    beta.className = 'wrn-stories-beta-185';
+    beta.textContent = copy.beta;
+    beta.title = copy.betaHint;
+    title.append(' ', beta);
     const intro = document.createElement('p');
     intro.textContent = `🔒 ${copy.intro}`;
     head.append(title, intro);

@@ -14,7 +14,7 @@ const styles = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
 const lexicon = fs.readFileSync(path.join(root, 'lexicon-tab.js'), 'utf8');
 
 const orderSource = app.match(
-  /function articlePublisherKey\(article\)[\s\S]*?window\.WRNFeedOrder = Object\.freeze\(\{ interleaveArticlesByPublisher \}\);/
+  /function articlePublisherKey\(article\)[\s\S]*?window\.WRNFeedOrder = Object\.freeze\(\{[\s\S]*?\}\);/
 );
 assert(orderSource, 'Publisher mixing implementation is missing.');
 const feedOrder = new Function(
@@ -42,6 +42,26 @@ for (let index = 1; index < mixed.length; index += 1) {
     'Adjacent publishers must differ when enough alternatives exist.'
   );
 }
+
+const crowded = [];
+for (let index = 0; index < 8; index += 1) {
+  crowded.push({ quelleName:'Dominant', id:`d${index}`, title:`Dominant ${index}`, link:`https://dominant.example/${index}` });
+}
+for (let index = 0; index < 10; index += 1) {
+  crowded.push({ quelleName:`Source ${index}`, id:`s${index}`, title:`Other ${index}`, link:`https://source-${index}.example/item` });
+}
+crowded.push({ quelleName:'Duplicate mirror', id:'duplicate', title:'Duplicate', link:'https://source-1.example/item?utm_source=test' });
+const diversified = feedOrder.interleaveArticlesByPublisher(crowded);
+assert.equal(
+  diversified.slice(0, 10).filter(item => item.quelleName === 'Dominant').length,
+  2,
+  'The first ten items may contain at most two articles from one publisher.'
+);
+assert.equal(
+  diversified.filter(item => String(item.link).includes('source-1.example/item')).length,
+  1,
+  'Tracking variants of the same URL must be deduplicated.'
+);
 
 for (const marker of [
   "view.id = 'wrn-summary-view'",

@@ -301,6 +301,19 @@ def activate_config() -> bool:
     return True
 
 
+def configured_version() -> str:
+    if not CONFIG_PATH.is_file():
+        return ""
+    source = CONFIG_PATH.read_text(encoding="utf-8")
+    match = re.search(
+        r"window\.WRN_CONFIG\s*=\s*Object\.freeze\(\{.*?"
+        r"\bversion:\s*['\"]([^'\"]+)",
+        source,
+        re.DOTALL,
+    )
+    return match.group(1) if match else ""
+
+
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
@@ -329,7 +342,7 @@ def main() -> int:
     status = {
         "ok": True,
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "version": "1.8.4",
+        "version": configured_version(),
         "news": {
             "archiveCount": len(news),
             "feedCount": len(news_feed),
