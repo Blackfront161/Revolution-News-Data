@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.5-quality-release';
-const DATA_CACHE = 'wrn-data-v1.8.5-quality-release';
+const APP_CACHE = 'wrn-app-v1.8.6-source-balance';
+const DATA_CACHE = 'wrn-data-v1.8.6-source-balance';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [

@@ -121,7 +121,7 @@
   });
 
   const CORRUPTION_TERMS = Object.freeze([
-    'corruption', 'corrupt', 'bribery', 'bribe', 'embezzlement', 'kickback', 'graft', 'nepotism', 'cronyism',
+    'corruption', 'corrupt', 'bribery', 'bribe', 'embezzlement', 'kickback', 'graft', 'extortion', 'nepotism', 'cronyism',
     'korruption', 'korrupt', 'bestechung', 'bestechlich', 'veruntreuung', 'vetternwirtschaft', 'nepotismus',
     'corrupción', 'corrupcion', 'soborno', 'cohecho', 'malversación', 'malversacion',
     'corruption', 'pot-de-vin', 'pots-de-vin', 'détournement', 'detournement',
@@ -194,12 +194,23 @@
       || clean(item?.kontinent) === 'Radar'
       || categories.includes('Radar')
     ) return false;
-    const values = [
-      item?.title, item?.summary, item?.description, item?.content,
+    const containsTerm = value => {
+      const haystack = normalize(
+        (Array.isArray(value) ? value : [value])
+          .flat()
+          .join(' ')
+      );
+      return CORRUPTION_TERMS.some(term => haystack.includes(normalize(term)));
+    };
+
+    // Nur Titel, Zusammenfassung oder redaktionelle Metadaten sind belastbare
+    // Signale. Volltexte enthalten oft historische Nebenbemerkungen und
+    // erzeugten zuvor zahlreiche sachfremde Treffer.
+    return containsTerm(item?.title)
+      || containsTerm([item?.summary, item?.description])
+      || containsTerm([
       item?.kategorie, item?.category, categories, item?.topics, item?.tags
-    ];
-    const haystack = normalize(values.flatMap(value => Array.isArray(value) ? value : [value]).join(' '));
-    return CORRUPTION_TERMS.some(term => haystack.includes(normalize(term)));
+      ]);
   }
 
   function rowsForCategory(input, category = currentCategory()) {

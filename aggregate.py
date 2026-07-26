@@ -622,6 +622,23 @@ for _wrn_bucket in quellen.values():
     for _wrn_source in _wrn_bucket:
         if safe_lower(_wrn_source.get("name")).startswith("bianet "):
             _wrn_source["maxNewItems"] = 1
+        if safe_lower(_wrn_source.get("name")) == "umanita nova (it)":
+            _wrn_source.update({
+                "url": "https://umanitanova.org/feed/",
+                "homepage": "https://umanitanova.org/",
+                "language": "it",
+                "languages": ["it"],
+                "categories": [
+                    "Europe", "Movement News", "Anticapitalism",
+                    "Antifascism", "No War", "Theory & Strategy",
+                ],
+                "originCountry": "Italy",
+                "originCountryCode": "IT",
+                "originRegion": "Southern Europe",
+                "maxNewItems": 4,
+                "minArticleTextLength": 700,
+                "articleSelectors": ["article", ".entry-content", "main"],
+            })
         if safe_lower(_wrn_source.get("name")) == "truthout":
             # Truthouts Feed enthält nur Anreißer. Der erste Reparaturlauf
             # darf deshalb alle im Feed sichtbaren Auszüge nachladen; danach
@@ -635,6 +652,244 @@ for _wrn_bucket in quellen.values():
                 "article",
                 "main",
             ]
+
+# WRN SOURCE BALANCE 1.8.6 START
+# Regions and topics with low visible diversity receive small, source-specific
+# intake limits. This adds diversity without allowing a new feed to dominate.
+_wrn_extra_sources_186 = [
+    {
+        "name": "Groundxero",
+        "url": "https://www.groundxero.in/feed/",
+        "homepage": "https://www.groundxero.in/",
+        "language": "en",
+        "categories": [
+            "Asia", "Antiracism", "Labor Struggles",
+            "Indigenous Struggles", "Antisexism", "Eco-Anarchism",
+        ],
+        "originCountry": "India",
+        "originCountryCode": "IN",
+        "originRegion": "South Asia",
+        "maxNewItems": 4,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Round Table India",
+        "url": "https://www.roundtableindia.co.in/feed/",
+        "homepage": "https://www.roundtableindia.co.in/",
+        "language": "en",
+        "categories": [
+            "Asia", "Antiracism", "Anticolonialism",
+            "Antisexism", "Theory & Strategy",
+        ],
+        "originCountry": "India",
+        "originCountryCode": "IN",
+        "originRegion": "South Asia",
+        "maxNewItems": 4,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "A.N.A. Brasil",
+        "url": "https://noticiasanarquistas.noblogs.org/feed/",
+        "homepage": "https://noticiasanarquistas.noblogs.org/",
+        "language": "pt",
+        "categories": [
+            "Latin America", "Movement News", "Anticapitalism",
+            "Antifascism", "No War",
+        ],
+        "originCountry": "Brazil",
+        "originCountryCode": "BR",
+        "originRegion": "South America",
+        "maxNewItems": 4,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "La Zarzamora",
+        "url": "https://lazarzamora.cl/feed/",
+        "homepage": "https://lazarzamora.cl/",
+        "language": "es",
+        "categories": [
+            "Latin America", "Antisexism", "Animal Liberation",
+            "Indigenous Struggles", "Antiracism", "Anti-Rep & Prisons",
+        ],
+        "originCountry": "Chile",
+        "originCountryCode": "CL",
+        "originRegion": "South America",
+        "maxNewItems": 4,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Radio Kurruf Noticias",
+        "url": "https://radiokurruf.org/feed/",
+        "homepage": "https://radiokurruf.org/",
+        "language": "es",
+        "categories": [
+            "Latin America", "Indigenous Struggles",
+            "Anti-Rep & Prisons", "Anticolonialism",
+        ],
+        "originCountry": "Chile",
+        "originCountryCode": "CL",
+        "originRegion": "Wallmapu",
+        "maxNewItems": 3,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Agencia Tierra Viva",
+        "url": "https://agenciatierraviva.com.ar/feed/",
+        "homepage": "https://agenciatierraviva.com.ar/",
+        "language": "es",
+        "categories": [
+            "Latin America", "Indigenous Struggles",
+            "Eco-Anarchism", "Anticapitalism",
+        ],
+        "originCountry": "Argentina",
+        "originCountryCode": "AR",
+        "originRegion": "South America",
+        "maxNewItems": 3,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "InfoAut",
+        "url": "https://infoaut.org/feed",
+        "homepage": "https://infoaut.org/",
+        "language": "it",
+        "categories": [
+            "Europe", "Movement News", "Anti-Rep & Prisons",
+            "Anticapitalism", "Labor Struggles", "Antifascism",
+        ],
+        "originCountry": "Italy",
+        "originCountryCode": "IT",
+        "originRegion": "Southern Europe",
+        "maxNewItems": 3,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Sicilia Libertaria",
+        "url": "https://www.sicilialibertaria.it/feed/",
+        "homepage": "https://www.sicilialibertaria.it/",
+        "language": "it",
+        "categories": [
+            "Europe", "Theory & Strategy", "Anticapitalism",
+            "No War", "Antifascism",
+        ],
+        "originCountry": "Italy",
+        "originCountryCode": "IT",
+        "originRegion": "Southern Europe",
+        "maxNewItems": 3,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Anarres Info",
+        "url": "https://anarresinfo.org/feed/",
+        "homepage": "https://anarresinfo.org/",
+        "language": "it",
+        "categories": [
+            "Europe", "Movement News", "Theory & Strategy",
+            "No War", "Anticapitalism",
+        ],
+        "originCountry": "Italy",
+        "originCountryCode": "IT",
+        "originRegion": "Southern Europe",
+        "maxNewItems": 3,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "European Digital Rights",
+        "url": "https://edri.org/feed/",
+        "homepage": "https://edri.org/",
+        "language": "en",
+        "categories": [
+            "Europe", "Cyberactivism", "No Borders",
+            "Antiracism", "Anti-Rep & Prisons",
+        ],
+        "originCountry": "Belgium",
+        "originCountryCode": "BE",
+        "originRegion": "Europe",
+        "maxNewItems": 4,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Access Now",
+        "url": "https://www.accessnow.org/feed/",
+        "homepage": "https://www.accessnow.org/",
+        "language": "en",
+        "categories": [
+            "Global", "Cyberactivism", "No Borders",
+            "Antiracism", "Anti-Rep & Prisons",
+        ],
+        "originRegion": "Global",
+        "maxNewItems": 4,
+        "minArticleTextLength": 700,
+        "articleSelectors": ["article", ".entry-content", "main"],
+    },
+    {
+        "name": "Tactical Tech",
+        "url": "https://tacticaltech.org/rss.xml",
+        "homepage": "https://tacticaltech.org/",
+        "language": "en",
+        "categories": ["Global", "Cyberactivism", "Theory & Strategy"],
+        "originRegion": "Global",
+        "maxNewItems": 3,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", "main"],
+    },
+    {
+        "name": "Digitalcourage",
+        "url": "https://digitalcourage.de/rss.xml",
+        "homepage": "https://digitalcourage.de/",
+        "language": "de",
+        "categories": [
+            "Europe", "Cyberactivism",
+            "Anti-Rep & Prisons", "Anticapitalism",
+        ],
+        "originCountry": "Germany",
+        "originCountryCode": "DE",
+        "originRegion": "Europe",
+        "maxNewItems": 4,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", "main"],
+    },
+    {
+        "name": "Animal Rising",
+        "url": "https://www.animalrising.org/blog-feed.xml",
+        "homepage": "https://www.animalrising.org/",
+        "language": "en",
+        "categories": [
+            "Europe", "Animal Liberation",
+            "Demonstrations", "Anti-Rep & Prisons",
+        ],
+        "originCountry": "United Kingdom",
+        "originCountryCode": "GB",
+        "originRegion": "Europe",
+        "maxNewItems": 4,
+        "minArticleTextLength": 650,
+        "articleSelectors": ["article", "main"],
+    },
+]
+
+_wrn_known_source_names_186 = {
+    safe_lower(item.get("name"))
+    for bucket in quellen.values()
+    for item in bucket
+    if isinstance(item, dict)
+}
+for _wrn_source in _wrn_extra_sources_186:
+    if safe_lower(_wrn_source.get("name")) in _wrn_known_source_names_186:
+        continue
+    _wrn_primary_category = _wrn_source.get("categories", ["Global"])[0]
+    quellen.setdefault(_wrn_primary_category, []).append(_wrn_source)
+    _wrn_known_source_names_186.add(safe_lower(_wrn_source.get("name")))
+# WRN SOURCE BALANCE 1.8.6 END
+
 ARTICLE_MIN_LENGTHS = {
     safe_lower(source.get("name")): max(
         350,
@@ -1903,13 +2158,28 @@ for kontinent, feeds in quellen.items():
                     configured_categories = feed.get("categories", [kontinent])
                     if not isinstance(configured_categories, list):
                         configured_categories = [configured_categories]
-                    existing_article["categories"] = infer_article_categories(
+                    existing_classification = classify_article(
                         existing_article.get("title", ""),
                         existing_article.get("content", ""),
                         configured_categories,
                         kontinent,
                         source_tags,
+                        feed.get("originCountryCode"),
                     )
+                    for classification_key in (
+                        "categories",
+                        "primaryRegion",
+                        "primaryTopic",
+                        "secondaryTopics",
+                        "classificationConfidence",
+                        "classificationMethod",
+                        "topicScores",
+                        "editorialReview",
+                        "editorialReviewReasons",
+                    ):
+                        existing_article[classification_key] = (
+                            existing_classification[classification_key]
+                        )
                     for existing_key, configured_key in (
                         ("sourceHomepage", "homepage"),
                         ("originCountry", "originCountry"),

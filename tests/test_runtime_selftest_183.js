@@ -14,7 +14,7 @@ assert.doesNotThrow(
     () => new Function(source),
     'runtime-selftest.js must be valid JavaScript'
 );
-assert.match(source, /const EXPECTED_VERSION = '1\.8\.5';/);
+assert.match(source, /const EXPECTED_VERSION = '1\.8\.6';/);
 assert.doesNotMatch(source, /EXPECTED_VERSION\s*=\s*['"]1\.7\.(?:5|17)['"]/);
 
 for (const language of ['en', 'de', 'es', 'fr', 'it', 'pt', 'ru', 'el', 'tr']) {
@@ -45,4 +45,4 @@ assert.ok(source.includes('navigator.serviceWorker?.controller'));
 assert.ok(source.includes("'./manifest.json'"));
 assert.ok(source.includes('new MutationObserver'));
 
-console.log('WRN 1.8.5 runtime self-test contracts: OK');
+console.log('WRN 1.8.6 runtime self-test contracts: OK');

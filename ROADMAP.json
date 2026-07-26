@@ -1,8 +1,8 @@
 {
   "current": {
-    "version": "1.8.2",
-    "name": "Türkische und kurdische Quellen, Sprach- und Herkunftsfilter",
-    "status": "lokal getestet und für Quality Gate bereit"
+    "version": "1.8.6",
+    "name": "Ausgewogenere Quellen und stabiler Korruptions-Reiter",
+    "status": "implementiert und im Quality Gate"
   },
   "completedInCurrent": [
     "Bianet Türkçe und Evrensel als türkischsprachige Quellen",
@@ -18,8 +18,25 @@
       "name": "Aktionsradar"
     },
     {
+      "version": "1.9",
+      "name": "Gefangenen-Solidarität",
+      "scope": [
+        "kuratiertes, regelmäßig überprüftes Verzeichnis öffentlich geteilter Haftadressen",
+        "Briefassistent mit lokalen Entwürfen, Übersetzungshilfe und Druckansicht",
+        "anstaltsspezifische Postregeln mit Quelle und Prüfdatum",
+        "verknüpfte Nachrichten aus dem bestehenden WRN-Archiv",
+        "keine automatische Veröffentlichung unbestätigter Personen- oder Adressdaten"
+      ]
+    },
+    {
       "version": "2.0",
-      "name": "Push-Mitteilungen und skalierbare gemeinsame Daten"
+      "name": "Push-Mitteilungen und skalierbare gemeinsame Daten",
+      "scope": [
+        "Karten- und Entfernungssuche für Termine",
+        "redaktionelle Prüfliste für unsichere Themenzuordnungen",
+        "automatisierte Quellen-Gesundheitsprüfung und Ablaufdaten",
+        "datensparsame optionale Benachrichtigungen"
+      ]
     },
     {
       "version": "später",
