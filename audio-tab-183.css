@@ -57,14 +57,14 @@
 
 .wrn-audio-controls-183 {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) minmax(140px, .5fr) minmax(120px, .35fr);
+  grid-template-columns: minmax(180px, 1fr) repeat(3, minmax(120px, .42fr));
   gap: .55rem;
   margin-bottom: .7rem;
 }
 .wrn-audio-controls-183 input,
 .wrn-audio-controls-183 select {
   width: 100%;
-  min-height: 42px;
+  min-height: 44px;
   box-sizing: border-box;
   border: 1px solid var(--border-read);
   border-radius: 5px;

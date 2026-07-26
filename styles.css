@@ -1764,6 +1764,25 @@ body.view-headlines .editorial-badges { margin-bottom: 5px; }
     line-height: 1.45;
 }
 .translation-cache-note { font-style: italic; }
+.translation-machine-status-185 {
+    flex: 0 0 100%;
+    margin: 0 0 2px;
+    color: var(--text-muted);
+    font-size: .61rem;
+    line-height: 1.35;
+}
+.translation-original-link-185 {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 3px 7px;
+    border: 1px solid rgba(0,240,255,.55);
+    border-radius: 999px;
+    color: var(--color-cyan);
+    font-size: .62rem;
+    font-weight: 800;
+    text-decoration: none;
+}
 .translation-compare-modal { max-width: 980px; }
 .translation-compare-grid {
     display: grid;

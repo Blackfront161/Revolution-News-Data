@@ -1,10 +1,10 @@
-/* World Revolution News 1.8.4 – read-only runtime self-test */
+/* World Revolution News 1.8.5 – read-only runtime self-test */
 'use strict';
 
 (() => {
     if (window.WRNRuntimeSelfTest) return;
 
-    const EXPECTED_VERSION = '1.8.4';
+    const EXPECTED_VERSION = '1.8.5';
     const TEMP_STORAGE_KEY = '__wrn_runtime_selftest_183__';
     const SUPPORTED_LANGUAGES = Object.freeze([
         'en', 'de', 'es', 'fr', 'it', 'pt', 'ru', 'el', 'tr'
@@ -19,7 +19,7 @@
 
     const TEXTS = Object.freeze({
         en: Object.freeze({
-            button:'App self-test', title:'WRN 1.8.4 release self-test',
+            button:'App self-test', title:'WRN 1.8.5 release self-test',
             subtitle:'Read-only checks for this device and the published app.',
             run:'Run again', copy:'Copy report', close:'Close',
             running:'Checks are running…', copied:'Report copied.',
@@ -41,7 +41,7 @@
             offlineHint:'Offline: network checks are reported as warnings.'
         }),
         de: Object.freeze({
-            button:'App-Selbsttest', title:'WRN 1.8.4 Release-Test',
+            button:'App-Selbsttest', title:'WRN 1.8.5 Release-Test',
             subtitle:'Rein lesende Prüfungen für dieses Gerät und die veröffentlichte App.',
             run:'Erneut prüfen', copy:'Bericht kopieren', close:'Schließen',
             running:'Prüfung läuft…', copied:'Bericht kopiert.',
@@ -63,7 +63,7 @@
             offlineHint:'Offline: Netzwerkprüfungen werden als Hinweise gewertet.'
         }),
         es: Object.freeze({
-            button:'Autoprueba de la app', title:'Prueba de lanzamiento WRN 1.8.4',
+            button:'Autoprueba de la app', title:'Prueba de lanzamiento WRN 1.8.5',
             subtitle:'Comprobaciones de solo lectura del dispositivo y la app publicada.',
             run:'Comprobar de nuevo', copy:'Copiar informe', close:'Cerrar',
             running:'Comprobando…', copied:'Informe copiado.',
@@ -85,7 +85,7 @@
             offlineHint:'Sin conexión: los fallos de red se muestran como avisos.'
         }),
         fr: Object.freeze({
-            button:'Autotest de l’app', title:'Autotest de publication WRN 1.8.4',
+            button:'Autotest de l’app', title:'Autotest de publication WRN 1.8.5',
             subtitle:'Contrôles en lecture seule de cet appareil et de l’application publiée.',
             run:'Vérifier à nouveau', copy:'Copier le rapport', close:'Fermer',
             running:'Vérification en cours…', copied:'Rapport copié.',
@@ -107,7 +107,7 @@
             offlineHint:'Hors ligne : les erreurs réseau sont signalées comme avertissements.'
         }),
         it: Object.freeze({
-            button:'Autotest dell’app', title:'Autotest di rilascio WRN 1.8.4',
+            button:'Autotest dell’app', title:'Autotest di rilascio WRN 1.8.5',
             subtitle:'Controlli di sola lettura del dispositivo e dell’app pubblicata.',
             run:'Controlla di nuovo', copy:'Copia rapporto', close:'Chiudi',
             running:'Controllo in corso…', copied:'Rapporto copiato.',
@@ -129,7 +129,7 @@
             offlineHint:'Offline: i problemi di rete vengono mostrati come avvisi.'
         }),
         pt: Object.freeze({
-            button:'Autoteste da aplicação', title:'Autoteste de lançamento WRN 1.8.4',
+            button:'Autoteste da aplicação', title:'Autoteste de lançamento WRN 1.8.5',
             subtitle:'Verificações só de leitura deste dispositivo e da aplicação publicada.',
             run:'Verificar novamente', copy:'Copiar relatório', close:'Fechar',
             running:'A verificar…', copied:'Relatório copiado.',
@@ -151,7 +151,7 @@
             offlineHint:'Offline: os problemas de rede são apresentados como avisos.'
         }),
         ru: Object.freeze({
-            button:'Самопроверка приложения', title:'Самопроверка релиза WRN 1.8.4',
+            button:'Самопроверка приложения', title:'Самопроверка релиза WRN 1.8.5',
             subtitle:'Проверки устройства и опубликованного приложения только для чтения.',
             run:'Проверить снова', copy:'Копировать отчёт', close:'Закрыть',
             running:'Идёт проверка…', copied:'Отчёт скопирован.',
@@ -173,7 +173,7 @@
             offlineHint:'Не в сети: сетевые ошибки отмечаются как предупреждения.'
         }),
         el: Object.freeze({
-            button:'Αυτοέλεγχος εφαρμογής', title:'Αυτοέλεγχος έκδοσης WRN 1.8.4',
+            button:'Αυτοέλεγχος εφαρμογής', title:'Αυτοέλεγχος έκδοσης WRN 1.8.5',
             subtitle:'Έλεγχοι μόνο για ανάγνωση στη συσκευή και τη δημοσιευμένη εφαρμογή.',
             run:'Νέος έλεγχος', copy:'Αντιγραφή αναφοράς', close:'Κλείσιμο',
             running:'Ο έλεγχος εκτελείται…', copied:'Η αναφορά αντιγράφηκε.',
@@ -195,7 +195,7 @@
             offlineHint:'Εκτός σύνδεσης: τα προβλήματα δικτύου εμφανίζονται ως προειδοποιήσεις.'
         }),
         tr: Object.freeze({
-            button:'Uygulama öz testi', title:'WRN 1.8.4 sürüm öz testi',
+            button:'Uygulama öz testi', title:'WRN 1.8.5 sürüm öz testi',
             subtitle:'Bu cihaz ve yayımlanan uygulama için salt okunur denetimler.',
             run:'Yeniden denetle', copy:'Raporu kopyala', close:'Kapat',
             running:'Denetimler çalışıyor…', copied:'Rapor kopyalandı.',
@@ -391,7 +391,7 @@
         const build = String(config.build || '');
         results.push(result(
             text.build,
-            build.includes('1.8.4') && build.includes('release')
+            build.includes(EXPECTED_VERSION) && build.includes('release')
                 ? 'pass' : 'fail',
             build || text.missing
         ));

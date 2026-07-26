@@ -21,7 +21,29 @@
     'que','dos','das','uma','com','sem','sobre','contra',
     'это','для','как','что','или','при','был','будет',
     'και','των','για','από','στο','στη','είναι',
-    'ile','bir','bu','için','karşı','olan'
+    'ile','bir','bu','için','karşı','olan',
+    // Generic newsroom words must not connect otherwise unrelated reports.
+    'world','global','international','news','report','reports','update','updates','bay','area',
+    'support','solidarity','movement','people','today','week','month','year',
+    'summer','winter','spring','autumn','break','holiday','statement','issue',
+    'welt','bericht','berichte','meldung','aktuell','heute','woche','monat',
+    'unterstützung','unterstutzung','solidarität','solidaritat','sommer','pause','erklärung','erklarung',
+    'fur','uber','aufruf','aufrufe','aktion','aktionen','januar','februar','marz','april','mai','juni','juli','august','september','oktober','november','dezember',
+    'monde','rapport','actualité','soutien','solidarité','été',
+    'mundo','noticias','informe','apoyo','solidaridad','verano',
+    'mondo','notizie','rapporto','sostegno','solidarietà',
+    'haber','dünya','destek','dayanışma','açıklama'
+  ]);
+
+  // Einzelne sehr große Regionen oder Länder sind kein ausreichender Grund,
+  // zwei inhaltlich verschiedene Meldungen als dieselbe Entwicklung zu führen.
+  const WEAK_ENTITIES = new Set([
+    'world','global','international','europe','europa','africa','afrika','asia','asien',
+    'argentina','bay area','germany','deutschland','france','frankreich','italy','italien',
+    'spain','spanien','turkey','turkiye','türkiye','philippines','ukraine','russia',
+    'january','february','march','april','may','june','july','august','september',
+    'october','november','december','januar','februar','marz','märz','mai','juni',
+    'juli','oktober','dezember'
   ]);
 
   function cleanText(value) {
@@ -121,8 +143,111 @@
   function itemTokens(item) {
     return tokens(
       `${item?.title || ''} ${item?.summary || ''}`,
-      18
+      24
     );
+  }
+
+  function sourceIdentity(item) {
+    const link = cleanText(item?.link || item?.sourceHomepage || '');
+    if (link) {
+      try {
+        return new URL(link).hostname
+          .toLocaleLowerCase()
+          .replace(/^www\./, '');
+      } catch (error) {}
+    }
+    return normalizeToken(sourceName(item))
+      .replace(/\s*\([^)]*\)\s*$/u, '')
+      .trim();
+  }
+
+  function itemType(item) {
+    return isEvent(item) ? 'event' : 'news';
+  }
+
+  function sourceTags(item) {
+    const values = Array.isArray(item?.sourceTags) ? item.sourceTags : [];
+    return values
+      .map(value => cleanText(value?.term || value))
+      .filter(Boolean);
+  }
+
+  function namedEntities(item) {
+    const title = cleanText(item?.title || '');
+    const quoted = [...title.matchAll(/[“"'«](.{3,80}?)[”"'»]/gu)]
+      .map(match => match[1]);
+    const capitalized = title.match(
+      /(?:\p{Lu}[\p{L}\p{M}.'’-]{2,})(?:\s+(?:\p{Lu}[\p{L}\p{M}.'’-]{2,}|of|de|del|la|der|die|von|and|und)){0,4}/gu
+    ) || [];
+    const structured = [
+      item?.eventCity,
+      item?.eventVenue,
+      item?.originRegion,
+      item?.originCountry,
+      ...(Array.isArray(item?.eventGroups) ? item.eventGroups : []),
+      ...sourceTags(item)
+    ];
+
+    return unique([...quoted, ...capitalized, ...structured])
+      .map(value => normalizeToken(value).replace(/[^\p{L}\p{N}\s-]/gu, ' ').replace(/\s+/g, ' ').trim())
+      .filter(value => {
+        if (value.length < 4 || WEAK_ENTITIES.has(value)) return false;
+        const parts = value.split(/\s+/).filter(Boolean);
+        return parts.some(part => part.length > 3 && !STOPWORDS.has(part));
+      });
+  }
+
+  function titlePhrases(item) {
+    const parts = tokens(item?.title || '', 24);
+    const phrases = [];
+    for (let index = 0; index < parts.length - 1; index += 1) {
+      phrases.push(`${parts[index]} ${parts[index + 1]}`);
+      if (index < parts.length - 2) {
+        phrases.push(`${parts[index]} ${parts[index + 1]} ${parts[index + 2]}`);
+      }
+    }
+    return unique(phrases);
+  }
+
+  function rowFeatures(item) {
+    return {
+      item,
+      date: dateMs(item),
+      source: sourceName(item),
+      sourceIdentity: sourceIdentity(item),
+      type: itemType(item),
+      tokens: itemTokens(item),
+      entities: namedEntities(item),
+      phrases: titlePhrases(item)
+    };
+  }
+
+  function similarityEvidence(first, second) {
+    if (!first || !second || first.type !== second.type) {
+      return { score: 0, reasons: [], sharedTokens: [], sharedEntities: [], sharedPhrases: [] };
+    }
+
+    const sharedTokens = unique(first.tokens).filter(token => second.tokens.includes(token));
+    const sharedEntities = unique(first.entities).filter(entity => second.entities.includes(entity));
+    const sharedPhrases = unique(first.phrases).filter(phrase => second.phrases.includes(phrase));
+    const titleA = normalizeToken(cleanText(first.item?.title || ''));
+    const titleB = normalizeToken(cleanText(second.item?.title || ''));
+    const exactTitle = Boolean(titleA && titleA === titleB);
+    const tokenScore = jaccard(first.tokens, second.tokens);
+    const score = Math.min(1,
+      (exactTitle ? 0.9 : 0)
+      + tokenScore * 0.42
+      + Math.min(sharedTokens.length, 5) * 0.065
+      + Math.min(sharedEntities.length, 2) * 0.24
+      + Math.min(sharedPhrases.length, 2) * 0.18
+    );
+    const reasons = unique([
+      ...sharedEntities.slice(0, 2),
+      ...sharedPhrases.slice(0, 2),
+      ...sharedTokens.slice(0, 3)
+    ]).slice(0, 5);
+
+    return { score, reasons, sharedTokens, sharedEntities, sharedPhrases, exactTitle };
   }
 
   function clusterLabel(items, fallback = 'Story') {
@@ -154,55 +279,92 @@
     const days = Math.max(1, Number(options.days || 30));
     const minSources = Math.max(1, Number(options.minSources || 2));
     const minItems = Math.max(2, Number(options.minItems || 2));
-    const threshold = Number(options.threshold || 0.27);
+    // A caller may raise the threshold, but not weaken the editorial floor.
+    const threshold = Math.max(0.52, Number(options.threshold || 0.58));
     const cutoff = now - days * 86400000;
 
     const rows = (Array.isArray(items) ? items : [])
       .filter(item => item && cleanText(item.title))
-      .map(item => ({
-        item,
-        date: dateMs(item),
-        source: sourceName(item),
-        tokens: itemTokens(item)
-      }))
+      .map(rowFeatures)
       .filter(row => row.date >= cutoff && row.tokens.length >= 2)
       .sort((a, b) => b.date - a.date);
 
     const clusters = [];
+    const clusterIndex = new Map();
+
+    const indexClusterRow = (cluster, row) => {
+      const keys = unique([
+        ...row.entities.map(value => `entity:${value}`),
+        ...row.phrases.map(value => `phrase:${value}`),
+        ...row.tokens.map(value => `token:${value}`)
+      ]);
+      keys.forEach(key => {
+        if (!clusterIndex.has(key)) clusterIndex.set(key, new Set());
+        clusterIndex.get(key).add(cluster);
+      });
+    };
+
+    const indexedCandidates = row => {
+      const candidates = new Set();
+      [
+        ...row.entities.map(value => `entity:${value}`),
+        ...row.phrases.map(value => `phrase:${value}`),
+        ...row.tokens.map(value => `token:${value}`)
+      ].forEach(key => {
+        clusterIndex.get(key)?.forEach(cluster => candidates.add(cluster));
+      });
+      return candidates;
+    };
 
     for (const row of rows) {
       let best = null;
       let bestScore = 0;
+      let bestEvidence = null;
 
-      for (const cluster of clusters) {
-        const representative = cluster.tokens;
-        const similarity = jaccard(row.tokens, representative);
-        const shared = sharedCount(row.tokens, representative);
-        const score = similarity + Math.min(shared, 4) * 0.04;
+      for (const cluster of indexedCandidates(row)) {
+        if (cluster.type !== row.type) continue;
+        const newestDistance = Math.abs(row.date - cluster.newest);
+        const maximumDistance = row.type === 'event' ? 45 * 86400000 : 12 * 86400000;
+        if (row.date && cluster.newest && newestDistance > maximumDistance) continue;
 
-        if (
-          score > bestScore
-          && (
-            similarity >= threshold
-            || shared >= 3
-          )
-        ) {
+        let evidence = null;
+        for (const member of cluster.rows) {
+          const candidate = similarityEvidence(row, member);
+          if (!evidence || candidate.score > evidence.score) evidence = candidate;
+        }
+        const hasStrongAnchor = Boolean(
+          evidence?.exactTitle
+          || evidence?.sharedEntities?.length
+          || evidence?.sharedPhrases?.length
+          || evidence?.sharedTokens?.length >= 4
+        );
+
+        if (evidence && evidence.score > bestScore && evidence.score >= threshold && hasStrongAnchor) {
           best = cluster;
-          bestScore = score;
+          bestScore = evidence.score;
+          bestEvidence = evidence;
         }
       }
 
       if (!best) {
-        clusters.push({
+        const cluster = {
           rows: [row],
           tokens: [...row.tokens],
+          type: row.type,
+          reasons: [],
+          confidences: [],
           newest: row.date,
           oldest: row.date
-        });
+        };
+        clusters.push(cluster);
+        indexClusterRow(cluster, row);
         continue;
       }
 
       best.rows.push(row);
+      indexClusterRow(best, row);
+      best.reasons.push(...(bestEvidence?.reasons || []));
+      best.confidences.push(bestScore);
       best.newest = Math.max(best.newest, row.date);
       best.oldest = Math.min(best.oldest, row.date);
 
@@ -229,6 +391,9 @@
         const sources = unique(
           cluster.rows.map(row => row.source)
         );
+        const sourceIdentities = unique(
+          cluster.rows.map(row => row.sourceIdentity || row.source)
+        );
 
         const story = {
           id: hashlibId(
@@ -243,13 +408,18 @@
           ),
           items: ordered,
           sources,
-          sourceCount: sources.length,
+          sourceCount: sourceIdentities.length,
           itemCount: ordered.length,
           oldest: cluster.oldest,
           newest: cluster.newest,
           keywords: cluster.tokens.slice(0, 6),
           eventCount: ordered.filter(isEvent).length
         };
+        story.kind = cluster.type;
+        story.matchReasons = unique(cluster.reasons).slice(0, 6);
+        story.matchConfidence = cluster.confidences.length
+          ? cluster.confidences.reduce((sum, value) => sum + value, 0) / cluster.confidences.length
+          : 1;
 
         const recency = Math.max(
           0,
@@ -448,6 +618,10 @@
     sourceName,
     itemKey,
     isEvent,
+    itemType,
+    namedEntities,
+    titlePhrases,
+    similarityEvidence,
     clusterStories,
     perspectiveRows,
     summarizeText,

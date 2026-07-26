@@ -235,12 +235,20 @@ def check_update_workflow() -> None:
     text = path.read_text(encoding="utf-8")
     for token in [
         "python aggregate.py",
+        "python reclassify_news_categories.py",
         "python build_source_catalog.py",
         "python check_news_sources.py",
-        "git add news.json events.json source-catalog.json source-health.json",
     ]:
         if token not in text:
             error(f"update.yml enthält den Phase-1J-Schritt nicht: {token}")
+    git_add = re.search(r"git add ([^\r\n]+)", text)
+    staged = set(git_add.group(1).split()) if git_add else set()
+    for required in {
+        "news.json", "events.json", "editorial-review.json",
+        "source-catalog.json", "source-health.json",
+    }:
+        if required not in staged:
+            error(f"update.yml veröffentlicht die Pflichtdatei nicht: {required}")
 
 
 def check_service_worker() -> None:
@@ -494,7 +502,11 @@ def check_phase1k_release_fixes() -> None:
     if "events.json" not in workflow:
         error("update.yml veröffentlicht events.json nicht.")
 
-    config_version = re.search(r"version:\s*['\"]([^'\"]+)", config)
+    config_version = re.search(
+        r"window\.WRN_CONFIG\s*=\s*Object\.freeze\(\{.*?\bversion:\s*['\"]([^'\"]+)",
+        config,
+        re.DOTALL,
+    )
     cache_version = re.search(
         r"APP_CACHE\s*=\s*['\"]wrn-app-v(\d+\.\d+\.\d+)(?:-[^'\"]+)?",
         service_worker,
@@ -516,11 +528,17 @@ def check_release_182() -> None:
     source_verification = (ROOT / "source-verification.js").read_text(encoding="utf-8") if (ROOT / "source-verification.js").is_file() else ""
     release_languages = (ROOT / "release-1.4.js").read_text(encoding="utf-8") if (ROOT / "release-1.4.js").is_file() else ""
 
-    for token in ["version: '1.8.4'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
+    configured_version = re.search(
+        r"window\.WRN_CONFIG\s*=\s*Object\.freeze\(\{.*?\bversion:\s*['\"]([^'\"]+)",
+        config,
+        re.DOTALL,
+    )
+    expected_version = configured_version.group(1) if configured_version else ""
+    for token in [f"version: '{expected_version}'", "audio-region-core.js", "video-hub.js", "video-hub.css", "openLandingTab"]:
         if token not in config:
             error(f"config.js enthält die 1.8.2-Verknüpfung nicht: {token}")
 
-    for token in ["wrn-app-v1.8.4-release-2", "wrn-data-v1.8.4-release-2", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
+    for token in [f"wrn-app-v{expected_version}-", f"wrn-data-v{expected_version}-", "audio-region-core.js", "video-hub.js", "video-hub.css"]:
         if token not in worker:
             error(f"service-worker.js enthält die 1.8.2-Datei nicht: {token}")
 

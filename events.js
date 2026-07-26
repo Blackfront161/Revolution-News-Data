@@ -135,12 +135,83 @@ function eventMatchesSpecialFilters(article) {
 
 function displayCountryName(value) {
     if (!value) return '';
+    if (String(value).toUpperCase() === 'XC') {
+        const labels = {
+            de: 'International / unklar', en: 'International / unclear',
+            es: 'Internacional / sin aclarar', fr: 'International / indéterminé',
+            it: 'Internazionale / non chiaro', pt: 'Internacional / incerto',
+            ru: 'Международное / неясно', el: 'Διεθνές / ασαφές',
+            tr: 'Uluslararası / belirsiz'
+        };
+        return labels[currentLang] || labels.en;
+    }
     if (String(value).length === 2 && typeof Intl.DisplayNames === 'function') {
         try {
             return new Intl.DisplayNames([currentLang], { type: 'region' }).of(String(value).toUpperCase()) || value;
         } catch (error) {}
     }
     return value;
+}
+
+function displayEventCategory(value) {
+    const normalized = String(value || '').trim().toLocaleLowerCase();
+    const labels = {
+        de: {
+            meeting:'Treffen', protest:'Protest', workshop:'Workshop',
+            discussion:'Diskussion', concert:'Konzert', benefit:'Soli-Veranstaltung',
+            film:'Film', party:'Party', food:'Essen', assembly:'Versammlung',
+            lecture:'Vortrag', exhibition:'Ausstellung'
+        },
+        en: {
+            meeting:'Meeting', protest:'Protest', workshop:'Workshop',
+            discussion:'Discussion', concert:'Concert', benefit:'Benefit',
+            film:'Film', party:'Party', food:'Food', assembly:'Assembly',
+            lecture:'Lecture', exhibition:'Exhibition'
+        },
+        es: {
+            meeting:'Encuentro', protest:'Protesta', workshop:'Taller',
+            discussion:'Debate', concert:'Concierto', benefit:'Evento solidario',
+            film:'Cine', party:'Fiesta', food:'Comida', assembly:'Asamblea',
+            lecture:'Charla', exhibition:'Exposición'
+        },
+        fr: {
+            meeting:'Rencontre', protest:'Manifestation', workshop:'Atelier',
+            discussion:'Discussion', concert:'Concert', benefit:'Événement solidaire',
+            film:'Film', party:'Fête', food:'Repas', assembly:'Assemblée',
+            lecture:'Conférence', exhibition:'Exposition'
+        },
+        it: {
+            meeting:'Incontro', protest:'Protesta', workshop:'Laboratorio',
+            discussion:'Discussione', concert:'Concerto', benefit:'Evento solidale',
+            film:'Film', party:'Festa', food:'Cibo', assembly:'Assemblea',
+            lecture:'Conferenza', exhibition:'Mostra'
+        },
+        pt: {
+            meeting:'Encontro', protest:'Protesto', workshop:'Oficina',
+            discussion:'Debate', concert:'Concerto', benefit:'Evento solidário',
+            film:'Filme', party:'Festa', food:'Comida', assembly:'Assembleia',
+            lecture:'Palestra', exhibition:'Exposição'
+        },
+        ru: {
+            meeting:'Встреча', protest:'Протест', workshop:'Мастерская',
+            discussion:'Обсуждение', concert:'Концерт', benefit:'Благотворительное событие',
+            film:'Кино', party:'Вечеринка', food:'Еда', assembly:'Собрание',
+            lecture:'Лекция', exhibition:'Выставка'
+        },
+        el: {
+            meeting:'Συνάντηση', protest:'Διαμαρτυρία', workshop:'Εργαστήριο',
+            discussion:'Συζήτηση', concert:'Συναυλία', benefit:'Εκδήλωση αλληλεγγύης',
+            film:'Ταινία', party:'Πάρτι', food:'Φαγητό', assembly:'Συνέλευση',
+            lecture:'Ομιλία', exhibition:'Έκθεση'
+        },
+        tr: {
+            meeting:'Buluşma', protest:'Protesto', workshop:'Atölye',
+            discussion:'Tartışma', concert:'Konser', benefit:'Dayanışma etkinliği',
+            film:'Film', party:'Parti', food:'Yemek', assembly:'Meclis',
+            lecture:'Söyleşi', exhibition:'Sergi'
+        }
+    };
+    return (labels[currentLang] || labels.en)[normalized] || value;
 }
 
 function normalizeFilterOption(value, label = value, count = 0) {
@@ -238,7 +309,7 @@ function populateEventFilters() {
     const categoryOptions = countedOptions(events, event => event?.eventCategories);
     const groupOptions = countedOptions(events, event => event?.eventGroups);
 
-    setDynamicSelectOptions('event-category-filter', categoryOptions, t.eventAll);
+    setDynamicSelectOptions('event-category-filter', categoryOptions, t.eventAll, displayEventCategory);
     setDynamicSelectOptions('event-group-filter', groupOptions, t.eventAll);
 
     const periodSelect = document.getElementById('event-date-filter');
@@ -312,14 +383,45 @@ function formatEventDateRange(article) {
     const start = new Date(startMs);
     const end = endMs ? new Date(endMs) : null;
     const dateFormatter = new Intl.DateTimeFormat(currentLang, { weekday:'short', year:'numeric', month:'2-digit', day:'2-digit' });
-    const timeFormatter = new Intl.DateTimeFormat(currentLang, { hour:'2-digit', minute:'2-digit' });
+    const timeFormatter = new Intl.DateTimeFormat(currentLang, { hour:'2-digit', minute:'2-digit', timeZoneName:'short' });
     let text = `${dateFormatter.format(start)}, ${timeFormatter.format(start)}`;
     if (end && endMs !== startMs) {
         const sameDay = start.toDateString() === end.toDateString();
         text += sameDay ? `–${timeFormatter.format(end)}` : ` – ${dateFormatter.format(end)}, ${timeFormatter.format(end)}`;
     }
+    const declaredTimezone = String(article?.eventTimezone || '').trim();
+    if (declaredTimezone && !text.toLocaleLowerCase().includes(declaredTimezone.toLocaleLowerCase())) {
+        text += ` · ${declaredTimezone}`;
+    }
     return text;
 }
+
+function collapseRecurringEvents(items) {
+    const groups = new Map();
+    (Array.isArray(items) ? items : []).forEach(event => {
+        const title = String(event?.title || '').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
+        const place = `${event?.eventVenue || ''}|${event?.eventCity || ''}`.toLocaleLowerCase();
+        const key = `${title}|${place}`;
+        if (!title) return;
+        const bucket = groups.get(key) || [];
+        bucket.push(event);
+        groups.set(key, bucket);
+    });
+    return [...groups.values()].map(rows => {
+        rows.sort((left, right) => getEventStartMs(left) - getEventStartMs(right));
+        const primary = { ...rows[0] };
+        if (rows.length > 1) {
+            primary.eventRecurrenceCount = rows.length;
+            primary.eventRecurrenceDates = rows
+                .map(row => row.eventStart || row.pubDate)
+                .filter(Boolean)
+                .slice(0, 12);
+        }
+        return primary;
+    });
+}
+
+window.WRNCollapseRecurringEvents = collapseRecurringEvents;
 
 function getEventLocationText(article) {
     const values = [
@@ -402,13 +504,17 @@ function buildEventDetailsHtml(article, t, itemIndex = null) {
         lines.push(`<div><strong>${escapeHtml(t.eventPriceLabel)}</strong> ${escapeHtml(priceText)}</div>`);
     }
     if (article?.eventStatus) lines.push(`<div><strong>${escapeHtml(t.eventStatusLabel)}</strong> ${escapeHtml(article.eventStatus)}</div>`);
+    if (Number(article?.eventRecurrenceCount) > 1) {
+        const recurringLabel = currentLang === 'de' ? 'Wiederkehrend' : 'Recurring';
+        lines.push(`<div><strong>${escapeHtml(recurringLabel)}:</strong> ${Number(article.eventRecurrenceCount)}×</div>`);
+    }
 
     const badges = [
         ...normalizedStringArray(article?.eventCategories),
         ...normalizedStringArray(article?.eventTags)
     ];
     const badgeHtml = badges.length
-        ? `<div class="event-badges">${badges.slice(0, 12).map(value => `<span class="event-badge">${escapeHtml(value)}</span>`).join('')}</div>`
+        ? `<div class="event-badges">${badges.slice(0, 12).map(value => `<span class="event-badge">${escapeHtml(displayEventCategory(value))}</span>`).join('')}</div>`
         : '';
 
     return `${buildEventStatusBadges(article)}<div class="event-facts">${lines.join('')}${badgeHtml}${buildEventActionButtons(article, itemIndex)}</div>`;

@@ -66,6 +66,12 @@ jobs:
             python normalize_source_health.py
           fi
 
+      - name: Themen, Regionen und redaktionelle Prüfliste aktualisieren
+        run: |
+          if [ -f reclassify_news_categories.py ]; then
+            python reclassify_news_categories.py
+          fi
+
       - name: Schnelle Web-Feeds erzeugen
         run: |
           if [ -f build_web_feeds.py ]; then
@@ -90,6 +96,7 @@ jobs:
           required=(
             news.json
             events.json
+            editorial-review.json
             source-catalog.json
             source-health.json
           )
@@ -130,7 +137,7 @@ jobs:
             -delete
 
           # Exakte Phase-1J-Zeile für den vorhandenen Validator:
-          git add news.json events.json source-catalog.json source-health.json
+          git add news.json events.json editorial-review.json source-catalog.json source-health.json
 
           optional_outputs=(
             source-health-report.json

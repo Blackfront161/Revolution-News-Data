@@ -27,6 +27,7 @@
     search: '',
     source: 'all',
     language: 'all',
+    category: 'all',
     region: 'global',
     original: [],
     generated: [],
@@ -47,7 +48,8 @@
       configuredMany: 'sources configured; episodes appear after the next data update.', publicLibrary: 'Public library',
       workerFallback: 'The public library is temporarily unavailable. Cached items are shown.', originalLink: 'Open original',
       feedLink: 'Open feed', source: 'Source', episodes: 'episodes', sources: 'sources', privacy: 'Public generated podcasts are listed for up to 30 days.', streamUnavailable: 'No direct browser stream is currently available. Open the station website.',
-      global: 'All regions', europe: 'Europe', africa: 'Africa', northAmerica: 'North America', latinAmerica: 'Latin America', asia: 'Asia', oceania: 'Oceania'
+      global: 'All regions', europe: 'Europe', africa: 'Africa', northAmerica: 'North America', latinAmerica: 'Latin America', asia: 'Asia', oceania: 'Oceania',
+      allCategories: 'All categories', politics: 'Politics', society: 'Society', culture: 'Culture'
     },
     de: {
       title: 'Audio-Hub', original: 'Original-Podcasts', generated: 'Erzeugte Podcasts', radio: 'Live-Radio',
@@ -57,7 +59,8 @@
       configuredMany: 'Quellen eingerichtet; Folgen erscheinen nach der nächsten Datenaktualisierung.', publicLibrary: 'Öffentliche Bibliothek',
       workerFallback: 'Die öffentliche Bibliothek ist vorübergehend nicht erreichbar. Zwischengespeicherte Einträge werden angezeigt.', originalLink: 'Original öffnen',
       feedLink: 'Feed öffnen', source: 'Quelle', episodes: 'Folgen', sources: 'Quellen', privacy: 'Öffentlich erzeugte Podcasts werden bis zu 30 Tage angezeigt.', streamUnavailable: 'Derzeit ist kein direkter Browser-Stream verfügbar. Öffne die Senderseite.',
-      global: 'Alle Regionen', europe: 'Europa', africa: 'Afrika', northAmerica: 'Nordamerika', latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Ozeanien'
+      global: 'Alle Regionen', europe: 'Europa', africa: 'Afrika', northAmerica: 'Nordamerika', latinAmerica: 'Lateinamerika', asia: 'Asien', oceania: 'Ozeanien',
+      allCategories: 'Alle Kategorien', politics: 'Politik', society: 'Gesellschaft', culture: 'Kultur'
     },
     es: {
       title: 'Centro de audio', original: 'Podcasts originales', generated: 'Podcasts generados', radio: 'Radio en directo',
@@ -147,7 +150,7 @@
     return String(document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
   }
 
-  function text() { return TEXTS[languageCode()] || TEXTS.en; }
+  function text() { return { ...TEXTS.en, ...(TEXTS[languageCode()] || {}) }; }
   function clean(value) { return String(value == null ? '' : value).trim(); }
   function key(value) { return clean(value).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
   function unique(values) { return [...new Set(values.map(clean).filter(Boolean))]; }
@@ -201,6 +204,29 @@
     return unique(values).map(safeUrl).filter(Boolean);
   }
 
+  function editorialCategory(item, source = null) {
+    const haystack = key([
+      item?.title, item?.description, item?.summary, item?.content,
+      item?.category, ...(Array.isArray(item?.categories) ? item.categories : []),
+      ...(Array.isArray(source?.tags) ? source.tags : [])
+    ].filter(Boolean).join(' '));
+    if (/(election|government|parliament|state|war|imperial|fascis|anarch|union|strike|protest|prison|politi|regierung|wahl|krieg|streik)/.test(haystack)) return 'politics';
+    if (/(culture|cultural|history|book|literature|film|art |theory|education|kultur|geschichte|buch|kunst)/.test(haystack)) return 'culture';
+    return 'society';
+  }
+
+  function isEditoriallyRelevant(item, source = null) {
+    const haystack = key([
+      item?.title, item?.description, item?.summary
+    ].filter(Boolean).join(' '));
+    const entertainmentOnly = /(jazz|playlist|dj set|music mix|musiksendung|hitparade|sports show|gaming|celebrity gossip|mystery radio club|meet the beat|musica machina|music show|radioshow|charts|dance mix|party mix)/.test(haystack);
+    const politicalContext = /(polit|society|social|movement|anarch|feminis|antifasc|anticapital|labor|labour|worker|strike|protest|ecolog|climate|colonial|indigenous|migration|refugee|prison|abolition|history|theory|rights|justice|solidarity)/.test(haystack);
+    // Eine generell passende Quelle macht eine konkrete reine Musik- oder
+    // Unterhaltungssendung noch nicht redaktionell relevant.
+    if (entertainmentOnly && !politicalContext) return false;
+    return politicalContext || source?.editorialRelevant === true || !entertainmentOnly;
+  }
+
   function normalizePodcast(item, kind, maps) {
     if (!item || typeof item !== 'object') return null;
     const source = matchSource(item, maps);
@@ -230,7 +256,8 @@
       duration: clean(item.duration || item.durationText),
       mode: clean(item.mode),
       voice: clean(item.voiceLabel || item.voice),
-      license: clean(item.license || source?.license)
+      license: clean(item.license || source?.license),
+      editorialCategory: editorialCategory(item, source)
     };
   }
 
@@ -306,7 +333,14 @@
         fetchJson(`${window.WRN_CONFIG?.dataUrls?.podcasts || './podcasts.json'}?v=${force ? Date.now() : '183'}`, { cache: force ? 'no-store' : 'default', timeout: 12000 })
       ]);
       const maps = sourceMaps(state.sources);
-      state.original = dedupe((Array.isArray(result.data) ? result.data : []).map(item => normalizePodcast(item, 'original', maps)).filter(Boolean));
+      state.original = dedupe((Array.isArray(result.data) ? result.data : [])
+        .map(item => {
+          const source = matchSource(item, maps);
+          return isEditoriallyRelevant(item, source)
+            ? normalizePodcast(item, 'original', maps)
+            : null;
+        })
+        .filter(Boolean));
       state.loaded.original = true;
       window.WRNStatusCenter?.noteDataset?.('podcasts', { data: state.original, source: 'network', updatedAt: result.date || new Date().toISOString() });
     } catch (error) { state.error.original = clean(error?.message || error); }
@@ -369,6 +403,7 @@
     const query = key(state.search);
     return rows.filter(item => state.source === 'all' || item.sourceName === state.source)
       .filter(item => state.language === 'all' || item.language === state.language)
+      .filter(item => state.category === 'all' || item.editorialCategory === state.category)
       .filter(item => state.region === 'global' || item.region === state.region)
       .filter(item => !query || key(`${item.title} ${item.description} ${item.sourceName}`).includes(query))
       .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
@@ -469,19 +504,26 @@
     const copy = document.createElement('div'); const h2 = document.createElement('h2'); h2.textContent=t.title; const intro=document.createElement('p'); intro.textContent=t.intro; copy.append(h2,intro);
     const refresh = makeButton(t.refresh, 'wrn-audio-refresh-183', () => loadView(true)); head.append(copy,refresh); root.append(head);
 
-    const tabs = document.createElement('div'); tabs.className='wrn-audio-tabs-183'; tabs.setAttribute('role','tablist');
-    [['original',t.original],['generated',t.generated],['radio',t.radio]].forEach(([view,label]) => {
-      const button=makeButton(label, `wrn-audio-tab-183${state.view===view?' active':''}`, () => { state.view=view; state.region='global'; state.source='all'; state.language='all'; render(); loadView(false); });
-      button.setAttribute('aria-selected',String(state.view===view)); tabs.append(button);
-    }); root.append(tabs);
-
     if (state.view === 'generated') { const note=document.createElement('p'); note.className='wrn-audio-public-note-183'; note.textContent=`${t.publicLibrary}: ${t.privacy}`; root.append(note); }
 
     const controls=document.createElement('div'); controls.className='wrn-audio-controls-183';
     const search=document.createElement('input'); search.type='search'; search.placeholder=t.search; search.value=state.search; search.addEventListener('input',()=>{state.search=search.value; renderList();}); controls.append(search);
     const rows=state.view==='generated'?state.generated:state.view==='radio'?state.radio:state.original;
     const sourceSelect=document.createElement('select'); sourceSelect.append(new Option(t.allSources,'all')); unique(rows.map(item=>item.sourceName)).sort().forEach(value=>sourceSelect.append(new Option(value,value))); sourceSelect.value=state.source; sourceSelect.addEventListener('change',()=>{state.source=sourceSelect.value; renderList();}); controls.append(sourceSelect);
-    const languageSelect=document.createElement('select'); languageSelect.append(new Option(t.allLanguages,'all')); unique(rows.map(item=>item.language).filter(value=>value&&value!=='und')).sort().forEach(value=>languageSelect.append(new Option(value.toUpperCase(),value))); languageSelect.value=state.language; languageSelect.addEventListener('change',()=>{state.language=languageSelect.value; renderList();}); controls.append(languageSelect); root.append(controls);
+    const languageSelect=document.createElement('select'); languageSelect.append(new Option(t.allLanguages,'all')); unique(rows.map(item=>item.language).filter(value=>value&&value!=='und')).sort().forEach(value=>languageSelect.append(new Option(value.toUpperCase(),value))); languageSelect.value=state.language; languageSelect.addEventListener('change',()=>{state.language=languageSelect.value; renderList();}); controls.append(languageSelect);
+    if (state.view === 'original') {
+      const categorySelect=document.createElement('select');
+      categorySelect.append(
+        new Option(t.allCategories,'all'),
+        new Option(t.politics,'politics'),
+        new Option(t.society,'society'),
+        new Option(t.culture,'culture')
+      );
+      categorySelect.value=state.category;
+      categorySelect.addEventListener('change',()=>{state.category=categorySelect.value;renderList();});
+      controls.append(categorySelect);
+    }
+    root.append(controls);
 
     if (state.view === 'original') {
       const regions=document.createElement('div'); regions.className='wrn-audio-regions-183';
@@ -520,7 +562,7 @@
   function loadView(force=false){ if(state.view==='generated')return loadGenerated(force); if(state.view==='radio')return loadRadio(force); return loadOriginal(force); }
 
   function open(view='original', highlightId=''){
-    state.active=true; state.view=['original','generated','radio'].includes(view)?view:'original'; state.highlightId=clean(highlightId); state.region='global';
+    state.active=true; state.view=['original','generated','radio'].includes(view)?view:'original'; state.highlightId=clean(highlightId); state.region='global'; state.category='all';
     hideStandardViews(); const root=ensureRoot(); root.hidden=false; root.style.display='block'; document.body.dataset.wrnTab='audio'; render(); void loadView(false);
   }
   function close(){state.active=false; const root=document.getElementById(VIEW_ID); if(root){root.hidden=true;root.style.display='none';} if(document.body.dataset.wrnTab==='audio')delete document.body.dataset.wrnTab; restoreStandardViews();}

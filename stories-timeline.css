@@ -58,7 +58,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
 
 .wrn-stories-controls {
   display: grid;
-  grid-template-columns: minmax(180px, 1fr) auto auto auto auto;
+  grid-template-columns: minmax(180px, 1fr) auto auto auto auto auto;
   gap: 8px;
   margin-bottom: 14px;
   padding: 10px;
@@ -172,6 +172,29 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   color: var(--color-cyan, #00f0ff);
   font-size: .72rem;
   line-height: 1.4;
+}
+
+.wrn-stories-beta-185 {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-left: .35rem;
+  padding: 1px 7px;
+  border: 1px solid rgba(255,49,88,.72);
+  border-radius: 999px;
+  color: #ff6079;
+  font: 800 .58rem/1 monospace;
+  vertical-align: middle;
+}
+
+.wrn-story-match-reason-185 {
+  margin: 0 14px 12px;
+  padding: 8px 10px;
+  border-left: 2px solid rgba(255,49,88,.8);
+  background: rgba(255,49,88,.055);
+  color: rgba(255,255,255,.72);
+  font-size: .68rem;
+  line-height: 1.45;
 }
 
 .wrn-story-card details {
@@ -348,6 +371,15 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   .wrn-stories-controls { grid-template-columns: minmax(0, 1fr) auto; }
   .wrn-stories-controls input { grid-column: 1 / -1; }
   .wrn-stories-advanced { grid-column: 1 / -1; }
+  .wrn-stories-controls select,
+  .wrn-stories-controls button,
+  .wrn-stories-advanced,
+  .wrn-stories-advanced > summary,
+  .wrn-story-actions button,
+  .wrn-story-timeline button,
+  .wrn-story-timeline a {
+    min-height: 44px;
+  }
   .wrn-story-heading { display: grid; }
   .wrn-story-actions { width: auto; }
 }
@@ -366,7 +398,7 @@ body.wrn-stories-active #wrn-briefing-loading-panel {
   }
   .wrn-story-actions button {
     flex: 0 0 auto;
-    min-height: 32px;
+    min-height: 44px;
     padding: 5px 8px;
     font-size: .72rem;
   }

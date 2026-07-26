@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.4-release-2-wrn187';
-const DATA_CACHE = 'wrn-data-v1.8.4-release-2-wrn187';
+const APP_CACHE = 'wrn-app-v1.8.5-quality-release';
+const DATA_CACHE = 'wrn-data-v1.8.5-quality-release';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -125,7 +125,9 @@ const JSON_FALLBACKS = new Map([
   [new URL('./audio-health.json', self.location.href).pathname, '{}'],
   [new URL('./feature-audit.json', self.location.href).pathname, '{}'],
   [new URL('./language-source-audit.json', self.location.href).pathname, '{}'],
-  [new URL('./multilingual-source-registry.json', self.location.href).pathname, '{}']
+  [new URL('./multilingual-source-registry.json', self.location.href).pathname, '{}'],
+  [new URL('./editorial-review.json', self.location.href).pathname, '{"items":[]}'],
+  [new URL('./alternative-social-media.json', self.location.href).pathname, '{"platforms":[]}']
 ]);
 
 const DATA_FILES = new Set([
@@ -145,7 +147,9 @@ const DATA_FILES = new Set([
   new URL('./audio-health.json', self.location.href).pathname,
   new URL('./feature-audit.json', self.location.href).pathname,
   new URL('./language-source-audit.json', self.location.href).pathname,
-  new URL('./multilingual-source-registry.json', self.location.href).pathname
+  new URL('./multilingual-source-registry.json', self.location.href).pathname,
+  new URL('./editorial-review.json', self.location.href).pathname,
+  new URL('./alternative-social-media.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {
