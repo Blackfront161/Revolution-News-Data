@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>World Revolution News – News App 2 Vorschau</title>
+  <meta name="theme-color" content="#05080b">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://wrn-translation-cache.paghklo.workers.dev https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https:; object-src 'none'; base-uri 'self'; form-action 'self'">
+  <link rel="stylesheet" href="news-app-2.css">
+</head>
+<body>
+  <a class="skip-link" href="#next-main">Zum Inhalt springen</a>
+
+  <header class="next-header">
+    <div class="next-header__inner">
+      <button class="brand" type="button" data-view-target="home" aria-label="Start öffnen">
+        <img src="wrn-logo.webp" alt="" width="46" height="46">
+        <span>
+          <strong>WORLD REVOLUTION NEWS</strong>
+          <small data-i18n="preview">News App 2 · Vorschau</small>
+        </span>
+      </button>
+
+      <div class="header-actions">
+        <button class="icon-button" id="next-search-toggle" type="button" aria-label="Suche öffnen" aria-expanded="false">
+          <span aria-hidden="true">⌕</span>
+        </button>
+        <label class="language-control">
+          <span class="sr-only" data-i18n="language">Sprache</span>
+          <select id="next-language" aria-label="Sprache">
+            <option value="de">DE</option>
+            <option value="en">EN</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
+            <option value="it">IT</option>
+            <option value="pt">PT</option>
+            <option value="ru">RU</option>
+            <option value="el">EL</option>
+            <option value="tr">TR</option>
+          </select>
+        </label>
+        <a class="classic-link" href="index.html" data-i18n="classic">Bisherige App</a>
+      </div>
+    </div>
+
+    <form class="global-search" id="next-global-search" role="search" hidden>
+      <label for="next-search-input" data-i18n="searchLabel">Nachrichten durchsuchen</label>
+      <div>
+        <input id="next-search-input" type="search" autocomplete="off" inputmode="search" placeholder="Titel, Quelle oder Thema">
+        <button type="submit" data-i18n="search">Suchen</button>
+      </div>
+    </form>
+  </header>
+
+  <main id="next-main" tabindex="-1">
+    <div class="loading-state" id="next-loading" role="status">
+      <span class="loading-star" aria-hidden="true">★</span>
+      <strong data-i18n="loading">Nachrichten werden geladen …</strong>
+    </div>
+    <div id="next-view" aria-live="polite"></div>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Hauptnavigation">
+    <button type="button" class="active" data-view-target="home" aria-current="page">
+      <span aria-hidden="true">⌂</span><span data-i18n="home">Start</span>
+    </button>
+    <button type="button" data-view-target="following">
+      <span aria-hidden="true">★</span><span data-i18n="following">Für mich</span>
+    </button>
+    <button type="button" data-view-target="discover">
+      <span aria-hidden="true">◎</span><span data-i18n="discover">Entdecken</span>
+    </button>
+    <button type="button" data-view-target="media">
+      <span aria-hidden="true">▶</span><span data-i18n="media">Medien</span>
+    </button>
+    <button type="button" data-view-target="saved">
+      <span aria-hidden="true">▰</span><span data-i18n="saved">Gespeichert</span>
+    </button>
+  </nav>
+
+  <dialog class="article-dialog" id="next-article-dialog" aria-labelledby="next-article-title">
+    <div class="dialog-shell">
+      <header class="dialog-header">
+        <button type="button" class="dialog-close" data-dialog-close aria-label="Artikel schließen">←</button>
+        <div>
+          <small id="next-article-source"></small>
+          <strong id="next-article-title"></strong>
+        </div>
+        <button type="button" class="save-icon" id="next-dialog-save" aria-label="Artikel speichern" aria-pressed="false">☆</button>
+      </header>
+      <article id="next-article-content"></article>
+      <footer class="dialog-actions">
+        <button type="button" id="next-dialog-translate"><span class="red-black-star" aria-hidden="true">★</span> <span data-i18n="translate">Übersetzen</span></button>
+        <a id="next-dialog-original" target="_blank" rel="noopener noreferrer" data-i18n="original">Original öffnen</a>
+      </footer>
+    </div>
+  </dialog>
+
+  <dialog class="preferences-dialog" id="next-preferences-dialog" aria-labelledby="next-preferences-title">
+    <form method="dialog">
+      <header>
+        <div>
+          <small data-i18n="personalLocal">Nur auf diesem Gerät gespeichert</small>
+          <h2 id="next-preferences-title" data-i18n="personalize">Deinen Feed einrichten</h2>
+        </div>
+        <button value="cancel" aria-label="Schließen">×</button>
+      </header>
+      <section>
+        <h3 data-i18n="chooseRegions">Regionen auswählen</h3>
+        <div class="choice-grid" id="next-region-choices"></div>
+      </section>
+      <section>
+        <h3 data-i18n="chooseTopics">Themen auswählen</h3>
+        <div class="choice-grid" id="next-topic-choices"></div>
+      </section>
+      <footer>
+        <button class="secondary-button" value="cancel" data-i18n="cancel">Abbrechen</button>
+        <button class="primary-button" value="save" id="next-save-preferences" data-i18n="savePreferences">Auswahl speichern</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div class="toast" id="next-toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="news-app-2-config.js"></script>
+  <script src="news-app-2-core.js"></script>
+  <script src="shared-translation-client.js"></script>
+  <script src="news-app-2.js"></script>
+</body>
+</html>
