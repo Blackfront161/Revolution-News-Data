@@ -1,0 +1,13 @@
+{
+  "name": "wrn-cloudflare-workers",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check revolution-proxy/src/index.js && node --check wrn-translation-cache/src/index.js && node --test tests/quota-client.test.mjs",
+    "deploy:proxy": "wrangler deploy --config revolution-proxy/wrangler.jsonc --keep-vars",
+    "deploy:cache": "wrangler deploy --config wrn-translation-cache/wrangler.jsonc --keep-vars"
+  },
+  "devDependencies": {
+    "wrangler": "4.114.0"
+  }
+}
