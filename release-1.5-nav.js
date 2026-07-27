@@ -9,7 +9,7 @@
     de: {
       briefing: 'Briefing', stories: 'Entwicklungen', video: 'Video', start: 'Start', regions: 'Regionen', topics: 'Themen', events: 'Termine',
       audio: 'Audio', saved: 'Gespeichert', zine: 'Zine', search: 'Suche', settings: 'Mehr & Einstellungen',
-      lexicon: 'Lexikon', about: 'Über das Projekt',
+      lexicon: 'Lexikon', solidarity: 'Solidarität', about: 'Über das Projekt',
       sources: 'Quellen', back: 'Zurück', article: 'Artikel', language: 'Sprache', design: 'Design',
       fontSize: 'Schriftgröße', view: 'Artikelansicht', format: 'Format', sort: 'Sortierung', info: 'Info',
       contact: 'Feedback', donate: 'Spenden', storage: 'Speicher', status: 'App-Selbsttest', diagnostics: 'Diagnose', clear: 'Cache leeren',
@@ -19,7 +19,7 @@
     en: {
       briefing: 'Briefing', stories: 'Developments', video: 'Video', start: 'Start', regions: 'Regions', topics: 'Topics', events: 'Events',
       audio: 'Audio', saved: 'Saved', zine: 'Zine', search: 'Search', settings: 'More & settings',
-      lexicon: 'Glossary', about: 'About the project',
+      lexicon: 'Glossary', solidarity: 'Solidarity', about: 'About the project',
       sources: 'Sources', back: 'Back', article: 'Article', language: 'Language', design: 'Design',
       fontSize: 'Font size', view: 'Article view', format: 'Format', sort: 'Sorting', info: 'Info',
       contact: 'Feedback', donate: 'Donate', storage: 'Storage', status: 'App self-test', diagnostics: 'Diagnostics', clear: 'Clear cache',
@@ -149,6 +149,22 @@
       }
     },
     {
+      key: 'solidarity',
+      subTabs: [
+        ['current', 'current'],
+        ['people', 'people'],
+        ['write', 'write'],
+        ['rules', 'rules'],
+        ['sources', 'sources']
+      ],
+      activate: subKey => {
+        closeAuxiliaryPanels();
+        const target = subKey || state.subSelections.solidarity || 'current';
+        state.subSelections.solidarity = target;
+        window.WRNPrisonerSolidarity190?.show?.(target);
+      }
+    },
+    {
       key: 'zine',
       activate: () => {
         closeAuxiliaryPanels();
@@ -193,7 +209,8 @@
       video: 'current',
       audio: 'original',
       saved: 'bookmarks',
-      lexicon: 'basics'
+      lexicon: 'basics',
+      solidarity: 'current'
     }
   };
 
@@ -240,6 +257,7 @@
     if (tab?.key === 'video') return window.WRNVideoHub?.modeLabel?.(key) || fallback || key;
     if (tab?.key === 'audio' || tab?.key === 'saved') return texts()[fallback] || fallback || key;
     if (tab?.key === 'lexicon') return window.WRNLexicon184?.sectionLabel?.(key, language) || fallback || key;
+    if (tab?.key === 'solidarity') return window.WRNPrisonerSolidarity190?.sectionLabel?.(key, language) || fallback || key;
     return fallback || key;
   }
 
@@ -251,6 +269,7 @@
     window.WRNVideoHub?.hide?.();
     window.WRNAbout184?.hide?.();
     window.WRNLexicon184?.hide?.();
+    window.WRNPrisonerSolidarity190?.hide?.();
   }
 
   function prepareArticleView() {
@@ -610,6 +629,8 @@
         ? window.WRNAbout184?.label?.(languageKey()) || texts()[tab.key] || 'About'
         : tab.key === 'lexicon'
           ? window.WRNLexicon184?.label?.(languageKey()) || texts()[tab.key] || 'Glossary'
+        : tab.key === 'solidarity'
+          ? window.WRNPrisonerSolidarity190?.label?.(languageKey()) || texts()[tab.key] || 'Solidarity'
         : texts()[tab.key] || tab.key;
       const button = makeButton('wrn-top-tab', label);
       button.dataset.key = tab.key;
@@ -697,6 +718,7 @@
 
     if (key !== 'audio') window.WRNAudioTab181?.close?.();
     if (key !== 'lexicon') window.WRNLexicon184?.hide?.();
+    if (key !== 'solidarity') window.WRNPrisonerSolidarity190?.hide?.();
     if (key !== 'about') window.WRNAbout184?.hide?.();
 
     if (!runAction) return;
@@ -722,6 +744,8 @@
         ? window.WRNAbout184?.label?.(languageKey()) || copy.about || 'About'
         : button.dataset.key === 'lexicon'
           ? window.WRNLexicon184?.label?.(languageKey()) || copy.lexicon || 'Glossary'
+        : button.dataset.key === 'solidarity'
+          ? window.WRNPrisonerSolidarity190?.label?.(languageKey()) || copy.solidarity || 'Solidarity'
         : copy[button.dataset.key] || button.dataset.key;
     });
 
@@ -752,6 +776,7 @@
     const activeTab = TABS.find(tab => tab.key === state.activeTab);
     if (activeTab) renderSubTabs(activeTab);
     if (state.activeTab === 'lexicon') window.WRNLexicon184?.render?.();
+    if (state.activeTab === 'solidarity') window.WRNPrisonerSolidarity190?.render?.();
     if (state.activeTab === 'about') window.WRNAbout184?.render?.();
 
     const morePanel = $('.wrn-more-panel');

@@ -16,9 +16,9 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent
 REPORT_PATH = ROOT / "release-readiness-183.json"
-EXPECTED_VERSION = "1.8.6"
-EXPECTED_APP_CACHE = "wrn-app-v1.8.6-source-balance"
-EXPECTED_DATA_CACHE = "wrn-data-v1.8.6-source-balance"
+EXPECTED_VERSION = "1.9.0"
+EXPECTED_APP_CACHE = "wrn-app-v1.9.0-prisoner-solidarity"
+EXPECTED_DATA_CACHE = "wrn-data-v1.9.0-prisoner-solidarity"
 
 REQUIRED_FILES = (
     ".github/workflows/quality-gate.yml",
@@ -181,8 +181,8 @@ class ReleaseAudit:
         self.add(
             "config-loader",
             "release",
-            "const VERSION = '185-quality-2';" in source,
-            "Dynamic loader uses 185-quality-2",
+            "const VERSION = '190-solidarity-1';" in source,
+            "Dynamic loader uses 190-solidarity-1",
         )
         for token in ("dataUrls:", "proxyUrl:", "sharedTranslationUrl:"):
             self.add(
