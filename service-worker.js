@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.9.0-prisoner-solidarity';
-const DATA_CACHE = 'wrn-data-v1.9.0-prisoner-solidarity';
+const APP_CACHE = 'wrn-app-v2.0.0-action-radar';
+const DATA_CACHE = 'wrn-data-v2.0.0-action-radar';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -21,6 +21,9 @@ const APP_SHELL = [
   './video-hub.css',
   './lexicon-tab.css',
   './prisoner-solidarity.css',
+  './action-radar.css',
+  './editorial-review-ui.css',
+  './source-health-freshness.css',
   './about-tab.css',
   './audio-catalog.css',
   './article-summary.css',
@@ -78,6 +81,9 @@ const APP_SHELL = [
   './typography.js',
   './wrn-header.js',
   './source-verification.js',
+  './source-health-freshness.js',
+  './action-radar.js',
+  './editorial-review-ui.js',
   './briefing-loader.js',
   './stories-core.js',
   './briefing-2.js',
@@ -120,6 +126,7 @@ const JSON_FALLBACKS = new Map([
   [new URL('./generated-podcasts.json', self.location.href).pathname, '[]'],
   [new URL('./radio-stations.json', self.location.href).pathname, '[]'],
   [new URL('./source-health.json', self.location.href).pathname, '{}'],
+  [new URL('./source-health-report.json', self.location.href).pathname, '{"sources":[]}'],
   [new URL('./source-catalog.json', self.location.href).pathname, '[]'],
   [new URL('./podcast-health.json', self.location.href).pathname, '{}'],
   [new URL('./radio-health.json', self.location.href).pathname, '{}'],
@@ -140,6 +147,7 @@ const DATA_FILES = new Set([
   new URL('./events.json', self.location.href).pathname,
   new URL('./events-feed.json', self.location.href).pathname,
   new URL('./source-health.json', self.location.href).pathname,
+  new URL('./source-health-report.json', self.location.href).pathname,
   new URL('./source-catalog.json', self.location.href).pathname,
   new URL('./podcasts.json', self.location.href).pathname,
   new URL('./generated-podcasts.json', self.location.href).pathname,
@@ -183,6 +191,13 @@ self.addEventListener('install', event => {
     }
     await self.skipWaiting();
   })());
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = event.notification?.data?.url;
+  if (!target) return;
+  event.waitUntil(clients.openWindow(target));
 });
 
 self.addEventListener('activate', event => {

@@ -62,6 +62,7 @@ jobs:
 
           python tests/validate_app.py
           python tests/test_release_182.py
+          python tests/test_release_200_assets.py
           PYTHONPATH=. python tests/test_audio_source_schema.py
 
       - name: JavaScript-Syntax und Kernlogik prüfen
@@ -89,6 +90,7 @@ jobs:
           node tests/test_stories_core.js
           node tests/test_audio_region_core.js
           node tests/test_source_filters.js
+          node tests/test_release_200.js
 
       - name: Python-Dateien kompilieren
         shell: bash
