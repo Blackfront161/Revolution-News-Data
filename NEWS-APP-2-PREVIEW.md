@@ -1,6 +1,6 @@
 # News App 2 – isolierte Vorschau
 
-Diese Vorschau entwickelt World Revolution News parallel zur veröffentlichten App weiter. Sie ersetzt keine bestehende Datei, registriert keinen Service Worker und verändert weder `index.html` noch die produktiven Cloudflare Worker.
+Diese Vorschau entwickelt World Revolution News parallel zur veröffentlichten App weiter. Sie ersetzt keine bestehende Einstiegsdatei und verändert weder `index.html` noch die produktiven Cloudflare Worker. Ihr eigener Service Worker gilt ausschließlich für den Pfad `next.html` und verwendet getrennt benannte Caches.
 
 ## Lokal testen
 
@@ -25,18 +25,21 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - Artikelansicht mit Übersetzen, Speichern und Original öffnen
 - neun angebotene Oberflächensprachen
 - mobile Vollbild-Artikelansicht und mindestens 44 × 44 Pixel große Bedienflächen
+- Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
+- Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
+- Gefangenen-Solidarität mit verifizierten Profilen, zugehörigen Nachrichten und privater Briefwerkstatt
+- „Entwicklungen · Beta“ mit strengem Mehrquellenabgleich, sichtbarer Verbindungsbegründung und lokaler Beobachtungsliste
+- eigener Offline-Cache mit netzwerkbevorzugten Updates für JavaScript, CSS und Daten
 
 ## Sichere Einführung
 
 1. Vorschau auf diesem Branch weiter testen.
-2. Fehlende Spezialbereiche schrittweise direkt einbauen; bis dahin öffnen sie die klassische App.
+2. Medienbereiche und weitere Detailfunktionen schrittweise direkt einbauen.
 3. Erst nach Regressionstests einen optionalen, deaktivierten Feature-Schalter in die Haupt-App aufnehmen.
 4. Kleine freiwillige Testgruppe aktivieren und Rückmeldungen auswerten.
 5. Erst danach eine neue Android-Version bauen. Die aktuelle Play-Store-App bleibt bis dahin unverändert.
 
 ## Noch nicht produktiv geschaltet
 
-- eigener Offline-Cache für die neue Oberfläche
-- vollständige neue Ansichten für Termine, Lexikon, politische Gefangene und Entwicklungen
 - produktive Freischaltung des neuen Designs
 - Änderung an Google Play, GitHub Pages oder Cloudflare

@@ -1769,6 +1769,11 @@
     exportData: downloadLexicon,
     exportEpub: downloadEpub,
     printPdf: printLexicon,
+    snapshot: () => JSON.parse(JSON.stringify({
+      schemaVersion: 1,
+      terms: TERMS,
+      sources: SOURCES
+    })),
     termCount: TERMS.length,
     sourceCount: SOURCES.length
   });

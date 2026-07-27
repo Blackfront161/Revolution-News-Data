@@ -3,13 +3,15 @@
 
 (() => {
   const core = window.WRNNewsApp2Core;
-  if (!core || window.__wrnNewsApp2Loaded) return;
+  const specialty = window.WRNNewsApp2Specialty;
+  if (!core || !specialty || window.__wrnNewsApp2Loaded) return;
   window.__wrnNewsApp2Loaded = true;
 
   const PREFS_KEY = 'wrn_next_preferences_v1';
   const TRANSLATIONS_KEY = 'wrn_next_teaser_translations_v1';
   const BOOKMARKS_KEY = 'wrn_bookmarks';
   const LANGUAGE_KEY = 'wrn_system_lang';
+  const STORY_WATCH_KEY = 'wrn_next_story_watch_v1';
   const HOME_COUNT = 10;
 
   const COPY = {
@@ -267,6 +269,93 @@
     }
   };
 
+  const SPECIAL_COPY = {
+    de: {
+      backDiscover:'Zurück zu Entdecken', underConstruction:'Im Aufbau', beta:'Beta',
+      eventUpcoming:'Kommende Termine', eventArchive:'Archiv', eventSearch:'Termine durchsuchen',
+      eventCountry:'Land', eventAllCountries:'Alle Länder', eventRepeat:'zusammengefasste Termine',
+      when:'Wann', where:'Wo', internationalUnknown:'International / unklar', noEvents:'Keine passenden Termine gefunden.',
+      glossaryIntro:'Kurze Einordnungen zu Begriffen aus anarchistischen, antiautoritären und linksrevolutionären Bewegungen.',
+      glossaryNote:'Ohne Anspruch auf Vollständigkeit: Begriffe bewegen sich, werden umkämpft und gemeinsam weiterentwickelt.',
+      glossarySearch:'Begriffe durchsuchen', glossarySources:'Quellen', meaning:'Kurz erklärt', practice:'In der Praxis',
+      debate:'Unterschiedliche Perspektiven', related:'Verwandte Begriffe', downloadJson:'Lexikon als JSON sichern',
+      sourceOpen:'Quelle öffnen', fallbackLanguage:'Dieser Eintrag ist noch nicht vollständig übersetzt; die englische Fassung wird angezeigt.',
+      prisonerIntro:'Verifizierte öffentliche Adressen und eine private Briefwerkstatt für solidarische Post.',
+      prisonerLimited:'Bewusst kleine, unvollständige und redaktionell geprüfte Liste – keine juristische Bewertung.',
+      verified:'Geprüft', reviewBy:'Erneut prüfen bis', address:'Postadresse', writeLetter:'Brief schreiben',
+      relatedNews:'Zugehörige Nachrichten', noRelated:'Noch kein passender Artikel im lokalen Archiv.',
+      mailRules:'Versandregeln', localOnly:'Entwürfe und persönliche Angaben bleiben auf diesem Gerät.',
+      developmentIntro:'Mehrere Berichte über dasselbe Geschehen – streng und lokal gruppiert.',
+      developmentGuard:'Nur verschiedene Quellen mit hoher inhaltlicher Übereinstimmung werden verbunden.',
+      whyLinked:'Verbunden durch', confidence:'Übereinstimmung', storySources:'Quellen', storyArticles:'Berichte',
+      storyTimeline:'Zeitverlauf', noDevelopments:'Aktuell gibt es keine ausreichend sichere Mehrquellen-Entwicklung.',
+      watch:'Beobachten', watching:'Beobachtet', showWatched:'Nur beobachtete', showAll:'Alle Entwicklungen'
+    },
+    en: {
+      backDiscover:'Back to Discover', underConstruction:'Under construction', beta:'Beta',
+      eventUpcoming:'Upcoming events', eventArchive:'Archive', eventSearch:'Search events', eventCountry:'Country',
+      eventAllCountries:'All countries', eventRepeat:'grouped dates', when:'When', where:'Where', internationalUnknown:'International / unclear', noEvents:'No matching events found.',
+      glossaryIntro:'Short contextual explanations of terms used in anarchist, anti-authoritarian and revolutionary left movements.',
+      glossaryNote:'No claim to completeness: words move, are contested and develop through collective use.',
+      glossarySearch:'Search terms', glossarySources:'Sources', meaning:'In brief', practice:'In practice',
+      debate:'Different perspectives', related:'Related terms', downloadJson:'Save glossary as JSON',
+      sourceOpen:'Open source', fallbackLanguage:'This entry is not fully translated yet; the English version is shown.',
+      prisonerIntro:'Verified public addresses and a private workshop for solidarity letters.',
+      prisonerLimited:'A deliberately small, incomplete and editorially reviewed list — not a legal assessment.',
+      verified:'Verified', reviewBy:'Review again by', address:'Mailing address', writeLetter:'Write a letter',
+      relatedNews:'Related news', noRelated:'No matching article in the local archive yet.', mailRules:'Mail rules',
+      localOnly:'Drafts and personal details remain on this device.',
+      developmentIntro:'Several reports about the same event, grouped strictly and locally.',
+      developmentGuard:'Only different sources with strong content overlap are linked.', whyLinked:'Linked by',
+      confidence:'Match', storySources:'Sources', storyArticles:'Reports', storyTimeline:'Timeline',
+      noDevelopments:'There is currently no sufficiently reliable multi-source development.',
+      watch:'Watch', watching:'Watching', showWatched:'Watched only', showAll:'All developments'
+    },
+    es: {
+      backDiscover:'Volver a Explorar', underConstruction:'En desarrollo', beta:'Beta', eventUpcoming:'Próximos eventos', eventArchive:'Archivo',
+      eventSearch:'Buscar eventos', eventCountry:'País', eventAllCountries:'Todos los países', eventRepeat:'fechas agrupadas', when:'Cuándo', where:'Dónde', noEvents:'No se encontraron eventos.',
+      glossaryIntro:'Explicaciones breves de términos de movimientos anarquistas, antiautoritarios y revolucionarios.', glossaryNote:'Sin pretensión de totalidad: las palabras cambian y se debaten.', glossarySearch:'Buscar términos', glossarySources:'Fuentes', meaning:'En breve', practice:'En la práctica', debate:'Perspectivas diferentes', related:'Términos relacionados', downloadJson:'Guardar glosario como JSON', sourceOpen:'Abrir fuente',
+      prisonerIntro:'Direcciones públicas verificadas y taller privado de cartas solidarias.', prisonerLimited:'Lista pequeña e incompleta; no es una valoración jurídica.', verified:'Verificado', reviewBy:'Revisar antes de', address:'Dirección postal', writeLetter:'Escribir una carta', relatedNews:'Noticias relacionadas', noRelated:'Aún no hay noticias relacionadas.', mailRules:'Normas de envío', localOnly:'Los borradores permanecen en este dispositivo.',
+      developmentIntro:'Varios informes del mismo hecho, agrupados localmente con criterios estrictos.', developmentGuard:'Solo se conectan fuentes diferentes con gran coincidencia.', whyLinked:'Vinculado por', confidence:'Coincidencia', storySources:'Fuentes', storyArticles:'Informes', storyTimeline:'Cronología', noDevelopments:'No hay desarrollos suficientemente seguros.', watch:'Seguir', watching:'Siguiendo', showWatched:'Solo seguidos', showAll:'Todos'
+    },
+    fr: {
+      backDiscover:'Retour à Découvrir', underConstruction:'En construction', beta:'Bêta', eventUpcoming:'Événements à venir', eventArchive:'Archives', eventSearch:'Rechercher des événements', eventCountry:'Pays', eventAllCountries:'Tous les pays', eventRepeat:'dates regroupées', when:'Quand', where:'Où', noEvents:'Aucun événement trouvé.',
+      glossaryIntro:'Explications brèves de termes des mouvements anarchistes, anti-autoritaires et révolutionnaires.', glossaryNote:'Sans prétention d’exhaustivité : les mots évoluent et sont débattus.', glossarySearch:'Rechercher des termes', glossarySources:'Sources', meaning:'En bref', practice:'En pratique', debate:'Perspectives différentes', related:'Termes liés', downloadJson:'Enregistrer en JSON', sourceOpen:'Ouvrir la source',
+      prisonerIntro:'Adresses publiques vérifiées et atelier privé de lettres solidaires.', prisonerLimited:'Liste volontairement petite et incomplète ; pas une évaluation juridique.', verified:'Vérifié', reviewBy:'Réviser avant le', address:'Adresse postale', writeLetter:'Écrire une lettre', relatedNews:'Actualités liées', noRelated:'Aucun article lié pour le moment.', mailRules:'Règles postales', localOnly:'Les brouillons restent sur cet appareil.',
+      developmentIntro:'Plusieurs rapports sur un même événement, regroupés localement avec prudence.', developmentGuard:'Seules des sources différentes fortement concordantes sont reliées.', whyLinked:'Relié par', confidence:'Correspondance', storySources:'Sources', storyArticles:'Rapports', storyTimeline:'Chronologie', noDevelopments:'Aucune évolution multisource assez fiable.', watch:'Suivre', watching:'Suivi', showWatched:'Suivis seulement', showAll:'Toutes'
+    },
+    it: {
+      backDiscover:'Torna a Scopri', underConstruction:'In costruzione', beta:'Beta', eventUpcoming:'Prossimi eventi', eventArchive:'Archivio', eventSearch:'Cerca eventi', eventCountry:'Paese', eventAllCountries:'Tutti i paesi', eventRepeat:'date raggruppate', when:'Quando', where:'Dove', noEvents:'Nessun evento trovato.',
+      glossaryIntro:'Brevi spiegazioni di termini dei movimenti anarchici, antiautoritari e rivoluzionari.', glossaryNote:'Senza pretesa di completezza: le parole cambiano e sono controverse.', glossarySearch:'Cerca termini', glossarySources:'Fonti', meaning:'In breve', practice:'Nella pratica', debate:'Prospettive diverse', related:'Termini collegati', downloadJson:'Salva come JSON', sourceOpen:'Apri fonte',
+      prisonerIntro:'Indirizzi pubblici verificati e laboratorio privato per lettere solidali.', prisonerLimited:'Elenco volutamente piccolo e incompleto; non è una valutazione legale.', verified:'Verificato', reviewBy:'Ricontrollare entro', address:'Indirizzo postale', writeLetter:'Scrivi una lettera', relatedNews:'Notizie correlate', noRelated:'Nessuna notizia correlata.', mailRules:'Regole postali', localOnly:'Le bozze restano su questo dispositivo.',
+      developmentIntro:'Più resoconti dello stesso evento, raggruppati localmente con criteri rigorosi.', developmentGuard:'Si collegano solo fonti diverse con forte concordanza.', whyLinked:'Collegato da', confidence:'Corrispondenza', storySources:'Fonti', storyArticles:'Resoconti', storyTimeline:'Cronologia', noDevelopments:'Nessuno sviluppo multisorgente abbastanza affidabile.', watch:'Segui', watching:'Seguito', showWatched:'Solo seguiti', showAll:'Tutti'
+    },
+    pt: {
+      backDiscover:'Voltar a Explorar', underConstruction:'Em construção', beta:'Beta', eventUpcoming:'Próximos eventos', eventArchive:'Arquivo', eventSearch:'Pesquisar eventos', eventCountry:'País', eventAllCountries:'Todos os países', eventRepeat:'datas agrupadas', when:'Quando', where:'Onde', noEvents:'Nenhum evento encontrado.',
+      glossaryIntro:'Explicações breves de termos de movimentos anarquistas, antiautoritários e revolucionários.', glossaryNote:'Sem pretensão de totalidade: as palavras mudam e são disputadas.', glossarySearch:'Pesquisar termos', glossarySources:'Fontes', meaning:'Em resumo', practice:'Na prática', debate:'Perspetivas diferentes', related:'Termos relacionados', downloadJson:'Guardar como JSON', sourceOpen:'Abrir fonte',
+      prisonerIntro:'Endereços públicos verificados e oficina privada de cartas solidárias.', prisonerLimited:'Lista deliberadamente pequena e incompleta; não é avaliação jurídica.', verified:'Verificado', reviewBy:'Rever até', address:'Endereço postal', writeLetter:'Escrever carta', relatedNews:'Notícias relacionadas', noRelated:'Ainda não há notícia relacionada.', mailRules:'Regras postais', localOnly:'Os rascunhos ficam neste dispositivo.',
+      developmentIntro:'Vários relatos do mesmo acontecimento, agrupados localmente com rigor.', developmentGuard:'Só fontes diferentes com forte concordância são ligadas.', whyLinked:'Ligado por', confidence:'Correspondência', storySources:'Fontes', storyArticles:'Relatos', storyTimeline:'Cronologia', noDevelopments:'Nenhum desenvolvimento multisource suficientemente fiável.', watch:'Observar', watching:'Observado', showWatched:'Só observados', showAll:'Todos'
+    },
+    ru: {
+      backDiscover:'Назад к обзору', underConstruction:'В разработке', beta:'Бета', eventUpcoming:'Предстоящие события', eventArchive:'Архив', eventSearch:'Поиск событий', eventCountry:'Страна', eventAllCountries:'Все страны', eventRepeat:'объединённых дат', when:'Когда', where:'Где', noEvents:'События не найдены.',
+      glossaryIntro:'Краткие объяснения терминов анархистских, антиавторитарных и революционных движений.', glossaryNote:'Без претензии на полноту: слова меняются и оспариваются.', glossarySearch:'Поиск терминов', glossarySources:'Источники', meaning:'Кратко', practice:'На практике', debate:'Разные взгляды', related:'Связанные термины', downloadJson:'Сохранить JSON', sourceOpen:'Открыть источник',
+      prisonerIntro:'Проверенные публичные адреса и приватная мастерская писем солидарности.', prisonerLimited:'Намеренно небольшой и неполный список; не юридическая оценка.', verified:'Проверено', reviewBy:'Проверить до', address:'Почтовый адрес', writeLetter:'Написать письмо', relatedNews:'Связанные новости', noRelated:'Связанных материалов пока нет.', mailRules:'Почтовые правила', localOnly:'Черновики остаются на устройстве.',
+      developmentIntro:'Несколько сообщений об одном событии, строго сгруппированных локально.', developmentGuard:'Связываются только разные источники с сильным совпадением.', whyLinked:'Связано по', confidence:'Совпадение', storySources:'Источники', storyArticles:'Материалы', storyTimeline:'Хронология', noDevelopments:'Нет достаточно надёжного развития из нескольких источников.', watch:'Отслеживать', watching:'Отслеживается', showWatched:'Только отслеживаемые', showAll:'Все'
+    },
+    el: {
+      backDiscover:'Πίσω στην Ανακάλυψη', underConstruction:'Υπό ανάπτυξη', beta:'Beta', eventUpcoming:'Επερχόμενες εκδηλώσεις', eventArchive:'Αρχείο', eventSearch:'Αναζήτηση εκδηλώσεων', eventCountry:'Χώρα', eventAllCountries:'Όλες οι χώρες', eventRepeat:'ομαδοποιημένες ημερομηνίες', when:'Πότε', where:'Πού', noEvents:'Δεν βρέθηκαν εκδηλώσεις.',
+      glossaryIntro:'Σύντομες εξηγήσεις όρων αναρχικών, αντιεξουσιαστικών και επαναστατικών κινημάτων.', glossaryNote:'Χωρίς αξίωση πληρότητας: οι λέξεις αλλάζουν και αμφισβητούνται.', glossarySearch:'Αναζήτηση όρων', glossarySources:'Πηγές', meaning:'Συνοπτικά', practice:'Στην πράξη', debate:'Διαφορετικές οπτικές', related:'Σχετικοί όροι', downloadJson:'Αποθήκευση JSON', sourceOpen:'Άνοιγμα πηγής',
+      prisonerIntro:'Επαληθευμένες δημόσιες διευθύνσεις και ιδιωτικό εργαστήριο επιστολών.', prisonerLimited:'Σκόπιμα μικρός και ελλιπής κατάλογος· όχι νομική αξιολόγηση.', verified:'Επαληθεύτηκε', reviewBy:'Επανέλεγχος έως', address:'Ταχυδρομική διεύθυνση', writeLetter:'Γράψτε επιστολή', relatedNews:'Σχετικές ειδήσεις', noRelated:'Δεν υπάρχει σχετικό άρθρο ακόμη.', mailRules:'Κανόνες αλληλογραφίας', localOnly:'Τα προσχέδια μένουν στη συσκευή.',
+      developmentIntro:'Πολλαπλές αναφορές για το ίδιο γεγονός, αυστηρά ομαδοποιημένες τοπικά.', developmentGuard:'Συνδέονται μόνο διαφορετικές πηγές με ισχυρή συμφωνία.', whyLinked:'Σύνδεση μέσω', confidence:'Αντιστοίχιση', storySources:'Πηγές', storyArticles:'Αναφορές', storyTimeline:'Χρονολόγιο', noDevelopments:'Δεν υπάρχει αρκετά αξιόπιστη εξέλιξη πολλών πηγών.', watch:'Παρακολούθηση', watching:'Παρακολουθείται', showWatched:'Μόνο παρακολουθούμενα', showAll:'Όλα'
+    },
+    tr: {
+      backDiscover:'Keşfet’e dön', underConstruction:'Yapım aşamasında', beta:'Beta', eventUpcoming:'Yaklaşan etkinlikler', eventArchive:'Arşiv', eventSearch:'Etkinlik ara', eventCountry:'Ülke', eventAllCountries:'Tüm ülkeler', eventRepeat:'birleştirilmiş tarihler', when:'Ne zaman', where:'Nerede', noEvents:'Etkinlik bulunamadı.',
+      glossaryIntro:'Anarşist, otorite karşıtı ve devrimci hareket kavramlarının kısa açıklamaları.', glossaryNote:'Eksiksizlik iddiası yoktur: sözcükler değişir ve tartışılır.', glossarySearch:'Kavram ara', glossarySources:'Kaynaklar', meaning:'Kısaca', practice:'Pratikte', debate:'Farklı bakışlar', related:'İlgili kavramlar', downloadJson:'JSON kaydet', sourceOpen:'Kaynağı aç',
+      prisonerIntro:'Doğrulanmış kamusal adresler ve özel dayanışma mektubu atölyesi.', prisonerLimited:'Bilinçli olarak küçük ve eksik liste; hukuki değerlendirme değildir.', verified:'Doğrulandı', reviewBy:'Yeniden kontrol', address:'Posta adresi', writeLetter:'Mektup yaz', relatedNews:'İlgili haberler', noRelated:'Henüz ilgili haber yok.', mailRules:'Posta kuralları', localOnly:'Taslaklar bu cihazda kalır.',
+      developmentIntro:'Aynı olay hakkındaki birden fazla haber, yerel olarak sıkı biçimde gruplanır.', developmentGuard:'Yalnızca güçlü içerik örtüşmesi olan farklı kaynaklar bağlanır.', whyLinked:'Bağlantı nedeni', confidence:'Eşleşme', storySources:'Kaynaklar', storyArticles:'Haberler', storyTimeline:'Zaman çizelgesi', noDevelopments:'Yeterince güvenilir çok kaynaklı gelişme yok.', watch:'İzle', watching:'İzleniyor', showWatched:'Yalnız izlenenler', showAll:'Tümü'
+    }
+  };
+
   const state = {
     articles: [],
     facets: { regions: [], topics: [], sources: [] },
@@ -275,6 +364,13 @@
     preferences: readJson(PREFS_KEY, { regions: [], topics: [], sources: [], blockedSources: [] }),
     translations: readJson(TRANSLATIONS_KEY, {}),
     discover: { query: '', region: '', topic: '' },
+    events: [],
+    eventFilter: { query: '', country: '', archived: false },
+    prisonerData: { profiles: [], sources: [] },
+    lexicon: { section: 'all', query: '' },
+    lexiconSnapshot: { terms: [], sources: [] },
+    developmentWatch: readJson(STORY_WATCH_KEY, []),
+    developmentsWatchedOnly: false,
     cardArticles: [],
     activeArticle: null
   };
@@ -293,7 +389,11 @@
   }
 
   function t(key) {
-    return COPY[state.language]?.[key] || COPY.en[key] || key;
+    return SPECIAL_COPY[state.language]?.[key]
+      || SPECIAL_COPY.en[key]
+      || COPY[state.language]?.[key]
+      || COPY.en[key]
+      || key;
   }
 
   function readJson(key, fallback) {
@@ -560,10 +660,10 @@
     viewRoot.innerHTML = `
       ${headingMarkup(t('discover'), t('discover'), t('discoverIntro'))}
       <section class="feature-grid" aria-label="${escapeHtml(t('specialty'))}">
-        ${featureCard('◷', t('events'), t('eventsText'), 'index.html')}
-        ${featureCard('A–Z', t('lexicon'), t('lexiconText'), 'index.html')}
-        ${featureCard('✉', t('prisoners'), t('prisonersText'), 'index.html')}
-        ${featureCard('↗', t('developments'), t('developmentsText'), 'index.html')}
+        ${featureCard('◷', t('events'), t('eventsText'), 'events')}
+        ${featureCard('A–Z', t('lexicon'), t('lexiconText'), 'lexicon')}
+        ${featureCard('✉', t('prisoners'), t('prisonersText'), 'prisoners')}
+        ${featureCard('↗', t('developments'), t('developmentsText'), 'developments')}
       </section>
       <div class="discover-controls">
         <input id="next-discover-query" type="search" value="${escapeHtml(state.discover.query)}" placeholder="${escapeHtml(t('searchPlaceholder'))}" aria-label="${escapeHtml(t('searchLabel'))}">
@@ -575,8 +675,167 @@
     `;
   }
 
-  function featureCard(icon, title, description, href) {
-    return `<a class="feature-card" href="${escapeHtml(href)}"><span aria-hidden="true">${escapeHtml(icon)}</span><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p></a>`;
+  function featureCard(icon, title, description, view) {
+    return `<button class="feature-card" type="button" data-view-target="${escapeHtml(view)}"><span aria-hidden="true">${escapeHtml(icon)}</span><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p></button>`;
+  }
+
+  function specialtyBack() {
+    return `<button class="secondary-button" type="button" data-view-target="discover">← ${escapeHtml(t('backDiscover'))}</button>`;
+  }
+
+  function formatTimestamp(value, options = {}) {
+    if (!value) return '—';
+    try {
+      const format = options.dateOnly
+        ? { dateStyle: 'medium' }
+        : { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+      if (options.timeZone) format.timeZone = options.timeZone;
+      return new Intl.DateTimeFormat(state.language, format).format(new Date(value));
+    } catch {
+      return '—';
+    }
+  }
+
+  function countryLabel(value) {
+    return ['XC', 'XE'].includes(value) ? t('internationalUnknown') : value;
+  }
+
+  function eventWhenLabel(event) {
+    const start = formatTimestamp(event.start, { timeZone: event.timezone });
+    const range = event.end > event.start + 12 * 60 * 60 * 1000
+      ? ` – ${formatTimestamp(event.end, { timeZone: event.timezone })}`
+      : '';
+    return `${start}${range}${event.timezone ? ` · ${event.timezone}` : ''}`;
+  }
+
+  function renderEvents() {
+    state.cardArticles = [];
+    const countries = [...new Set(state.events.map(item => item.country).filter(Boolean))].sort();
+    const filtered = specialty.filterEvents(state.events, state.eventFilter).slice(0, 40);
+    viewRoot.innerHTML = `
+      ${headingMarkup(t('events'), t('events'), t('eventsText'), specialtyBack())}
+      <div class="special-tabs" role="tablist" aria-label="${escapeHtml(t('events'))}">
+        <button type="button" class="filter-chip${state.eventFilter.archived ? '' : ' active'}" data-action="event-period" data-value="upcoming">${escapeHtml(t('eventUpcoming'))}</button>
+        <button type="button" class="filter-chip${state.eventFilter.archived ? ' active' : ''}" data-action="event-period" data-value="archive">${escapeHtml(t('eventArchive'))}</button>
+      </div>
+      <div class="special-filter-row">
+        <input id="next-event-query" type="search" value="${escapeHtml(state.eventFilter.query)}" placeholder="${escapeHtml(t('eventSearch'))}" aria-label="${escapeHtml(t('eventSearch'))}">
+        <label><span class="sr-only">${escapeHtml(t('eventCountry'))}</span><select id="next-event-country">
+          <option value="">${escapeHtml(t('eventAllCountries'))}</option>
+          ${countries.map(country => `<option value="${escapeHtml(country)}"${country === state.eventFilter.country ? ' selected' : ''}>${escapeHtml(countryLabel(country))}</option>`).join('')}
+        </select></label>
+      </div>
+      <div class="section-heading"><h2>${escapeHtml(state.eventFilter.archived ? t('eventArchive') : t('eventUpcoming'))}</h2><small>${filtered.length}</small></div>
+      ${filtered.length ? `<div class="event-grid">${filtered.map(event => `
+        <article class="event-card">
+          ${event.image ? `<img src="${escapeHtml(event.image)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}
+          <div>
+            <span class="eyebrow">${escapeHtml(event.source)}</span>
+            <h3>${escapeHtml(event.title)}</h3>
+            <dl><div><dt>${escapeHtml(t('when'))}</dt><dd>${escapeHtml(eventWhenLabel(event))}</dd></div>
+            <div><dt>${escapeHtml(t('where'))}</dt><dd>${escapeHtml([event.venue, event.city, countryLabel(event.country)].filter(Boolean).join(' · ') || '—')}</dd></div></dl>
+            ${event.content ? `<p>${escapeHtml(core.excerpt(event.content, 220))}</p>` : ''}
+            <div class="meta-line">${event.categories.slice(0, 3).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}</div>
+            ${event.occurrenceCount > 1 ? `<small>${event.occurrenceCount} ${escapeHtml(t('eventRepeat'))}</small>` : ''}
+            ${event.link ? `<a class="small-action" href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('original'))}</a>` : ''}
+          </div>
+        </article>`).join('')}</div>` : `<div class="empty-state"><strong>${escapeHtml(t('noEvents'))}</strong></div>`}
+    `;
+  }
+
+  function sectionLabel(section) {
+    return window.WRNLexicon184?.sectionLabel?.(section, state.language) || section;
+  }
+
+  function renderLexiconSources() {
+    return `<div class="source-grid">${state.lexiconSnapshot.sources.map(source => `
+      <article class="source-card">
+        <span class="eyebrow">${escapeHtml(source.language || '')}</span>
+        <h3>${escapeHtml(source.name)}</h3>
+        <p>${escapeHtml(specialty.localized(source.description, state.language))}</p>
+        <div class="source-actions">
+          ${source.url ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('sourceOpen'))}</a>` : ''}
+          ${(source.downloads || []).map(download => `<a href="${escapeHtml(download.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(download.label)}</a>`).join('')}
+        </div>
+      </article>`).join('')}</div>`;
+  }
+
+  function renderLexicon() {
+    state.cardArticles = [];
+    const sections = ['all', 'basics', 'organisation', 'justice', 'power', 'tactics', 'ecology', 'struggles', 'sources'];
+    const terms = specialty.glossaryEntries(state.lexiconSnapshot, state.language, state.lexicon.section, state.lexicon.query);
+    viewRoot.innerHTML = `
+      ${headingMarkup(t('lexicon'), t('lexicon'), t('glossaryIntro'), specialtyBack())}
+      <div class="notice-card"><strong>${escapeHtml(t('underConstruction'))}</strong><p>${escapeHtml(t('glossaryNote'))}</p></div>
+      <div class="special-tabs lexicon-tabs">${sections.map(section => `<button type="button" class="filter-chip${state.lexicon.section === section ? ' active' : ''}" data-action="lexicon-section" data-value="${section}">${escapeHtml(section === 'sources' ? t('glossarySources') : sectionLabel(section))}</button>`).join('')}</div>
+      ${state.lexicon.section === 'sources' ? `
+        <div class="special-actions"><button type="button" class="secondary-button" data-action="lexicon-download">${escapeHtml(t('downloadJson'))}</button></div>
+        ${renderLexiconSources()}` : `
+        <div class="special-filter-row"><input id="next-lexicon-query" type="search" value="${escapeHtml(state.lexicon.query)}" placeholder="${escapeHtml(t('glossarySearch'))}" aria-label="${escapeHtml(t('glossarySearch'))}"><span class="result-count">${terms.length}</span></div>
+        <div class="lexicon-grid">${terms.map(term => `
+          <details class="lexicon-card">
+            <summary><span class="eyebrow">${escapeHtml(sectionLabel(term.category))}</span><strong>${escapeHtml(term.displayTitle)}</strong><p>${escapeHtml(term.displaySummary)}</p></summary>
+            <div class="lexicon-detail">
+              ${term.displayPractice ? `<h4>${escapeHtml(t('practice'))}</h4><p>${escapeHtml(term.displayPractice)}</p>` : ''}
+              ${term.displayDebate ? `<h4>${escapeHtml(t('debate'))}</h4><p>${escapeHtml(term.displayDebate)}</p>` : ''}
+              ${(term.related || []).length ? `<h4>${escapeHtml(t('related'))}</h4><div class="meta-line">${term.related.map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}</div>` : ''}
+              ${!['de', 'en'].includes(state.language) ? `<small>${escapeHtml(t('fallbackLanguage'))}</small>` : ''}
+            </div>
+          </details>`).join('')}</div>`}
+    `;
+  }
+
+  function prisonerAddress(profile) {
+    return (profile?.mailingAddress?.lines || []).join('\n');
+  }
+
+  function renderPrisoners() {
+    state.cardArticles = [];
+    const profiles = state.prisonerData.profiles || [];
+    viewRoot.innerHTML = `
+      ${headingMarkup(t('prisoners'), t('prisoners'), t('prisonerIntro'), specialtyBack())}
+      <div class="notice-card"><strong>${escapeHtml(t('underConstruction'))}</strong><p>${escapeHtml(t('prisonerLimited'))}</p><small>🔒 ${escapeHtml(t('localOnly'))}</small></div>
+      <div class="prisoner-grid">${profiles.map(profile => {
+        const current = specialty.isCurrentProfile(profile);
+        const related = specialty.relatedArticles(profile, state.articles).slice(0, 3);
+        const relatedMarkup = related.map(article => {
+          const index = state.cardArticles.push(article) - 1;
+          return `<button type="button" data-action="open" data-index="${index}"><strong>${escapeHtml(article.title)}</strong><small>${escapeHtml(article.source)}</small></button>`;
+        }).join('');
+        return `<article class="prisoner-card${current ? '' : ' stale'}">
+          <header><div><span class="eyebrow">${escapeHtml(profile.country)} · ${escapeHtml(profile.institution)}</span><h3>${escapeHtml(profile.publicName)}</h3></div><span class="verification-badge">${escapeHtml(current ? t('verified') : t('reviewBy'))}: ${escapeHtml(formatTimestamp(`${profile.verification?.[current ? 'verifiedAt' : 'nextReviewAt']}T12:00:00Z`, { dateOnly: true }))}</span></header>
+          <p>${escapeHtml(specialty.localized(profile.context, state.language))}</p>
+          <div class="meta-line">${(profile.movementTags || []).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}</div>
+          <details><summary>${escapeHtml(t('address'))}</summary><address>${escapeHtml(prisonerAddress(profile))}</address><p>${escapeHtml(specialty.localized(profile.mailRules?.notes, state.language))}</p></details>
+          <div class="prisoner-related"><h4>${escapeHtml(t('relatedNews'))}</h4>${relatedMarkup || `<p>${escapeHtml(t('noRelated'))}</p>`}</div>
+          <button type="button" class="primary-button" data-action="letter" data-profile-id="${escapeHtml(profile.id)}"${current ? '' : ' disabled'}>✉ ${escapeHtml(t('writeLetter'))}</button>
+        </article>`;
+      }).join('')}</div>
+    `;
+  }
+
+  function renderDevelopments() {
+    state.cardArticles = [];
+    const all = specialty.developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 });
+    const watched = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
+    const clusters = state.developmentsWatchedOnly ? all.filter(story => watched.has(story.id)) : all;
+    viewRoot.innerHTML = `
+      ${headingMarkup(t('developments'), t('developments'), t('developmentIntro'), specialtyBack())}
+      <div class="notice-card"><strong>${escapeHtml(t('beta'))}</strong><p>${escapeHtml(t('developmentGuard'))}</p></div>
+      <div class="special-tabs"><button type="button" class="filter-chip${state.developmentsWatchedOnly ? '' : ' active'}" data-action="development-filter" data-value="all">${escapeHtml(t('showAll'))}</button><button type="button" class="filter-chip${state.developmentsWatchedOnly ? ' active' : ''}" data-action="development-filter" data-value="watched">${escapeHtml(t('showWatched'))}</button></div>
+      ${clusters.length ? `<div class="development-grid">${clusters.map(story => {
+        const isWatching = watched.has(story.id);
+        return `<article class="development-card">
+          <header><div><span class="eyebrow">${story.itemCount} ${escapeHtml(t('storyArticles'))} · ${story.sourceCount} ${escapeHtml(t('storySources'))}</span><h3>${escapeHtml(story.title)}</h3></div><button type="button" class="watch-button" data-action="watch-development" data-story-id="${escapeHtml(story.id)}" aria-pressed="${isWatching}">${isWatching ? '★' : '☆'} ${escapeHtml(isWatching ? t('watching') : t('watch'))}</button></header>
+          <div class="evidence-line"><strong>${escapeHtml(t('whyLinked'))}:</strong> ${(story.matchReasons || []).slice(0, 5).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}<span>${escapeHtml(t('confidence'))}: ${Math.round((story.matchConfidence || 0) * 100)}%</span></div>
+          <ol class="timeline-list">${story.items.map(item => {
+            const normalized = core.normalizeArticle(item);
+            const index = state.cardArticles.push(normalized) - 1;
+            return `<li><time>${escapeHtml(dateLabel(normalized))}</time><button type="button" data-action="open" data-index="${index}"><strong>${escapeHtml(normalized.title)}</strong><small>${escapeHtml(normalized.source)}</small></button></li>`;
+          }).join('')}</ol>
+        </article>`;
+      }).join('')}</div>` : `<div class="empty-state"><strong>${escapeHtml(t('noDevelopments'))}</strong></div>`}
+    `;
   }
 
   function renderMedia() {
@@ -620,8 +879,10 @@
 
   function render() {
     loading.hidden = true;
+    const discoverViews = new Set(['discover', 'events', 'lexicon', 'prisoners', 'developments']);
     document.querySelectorAll('[data-view-target]').forEach(button => {
-      const active = button.dataset.viewTarget === state.view;
+      const active = button.dataset.viewTarget === state.view
+        || (button.dataset.viewTarget === 'discover' && discoverViews.has(state.view));
       button.classList.toggle('active', active);
       if (button.closest('.bottom-nav')) {
         if (active) button.setAttribute('aria-current', 'page');
@@ -631,6 +892,10 @@
 
     if (state.view === 'following') renderFollowing();
     else if (state.view === 'discover') renderDiscover();
+    else if (state.view === 'events') renderEvents();
+    else if (state.view === 'lexicon') renderLexicon();
+    else if (state.view === 'prisoners') renderPrisoners();
+    else if (state.view === 'developments') renderDevelopments();
     else if (state.view === 'media') renderMedia();
     else if (state.view === 'saved') renderSaved();
     else renderHome();
@@ -781,7 +1046,7 @@
   }
 
   function changeView(view) {
-    if (!['home', 'following', 'discover', 'media', 'saved'].includes(view)) return;
+    if (!['home', 'following', 'discover', 'events', 'lexicon', 'prisoners', 'developments', 'media', 'saved'].includes(view)) return;
     state.view = view;
     render();
     document.getElementById('next-main').focus({ preventScroll: true });
@@ -821,6 +1086,35 @@
       }
       if (action === 'preferences') openPreferences();
       if (action === 'retry') loadData();
+      if (action === 'event-period') {
+        state.eventFilter.archived = target.dataset.value === 'archive';
+        renderEvents();
+      }
+      if (action === 'lexicon-section') {
+        state.lexicon.section = target.dataset.value || 'all';
+        renderLexicon();
+      }
+      if (action === 'lexicon-download') window.WRNLexicon184?.exportData?.();
+      if (action === 'letter') {
+        window.WRNPrisonerSolidarity190?.loadData?.()
+          .then(() => window.WRNPrisonerSolidarity190.openWorkshop(target.dataset.profileId))
+          .catch(error => {
+            console.warn('Letter workshop unavailable', error);
+            showToast(t('loadError'));
+          });
+      }
+      if (action === 'development-filter') {
+        state.developmentsWatchedOnly = target.dataset.value === 'watched';
+        renderDevelopments();
+      }
+      if (action === 'watch-development') {
+        const values = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
+        if (values.has(target.dataset.storyId)) values.delete(target.dataset.storyId);
+        else values.add(target.dataset.storyId);
+        state.developmentWatch = [...values];
+        writeJson(STORY_WATCH_KEY, state.developmentWatch);
+        renderDevelopments();
+      }
     });
 
     document.getElementById('next-search-toggle').addEventListener('click', event => {
@@ -839,10 +1133,26 @@
     });
 
     viewRoot.addEventListener('input', event => {
-      if (event.target.id !== 'next-discover-query') return;
-      state.discover.query = event.target.value;
+      const id = event.target.id;
+      if (!['next-discover-query', 'next-event-query', 'next-lexicon-query'].includes(id)) return;
+      if (id === 'next-discover-query') state.discover.query = event.target.value;
+      if (id === 'next-event-query') state.eventFilter.query = event.target.value;
+      if (id === 'next-lexicon-query') state.lexicon.query = event.target.value;
       window.clearTimeout(bindEvents.searchTimer);
-      bindEvents.searchTimer = window.setTimeout(renderDiscover, 180);
+      bindEvents.searchTimer = window.setTimeout(() => {
+        if (id === 'next-event-query') renderEvents();
+        else if (id === 'next-lexicon-query') renderLexicon();
+        else renderDiscover();
+        const replacement = document.getElementById(id);
+        replacement?.focus();
+        replacement?.setSelectionRange(replacement.value.length, replacement.value.length);
+      }, 180);
+    });
+
+    viewRoot.addEventListener('change', event => {
+      if (event.target.id !== 'next-event-country') return;
+      state.eventFilter.country = event.target.value;
+      renderEvents();
     });
 
     languageSelect.addEventListener('change', () => {
@@ -851,6 +1161,7 @@
       localStorage.setItem(LANGUAGE_KEY, state.language);
       applyLanguage();
       render();
+      window.dispatchEvent(new CustomEvent('wrnlanguagechange', { detail: { language: state.language } }));
     });
 
     document.querySelector('[data-dialog-close]').addEventListener('click', () => articleDialog.close());
@@ -879,6 +1190,26 @@
     return response.json();
   }
 
+  async function loadSpecialtyData() {
+    state.lexiconSnapshot = window.WRNLexicon184?.snapshot?.() || { terms: [], sources: [] };
+    const [eventsResult, prisonersResult] = await Promise.allSettled([
+      fetchJson('events-feed.json'),
+      fetchJson('prisoner-solidarity.json')
+    ]);
+    if (eventsResult.status === 'fulfilled') {
+      state.events = specialty.collapseRecurringEvents(eventsResult.value);
+    } else {
+      console.warn('Events unavailable in preview', eventsResult.reason);
+      state.events = [];
+    }
+    if (prisonersResult.status === 'fulfilled' && Array.isArray(prisonersResult.value?.profiles)) {
+      state.prisonerData = prisonersResult.value;
+    } else {
+      console.warn('Prisoner solidarity data unavailable in preview', prisonersResult.reason);
+      state.prisonerData = { profiles: [], sources: [] };
+    }
+  }
+
   async function loadData() {
     loading.hidden = false;
     viewRoot.innerHTML = '';
@@ -897,6 +1228,7 @@
         if (!articles.length) throw new Error(`No articles in ${url}`);
         state.articles = articles;
         state.facets = core.collectFacets(articles);
+        await loadSpecialtyData();
         render();
         return;
       } catch (error) {
@@ -913,4 +1245,12 @@
   applyLanguage();
   bindEvents();
   loadData();
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./news-app-2-sw.js', {
+        scope: './next.html',
+        updateViaCache: 'none'
+      }).catch(error => console.warn('Preview offline cache unavailable', error));
+    }, { once: true });
+  }
 })();
