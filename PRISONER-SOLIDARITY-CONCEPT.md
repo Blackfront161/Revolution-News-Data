@@ -1,5 +1,9 @@
 # Konzept: Gefangenen-Solidarität
 
+Status: Der sichere MVP dieses Konzepts ist seit WRN 1.9.0 umgesetzt. Das
+Verzeichnis startet bewusst klein; weitere Profile werden erst nach derselben
+Adress- und Quellenprüfung aufgenommen.
+
 ## Ziel
 
 Der Bereich hilft Menschen, politische Gefangene aus anarchistischen,

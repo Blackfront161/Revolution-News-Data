@@ -1,8 +1,8 @@
 /* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
 'use strict';
 
-const APP_CACHE = 'wrn-app-v1.8.6-source-balance';
-const DATA_CACHE = 'wrn-data-v1.8.6-source-balance';
+const APP_CACHE = 'wrn-app-v1.9.0-prisoner-solidarity';
+const DATA_CACHE = 'wrn-data-v1.9.0-prisoner-solidarity';
 const WRN_CACHE_PREFIX = 'wrn-';
 
 const APP_SHELL = [
@@ -20,6 +20,7 @@ const APP_SHELL = [
   './stories-timeline.css',
   './video-hub.css',
   './lexicon-tab.css',
+  './prisoner-solidarity.css',
   './about-tab.css',
   './audio-catalog.css',
   './article-summary.css',
@@ -83,6 +84,7 @@ const APP_SHELL = [
   './stories-timeline.js',
   './video-hub.js',
   './lexicon-tab.js',
+  './prisoner-solidarity.js',
   './about-tab.js',
   './article-actions.js',
   './sticky-dialogs.js',
@@ -105,7 +107,8 @@ const APP_SHELL = [
   './audio-catalog.js',
   './app.js',
   './manifest.json',
-  './icon.svg'
+  './icon.svg',
+  './prisoner-solidarity.json'
 ];
 
 const JSON_FALLBACKS = new Map([
@@ -127,7 +130,8 @@ const JSON_FALLBACKS = new Map([
   [new URL('./language-source-audit.json', self.location.href).pathname, '{}'],
   [new URL('./multilingual-source-registry.json', self.location.href).pathname, '{}'],
   [new URL('./editorial-review.json', self.location.href).pathname, '{"items":[]}'],
-  [new URL('./alternative-social-media.json', self.location.href).pathname, '{"platforms":[]}']
+  [new URL('./alternative-social-media.json', self.location.href).pathname, '{"platforms":[]}'],
+  [new URL('./prisoner-solidarity.json', self.location.href).pathname, '{"schemaVersion":1,"profiles":[],"sources":[]}']
 ]);
 
 const DATA_FILES = new Set([
@@ -149,7 +153,8 @@ const DATA_FILES = new Set([
   new URL('./language-source-audit.json', self.location.href).pathname,
   new URL('./multilingual-source-registry.json', self.location.href).pathname,
   new URL('./editorial-review.json', self.location.href).pathname,
-  new URL('./alternative-social-media.json', self.location.href).pathname
+  new URL('./alternative-social-media.json', self.location.href).pathname,
+  new URL('./prisoner-solidarity.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {

@@ -153,9 +153,9 @@ window.WRN_EMERGENCY_MODE = false;
 
 window.WRN_CONFIG = Object.freeze({
     appName: 'World Revolution News',
-    version: '1.8.6',
-    build: '2026.07.26-wrn-1.8.6-source-balance-release',
-    releasedAt: '2026-07-26T20:30:00+02:00',
+    version: '1.9.0',
+    build: '2026.07.27-wrn-1.9.0-prisoner-solidarity-release',
+    releasedAt: '2026-07-27T12:00:00+02:00',
     repository: 'Blackfront161/Revolution-News-Data',
     emergencyMode: false,
     recoveryStage: 15,
@@ -176,6 +176,7 @@ window.WRN_CONFIG = Object.freeze({
         languageSourceAudit: 'https://blackfront161.github.io/Revolution-News-Data/language-source-audit.json',
         editorialReview: './editorial-review.json',
         alternativeSocialMedia: './alternative-social-media.json',
+        prisonerSolidarity: './prisoner-solidarity.json',
         generatedPodcasts: 'https://blackfront161.github.io/Revolution-News-Data/generated-podcasts.json'
     }),
     proxyUrl: 'https://revolution-proxy.paghklo.workers.dev',
@@ -509,7 +510,7 @@ window.WRN_CONFIG = Object.freeze({
     if (window.__wrnRecoveryCoreLoader180) return;
     window.__wrnRecoveryCoreLoader180 = true;
 
-    const VERSION = '185-quality-2';
+    const VERSION = '190-solidarity-1';
 
     const addStyle = (file, marker) => {
         if (
@@ -631,6 +632,7 @@ window.WRN_CONFIG = Object.freeze({
             ['stories-timeline.css', 'stories-recovery-13'],
             ['video-hub.css', 'video-hub-recovery-14'],
             ['lexicon-tab.css', 'lexicon-tab-recovery-184'],
+            ['prisoner-solidarity.css', 'prisoner-solidarity-recovery-190'],
             ['about-tab.css', 'about-tab-recovery-184'],
             ['article-summary.css', 'article-summary-recovery-184'],
             ['zine-designer.css', 'zine-designer-recovery-10'],
@@ -648,6 +650,7 @@ window.WRN_CONFIG = Object.freeze({
             ['stories-timeline.js', 'stories-recovery-13'],
             ['video-hub.js', 'video-hub-recovery-14'],
             ['lexicon-tab.js', 'lexicon-tab-recovery-184'],
+            ['prisoner-solidarity.js', 'prisoner-solidarity-recovery-190'],
             ['about-tab.js', 'about-tab-recovery-184'],
             ['article-summary-core.js', 'article-summary-core-recovery-184'],
             ['article-summary.js', 'article-summary-recovery-184'],
