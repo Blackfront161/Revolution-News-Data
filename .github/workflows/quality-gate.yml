@@ -106,9 +106,11 @@ jobs:
           node tests/test_article_interactions.js
           node tests/test_article_workspace_184.js
           node tests/test_prisoner_solidarity.js
+          node tests/test_release_200.js
           python tests/test_video_assets.py
           python tests/test_audio_block2_assets.py
           python tests/test_prisoner_solidarity_assets.py
+          python tests/test_release_200_assets.py
           node tests/test_block3_interface.js
           node tests/test_block3_runtime.js
           python tests/test_block3_assets.py

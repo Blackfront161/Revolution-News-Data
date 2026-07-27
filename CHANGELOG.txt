@@ -1,3 +1,25 @@
+ÄNDERUNGEN 2.0.0 – AKTIONSRADAR UND REDAKTIONELLE QUALITÄT
+
+- Der Terminbereich besitzt jetzt ein Aktionsradar mit den Ansichten
+  „Alle Termine“, „In der Nähe“ und „Erinnerungen“.
+- Die freiwillige Entfernungssuche verarbeitet den Gerätestandort nur im
+  Browser. Er wird weder gespeichert noch an WRN oder einen Kartendienst
+  übertragen.
+- Eine kostenfreie schematische Kartenansicht zeigt Termine mit vorhandenen
+  Koordinaten. Erst ein ausdrücklicher Klick öffnet den exakten Punkt bei
+  OpenStreetMap.
+- Terminerinnerungen werden ausschließlich lokal gespeichert. Wenn die App
+  geöffnet ist, können Browser-/PWA-Benachrichtigungen ausgelöst werden;
+  es gibt keinen kostenpflichtigen Push-Server.
+- Eine redaktionelle Prüfliste unter „Diagnose“ macht unsichere automatische
+  Themen- und Regionszuordnungen filterbar. Entscheidungen lassen sich lokal
+  vormerken und als JSON exportieren.
+- Die automatische Quellenprüfung läuft weiterhin alle vier Stunden. Ihr
+  Bericht enthält jetzt ein 12-Stunden-Ablauffenster; die App warnt sichtbar,
+  wenn Erreichbarkeitswerte nicht mehr aktuell sind.
+- Der geplante Social-Media-Bereich bleibt vollständig zurückgestellt und
+  wurde in diesem Release nicht eingebunden.
+
 ÄNDERUNGEN 1.9.0 – GEFANGENEN-SOLIDARITÄT
 
 SOLIDARITÄTSVERZEICHNIS

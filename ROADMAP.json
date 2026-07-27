@@ -1,7 +1,7 @@
 {
   "current": {
-    "version": "1.9.0",
-    "name": "Gefangenen-Solidarität und private Schreibwerkstatt",
+    "version": "2.0.0",
+    "name": "Aktionsradar und redaktionelle Qualitätssicherung",
     "status": "implementiert und im Quality Gate"
   },
   "completedInCurrent": [
@@ -14,25 +14,29 @@
     "kuratiertes Verzeichnis mit automatisch ablaufender Adressprüfung",
     "lokale Schreibwerkstatt mit optionaler Übersetzung und Druckansicht",
     "Posthinweise, Quellen und passende Artikel aus dem WRN-Archiv"
+    ,
+    "Aktionsradar mit kostenfreier schematischer Kartenansicht",
+    "freiwillige Entfernungssuche ohne Übertragung oder Speicherung des Standorts",
+    "lokale Terminerinnerungen ohne Push-Server und ohne laufende Kosten",
+    "redaktionelle Prüfliste mit lokalem Entscheidungs-Export",
+    "automatische Quellenprüfung alle vier Stunden mit transparentem Ablaufstatus"
   ],
   "next": [
     {
-      "version": "1.9",
-      "name": "Aktionsradar"
-    },
-    {
-      "version": "2.0",
-      "name": "Push-Mitteilungen und skalierbare gemeinsame Daten",
+      "version": "2.1",
+      "name": "Gemeinsame redaktionelle Daten – erst nach Kosten- und Datenschutzentscheidung",
       "scope": [
-        "Karten- und Entfernungssuche für Termine",
-        "redaktionelle Prüfliste für unsichere Themenzuordnungen",
-        "automatisierte Quellen-Gesundheitsprüfung und Ablaufdaten",
-        "datensparsame optionale Benachrichtigungen"
+        "optional synchronisierte redaktionelle Entscheidungen",
+        "echte Hintergrundbenachrichtigungen nur mit freiwilliger Einwilligung",
+        "keine Einführung ohne transparentes Kostenlimit"
       ]
-    },
+    }
+  ],
+  "deferred": [
     {
       "version": "später",
       "name": "Kuratiertes alternatives Social-Media-Fenster",
+      "status": "auf ausdrücklichen Wunsch zurückgestellt",
       "scope": [
         "Mastodon-Accounts und Hashtags als ruhiger, chronologischer Feed",
         "PeerTube-Kanäle im Video-Hub",

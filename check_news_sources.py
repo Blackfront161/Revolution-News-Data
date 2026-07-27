@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import ast
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from html.parser import HTMLParser
 import json
 import os
@@ -959,11 +959,18 @@ def write_results(results: list[dict[str, Any]]) -> None:
         ),
     }
 
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated = datetime.now(timezone.utc)
+    generated_at = generated.isoformat()
 
     report = {
-        "schemaVersion": 4,
+        "schemaVersion": 5,
         "generatedAt": generated_at,
+        "freshUntil": (generated + timedelta(hours=12)).isoformat(),
+        "refreshPolicy": {
+            "workflowIntervalHours": 4,
+            "freshnessWindowHours": 12,
+            "expiredResultsAreNotPresentedAsCurrent": True,
+        },
         "summary": summary,
         "sources": results,
     }
