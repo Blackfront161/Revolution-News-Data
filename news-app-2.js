@@ -13,6 +13,7 @@
   const BOOKMARKS_KEY = 'wrn_bookmarks';
   const LANGUAGE_KEY = 'wrn_system_lang';
   const STORY_WATCH_KEY = 'wrn_next_story_watch_v1';
+  const UI_SETTINGS_KEY = 'wrn_next_ui_settings_v1';
   const HOME_COUNT = 10;
 
   const COPY = {
@@ -445,6 +446,10 @@
     de: {
       menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
       sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
+      display:'Darstellung', project:'Projekt', theme:'Farbdarstellung', themeDark:'Dunkel', themeLight:'Hell',
+      themeSystem:'Systemeinstellung', themeContrast:'Hoher Kontrast', fontSize:'Schriftgröße', normal:'Normal',
+      large:'Groß', xlarge:'Sehr groß', density:'Artikeldarstellung', compact:'Kompakt', standard:'Standard',
+      spacious:'Großzügig', settingsLocal:'Diese Einstellungen bleiben auf diesem Gerät.',
       briefingSetup:'Wähle in drei kurzen Schritten, was du hören oder lesen möchtest.', step:'Schritt', of:'von',
       next:'Weiter', back:'Zurück', listen:'Anhören', stop:'Stoppen', done:'Fertig', briefingLocal:'Wird nur auf diesem Gerät zusammengestellt.',
       briefingAmount:'Länge', briefingItems:'Meldungen', noBriefing:'Keine passenden Meldungen gefunden.',
@@ -453,6 +458,10 @@
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
       sourceCheck:'Source check', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
+      display:'Appearance', project:'Project', theme:'Colour theme', themeDark:'Dark', themeLight:'Light',
+      themeSystem:'System setting', themeContrast:'High contrast', fontSize:'Text size', normal:'Normal',
+      large:'Large', xlarge:'Very large', density:'Article layout', compact:'Compact', standard:'Standard',
+      spacious:'Spacious', settingsLocal:'These settings remain on this device.',
       briefingSetup:'Choose what you want to hear or read in three short steps.', step:'Step', of:'of',
       next:'Next', back:'Back', listen:'Listen', stop:'Stop', done:'Done', briefingLocal:'Assembled only on this device.',
       briefingAmount:'Length', briefingItems:'stories', noBriefing:'No matching stories found.',
@@ -461,6 +470,10 @@
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
       sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
+      display:'Apariencia', project:'Proyecto', theme:'Tema de color', themeDark:'Oscuro', themeLight:'Claro',
+      themeSystem:'Sistema', themeContrast:'Alto contraste', fontSize:'Tamaño del texto', normal:'Normal',
+      large:'Grande', xlarge:'Muy grande', density:'Vista de artículos', compact:'Compacta', standard:'Estándar',
+      spacious:'Amplia', settingsLocal:'Estos ajustes permanecen en este dispositivo.',
       briefingSetup:'Elige en tres pasos lo que quieres escuchar o leer.', step:'Paso', of:'de', next:'Siguiente', back:'Atrás',
       listen:'Escuchar', stop:'Detener', done:'Listo', briefingLocal:'Se crea solo en este dispositivo.',
       briefingAmount:'Duración', briefingItems:'noticias', noBriefing:'No se encontraron noticias.', speechUnavailable:'La lectura no está disponible.'
@@ -468,6 +481,10 @@
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
       sourceCheck:'Vérifier les sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
+      display:'Affichage', project:'Projet', theme:'Thème de couleur', themeDark:'Sombre', themeLight:'Clair',
+      themeSystem:'Système', themeContrast:'Contraste élevé', fontSize:'Taille du texte', normal:'Normale',
+      large:'Grande', xlarge:'Très grande', density:'Affichage des articles', compact:'Compact', standard:'Standard',
+      spacious:'Aéré', settingsLocal:'Ces réglages restent sur cet appareil.',
       briefingSetup:'Choisissez en trois étapes ce que vous souhaitez écouter ou lire.', step:'Étape', of:'sur', next:'Suivant', back:'Retour',
       listen:'Écouter', stop:'Arrêter', done:'Terminé', briefingLocal:'Assemblé uniquement sur cet appareil.',
       briefingAmount:'Durée', briefingItems:'informations', noBriefing:'Aucune information correspondante.', speechUnavailable:'La lecture vocale est indisponible.'
@@ -475,6 +492,10 @@
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
       sourceCheck:'Controllo fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
+      display:'Aspetto', project:'Progetto', theme:'Tema colore', themeDark:'Scuro', themeLight:'Chiaro',
+      themeSystem:'Sistema', themeContrast:'Contrasto elevato', fontSize:'Dimensione testo', normal:'Normale',
+      large:'Grande', xlarge:'Molto grande', density:'Vista articoli', compact:'Compatta', standard:'Standard',
+      spacious:'Spaziosa', settingsLocal:'Queste impostazioni restano su questo dispositivo.',
       briefingSetup:'Scegli in tre passaggi cosa ascoltare o leggere.', step:'Passaggio', of:'di', next:'Avanti', back:'Indietro',
       listen:'Ascolta', stop:'Ferma', done:'Fatto', briefingLocal:'Creato solo su questo dispositivo.',
       briefingAmount:'Durata', briefingItems:'notizie', noBriefing:'Nessuna notizia corrispondente.', speechUnavailable:'La lettura vocale non è disponibile.'
@@ -482,6 +503,10 @@
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
       sourceCheck:'Verificar fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
+      display:'Aparência', project:'Projeto', theme:'Tema de cores', themeDark:'Escuro', themeLight:'Claro',
+      themeSystem:'Sistema', themeContrast:'Alto contraste', fontSize:'Tamanho do texto', normal:'Normal',
+      large:'Grande', xlarge:'Muito grande', density:'Vista de artigos', compact:'Compacta', standard:'Padrão',
+      spacious:'Ampla', settingsLocal:'Estas definições ficam neste dispositivo.',
       briefingSetup:'Escolhe em três passos o que queres ouvir ou ler.', step:'Passo', of:'de', next:'Seguinte', back:'Voltar',
       listen:'Ouvir', stop:'Parar', done:'Concluir', briefingLocal:'Criado apenas neste dispositivo.',
       briefingAmount:'Duração', briefingItems:'notícias', noBriefing:'Nenhuma notícia correspondente.', speechUnavailable:'A leitura em voz alta não está disponível.'
@@ -489,6 +514,10 @@
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
       sourceCheck:'Проверка источников', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
+      display:'Оформление', project:'Проект', theme:'Цветовая тема', themeDark:'Тёмная', themeLight:'Светлая',
+      themeSystem:'Системная', themeContrast:'Высокий контраст', fontSize:'Размер текста', normal:'Обычный',
+      large:'Большой', xlarge:'Очень большой', density:'Вид статей', compact:'Компактный', standard:'Стандартный',
+      spacious:'Свободный', settingsLocal:'Эти настройки остаются на устройстве.',
       briefingSetup:'За три шага выберите, что слушать или читать.', step:'Шаг', of:'из', next:'Далее', back:'Назад',
       listen:'Слушать', stop:'Стоп', done:'Готово', briefingLocal:'Составляется только на этом устройстве.',
       briefingAmount:'Длина', briefingItems:'материалов', noBriefing:'Подходящих материалов нет.', speechUnavailable:'Озвучивание недоступно.'
@@ -496,6 +525,10 @@
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
       sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
+      display:'Εμφάνιση', project:'Έργο', theme:'Χρωματικό θέμα', themeDark:'Σκούρο', themeLight:'Ανοιχτό',
+      themeSystem:'Σύστημα', themeContrast:'Υψηλή αντίθεση', fontSize:'Μέγεθος κειμένου', normal:'Κανονικό',
+      large:'Μεγάλο', xlarge:'Πολύ μεγάλο', density:'Προβολή άρθρων', compact:'Συμπαγής', standard:'Κανονική',
+      spacious:'Άνετη', settingsLocal:'Αυτές οι ρυθμίσεις μένουν στη συσκευή.',
       briefingSetup:'Επιλέξτε σε τρία βήματα τι θέλετε να ακούσετε ή να διαβάσετε.', step:'Βήμα', of:'από', next:'Επόμενο', back:'Πίσω',
       listen:'Ακρόαση', stop:'Διακοπή', done:'Τέλος', briefingLocal:'Δημιουργείται μόνο σε αυτή τη συσκευή.',
       briefingAmount:'Διάρκεια', briefingItems:'ειδήσεις', noBriefing:'Δεν βρέθηκαν ειδήσεις.', speechUnavailable:'Η εκφώνηση δεν είναι διαθέσιμη.'
@@ -503,6 +536,10 @@
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
       sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
+      display:'Görünüm', project:'Proje', theme:'Renk teması', themeDark:'Koyu', themeLight:'Açık',
+      themeSystem:'Sistem', themeContrast:'Yüksek kontrast', fontSize:'Metin boyutu', normal:'Normal',
+      large:'Büyük', xlarge:'Çok büyük', density:'Haber görünümü', compact:'Kompakt', standard:'Standart',
+      spacious:'Geniş', settingsLocal:'Bu ayarlar yalnızca bu cihazda kalır.',
       briefingSetup:'Dinlemek veya okumak istediklerini üç adımda seç.', step:'Adım', of:'/', next:'İleri', back:'Geri',
       listen:'Dinle', stop:'Durdur', done:'Bitti', briefingLocal:'Yalnızca bu cihazda hazırlanır.',
       briefingAmount:'Uzunluk', briefingItems:'haber', noBriefing:'Uygun haber bulunamadı.', speechUnavailable:'Sesli okuma kullanılamıyor.'
@@ -514,6 +551,7 @@
     facets: { regions: [], topics: [], sources: [] },
     view: 'home',
     language: supportedLanguage(localStorage.getItem(LANGUAGE_KEY) || navigator.language || 'de'),
+    ui: readJson(UI_SETTINGS_KEY, { theme: 'dark', fontSize: 'normal', density: 'standard' }),
     preferences: readJson(PREFS_KEY, { regions: [], topics: [], sources: [], blockedSources: [] }),
     translations: readJson(TRANSLATIONS_KEY, {}),
     discover: { query: '', region: '', topic: '' },
@@ -542,8 +580,12 @@
   const searchPanel = document.getElementById('next-global-search');
   const searchInput = document.getElementById('next-search-input');
   const languageSelect = document.getElementById('next-language');
+  const themeSelect = document.getElementById('next-menu-theme');
+  const fontSizeSelect = document.getElementById('next-menu-font-size');
+  const densitySelect = document.getElementById('next-menu-density');
   const briefingTranslationsInFlight = new Set();
   const briefingTranslationsAttempted = new Set();
+  const systemTheme = window.matchMedia?.('(prefers-color-scheme: light)');
 
   function supportedLanguage(value) {
     const language = String(value || '').toLowerCase().split('-')[0];
@@ -579,6 +621,41 @@
       console.warn('Local storage unavailable', error);
       return false;
     }
+  }
+
+  function normalizedUiSettings(value = {}) {
+    return {
+      theme: ['dark', 'light', 'system', 'contrast'].includes(value.theme) ? value.theme : 'dark',
+      fontSize: ['normal', 'large', 'xlarge'].includes(value.fontSize) ? value.fontSize : 'normal',
+      density: ['compact', 'standard', 'spacious'].includes(value.density) ? value.density : 'standard'
+    };
+  }
+
+  function applyUiSettings() {
+    state.ui = normalizedUiSettings(state.ui);
+    const resolvedTheme = state.ui.theme === 'system'
+      ? (systemTheme?.matches ? 'light' : 'dark')
+      : state.ui.theme;
+    document.documentElement.dataset.theme = resolvedTheme;
+    document.documentElement.dataset.fontSize = state.ui.fontSize;
+    document.documentElement.dataset.density = state.ui.density;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute(
+      'content',
+      resolvedTheme === 'light' ? '#f3eee5' : '#05080b'
+    );
+    themeSelect.value = state.ui.theme;
+    fontSizeSelect.value = state.ui.fontSize;
+    densitySelect.value = state.ui.density;
+  }
+
+  function saveUiSettings() {
+    state.ui = normalizedUiSettings({
+      theme: themeSelect.value,
+      fontSize: fontSizeSelect.value,
+      density: densitySelect.value
+    });
+    writeJson(UI_SETTINGS_KEY, state.ui);
+    applyUiSettings();
   }
 
   function escapeHtml(value) {
@@ -619,6 +696,22 @@
     document.querySelector('[data-menu-close]').setAttribute('aria-label', t('close'));
     document.querySelector('[data-briefing-close]').setAttribute('aria-label', t('close'));
     document.getElementById('next-menu-title').textContent = t('menu');
+    document.getElementById('next-menu-display-title').textContent = t('display');
+    document.getElementById('next-menu-project-title').textContent = t('project');
+    document.getElementById('next-menu-theme-label').textContent = t('theme');
+    document.getElementById('next-menu-font-label').textContent = t('fontSize');
+    document.getElementById('next-menu-density-label').textContent = t('density');
+    document.getElementById('next-menu-settings-local').textContent = t('settingsLocal');
+    [
+      [themeSelect, [['dark', 'themeDark'], ['light', 'themeLight'], ['system', 'themeSystem'], ['contrast', 'themeContrast']]],
+      [fontSizeSelect, [['normal', 'normal'], ['large', 'large'], ['xlarge', 'xlarge']]],
+      [densitySelect, [['compact', 'compact'], ['standard', 'standard'], ['spacious', 'spacious']]]
+    ].forEach(([select, options]) => {
+      options.forEach(([value, key]) => {
+        const option = select.querySelector(`option[value="${value}"]`);
+        if (option) option.textContent = t(key);
+      });
+    });
     document.getElementById('next-menu-about').textContent = t('aboutProject');
     document.getElementById('next-menu-feedback').textContent = t('feedback');
     document.getElementById('next-menu-privacy').textContent = t('privacy');
@@ -690,7 +783,7 @@
             <h3>${escapeHtml(title)}</h3>
             <p>${escapeHtml(intro || '')}</p>
           </button>
-          <div class="meta-line">
+          <div class="meta-line article-classification">
             ${article.primaryRegion ? `<span class="tag">${escapeHtml(article.primaryRegion)}</span>` : ''}
             ${article.primaryTopic ? `<span class="tag optional-meta">${escapeHtml(article.primaryTopic)}</span>` : ''}
           </div>
@@ -750,7 +843,7 @@
           <span class="eyebrow">${escapeHtml(hero.source)} · ${escapeHtml(dateLabel(hero))}</span>
           <h1>${escapeHtml(heroTitle)}</h1>
           <p>${escapeHtml(heroIntro)}</p>
-          <div class="meta-line">
+          <div class="meta-line article-classification">
             <span class="tag">${escapeHtml(hero.primaryRegion)}</span>
             ${hero.primaryTopic ? `<span class="tag">${escapeHtml(hero.primaryTopic)}</span>` : ''}
           </div>
@@ -1713,6 +1806,12 @@
       render();
       window.dispatchEvent(new CustomEvent('wrnlanguagechange', { detail: { language: state.language } }));
     });
+    [themeSelect, fontSizeSelect, densitySelect].forEach(select => {
+      select.addEventListener('change', saveUiSettings);
+    });
+    systemTheme?.addEventListener?.('change', () => {
+      if (state.ui.theme === 'system') applyUiSettings();
+    });
 
     document.querySelector('[data-dialog-close]').addEventListener('click', () => articleDialog.close());
     document.getElementById('next-dialog-save').addEventListener('click', () => {
@@ -1824,6 +1923,7 @@
     renderError();
   }
 
+  applyUiSettings();
   applyLanguage();
   bindEvents();
   loadData();

@@ -28,10 +28,11 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - am Artikelende bis zu fünf weitere Meldungen derselben Quelle; der aktuell geöffnete Artikel ist links cyan markiert
 - neun angebotene Oberflächensprachen
 - mobile Vollbild-Artikelansicht und mindestens 44 × 44 Pixel große Bedienflächen
-- kompaktes Hamburger-Menü ohne doppelte Hauptnavigation, dafür mit Briefing, Einstellungen, Terminen, Lexikon, Gefangenensolidarität, Entwicklungen, Projekthinweisen und kleinem Diagnosebereich
+- sinnorientiertes Hamburger-Menü ohne doppelte Navigation: Farbdarstellung, Schriftgröße und Artikeldichte sowie getrennte Bereiche für Projekt und Diagnose
 - dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
 - automatische Übersetzung der fünf Start-Kurzmeldungen in die App-Sprache; bereits übersetzte Meldungen werden lokal wiederverwendet
 - responsive, innerhalb ihrer Karten zugeschnittene Bilder ohne seitliches Überlaufen
+- klar getrennte Bereiche für Themen-/Regionsmarkierungen und Artikelaktionen
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
 - Gefangenen-Solidarität mit verifizierten Profilen, zugehörigen Nachrichten und privater Briefwerkstatt

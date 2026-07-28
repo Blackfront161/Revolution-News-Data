@@ -92,13 +92,18 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert "max-width: 100%" in style
     assert "-1px -1px 0 var(--red)" in style
     menu = html.split('id="next-menu-dialog"', 1)[1].split('</dialog>', 1)[0]
-    assert 'data-action="briefing-open"' in menu
-    assert 'data-view-target="events"' in menu
-    assert 'data-view-target="lexicon"' in menu
     assert 'data-view-target="home"' not in menu
+    assert 'data-view-target=' not in menu
+    assert 'id="next-menu-theme"' in menu
+    assert 'id="next-menu-font-size"' in menu
+    assert 'id="next-menu-density"' in menu
     assert "ensureBriefingTranslations" in script
     assert "data-briefing-id" in script
     assert "<h2>${escapeHtml(t('latest'))}</h2>" in script
+    assert "UI_SETTINGS_KEY" in script
+    assert "article-classification" in script
+    assert ':root[data-theme="light"]' in style
+    assert ':root[data-font-size="xlarge"]' in style
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://wrn-translation-cache.paghklo.workers.dev https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https:; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <link rel="stylesheet" href="news-app-2.css?preview=6">
+  <link rel="stylesheet" href="news-app-2.css?preview=7">
   <link rel="stylesheet" href="prisoner-solidarity.css?preview=3">
 </head>
 <body>
@@ -135,15 +135,37 @@
         </div>
         <button type="button" class="dialog-close" data-menu-close aria-label="Schließen">×</button>
       </header>
-      <nav aria-label="Zusätzliche Inhalte und Einstellungen">
-        <button type="button" data-action="briefing-open"><span aria-hidden="true">◷</span><span data-i18n="briefing">In 5 Minuten</span></button>
-        <button type="button" data-action="preferences"><span aria-hidden="true">⚙</span><span data-i18n="personalize">Feed einrichten</span></button>
-        <button type="button" data-view-target="events"><span aria-hidden="true">▣</span><span data-i18n="events">Termine</span></button>
-        <button type="button" data-view-target="lexicon"><span aria-hidden="true">A–Z</span><span data-i18n="lexicon">Lexikon</span></button>
-        <button type="button" data-view-target="prisoners"><span aria-hidden="true">✉</span><span data-i18n="prisoners">Gefangenensolidarität</span></button>
-        <button type="button" data-view-target="developments"><span aria-hidden="true">↗</span><span data-i18n="developments">Entwicklungen · Beta</span></button>
-      </nav>
-      <section>
+      <section class="menu-settings" aria-labelledby="next-menu-display-title">
+        <h3 id="next-menu-display-title">Darstellung</h3>
+        <label>
+          <span id="next-menu-theme-label">Farbdarstellung</span>
+          <select id="next-menu-theme">
+            <option value="dark">Dunkel</option>
+            <option value="light">Hell</option>
+            <option value="system">Systemeinstellung</option>
+            <option value="contrast">Hoher Kontrast</option>
+          </select>
+        </label>
+        <label>
+          <span id="next-menu-font-label">Schriftgröße</span>
+          <select id="next-menu-font-size">
+            <option value="normal">Normal</option>
+            <option value="large">Groß</option>
+            <option value="xlarge">Sehr groß</option>
+          </select>
+        </label>
+        <label>
+          <span id="next-menu-density-label">Artikeldarstellung</span>
+          <select id="next-menu-density">
+            <option value="compact">Kompakt</option>
+            <option value="standard">Standard</option>
+            <option value="spacious">Großzügig</option>
+          </select>
+        </label>
+        <small id="next-menu-settings-local">Diese Einstellungen bleiben auf diesem Gerät.</small>
+      </section>
+      <section class="menu-project" aria-labelledby="next-menu-project-title">
+        <h3 id="next-menu-project-title">Projekt</h3>
         <a href="index.html#about" id="next-menu-about">Über das Projekt</a>
         <a href="mailto:worldrevnews@brief.li" id="next-menu-feedback">Feedback &amp; neue Quellen</a>
         <a href="privacy.html" id="next-menu-privacy">Datenschutz</a>
@@ -183,6 +205,6 @@
   <script src="stories-core.js?preview=3"></script>
   <script src="lexicon-tab.js?preview=3"></script>
   <script src="prisoner-solidarity.js?preview=3"></script>
-  <script src="news-app-2.js?preview=6"></script>
+  <script src="news-app-2.js?preview=7"></script>
 </body>
 </html>
