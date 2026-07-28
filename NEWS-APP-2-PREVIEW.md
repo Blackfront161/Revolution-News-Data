@@ -40,7 +40,11 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
 - automatische Übersetzung der fünf Start-Kurzmeldungen in die App-Sprache; bereits übersetzte Meldungen werden lokal wiederverwendet
 - responsive Bilder ohne Abschneiden: vollständige Darstellung im Desktop-Rahmen und auf Smartphones oberhalb des Artikels
+- vollständige Einleitungen in der Nachrichtenübersicht ohne harte Zeilenbegrenzung
 - klar getrennte Bereiche für Themen-/Regionsmarkierungen und Artikelaktionen
+- erweiterte lokale Feed-Einrichtung für Regionen, Themen, bevorzugte oder ausgeblendete Quellen, beobachtete Gefangene und Entwicklungen, App-Sprache und Briefing-Länge
+- kompaktere Entdecken- und Medienauswahl mit alphabetisch geordneten Themen
+- Zine-Werkstatt im Medienbereich mit gemeinsamer lokaler Artikelliste, Gestaltung sowie Druck-/PDF-Ausgabe
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
 - Gefangenen-Solidarität mit verifizierten Profilen, zugehörigen Nachrichten und privater Briefwerkstatt
@@ -59,3 +63,15 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 
 - produktive Freischaltung des neuen Designs
 - Änderung an Google Play, GitHub Pages oder Cloudflare
+
+## Noch nicht aus der bisherigen App übernommen
+
+- Zusammenfassen und Übersetzungsvergleich in der geöffneten Artikelansicht
+- Podcast-Erzeugung und Gerätestimme direkt aus einem Artikel
+- Teilen und Lesestatus als vollständige Artikelaktionen
+- der erweiterte Briefing-Verlauf mit Export, Import und Rückmeldungen
+
+Die lokale Smartphone-Vorschau bleibt absichtlich von den produktiven
+Übersetzungs-Origins getrennt. Automatische Übersetzungen werden in einer
+freigegebenen App- oder Web-Origin ausgeführt und anschließend lokal
+wiederverwendet; die Live-Worker werden für LAN-Adressen nicht geöffnet.

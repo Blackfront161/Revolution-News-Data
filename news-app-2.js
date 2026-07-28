@@ -11,6 +11,7 @@
   const PREFS_KEY = 'wrn_next_preferences_v1';
   const TRANSLATIONS_KEY = 'wrn_next_teaser_translations_v1';
   const BOOKMARKS_KEY = 'wrn_bookmarks';
+  const ZINE_KEY = 'wrn_zine_articles';
   const LANGUAGE_KEY = 'wrn_system_lang';
   const STORY_WATCH_KEY = 'wrn_next_story_watch_v1';
   const UI_SETTINGS_KEY = 'wrn_next_ui_settings_v1';
@@ -453,7 +454,17 @@
       briefingSetup:'Wähle in drei kurzen Schritten, was du hören oder lesen möchtest.', step:'Schritt', of:'von',
       next:'Weiter', back:'Zurück', listen:'Anhören', stop:'Stoppen', done:'Fertig', briefingLocal:'Wird nur auf diesem Gerät zusammengestellt.',
       briefingAmount:'Länge', briefingItems:'Meldungen', noBriefing:'Keine passenden Meldungen gefunden.',
-      speechUnavailable:'Vorlesen ist in diesem Browser nicht verfügbar.'
+      speechUnavailable:'Vorlesen ist in diesem Browser nicht verfügbar.',
+      chooseSources:'Quellen priorisieren oder ausblenden', sourcePreferenceSearch:'Quellen durchsuchen',
+      sourceNeutral:'Standard', sourceFollow:'Folgen', sourceHide:'Ausblenden',
+      followPrisoners:'Politische Gefangene beobachten', followDevelopments:'Entwicklungen beobachten',
+      feedLanguage:'App-Sprache', preferredBriefingLength:'Standardlänge des Briefings',
+      shownBecause:'Angezeigt wegen', followedPrisoners:'Beobachtete Gefangene',
+      followedDevelopments:'Beobachtete Entwicklungen', noWatchOptions:'Aktuell steht keine Auswahl zur Verfügung.',
+      zine:'Zine', zineIntro:'Stelle Artikel zu einer eigenen Ausgabe zusammen und gestalte sie anschließend für Druck oder PDF.',
+      zineAdd:'Zum Zine', zineAdded:'Artikel zum Zine hinzugefügt.', zineRemove:'Aus Zine entfernen',
+      zineRemoved:'Artikel aus dem Zine entfernt.', zineEmpty:'Das Zine ist noch leer.',
+      zineClear:'Zine leeren', zineClearConfirm:'Alle Artikel aus dem Zine entfernen?'
     },
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
@@ -465,7 +476,17 @@
       briefingSetup:'Choose what you want to hear or read in three short steps.', step:'Step', of:'of',
       next:'Next', back:'Back', listen:'Listen', stop:'Stop', done:'Done', briefingLocal:'Assembled only on this device.',
       briefingAmount:'Length', briefingItems:'stories', noBriefing:'No matching stories found.',
-      speechUnavailable:'Read-aloud is not available in this browser.'
+      speechUnavailable:'Read-aloud is not available in this browser.',
+      chooseSources:'Prioritize or hide sources', sourcePreferenceSearch:'Search sources',
+      sourceNeutral:'Default', sourceFollow:'Follow', sourceHide:'Hide',
+      followPrisoners:'Watch political prisoners', followDevelopments:'Watch developments',
+      feedLanguage:'App language', preferredBriefingLength:'Default briefing length',
+      shownBecause:'Shown because of', followedPrisoners:'Watched prisoners',
+      followedDevelopments:'Watched developments', noWatchOptions:'No options are currently available.',
+      zine:'Zine', zineIntro:'Collect articles into your own issue, then design it for print or PDF.',
+      zineAdd:'Add to Zine', zineAdded:'Article added to the Zine.', zineRemove:'Remove from Zine',
+      zineRemoved:'Article removed from the Zine.', zineEmpty:'The Zine is empty.',
+      zineClear:'Clear Zine', zineClearConfirm:'Remove every article from the Zine?'
     },
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
@@ -476,7 +497,16 @@
       spacious:'Amplia', settingsLocal:'Estos ajustes permanecen en este dispositivo.',
       briefingSetup:'Elige en tres pasos lo que quieres escuchar o leer.', step:'Paso', of:'de', next:'Siguiente', back:'Atrás',
       listen:'Escuchar', stop:'Detener', done:'Listo', briefingLocal:'Se crea solo en este dispositivo.',
-      briefingAmount:'Duración', briefingItems:'noticias', noBriefing:'No se encontraron noticias.', speechUnavailable:'La lectura no está disponible.'
+      briefingAmount:'Duración', briefingItems:'noticias', noBriefing:'No se encontraron noticias.', speechUnavailable:'La lectura no está disponible.',
+      chooseSources:'Priorizar u ocultar fuentes', sourcePreferenceSearch:'Buscar fuentes', sourceNeutral:'Predeterminado',
+      sourceFollow:'Seguir', sourceHide:'Ocultar', followPrisoners:'Seguir a presxs políticxs',
+      followDevelopments:'Seguir desarrollos', feedLanguage:'Idioma de la aplicación',
+      preferredBriefingLength:'Duración predeterminada del resumen', shownBecause:'Se muestra por',
+      followedPrisoners:'Presxs seguidxs', followedDevelopments:'Desarrollos seguidos', noWatchOptions:'No hay opciones disponibles.',
+      zine:'Zine', zineIntro:'Reúne artículos en una edición y diseña el resultado para imprimir o guardar en PDF.',
+      zineAdd:'Añadir al Zine', zineAdded:'Artículo añadido al Zine.', zineRemove:'Quitar del Zine',
+      zineRemoved:'Artículo eliminado del Zine.', zineEmpty:'El Zine está vacío.',
+      zineClear:'Vaciar Zine', zineClearConfirm:'¿Quitar todos los artículos del Zine?'
     },
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
@@ -487,7 +517,16 @@
       spacious:'Aéré', settingsLocal:'Ces réglages restent sur cet appareil.',
       briefingSetup:'Choisissez en trois étapes ce que vous souhaitez écouter ou lire.', step:'Étape', of:'sur', next:'Suivant', back:'Retour',
       listen:'Écouter', stop:'Arrêter', done:'Terminé', briefingLocal:'Assemblé uniquement sur cet appareil.',
-      briefingAmount:'Durée', briefingItems:'informations', noBriefing:'Aucune information correspondante.', speechUnavailable:'La lecture vocale est indisponible.'
+      briefingAmount:'Durée', briefingItems:'informations', noBriefing:'Aucune information correspondante.', speechUnavailable:'La lecture vocale est indisponible.',
+      chooseSources:'Prioriser ou masquer des sources', sourcePreferenceSearch:'Rechercher des sources', sourceNeutral:'Par défaut',
+      sourceFollow:'Suivre', sourceHide:'Masquer', followPrisoners:'Suivre des prisonnier·ères politiques',
+      followDevelopments:'Suivre des évolutions', feedLanguage:'Langue de l’application',
+      preferredBriefingLength:'Durée par défaut du briefing', shownBecause:'Affiché en raison de',
+      followedPrisoners:'Prisonnier·ères suivi·es', followedDevelopments:'Évolutions suivies', noWatchOptions:'Aucune option disponible.',
+      zine:'Zine', zineIntro:'Rassemblez des articles dans un numéro, puis préparez-le pour l’impression ou le PDF.',
+      zineAdd:'Ajouter au Zine', zineAdded:'Article ajouté au Zine.', zineRemove:'Retirer du Zine',
+      zineRemoved:'Article retiré du Zine.', zineEmpty:'Le Zine est vide.',
+      zineClear:'Vider le Zine', zineClearConfirm:'Retirer tous les articles du Zine ?'
     },
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
@@ -498,7 +537,16 @@
       spacious:'Spaziosa', settingsLocal:'Queste impostazioni restano su questo dispositivo.',
       briefingSetup:'Scegli in tre passaggi cosa ascoltare o leggere.', step:'Passaggio', of:'di', next:'Avanti', back:'Indietro',
       listen:'Ascolta', stop:'Ferma', done:'Fatto', briefingLocal:'Creato solo su questo dispositivo.',
-      briefingAmount:'Durata', briefingItems:'notizie', noBriefing:'Nessuna notizia corrispondente.', speechUnavailable:'La lettura vocale non è disponibile.'
+      briefingAmount:'Durata', briefingItems:'notizie', noBriefing:'Nessuna notizia corrispondente.', speechUnavailable:'La lettura vocale non è disponibile.',
+      chooseSources:'Dai priorità o nascondi fonti', sourcePreferenceSearch:'Cerca fonti', sourceNeutral:'Predefinito',
+      sourceFollow:'Segui', sourceHide:'Nascondi', followPrisoners:'Segui prigionierə politicə',
+      followDevelopments:'Segui sviluppi', feedLanguage:'Lingua dell’app',
+      preferredBriefingLength:'Durata predefinita del briefing', shownBecause:'Mostrato per',
+      followedPrisoners:'Prigionierə seguitə', followedDevelopments:'Sviluppi seguiti', noWatchOptions:'Nessuna opzione disponibile.',
+      zine:'Zine', zineIntro:'Raccogli articoli in un numero e preparalo per la stampa o il PDF.',
+      zineAdd:'Aggiungi allo Zine', zineAdded:'Articolo aggiunto allo Zine.', zineRemove:'Rimuovi dallo Zine',
+      zineRemoved:'Articolo rimosso dallo Zine.', zineEmpty:'Lo Zine è vuoto.',
+      zineClear:'Svuota Zine', zineClearConfirm:'Rimuovere tutti gli articoli dallo Zine?'
     },
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
@@ -509,7 +557,16 @@
       spacious:'Ampla', settingsLocal:'Estas definições ficam neste dispositivo.',
       briefingSetup:'Escolhe em três passos o que queres ouvir ou ler.', step:'Passo', of:'de', next:'Seguinte', back:'Voltar',
       listen:'Ouvir', stop:'Parar', done:'Concluir', briefingLocal:'Criado apenas neste dispositivo.',
-      briefingAmount:'Duração', briefingItems:'notícias', noBriefing:'Nenhuma notícia correspondente.', speechUnavailable:'A leitura em voz alta não está disponível.'
+      briefingAmount:'Duração', briefingItems:'notícias', noBriefing:'Nenhuma notícia correspondente.', speechUnavailable:'A leitura em voz alta não está disponível.',
+      chooseSources:'Priorizar ou ocultar fontes', sourcePreferenceSearch:'Pesquisar fontes', sourceNeutral:'Padrão',
+      sourceFollow:'Seguir', sourceHide:'Ocultar', followPrisoners:'Seguir prisioneiros políticos',
+      followDevelopments:'Seguir desenvolvimentos', feedLanguage:'Idioma da aplicação',
+      preferredBriefingLength:'Duração predefinida do briefing', shownBecause:'Mostrado por',
+      followedPrisoners:'Prisioneiros seguidos', followedDevelopments:'Desenvolvimentos seguidos', noWatchOptions:'Não há opções disponíveis.',
+      zine:'Zine', zineIntro:'Reúne artigos numa edição e prepara-a para impressão ou PDF.',
+      zineAdd:'Adicionar ao Zine', zineAdded:'Artigo adicionado ao Zine.', zineRemove:'Remover do Zine',
+      zineRemoved:'Artigo removido do Zine.', zineEmpty:'O Zine está vazio.',
+      zineClear:'Esvaziar Zine', zineClearConfirm:'Remover todos os artigos do Zine?'
     },
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
@@ -520,7 +577,17 @@
       spacious:'Свободный', settingsLocal:'Эти настройки остаются на устройстве.',
       briefingSetup:'За три шага выберите, что слушать или читать.', step:'Шаг', of:'из', next:'Далее', back:'Назад',
       listen:'Слушать', stop:'Стоп', done:'Готово', briefingLocal:'Составляется только на этом устройстве.',
-      briefingAmount:'Длина', briefingItems:'материалов', noBriefing:'Подходящих материалов нет.', speechUnavailable:'Озвучивание недоступно.'
+      briefingAmount:'Длина', briefingItems:'материалов', noBriefing:'Подходящих материалов нет.', speechUnavailable:'Озвучивание недоступно.',
+      chooseSources:'Выбрать приоритетные или скрытые источники', sourcePreferenceSearch:'Поиск источников',
+      sourceNeutral:'По умолчанию', sourceFollow:'Следить', sourceHide:'Скрыть',
+      followPrisoners:'Следить за политзаключёнными', followDevelopments:'Следить за событиями',
+      feedLanguage:'Язык приложения', preferredBriefingLength:'Длина обзора по умолчанию',
+      shownBecause:'Показано по причине', followedPrisoners:'Отслеживаемые заключённые',
+      followedDevelopments:'Отслеживаемые события', noWatchOptions:'Сейчас вариантов нет.',
+      zine:'Zine', zineIntro:'Соберите статьи в выпуск и подготовьте его к печати или сохранению в PDF.',
+      zineAdd:'Добавить в Zine', zineAdded:'Статья добавлена в Zine.', zineRemove:'Удалить из Zine',
+      zineRemoved:'Статья удалена из Zine.', zineEmpty:'Zine пока пуст.',
+      zineClear:'Очистить Zine', zineClearConfirm:'Удалить все статьи из Zine?'
     },
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
@@ -531,7 +598,17 @@
       spacious:'Άνετη', settingsLocal:'Αυτές οι ρυθμίσεις μένουν στη συσκευή.',
       briefingSetup:'Επιλέξτε σε τρία βήματα τι θέλετε να ακούσετε ή να διαβάσετε.', step:'Βήμα', of:'από', next:'Επόμενο', back:'Πίσω',
       listen:'Ακρόαση', stop:'Διακοπή', done:'Τέλος', briefingLocal:'Δημιουργείται μόνο σε αυτή τη συσκευή.',
-      briefingAmount:'Διάρκεια', briefingItems:'ειδήσεις', noBriefing:'Δεν βρέθηκαν ειδήσεις.', speechUnavailable:'Η εκφώνηση δεν είναι διαθέσιμη.'
+      briefingAmount:'Διάρκεια', briefingItems:'ειδήσεις', noBriefing:'Δεν βρέθηκαν ειδήσεις.', speechUnavailable:'Η εκφώνηση δεν είναι διαθέσιμη.',
+      chooseSources:'Προτεραιότητα ή απόκρυψη πηγών', sourcePreferenceSearch:'Αναζήτηση πηγών',
+      sourceNeutral:'Προεπιλογή', sourceFollow:'Παρακολούθηση', sourceHide:'Απόκρυψη',
+      followPrisoners:'Παρακολούθηση πολιτικών κρατουμένων', followDevelopments:'Παρακολούθηση εξελίξεων',
+      feedLanguage:'Γλώσσα εφαρμογής', preferredBriefingLength:'Προεπιλεγμένη διάρκεια ενημέρωσης',
+      shownBecause:'Εμφανίζεται λόγω', followedPrisoners:'Παρακολουθούμενοι κρατούμενοι',
+      followedDevelopments:'Παρακολουθούμενες εξελίξεις', noWatchOptions:'Δεν υπάρχουν διαθέσιμες επιλογές.',
+      zine:'Zine', zineIntro:'Συγκεντρώστε άρθρα σε ένα τεύχος και σχεδιάστε το για εκτύπωση ή PDF.',
+      zineAdd:'Προσθήκη στο Zine', zineAdded:'Το άρθρο προστέθηκε στο Zine.', zineRemove:'Αφαίρεση από το Zine',
+      zineRemoved:'Το άρθρο αφαιρέθηκε από το Zine.', zineEmpty:'Το Zine είναι κενό.',
+      zineClear:'Εκκαθάριση Zine', zineClearConfirm:'Να αφαιρεθούν όλα τα άρθρα από το Zine;'
     },
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
@@ -542,7 +619,17 @@
       spacious:'Geniş', settingsLocal:'Bu ayarlar yalnızca bu cihazda kalır.',
       briefingSetup:'Dinlemek veya okumak istediklerini üç adımda seç.', step:'Adım', of:'/', next:'İleri', back:'Geri',
       listen:'Dinle', stop:'Durdur', done:'Bitti', briefingLocal:'Yalnızca bu cihazda hazırlanır.',
-      briefingAmount:'Uzunluk', briefingItems:'haber', noBriefing:'Uygun haber bulunamadı.', speechUnavailable:'Sesli okuma kullanılamıyor.'
+      briefingAmount:'Uzunluk', briefingItems:'haber', noBriefing:'Uygun haber bulunamadı.', speechUnavailable:'Sesli okuma kullanılamıyor.',
+      chooseSources:'Kaynaklara öncelik ver veya gizle', sourcePreferenceSearch:'Kaynak ara',
+      sourceNeutral:'Varsayılan', sourceFollow:'Takip et', sourceHide:'Gizle',
+      followPrisoners:'Siyasi mahpusları takip et', followDevelopments:'Gelişmeleri takip et',
+      feedLanguage:'Uygulama dili', preferredBriefingLength:'Varsayılan bülten uzunluğu',
+      shownBecause:'Gösterilme nedeni', followedPrisoners:'Takip edilen mahpuslar',
+      followedDevelopments:'Takip edilen gelişmeler', noWatchOptions:'Şu anda seçenek yok.',
+      zine:'Zine', zineIntro:'Makaleleri bir sayıda topla ve baskı veya PDF için tasarla.',
+      zineAdd:'Zine’a ekle', zineAdded:'Makale Zine’a eklendi.', zineRemove:'Zine’dan çıkar',
+      zineRemoved:'Makale Zine’dan çıkarıldı.', zineEmpty:'Zine henüz boş.',
+      zineClear:'Zine’ı temizle', zineClearConfirm:'Zine’daki tüm makaleler kaldırılsın mı?'
     }
   };
 
@@ -552,7 +639,7 @@
     view: 'home',
     language: supportedLanguage(localStorage.getItem(LANGUAGE_KEY) || navigator.language || 'de'),
     ui: readJson(UI_SETTINGS_KEY, { theme: 'dark', fontSize: 'normal', density: 'standard' }),
-    preferences: readJson(PREFS_KEY, { regions: [], topics: [], sources: [], blockedSources: [] }),
+    preferences: normalizedPreferences(readJson(PREFS_KEY, {})),
     translations: readJson(TRANSLATIONS_KEY, {}),
     discover: { query: '', region: '', topic: '' },
     events: [],
@@ -611,6 +698,22 @@
     } catch {
       return fallback;
     }
+  }
+
+  function normalizedPreferences(value = {}) {
+    const uniqueStrings = key => [...new Set(
+      (Array.isArray(value[key]) ? value[key] : []).map(item => String(item || '').trim()).filter(Boolean)
+    )];
+    const briefingAmount = Number(value.briefingAmount);
+    return {
+      regions: uniqueStrings('regions'),
+      topics: uniqueStrings('topics'),
+      sources: uniqueStrings('sources'),
+      blockedSources: uniqueStrings('blockedSources'),
+      prisonerIds: uniqueStrings('prisonerIds'),
+      preferredLanguage: value.preferredLanguage ? supportedLanguage(value.preferredLanguage) : '',
+      briefingAmount: [3, 5, 8].includes(briefingAmount) ? briefingAmount : 5
+    };
   }
 
   function writeJson(key, value) {
@@ -689,6 +792,9 @@
     document.querySelectorAll('[data-i18n]').forEach(element => {
       element.textContent = t(element.dataset.i18n);
     });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+      element.placeholder = t(element.dataset.i18nPlaceholder);
+    });
     searchInput.placeholder = t('searchPlaceholder');
     document.getElementById('next-search-toggle').setAttribute('aria-label', t('menuSearch'));
     document.getElementById('next-menu-toggle').setAttribute('aria-label', t('menuOpen'));
@@ -754,6 +860,54 @@
     return saved;
   }
 
+  function zineArticles() {
+    const values = readJson(ZINE_KEY, []);
+    return Array.isArray(values) ? values.filter(item => item && typeof item === 'object') : [];
+  }
+
+  function zineArticleKey(article) {
+    return String(
+      article?.link
+      || `${article?.source || article?.quelleName || ''}::${article?.title || ''}::${article?.pubDate || article?.timestamp || ''}`
+    ).trim();
+  }
+
+  function isInZine(article) {
+    const key = zineArticleKey(article);
+    return Boolean(key && zineArticles().some(item => zineArticleKey(item) === key));
+  }
+
+  function storeZineArticles(items) {
+    writeJson(ZINE_KEY, items);
+    window.dispatchEvent(new CustomEvent('wrnzinechange', { detail: { count: items.length } }));
+  }
+
+  function toggleZineArticle(article) {
+    const items = zineArticles();
+    const key = zineArticleKey(article);
+    const index = items.findIndex(item => zineArticleKey(item) === key);
+    const added = index < 0;
+    if (added) {
+      items.push({
+        ...article,
+        quelleName: article.source,
+        pubDate: article.pubDate || (article.timestamp ? new Date(article.timestamp).toISOString() : ''),
+        summary: article.intro,
+        description: article.content || article.intro
+      });
+    } else {
+      items.splice(index, 1);
+    }
+    storeZineArticles(items);
+    showToast(t(added ? 'zineAdded' : 'zineRemoved'));
+    return added;
+  }
+
+  function removeZineArticle(key) {
+    storeZineArticles(zineArticles().filter(article => zineArticleKey(article) !== key));
+    if (state.view === 'media' && state.media.section === 'zine') renderMedia();
+  }
+
   function showToast(message) {
     const toast = document.getElementById('next-toast');
     toast.textContent = message;
@@ -771,6 +925,13 @@
     const image = article.image
       ? `<div class="news-card__image"><img src="${escapeHtml(article.image)}" alt="" loading="lazy" referrerpolicy="no-referrer"></div>`
       : '<div class="news-card__image" aria-hidden="true"></div>';
+    const preferenceReasons = state.view === 'following'
+      ? [
+          (state.preferences.regions || []).includes(article.primaryRegion) ? article.primaryRegion : '',
+          (state.preferences.topics || []).includes(article.primaryTopic) ? article.primaryTopic : '',
+          (state.preferences.sources || []).includes(article.source) ? article.source : ''
+        ].filter(Boolean)
+      : [];
 
     return `
       <article class="news-card" data-card-index="${cardIndex}">
@@ -787,6 +948,7 @@
             ${article.primaryRegion ? `<span class="tag">${escapeHtml(article.primaryRegion)}</span>` : ''}
             ${article.primaryTopic ? `<span class="tag optional-meta">${escapeHtml(article.primaryTopic)}</span>` : ''}
           </div>
+          ${preferenceReasons.length ? `<small class="preference-reason">${escapeHtml(t('shownBecause'))}: ${escapeHtml(preferenceReasons.join(' · '))}</small>` : ''}
           ${translation ? `<small class="translation-note">${escapeHtml(t('translated'))}</small>` : ''}
           <div class="card-actions">
             <button class="translate-card" type="button" data-action="translate" data-index="${cardIndex}">
@@ -896,6 +1058,7 @@
         const result = await window.WRNSharedTranslations.request({
           title: article.title,
           text: article.intro || core.excerpt(article.content, 230),
+          targetLanguage: language,
           mode: 'title_and_text'
         });
         if (result?.error || !result?.text) throw new Error(result?.message || 'Translation failed');
@@ -923,7 +1086,30 @@
   }
 
   function hasPreferences() {
-    return ['regions', 'topics', 'sources'].some(key => Array.isArray(state.preferences[key]) && state.preferences[key].length);
+    return ['regions', 'topics', 'sources', 'blockedSources', 'prisonerIds']
+      .some(key => Array.isArray(state.preferences[key]) && state.preferences[key].length)
+      || (Array.isArray(state.developmentWatch) && state.developmentWatch.length);
+  }
+
+  function followedContextMarkup() {
+    const prisonerIds = new Set(state.preferences.prisonerIds || []);
+    const prisoners = (state.prisonerData.profiles || []).filter(profile => prisonerIds.has(profile.id));
+    const watched = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
+    const developments = specialty
+      .developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 })
+      .filter(story => watched.has(story.id));
+    if (!prisoners.length && !developments.length) return '';
+
+    return `<div class="followed-context">
+      ${prisoners.length ? `<section>
+        <div class="section-heading"><h2>${escapeHtml(t('followedPrisoners'))}</h2><small>${prisoners.length}</small></div>
+        <button type="button" class="followed-context__button" data-view-target="prisoners">${prisoners.map(profile => escapeHtml(profile.publicName)).join(' · ')}</button>
+      </section>` : ''}
+      ${developments.length ? `<section>
+        <div class="section-heading"><h2>${escapeHtml(t('followedDevelopments'))}</h2><small>${developments.length}</small></div>
+        <button type="button" class="followed-context__button" data-view-target="developments">${developments.map(story => escapeHtml(story.title)).join(' · ')}</button>
+      </section>` : ''}
+    </div>`;
   }
 
   function renderFollowing() {
@@ -939,11 +1125,16 @@
       return;
     }
 
-    const chosen = state.articles.filter(article => core.matchesPreferences(article, state.preferences));
+    const hasArticlePreferences = ['regions', 'topics', 'sources', 'blockedSources']
+      .some(key => Array.isArray(state.preferences[key]) && state.preferences[key].length);
+    const chosen = hasArticlePreferences
+      ? state.articles.filter(article => core.matchesPreferences(article, state.preferences))
+      : [];
     const selected = core.balanceBySource(chosen, HOME_COUNT, 2);
     const summary = [
       ...(state.preferences.regions || []),
-      ...(state.preferences.topics || [])
+      ...(state.preferences.topics || []),
+      ...(state.preferences.sources || [])
     ].slice(0, 5).join(' · ');
 
     viewRoot.innerHTML = `
@@ -952,6 +1143,7 @@
         <div><strong>${escapeHtml(summary || t('personalize'))}</strong><p>${escapeHtml(t('personalLocal'))}</p></div>
         <button class="secondary-button" type="button" data-action="preferences">${escapeHtml(t('editSelection'))}</button>
       </div>
+      ${followedContextMarkup()}
       ${cardsMarkup(selected)}
     `;
   }
@@ -974,7 +1166,8 @@
     const regionChips = ['', ...state.facets.regions].map(value =>
       filterChipMarkup('region', value, state.discover.region === value)
     ).join('');
-    const topicChips = ['', ...state.facets.topics.slice(0, 22)].map(value =>
+    const topics = [...state.facets.topics].sort((a, b) => a.localeCompare(b, state.language));
+    const topicChips = ['', ...topics].map(value =>
       filterChipMarkup('topic', value, state.discover.topic === value)
     ).join('');
 
@@ -989,7 +1182,7 @@
       <div class="discover-controls">
         <input id="next-discover-query" type="search" value="${escapeHtml(state.discover.query)}" placeholder="${escapeHtml(t('searchPlaceholder'))}" aria-label="${escapeHtml(t('searchLabel'))}">
         <div><span class="eyebrow">${escapeHtml(t('regions'))}</span><div class="filter-chips">${regionChips}</div></div>
-        <div><span class="eyebrow">${escapeHtml(t('topics'))}</span><div class="filter-chips">${topicChips}</div></div>
+        <div><span class="eyebrow">${escapeHtml(t('topics'))}</span><div class="filter-chips filter-chips--topics">${topicChips}</div></div>
       </div>
       <div class="section-heading"><h2>${escapeHtml(t('results'))}</h2><small>${results.length}</small></div>
       ${cardsMarkup(results)}
@@ -1169,9 +1362,12 @@
         ${mediaTab('podcasts', '◉', t('podcasts'))}
         ${mediaTab('generated', '◌', t('generated'))}
         ${mediaTab('radio', '⌁', t('radio'))}
+        ${mediaTab('zine', '📄', t('zine'))}
       </div>
       <p class="media-privacy">◉ ${escapeHtml(t('privacyMedia'))}</p>
-      ${section === 'podcasts'
+      ${section === 'zine'
+        ? renderZineSection()
+        : section === 'podcasts'
         ? renderPodcastSection(state.podcasts, false)
         : section === 'generated'
           ? renderPodcastSection(state.generatedPodcasts, true)
@@ -1179,6 +1375,9 @@
             ? renderRadioSection()
             : renderVideoSection()}
     `;
+    if (section === 'zine') {
+      window.setTimeout(() => window.WRNZineDesigner1719?.install?.(), 0);
+    }
   }
 
   function mediaTab(value, icon, label) {
@@ -1307,6 +1506,28 @@
     return `<div class="empty-state compact"><strong>${escapeHtml(message)}</strong></div>`;
   }
 
+  function renderZineSection() {
+    const items = zineArticles();
+    const normalizedItems = core.normalizeArticles(items);
+    return `
+      <p class="zine-workspace-intro">${escapeHtml(t('zineIntro'))}</p>
+      <div class="zine-toolbar">
+        <button class="secondary-button" type="button" data-action="zine-clear"${items.length ? '' : ' disabled'}>${escapeHtml(t('zineClear'))}</button>
+      </div>
+      <section class="wrn-zine" id="zine-container" data-wrn-zine>
+        <div class="section-heading"><h2>${escapeHtml(t('zine'))}</h2><small>${items.length}</small></div>
+        ${normalizedItems.length ? `<div class="zine-content">${normalizedItems.map((article, index) => `
+          <article class="zine-workspace-item">
+            <div>
+              <span class="eyebrow">${escapeHtml(article.source)}</span>
+              <h3>${escapeHtml(translationFor(article)?.title || article.title)}</h3>
+              <p>${escapeHtml(mediaDescription(translationFor(article)?.intro || article.intro || article.content))}</p>
+            </div>
+            <button type="button" data-action="zine-remove" data-zine-key="${escapeHtml(zineArticleKey(items[index]))}">${escapeHtml(t('zineRemove'))}</button>
+          </article>`).join('')}</div>` : mediaEmpty(t('zineEmpty'))}
+      </section>`;
+  }
+
   function renderSaved() {
     state.cardArticles = [];
     const saved = core.normalizeArticles(bookmarks());
@@ -1425,6 +1646,7 @@
     document.getElementById('next-dialog-original').href = article.link || '#';
     document.getElementById('next-dialog-original').hidden = !article.link;
     updateDialogSave();
+    updateDialogZine();
 
     document.getElementById('next-article-content').innerHTML = `
       ${article.image ? `<img class="article-lead-image" src="${escapeHtml(article.image)}" alt="" referrerpolicy="no-referrer">` : ''}
@@ -1447,6 +1669,13 @@
     button.setAttribute('aria-pressed', String(saved));
     button.setAttribute('aria-label', saved ? t('removeSaved') : t('save'));
     button.textContent = saved ? '★' : '☆';
+  }
+
+  function updateDialogZine() {
+    const button = document.getElementById('next-dialog-zine');
+    const added = state.activeArticle ? isInZine(state.activeArticle) : false;
+    button.setAttribute('aria-pressed', String(added));
+    button.querySelector('span:last-child').textContent = t(added ? 'zineRemove' : 'zineAdd');
   }
 
   async function translateOpenArticle() {
@@ -1489,8 +1718,8 @@
       step: 1,
       regions: [...(state.preferences.regions || [])],
       topics: [...(state.preferences.topics || [])],
-      language: state.language,
-      amount: 5,
+      language: state.preferences.preferredLanguage || state.language,
+      amount: state.preferences.briefingAmount || 5,
       items: []
     };
     renderBriefingStep();
@@ -1526,8 +1755,8 @@
     const preferences = {
       regions: state.briefing.regions,
       topics: state.briefing.topics,
-      sources: [],
-      blockedSources: []
+      sources: [...(state.preferences.sources || [])],
+      blockedSources: [...(state.preferences.blockedSources || [])]
     };
     const candidates = state.briefing.regions.length || state.briefing.topics.length
       ? state.articles.filter(article => core.matchesPreferences(article, preferences))
@@ -1600,26 +1829,89 @@
   function openPreferences() {
     const selectedRegions = new Set(state.preferences.regions || []);
     const selectedTopics = new Set(state.preferences.topics || []);
-    document.getElementById('next-region-choices').innerHTML = state.facets.regions.map(value =>
+    const followedSources = new Set(state.preferences.sources || []);
+    const blockedSources = new Set(state.preferences.blockedSources || []);
+    const selectedPrisoners = new Set(state.preferences.prisonerIds || []);
+    const selectedDevelopments = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
+    const topics = [...state.facets.topics].sort((a, b) => a.localeCompare(b, state.language));
+    const sources = [...state.facets.sources].sort((a, b) => a.localeCompare(b, state.language));
+    const developments = specialty.developmentClusters(
+      state.articles,
+      window.WRNStoriesCore,
+      { days: 30, threshold: 0.5 }
+    );
+
+    document.getElementById('next-region-choices').innerHTML = [...state.facets.regions]
+      .sort((a, b) => a.localeCompare(b, state.language)).map(value =>
       choiceMarkup('region', value, selectedRegions.has(value))
     ).join('');
-    document.getElementById('next-topic-choices').innerHTML = state.facets.topics.map(value =>
+    document.getElementById('next-topic-choices').innerHTML = topics.map(value =>
       choiceMarkup('topic', value, selectedTopics.has(value))
     ).join('');
+    document.getElementById('next-source-choices').innerHTML = sources.map(value =>
+      sourcePreferenceMarkup(
+        value,
+        followedSources.has(value) ? 'follow' : blockedSources.has(value) ? 'hide' : 'neutral'
+      )
+    ).join('');
+    document.getElementById('next-prisoner-choices').innerHTML = (state.prisonerData.profiles || [])
+      .filter(specialty.isCurrentProfile)
+      .map(profile => choiceMarkup('prisoner', profile.id, selectedPrisoners.has(profile.id), profile.publicName))
+      .join('') || `<small>${escapeHtml(t('noWatchOptions'))}</small>`;
+    document.getElementById('next-development-choices').innerHTML = developments
+      .map(story => choiceMarkup('development', story.id, selectedDevelopments.has(story.id), story.title))
+      .join('') || `<small>${escapeHtml(t('noWatchOptions'))}</small>`;
+    document.getElementById('next-preference-language').value = state.preferences.preferredLanguage || state.language;
+    document.getElementById('next-preference-briefing-length').innerHTML = [3, 5, 8].map(amount =>
+      `<label><input type="radio" name="preference-briefing-amount" value="${amount}"${state.preferences.briefingAmount === amount ? ' checked' : ''}><strong>${amount}</strong><span>${escapeHtml(t('briefingItems'))}</span></label>`
+    ).join('');
+    document.getElementById('next-preference-source-search').value = '';
+    filterPreferenceSources('');
     preferencesDialog.showModal();
   }
 
-  function choiceMarkup(kind, value, selected) {
-    return `<label class="choice-chip"><input type="checkbox" name="${escapeHtml(kind)}" value="${escapeHtml(value)}"${selected ? ' checked' : ''}><span>${escapeHtml(value)}</span></label>`;
+  function choiceMarkup(kind, value, selected, label = value) {
+    return `<label class="choice-chip"><input type="checkbox" name="${escapeHtml(kind)}" value="${escapeHtml(value)}"${selected ? ' checked' : ''}><span>${escapeHtml(label)}</span></label>`;
+  }
+
+  function sourcePreferenceMarkup(source, value) {
+    return `<label class="source-preference-row" data-source-row data-source-search="${escapeHtml(source.toLocaleLowerCase())}">
+      <span>${escapeHtml(source)}</span>
+      <select data-source-preference="${escapeHtml(source)}" aria-label="${escapeHtml(`${source}: ${t('chooseSources')}`)}">
+        <option value="neutral"${value === 'neutral' ? ' selected' : ''}>${escapeHtml(t('sourceNeutral'))}</option>
+        <option value="follow"${value === 'follow' ? ' selected' : ''}>${escapeHtml(t('sourceFollow'))}</option>
+        <option value="hide"${value === 'hide' ? ' selected' : ''}>${escapeHtml(t('sourceHide'))}</option>
+      </select>
+    </label>`;
+  }
+
+  function filterPreferenceSources(query) {
+    const normalized = String(query || '').trim().toLocaleLowerCase();
+    preferencesDialog.querySelectorAll('[data-source-row]').forEach(row => {
+      row.hidden = Boolean(normalized && !row.dataset.sourceSearch.includes(normalized));
+    });
   }
 
   function savePreferences() {
+    const sourcePreferences = [...preferencesDialog.querySelectorAll('[data-source-preference]')];
+    const selectedLanguage = supportedLanguage(document.getElementById('next-preference-language').value);
     state.preferences = {
-      ...state.preferences,
+      ...normalizedPreferences(state.preferences),
       regions: [...preferencesDialog.querySelectorAll('input[name="region"]:checked')].map(input => input.value),
-      topics: [...preferencesDialog.querySelectorAll('input[name="topic"]:checked')].map(input => input.value)
+      topics: [...preferencesDialog.querySelectorAll('input[name="topic"]:checked')].map(input => input.value),
+      sources: sourcePreferences.filter(select => select.value === 'follow').map(select => select.dataset.sourcePreference),
+      blockedSources: sourcePreferences.filter(select => select.value === 'hide').map(select => select.dataset.sourcePreference),
+      prisonerIds: [...preferencesDialog.querySelectorAll('input[name="prisoner"]:checked')].map(input => input.value),
+      preferredLanguage: selectedLanguage,
+      briefingAmount: Number(preferencesDialog.querySelector('input[name="preference-briefing-amount"]:checked')?.value || 5)
     };
+    state.developmentWatch = [...preferencesDialog.querySelectorAll('input[name="development"]:checked')].map(input => input.value);
     writeJson(PREFS_KEY, state.preferences);
+    writeJson(STORY_WATCH_KEY, state.developmentWatch);
+    state.language = selectedLanguage;
+    localStorage.setItem(LANGUAGE_KEY, state.language);
+    applyLanguage();
+    window.dispatchEvent(new CustomEvent('wrnlanguagechange', { detail: { language: state.language } }));
     preferencesDialog.close();
     state.view = 'following';
     render();
@@ -1722,6 +2014,11 @@
         state.media.videoMode = target.dataset.value === 'information' ? 'information' : 'current';
         renderMedia();
       }
+      if (action === 'zine-remove') removeZineArticle(target.dataset.zineKey || '');
+      if (action === 'zine-clear' && zineArticles().length && window.confirm(t('zineClearConfirm'))) {
+        storeZineArticles([]);
+        renderMedia();
+      }
       if (action === 'briefing-open') {
         if (menuDialog.open) menuDialog.close();
         openBriefing();
@@ -1820,9 +2117,17 @@
       updateDialogSave();
     });
     document.getElementById('next-dialog-translate').addEventListener('click', translateOpenArticle);
+    document.getElementById('next-dialog-zine').addEventListener('click', () => {
+      if (!state.activeArticle) return;
+      toggleZineArticle(state.activeArticle);
+      updateDialogZine();
+    });
     document.getElementById('next-save-preferences').addEventListener('click', event => {
       event.preventDefault();
       savePreferences();
+    });
+    document.getElementById('next-preference-source-search').addEventListener('input', event => {
+      filterPreferenceSources(event.target.value);
     });
 
     articleDialog.addEventListener('click', event => {
