@@ -85,6 +85,31 @@
     }
   }
 
+  function canonicalRegion(value) {
+    const clean = text(value);
+    const normalized = clean
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLocaleLowerCase();
+    const aliases = {
+      dach: 'Europe',
+      europa: 'Europe',
+      europe: 'Europe',
+      lateinamerika: 'Latin America',
+      'latin america': 'Latin America',
+      nordamerika: 'North America',
+      'north america': 'North America',
+      afrika: 'Africa',
+      africa: 'Africa',
+      asien: 'Asia',
+      asia: 'Asia',
+      ozeanien: 'Oceania',
+      oceania: 'Oceania',
+      global: 'Global'
+    };
+    return aliases[normalized] || clean || 'Global';
+  }
+
   function categoryFor(item) {
     const haystack = [
       item?.title,
@@ -109,7 +134,7 @@
       duration: text(item?.duration),
       language: text(item?.language),
       country: text(item?.country),
-      region: text(item?.region || 'Global'),
+      region: canonicalRegion(item?.region),
       audioUrl: safeUrl(item?.audioUrl || item?.url),
       episodeUrl: safeUrl(item?.episodeUrl || item?.link),
       artwork: safeUrl(item?.artwork),
@@ -126,7 +151,7 @@
       name: text(item?.name || 'Radio'),
       city: text(item?.city),
       country: text(item?.country),
-      region: text(item?.region || 'Global'),
+      region: canonicalRegion(item?.region),
       languages: Array.isArray(item?.languages) ? item.languages.map(text).filter(Boolean) : [],
       topics: Array.isArray(item?.topics) ? item.topics.map(text).filter(Boolean) : [],
       description: text(item?.description),
@@ -155,7 +180,11 @@
   function filterItems(items, filters = {}) {
     const query = text(filters.query).toLocaleLowerCase();
     return (Array.isArray(items) ? items : []).filter(item => {
-      if (filters.region && filters.region !== 'all' && item.region !== filters.region) return false;
+      if (
+        filters.region
+        && filters.region !== 'all'
+        && canonicalRegion(item.region) !== canonicalRegion(filters.region)
+      ) return false;
       if (filters.category && filters.category !== 'all' && item.category !== filters.category) return false;
       if (!query) return true;
       return [
@@ -172,6 +201,7 @@
 
   return {
     INFORMATION_VIDEOS,
+    canonicalRegion,
     categoryFor,
     filterItems,
     isRelevantPodcast,

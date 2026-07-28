@@ -58,7 +58,26 @@ const recurring = specialty.collapseRecurringEvents([{
   eventRecurrence: 'RRULE:FREQ=WEEKLY;BYDAY=TH'
 }], now)[0];
 assert(recurring.start >= now, 'a weekly series must display its next date, not its first past date');
-assert(recurring.start <= recurring.end);
+  assert(recurring.start <= recurring.end);
+
+const detailed = specialty.normalizeEvent({
+  title: 'Mapped event',
+  eventStart: '2026-07-29T18:00:00Z',
+  eventLatitude: '46.948',
+  eventLongitude: '7.4474',
+  eventGroups: ['Collective'],
+  eventPrice: 'free',
+  eventExternalLinks: ['https://example.org/info', 'javascript:alert(1)']
+});
+assert.strictEqual(detailed.latitude, 46.948);
+assert.deepStrictEqual(detailed.groups, ['Collective']);
+assert.strictEqual(detailed.externalLinks.length, 1);
+const zeroCoordinates = specialty.normalizeEvent({
+  eventLatitude: '0',
+  eventLongitude: '0'
+});
+assert.strictEqual(zeroCoordinates.latitude, null);
+assert.strictEqual(zeroCoordinates.longitude, null);
 
 assert.strictEqual(specialty.safeUrl('javascript:alert(1)'), '');
 assert.strictEqual(specialty.localized({ de: 'Deutsch', en: 'English' }, 'de'), 'Deutsch');

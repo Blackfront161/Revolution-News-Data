@@ -8,6 +8,7 @@ def test_parallel_preview_assets_exist():
     for name in (
         "next.html", "news-app-2.css", "news-app-2.js", "news-app-2-core.js",
         "news-app-2-config.js", "news-app-2-specialty.js", "news-app-2-media.js",
+        "news-app-2-release.js", "news-app-2-release.css",
         "news-app-2-sw.js", "wrn-logo-preview-transparent.png"
     ):
         path = ROOT / name
@@ -86,7 +87,10 @@ def test_media_sections_are_native_and_privacy_conscious():
     assert "renderPodcastSection" in script
     assert "renderRadioSection" in script
     assert "renderVideoSection" in script
-    assert 'preload="none"' in script
+    assert 'id="global-media-player" preload="none"' in html
+    assert "media-player.js" in html
+    assert "audio-tools.js" in html
+    assert "appendSimpleMediaControls" in script
     assert "podcasts.json" in script
     assert "radio-stations.json" in script
     assert "news-app-2-media.js" in html
@@ -191,6 +195,30 @@ def test_preview_logo_is_transparent_and_donation_flow_matches_live_safety():
     assert ".menu-shell > section > .menu-donate" in style
 
 
+def test_release_candidate_restores_existing_live_capabilities():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    helper = (ROOT / "news-app-2-release.js").read_text(encoding="utf-8")
+    worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
+    for asset in (
+        "source-profiles.js", "source-verification.js", "editorial-review-ui.js",
+        "media-player.js", "audio-tools.js", "news-app-2-release.js"
+    ):
+        assert asset in html
+        assert asset in worker
+    for feature in (
+        "splitTranslationChunks", "READING_POSITIONS_KEY", "discoverAdvancedFiltersMarkup",
+        "eventIcs", "EVENT_REMINDERS_KEY", "renderDataControl", "renderSystemStatus",
+        "generateCloudPodcast", "reportTranslationProblem"
+    ):
+        assert feature in script or feature in helper
+    assert 'data-action="about"' in html
+    assert 'data-action="system-status"' in html
+    assert 'data-action="data-control"' in html
+    assert 'value="200"' in html
+    assert "unverÃ¤ndert', 'unverändert" in script
+
+
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_preview_server_can_be_exposed_to_private_lan()
@@ -204,4 +232,5 @@ if __name__ == "__main__":
     test_article_tools_and_professional_discovery_are_present()
     test_preview_header_cards_and_mobile_navigation_are_polished()
     test_preview_logo_is_transparent_and_donation_flow_matches_live_safety()
+    test_release_candidate_restores_existing_live_capabilities()
     print("News App 2 parallel preview assets: OK")

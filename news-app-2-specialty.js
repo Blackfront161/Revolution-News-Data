@@ -38,6 +38,15 @@
   function normalizeEvent(raw) {
     const start = eventTimestamp(raw?.eventStart || raw?.pubDate);
     const end = eventTimestamp(raw?.eventEnd || raw?.eventStart || raw?.pubDate);
+    const latitude = text(raw?.eventLatitude) && Number.isFinite(Number(raw.eventLatitude))
+      ? Number(raw.eventLatitude)
+      : null;
+    const longitude = text(raw?.eventLongitude) && Number.isFinite(Number(raw.eventLongitude))
+      ? Number(raw.eventLongitude)
+      : null;
+    const hasUsefulCoordinates = latitude !== null
+      && longitude !== null
+      && !(latitude === 0 && longitude === 0);
     return {
       id: text(raw?.eventUuid || raw?.eventApiId || raw?.link || `${raw?.title}-${start}`),
       title: text(raw?.title) || 'Event',
@@ -52,10 +61,17 @@
       city: text(raw?.eventCity),
       venue: text(raw?.eventVenue),
       address: text([raw?.eventAddress, raw?.eventPostal].filter(Boolean).join(' ')),
+      latitude: hasUsefulCoordinates ? latitude : null,
+      longitude: hasUsefulCoordinates ? longitude : null,
       categories: [...new Set([
         ...(Array.isArray(raw?.eventCategories) ? raw.eventCategories : []),
         ...(Array.isArray(raw?.eventTags) ? raw.eventTags : [])
       ].map(text).filter(Boolean))],
+      groups: [...new Set((Array.isArray(raw?.eventGroups) ? raw.eventGroups : []).map(text).filter(Boolean))],
+      price: text(raw?.eventPrice),
+      externalLinks: (Array.isArray(raw?.eventExternalLinks) ? raw.eventExternalLinks : [])
+        .map(safeUrl)
+        .filter(Boolean),
       recurrence: text(raw?.eventRecurrence),
       occurrenceCount: 1
     };

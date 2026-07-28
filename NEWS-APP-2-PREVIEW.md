@@ -58,37 +58,49 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - identisch geformte Schaltflächen für „Artikel öffnen“ und „Übersetzen“ in allen Übersichtskarten
 - Spenden-Schaltfläche im Hamburger-Menü mit demselben ausdrücklichen PayPal-Hinweis wie in der bisherigen App
 
-## Sichere Einführung
+## Release-Kandidat
 
-1. Vorschau auf diesem Branch weiter testen.
-2. Medienbereiche und weitere Detailfunktionen schrittweise direkt einbauen.
-3. Erst nach Regressionstests einen optionalen, deaktivierten Feature-Schalter in die Haupt-App aufnehmen.
-4. Kleine freiwillige Testgruppe aktivieren und Rückmeldungen auswerten.
-5. Erst danach eine neue Android-Version bauen. Die aktuelle Play-Store-App bleibt bis dahin unverändert.
+Der Stand `2.0.0-rc.1` ist der erste vollständige Veröffentlichungskandidat
+der parallelen Oberfläche. Er bleibt über `next.html?preview=8` vollständig
+von der bisherigen App getrennt.
+
+Zusätzlich zum bisherigen Vorschauumfang enthält RC1:
+
+- Quellenprofile sowie redaktionelle Format-, Aktualisierungs- und Korrekturhinweise
+- vollständige, abschnittsweise Übersetzung langer Artikel
+- Übersetzungsvergleich und vorbereitete Fehlermeldung
+- lokale und serverseitig erzeugte Artikel-Podcasts mit kurzer oder vollständiger Fassung
+- globalen Audioplayer mit Warteschlange, Favoriten, Weiterhören, Zeitsprüngen, Tempo, Schlaf-Timer und Media Session
+- gelesene Artikel, Lesefortschritt und Wiederaufnahme an der letzten Position
+- erweiterte Nachrichtenfilter nach Sprache, Herkunft, Format, Quelle und Sortierung
+- Karten-, Kompakt- und Schlagzeilenansicht
+- professionell gruppierte Terminarten, Stadt-, Gruppen-, Datums- und optionale Umkreisfilter
+- Kalenderdatei, Karten-/Routenlink, lokale Erinnerung und gespeicherte Terminfilter
+- lokalen Datenexport/-import sowie getrenntes Löschen von Leselisten, Vorschau-Cache und App-Daten
+- integrierten Systemstatus, Quellenprofile, Quellenprüfung und redaktionelle Prüfliste
+- OLED-, gedämpfte und 200-Prozent-Darstellung
+- vollständig übersetzte RC1-Bedienoberfläche in allen neun App-Sprachen
+
+Die zugehörige Prüfliste steht in
+`NEWS-APP-2-RELEASE-CHECKLIST.md`.
 
 ## Noch nicht produktiv geschaltet
 
 - produktive Freischaltung des neuen Designs
 - Änderung an Google Play, GitHub Pages oder Cloudflare
+- Freigabe einer Vorschau-Origin für Übersetzungen und natürliche Podcast-Stimmen
 
 ## Funktionsabgleich mit der bisherigen App
 
-Der Abgleich vom 28. Juli 2026 zeigt: Die Vorschau deckt die zentralen
-Nachrichten-, Übersetzungs-, Zine-, Such-, Lesezeichen- und
-Personalisierungsabläufe ab, ist aber noch nicht vollständig funktionsgleich.
+Der erneute Abgleich vom 28. Juli 2026 zeigt: Die aktuell genutzten
+Nachrichten-, Übersetzungs-, Audio-, Zine-, Termin-, Lexikon-, Solidaritäts-,
+Such-, Lesezeichen-, Diagnose- und Personalisierungsabläufe der bisherigen
+App sind in RC1 vorhanden. Die neue Oberfläche ordnet diese Funktionen
+teilweise neu, entfernt sie aber nicht.
 
-Noch nicht oder erst teilweise übernommen:
-
-- serverseitig erzeugte MP3-Podcasts mit natürlichen Azure-Stimmen direkt aus einem Artikel; die kostenlose Gerätestimme ist bereits vorhanden
-- globaler Audioplayer mit Weiterhören, Warteschlange, Favoriten, Zeitsprung, Schlaf-Timer und Media-Session-Steuerung
-- eigene Liste gelesener Artikel sowie Lesefortschritt und Wiederaufnahme an der letzten Position
-- Quellenprofile, Korrekturhinweise und Melden eines Übersetzungsproblems
-- erweiterte Nachrichtenfilter für Quellsprache, Herkunft, Format und Sortierung sowie die reine Schlagzeilenansicht
-- erweiterte Terminfilter, gespeicherte Terminfilter, Kalenderdatei, Karte und Routenlink
-- lokales Datenmanagement mit Export, Import und getrenntem Löschen von Lese-, Offline- und App-Daten
-- integrierter Systemstatus; Quellenprüfung und App-Selbsttest sind derzeit als eigene Diagnoseseiten verlinkt
-- vollständige, abschnittsweise Übersetzung sehr langer Artikel; die Vorschau übersetzt aktuell einen begrenzten Textblock
-- ein später geplanter Briefing-Verlauf mit Export, Import und Rückmeldungen
+Nicht in RC1 aufgenommen wurden ausschließlich später geplante Erweiterungen,
+insbesondere alternative soziale Medien und ein zukünftiger Briefing-Verlauf
+mit Export, Import und Rückmeldungen.
 
 Die lokale Smartphone-Vorschau bleibt absichtlich von den produktiven
 Übersetzungs-Origins getrennt. Automatische Übersetzungen werden in einer

@@ -5,7 +5,8 @@
   const core = window.WRNNewsApp2Core;
   const specialty = window.WRNNewsApp2Specialty;
   const media = window.WRNNewsApp2Media;
-  if (!core || !specialty || !media || window.__wrnNewsApp2Loaded) return;
+  const release = window.WRNNewsApp2Release;
+  if (!core || !specialty || !media || !release || window.__wrnNewsApp2Loaded) return;
   window.__wrnNewsApp2Loaded = true;
 
   const PREFS_KEY = 'wrn_next_preferences_v1';
@@ -16,6 +17,9 @@
   const LANGUAGE_KEY = 'wrn_system_lang';
   const STORY_WATCH_KEY = 'wrn_next_story_watch_v1';
   const UI_SETTINGS_KEY = 'wrn_next_ui_settings_v1';
+  const READING_POSITIONS_KEY = 'wrn_read_positions';
+  const EVENT_REMINDERS_KEY = 'wrn_event_reminders_v2';
+  const EVENT_FILTERS_KEY = 'wrn_saved_event_filters_v1';
   const HOME_COUNT = 10;
 
   const PRODUCT_COPY = {
@@ -585,7 +589,7 @@
   const UI_COPY = {
     de: {
       menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
-      sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
+      sourceCheck:'Quellenbericht', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
       donate:'Spenden', donateKicker:'Freiwillige Unterstützung', donateTitle:'Projekt unterstützen',
       donateBody:'Dieses unabhängige Projekt kann freiwillig unterstützt werden.',
       donateWarning:'Wenn du fortfährst, verlässt du die App und öffnest PayPal.', donatePaypal:'Weiter zu PayPal',
@@ -610,7 +614,7 @@
     },
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
-      sourceCheck:'Source check', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
+      sourceCheck:'Source report', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
       donate:'Donate', donateKicker:'Voluntary support', donateTitle:'Support the project',
       donateBody:'You can voluntarily support this independent project.',
       donateWarning:'If you continue, you will leave the app and open PayPal.', donatePaypal:'Continue to PayPal',
@@ -635,7 +639,7 @@
     },
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
-      sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
+      sourceCheck:'Informe de fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
       donate:'Donar', donateKicker:'Apoyo voluntario', donateTitle:'Apoyar el proyecto',
       donateBody:'Puedes apoyar voluntariamente este proyecto independiente.',
       donateWarning:'Si continúas, saldrás de la aplicación y abrirás PayPal.', donatePaypal:'Continuar a PayPal',
@@ -658,7 +662,7 @@
     },
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
-      sourceCheck:'Vérifier les sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
+      sourceCheck:'Rapport des sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
       donate:'Faire un don', donateKicker:'Soutien volontaire', donateTitle:'Soutenir le projet',
       donateBody:'Vous pouvez soutenir volontairement ce projet indépendant.',
       donateWarning:'En continuant, vous quitterez l’application et ouvrirez PayPal.', donatePaypal:'Continuer vers PayPal',
@@ -681,7 +685,7 @@
     },
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
-      sourceCheck:'Controllo fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
+      sourceCheck:'Rapporto fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
       donate:'Dona', donateKicker:'Sostegno volontario', donateTitle:'Sostieni il progetto',
       donateBody:'Puoi sostenere volontariamente questo progetto indipendente.',
       donateWarning:'Continuando, lascerai l’app e aprirai PayPal.', donatePaypal:'Continua su PayPal',
@@ -704,7 +708,7 @@
     },
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
-      sourceCheck:'Verificar fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
+      sourceCheck:'Relatório de fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
       donate:'Doar', donateKicker:'Apoio voluntário', donateTitle:'Apoiar o projeto',
       donateBody:'Podes apoiar voluntariamente este projeto independente.',
       donateWarning:'Ao continuar, sairás da aplicação e abrirás o PayPal.', donatePaypal:'Continuar para o PayPal',
@@ -727,7 +731,7 @@
     },
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
-      sourceCheck:'Проверка источников', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
+      sourceCheck:'Отчёт об источниках', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
       donate:'Поддержать', donateKicker:'Добровольная поддержка', donateTitle:'Поддержать проект',
       donateBody:'Вы можете добровольно поддержать этот независимый проект.',
       donateWarning:'При продолжении вы покинете приложение и откроете PayPal.', donatePaypal:'Перейти в PayPal',
@@ -751,7 +755,7 @@
     },
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
-      sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
+      sourceCheck:'Αναφορά πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
       donate:'Δωρεά', donateKicker:'Εθελοντική υποστήριξη', donateTitle:'Υποστήριξη του έργου',
       donateBody:'Μπορείτε να υποστηρίξετε εθελοντικά αυτό το ανεξάρτητο έργο.',
       donateWarning:'Αν συνεχίσετε, θα φύγετε από την εφαρμογή και θα ανοίξετε το PayPal.', donatePaypal:'Συνέχεια στο PayPal',
@@ -775,7 +779,7 @@
     },
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
-      sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
+      sourceCheck:'Kaynak raporu', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
       donate:'Bağış yap', donateKicker:'Gönüllü destek', donateTitle:'Projeyi destekle',
       donateBody:'Bu bağımsız projeyi gönüllü olarak destekleyebilirsiniz.',
       donateWarning:'Devam ederseniz uygulamadan ayrılır ve PayPal’ı açarsınız.', donatePaypal:'PayPal’a devam et',
@@ -799,6 +803,405 @@
     }
   };
 
+  const RELEASE_COPY = {
+    de: {
+      themeOled:'OLED-Schwarz', themeSoft:'Gedämpft', font200:'200 %',
+      systemStatus:'Systemstatus', localData:'Lokale Daten', advancedFilters:'Weitere Filter',
+      sort:'Sortierung', newestFirst:'Neueste zuerst', oldestFirst:'Älteste zuerst',
+      sourceLanguage:'Quellsprache', sourceOrigin:'Herkunft', contentFormat:'Format',
+      exactSource:'Quelle', allLanguages:'Alle Sprachen', allOrigins:'Alle Herkünfte',
+      allFormats:'Alle Formate', allSources:'Alle Quellen', cardsView:'Karten',
+      compactView:'Kompakt', headlinesView:'Schlagzeilen', sourceProfile:'Quellenprofil',
+      newsFormat:'Nachricht', analysisFormat:'Analyse', commentaryFormat:'Kommentar',
+      interviewFormat:'Interview', pressReleaseFormat:'Pressemitteilung',
+      readArticles:'Gelesen', readProgress:'Lesefortschritt', continueReading:'Weiterlesen',
+      city:'Stadt', category:'Kategorie', group:'Gruppe', date:'Datum',
+      allCities:'Alle Städte', allGroups:'Alle Gruppen', allEventCategories:'Alle Kategorien',
+      nearMe:'In meiner Nähe', locationOff:'Nähe aus', locationPrivate:'Der Standort bleibt auf diesem Gerät und wird nicht gespeichert.',
+      locationUnavailable:'Standort konnte nicht bestimmt werden.', map:'Karte', route:'Route',
+      calendar:'Kalender', remind:'Erinnern', reminderSet:'Erinnerung gespeichert',
+      reminderRemoved:'Erinnerung entfernt', distance:'Entfernung',
+      saveFilter:'Filter speichern', savedFilters:'Gespeicherte Filter', filterSaved:'Terminfilter gespeichert.',
+      audioQueue:'Warteschlange', favoritesOnly:'Nur Favoriten', cloudPodcast:'Natürliche Stimme (online)',
+      shortPodcast:'Kurz-Podcast', fullPodcast:'Ganzer Artikel', podcastGenerating:'Podcast wird erzeugt …',
+      podcastReady:'Podcast wurde erzeugt und ist abspielbereit.', podcastFailed:'Podcast konnte nicht erzeugt werden.',
+      azureVoice:'Stimme', onlineCostNotice:'Online-Erzeugung nutzt das begrenzte gemeinsame Stimmenkontingent.',
+      translationProblem:'Übersetzungsproblem melden', reportReason:'Grund',
+      reportWrong:'Falsche Bedeutung', reportMissing:'Text fehlt', reportNames:'Namen oder Begriffe',
+      reportOther:'Anderes', reportNote:'Hinweis (optional)', prepareEmail:'E-Mail vorbereiten',
+      translatingPart:'Übersetze Abschnitt', translationComplete:'Vollständiger Artikel übersetzt.',
+      aboutTitle:'Über World Revolution News', aboutIntro:'Unabhängige, mehrsprachige Nachrichten aus Bewegungen und sozialen Kämpfen – ohne Konto, Tracking oder personalisierte Werbung.',
+      aboutPrinciples:'Die neue App verbindet aktuelle Meldungen, transparente Quellen, Übersetzungen, Audio, Termine, Lexikon, Solidarität und Zine-Werkzeuge in einer einhändig bedienbaren Oberfläche.',
+      previewIsolation:'Diese Release-Kandidatin ist weiterhin von der veröffentlichten App getrennt.',
+      statusOnline:'Verbindung', statusData:'Nachrichten geladen', statusEvents:'Termine geladen',
+      statusSources:'Quellenprüfung', statusTranslation:'Übersetzungsdienst', statusOffline:'Offline-Cache',
+      online:'Online', offline:'Offline', available:'Verfügbar', checking:'Wird geprüft …',
+      storageIntro:'Alle persönlichen Listen und Einstellungen bleiben lokal auf diesem Gerät.',
+      bookmarks:'Später lesen', zineItems:'Zine-Artikel', appSettings:'App-Einstellungen',
+      exportBackup:'Sicherung exportieren', importBackup:'Sicherung importieren',
+      clearReading:'Leselisten löschen', clearOffline:'Vorschau-Cache löschen',
+      clearAll:'Alle lokalen App-Daten löschen', backupExported:'Sicherung heruntergeladen.',
+      backupImported:'Sicherung importiert. Die Vorschau wird neu geladen.',
+      invalidBackup:'Keine gültige World-Revolution-News-Sicherung.',
+      clearReadingConfirm:'Später lesen, Gelesen, Lesepositionen und Zine wirklich löschen?',
+      clearOfflineConfirm:'Nur die getrennten Vorschau-Caches löschen?',
+      clearAllConfirm:'Alle lokalen World-Revolution-News-Daten auf diesem Gerät löschen?',
+      selectedDataCleared:'Ausgewählte Daten wurden gelöscht.', close:'Schließen'
+    },
+    en: {
+      themeOled:'OLED black', themeSoft:'Muted', font200:'200%',
+      systemStatus:'System status', localData:'Local data', advancedFilters:'More filters',
+      sort:'Sort', newestFirst:'Newest first', oldestFirst:'Oldest first',
+      sourceLanguage:'Source language', sourceOrigin:'Origin', contentFormat:'Format',
+      exactSource:'Source', allLanguages:'All languages', allOrigins:'All origins',
+      allFormats:'All formats', allSources:'All sources', cardsView:'Cards',
+      compactView:'Compact', headlinesView:'Headlines', sourceProfile:'Source profile',
+      newsFormat:'News', analysisFormat:'Analysis', commentaryFormat:'Commentary',
+      interviewFormat:'Interview', pressReleaseFormat:'Press release',
+      readArticles:'Read', readProgress:'Reading progress', continueReading:'Continue reading',
+      city:'City', category:'Category', group:'Group', date:'Date',
+      allCities:'All cities', allGroups:'All groups', allEventCategories:'All categories',
+      nearMe:'Near me', locationOff:'Disable nearby', locationPrivate:'Your location stays on this device and is not stored.',
+      locationUnavailable:'Location could not be determined.', map:'Map', route:'Route',
+      calendar:'Calendar', remind:'Remind me', reminderSet:'Reminder saved',
+      reminderRemoved:'Reminder removed', distance:'Distance',
+      saveFilter:'Save filter', savedFilters:'Saved filters', filterSaved:'Event filter saved.',
+      audioQueue:'Queue', favoritesOnly:'Favorites only', cloudPodcast:'Natural voice (online)',
+      shortPodcast:'Short podcast', fullPodcast:'Full article', podcastGenerating:'Generating podcast …',
+      podcastReady:'Podcast is ready to play.', podcastFailed:'Podcast could not be generated.',
+      azureVoice:'Voice', onlineCostNotice:'Online generation uses the shared limited voice allowance.',
+      translationProblem:'Report translation problem', reportReason:'Reason',
+      reportWrong:'Wrong meaning', reportMissing:'Missing text', reportNames:'Names or terms',
+      reportOther:'Other', reportNote:'Note (optional)', prepareEmail:'Prepare email',
+      translatingPart:'Translating section', translationComplete:'Full article translated.',
+      aboutTitle:'About World Revolution News', aboutIntro:'Independent multilingual news from movements and social struggles, without accounts, tracking or personalized ads.',
+      aboutPrinciples:'The new app combines current news, transparent sources, translations, audio, events, a glossary, solidarity and Zine tools in a one-thumb interface.',
+      previewIsolation:'This release candidate remains isolated from the published app.',
+      statusOnline:'Connection', statusData:'News loaded', statusEvents:'Events loaded',
+      statusSources:'Source verification', statusTranslation:'Translation service', statusOffline:'Offline cache',
+      online:'Online', offline:'Offline', available:'Available', checking:'Checking …',
+      storageIntro:'All personal lists and settings stay locally on this device.',
+      bookmarks:'Read later', zineItems:'Zine articles', appSettings:'App settings',
+      exportBackup:'Export backup', importBackup:'Import backup',
+      clearReading:'Delete reading lists', clearOffline:'Delete preview cache',
+      clearAll:'Delete all local app data', backupExported:'Backup downloaded.',
+      backupImported:'Backup imported. The preview will reload.',
+      invalidBackup:'Not a valid World Revolution News backup.',
+      clearReadingConfirm:'Delete Read later, Read, reading positions and the Zine?',
+      clearOfflineConfirm:'Delete only the isolated preview caches?',
+      clearAllConfirm:'Delete all local World Revolution News data on this device?',
+      selectedDataCleared:'Selected data was deleted.', close:'Close'
+    },
+    es: {
+      themeOled:'Negro OLED', themeSoft:'Atenuado', font200:'200 %',
+      systemStatus:'Estado del sistema', localData:'Datos locales', advancedFilters:'Más filtros',
+      sort:'Orden', newestFirst:'Más recientes primero', oldestFirst:'Más antiguos primero',
+      sourceLanguage:'Idioma de origen', sourceOrigin:'Procedencia', contentFormat:'Formato',
+      exactSource:'Fuente', allLanguages:'Todos los idiomas', allOrigins:'Todas las procedencias',
+      allFormats:'Todos los formatos', allSources:'Todas las fuentes', cardsView:'Tarjetas',
+      compactView:'Compacta', headlinesView:'Titulares', sourceProfile:'Perfil de la fuente',
+      newsFormat:'Noticia', analysisFormat:'Análisis', commentaryFormat:'Comentario',
+      interviewFormat:'Entrevista', pressReleaseFormat:'Comunicado de prensa',
+      readArticles:'Leídos', readProgress:'Progreso de lectura', continueReading:'Seguir leyendo',
+      city:'Ciudad', category:'Categoría', group:'Grupo', date:'Fecha',
+      allCities:'Todas las ciudades', allGroups:'Todos los grupos', allEventCategories:'Todas las categorías',
+      nearMe:'Cerca de mí', locationOff:'Desactivar proximidad', locationPrivate:'Tu ubicación permanece en este dispositivo y no se guarda.',
+      locationUnavailable:'No se pudo determinar la ubicación.', map:'Mapa', route:'Ruta',
+      calendar:'Calendario', remind:'Avisarme', reminderSet:'Recordatorio guardado',
+      reminderRemoved:'Recordatorio eliminado', distance:'Distancia',
+      saveFilter:'Guardar filtro', savedFilters:'Filtros guardados', filterSaved:'Filtro de eventos guardado.',
+      audioQueue:'Cola', favoritesOnly:'Solo favoritos', cloudPodcast:'Voz natural (en línea)',
+      shortPodcast:'Pódcast corto', fullPodcast:'Artículo completo', podcastGenerating:'Generando pódcast…',
+      podcastReady:'El pódcast está listo para reproducirse.', podcastFailed:'No se pudo generar el pódcast.',
+      azureVoice:'Voz', onlineCostNotice:'La generación en línea usa el cupo compartido y limitado de voces.',
+      translationProblem:'Informar de un problema de traducción', reportReason:'Motivo',
+      reportWrong:'Significado incorrecto', reportMissing:'Falta texto', reportNames:'Nombres o términos',
+      reportOther:'Otro', reportNote:'Nota (opcional)', prepareEmail:'Preparar correo',
+      translatingPart:'Traduciendo sección', translationComplete:'Artículo completo traducido.',
+      aboutTitle:'Acerca de World Revolution News', aboutIntro:'Noticias independientes y multilingües de movimientos y luchas sociales, sin cuentas, seguimiento ni publicidad personalizada.',
+      aboutPrinciples:'La nueva aplicación reúne noticias actuales, fuentes transparentes, traducciones, audio, eventos, glosario, solidaridad y herramientas Zine en una interfaz manejable con una mano.',
+      previewIsolation:'Esta versión candidata sigue separada de la aplicación publicada.',
+      statusOnline:'Conexión', statusData:'Noticias cargadas', statusEvents:'Eventos cargados',
+      statusSources:'Verificación de fuentes', statusTranslation:'Servicio de traducción', statusOffline:'Caché sin conexión',
+      online:'En línea', offline:'Sin conexión', available:'Disponible', checking:'Comprobando…',
+      storageIntro:'Todas las listas y preferencias personales permanecen localmente en este dispositivo.',
+      bookmarks:'Leer más tarde', zineItems:'Artículos del Zine', appSettings:'Ajustes de la aplicación',
+      exportBackup:'Exportar copia', importBackup:'Importar copia',
+      clearReading:'Borrar listas de lectura', clearOffline:'Borrar caché de vista previa',
+      clearAll:'Borrar todos los datos locales', backupExported:'Copia descargada.',
+      backupImported:'Copia importada. La vista previa se recargará.',
+      invalidBackup:'No es una copia válida de World Revolution News.',
+      clearReadingConfirm:'¿Borrar Leer más tarde, Leídos, posiciones de lectura y el Zine?',
+      clearOfflineConfirm:'¿Borrar solo las cachés separadas de la vista previa?',
+      clearAllConfirm:'¿Borrar todos los datos locales de World Revolution News de este dispositivo?',
+      selectedDataCleared:'Se borraron los datos seleccionados.', close:'Cerrar'
+    },
+    fr: {
+      themeOled:'Noir OLED', themeSoft:'Atténué', font200:'200 %',
+      systemStatus:'État du système', localData:'Données locales', advancedFilters:'Plus de filtres',
+      sort:'Tri', newestFirst:'Plus récents', oldestFirst:'Plus anciens',
+      sourceLanguage:'Langue source', sourceOrigin:'Origine', contentFormat:'Format',
+      exactSource:'Source', allLanguages:'Toutes les langues', allOrigins:'Toutes les origines',
+      allFormats:'Tous les formats', allSources:'Toutes les sources', cardsView:'Cartes',
+      compactView:'Compact', headlinesView:'Titres', sourceProfile:'Profil de la source',
+      newsFormat:'Actualité', analysisFormat:'Analyse', commentaryFormat:'Commentaire',
+      interviewFormat:'Entretien', pressReleaseFormat:'Communiqué de presse',
+      readArticles:'Lus', readProgress:'Progression de lecture', continueReading:'Continuer la lecture',
+      city:'Ville', category:'Catégorie', group:'Groupe', date:'Date',
+      allCities:'Toutes les villes', allGroups:'Tous les groupes', allEventCategories:'Toutes les catégories',
+      nearMe:'Près de moi', locationOff:'Désactiver la proximité', locationPrivate:'Votre position reste sur cet appareil et n’est pas enregistrée.',
+      locationUnavailable:'La position n’a pas pu être déterminée.', map:'Carte', route:'Itinéraire',
+      calendar:'Calendrier', remind:'Me rappeler', reminderSet:'Rappel enregistré',
+      reminderRemoved:'Rappel supprimé', distance:'Distance',
+      saveFilter:'Enregistrer le filtre', savedFilters:'Filtres enregistrés', filterSaved:'Filtre d’événements enregistré.',
+      audioQueue:'File d’attente', favoritesOnly:'Favoris uniquement', cloudPodcast:'Voix naturelle (en ligne)',
+      shortPodcast:'Podcast court', fullPodcast:'Article complet', podcastGenerating:'Création du podcast…',
+      podcastReady:'Le podcast est prêt à être écouté.', podcastFailed:'Le podcast n’a pas pu être créé.',
+      azureVoice:'Voix', onlineCostNotice:'La création en ligne utilise le quota vocal partagé et limité.',
+      translationProblem:'Signaler un problème de traduction', reportReason:'Motif',
+      reportWrong:'Sens incorrect', reportMissing:'Texte manquant', reportNames:'Noms ou termes',
+      reportOther:'Autre', reportNote:'Note (facultative)', prepareEmail:'Préparer l’e-mail',
+      translatingPart:'Traduction de la section', translationComplete:'Article complet traduit.',
+      aboutTitle:'À propos de World Revolution News', aboutIntro:'Actualités indépendantes et multilingues issues des mouvements et des luttes sociales, sans compte, suivi ni publicité personnalisée.',
+      aboutPrinciples:'La nouvelle application réunit actualités, sources transparentes, traductions, audio, événements, lexique, solidarité et outils Zine dans une interface utilisable d’une seule main.',
+      previewIsolation:'Cette version candidate reste séparée de l’application publiée.',
+      statusOnline:'Connexion', statusData:'Actualités chargées', statusEvents:'Événements chargés',
+      statusSources:'Vérification des sources', statusTranslation:'Service de traduction', statusOffline:'Cache hors ligne',
+      online:'En ligne', offline:'Hors ligne', available:'Disponible', checking:'Vérification…',
+      storageIntro:'Toutes les listes et préférences personnelles restent localement sur cet appareil.',
+      bookmarks:'À lire plus tard', zineItems:'Articles du Zine', appSettings:'Réglages de l’application',
+      exportBackup:'Exporter la sauvegarde', importBackup:'Importer la sauvegarde',
+      clearReading:'Supprimer les listes de lecture', clearOffline:'Supprimer le cache de prévisualisation',
+      clearAll:'Supprimer toutes les données locales', backupExported:'Sauvegarde téléchargée.',
+      backupImported:'Sauvegarde importée. La prévisualisation va être rechargée.',
+      invalidBackup:'Cette sauvegarde World Revolution News n’est pas valide.',
+      clearReadingConfirm:'Supprimer À lire plus tard, Lus, les positions de lecture et le Zine ?',
+      clearOfflineConfirm:'Supprimer uniquement les caches séparés de la prévisualisation ?',
+      clearAllConfirm:'Supprimer toutes les données locales de World Revolution News sur cet appareil ?',
+      selectedDataCleared:'Les données sélectionnées ont été supprimées.', close:'Fermer'
+    },
+    it: {
+      themeOled:'Nero OLED', themeSoft:'Attenuato', font200:'200 %',
+      systemStatus:'Stato del sistema', localData:'Dati locali', advancedFilters:'Altri filtri',
+      sort:'Ordinamento', newestFirst:'Più recenti', oldestFirst:'Più vecchi',
+      sourceLanguage:'Lingua originale', sourceOrigin:'Provenienza', contentFormat:'Formato',
+      exactSource:'Fonte', allLanguages:'Tutte le lingue', allOrigins:'Tutte le provenienze',
+      allFormats:'Tutti i formati', allSources:'Tutte le fonti', cardsView:'Schede',
+      compactView:'Compatta', headlinesView:'Titoli', sourceProfile:'Profilo della fonte',
+      newsFormat:'Notizia', analysisFormat:'Analisi', commentaryFormat:'Commento',
+      interviewFormat:'Intervista', pressReleaseFormat:'Comunicato stampa',
+      readArticles:'Letti', readProgress:'Avanzamento lettura', continueReading:'Continua a leggere',
+      city:'Città', category:'Categoria', group:'Gruppo', date:'Data',
+      allCities:'Tutte le città', allGroups:'Tutti i gruppi', allEventCategories:'Tutte le categorie',
+      nearMe:'Vicino a me', locationOff:'Disattiva vicinanza', locationPrivate:'La posizione resta su questo dispositivo e non viene salvata.',
+      locationUnavailable:'Impossibile determinare la posizione.', map:'Mappa', route:'Percorso',
+      calendar:'Calendario', remind:'Ricordamelo', reminderSet:'Promemoria salvato',
+      reminderRemoved:'Promemoria rimosso', distance:'Distanza',
+      saveFilter:'Salva filtro', savedFilters:'Filtri salvati', filterSaved:'Filtro eventi salvato.',
+      audioQueue:'Coda', favoritesOnly:'Solo preferiti', cloudPodcast:'Voce naturale (online)',
+      shortPodcast:'Podcast breve', fullPodcast:'Articolo completo', podcastGenerating:'Creazione del podcast…',
+      podcastReady:'Il podcast è pronto per l’ascolto.', podcastFailed:'Impossibile creare il podcast.',
+      azureVoice:'Voce', onlineCostNotice:'La creazione online usa il contingente vocale condiviso e limitato.',
+      translationProblem:'Segnala un problema di traduzione', reportReason:'Motivo',
+      reportWrong:'Significato errato', reportMissing:'Testo mancante', reportNames:'Nomi o termini',
+      reportOther:'Altro', reportNote:'Nota (facoltativa)', prepareEmail:'Prepara e-mail',
+      translatingPart:'Traduzione della sezione', translationComplete:'Articolo completo tradotto.',
+      aboutTitle:'Informazioni su World Revolution News', aboutIntro:'Notizie indipendenti e multilingue da movimenti e lotte sociali, senza account, tracciamento o pubblicità personalizzata.',
+      aboutPrinciples:'La nuova app riunisce notizie attuali, fonti trasparenti, traduzioni, audio, eventi, glossario, solidarietà e strumenti Zine in un’interfaccia utilizzabile con una mano.',
+      previewIsolation:'Questa versione candidata resta separata dall’app pubblicata.',
+      statusOnline:'Connessione', statusData:'Notizie caricate', statusEvents:'Eventi caricati',
+      statusSources:'Verifica delle fonti', statusTranslation:'Servizio di traduzione', statusOffline:'Cache offline',
+      online:'Online', offline:'Offline', available:'Disponibile', checking:'Verifica…',
+      storageIntro:'Tutte le liste e impostazioni personali restano localmente su questo dispositivo.',
+      bookmarks:'Leggi più tardi', zineItems:'Articoli Zine', appSettings:'Impostazioni dell’app',
+      exportBackup:'Esporta backup', importBackup:'Importa backup',
+      clearReading:'Elimina elenchi di lettura', clearOffline:'Elimina cache anteprima',
+      clearAll:'Elimina tutti i dati locali', backupExported:'Backup scaricato.',
+      backupImported:'Backup importato. L’anteprima verrà ricaricata.',
+      invalidBackup:'Questo non è un backup valido di World Revolution News.',
+      clearReadingConfirm:'Eliminare Leggi più tardi, Letti, posizioni di lettura e Zine?',
+      clearOfflineConfirm:'Eliminare solo le cache separate dell’anteprima?',
+      clearAllConfirm:'Eliminare tutti i dati locali di World Revolution News su questo dispositivo?',
+      selectedDataCleared:'I dati selezionati sono stati eliminati.', close:'Chiudi'
+    },
+    pt: {
+      themeOled:'Preto OLED', themeSoft:'Suave', font200:'200 %',
+      systemStatus:'Estado do sistema', localData:'Dados locais', advancedFilters:'Mais filtros',
+      sort:'Ordenação', newestFirst:'Mais recentes', oldestFirst:'Mais antigos',
+      sourceLanguage:'Idioma de origem', sourceOrigin:'Origem', contentFormat:'Formato',
+      exactSource:'Fonte', allLanguages:'Todos os idiomas', allOrigins:'Todas as origens',
+      allFormats:'Todos os formatos', allSources:'Todas as fontes', cardsView:'Cartões',
+      compactView:'Compacta', headlinesView:'Manchetes', sourceProfile:'Perfil da fonte',
+      newsFormat:'Notícia', analysisFormat:'Análise', commentaryFormat:'Comentário',
+      interviewFormat:'Entrevista', pressReleaseFormat:'Comunicado de imprensa',
+      readArticles:'Lidos', readProgress:'Progresso de leitura', continueReading:'Continuar a ler',
+      city:'Cidade', category:'Categoria', group:'Grupo', date:'Data',
+      allCities:'Todas as cidades', allGroups:'Todos os grupos', allEventCategories:'Todas as categorias',
+      nearMe:'Perto de mim', locationOff:'Desativar proximidade', locationPrivate:'A tua localização permanece neste dispositivo e não é guardada.',
+      locationUnavailable:'Não foi possível determinar a localização.', map:'Mapa', route:'Rota',
+      calendar:'Calendário', remind:'Lembrar-me', reminderSet:'Lembrete guardado',
+      reminderRemoved:'Lembrete removido', distance:'Distância',
+      saveFilter:'Guardar filtro', savedFilters:'Filtros guardados', filterSaved:'Filtro de eventos guardado.',
+      audioQueue:'Fila', favoritesOnly:'Apenas favoritos', cloudPodcast:'Voz natural (online)',
+      shortPodcast:'Podcast curto', fullPodcast:'Artigo completo', podcastGenerating:'A criar podcast…',
+      podcastReady:'O podcast está pronto para reprodução.', podcastFailed:'Não foi possível criar o podcast.',
+      azureVoice:'Voz', onlineCostNotice:'A criação online usa a quota partilhada e limitada de vozes.',
+      translationProblem:'Comunicar problema de tradução', reportReason:'Motivo',
+      reportWrong:'Significado incorreto', reportMissing:'Texto em falta', reportNames:'Nomes ou termos',
+      reportOther:'Outro', reportNote:'Nota (opcional)', prepareEmail:'Preparar e-mail',
+      translatingPart:'A traduzir secção', translationComplete:'Artigo completo traduzido.',
+      aboutTitle:'Sobre o World Revolution News', aboutIntro:'Notícias independentes e multilingues de movimentos e lutas sociais, sem contas, rastreio ou publicidade personalizada.',
+      aboutPrinciples:'A nova aplicação reúne notícias atuais, fontes transparentes, traduções, áudio, eventos, glossário, solidariedade e ferramentas Zine numa interface utilizável com uma mão.',
+      previewIsolation:'Esta versão candidata continua separada da aplicação publicada.',
+      statusOnline:'Ligação', statusData:'Notícias carregadas', statusEvents:'Eventos carregados',
+      statusSources:'Verificação de fontes', statusTranslation:'Serviço de tradução', statusOffline:'Cache offline',
+      online:'Online', offline:'Offline', available:'Disponível', checking:'A verificar…',
+      storageIntro:'Todas as listas e definições pessoais permanecem localmente neste dispositivo.',
+      bookmarks:'Ler mais tarde', zineItems:'Artigos do Zine', appSettings:'Definições da aplicação',
+      exportBackup:'Exportar cópia', importBackup:'Importar cópia',
+      clearReading:'Eliminar listas de leitura', clearOffline:'Eliminar cache da pré-visualização',
+      clearAll:'Eliminar todos os dados locais', backupExported:'Cópia transferida.',
+      backupImported:'Cópia importada. A pré-visualização será recarregada.',
+      invalidBackup:'Esta não é uma cópia válida do World Revolution News.',
+      clearReadingConfirm:'Eliminar Ler mais tarde, Lidos, posições de leitura e o Zine?',
+      clearOfflineConfirm:'Eliminar apenas as caches separadas da pré-visualização?',
+      clearAllConfirm:'Eliminar todos os dados locais do World Revolution News neste dispositivo?',
+      selectedDataCleared:'Os dados selecionados foram eliminados.', close:'Fechar'
+    },
+    ru: {
+      themeOled:'Чёрный OLED', themeSoft:'Приглушённая', font200:'200 %',
+      systemStatus:'Состояние системы', localData:'Локальные данные', advancedFilters:'Дополнительные фильтры',
+      sort:'Сортировка', newestFirst:'Сначала новые', oldestFirst:'Сначала старые',
+      sourceLanguage:'Язык источника', sourceOrigin:'Происхождение', contentFormat:'Формат',
+      exactSource:'Источник', allLanguages:'Все языки', allOrigins:'Все регионы происхождения',
+      allFormats:'Все форматы', allSources:'Все источники', cardsView:'Карточки',
+      compactView:'Компактно', headlinesView:'Заголовки', sourceProfile:'Профиль источника',
+      newsFormat:'Новость', analysisFormat:'Анализ', commentaryFormat:'Комментарий',
+      interviewFormat:'Интервью', pressReleaseFormat:'Пресс-релиз',
+      readArticles:'Прочитано', readProgress:'Прогресс чтения', continueReading:'Продолжить чтение',
+      city:'Город', category:'Категория', group:'Группа', date:'Дата',
+      allCities:'Все города', allGroups:'Все группы', allEventCategories:'Все категории',
+      nearMe:'Рядом со мной', locationOff:'Отключить поиск рядом', locationPrivate:'Местоположение остаётся на этом устройстве и не сохраняется.',
+      locationUnavailable:'Не удалось определить местоположение.', map:'Карта', route:'Маршрут',
+      calendar:'Календарь', remind:'Напомнить', reminderSet:'Напоминание сохранено',
+      reminderRemoved:'Напоминание удалено', distance:'Расстояние',
+      saveFilter:'Сохранить фильтр', savedFilters:'Сохранённые фильтры', filterSaved:'Фильтр событий сохранён.',
+      audioQueue:'Очередь', favoritesOnly:'Только избранное', cloudPodcast:'Естественный голос (онлайн)',
+      shortPodcast:'Короткий подкаст', fullPodcast:'Полная статья', podcastGenerating:'Создание подкаста…',
+      podcastReady:'Подкаст готов к воспроизведению.', podcastFailed:'Не удалось создать подкаст.',
+      azureVoice:'Голос', onlineCostNotice:'Онлайн-создание использует общий ограниченный голосовой ресурс.',
+      translationProblem:'Сообщить о проблеме перевода', reportReason:'Причина',
+      reportWrong:'Неверный смысл', reportMissing:'Отсутствует текст', reportNames:'Имена или термины',
+      reportOther:'Другое', reportNote:'Примечание (необязательно)', prepareEmail:'Подготовить письмо',
+      translatingPart:'Перевод раздела', translationComplete:'Полная статья переведена.',
+      aboutTitle:'О World Revolution News', aboutIntro:'Независимые многоязычные новости движений и социальной борьбы без аккаунтов, отслеживания и персонализированной рекламы.',
+      aboutPrinciples:'Новое приложение объединяет актуальные новости, прозрачные источники, переводы, аудио, события, словарь, солидарность и инструменты Zine в интерфейсе для управления одной рукой.',
+      previewIsolation:'Эта версия-кандидат по-прежнему отделена от опубликованного приложения.',
+      statusOnline:'Соединение', statusData:'Новостей загружено', statusEvents:'Событий загружено',
+      statusSources:'Проверка источников', statusTranslation:'Служба перевода', statusOffline:'Офлайн-кэш',
+      online:'Онлайн', offline:'Офлайн', available:'Доступно', checking:'Проверка…',
+      storageIntro:'Все личные списки и настройки хранятся локально на этом устройстве.',
+      bookmarks:'Прочитать позже', zineItems:'Статьи Zine', appSettings:'Настройки приложения',
+      exportBackup:'Экспортировать копию', importBackup:'Импортировать копию',
+      clearReading:'Удалить списки чтения', clearOffline:'Удалить кэш предпросмотра',
+      clearAll:'Удалить все локальные данные', backupExported:'Копия загружена.',
+      backupImported:'Копия импортирована. Предпросмотр будет перезагружен.',
+      invalidBackup:'Это недействительная копия World Revolution News.',
+      clearReadingConfirm:'Удалить «Прочитать позже», прочитанные статьи, позиции чтения и Zine?',
+      clearOfflineConfirm:'Удалить только отдельные кэши предпросмотра?',
+      clearAllConfirm:'Удалить все локальные данные World Revolution News на этом устройстве?',
+      selectedDataCleared:'Выбранные данные удалены.', close:'Закрыть'
+    },
+    el: {
+      themeOled:'Μαύρο OLED', themeSoft:'Ήπιο', font200:'200 %',
+      systemStatus:'Κατάσταση συστήματος', localData:'Τοπικά δεδομένα', advancedFilters:'Περισσότερα φίλτρα',
+      sort:'Ταξινόμηση', newestFirst:'Νεότερα πρώτα', oldestFirst:'Παλαιότερα πρώτα',
+      sourceLanguage:'Γλώσσα πηγής', sourceOrigin:'Προέλευση', contentFormat:'Μορφή',
+      exactSource:'Πηγή', allLanguages:'Όλες οι γλώσσες', allOrigins:'Όλες οι προελεύσεις',
+      allFormats:'Όλες οι μορφές', allSources:'Όλες οι πηγές', cardsView:'Κάρτες',
+      compactView:'Συμπαγής', headlinesView:'Τίτλοι', sourceProfile:'Προφίλ πηγής',
+      newsFormat:'Είδηση', analysisFormat:'Ανάλυση', commentaryFormat:'Σχόλιο',
+      interviewFormat:'Συνέντευξη', pressReleaseFormat:'Δελτίο Τύπου',
+      readArticles:'Διαβασμένα', readProgress:'Πρόοδος ανάγνωσης', continueReading:'Συνέχεια ανάγνωσης',
+      city:'Πόλη', category:'Κατηγορία', group:'Ομάδα', date:'Ημερομηνία',
+      allCities:'Όλες οι πόλεις', allGroups:'Όλες οι ομάδες', allEventCategories:'Όλες οι κατηγορίες',
+      nearMe:'Κοντά μου', locationOff:'Απενεργοποίηση εγγύτητας', locationPrivate:'Η τοποθεσία παραμένει σε αυτή τη συσκευή και δεν αποθηκεύεται.',
+      locationUnavailable:'Δεν ήταν δυνατός ο προσδιορισμός της τοποθεσίας.', map:'Χάρτης', route:'Διαδρομή',
+      calendar:'Ημερολόγιο', remind:'Υπενθύμιση', reminderSet:'Η υπενθύμιση αποθηκεύτηκε',
+      reminderRemoved:'Η υπενθύμιση αφαιρέθηκε', distance:'Απόσταση',
+      saveFilter:'Αποθήκευση φίλτρου', savedFilters:'Αποθηκευμένα φίλτρα', filterSaved:'Το φίλτρο εκδηλώσεων αποθηκεύτηκε.',
+      audioQueue:'Ουρά', favoritesOnly:'Μόνο αγαπημένα', cloudPodcast:'Φυσική φωνή (online)',
+      shortPodcast:'Σύντομο podcast', fullPodcast:'Πλήρες άρθρο', podcastGenerating:'Δημιουργία podcast…',
+      podcastReady:'Το podcast είναι έτοιμο για αναπαραγωγή.', podcastFailed:'Δεν ήταν δυνατή η δημιουργία του podcast.',
+      azureVoice:'Φωνή', onlineCostNotice:'Η online δημιουργία χρησιμοποιεί το κοινό περιορισμένο όριο φωνής.',
+      translationProblem:'Αναφορά προβλήματος μετάφρασης', reportReason:'Αιτία',
+      reportWrong:'Λανθασμένο νόημα', reportMissing:'Λείπει κείμενο', reportNames:'Ονόματα ή όροι',
+      reportOther:'Άλλο', reportNote:'Σημείωση (προαιρετικά)', prepareEmail:'Προετοιμασία email',
+      translatingPart:'Μετάφραση ενότητας', translationComplete:'Μεταφράστηκε ολόκληρο το άρθρο.',
+      aboutTitle:'Σχετικά με το World Revolution News', aboutIntro:'Ανεξάρτητες, πολύγλωσσες ειδήσεις από κινήματα και κοινωνικούς αγώνες, χωρίς λογαριασμούς, παρακολούθηση ή εξατομικευμένες διαφημίσεις.',
+      aboutPrinciples:'Η νέα εφαρμογή συνδυάζει τρέχουσες ειδήσεις, διαφανείς πηγές, μεταφράσεις, ήχο, εκδηλώσεις, λεξικό, αλληλεγγύη και εργαλεία Zine σε διεπαφή για χρήση με ένα χέρι.',
+      previewIsolation:'Αυτή η υποψήφια έκδοση παραμένει χωριστή από τη δημοσιευμένη εφαρμογή.',
+      statusOnline:'Σύνδεση', statusData:'Ειδήσεις που φορτώθηκαν', statusEvents:'Εκδηλώσεις που φορτώθηκαν',
+      statusSources:'Έλεγχος πηγών', statusTranslation:'Υπηρεσία μετάφρασης', statusOffline:'Μνήμη εκτός σύνδεσης',
+      online:'Online', offline:'Εκτός σύνδεσης', available:'Διαθέσιμο', checking:'Έλεγχος…',
+      storageIntro:'Όλες οι προσωπικές λίστες και ρυθμίσεις παραμένουν τοπικά σε αυτή τη συσκευή.',
+      bookmarks:'Ανάγνωση αργότερα', zineItems:'Άρθρα Zine', appSettings:'Ρυθμίσεις εφαρμογής',
+      exportBackup:'Εξαγωγή αντιγράφου', importBackup:'Εισαγωγή αντιγράφου',
+      clearReading:'Διαγραφή λιστών ανάγνωσης', clearOffline:'Διαγραφή μνήμης προεπισκόπησης',
+      clearAll:'Διαγραφή όλων των τοπικών δεδομένων', backupExported:'Το αντίγραφο λήφθηκε.',
+      backupImported:'Το αντίγραφο εισήχθη. Η προεπισκόπηση θα φορτωθεί ξανά.',
+      invalidBackup:'Δεν είναι έγκυρο αντίγραφο του World Revolution News.',
+      clearReadingConfirm:'Να διαγραφούν οι λίστες ανάγνωσης, τα διαβασμένα, οι θέσεις ανάγνωσης και το Zine;',
+      clearOfflineConfirm:'Να διαγραφούν μόνο οι ξεχωριστές μνήμες προεπισκόπησης;',
+      clearAllConfirm:'Να διαγραφούν όλα τα τοπικά δεδομένα World Revolution News από αυτή τη συσκευή;',
+      selectedDataCleared:'Τα επιλεγμένα δεδομένα διαγράφηκαν.', close:'Κλείσιμο'
+    },
+    tr: {
+      themeOled:'OLED siyahı', themeSoft:'Yumuşak', font200:'%200',
+      systemStatus:'Sistem durumu', localData:'Yerel veriler', advancedFilters:'Daha fazla filtre',
+      sort:'Sıralama', newestFirst:'Önce en yeniler', oldestFirst:'Önce en eskiler',
+      sourceLanguage:'Kaynak dili', sourceOrigin:'Köken', contentFormat:'Biçim',
+      exactSource:'Kaynak', allLanguages:'Tüm diller', allOrigins:'Tüm kökenler',
+      allFormats:'Tüm biçimler', allSources:'Tüm kaynaklar', cardsView:'Kartlar',
+      compactView:'Kompakt', headlinesView:'Başlıklar', sourceProfile:'Kaynak profili',
+      newsFormat:'Haber', analysisFormat:'Analiz', commentaryFormat:'Yorum',
+      interviewFormat:'Röportaj', pressReleaseFormat:'Basın açıklaması',
+      readArticles:'Okunanlar', readProgress:'Okuma ilerlemesi', continueReading:'Okumaya devam et',
+      city:'Şehir', category:'Kategori', group:'Grup', date:'Tarih',
+      allCities:'Tüm şehirler', allGroups:'Tüm gruplar', allEventCategories:'Tüm kategoriler',
+      nearMe:'Yakınımda', locationOff:'Yakınlığı kapat', locationPrivate:'Konumunuz bu cihazda kalır ve kaydedilmez.',
+      locationUnavailable:'Konum belirlenemedi.', map:'Harita', route:'Rota',
+      calendar:'Takvim', remind:'Hatırlat', reminderSet:'Hatırlatıcı kaydedildi',
+      reminderRemoved:'Hatırlatıcı kaldırıldı', distance:'Mesafe',
+      saveFilter:'Filtreyi kaydet', savedFilters:'Kayıtlı filtreler', filterSaved:'Etkinlik filtresi kaydedildi.',
+      audioQueue:'Sıra', favoritesOnly:'Yalnızca favoriler', cloudPodcast:'Doğal ses (çevrimiçi)',
+      shortPodcast:'Kısa podcast', fullPodcast:'Tam makale', podcastGenerating:'Podcast oluşturuluyor…',
+      podcastReady:'Podcast oynatılmaya hazır.', podcastFailed:'Podcast oluşturulamadı.',
+      azureVoice:'Ses', onlineCostNotice:'Çevrimiçi üretim ortak ve sınırlı ses kotasını kullanır.',
+      translationProblem:'Çeviri sorunu bildir', reportReason:'Neden',
+      reportWrong:'Yanlış anlam', reportMissing:'Eksik metin', reportNames:'Adlar veya terimler',
+      reportOther:'Diğer', reportNote:'Not (isteğe bağlı)', prepareEmail:'E-posta hazırla',
+      translatingPart:'Bölüm çevriliyor', translationComplete:'Makalenin tamamı çevrildi.',
+      aboutTitle:'World Revolution News hakkında', aboutIntro:'Hesap, takip veya kişiselleştirilmiş reklam olmadan hareketlerden ve toplumsal mücadelelerden bağımsız, çok dilli haberler.',
+      aboutPrinciples:'Yeni uygulama güncel haberleri, şeffaf kaynakları, çevirileri, sesi, etkinlikleri, sözlüğü, dayanışmayı ve Zine araçlarını tek elle kullanılabilen bir arayüzde birleştirir.',
+      previewIsolation:'Bu sürüm adayı yayımlanmış uygulamadan ayrı kalmaya devam eder.',
+      statusOnline:'Bağlantı', statusData:'Yüklenen haberler', statusEvents:'Yüklenen etkinlikler',
+      statusSources:'Kaynak doğrulama', statusTranslation:'Çeviri hizmeti', statusOffline:'Çevrimdışı önbellek',
+      online:'Çevrimiçi', offline:'Çevrimdışı', available:'Kullanılabilir', checking:'Kontrol ediliyor…',
+      storageIntro:'Tüm kişisel listeler ve ayarlar bu cihazda yerel olarak kalır.',
+      bookmarks:'Daha sonra oku', zineItems:'Zine makaleleri', appSettings:'Uygulama ayarları',
+      exportBackup:'Yedeği dışa aktar', importBackup:'Yedeği içe aktar',
+      clearReading:'Okuma listelerini sil', clearOffline:'Önizleme önbelleğini sil',
+      clearAll:'Tüm yerel verileri sil', backupExported:'Yedek indirildi.',
+      backupImported:'Yedek içe aktarıldı. Önizleme yeniden yüklenecek.',
+      invalidBackup:'Geçerli bir World Revolution News yedeği değil.',
+      clearReadingConfirm:'Daha sonra oku, Okunanlar, okuma konumları ve Zine silinsin mi?',
+      clearOfflineConfirm:'Yalnızca ayrı önizleme önbellekleri silinsin mi?',
+      clearAllConfirm:'Bu cihazdaki tüm yerel World Revolution News verileri silinsin mi?',
+      selectedDataCleared:'Seçilen veriler silindi.', close:'Kapat'
+    }
+  };
+
   const state = {
     articles: [],
     facets: { regions: [], topics: [], sources: [] },
@@ -807,9 +1210,18 @@
     ui: readJson(UI_SETTINGS_KEY, { theme: 'dark', fontSize: 'normal', density: 'standard' }),
     preferences: normalizedPreferences(readJson(PREFS_KEY, {})),
     translations: readJson(TRANSLATIONS_KEY, {}),
-    discover: { query: '', region: '', topic: '', period: 'current', limit: 24 },
+    discover: {
+      query: '', region: '', topic: '', period: 'current', limit: 24,
+      sort: 'newest', language: 'all', origin: 'all', source: 'all',
+      format: 'all', viewMode: 'cards'
+    },
     events: [],
-    eventFilter: { query: '', country: '', archived: false },
+    eventFilter: {
+      query: '', country: '', city: '', category: '', group: '', date: '',
+      archived: false, radius: 0, location: null
+    },
+    sourceCatalog: null,
+    sourceIndex: new Map(),
     prisonerData: { profiles: [], sources: [] },
     lexicon: { section: 'all', query: '' },
     lexiconSnapshot: { terms: [], sources: [] },
@@ -818,7 +1230,11 @@
     podcasts: [],
     generatedPodcasts: [],
     radioStations: [],
-    media: { section: 'video', videoMode: 'current', query: '', region: 'all', category: 'all' },
+    media: {
+      section: 'video', videoMode: 'current', query: '', region: 'all',
+      category: 'all', favoritesOnly: false
+    },
+    savedMode: 'bookmarks',
     briefing: { step: 1, regions: [], topics: [], language: '', amount: 5, items: [] },
     cardArticles: [],
     activeArticle: null
@@ -847,6 +1263,7 @@
   const densitySelect = document.getElementById('next-menu-density');
   const briefingTranslationsInFlight = new Set();
   const briefingTranslationsAttempted = new Set();
+  let briefingTranslationWarningShown = false;
   const systemTheme = window.matchMedia?.('(prefers-color-scheme: light)');
 
   function supportedLanguage(value) {
@@ -855,7 +1272,9 @@
   }
 
   function t(key) {
-    return PRODUCT_COPY[state.language]?.[key]
+    return RELEASE_COPY[state.language]?.[key]
+      || RELEASE_COPY.en[key]
+      || PRODUCT_COPY[state.language]?.[key]
       || PRODUCT_COPY.en[key]
       || UI_COPY[state.language]?.[key]
       || UI_COPY.en[key]
@@ -905,8 +1324,8 @@
 
   function normalizedUiSettings(value = {}) {
     return {
-      theme: ['dark', 'light', 'system', 'contrast'].includes(value.theme) ? value.theme : 'dark',
-      fontSize: ['normal', 'large', 'xlarge'].includes(value.fontSize) ? value.fontSize : 'normal',
+      theme: ['dark', 'oled', 'soft', 'light', 'system', 'contrast'].includes(value.theme) ? value.theme : 'dark',
+      fontSize: ['normal', 'large', 'xlarge', '200'].includes(value.fontSize) ? value.fontSize : 'normal',
       density: ['compact', 'standard', 'spacious'].includes(value.density) ? value.density : 'standard'
     };
   }
@@ -946,6 +1365,8 @@
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
   }
+  window.escapeHtml = escapeHtml;
+  window.getSafeHttpUrl = core.safeHttpUrl;
 
   function dateLabel(article) {
     if (!article?.timestamp) return '';
@@ -987,8 +1408,8 @@
     document.getElementById('next-menu-density-label').textContent = t('density');
     document.getElementById('next-menu-settings-local').textContent = t('settingsLocal');
     [
-      [themeSelect, [['dark', 'themeDark'], ['light', 'themeLight'], ['system', 'themeSystem'], ['contrast', 'themeContrast']]],
-      [fontSizeSelect, [['normal', 'normal'], ['large', 'large'], ['xlarge', 'xlarge']]],
+      [themeSelect, [['dark', 'themeDark'], ['oled', 'themeOled'], ['soft', 'themeSoft'], ['light', 'themeLight'], ['system', 'themeSystem'], ['contrast', 'themeContrast']]],
+      [fontSizeSelect, [['normal', 'normal'], ['large', 'large'], ['xlarge', 'xlarge'], ['200', 'font200']]],
       [densitySelect, [['compact', 'compact'], ['standard', 'standard'], ['spacious', 'spacious']]]
     ].forEach(([select, options]) => {
       options.forEach(([value, key]) => {
@@ -1009,6 +1430,11 @@
     document.getElementById('next-menu-diagnostics-label').textContent = t('diagnostics');
     document.getElementById('next-menu-sources').textContent = t('sourceCheck');
     document.getElementById('next-menu-selftest').textContent = t('selfTest');
+    document.getElementById('next-menu-status').textContent = t('systemStatus');
+    document.getElementById('next-menu-data').textContent = t('localData');
+    document.querySelector('[data-release-close]')?.setAttribute('aria-label', t('close'));
+    window.WRNAudioTools?.updateLabels?.();
+    window.WRNSourceProfiles?.updateUi?.(state.language);
   }
 
   function translationFor(article) {
@@ -1068,7 +1494,78 @@
     if (read) values.push(key);
     else values.splice(index, 1);
     writeJson(READ_KEY, values);
+    if (read) {
+      const positions = readingPositions();
+      delete positions[readingKey(article)];
+      writeJson(READING_POSITIONS_KEY, positions);
+    }
     return read;
+  }
+
+  function readingKey(article) {
+    return article?.link || article?.id || '';
+  }
+
+  function readingPositions() {
+    const values = readJson(READING_POSITIONS_KEY, {});
+    return values && typeof values === 'object' && !Array.isArray(values) ? values : {};
+  }
+
+  function readingPosition(article) {
+    return readingPositions()[readingKey(article)] || null;
+  }
+
+  function storeReadingPosition(article, container, force = false) {
+    const key = readingKey(article);
+    if (!key || !container) return;
+    const now = Date.now();
+    if (!force && now - (storeReadingPosition.lastSave || 0) < 900) return;
+    storeReadingPosition.lastSave = now;
+    const progress = release.readingProgress(
+      container.scrollTop,
+      container.scrollHeight,
+      container.clientHeight
+    );
+    const positions = readingPositions();
+    if (progress > .985) {
+      delete positions[key];
+      if (!isRead(article)) {
+        const values = readArticles();
+        values.push(key);
+        writeJson(READ_KEY, [...new Set(values)]);
+      }
+    } else if (progress > .015) {
+      positions[key] = {
+        position: Math.max(0, container.scrollTop),
+        progress,
+        title: article.title,
+        source: article.source,
+        updatedAt: now
+      };
+    }
+    const trimmed = Object.fromEntries(Object.entries(positions)
+      .sort(([, a], [, b]) => Number(b?.updatedAt || 0) - Number(a?.updatedAt || 0))
+      .slice(0, 100));
+    writeJson(READING_POSITIONS_KEY, trimmed);
+    updateArticleReadingMeter(progress);
+  }
+
+  function updateArticleReadingMeter(progress) {
+    const meter = document.getElementById('next-article-reading-progress');
+    const label = document.getElementById('next-article-reading-label');
+    const percentage = Math.round(Math.max(0, Math.min(1, Number(progress) || 0)) * 100);
+    if (meter) meter.value = percentage;
+    if (label) label.textContent = `${percentage} %`;
+  }
+
+  function readingProgressMarkup(article) {
+    const position = readingPosition(article);
+    if (!position?.progress || isRead(article)) return '';
+    const percentage = Math.round(position.progress * 100);
+    return `<div class="reading-progress">
+      <progress value="${percentage}" max="100" aria-label="${escapeHtml(t('readProgress'))}"></progress>
+      <span>${percentage} %</span>
+    </div>`;
   }
 
   function zineArticles() {
@@ -1127,6 +1624,167 @@
     showToast.timer = window.setTimeout(() => { toast.hidden = true; }, 2600);
   }
 
+  function openReleaseDialog(kicker, title, body, actions = '') {
+    const dialog = document.getElementById('next-release-dialog');
+    document.getElementById('next-release-kicker').textContent = kicker;
+    document.getElementById('next-release-title').textContent = title;
+    document.getElementById('next-release-content').innerHTML = body;
+    document.getElementById('next-release-actions').innerHTML = actions;
+    if (!dialog.open) dialog.showModal();
+    return dialog;
+  }
+
+  function renderAbout() {
+    openReleaseDialog(
+      'World Revolution News',
+      t('aboutTitle'),
+      `<p class="release-note">${escapeHtml(t('aboutIntro'))}</p>
+      <p>${escapeHtml(t('aboutPrinciples'))}</p>
+      <div class="release-facts">
+        <div><span>Version</span><strong>${escapeHtml(window.WRN_CONFIG?.version || 'Preview')}</strong></div>
+        <div><span>Build</span><strong>${escapeHtml(window.WRN_CONFIG?.build || '—')}</strong></div>
+        <div><span>${escapeHtml(t('source'))}</span><strong>${state.facets.sources.length}</strong></div>
+        <div><span>${escapeHtml(t('language'))}</span><strong>9</strong></div>
+      </div>
+      <p class="release-note release-danger">${escapeHtml(t('previewIsolation'))}</p>`,
+      `<button type="button" class="primary-button" data-release-close>${escapeHtml(t('close'))}</button>`
+    );
+  }
+
+  function localStorageSnapshot() {
+    const values = {};
+    for (let index = 0; index < localStorage.length; index += 1) {
+      const key = localStorage.key(index);
+      if (key) values[key] = localStorage.getItem(key);
+    }
+    return values;
+  }
+
+  function estimatedLocalStorageBytes() {
+    return Object.entries(localStorageSnapshot()).reduce(
+      (total, [key, value]) => total + new Blob([key, value || '']).size,
+      0
+    );
+  }
+
+  function formatBytes(value) {
+    const bytes = Number(value) || 0;
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 ** 2) return `${(bytes / 1024).toFixed(1)} KiB`;
+    return `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
+  }
+
+  function renderDataControl() {
+    const settingsCount = [
+      PREFS_KEY, STORY_WATCH_KEY, UI_SETTINGS_KEY, LANGUAGE_KEY
+    ].filter(key => localStorage.getItem(key) !== null).length;
+    openReleaseDialog(
+      t('localData'),
+      t('localData'),
+      `<p>${escapeHtml(t('storageIntro'))}</p>
+      <div class="data-overview">
+        <div><span>${escapeHtml(t('bookmarks'))}</span><strong>${bookmarks().length}</strong></div>
+        <div><span>${escapeHtml(t('readArticles'))}</span><strong>${readArticles().length}</strong></div>
+        <div><span>${escapeHtml(t('zineItems'))}</span><strong>${zineArticles().length}</strong></div>
+        <div><span>${escapeHtml(t('appSettings'))}</span><strong>${settingsCount}</strong></div>
+        <div><span>Local Storage</span><strong>${escapeHtml(formatBytes(estimatedLocalStorageBytes()))}</strong></div>
+      </div>
+      <div class="release-action-grid">
+        <button type="button" data-action="data-export">${escapeHtml(t('exportBackup'))}</button>
+        <button type="button" data-action="data-import">${escapeHtml(t('importBackup'))}</button>
+        <button type="button" data-action="data-clear-reading">${escapeHtml(t('clearReading'))}</button>
+        <button type="button" data-action="data-clear-offline">${escapeHtml(t('clearOffline'))}</button>
+        <button type="button" data-action="data-clear-all">${escapeHtml(t('clearAll'))}</button>
+      </div>`,
+      `<button type="button" class="primary-button" data-release-close>${escapeHtml(t('close'))}</button>`
+    );
+  }
+
+  function exportDataBackup() {
+    const backup = release.backupPayload(localStorageSnapshot(), window.WRN_CONFIG?.version || '');
+    downloadText(
+      `world-revolution-news-backup-${new Date().toISOString().slice(0, 10)}.json`,
+      `${JSON.stringify(backup, null, 2)}\n`,
+      'application/json;charset=utf-8'
+    );
+    showToast(t('backupExported'));
+  }
+
+  async function importDataBackup(file) {
+    if (!file || file.size > 8 * 1024 * 1024) return showToast(t('invalidBackup'));
+    try {
+      const data = JSON.parse(await file.text());
+      if (!release.validBackup(data)) throw new Error('Invalid backup');
+      const sanitized = release.backupPayload(data.localStorage, data.appVersion).localStorage;
+      Object.entries(sanitized).forEach(([key, value]) => localStorage.setItem(key, value));
+      showToast(t('backupImported'));
+      window.setTimeout(() => window.location.reload(), 700);
+    } catch (error) {
+      console.warn('Backup import failed', error);
+      showToast(t('invalidBackup'));
+    }
+  }
+
+  async function clearPreviewCaches() {
+    if (!('caches' in window)) return;
+    const names = await caches.keys();
+    await Promise.all(
+      names.filter(name => name.startsWith('wrn-news-app-2-')).map(name => caches.delete(name))
+    );
+  }
+
+  async function clearLocalData(category) {
+    if (category === 'reading') {
+      if (!window.confirm(t('clearReadingConfirm'))) return;
+      [BOOKMARKS_KEY, READ_KEY, READING_POSITIONS_KEY, ZINE_KEY].forEach(key => localStorage.removeItem(key));
+    } else if (category === 'offline') {
+      if (!window.confirm(t('clearOfflineConfirm'))) return;
+      await clearPreviewCaches();
+    } else {
+      if (!window.confirm(t('clearAllConfirm'))) return;
+      [...Array(localStorage.length)].map((_, index) => localStorage.key(index))
+        .filter(key => key?.startsWith('wrn_'))
+        .forEach(key => localStorage.removeItem(key));
+      await clearPreviewCaches();
+    }
+    showToast(t('selectedDataCleared'));
+    renderDataControl();
+  }
+
+  async function renderSystemStatus() {
+    openReleaseDialog(
+      t('systemStatus'),
+      t('systemStatus'),
+      `<p class="release-note">${escapeHtml(t('checking'))}</p>`,
+      `<button type="button" class="primary-button" data-release-close>${escapeHtml(t('close'))}</button>`
+    );
+    const [translation, sourceResult, cacheNames] = await Promise.all([
+      window.WRNSharedTranslations?.health?.().catch(error => ({ ok: false, error: String(error) }))
+        || Promise.resolve({ ok: false }),
+      window.WRNSourceVerification?.refresh?.().catch(error => ({ ok: false, error: String(error) }))
+        || Promise.resolve(null),
+      'caches' in window ? caches.keys().catch(() => []) : Promise.resolve([])
+    ]);
+    const sourceSummary = window.WRNSourceVerification?.summary?.() || {};
+    const serviceWorkerActive = Boolean(navigator.serviceWorker?.controller);
+    const sourceOk = Number(sourceSummary.error || 0) === 0 && Number(sourceSummary.total || 0) > 0;
+    const online = navigator.onLine;
+    document.getElementById('next-release-content').innerHTML = `
+      <div class="status-overview">
+        <div><span>${escapeHtml(t('statusOnline'))}</span><strong class="${online ? 'system-ok' : 'system-warning'}">${escapeHtml(t(online ? 'online' : 'offline'))}</strong></div>
+        <div><span>${escapeHtml(t('statusData'))}</span><strong class="${state.articles.length ? 'system-ok' : 'system-warning'}">${state.articles.length}</strong></div>
+        <div><span>${escapeHtml(t('statusEvents'))}</span><strong class="${state.events.length ? 'system-ok' : 'system-warning'}">${state.events.length}</strong></div>
+        <div><span>${escapeHtml(t('statusSources'))}</span><strong class="${sourceOk ? 'system-ok' : 'system-warning'}">${sourceSummary.ok || 0} / ${sourceSummary.total || 0}</strong></div>
+        <div><span>${escapeHtml(t('statusTranslation'))}</span><strong class="${translation?.ok ? 'system-ok' : 'system-warning'}">${escapeHtml(translation?.ok ? t('available') : t('offline'))}</strong></div>
+        <div><span>${escapeHtml(t('statusOffline'))}</span><strong class="${serviceWorkerActive ? 'system-ok' : ''}">${serviceWorkerActive ? 'Service Worker aktiv' : `${cacheNames.filter(name => name.startsWith('wrn-news-app-2-')).length} Cache`}</strong></div>
+      </div>
+      <div class="release-action-grid">
+        <a href="source-check.html">${escapeHtml(t('sourceCheck'))}</a>
+        <a href="app-check.html">${escapeHtml(t('selfTest'))}</a>
+      </div>`;
+    void sourceResult;
+  }
+
   function cardMarkup(article) {
     const cardIndex = state.cardArticles.push(article) - 1;
     const translation = translationFor(article);
@@ -1148,9 +1806,10 @@
       <article class="news-card" data-card-index="${cardIndex}">
         <div class="news-card__body">
           <div class="meta-line">
-            <span>${escapeHtml(article.source)}</span>
+            <button class="source-profile-trigger" type="button" data-action="source-profile" data-source="${escapeHtml(article.source)}" aria-label="${escapeHtml(`${t('sourceProfile')}: ${article.source}`)}">${escapeHtml(article.source)}</button>
             <span>${escapeHtml(dateLabel(article))}</span>
           </div>
+          ${window.WRNSourceProfiles?.badgeMarkup?.(article, state.language) || ''}
           <button class="news-card__open" type="button" data-action="open" data-index="${cardIndex}">
             <h3>${escapeHtml(title)}</h3>
             <p>${escapeHtml(intro || '')}</p>
@@ -1161,6 +1820,7 @@
           </div>
           ${preferenceReasons.length ? `<small class="preference-reason">${escapeHtml(t('shownBecause'))}: ${escapeHtml(preferenceReasons.join(' · '))}</small>` : ''}
           ${translation ? `<small class="translation-note">${escapeHtml(t('translated'))}</small>` : ''}
+          ${readingProgressMarkup(article)}
           <div class="card-actions">
             <button class="small-action" type="button" data-action="open" data-index="${cardIndex}">${escapeHtml(t('openArticle'))}</button>
             <button class="translate-card" type="button" data-action="translate" data-index="${cardIndex}">
@@ -1178,7 +1838,8 @@
     if (!items.length) {
       return `<div class="empty-state"><strong>${escapeHtml(t('noMatches'))}</strong><p>${escapeHtml(t('noMatchesText'))}</p></div>`;
     }
-    return `<div class="article-grid">${items.map(cardMarkup).join('')}</div>`;
+    const viewMode = state.view === 'discover' ? state.discover.viewMode : 'cards';
+    return `<div class="article-grid" data-view-mode="${escapeHtml(viewMode)}">${items.map(cardMarkup).join('')}</div>`;
   }
 
   function headingMarkup(eyebrow, title, intro, action = '') {
@@ -1290,7 +1951,11 @@
           currentItem.removeAttribute('aria-busy');
         }
       } catch (error) {
-        console.warn('Automatic briefing translation failed', error);
+        if (!briefingTranslationWarningShown) {
+          console.warn('Automatic briefing translation is currently unavailable', error);
+          briefingTranslationWarningShown = true;
+        }
+        window.setTimeout(() => briefingTranslationsAttempted.delete(requestKey), 5 * 60 * 1000);
         const currentItem = [...viewRoot.querySelectorAll('.briefing-item')]
           .find(element => element.dataset.briefingId === article.id);
         currentItem?.removeAttribute('aria-busy');
@@ -1384,7 +2049,15 @@
   }
 
   function allDiscoverResults() {
-    return periodArticles(core.filterArticles(state.articles, state.discover));
+    return release.filterArticles(
+      periodArticles(core.filterArticles(state.articles, {
+        query: state.discover.query,
+        region: state.discover.region,
+        topic: state.discover.topic
+      })),
+      state.discover,
+      state.sourceIndex
+    );
   }
 
   function discoverResults() {
@@ -1419,6 +2092,64 @@
         </section>`
       : '';
     return `<div class="topic-directory">${groups}${remainingMarkup}</div>`;
+  }
+
+  function selectOptions(values, selected, allValue, allLabel) {
+    return `<option value="${escapeHtml(allValue)}">${escapeHtml(allLabel)}</option>${
+      values.map(value => `<option value="${escapeHtml(value)}"${value === selected ? ' selected' : ''}>${escapeHtml(value)}</option>`).join('')
+    }`;
+  }
+
+  function discoverAdvancedFiltersMarkup() {
+    const sourceMetadata = state.articles.map(article => release.sourceMeta(article, state.sourceIndex));
+    const languages = [...new Set(sourceMetadata.map(item => item.language).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b));
+    const origins = [...new Set(sourceMetadata.flatMap(item => [item.originRegion, item.originCountry]).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b));
+    const formats = [
+      ['news', t('newsFormat')],
+      ['analysis', t('analysisFormat')],
+      ['commentary', t('commentaryFormat')],
+      ['interview', t('interviewFormat')],
+      ['press-release', t('pressReleaseFormat')],
+      ['podcast', t('podcast')]
+    ];
+    const viewModes = [
+      ['cards', t('cardsView')],
+      ['compact', t('compactView')],
+      ['headlines', t('headlinesView')]
+    ];
+    return `<details class="advanced-filter-panel"${
+      ['oldest'].includes(state.discover.sort)
+      || ['language', 'origin', 'source', 'format'].some(key => !['', 'all'].includes(state.discover[key]))
+      || state.discover.viewMode !== 'cards' ? ' open' : ''
+    }>
+      <summary>${escapeHtml(t('advancedFilters'))}</summary>
+      <div class="advanced-filter-grid">
+        <label><span>${escapeHtml(t('sort'))}</span><select id="next-discover-sort">
+          <option value="newest"${state.discover.sort === 'newest' ? ' selected' : ''}>${escapeHtml(t('newestFirst'))}</option>
+          <option value="oldest"${state.discover.sort === 'oldest' ? ' selected' : ''}>${escapeHtml(t('oldestFirst'))}</option>
+        </select></label>
+        <label><span>${escapeHtml(t('sourceLanguage'))}</span><select id="next-discover-language">${
+          selectOptions(languages.map(value => value.toUpperCase()), state.discover.language.toUpperCase(), 'ALL', t('allLanguages'))
+            .replaceAll('value="ALL"', 'value="all"')
+            .replace(/value="([A-Z]{2,3})"/g, (_, value) => `value="${value.toLowerCase()}"`)
+        }</select></label>
+        <label><span>${escapeHtml(t('sourceOrigin'))}</span><select id="next-discover-origin">${
+          selectOptions(origins, state.discover.origin, 'all', t('allOrigins'))
+        }</select></label>
+        <label><span>${escapeHtml(t('contentFormat'))}</span><select id="next-discover-format">
+          <option value="all">${escapeHtml(t('allFormats'))}</option>
+          ${formats.map(([value, label]) => `<option value="${value}"${state.discover.format === value ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('')}
+        </select></label>
+        <label><span>${escapeHtml(t('exactSource'))}</span><select id="next-discover-source">${
+          selectOptions(state.facets.sources, state.discover.source, 'all', t('allSources'))
+        }</select></label>
+        <div class="view-mode-switch" aria-label="${escapeHtml(t('cardsView'))}">${
+          viewModes.map(([value, label]) => `<button type="button" class="${state.discover.viewMode === value ? 'active' : ''}" data-action="discover-view" data-value="${value}" aria-pressed="${state.discover.viewMode === value}">${escapeHtml(label)}</button>`).join('')
+        }</div>
+      </div>
+    </details>`;
   }
 
   function renderDiscover() {
@@ -1457,6 +2188,7 @@
           </div>
           ${topicDirectoryMarkup(topics)}
         </section>
+        ${discoverAdvancedFiltersMarkup()}
       </div>
       <div class="section-heading"><h2>${escapeHtml(t('results'))}</h2><small>${results.length} ${escapeHtml(t('of'))} ${total}</small></div>
       ${cardsMarkup(results)}
@@ -1497,10 +2229,130 @@
     return `${start}${range}${event.timezone ? ` · ${event.timezone}` : ''}`;
   }
 
+  function eventReminders() {
+    const values = readJson(EVENT_REMINDERS_KEY, {});
+    return values && typeof values === 'object' && !Array.isArray(values) ? values : {};
+  }
+
+  function hasEventReminder(event) {
+    return Boolean(eventReminders()[event?.id]);
+  }
+
+  function toggleEventReminder(event) {
+    if (!event?.id) return false;
+    const reminders = eventReminders();
+    const enabled = !reminders[event.id];
+    if (enabled) {
+      reminders[event.id] = {
+        id: event.id,
+        title: event.title,
+        start: event.start,
+        city: event.city,
+        link: event.link,
+        remindAt: Math.max(Date.now(), Number(event.start) - 2 * 60 * 60 * 1000),
+        createdAt: Date.now()
+      };
+      if ('Notification' in window && Notification.permission === 'default') {
+        void Notification.requestPermission().catch(() => {});
+      }
+    } else {
+      delete reminders[event.id];
+    }
+    writeJson(EVENT_REMINDERS_KEY, reminders);
+    showToast(t(enabled ? 'reminderSet' : 'reminderRemoved'));
+    return enabled;
+  }
+
+  function checkEventReminders() {
+    const reminders = eventReminders();
+    let changed = false;
+    Object.values(reminders).forEach(reminder => {
+      if (
+        reminder?.notifiedAt
+        || Number(reminder?.remindAt) > Date.now()
+        || Number(reminder?.start) < Date.now() - 12 * 60 * 60 * 1000
+      ) return;
+      reminder.notifiedAt = Date.now();
+      changed = true;
+      const message = [reminder.title, reminder.city].filter(Boolean).join(' · ');
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification('World Revolution News', {
+            body: message,
+            icon: 'icon.svg',
+            tag: `wrn-event-${reminder.id}`
+          });
+        } catch {
+          showToast(message);
+        }
+      } else {
+        showToast(message);
+      }
+    });
+    if (changed) writeJson(EVENT_REMINDERS_KEY, reminders);
+  }
+
+  function savedEventFilters() {
+    const values = readJson(EVENT_FILTERS_KEY, []);
+    return Array.isArray(values) ? values : [];
+  }
+
+  function storeCurrentEventFilter() {
+    const record = {
+      id: `filter-${Date.now()}`,
+      label: [
+        state.eventFilter.city,
+        state.eventFilter.country,
+        state.eventFilter.category,
+        state.eventFilter.query
+      ].filter(Boolean).join(' · ') || t('events'),
+      query: state.eventFilter.query,
+      country: state.eventFilter.country,
+      city: state.eventFilter.city,
+      category: state.eventFilter.category,
+      group: state.eventFilter.group,
+      date: state.eventFilter.date,
+      radius: state.eventFilter.radius
+    };
+    writeJson(EVENT_FILTERS_KEY, [...savedEventFilters(), record].slice(-12));
+    showToast(t('filterSaved'));
+    renderEvents();
+  }
+
+  function downloadText(filename, content, type = 'text/plain;charset=utf-8') {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1200);
+  }
+
+  function eventById(id) {
+    return state.events.find(event => event.id === id) || null;
+  }
+
   function renderEvents() {
     state.cardArticles = [];
-    const countries = [...new Set(state.events.map(item => item.country).filter(Boolean))].sort();
-    const filtered = specialty.filterEvents(state.events, state.eventFilter).slice(0, 40);
+    const countries = [...new Set(
+      state.events
+        .map(item => ['XC', 'XE'].includes(item.country) ? '__international__' : item.country)
+        .filter(Boolean)
+    )].sort((a, b) => {
+      const labelA = a === '__international__' ? t('internationalUnknown') : countryLabel(a);
+      const labelB = b === '__international__' ? t('internationalUnknown') : countryLabel(b);
+      return labelA.localeCompare(labelB);
+    });
+    const cities = [...new Set(state.events.map(item => item.city).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    const categories = [...new Set(
+      state.events.flatMap(item => item.categories || []).map(release.eventCategoryGroup).filter(Boolean)
+    )].sort((a, b) => a.localeCompare(b));
+    const groups = [...new Set(state.events.flatMap(item => item.groups || []).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    const filtered = release.filterEvents(state.events, state.eventFilter).slice(0, 60);
+    const savedFilters = savedEventFilters();
     viewRoot.innerHTML = `
       ${headingMarkup(t('events'), t('events'), t('eventsText'), specialtyBack())}
       <div class="special-tabs" role="tablist" aria-label="${escapeHtml(t('events'))}">
@@ -1511,9 +2363,29 @@
         <input id="next-event-query" type="search" value="${escapeHtml(state.eventFilter.query)}" placeholder="${escapeHtml(t('eventSearch'))}" aria-label="${escapeHtml(t('eventSearch'))}">
         <label><span class="sr-only">${escapeHtml(t('eventCountry'))}</span><select id="next-event-country">
           <option value="">${escapeHtml(t('eventAllCountries'))}</option>
-          ${countries.map(country => `<option value="${escapeHtml(country)}"${country === state.eventFilter.country ? ' selected' : ''}>${escapeHtml(countryLabel(country))}</option>`).join('')}
+          ${countries.map(country => `<option value="${escapeHtml(country)}"${country === state.eventFilter.country ? ' selected' : ''}>${escapeHtml(country === '__international__' ? t('internationalUnknown') : countryLabel(country))}</option>`).join('')}
         </select></label>
       </div>
+      <div class="event-filter-grid">
+        <select id="next-event-city" aria-label="${escapeHtml(t('city'))}">${selectOptions(cities, state.eventFilter.city, '', t('allCities'))}</select>
+        <select id="next-event-category" aria-label="${escapeHtml(t('category'))}">${selectOptions(categories, state.eventFilter.category, '', t('allEventCategories'))}</select>
+        <select id="next-event-group" aria-label="${escapeHtml(t('group'))}">${selectOptions(groups, state.eventFilter.group, '', t('allGroups'))}</select>
+        <input id="next-event-date" type="date" value="${escapeHtml(state.eventFilter.date)}" aria-label="${escapeHtml(t('date'))}">
+        <select id="next-event-radius" aria-label="${escapeHtml(t('nearMe'))}"${state.eventFilter.location ? '' : ' disabled'}>
+          <option value="0">${escapeHtml(t('nearMe'))}</option>
+          ${[10, 25, 50, 100, 250].map(value => `<option value="${value}"${Number(state.eventFilter.radius) === value ? ' selected' : ''}>${value} km</option>`).join('')}
+        </select>
+      </div>
+      <div class="event-radar-tools">
+        <button type="button" data-action="event-location">${escapeHtml(state.eventFilter.location ? t('locationOff') : t('nearMe'))}</button>
+        <button type="button" data-action="event-radar">◎ ${escapeHtml(t('map'))}</button>
+        <button type="button" data-action="event-filter-save">＋ ${escapeHtml(t('saveFilter'))}</button>
+        ${savedFilters.length ? `<select id="next-event-saved-filter" aria-label="${escapeHtml(t('savedFilters'))}">
+          <option value="">${escapeHtml(t('savedFilters'))}</option>
+          ${savedFilters.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.label)}</option>`).join('')}
+        </select>` : ''}
+      </div>
+      ${state.eventFilter.location ? `<p class="release-note">${escapeHtml(t('locationPrivate'))}</p>` : ''}
       <div class="section-heading"><h2>${escapeHtml(state.eventFilter.archived ? t('eventArchive') : t('eventUpcoming'))}</h2><small>${filtered.length}</small></div>
       ${filtered.length ? `<div class="event-grid">${filtered.map(event => `
         <article class="event-card">
@@ -1525,11 +2397,91 @@
             <div><dt>${escapeHtml(t('where'))}</dt><dd>${escapeHtml([event.venue, event.city, countryLabel(event.country)].filter(Boolean).join(' · ') || '—')}</dd></div></dl>
             ${event.content ? `<p>${escapeHtml(core.excerpt(event.content, 220))}</p>` : ''}
             <div class="meta-line">${event.categories.slice(0, 3).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}</div>
+            ${event.price ? `<p><strong>${escapeHtml(event.price)}</strong></p>` : ''}
+            ${Number.isFinite(event.distanceKm) ? `<small class="event-distance">${escapeHtml(t('distance'))}: ${event.distanceKm < 10 ? event.distanceKm.toFixed(1) : Math.round(event.distanceKm)} km</small>` : ''}
             ${event.occurrenceCount > 1 ? `<small>${event.occurrenceCount} ${escapeHtml(t('eventRepeat'))}</small>` : ''}
-            ${event.link ? `<a class="small-action" href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('original'))}</a>` : ''}
+            <div class="event-card-actions">
+              ${event.link ? `<a href="${escapeHtml(event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('original'))}</a>` : ''}
+              ${release.eventMapUrl(event) ? `<a href="${escapeHtml(release.eventMapUrl(event))}" target="_blank" rel="noopener noreferrer">◎ ${escapeHtml(t('map'))}</a>` : ''}
+              ${release.eventRouteUrl(event) ? `<a href="${escapeHtml(release.eventRouteUrl(event))}" target="_blank" rel="noopener noreferrer">↗ ${escapeHtml(t('route'))}</a>` : ''}
+              <button type="button" data-action="event-calendar" data-event-id="${escapeHtml(event.id)}">＋ ${escapeHtml(t('calendar'))}</button>
+              <button type="button" class="${hasEventReminder(event) ? 'event-reminder-active' : ''}" data-action="event-reminder" data-event-id="${escapeHtml(event.id)}" aria-pressed="${hasEventReminder(event)}">◷ ${escapeHtml(t('remind'))}</button>
+            </div>
           </div>
         </article>`).join('')}</div>` : `<div class="empty-state"><strong>${escapeHtml(t('noEvents'))}</strong></div>`}
     `;
+  }
+
+  function requestEventLocation() {
+    if (state.eventFilter.location) {
+      state.eventFilter.location = null;
+      state.eventFilter.radius = 0;
+      renderEvents();
+      return;
+    }
+    if (!navigator.geolocation) {
+      showToast(t('locationUnavailable'));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(position => {
+      state.eventFilter.location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      state.eventFilter.radius = 50;
+      renderEvents();
+    }, error => {
+      console.warn('Optional event distance unavailable', error);
+      showToast(t('locationUnavailable'));
+    }, {
+      enableHighAccuracy: false,
+      maximumAge: 10 * 60 * 1000,
+      timeout: 9000
+    });
+  }
+
+  function renderEventRadar() {
+    const items = release.filterEvents(state.events, state.eventFilter).slice(0, 80);
+    const groups = new Map();
+    items.forEach(event => {
+      const key = [countryLabel(event.country), event.city || '—'].filter(Boolean).join(' · ');
+      const rows = groups.get(key) || [];
+      rows.push(event);
+      groups.set(key, rows);
+    });
+    const body = groups.size
+      ? `<p class="release-note">${escapeHtml(t('locationPrivate'))}</p>
+        <div class="event-grid">${[...groups.entries()].map(([place, rows]) => `
+          <article class="event-card"><div>
+            <span class="eyebrow">${escapeHtml(place)}</span>
+            <h3>${rows.length} ${escapeHtml(t('events'))}</h3>
+            <ol>${rows.slice(0, 8).map(event => `<li>
+              <a href="${escapeHtml(release.eventMapUrl(event) || event.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a>
+              <small>${escapeHtml(eventWhenLabel(event))}${Number.isFinite(event.distanceKm) ? ` · ${event.distanceKm.toFixed(1)} km` : ''}</small>
+            </li>`).join('')}</ol>
+          </div></article>`).join('')}</div>`
+      : `<div class="empty-state"><strong>${escapeHtml(t('noEvents'))}</strong></div>`;
+    openReleaseDialog(
+      t('events'),
+      `${t('events')} · ${t('map')}`,
+      body,
+      `<button type="button" class="primary-button" data-release-close>${escapeHtml(t('close'))}</button>`
+    );
+  }
+
+  function applySavedEventFilter(id) {
+    const record = savedEventFilters().find(item => item.id === id);
+    if (!record) return;
+    Object.assign(state.eventFilter, {
+      query: record.query || '',
+      country: record.country || '',
+      city: record.city || '',
+      category: record.category || '',
+      group: record.group || '',
+      date: record.date || '',
+      radius: state.eventFilter.location ? Number(record.radius || 0) : 0
+    });
+    renderEvents();
   }
 
   function sectionLabel(section) {
@@ -1537,16 +2489,22 @@
   }
 
   function renderLexiconSources() {
-    return `<div class="source-grid">${state.lexiconSnapshot.sources.map(source => `
-      <article class="source-card">
-        <span class="eyebrow">${escapeHtml(source.language || '')}</span>
-        <h3>${escapeHtml(source.name)}</h3>
-        <p>${escapeHtml(specialty.localized(source.description, state.language))}</p>
-        <div class="source-actions">
-          ${source.url ? `<a href="${escapeHtml(source.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('sourceOpen'))}</a>` : ''}
-          ${(source.downloads || []).map(download => `<a href="${escapeHtml(download.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(download.label)}</a>`).join('')}
-        </div>
-      </article>`).join('')}</div>`;
+    return `<div class="source-grid">${state.lexiconSnapshot.sources.map(source => {
+      const sourceUrl = core.safeHttpUrl(source.url);
+      const downloads = (source.downloads || [])
+        .map(download => ({ ...download, url: core.safeHttpUrl(download.url) }))
+        .filter(download => download.url);
+      return `
+        <article class="source-card">
+          <span class="eyebrow">${escapeHtml(source.language || '')}</span>
+          <h3>${escapeHtml(source.name)}</h3>
+          <p>${escapeHtml(specialty.localized(source.description, state.language))}</p>
+          <div class="source-actions">
+            ${sourceUrl ? `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('sourceOpen'))}</a>` : ''}
+            ${downloads.map(download => `<a href="${escapeHtml(download.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(download.label)}</a>`).join('')}
+          </div>
+        </article>`;
+    }).join('')}</div>`;
   }
 
   function renderLexicon() {
@@ -1640,6 +2598,18 @@
         ${mediaTab('zine', '📄', t('zine'))}
       </div>
       <p class="media-privacy">◉ ${escapeHtml(t('privacyMedia'))}</p>
+      ${['podcasts', 'generated', 'radio'].includes(section) ? `
+        <label class="audio-favorites-filter">
+          <input id="next-media-favorites-only" type="checkbox"${state.media.favoritesOnly ? ' checked' : ''}>
+          <span>${escapeHtml(t('favoritesOnly'))}</span>
+        </label>
+        <section class="audio-queue-panel" id="audio-queue-panel" aria-live="polite">
+          <div class="audio-queue-heading">
+            <strong id="audio-queue-title">${escapeHtml(t('audioQueue'))}</strong>
+            <button type="button" id="audio-queue-clear">${escapeHtml(t('clear'))}</button>
+          </div>
+          <div id="audio-queue-list" class="audio-queue-list"></div>
+        </section>` : ''}
       ${section === 'zine'
         ? renderZineSection()
         : section === 'podcasts'
@@ -1653,6 +2623,9 @@
     if (section === 'zine') {
       window.setTimeout(() => window.WRNZineDesigner1719?.install?.(), 0);
     }
+    if (['podcasts', 'generated', 'radio'].includes(section)) {
+      window.setTimeout(installMediaControls, 0);
+    }
   }
 
   function mediaTab(value, icon, label) {
@@ -1662,10 +2635,10 @@
 
   function mediaFilters({ categories = false } = {}) {
     const regions = [...new Set([
-      ...state.articles.map(item => item.primaryRegion),
-      ...state.podcasts.map(item => item.region),
-      ...state.radioStations.map(item => item.region),
-      ...media.INFORMATION_VIDEOS.map(item => item.region)
+      ...state.articles.map(item => media.canonicalRegion(item.primaryRegion)),
+      ...state.podcasts.map(item => media.canonicalRegion(item.region)),
+      ...state.radioStations.map(item => media.canonicalRegion(item.region)),
+      ...media.INFORMATION_VIDEOS.map(item => media.canonicalRegion(item.region))
     ].filter(Boolean))].sort((a, b) => a.localeCompare(b));
     return `<div class="media-controls${categories ? '' : ' media-controls--two'}">
       <input id="next-media-query" type="search" value="${escapeHtml(state.media.query)}" placeholder="${escapeHtml(t('mediaSearch'))}" aria-label="${escapeHtml(t('mediaSearch'))}">
@@ -1686,12 +2659,18 @@
     const query = state.media.query.toLocaleLowerCase();
     const currentVideos = state.articles.filter(article => {
       if (!core.hasVideo(article)) return false;
-      if (state.media.region !== 'all' && article.primaryRegion !== state.media.region) return false;
+      if (
+        state.media.region !== 'all'
+        && media.canonicalRegion(article.primaryRegion) !== state.media.region
+      ) return false;
       return !query || [article.title, article.intro, article.source].join(' ').toLocaleLowerCase().includes(query);
     });
     const current = core.balanceBySource(currentVideos, 24, 2);
     const information = media.INFORMATION_VIDEOS.filter(item => {
-      if (state.media.region !== 'all' && item.region !== state.media.region) return false;
+      if (
+        state.media.region !== 'all'
+        && media.canonicalRegion(item.region) !== state.media.region
+      ) return false;
       return !query || [item.title, item.source, item.summary].join(' ').toLocaleLowerCase().includes(query);
     });
     const items = state.media.videoMode === 'information' ? information : current;
@@ -1732,10 +2711,15 @@
   }
 
   function renderPodcastSection(source, generated) {
-    const filtered = media.filterItems(
+    let filtered = media.filterItems(
       (source || []).filter(item => generated || media.isRelevantPodcast(item)),
       state.media
-    ).slice(0, 40);
+    );
+    if (state.media.favoritesOnly) {
+      filtered = filtered.filter(item => window.WRNAudioTools?.isFavorite?.(item.id));
+    }
+    filtered = window.WRNAudioTools?.favoriteFirst?.(filtered) || filtered;
+    filtered = filtered.slice(0, 40);
     return `
       ${mediaFilters({ categories: true })}
       ${generated ? `<div class="notice-card"><strong>30 Tage</strong><p>${escapeHtml(t('generatedNotice'))}</p></div>` : ''}
@@ -1747,7 +2731,13 @@
             <div class="meta-line"><span>${escapeHtml(podcast.source)}</span><span>${escapeHtml(podcast.language.toUpperCase())}${podcast.region ? ` · ${escapeHtml(podcast.region)}` : ''}</span></div>
             <h3>${escapeHtml(podcast.title)}</h3>
             <p>${escapeHtml(mediaDescription(podcast.description))}</p>
-            ${podcast.audioUrl ? `<audio controls preload="none" src="${escapeHtml(podcast.audioUrl)}" aria-label="${escapeHtml(`${t('playEpisode')}: ${podcast.title}`)}"></audio>` : ''}
+            ${podcast.audioUrl ? `<div class="media-play-host" data-audio-control
+              data-audio-id="${escapeHtml(podcast.id)}"
+              data-audio-kind="${generated ? 'generated' : 'original'}"
+              data-audio-title="${escapeHtml(podcast.title)}"
+              data-audio-artist="${escapeHtml(podcast.source)}"
+              data-audio-url="${escapeHtml(podcast.audioUrl)}"
+              data-audio-artwork="${escapeHtml(podcast.artwork)}"></div>` : ''}
             <div class="media-links">
               ${podcast.episodeUrl ? `<a href="${escapeHtml(podcast.episodeUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openEpisode'))}</a>` : ''}
             </div>
@@ -1757,7 +2747,11 @@
   }
 
   function renderRadioSection() {
-    const filtered = media.filterItems(state.radioStations, state.media);
+    let filtered = media.filterItems(state.radioStations, state.media);
+    if (state.media.favoritesOnly) {
+      filtered = filtered.filter(item => window.WRNAudioTools?.isFavorite?.(item.id));
+    }
+    filtered = window.WRNAudioTools?.favoriteFirst?.(filtered) || filtered;
     return `
       ${mediaFilters()}
       <div class="section-heading"><h2>${escapeHtml(t('radio'))}</h2><small>${filtered.length} ${escapeHtml(t('stations'))}</small></div>
@@ -1769,12 +2763,43 @@
             <h3>${escapeHtml(station.name)}</h3>
             <p>${escapeHtml(station.description)}</p>
             ${station.streamUrl
-              ? `<audio controls preload="none" src="${escapeHtml(station.streamUrl)}" aria-label="${escapeHtml(`${t('listenLive')}: ${station.name}`)}"></audio>`
+              ? `<div class="media-play-host" data-audio-control
+                  data-audio-id="${escapeHtml(station.id)}"
+                  data-audio-kind="radio"
+                  data-audio-title="${escapeHtml(station.name)}"
+                  data-audio-artist="${escapeHtml([station.city, station.country].filter(Boolean).join(', '))}"
+                  data-audio-url="${escapeHtml(station.streamUrl)}"></div>`
               : `<p class="stream-fallback">${escapeHtml(t('streamFallback'))}</p>`}
             <div class="media-links">${station.website ? `<a href="${escapeHtml(station.website)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openEpisode'))}</a>` : ''}</div>
           </div>
         </article>`).join('')}</div>` : mediaEmpty(t('noMedia'))}
     `;
+  }
+
+  function installMediaControls(root = viewRoot) {
+    root.querySelectorAll('[data-audio-control]').forEach((host, index) => {
+      if (host.dataset.audioInstalled === 'true' || !host.dataset.audioUrl) return;
+      host.dataset.audioInstalled = 'true';
+      const id = host.dataset.audioId || `preview-audio-${index}`;
+      const config = {
+        id,
+        kind: host.dataset.audioKind || 'original',
+        title: host.dataset.audioTitle || 'Audio',
+        artist: host.dataset.audioArtist || '',
+        candidates: [host.dataset.audioUrl],
+        artwork: host.dataset.audioArtwork || '',
+        statusId: `next-audio-status-${id.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 100)}`,
+        showPause: true,
+        showProgress: host.dataset.audioKind !== 'radio'
+      };
+      window.appendSimpleMediaControls?.(host, config);
+      window.WRNAudioTools?.appendCardActions?.(host, config, {
+        queue: config.kind !== 'radio'
+      });
+    });
+    window.WRNAudioTools?.renderQueue?.();
+    const clear = document.getElementById('audio-queue-clear');
+    if (clear) clear.onclick = () => window.WRNAudioTools?.clearQueue?.();
   }
 
   function mediaEmpty(message) {
@@ -1805,9 +2830,15 @@
 
   function renderSaved() {
     state.cardArticles = [];
-    const saved = core.normalizeArticles(bookmarks());
+    const saved = state.savedMode === 'read'
+      ? state.articles.filter(article => isRead(article))
+      : core.normalizeArticles(bookmarks());
     viewRoot.innerHTML = `
       ${headingMarkup(t('saved'), t('saved'), t('savedIntro'))}
+      <div class="saved-tabs" role="tablist">
+        <button type="button" class="${state.savedMode === 'bookmarks' ? 'active' : ''}" data-action="saved-mode" data-value="bookmarks" aria-selected="${state.savedMode === 'bookmarks'}">☆ ${escapeHtml(t('bookmarks'))} (${bookmarks().length})</button>
+        <button type="button" class="${state.savedMode === 'read' ? 'active' : ''}" data-action="saved-mode" data-value="read" aria-selected="${state.savedMode === 'read'}">✓ ${escapeHtml(t('readArticles'))} (${readArticles().length})</button>
+      </div>
       ${saved.length
         ? cardsMarkup(saved)
         : `<div class="empty-state"><strong>${escapeHtml(t('emptySaved'))}</strong><p>${escapeHtml(t('emptySavedText'))}</p></div>`}
@@ -1926,6 +2957,10 @@
     document.getElementById('next-article-content').innerHTML = `
       ${article.image ? `<img class="article-lead-image" src="${escapeHtml(article.image)}" alt="" referrerpolicy="no-referrer">` : ''}
       <h1>${escapeHtml(translation?.title || article.title)}</h1>
+      <div class="article-reading-meter">
+        <progress id="next-article-reading-progress" value="0" max="100" aria-label="${escapeHtml(t('readProgress'))}"></progress>
+        <span id="next-article-reading-label">0 %</span>
+      </div>
       <div class="meta-line">
         <span class="tag">${escapeHtml(article.primaryRegion)}</span>
         ${article.primaryTopic ? `<span class="tag">${escapeHtml(article.primaryTopic)}</span>` : ''}
@@ -1937,7 +2972,24 @@
       ${relatedMarkup}
     `;
     if (!articleDialog.open) articleDialog.showModal();
-    document.getElementById('next-article-content').scrollTop = 0;
+    const articleContent = document.getElementById('next-article-content');
+    const savedPosition = readingPosition(article);
+    articleContent.scrollTop = 0;
+    window.requestAnimationFrame(() => {
+      if (savedPosition?.position) {
+        articleContent.scrollTop = Math.min(
+          savedPosition.position,
+          Math.max(0, articleContent.scrollHeight - articleContent.clientHeight)
+        );
+      }
+      updateArticleReadingMeter(
+        savedPosition?.progress || (isRead(article) ? 1 : release.readingProgress(
+          articleContent.scrollTop,
+          articleContent.scrollHeight,
+          articleContent.clientHeight
+        ))
+      );
+    });
   }
 
   function updateDialogSave() {
@@ -2031,6 +3083,19 @@
           <p>${escapeHtml(translation.fullContent ? translation.content : translation.intro)}</p>
         </section>
       </div>
+      <div class="translation-report">
+        <strong>${escapeHtml(t('translationProblem'))}</strong>
+        <label><span>${escapeHtml(t('reportReason'))}</span>
+          <select id="next-translation-report-reason">
+            <option value="wrong">${escapeHtml(t('reportWrong'))}</option>
+            <option value="missing">${escapeHtml(t('reportMissing'))}</option>
+            <option value="names">${escapeHtml(t('reportNames'))}</option>
+            <option value="other">${escapeHtml(t('reportOther'))}</option>
+          </select>
+        </label>
+        <label><span>${escapeHtml(t('reportNote'))}</span><textarea id="next-translation-report-note" maxlength="1000"></textarea></label>
+        <button type="button" class="secondary-button" data-action="translation-report">${escapeHtml(t('prepareEmail'))}</button>
+      </div>
     `);
   }
 
@@ -2084,6 +3149,18 @@
     articlePodcast.chunks = splitTextForArticleSpeech(
       `${translation?.title || article.title}. ${translation?.fullContent ? translation.content : (article.content || article.intro)}`
     );
+    const cloudVoices = {
+      en: [['en-US-AriaNeural', 'Aria'], ['en-US-GuyNeural', 'Guy']],
+      de: [['de-DE-KatjaNeural', 'Katja'], ['de-DE-ConradNeural', 'Conrad']],
+      es: [['es-ES-ElviraNeural', 'Elvira'], ['es-ES-AlvaroNeural', 'Álvaro']],
+      fr: [['fr-FR-DeniseNeural', 'Denise'], ['fr-FR-HenriNeural', 'Henri']],
+      it: [['it-IT-ElsaNeural', 'Elsa'], ['it-IT-DiegoNeural', 'Diego']],
+      pt: [['pt-BR-FranciscaNeural', 'Francisca'], ['pt-BR-AntonioNeural', 'Antônio']],
+      ru: [['ru-RU-SvetlanaNeural', 'Svetlana'], ['ru-RU-DmitryNeural', 'Dmitry']],
+      el: [['el-GR-AthinaNeural', 'Athina'], ['el-GR-NestorasNeural', 'Nestoras']],
+      tr: [['tr-TR-EmelNeural', 'Emel'], ['tr-TR-AhmetNeural', 'Ahmet']]
+    };
+    const voices = cloudVoices[state.language] || cloudVoices.en;
     showArticleTool(t('podcast'), `
       <p>${escapeHtml(t('deviceVoice'))}</p>
       <div class="article-podcast-settings">
@@ -2095,7 +3172,92 @@
         <button type="button" class="secondary-button" data-action="article-podcast-stop">${escapeHtml(t('stop'))}</button>
         <span id="next-article-podcast-status">${escapeHtml(t('ready'))}</span>
       </div>
+      <div class="podcast-cloud-options">
+        <strong>${escapeHtml(t('cloudPodcast'))}</strong>
+        <p>${escapeHtml(t('onlineCostNotice'))}</p>
+        <label><span>${escapeHtml(t('azureVoice'))}</span><select id="next-cloud-podcast-voice">${
+          voices.map(([value, label]) => `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`).join('')
+        }</select></label>
+        <button type="button" class="secondary-button" data-action="article-cloud-podcast" data-value="short">${escapeHtml(t('shortPodcast'))}</button>
+        <button type="button" class="secondary-button" data-action="article-cloud-podcast" data-value="full">${escapeHtml(t('fullPodcast'))}</button>
+        <span class="podcast-cloud-status" id="next-cloud-podcast-status"></span>
+      </div>
     `);
+  }
+
+  async function generateCloudPodcast(mode) {
+    const article = state.activeArticle;
+    const status = document.getElementById('next-cloud-podcast-status');
+    const buttons = [...document.querySelectorAll('[data-action="article-cloud-podcast"]')];
+    if (!article || !window.WRN_CONFIG?.proxyUrl) return;
+    buttons.forEach(button => { button.disabled = true; });
+    if (status) status.textContent = t('podcastGenerating');
+    try {
+      if (!translationFor(article)?.fullContent) {
+        await translateOpenArticle();
+        renderArticlePodcast();
+      }
+      const translated = translationFor(article);
+      const voice = document.getElementById('next-cloud-podcast-voice')?.value || '';
+      const fullText = translated?.fullContent
+        ? translated.content
+        : (article.content || article.intro);
+      const shortSummary = window.WRNSummaryCore?.summarizeText?.(fullText, {
+        title: translated?.title || article.title,
+        length: 'detailed',
+        language: state.language
+      });
+      const podcastText = mode === 'short'
+        ? [shortSummary?.lead, ...(shortSummary?.bullets || [])].filter(Boolean).join('. ')
+        : fullText;
+      const response = await fetch(window.WRN_CONFIG.proxyUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Client-Id': 'wrn-news-app-2'
+        },
+        body: JSON.stringify({
+          action: 'podcast.generate',
+          targetLanguage: state.language,
+          mode: mode === 'full' ? 'full' : 'short',
+          voice,
+          title: String(translated?.title || article.title).slice(0, 300),
+          text: String(podcastText || '').slice(0, mode === 'short' ? 12000 : 9000),
+          articleUrl: article.link,
+          source: String(article.source || '').slice(0, 120)
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || !data?.podcast) throw new Error(data?.message || `HTTP ${response.status}`);
+      const podcast = media.normalizePodcast(data.podcast);
+      if (!podcast.audioUrl) throw new Error('Missing podcast audio');
+      state.generatedPodcasts = [
+        podcast,
+        ...state.generatedPodcasts.filter(item => item.id !== podcast.id)
+      ];
+      const currentStatus = document.getElementById('next-cloud-podcast-status');
+      if (currentStatus) currentStatus.textContent = t('podcastReady');
+      const panel = document.getElementById('next-article-tool-panel');
+      const host = document.createElement('div');
+      host.className = 'media-play-host';
+      host.dataset.audioControl = '';
+      host.dataset.audioId = podcast.id;
+      host.dataset.audioKind = 'generated';
+      host.dataset.audioTitle = podcast.title;
+      host.dataset.audioArtist = podcast.source;
+      host.dataset.audioUrl = podcast.audioUrl;
+      host.dataset.audioArtwork = podcast.artwork || '';
+      panel?.querySelector('.article-tool-panel__body')?.append(host);
+      installMediaControls(panel || document);
+    } catch (error) {
+      console.warn('Cloud podcast generation failed', error);
+      const currentStatus = document.getElementById('next-cloud-podcast-status');
+      if (currentStatus) currentStatus.textContent = t('podcastFailed');
+    } finally {
+      document.querySelectorAll('[data-action="article-cloud-podcast"]').forEach(button => {
+        button.disabled = false;
+      });
+    }
   }
 
   function updateArticlePodcastUi(status) {
@@ -2185,6 +3347,23 @@
     }
   }
 
+  function reportTranslationProblem() {
+    const article = state.activeArticle;
+    if (!article) return;
+    const reason = document.getElementById('next-translation-report-reason')?.value || 'other';
+    const note = document.getElementById('next-translation-report-note')?.value.trim() || '';
+    const subject = `WRN translation report: ${article.title}`.slice(0, 180);
+    const body = [
+      `Article: ${article.title}`,
+      `Source: ${article.source}`,
+      `URL: ${article.link}`,
+      `Target language: ${state.language}`,
+      `Reason: ${reason}`,
+      `Note: ${note}`
+    ].join('\n');
+    window.location.href = `mailto:worldrevnews@brief.li?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
   async function translateOpenArticle() {
     const article = state.activeArticle;
     const button = document.getElementById('next-dialog-translate');
@@ -2197,17 +3376,34 @@
     button.setAttribute('aria-busy', 'true');
 
     try {
-      const result = await window.WRNSharedTranslations.request({
-        title: article.title,
-        text: article.content || article.intro,
-        mode: 'title_and_text'
-      });
-      if (result?.error || !result?.text) throw new Error(result?.message || 'Translation failed');
-      const parsed = core.splitTranslatedTeaser(result.text);
+      const chunks = release.splitTranslationChunks(article.content || article.intro, 5200);
+      if (!chunks.length) throw new Error('No article text');
+      let translatedTitle = article.title;
+      const translatedParts = [];
+      for (let index = 0; index < chunks.length; index += 1) {
+        button.querySelector('span:last-child').textContent =
+          `${t('translatingPart')} ${index + 1}/${chunks.length}`;
+        const result = await window.WRNSharedTranslations.request({
+          title: index === 0 ? article.title : '',
+          text: chunks[index],
+          targetLanguage: state.language,
+          mode: index === 0 ? 'title_and_text' : 'continuation'
+        });
+        if (result?.error || !result?.text) throw new Error(result?.message || 'Translation failed');
+        if (index === 0) {
+          const parsed = core.splitTranslatedTeaser(result.text);
+          const hasSeparatedTitle = Boolean(parsed.intro);
+          translatedTitle = hasSeparatedTitle ? (parsed.title || article.title) : article.title;
+          translatedParts.push(hasSeparatedTitle ? parsed.intro : result.text);
+        } else {
+          translatedParts.push(core.text(result.text));
+        }
+      }
+      const fullContent = translatedParts.filter(Boolean).join('\n\n');
       const translated = {
-        title: parsed.title || article.title,
-        intro: core.excerpt(parsed.intro || article.intro, 230),
-        content: parsed.intro || article.content || article.intro
+        title: translatedTitle,
+        intro: core.excerpt(fullContent || article.intro, 230),
+        content: fullContent || article.content || article.intro
       };
       storeTranslation(article, translated);
       document.getElementById('next-article-title').textContent = translated.title;
@@ -2216,13 +3412,14 @@
       content.querySelector('.article-intro').textContent = translated.intro;
       content.querySelector('.article-body').textContent = translated.content;
       renderTranslationComparison();
-      showToast(t('translatedTitle'));
+      showToast(t('translationComplete'));
     } catch (error) {
       console.warn('Article translation failed', error);
       showToast(t('translationFailed'));
     } finally {
       button.disabled = false;
       button.removeAttribute('aria-busy');
+      button.querySelector('span:last-child').textContent = t('translate');
     }
   }
 
@@ -2441,7 +3638,7 @@
 
   function bindEvents() {
     document.addEventListener('click', event => {
-      const target = event.target.closest('[data-view-target], [data-action], [data-filter-kind], [data-menu-close], [data-briefing-close]');
+      const target = event.target.closest('[data-view-target], [data-action], [data-filter-kind], [data-menu-close], [data-briefing-close], [data-release-close]');
       if (!target) return;
 
       if (target.hasAttribute('data-menu-close')) {
@@ -2465,6 +3662,11 @@
         state.discover[target.dataset.filterKind] = target.dataset.filterValue;
         state.discover.limit = 24;
         renderDiscover();
+        return;
+      }
+
+      if (target.hasAttribute('data-release-close')) {
+        document.getElementById('next-release-dialog')?.close();
         return;
       }
 
@@ -2501,12 +3703,22 @@
         state.discover.limit += 24;
         renderDiscover();
       }
+      if (action === 'discover-view') {
+        state.discover.viewMode = ['cards', 'compact', 'headlines'].includes(target.dataset.value)
+          ? target.dataset.value
+          : 'cards';
+        renderDiscover();
+      }
+      if (action === 'source-profile') {
+        window.WRNSourceProfiles?.open?.(target.dataset.source || article?.source || '');
+      }
       if (action === 'article-summary') renderArticleSummary();
       if (action === 'article-summary-length') renderArticleSummary(target.dataset.value || 'standard');
       if (action === 'article-translate') translateOpenArticle();
       if (action === 'article-podcast') renderArticlePodcast();
       if (action === 'article-podcast-play') toggleArticlePodcast();
       if (action === 'article-podcast-stop') stopArticlePodcast();
+      if (action === 'article-cloud-podcast') void generateCloudPodcast(target.dataset.value || 'short');
       if (action === 'article-zine' && state.activeArticle) {
         toggleZineArticle(state.activeArticle);
         updateDialogZine();
@@ -2516,7 +3728,25 @@
         updateDialogRead();
       }
       if (action === 'article-share') shareOpenArticle();
+      if (action === 'translation-report') reportTranslationProblem();
       if (action === 'article-tool-close') closeArticleTool();
+      if (action === 'about') {
+        if (menuDialog.open) menuDialog.close();
+        renderAbout();
+      }
+      if (action === 'system-status') {
+        if (menuDialog.open) menuDialog.close();
+        void renderSystemStatus();
+      }
+      if (action === 'data-control') {
+        if (menuDialog.open) menuDialog.close();
+        renderDataControl();
+      }
+      if (action === 'data-export') exportDataBackup();
+      if (action === 'data-import') document.getElementById('next-data-import-file')?.click();
+      if (action === 'data-clear-reading') void clearLocalData('reading');
+      if (action === 'data-clear-offline') void clearLocalData('offline');
+      if (action === 'data-clear-all') void clearLocalData('all');
       if (action === 'preferences') {
         if (menuDialog.open) menuDialog.close();
         openPreferences();
@@ -2525,6 +3755,26 @@
       if (action === 'event-period') {
         state.eventFilter.archived = target.dataset.value === 'archive';
         renderEvents();
+      }
+      if (action === 'event-location') requestEventLocation();
+      if (action === 'event-radar') renderEventRadar();
+      if (action === 'event-filter-save') storeCurrentEventFilter();
+      if (action === 'event-calendar') {
+        const selectedEvent = eventById(target.dataset.eventId);
+        if (selectedEvent) {
+          downloadText(
+            `wrn-event-${String(selectedEvent.id).replace(/[^a-z0-9_-]/gi, '-').slice(0, 70)}.ics`,
+            release.eventIcs(selectedEvent),
+            'text/calendar;charset=utf-8'
+          );
+        }
+      }
+      if (action === 'event-reminder') {
+        const selectedEvent = eventById(target.dataset.eventId);
+        if (selectedEvent) {
+          toggleEventReminder(selectedEvent);
+          renderEvents();
+        }
       }
       if (action === 'lexicon-section') {
         state.lexicon.section = target.dataset.value || 'all';
@@ -2566,6 +3816,10 @@
       if (action === 'zine-clear' && zineArticles().length && window.confirm(t('zineClearConfirm'))) {
         storeZineArticles([]);
         renderMedia();
+      }
+      if (action === 'saved-mode') {
+        state.savedMode = target.dataset.value === 'read' ? 'read' : 'bookmarks';
+        renderSaved();
       }
       if (action === 'briefing-open') {
         if (menuDialog.open) menuDialog.close();
@@ -2632,9 +3886,38 @@
     });
 
     viewRoot.addEventListener('change', event => {
+      const discoverMap = {
+        'next-discover-sort': 'sort',
+        'next-discover-language': 'language',
+        'next-discover-origin': 'origin',
+        'next-discover-format': 'format',
+        'next-discover-source': 'source'
+      };
+      if (discoverMap[event.target.id]) {
+        state.discover[discoverMap[event.target.id]] = event.target.value;
+        state.discover.limit = 24;
+        renderDiscover();
+        return;
+      }
       if (event.target.id === 'next-event-country') {
         state.eventFilter.country = event.target.value;
         renderEvents();
+      }
+      const eventMap = {
+        'next-event-city': 'city',
+        'next-event-category': 'category',
+        'next-event-group': 'group',
+        'next-event-date': 'date',
+        'next-event-radius': 'radius'
+      };
+      if (eventMap[event.target.id]) {
+        state.eventFilter[eventMap[event.target.id]] = eventMap[event.target.id] === 'radius'
+          ? Number(event.target.value || 0)
+          : event.target.value;
+        renderEvents();
+      }
+      if (event.target.id === 'next-event-saved-filter') {
+        applySavedEventFilter(event.target.value);
       }
       if (event.target.id === 'next-media-region') {
         state.media.region = event.target.value;
@@ -2642,6 +3925,10 @@
       }
       if (event.target.id === 'next-media-category') {
         state.media.category = event.target.value;
+        renderMedia();
+      }
+      if (event.target.id === 'next-media-favorites-only') {
+        state.media.favoritesOnly = event.target.checked;
         renderMedia();
       }
     });
@@ -2684,6 +3971,31 @@
     document.getElementById('next-preference-source-search').addEventListener('input', event => {
       filterPreferenceSources(event.target.value);
     });
+    document.getElementById('next-data-import-file').addEventListener('change', event => {
+      const file = event.target.files?.[0];
+      void importDataBackup(file);
+      event.target.value = '';
+    });
+
+    const articleContent = document.getElementById('next-article-content');
+    articleContent.addEventListener('scroll', () => {
+      if (state.activeArticle) storeReadingPosition(state.activeArticle, articleContent, false);
+    }, { passive: true });
+
+    document.getElementById('global-media-progress').addEventListener('input', event => {
+      window.WRNMediaPlayer?.seek?.(event.target.value);
+    });
+    document.getElementById('global-media-back').addEventListener('click', () => window.WRNMediaPlayer?.skip?.(-15));
+    document.getElementById('global-media-play').addEventListener('click', () => window.WRNMediaPlayer?.resume?.());
+    document.getElementById('global-media-pause').addEventListener('click', () => window.WRNMediaPlayer?.pause?.());
+    document.getElementById('global-media-forward').addEventListener('click', () => window.WRNMediaPlayer?.skip?.(30));
+    document.getElementById('global-media-stop').addEventListener('click', () => window.WRNMediaPlayer?.stop?.());
+    document.getElementById('global-media-speed').addEventListener('change', event => {
+      window.WRNAudioTools?.setPlaybackRate?.(event.target.value);
+    });
+    document.getElementById('global-media-sleep').addEventListener('change', event => {
+      window.WRNAudioTools?.setSleepTimer?.(event.target.value);
+    });
 
     articleDialog.addEventListener('click', event => {
       if (event.target === articleDialog) {
@@ -2691,7 +4003,10 @@
         articleDialog.close();
       }
     });
-    articleDialog.addEventListener('close', () => stopArticlePodcast());
+    articleDialog.addEventListener('close', () => {
+      if (state.activeArticle) storeReadingPosition(state.activeArticle, articleContent, true);
+      stopArticlePodcast();
+    });
     preferencesDialog.addEventListener('click', event => {
       if (event.target === preferencesDialog) preferencesDialog.close();
     });
@@ -2707,6 +4022,38 @@
         briefingDialog.close();
       }
     });
+    document.getElementById('next-release-dialog').addEventListener('click', event => {
+      if (event.target.id === 'next-release-dialog') event.currentTarget.close();
+    });
+    document.getElementById('fb-overlay').addEventListener('click', event => {
+      event.currentTarget.style.display = 'none';
+      window.WRNSourceProfiles?.close?.();
+    });
+    document.addEventListener('click', event => {
+      if (event.target?.id === 'source-profile-close') {
+        document.getElementById('fb-overlay').style.display = 'none';
+      }
+    });
+
+    const sourceVerificationModal = document.getElementById('wrn-source-verification-modal');
+    if (sourceVerificationModal && 'MutationObserver' in window) {
+      const repairGeneratedStatusText = () => {
+        const walker = document.createTreeWalker(sourceVerificationModal, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+        while (node) {
+          if (node.data.includes('unverÃ¤ndert')) {
+            node.data = node.data.replaceAll('unverÃ¤ndert', 'unverändert');
+          }
+          node = walker.nextNode();
+        }
+      };
+      new MutationObserver(repairGeneratedStatusText).observe(sourceVerificationModal, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+      repairGeneratedStatusText();
+    }
   }
 
   async function fetchJson(url) {
@@ -2717,13 +4064,15 @@
 
   async function loadSpecialtyData() {
     state.lexiconSnapshot = window.WRNLexicon184?.snapshot?.() || { terms: [], sources: [] };
-    const [eventsResult, prisonersResult, podcastsResult, generatedResult, radioResult, radioHealthResult] = await Promise.allSettled([
-      fetchJson('events-feed.json'),
+    const dataUrls = window.WRN_CONFIG?.dataUrls || {};
+    const [eventsResult, prisonersResult, podcastsResult, generatedResult, radioResult, radioHealthResult, sourceCatalogResult] = await Promise.allSettled([
+      fetchJson(dataUrls.events || 'events-feed.json'),
       fetchJson('prisoner-solidarity.json'),
-      fetchJson('podcasts.json'),
-      fetchJson('generated-podcasts.json'),
-      fetchJson('radio-stations.json'),
-      fetchJson('radio-health.json')
+      fetchJson(dataUrls.podcasts || 'podcasts.json'),
+      fetchJson(dataUrls.generatedPodcasts || 'generated-podcasts.json'),
+      fetchJson(dataUrls.radio || 'radio-stations.json'),
+      fetchJson(dataUrls.radioHealth || 'radio-health.json'),
+      fetchJson(dataUrls.sourceCatalog || 'sources-registry.json')
     ]);
     if (eventsResult.status === 'fulfilled') {
       state.events = specialty.collapseRecurringEvents(eventsResult.value);
@@ -2756,6 +4105,16 @@
         });
       })
       : [];
+    if (sourceCatalogResult.status === 'fulfilled') {
+      state.sourceCatalog = sourceCatalogResult.value;
+      state.sourceIndex = release.sourceIndex(sourceCatalogResult.value);
+    } else {
+      state.sourceCatalog = null;
+      state.sourceIndex = release.sourceIndex([]);
+      console.warn('Source catalog unavailable in preview', sourceCatalogResult.reason);
+    }
+    window.WRNSourceProfiles?.setArticles?.(state.articles);
+    window.WRNSourceProfiles?.loadCatalog?.(false);
   }
 
   async function loadData() {
@@ -2790,10 +4149,20 @@
     renderError();
   }
 
+  window.filterBySource = source => {
+    state.discover.source = String(source || 'all');
+    state.discover.period = 'all';
+    state.discover.limit = 24;
+    document.getElementById('fb-overlay').style.display = 'none';
+    changeView('discover');
+  };
+
   applyUiSettings();
   applyLanguage();
   bindEvents();
   loadData();
+  checkEventReminders();
+  window.setInterval(checkEventReminders, 60 * 1000);
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./news-app-2-sw.js', {

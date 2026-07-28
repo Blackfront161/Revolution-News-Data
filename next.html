@@ -8,9 +8,12 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; connect-src 'self' https://wrn-translation-cache.paghklo.workers.dev https://revolution-proxy.paghklo.workers.dev; media-src 'self' blob: https:; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <link rel="stylesheet" href="news-app-2.css?preview=13">
+  <link rel="stylesheet" href="news-app-2.css?preview=14">
+  <link rel="stylesheet" href="news-app-2-release.css?preview=1">
   <link rel="stylesheet" href="prisoner-solidarity.css?preview=3">
   <link rel="stylesheet" href="zine-designer.css?preview=2">
+  <link rel="stylesheet" href="source-verification.css?preview=1">
+  <link rel="stylesheet" href="editorial-review-ui.css?preview=1">
 </head>
 <body>
   <a class="skip-link" href="#next-main">Zum Inhalt springen</a>
@@ -176,6 +179,8 @@
           <span id="next-menu-theme-label">Farbdarstellung</span>
           <select id="next-menu-theme">
             <option value="dark">Dunkel</option>
+            <option value="oled">OLED-Schwarz</option>
+            <option value="soft">Gedämpft</option>
             <option value="light">Hell</option>
             <option value="system">Systemeinstellung</option>
             <option value="contrast">Hoher Kontrast</option>
@@ -187,6 +192,7 @@
             <option value="normal">Normal</option>
             <option value="large">Groß</option>
             <option value="xlarge">Sehr groß</option>
+            <option value="200">200 %</option>
           </select>
         </label>
         <label>
@@ -205,14 +211,16 @@
           <span aria-hidden="true">♥</span>
           <span id="next-menu-donate-label">Spenden</span>
         </button>
-        <a href="index.html#about" id="next-menu-about">Über das Projekt</a>
+        <button type="button" id="next-menu-about" data-action="about">Über das Projekt</button>
         <a href="mailto:worldrevnews@brief.li" id="next-menu-feedback">Feedback &amp; neue Quellen</a>
         <a href="privacy.html" id="next-menu-privacy">Datenschutz</a>
         <a href="index.html" data-i18n="classic">Bisherige App</a>
       </section>
       <section class="menu-diagnostics">
         <small id="next-menu-diagnostics-label">Diagnose</small>
-        <div>
+        <div class="wrn-more-admin-tools-184">
+          <button type="button" id="next-menu-status" data-action="system-status">Systemstatus</button>
+          <button type="button" id="next-menu-data" data-action="data-control">Lokale Daten</button>
           <a href="source-check.html" id="next-menu-sources">Quellenprüfung</a>
           <a href="app-check.html" id="next-menu-selftest">App-Selbsttest</a>
         </div>
@@ -254,18 +262,86 @@
     </div>
   </dialog>
 
+  <dialog class="release-dialog" id="next-release-dialog" aria-labelledby="next-release-title">
+    <div class="release-shell">
+      <header>
+        <div>
+          <small id="next-release-kicker">World Revolution News</small>
+          <h2 id="next-release-title">Information</h2>
+        </div>
+        <button type="button" class="dialog-close" data-release-close aria-label="Schließen">×</button>
+      </header>
+      <div id="next-release-content" class="release-content"></div>
+      <footer id="next-release-actions"></footer>
+    </div>
+  </dialog>
+  <input id="next-data-import-file" type="file" accept="application/json,.json" hidden>
+
+  <section id="global-media-bar" class="global-media-bar" hidden aria-live="polite">
+    <div class="global-media-info">
+      <strong id="global-media-title">Audio</strong>
+      <span id="global-media-subtitle"></span>
+      <span id="global-media-status"></span>
+    </div>
+    <div class="global-media-progress" id="global-media-progress-row">
+      <input type="range" id="global-media-progress" min="0" max="1" step="0.1" value="0" disabled aria-label="Audioposition">
+      <span id="global-media-time">0:00 / 0:00</span>
+    </div>
+    <div class="global-media-controls">
+      <button type="button" class="btn-media-skip" id="global-media-back" aria-label="15 Sekunden zurück">↶ 15s</button>
+      <button type="button" class="btn-media-play" id="global-media-play">▶ Play</button>
+      <button type="button" class="btn-media-pause" id="global-media-pause">❚❚ Pause</button>
+      <button type="button" class="btn-media-skip" id="global-media-forward" aria-label="30 Sekunden vor">30s ↷</button>
+      <button type="button" class="btn-media-stop" id="global-media-stop">■ Stop</button>
+    </div>
+    <div class="global-media-tools" aria-label="Audio-Einstellungen">
+      <label class="global-media-tool" id="global-media-speed-field">
+        <span id="global-media-speed-label">Tempo</span>
+        <select id="global-media-speed">
+          <option value="0.75">0,75×</option>
+          <option value="1" selected>1,0×</option>
+          <option value="1.25">1,25×</option>
+          <option value="1.5">1,5×</option>
+          <option value="1.75">1,75×</option>
+          <option value="2">2,0×</option>
+        </select>
+      </label>
+      <label class="global-media-tool">
+        <span id="global-media-sleep-label">Schlaf-Timer</span>
+        <select id="global-media-sleep">
+          <option value="off" selected>Aus</option>
+          <option value="15">15 Min.</option>
+          <option value="30">30 Min.</option>
+          <option value="45">45 Min.</option>
+          <option value="60">60 Min.</option>
+          <option value="end">Am Ende der Folge</option>
+        </select>
+      </label>
+      <span id="global-media-sleep-status" class="global-media-sleep-status" aria-live="polite"></span>
+    </div>
+  </section>
+  <audio id="global-media-player" preload="none" playsinline></audio>
+
+  <div class="feedback-overlay" id="fb-overlay" style="display:none"></div>
   <div class="toast" id="next-toast" role="status" aria-live="polite" hidden></div>
 
-  <script src="news-app-2-config.js?preview=3"></script>
+  <script src="news-app-2-config.js?preview=5"></script>
   <script src="news-app-2-core.js?preview=3"></script>
-  <script src="news-app-2-specialty.js?preview=3"></script>
-  <script src="news-app-2-media.js?preview=4"></script>
+  <script src="news-app-2-specialty.js?preview=5"></script>
+  <script src="news-app-2-media.js?preview=5"></script>
+  <script src="news-app-2-release.js?preview=3"></script>
   <script src="article-summary-core.js?preview=1"></script>
   <script src="shared-translation-client.js?preview=3"></script>
   <script src="stories-core.js?preview=3"></script>
   <script src="lexicon-tab.js?preview=3"></script>
   <script src="prisoner-solidarity.js?preview=3"></script>
   <script src="zine-designer.js?preview=2"></script>
-  <script src="news-app-2.js?preview=13"></script>
+  <script src="media-player.js?preview=1"></script>
+  <script src="audio-tools.js?preview=1"></script>
+  <script src="source-profiles.js?preview=1"></script>
+  <script src="source-verification.js?preview=1"></script>
+  <script src="source-health-freshness.js?preview=1"></script>
+  <script src="editorial-review-ui.js?preview=1"></script>
+  <script src="news-app-2.js?preview=21"></script>
 </body>
 </html>

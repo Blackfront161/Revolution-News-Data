@@ -1,23 +1,33 @@
 'use strict';
 
 const CACHE_PREFIX = 'wrn-news-app-2-';
-const CACHE_NAME = `${CACHE_PREFIX}v14`;
+const CACHE_NAME = `${CACHE_PREFIX}v24`;
 const SHELL = [
   './next.html',
-  './news-app-2.css?preview=13',
+  './news-app-2.css?preview=14',
+  './news-app-2-release.css?preview=1',
   './prisoner-solidarity.css?preview=3',
   './zine-designer.css?preview=2',
-  './news-app-2-config.js?preview=3',
+  './source-verification.css?preview=1',
+  './editorial-review-ui.css?preview=1',
+  './news-app-2-config.js?preview=5',
   './news-app-2-core.js?preview=3',
-  './news-app-2-specialty.js?preview=3',
-  './news-app-2-media.js?preview=4',
+  './news-app-2-specialty.js?preview=5',
+  './news-app-2-media.js?preview=5',
+  './news-app-2-release.js?preview=3',
   './article-summary-core.js?preview=1',
   './shared-translation-client.js?preview=3',
   './stories-core.js?preview=3',
   './lexicon-tab.js?preview=3',
   './prisoner-solidarity.js?preview=3',
   './zine-designer.js?preview=2',
-  './news-app-2.js?preview=13',
+  './media-player.js?preview=1',
+  './audio-tools.js?preview=1',
+  './source-profiles.js?preview=1',
+  './source-verification.js?preview=1',
+  './source-health-freshness.js?preview=1',
+  './editorial-review-ui.js?preview=1',
+  './news-app-2.js?preview=21',
   './wrn-logo-preview-transparent.png',
   './wrn-logo.webp'
 ];
@@ -29,7 +39,12 @@ const DATA_PATHS = new Set([
   new URL('./podcasts.json', self.location.href).pathname,
   new URL('./generated-podcasts.json', self.location.href).pathname,
   new URL('./radio-stations.json', self.location.href).pathname,
-  new URL('./radio-health.json', self.location.href).pathname
+  new URL('./radio-health.json', self.location.href).pathname,
+  new URL('./sources-registry.json', self.location.href).pathname,
+  new URL('./source-health.json', self.location.href).pathname,
+  new URL('./editorial-review.json', self.location.href).pathname,
+  new URL('./audio-health.json', self.location.href).pathname,
+  new URL('./podcast-health.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {
@@ -40,6 +55,7 @@ self.addEventListener('install', event => {
       const response = await fetch(request);
       if (response.ok) await cache.put(request, response);
     }));
+    await self.skipWaiting();
   })());
 });
 

@@ -19,6 +19,9 @@ assert.strictEqual(political.category, 'politics');
 assert.strictEqual(political.description, 'A discussion about writing to political prisoners.');
 assert.strictEqual(media.isRelevantPodcast(political), true);
 assert.strictEqual(media.safeUrl('javascript:alert(1)'), '');
+assert.strictEqual(media.canonicalRegion('Europa'), 'Europe');
+assert.strictEqual(media.canonicalRegion('DACH'), 'Europe');
+assert.strictEqual(media.canonicalRegion('Lateinamerika'), 'Latin America');
 
 const radio = media.normalizeRadio({
   id: 'station',
