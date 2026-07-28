@@ -1,26 +1,31 @@
 'use strict';
 
 const CACHE_PREFIX = 'wrn-news-app-2-';
-const CACHE_NAME = `${CACHE_PREFIX}v4`;
+const CACHE_NAME = `${CACHE_PREFIX}v5`;
 const SHELL = [
   './next.html',
-  './news-app-2.css?preview=3',
+  './news-app-2.css?preview=4',
   './prisoner-solidarity.css?preview=3',
   './news-app-2-config.js?preview=3',
   './news-app-2-core.js?preview=3',
   './news-app-2-specialty.js?preview=3',
+  './news-app-2-media.js?preview=4',
   './shared-translation-client.js?preview=3',
   './stories-core.js?preview=3',
   './lexicon-tab.js?preview=3',
   './prisoner-solidarity.js?preview=3',
-  './news-app-2.js?preview=3',
+  './news-app-2.js?preview=4',
   './wrn-logo.webp'
 ];
 const DATA_PATHS = new Set([
   new URL('./news-feed.json', self.location.href).pathname,
   new URL('./news.json', self.location.href).pathname,
   new URL('./events-feed.json', self.location.href).pathname,
-  new URL('./prisoner-solidarity.json', self.location.href).pathname
+  new URL('./prisoner-solidarity.json', self.location.href).pathname,
+  new URL('./podcasts.json', self.location.href).pathname,
+  new URL('./generated-podcasts.json', self.location.href).pathname,
+  new URL('./radio-stations.json', self.location.href).pathname,
+  new URL('./radio-health.json', self.location.href).pathname
 ]);
 
 self.addEventListener('install', event => {

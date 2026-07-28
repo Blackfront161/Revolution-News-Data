@@ -4,7 +4,8 @@
 (() => {
   const core = window.WRNNewsApp2Core;
   const specialty = window.WRNNewsApp2Specialty;
-  if (!core || !specialty || window.__wrnNewsApp2Loaded) return;
+  const media = window.WRNNewsApp2Media;
+  if (!core || !specialty || !media || window.__wrnNewsApp2Loaded) return;
   window.__wrnNewsApp2Loaded = true;
 
   const PREFS_KEY = 'wrn_next_preferences_v1';
@@ -356,6 +357,90 @@
     }
   };
 
+  const MEDIA_COPY = {
+    de: {
+      current:'Aktuell', information:'Information', politics:'Politik', society:'Gesellschaft', culture:'Kultur',
+      allCategories:'Alle Kategorien', allRegions:'Alle Regionen', mediaSearch:'Medien durchsuchen',
+      privacyMedia:'Datenschutz: Nichts startet automatisch. Externe Medien werden erst nach deiner Auswahl geladen.',
+      playEpisode:'Folge abspielen', openEpisode:'Original öffnen', openChannel:'Kanal öffnen',
+      noMedia:'Keine passenden Medien gefunden.', noGenerated:'Noch keine erzeugten Podcasts gespeichert.',
+      generatedNotice:'Erzeugte Podcasts bleiben höchstens 30 Tage gespeichert.', station:'Sender', listenLive:'Live hören',
+      streamFallback:'Kein geprüfter Browser-Stream. Öffne die Senderseite.', episodes:'Folgen', stations:'Sender'
+    },
+    en: {
+      current:'Current', information:'Information', politics:'Politics', society:'Society', culture:'Culture',
+      allCategories:'All categories', allRegions:'All regions', mediaSearch:'Search media',
+      privacyMedia:'Privacy: nothing starts automatically. External media load only after you choose them.',
+      playEpisode:'Play episode', openEpisode:'Open original', openChannel:'Open channel',
+      noMedia:'No matching media found.', noGenerated:'No generated podcasts are stored yet.',
+      generatedNotice:'Generated podcasts are stored for no longer than 30 days.', station:'Station', listenLive:'Listen live',
+      streamFallback:'No verified browser stream. Open the station website.', episodes:'Episodes', stations:'Stations'
+    },
+    es: {
+      current:'Actualidad', information:'Información', politics:'Política', society:'Sociedad', culture:'Cultura',
+      allCategories:'Todas las categorías', allRegions:'Todas las regiones', mediaSearch:'Buscar medios',
+      privacyMedia:'Privacidad: nada se inicia automáticamente. Los medios externos se cargan solo tras elegirlos.',
+      playEpisode:'Reproducir episodio', openEpisode:'Abrir original', openChannel:'Abrir canal',
+      noMedia:'No se encontraron medios.', noGenerated:'Aún no hay pódcasts generados guardados.',
+      generatedNotice:'Los pódcasts generados se guardan como máximo 30 días.', station:'Emisora', listenLive:'Escuchar en directo',
+      streamFallback:'No hay un flujo web verificado. Abre la web de la emisora.', episodes:'Episodios', stations:'Emisoras'
+    },
+    fr: {
+      current:'Actualité', information:'Information', politics:'Politique', society:'Société', culture:'Culture',
+      allCategories:'Toutes les catégories', allRegions:'Toutes les régions', mediaSearch:'Rechercher des médias',
+      privacyMedia:'Confidentialité : rien ne démarre automatiquement. Les médias externes ne chargent qu’après votre choix.',
+      playEpisode:'Lire l’épisode', openEpisode:'Ouvrir l’original', openChannel:'Ouvrir la chaîne',
+      noMedia:'Aucun média correspondant.', noGenerated:'Aucun podcast généré n’est encore enregistré.',
+      generatedNotice:'Les podcasts générés sont conservés au maximum 30 jours.', station:'Station', listenLive:'Écouter en direct',
+      streamFallback:'Aucun flux web vérifié. Ouvrez le site de la station.', episodes:'Épisodes', stations:'Stations'
+    },
+    it: {
+      current:'Attualità', information:'Informazione', politics:'Politica', society:'Società', culture:'Cultura',
+      allCategories:'Tutte le categorie', allRegions:'Tutte le regioni', mediaSearch:'Cerca media',
+      privacyMedia:'Privacy: nulla parte automaticamente. I media esterni si caricano solo dopo la scelta.',
+      playEpisode:'Riproduci episodio', openEpisode:'Apri originale', openChannel:'Apri canale',
+      noMedia:'Nessun media corrispondente.', noGenerated:'Nessun podcast generato è ancora salvato.',
+      generatedNotice:'I podcast generati restano salvati al massimo 30 giorni.', station:'Emittente', listenLive:'Ascolta dal vivo',
+      streamFallback:'Nessuno stream web verificato. Apri il sito dell’emittente.', episodes:'Episodi', stations:'Emittenti'
+    },
+    pt: {
+      current:'Atualidade', information:'Informação', politics:'Política', society:'Sociedade', culture:'Cultura',
+      allCategories:'Todas as categorias', allRegions:'Todas as regiões', mediaSearch:'Pesquisar media',
+      privacyMedia:'Privacidade: nada começa automaticamente. Os media externos só carregam após a escolha.',
+      playEpisode:'Reproduzir episódio', openEpisode:'Abrir original', openChannel:'Abrir canal',
+      noMedia:'Nenhum media correspondente.', noGenerated:'Ainda não há podcasts gerados guardados.',
+      generatedNotice:'Os podcasts gerados ficam guardados no máximo 30 dias.', station:'Estação', listenLive:'Ouvir em direto',
+      streamFallback:'Sem transmissão web verificada. Abre o site da estação.', episodes:'Episódios', stations:'Estações'
+    },
+    ru: {
+      current:'Актуальное', information:'Справочные', politics:'Политика', society:'Общество', culture:'Культура',
+      allCategories:'Все категории', allRegions:'Все регионы', mediaSearch:'Поиск медиа',
+      privacyMedia:'Конфиденциальность: ничего не запускается автоматически. Внешние медиа загружаются только после выбора.',
+      playEpisode:'Воспроизвести', openEpisode:'Открыть оригинал', openChannel:'Открыть канал',
+      noMedia:'Подходящих медиа нет.', noGenerated:'Созданные подкасты пока не сохранены.',
+      generatedNotice:'Созданные подкасты хранятся не более 30 дней.', station:'Станция', listenLive:'Слушать эфир',
+      streamFallback:'Нет проверенного веб-потока. Откройте сайт станции.', episodes:'Выпуски', stations:'Станции'
+    },
+    el: {
+      current:'Τρέχοντα', information:'Πληροφορίες', politics:'Πολιτική', society:'Κοινωνία', culture:'Πολιτισμός',
+      allCategories:'Όλες οι κατηγορίες', allRegions:'Όλες οι περιοχές', mediaSearch:'Αναζήτηση πολυμέσων',
+      privacyMedia:'Απόρρητο: τίποτα δεν ξεκινά αυτόματα. Τα εξωτερικά μέσα φορτώνουν μόνο μετά την επιλογή.',
+      playEpisode:'Αναπαραγωγή', openEpisode:'Άνοιγμα πρωτοτύπου', openChannel:'Άνοιγμα καναλιού',
+      noMedia:'Δεν βρέθηκαν πολυμέσα.', noGenerated:'Δεν υπάρχουν ακόμη αποθηκευμένα podcast.',
+      generatedNotice:'Τα δημιουργημένα podcast διατηρούνται έως 30 ημέρες.', station:'Σταθμός', listenLive:'Ζωντανή ακρόαση',
+      streamFallback:'Δεν υπάρχει επαληθευμένη ροή. Ανοίξτε τη σελίδα του σταθμού.', episodes:'Επεισόδια', stations:'Σταθμοί'
+    },
+    tr: {
+      current:'Güncel', information:'Bilgi', politics:'Siyaset', society:'Toplum', culture:'Kültür',
+      allCategories:'Tüm kategoriler', allRegions:'Tüm bölgeler', mediaSearch:'Medya ara',
+      privacyMedia:'Gizlilik: hiçbir şey otomatik başlamaz. Harici medya yalnızca seçiminizden sonra yüklenir.',
+      playEpisode:'Bölümü oynat', openEpisode:'Orijinali aç', openChannel:'Kanalı aç',
+      noMedia:'Uygun medya bulunamadı.', noGenerated:'Henüz oluşturulmuş podcast kaydedilmedi.',
+      generatedNotice:'Oluşturulan podcastler en fazla 30 gün saklanır.', station:'İstasyon', listenLive:'Canlı dinle',
+      streamFallback:'Doğrulanmış web yayını yok. İstasyon sitesini açın.', episodes:'Bölümler', stations:'İstasyonlar'
+    }
+  };
+
   const state = {
     articles: [],
     facets: { regions: [], topics: [], sources: [] },
@@ -371,6 +456,10 @@
     lexiconSnapshot: { terms: [], sources: [] },
     developmentWatch: readJson(STORY_WATCH_KEY, []),
     developmentsWatchedOnly: false,
+    podcasts: [],
+    generatedPodcasts: [],
+    radioStations: [],
+    media: { section: 'video', videoMode: 'current', query: '', region: 'all', category: 'all' },
     cardArticles: [],
     activeArticle: null
   };
@@ -389,7 +478,9 @@
   }
 
   function t(key) {
-    return SPECIAL_COPY[state.language]?.[key]
+    return MEDIA_COPY[state.language]?.[key]
+      || MEDIA_COPY.en[key]
+      || SPECIAL_COPY[state.language]?.[key]
       || SPECIAL_COPY.en[key]
       || COPY[state.language]?.[key]
       || COPY.en[key]
@@ -840,22 +931,150 @@
 
   function renderMedia() {
     state.cardArticles = [];
-    const videos = core.balanceBySource(state.articles.filter(core.hasVideo), 8, 2);
+    const section = state.media.section;
     viewRoot.innerHTML = `
       ${headingMarkup(t('media'), t('media'), t('mediaIntro'))}
-      <section class="media-grid">
-        ${mediaCard('▶', t('video'), t('videoText'))}
-        ${mediaCard('◉', t('podcasts'), t('podcastsText'))}
-        ${mediaCard('◌', t('generated'), t('generatedText'))}
-        ${mediaCard('⌁', t('radio'), t('radioText'))}
-      </section>
-      <div class="section-heading"><h2>${escapeHtml(t('video'))}</h2><small>${videos.length}</small></div>
-      ${cardsMarkup(videos)}
+      <div class="media-section-tabs" role="tablist" aria-label="${escapeHtml(t('media'))}">
+        ${mediaTab('video', '▶', t('video'))}
+        ${mediaTab('podcasts', '◉', t('podcasts'))}
+        ${mediaTab('generated', '◌', t('generated'))}
+        ${mediaTab('radio', '⌁', t('radio'))}
+      </div>
+      <p class="media-privacy">◉ ${escapeHtml(t('privacyMedia'))}</p>
+      ${section === 'podcasts'
+        ? renderPodcastSection(state.podcasts, false)
+        : section === 'generated'
+          ? renderPodcastSection(state.generatedPodcasts, true)
+          : section === 'radio'
+            ? renderRadioSection()
+            : renderVideoSection()}
     `;
   }
 
-  function mediaCard(icon, title, description) {
-    return `<a class="media-card" href="index.html"><span aria-hidden="true">${escapeHtml(icon)}</span><strong>${escapeHtml(title)}</strong><p>${escapeHtml(description)}</p><small>${escapeHtml(t('openClassic'))} →</small></a>`;
+  function mediaTab(value, icon, label) {
+    const active = state.media.section === value;
+    return `<button type="button" role="tab" aria-selected="${active}" class="${active ? 'active' : ''}" data-action="media-section" data-value="${escapeHtml(value)}"><span aria-hidden="true">${escapeHtml(icon)}</span><strong>${escapeHtml(label)}</strong></button>`;
+  }
+
+  function mediaFilters({ categories = false } = {}) {
+    const regions = [...new Set([
+      ...state.articles.map(item => item.primaryRegion),
+      ...state.podcasts.map(item => item.region),
+      ...state.radioStations.map(item => item.region),
+      ...media.INFORMATION_VIDEOS.map(item => item.region)
+    ].filter(Boolean))].sort((a, b) => a.localeCompare(b));
+    return `<div class="media-controls${categories ? '' : ' media-controls--two'}">
+      <input id="next-media-query" type="search" value="${escapeHtml(state.media.query)}" placeholder="${escapeHtml(t('mediaSearch'))}" aria-label="${escapeHtml(t('mediaSearch'))}">
+      ${categories ? `<select id="next-media-category" aria-label="${escapeHtml(t('allCategories'))}">
+        <option value="all"${state.media.category === 'all' ? ' selected' : ''}>${escapeHtml(t('allCategories'))}</option>
+        <option value="politics"${state.media.category === 'politics' ? ' selected' : ''}>${escapeHtml(t('politics'))}</option>
+        <option value="society"${state.media.category === 'society' ? ' selected' : ''}>${escapeHtml(t('society'))}</option>
+        <option value="culture"${state.media.category === 'culture' ? ' selected' : ''}>${escapeHtml(t('culture'))}</option>
+      </select>` : ''}
+      <select id="next-media-region" aria-label="${escapeHtml(t('allRegions'))}">
+        <option value="all"${state.media.region === 'all' ? ' selected' : ''}>${escapeHtml(t('allRegions'))}</option>
+        ${regions.map(region => `<option value="${escapeHtml(region)}"${state.media.region === region ? ' selected' : ''}>${escapeHtml(region)}</option>`).join('')}
+      </select>
+    </div>`;
+  }
+
+  function renderVideoSection() {
+    const query = state.media.query.toLocaleLowerCase();
+    const currentVideos = state.articles.filter(article => {
+      if (!core.hasVideo(article)) return false;
+      if (state.media.region !== 'all' && article.primaryRegion !== state.media.region) return false;
+      return !query || [article.title, article.intro, article.source].join(' ').toLocaleLowerCase().includes(query);
+    });
+    const current = core.balanceBySource(currentVideos, 24, 2);
+    const information = media.INFORMATION_VIDEOS.filter(item => {
+      if (state.media.region !== 'all' && item.region !== state.media.region) return false;
+      return !query || [item.title, item.source, item.summary].join(' ').toLocaleLowerCase().includes(query);
+    });
+    const items = state.media.videoMode === 'information' ? information : current;
+    return `
+      <div class="special-tabs media-mode-tabs">
+        <button type="button" class="filter-chip${state.media.videoMode === 'current' ? ' active' : ''}" data-action="media-video-mode" data-value="current">${escapeHtml(t('current'))}</button>
+        <button type="button" class="filter-chip${state.media.videoMode === 'information' ? ' active' : ''}" data-action="media-video-mode" data-value="information">${escapeHtml(t('information'))}</button>
+      </div>
+      ${mediaFilters()}
+      <div class="section-heading"><h2>${escapeHtml(state.media.videoMode === 'information' ? t('information') : t('current'))}</h2><small>${items.length}</small></div>
+      ${state.media.videoMode === 'information'
+        ? informationVideoMarkup(information)
+        : cardsMarkup(current)}
+    `;
+  }
+
+  function informationVideoMarkup(items) {
+    if (!items.length) return mediaEmpty(t('noMedia'));
+    return `<div class="media-results">${items.map(item => `
+      <article class="media-result-card">
+        <div class="media-result-card__icon" aria-hidden="true">▶</div>
+        <div>
+          <div class="meta-line"><span>${escapeHtml(item.source)}</span><span>${escapeHtml(item.language)} · ${escapeHtml(item.region)}</span></div>
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${escapeHtml(item.summary)}</p>
+          <div class="media-links">
+            <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openEpisode'))}</a>
+            <a href="${escapeHtml(item.channelUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openChannel'))}</a>
+          </div>
+        </div>
+      </article>`).join('')}</div>`;
+  }
+
+  function mediaDescription(value) {
+    const clean = core.text(value);
+    const firstSentence = clean.match(/^(.{20,260}?[.!?])(?:\s|$)/)?.[1];
+    return firstSentence || core.excerpt(clean, 220);
+  }
+
+  function renderPodcastSection(source, generated) {
+    const filtered = media.filterItems(
+      (source || []).filter(item => generated || media.isRelevantPodcast(item)),
+      state.media
+    ).slice(0, 40);
+    return `
+      ${mediaFilters({ categories: true })}
+      ${generated ? `<div class="notice-card"><strong>30 Tage</strong><p>${escapeHtml(t('generatedNotice'))}</p></div>` : ''}
+      <div class="section-heading"><h2>${escapeHtml(generated ? t('generated') : t('podcasts'))}</h2><small>${filtered.length} ${escapeHtml(t('episodes'))}</small></div>
+      ${filtered.length ? `<div class="media-results">${filtered.map(podcast => `
+        <article class="media-result-card podcast-card">
+          ${podcast.artwork ? `<img src="${escapeHtml(podcast.artwork)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : `<div class="media-result-card__icon" aria-hidden="true">◉</div>`}
+          <div>
+            <div class="meta-line"><span>${escapeHtml(podcast.source)}</span><span>${escapeHtml(podcast.language.toUpperCase())}${podcast.region ? ` · ${escapeHtml(podcast.region)}` : ''}</span></div>
+            <h3>${escapeHtml(podcast.title)}</h3>
+            <p>${escapeHtml(mediaDescription(podcast.description))}</p>
+            ${podcast.audioUrl ? `<audio controls preload="none" src="${escapeHtml(podcast.audioUrl)}" aria-label="${escapeHtml(`${t('playEpisode')}: ${podcast.title}`)}"></audio>` : ''}
+            <div class="media-links">
+              ${podcast.episodeUrl ? `<a href="${escapeHtml(podcast.episodeUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openEpisode'))}</a>` : ''}
+            </div>
+          </div>
+        </article>`).join('')}</div>` : mediaEmpty(generated ? t('noGenerated') : t('noMedia'))}
+    `;
+  }
+
+  function renderRadioSection() {
+    const filtered = media.filterItems(state.radioStations, state.media);
+    return `
+      ${mediaFilters()}
+      <div class="section-heading"><h2>${escapeHtml(t('radio'))}</h2><small>${filtered.length} ${escapeHtml(t('stations'))}</small></div>
+      ${filtered.length ? `<div class="media-results">${filtered.map(station => `
+        <article class="media-result-card radio-card">
+          <div class="media-result-card__icon" aria-hidden="true">⌁</div>
+          <div>
+            <div class="meta-line"><span>${escapeHtml(t('station'))}</span><span>${escapeHtml([station.city, station.country].filter(Boolean).join(', '))}</span></div>
+            <h3>${escapeHtml(station.name)}</h3>
+            <p>${escapeHtml(station.description)}</p>
+            ${station.streamUrl
+              ? `<audio controls preload="none" src="${escapeHtml(station.streamUrl)}" aria-label="${escapeHtml(`${t('listenLive')}: ${station.name}`)}"></audio>`
+              : `<p class="stream-fallback">${escapeHtml(t('streamFallback'))}</p>`}
+            <div class="media-links">${station.website ? `<a href="${escapeHtml(station.website)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t('openEpisode'))}</a>` : ''}</div>
+          </div>
+        </article>`).join('')}</div>` : mediaEmpty(t('noMedia'))}
+    `;
+  }
+
+  function mediaEmpty(message) {
+    return `<div class="empty-state compact"><strong>${escapeHtml(message)}</strong></div>`;
   }
 
   function renderSaved() {
@@ -1115,6 +1334,17 @@
         writeJson(STORY_WATCH_KEY, state.developmentWatch);
         renderDevelopments();
       }
+      if (action === 'media-section') {
+        state.media.section = target.dataset.value || 'video';
+        state.media.query = '';
+        state.media.region = 'all';
+        state.media.category = 'all';
+        renderMedia();
+      }
+      if (action === 'media-video-mode') {
+        state.media.videoMode = target.dataset.value === 'information' ? 'information' : 'current';
+        renderMedia();
+      }
     });
 
     document.getElementById('next-search-toggle').addEventListener('click', event => {
@@ -1134,14 +1364,16 @@
 
     viewRoot.addEventListener('input', event => {
       const id = event.target.id;
-      if (!['next-discover-query', 'next-event-query', 'next-lexicon-query'].includes(id)) return;
+      if (!['next-discover-query', 'next-event-query', 'next-lexicon-query', 'next-media-query'].includes(id)) return;
       if (id === 'next-discover-query') state.discover.query = event.target.value;
       if (id === 'next-event-query') state.eventFilter.query = event.target.value;
       if (id === 'next-lexicon-query') state.lexicon.query = event.target.value;
+      if (id === 'next-media-query') state.media.query = event.target.value;
       window.clearTimeout(bindEvents.searchTimer);
       bindEvents.searchTimer = window.setTimeout(() => {
         if (id === 'next-event-query') renderEvents();
         else if (id === 'next-lexicon-query') renderLexicon();
+        else if (id === 'next-media-query') renderMedia();
         else renderDiscover();
         const replacement = document.getElementById(id);
         replacement?.focus();
@@ -1150,10 +1382,26 @@
     });
 
     viewRoot.addEventListener('change', event => {
-      if (event.target.id !== 'next-event-country') return;
-      state.eventFilter.country = event.target.value;
-      renderEvents();
+      if (event.target.id === 'next-event-country') {
+        state.eventFilter.country = event.target.value;
+        renderEvents();
+      }
+      if (event.target.id === 'next-media-region') {
+        state.media.region = event.target.value;
+        renderMedia();
+      }
+      if (event.target.id === 'next-media-category') {
+        state.media.category = event.target.value;
+        renderMedia();
+      }
     });
+
+    viewRoot.addEventListener('play', event => {
+      if (!(event.target instanceof HTMLMediaElement)) return;
+      viewRoot.querySelectorAll('audio, video').forEach(player => {
+        if (player !== event.target && !player.paused) player.pause();
+      });
+    }, true);
 
     languageSelect.addEventListener('change', () => {
       state.language = supportedLanguage(languageSelect.value);
@@ -1192,9 +1440,13 @@
 
   async function loadSpecialtyData() {
     state.lexiconSnapshot = window.WRNLexicon184?.snapshot?.() || { terms: [], sources: [] };
-    const [eventsResult, prisonersResult] = await Promise.allSettled([
+    const [eventsResult, prisonersResult, podcastsResult, generatedResult, radioResult, radioHealthResult] = await Promise.allSettled([
       fetchJson('events-feed.json'),
-      fetchJson('prisoner-solidarity.json')
+      fetchJson('prisoner-solidarity.json'),
+      fetchJson('podcasts.json'),
+      fetchJson('generated-podcasts.json'),
+      fetchJson('radio-stations.json'),
+      fetchJson('radio-health.json')
     ]);
     if (eventsResult.status === 'fulfilled') {
       state.events = specialty.collapseRecurringEvents(eventsResult.value);
@@ -1208,6 +1460,25 @@
       console.warn('Prisoner solidarity data unavailable in preview', prisonersResult.reason);
       state.prisonerData = { profiles: [], sources: [] };
     }
+    state.podcasts = podcastsResult.status === 'fulfilled' && Array.isArray(podcastsResult.value)
+      ? podcastsResult.value.map(media.normalizePodcast).sort((a, b) => b.timestamp - a.timestamp)
+      : [];
+    state.generatedPodcasts = generatedResult.status === 'fulfilled' && Array.isArray(generatedResult.value)
+      ? generatedResult.value.map(media.normalizePodcast).sort((a, b) => b.timestamp - a.timestamp)
+      : [];
+    const radioHealth = radioHealthResult.status === 'fulfilled' && radioHealthResult.value
+      ? radioHealthResult.value
+      : {};
+    state.radioStations = radioResult.status === 'fulfilled' && Array.isArray(radioResult.value)
+      ? radioResult.value.map(item => {
+        const health = radioHealth[item.id] || {};
+        return media.normalizeRadio({
+          ...item,
+          streamCandidates: health.ok && health.workingStream ? [health.workingStream] : [],
+          healthStatus: health.status || item.healthStatus
+        });
+      })
+      : [];
   }
 
   async function loadData() {

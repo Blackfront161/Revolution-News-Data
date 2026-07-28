@@ -19,7 +19,9 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - höchstens zwei Beiträge derselben Quelle unter den ersten zehn
 - lokale Interessenwahl nach Regionen und Themen
 - Suche und Filter mit bis zu 40 Treffern nach aktiver Auswahl
-- Video-, Podcast- und Radio-Einstiege
+- nativer Medienbereich mit getrennten Ansichten für aktuelle und informative Videos, Original-Podcasts, erzeugte Podcasts und Live-Radio
+- Podcast-Suche sowie Filter nach Region und den Kategorien Politik, Gesellschaft und Kultur
+- datensparsames Audio: Podcasts und Radios starten niemals automatisch; defekte Streams verweisen auf die Originalseite
 - kompatible gespeicherte Artikel über den bestehenden Schlüssel `wrn_bookmarks`
 - Übersetzen direkt in der Artikelübersicht für Titel und Einleitung
 - Artikelansicht mit Übersetzen, Speichern und Original öffnen
