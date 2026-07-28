@@ -9,6 +9,7 @@ def test_parallel_preview_assets_exist():
         "next.html", "news-app-2.css", "news-app-2.js", "news-app-2-core.js",
         "news-app-2-config.js", "news-app-2-specialty.js", "news-app-2-media.js",
         "news-app-2-release.js", "news-app-2-release.css",
+        "news-app-2-release-checklist.html", "news-app-2-release-checklist.css",
         "news-app-2-sw.js", "wrn-logo-preview-transparent.png"
     ):
         path = ROOT / name
@@ -219,6 +220,24 @@ def test_release_candidate_restores_existing_live_capabilities():
     assert "unverÃ¤ndert', 'unverändert" in script
 
 
+def test_release_checklist_is_readable_and_preview_only():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    checklist = (ROOT / "news-app-2-release-checklist.html").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2-release-checklist.css").read_text(encoding="utf-8")
+    worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
+    assert 'id="next-menu-release"' in html
+    assert 'href="news-app-2-release-checklist.html"' in html
+    assert "news-app-2-release-checklist.html" in worker
+    assert "news-app-2-release-checklist.css" in worker
+    assert 'class="release-checklist-page"' in checklist
+    assert "Bestanden" in checklist
+    assert "Integriert" in checklist
+    assert "Noch gesperrt" in checklist
+    assert "width: min(1040px, calc(100% - 32px));" in style
+    assert "@media (max-width: 720px)" in style
+    assert "<table" not in checklist
+
+
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_preview_server_can_be_exposed_to_private_lan()
@@ -233,4 +252,5 @@ if __name__ == "__main__":
     test_preview_header_cards_and_mobile_navigation_are_polished()
     test_preview_logo_is_transparent_and_donation_flow_matches_live_safety()
     test_release_candidate_restores_existing_live_capabilities()
+    test_release_checklist_is_readable_and_preview_only()
     print("News App 2 parallel preview assets: OK")

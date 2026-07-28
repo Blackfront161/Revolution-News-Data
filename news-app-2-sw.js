@@ -1,9 +1,11 @@
 'use strict';
 
 const CACHE_PREFIX = 'wrn-news-app-2-';
-const CACHE_NAME = `${CACHE_PREFIX}v24`;
+const CACHE_NAME = `${CACHE_PREFIX}v25`;
 const SHELL = [
   './next.html',
+  './news-app-2-release-checklist.html',
+  './news-app-2-release-checklist.css?preview=1',
   './news-app-2.css?preview=14',
   './news-app-2-release.css?preview=1',
   './prisoner-solidarity.css?preview=3',
@@ -27,7 +29,7 @@ const SHELL = [
   './source-verification.js?preview=1',
   './source-health-freshness.js?preview=1',
   './editorial-review-ui.js?preview=1',
-  './news-app-2.js?preview=21',
+  './news-app-2.js?preview=22',
   './wrn-logo-preview-transparent.png',
   './wrn-logo.webp'
 ];

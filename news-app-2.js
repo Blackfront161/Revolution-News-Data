@@ -589,7 +589,7 @@
   const UI_COPY = {
     de: {
       menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
-      sourceCheck:'Quellenbericht', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
+      sourceCheck:'Quellenbericht', selfTest:'App-Selbsttest', releaseChecklist:'Release-Checkliste', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
       donate:'Spenden', donateKicker:'Freiwillige Unterstützung', donateTitle:'Projekt unterstützen',
       donateBody:'Dieses unabhängige Projekt kann freiwillig unterstützt werden.',
       donateWarning:'Wenn du fortfährst, verlässt du die App und öffnest PayPal.', donatePaypal:'Weiter zu PayPal',
@@ -614,7 +614,7 @@
     },
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
-      sourceCheck:'Source report', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
+      sourceCheck:'Source report', selfTest:'App self-test', releaseChecklist:'Release checklist', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
       donate:'Donate', donateKicker:'Voluntary support', donateTitle:'Support the project',
       donateBody:'You can voluntarily support this independent project.',
       donateWarning:'If you continue, you will leave the app and open PayPal.', donatePaypal:'Continue to PayPal',
@@ -639,7 +639,7 @@
     },
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
-      sourceCheck:'Informe de fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
+      sourceCheck:'Informe de fuentes', selfTest:'Autoprueba', releaseChecklist:'Lista de publicación', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
       donate:'Donar', donateKicker:'Apoyo voluntario', donateTitle:'Apoyar el proyecto',
       donateBody:'Puedes apoyar voluntariamente este proyecto independiente.',
       donateWarning:'Si continúas, saldrás de la aplicación y abrirás PayPal.', donatePaypal:'Continuar a PayPal',
@@ -662,7 +662,7 @@
     },
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
-      sourceCheck:'Rapport des sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
+      sourceCheck:'Rapport des sources', selfTest:'Autotest', releaseChecklist:'Liste de publication', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
       donate:'Faire un don', donateKicker:'Soutien volontaire', donateTitle:'Soutenir le projet',
       donateBody:'Vous pouvez soutenir volontairement ce projet indépendant.',
       donateWarning:'En continuant, vous quitterez l’application et ouvrirez PayPal.', donatePaypal:'Continuer vers PayPal',
@@ -685,7 +685,7 @@
     },
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
-      sourceCheck:'Rapporto fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
+      sourceCheck:'Rapporto fonti', selfTest:'Autotest', releaseChecklist:'Lista di rilascio', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
       donate:'Dona', donateKicker:'Sostegno volontario', donateTitle:'Sostieni il progetto',
       donateBody:'Puoi sostenere volontariamente questo progetto indipendente.',
       donateWarning:'Continuando, lascerai l’app e aprirai PayPal.', donatePaypal:'Continua su PayPal',
@@ -708,7 +708,7 @@
     },
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
-      sourceCheck:'Relatório de fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
+      sourceCheck:'Relatório de fontes', selfTest:'Autoteste', releaseChecklist:'Lista de lançamento', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
       donate:'Doar', donateKicker:'Apoio voluntário', donateTitle:'Apoiar o projeto',
       donateBody:'Podes apoiar voluntariamente este projeto independente.',
       donateWarning:'Ao continuar, sairás da aplicação e abrirás o PayPal.', donatePaypal:'Continuar para o PayPal',
@@ -731,7 +731,7 @@
     },
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
-      sourceCheck:'Отчёт об источниках', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
+      sourceCheck:'Отчёт об источниках', selfTest:'Самопроверка', releaseChecklist:'Список готовности', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
       donate:'Поддержать', donateKicker:'Добровольная поддержка', donateTitle:'Поддержать проект',
       donateBody:'Вы можете добровольно поддержать этот независимый проект.',
       donateWarning:'При продолжении вы покинете приложение и откроете PayPal.', donatePaypal:'Перейти в PayPal',
@@ -755,7 +755,7 @@
     },
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
-      sourceCheck:'Αναφορά πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
+      sourceCheck:'Αναφορά πηγών', selfTest:'Αυτοέλεγχος', releaseChecklist:'Λίστα έκδοσης', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
       donate:'Δωρεά', donateKicker:'Εθελοντική υποστήριξη', donateTitle:'Υποστήριξη του έργου',
       donateBody:'Μπορείτε να υποστηρίξετε εθελοντικά αυτό το ανεξάρτητο έργο.',
       donateWarning:'Αν συνεχίσετε, θα φύγετε από την εφαρμογή και θα ανοίξετε το PayPal.', donatePaypal:'Συνέχεια στο PayPal',
@@ -779,7 +779,7 @@
     },
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
-      sourceCheck:'Kaynak raporu', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
+      sourceCheck:'Kaynak raporu', selfTest:'Uygulama testi', releaseChecklist:'Yayın kontrol listesi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
       donate:'Bağış yap', donateKicker:'Gönüllü destek', donateTitle:'Projeyi destekle',
       donateBody:'Bu bağımsız projeyi gönüllü olarak destekleyebilirsiniz.',
       donateWarning:'Devam ederseniz uygulamadan ayrılır ve PayPal’ı açarsınız.', donatePaypal:'PayPal’a devam et',
@@ -1430,6 +1430,7 @@
     document.getElementById('next-menu-diagnostics-label').textContent = t('diagnostics');
     document.getElementById('next-menu-sources').textContent = t('sourceCheck');
     document.getElementById('next-menu-selftest').textContent = t('selfTest');
+    document.getElementById('next-menu-release').textContent = t('releaseChecklist');
     document.getElementById('next-menu-status').textContent = t('systemStatus');
     document.getElementById('next-menu-data').textContent = t('localData');
     document.querySelector('[data-release-close]')?.setAttribute('aria-label', t('close'));
