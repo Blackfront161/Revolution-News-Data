@@ -53,6 +53,10 @@ jobs:
       # ausdrücklich erwartet.
       - name: Nachrichten und Termine aggregieren
         run: python aggregate.py
+        env:
+          WRN_AGGREGATE_BUDGET_SECONDS: "1980"
+          WRN_AGGREGATE_STOP_RESERVE_SECONDS: "120"
+          WRN_CHECKPOINT_INTERVAL_SECONDS: "240"
 
       - name: Quellenkatalog erzeugen
         run: python build_source_catalog.py
@@ -99,6 +103,9 @@ jobs:
             editorial-review.json
             source-catalog.json
             source-health.json
+            news-feed.json
+            events-feed.json
+            feed-status.json
           )
 
           for file in "${required[@]}"; do
@@ -111,6 +118,38 @@ jobs:
           done
 
           echo "events.json wird als veröffentlichte App-Datendatei übernommen."
+
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          news = json.loads(Path("news-feed.json").read_text(encoding="utf-8"))
+          events = json.loads(Path("events-feed.json").read_text(encoding="utf-8"))
+          status = json.loads(Path("feed-status.json").read_text(encoding="utf-8"))
+          generated = datetime.fromisoformat(
+              str(status["generatedAt"]).replace("Z", "+00:00")
+          )
+          age = (datetime.now(timezone.utc) - generated).total_seconds()
+
+          if not status.get("ok"):
+              raise SystemExit("FEHLER: feed-status.json meldet keinen Erfolg.")
+          if not isinstance(news, list) or not news:
+              raise SystemExit("FEHLER: news-feed.json ist leer oder ungültig.")
+          if not isinstance(events, list):
+              raise SystemExit("FEHLER: events-feed.json ist ungültig.")
+          if status.get("news", {}).get("feedCount") != len(news):
+              raise SystemExit("FEHLER: News-Anzahl stimmt nicht mit feed-status.json überein.")
+          if status.get("events", {}).get("feedCount") != len(events):
+              raise SystemExit("FEHLER: Termin-Anzahl stimmt nicht mit feed-status.json überein.")
+          if age < 0 or age > 3600:
+              raise SystemExit(f"FEHLER: Feed-Status ist nicht aktuell ({age:.0f} Sekunden).")
+
+          print(
+              f"Web-Feeds aktuell und konsistent: "
+              f"{len(news)} Nachrichten, {len(events)} Termine."
+          )
+          PY
 
       - name: App-Validator ausführen
         run: |
@@ -138,6 +177,7 @@ jobs:
 
           # Exakte Phase-1J-Zeile für den vorhandenen Validator:
           git add news.json events.json editorial-review.json source-catalog.json source-health.json
+          git add news-feed.json events-feed.json feed-status.json
 
           optional_outputs=(
             source-health-report.json
