@@ -10,6 +10,14 @@ node scripts/serve_news_app_2.js
 
 Danach `http://127.0.0.1:8765/next.html` öffnen.
 
+Für einen Test auf einem Smartphone im selben privaten WLAN:
+
+```powershell
+node scripts/serve_news_app_2.js --host 0.0.0.0
+```
+
+Das Skript gibt anschließend die passenden WLAN-Adressen für das Smartphone aus. Eine Windows-Firewall-Freigabe nur für private Netzwerke erteilen.
+
 Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzungsanfragen von `127.0.0.1` können vom produktiven Worker wegen dessen Origin-Schutz abgelehnt werden. Das ist beabsichtigt; die produktive Origin-Liste wird für diese Vorschau nicht gelockert.
 
 ## Bereits umgesetzt

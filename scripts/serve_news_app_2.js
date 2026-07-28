@@ -2,10 +2,24 @@
 
 const http = require('http');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const root = path.resolve(__dirname, '..');
-const host = '127.0.0.1';
+function argumentValue(name) {
+  const exact = process.argv.indexOf(name);
+  if (exact >= 0 && process.argv[exact + 1]) return process.argv[exact + 1];
+  const prefix = `${name}=`;
+  const inline = process.argv.find(value => value.startsWith(prefix));
+  return inline ? inline.slice(prefix.length) : '';
+}
+
+const requestedHost = String(
+  argumentValue('--host') || process.env.WRN_PREVIEW_HOST || '127.0.0.1'
+).trim();
+const host = ['127.0.0.1', '0.0.0.0', 'localhost'].includes(requestedHost)
+  ? requestedHost
+  : '127.0.0.1';
 const port = Number(process.env.WRN_PREVIEW_PORT || 8765);
 const types = {
   '.css': 'text/css; charset=utf-8',
@@ -53,5 +67,14 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, host, () => {
-  console.log(`WRN News App 2 preview: http://${host}:${port}/next.html`);
+  console.log(`WRN News App 2 preview: http://127.0.0.1:${port}/next.html?preview=8`);
+  if (host === '0.0.0.0') {
+    const addresses = Object.values(os.networkInterfaces())
+      .flat()
+      .filter(address => address && address.family === 'IPv4' && !address.internal)
+      .map(address => address.address);
+    [...new Set(addresses)].forEach(address => {
+      console.log(`Smartphone im gleichen WLAN: http://${address}:${port}/next.html?preview=8`);
+    });
+  }
 });

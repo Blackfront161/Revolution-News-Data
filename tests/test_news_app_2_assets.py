@@ -15,6 +15,13 @@ def test_parallel_preview_assets_exist():
         assert path.stat().st_size > 300, f"{name} looks empty"
 
 
+def test_preview_server_can_be_exposed_to_private_lan():
+    server = (ROOT / "scripts" / "serve_news_app_2.js").read_text(encoding="utf-8")
+    assert "argumentValue('--host')" in server
+    assert "'0.0.0.0'" in server
+    assert "Smartphone im gleichen WLAN" in server
+
+
 def test_live_entry_point_is_not_rewired():
     index = (ROOT / "index.html").read_text(encoding="utf-8")
     service_worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
@@ -110,6 +117,7 @@ def test_menu_briefing_and_responsive_images_are_present():
 
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
+    test_preview_server_can_be_exposed_to_private_lan()
     test_live_entry_point_is_not_rewired()
     test_preview_keeps_card_translation_and_safe_metadata()
     test_preview_offline_cache_is_isolated_from_live_app()
