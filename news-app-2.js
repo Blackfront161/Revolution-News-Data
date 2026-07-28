@@ -11,11 +11,150 @@
   const PREFS_KEY = 'wrn_next_preferences_v1';
   const TRANSLATIONS_KEY = 'wrn_next_teaser_translations_v1';
   const BOOKMARKS_KEY = 'wrn_bookmarks';
+  const READ_KEY = 'wrn_read_list';
   const ZINE_KEY = 'wrn_zine_articles';
   const LANGUAGE_KEY = 'wrn_system_lang';
   const STORY_WATCH_KEY = 'wrn_next_story_watch_v1';
   const UI_SETTINGS_KEY = 'wrn_next_ui_settings_v1';
   const HOME_COUNT = 10;
+
+  const PRODUCT_COPY = {
+    de: {
+      currentPeriod:'Aktuell', last7Days:'Letzte 7 Tage', last30Days:'Letzte 30 Tage', allArticles:'Alle Artikel',
+      archiveBrowse:'Zum Nachrichtenarchiv', showMore:'Mehr Artikel laden',
+      groupPolitics:'Politik & Herrschaft', groupRights:'Rechte & Gesellschaft',
+      groupAction:'Bewegung & Praxis', groupEcology:'Ökologie & Wissen',
+      prisonersShort:'Gefangene', summary:'Zusammenfassen', podcast:'Podcast', markRead:'Als gelesen',
+      markUnread:'Als ungelesen', share:'Teilen', shared:'Geteilt.', linkCopied:'Link kopiert.',
+      shareFailed:'Teilen ist nicht verfügbar.', translationCompare:'Übersetzungsvergleich',
+      originalVersion:'Original', translatedVersion:'Übersetzung', closeTool:'Schließen',
+      summaryLocal:'Lokale Zusammenfassung – bitte mit dem Original abgleichen.',
+      summaryShort:'Kurz', summaryStandard:'Standard', summaryDetailed:'Ausführlich',
+      deviceVoice:'Kostenlose Gerätestimme', voice:'Stimme', speed:'Tempo', play:'Abspielen',
+      pause:'Pause', stop:'Stopp', ready:'Bereit – startet erst nach deiner Auswahl.',
+      listening:'Wird vorgelesen', finished:'Wiedergabe beendet.'
+    },
+    en: {
+      currentPeriod:'Current', last7Days:'Last 7 days', last30Days:'Last 30 days', allArticles:'All articles',
+      archiveBrowse:'Open news archive', showMore:'Load more articles',
+      groupPolitics:'Politics & power', groupRights:'Rights & society',
+      groupAction:'Movements & action', groupEcology:'Ecology & knowledge',
+      prisonersShort:'Prisoners', summary:'Summarize', podcast:'Podcast', markRead:'Mark read',
+      markUnread:'Mark unread', share:'Share', shared:'Shared.', linkCopied:'Link copied.',
+      shareFailed:'Sharing is unavailable.', translationCompare:'Translation comparison',
+      originalVersion:'Original', translatedVersion:'Translation', closeTool:'Close',
+      summaryLocal:'Local summary – please compare it with the original.',
+      summaryShort:'Short', summaryStandard:'Standard', summaryDetailed:'Detailed',
+      deviceVoice:'Free device voice', voice:'Voice', speed:'Speed', play:'Play',
+      pause:'Pause', stop:'Stop', ready:'Ready – starts only after you choose play.',
+      listening:'Reading aloud', finished:'Playback finished.'
+    },
+    es: {
+      currentPeriod:'Actualidad', last7Days:'Últimos 7 días', last30Days:'Últimos 30 días', allArticles:'Todos los artículos',
+      archiveBrowse:'Abrir archivo de noticias', showMore:'Cargar más artículos',
+      groupPolitics:'Política y poder', groupRights:'Derechos y sociedad',
+      groupAction:'Movimientos y acción', groupEcology:'Ecología y conocimiento',
+      prisonersShort:'Presxs', summary:'Resumir', podcast:'Pódcast', markRead:'Marcar como leído',
+      markUnread:'Marcar como no leído', share:'Compartir', shared:'Compartido.', linkCopied:'Enlace copiado.',
+      shareFailed:'No se puede compartir.', translationCompare:'Comparar traducción',
+      originalVersion:'Original', translatedVersion:'Traducción', closeTool:'Cerrar',
+      summaryLocal:'Resumen local; compáralo con el original.',
+      summaryShort:'Breve', summaryStandard:'Estándar', summaryDetailed:'Detallado',
+      deviceVoice:'Voz gratuita del dispositivo', voice:'Voz', speed:'Velocidad', play:'Reproducir',
+      pause:'Pausa', stop:'Detener', ready:'Listo; comienza solo cuando lo elijas.',
+      listening:'Leyendo', finished:'Reproducción terminada.'
+    },
+    fr: {
+      currentPeriod:'Actualité', last7Days:'7 derniers jours', last30Days:'30 derniers jours', allArticles:'Tous les articles',
+      archiveBrowse:'Ouvrir les archives', showMore:'Charger plus d’articles',
+      groupPolitics:'Politique et pouvoir', groupRights:'Droits et société',
+      groupAction:'Mouvements et action', groupEcology:'Écologie et savoirs',
+      prisonersShort:'Prisonnier·ères', summary:'Résumer', podcast:'Podcast', markRead:'Marquer comme lu',
+      markUnread:'Marquer non lu', share:'Partager', shared:'Partagé.', linkCopied:'Lien copié.',
+      shareFailed:'Le partage est indisponible.', translationCompare:'Comparer la traduction',
+      originalVersion:'Original', translatedVersion:'Traduction', closeTool:'Fermer',
+      summaryLocal:'Résumé local – à comparer avec l’original.',
+      summaryShort:'Court', summaryStandard:'Standard', summaryDetailed:'Détaillé',
+      deviceVoice:'Voix gratuite de l’appareil', voice:'Voix', speed:'Vitesse', play:'Lire',
+      pause:'Pause', stop:'Arrêter', ready:'Prêt – démarre uniquement après votre choix.',
+      listening:'Lecture en cours', finished:'Lecture terminée.'
+    },
+    it: {
+      currentPeriod:'Attualità', last7Days:'Ultimi 7 giorni', last30Days:'Ultimi 30 giorni', allArticles:'Tutti gli articoli',
+      archiveBrowse:'Apri archivio notizie', showMore:'Carica altri articoli',
+      groupPolitics:'Politica e potere', groupRights:'Diritti e società',
+      groupAction:'Movimenti e azione', groupEcology:'Ecologia e sapere',
+      prisonersShort:'Prigionieri', summary:'Riassumi', podcast:'Podcast', markRead:'Segna come letto',
+      markUnread:'Segna come non letto', share:'Condividi', shared:'Condiviso.', linkCopied:'Link copiato.',
+      shareFailed:'Condivisione non disponibile.', translationCompare:'Confronto traduzione',
+      originalVersion:'Originale', translatedVersion:'Traduzione', closeTool:'Chiudi',
+      summaryLocal:'Riassunto locale – confrontalo con l’originale.',
+      summaryShort:'Breve', summaryStandard:'Standard', summaryDetailed:'Dettagliato',
+      deviceVoice:'Voce gratuita del dispositivo', voice:'Voce', speed:'Velocità', play:'Riproduci',
+      pause:'Pausa', stop:'Stop', ready:'Pronto – parte solo dopo la selezione.',
+      listening:'Lettura in corso', finished:'Riproduzione terminata.'
+    },
+    pt: {
+      currentPeriod:'Atualidade', last7Days:'Últimos 7 dias', last30Days:'Últimos 30 dias', allArticles:'Todos os artigos',
+      archiveBrowse:'Abrir arquivo de notícias', showMore:'Carregar mais artigos',
+      groupPolitics:'Política e poder', groupRights:'Direitos e sociedade',
+      groupAction:'Movimentos e ação', groupEcology:'Ecologia e saberes',
+      prisonersShort:'Prisioneiros', summary:'Resumir', podcast:'Podcast', markRead:'Marcar como lido',
+      markUnread:'Marcar como não lido', share:'Partilhar', shared:'Partilhado.', linkCopied:'Ligação copiada.',
+      shareFailed:'Partilha indisponível.', translationCompare:'Comparar tradução',
+      originalVersion:'Original', translatedVersion:'Tradução', closeTool:'Fechar',
+      summaryLocal:'Resumo local – compara com o original.',
+      summaryShort:'Curto', summaryStandard:'Padrão', summaryDetailed:'Detalhado',
+      deviceVoice:'Voz gratuita do dispositivo', voice:'Voz', speed:'Velocidade', play:'Reproduzir',
+      pause:'Pausa', stop:'Parar', ready:'Pronto – só começa após a tua escolha.',
+      listening:'A ler', finished:'Reprodução terminada.'
+    },
+    ru: {
+      currentPeriod:'Актуальное', last7Days:'Последние 7 дней', last30Days:'Последние 30 дней', allArticles:'Все материалы',
+      archiveBrowse:'Открыть архив новостей', showMore:'Загрузить ещё',
+      groupPolitics:'Политика и власть', groupRights:'Права и общество',
+      groupAction:'Движения и действия', groupEcology:'Экология и знания',
+      prisonersShort:'Заключённые', summary:'Кратко', podcast:'Подкаст', markRead:'Отметить прочитанным',
+      markUnread:'Отметить непрочитанным', share:'Поделиться', shared:'Отправлено.', linkCopied:'Ссылка скопирована.',
+      shareFailed:'Поделиться не удалось.', translationCompare:'Сравнение перевода',
+      originalVersion:'Оригинал', translatedVersion:'Перевод', closeTool:'Закрыть',
+      summaryLocal:'Локальное резюме — сверьте с оригиналом.',
+      summaryShort:'Коротко', summaryStandard:'Обычно', summaryDetailed:'Подробно',
+      deviceVoice:'Бесплатный голос устройства', voice:'Голос', speed:'Скорость', play:'Воспроизвести',
+      pause:'Пауза', stop:'Стоп', ready:'Готово — запуск только после выбора.',
+      listening:'Чтение', finished:'Воспроизведение завершено.'
+    },
+    el: {
+      currentPeriod:'Τρέχοντα', last7Days:'Τελευταίες 7 ημέρες', last30Days:'Τελευταίες 30 ημέρες', allArticles:'Όλα τα άρθρα',
+      archiveBrowse:'Άνοιγμα αρχείου ειδήσεων', showMore:'Φόρτωση περισσότερων',
+      groupPolitics:'Πολιτική και εξουσία', groupRights:'Δικαιώματα και κοινωνία',
+      groupAction:'Κινήματα και δράση', groupEcology:'Οικολογία και γνώση',
+      prisonersShort:'Κρατούμενοι', summary:'Σύνοψη', podcast:'Podcast', markRead:'Σήμανση ως διαβασμένο',
+      markUnread:'Σήμανση ως αδιάβαστο', share:'Κοινοποίηση', shared:'Κοινοποιήθηκε.', linkCopied:'Ο σύνδεσμος αντιγράφηκε.',
+      shareFailed:'Η κοινοποίηση δεν είναι διαθέσιμη.', translationCompare:'Σύγκριση μετάφρασης',
+      originalVersion:'Πρωτότυπο', translatedVersion:'Μετάφραση', closeTool:'Κλείσιμο',
+      summaryLocal:'Τοπική σύνοψη – ελέγξτε την με το πρωτότυπο.',
+      summaryShort:'Σύντομη', summaryStandard:'Κανονική', summaryDetailed:'Αναλυτική',
+      deviceVoice:'Δωρεάν φωνή συσκευής', voice:'Φωνή', speed:'Ταχύτητα', play:'Αναπαραγωγή',
+      pause:'Παύση', stop:'Διακοπή', ready:'Έτοιμο – ξεκινά μόνο μετά την επιλογή σας.',
+      listening:'Ανάγνωση', finished:'Η αναπαραγωγή ολοκληρώθηκε.'
+    },
+    tr: {
+      currentPeriod:'Güncel', last7Days:'Son 7 gün', last30Days:'Son 30 gün', allArticles:'Tüm haberler',
+      archiveBrowse:'Haber arşivini aç', showMore:'Daha fazla haber yükle',
+      groupPolitics:'Siyaset ve iktidar', groupRights:'Haklar ve toplum',
+      groupAction:'Hareketler ve eylem', groupEcology:'Ekoloji ve bilgi',
+      prisonersShort:'Tutsaklar', summary:'Özetle', podcast:'Podcast', markRead:'Okundu işaretle',
+      markUnread:'Okunmadı işaretle', share:'Paylaş', shared:'Paylaşıldı.', linkCopied:'Bağlantı kopyalandı.',
+      shareFailed:'Paylaşım kullanılamıyor.', translationCompare:'Çeviri karşılaştırması',
+      originalVersion:'Özgün', translatedVersion:'Çeviri', closeTool:'Kapat',
+      summaryLocal:'Yerel özet – özgün metinle karşılaştırın.',
+      summaryShort:'Kısa', summaryStandard:'Standart', summaryDetailed:'Ayrıntılı',
+      deviceVoice:'Ücretsiz cihaz sesi', voice:'Ses', speed:'Hız', play:'Oynat',
+      pause:'Duraklat', stop:'Durdur', ready:'Hazır – yalnızca seçiminizden sonra başlar.',
+      listening:'Seslendiriliyor', finished:'Oynatma tamamlandı.'
+    }
+  };
 
   const COPY = {
     de: {
@@ -641,7 +780,7 @@
     ui: readJson(UI_SETTINGS_KEY, { theme: 'dark', fontSize: 'normal', density: 'standard' }),
     preferences: normalizedPreferences(readJson(PREFS_KEY, {})),
     translations: readJson(TRANSLATIONS_KEY, {}),
-    discover: { query: '', region: '', topic: '' },
+    discover: { query: '', region: '', topic: '', period: 'current', limit: 24 },
     events: [],
     eventFilter: { query: '', country: '', archived: false },
     prisonerData: { profiles: [], sources: [] },
@@ -656,6 +795,14 @@
     briefing: { step: 1, regions: [], topics: [], language: '', amount: 5, items: [] },
     cardArticles: [],
     activeArticle: null
+  };
+  let articlePodcast = {
+    chunks: [],
+    index: 0,
+    utterance: null,
+    playing: false,
+    paused: false,
+    language: 'de'
   };
 
   const viewRoot = document.getElementById('next-view');
@@ -680,7 +827,9 @@
   }
 
   function t(key) {
-    return UI_COPY[state.language]?.[key]
+    return PRODUCT_COPY[state.language]?.[key]
+      || PRODUCT_COPY.en[key]
+      || UI_COPY[state.language]?.[key]
       || UI_COPY.en[key]
       || MEDIA_COPY[state.language]?.[key]
       || MEDIA_COPY.en[key]
@@ -832,11 +981,16 @@
 
   function storeTranslation(article, translation, language = state.language) {
     if (!state.translations[language]) state.translations[language] = {};
-    state.translations[language][article.id] = {
+    const entry = {
       title: core.text(translation.title),
       intro: core.text(translation.intro),
       storedAt: new Date().toISOString()
     };
+    if (translation.content) {
+      entry.content = core.text(translation.content);
+      entry.fullContent = true;
+    }
+    state.translations[language][article.id] = entry;
     writeJson(TRANSLATIONS_KEY, state.translations);
   }
 
@@ -858,6 +1012,27 @@
     writeJson(BOOKMARKS_KEY, items);
     showToast(saved ? t('articleSaved') : t('articleRemoved'));
     return saved;
+  }
+
+  function readArticles() {
+    const values = readJson(READ_KEY, []);
+    return Array.isArray(values) ? values.filter(Boolean) : [];
+  }
+
+  function isRead(article) {
+    return readArticles().includes(article?.link || article?.id || '');
+  }
+
+  function toggleRead(article) {
+    const key = article?.link || article?.id || '';
+    if (!key) return false;
+    const values = readArticles();
+    const index = values.indexOf(key);
+    const read = index < 0;
+    if (read) values.push(key);
+    else values.splice(index, 1);
+    writeJson(READ_KEY, values);
+    return read;
   }
 
   function zineArticles() {
@@ -1028,7 +1203,10 @@
           return `<button class="briefing-item" type="button" data-action="open" data-index="${cardIndex}" data-briefing-id="${escapeHtml(article.id)}"><b>${index + 1}</b><span>${escapeHtml(translation?.title || article.title)}</span></button>`;
         }).join('')}
       </div>
-      <div class="section-heading"><h2>${escapeHtml(t('moreNews'))}</h2><small>${others.length}</small></div>
+      <div class="section-heading">
+        <h2>${escapeHtml(t('moreNews'))}</h2>
+        <button class="section-text-action" type="button" data-action="open-archive" data-period="7d">${escapeHtml(t('archiveBrowse'))} →</button>
+      </div>
       ${cardsMarkup(others)}
     `;
     void ensureBriefingTranslations(selected.slice(0, 5));
@@ -1152,40 +1330,100 @@
     return `<button type="button" class="filter-chip${active ? ' active' : ''}" data-filter-kind="${escapeHtml(kind)}" data-filter-value="${escapeHtml(value)}">${escapeHtml(value || t('all'))}</button>`;
   }
 
+  const TOPIC_GROUPS = [
+    ['groupPolitics', ['Anti-Imperialism', 'Anticapitalism', 'Anticolonialism', 'Antifascism', 'No War', 'Theory & Strategy']],
+    ['groupRights', ['Antiracism', 'Antisexism', 'Queer-Feminism', 'No Borders', 'Radical Health & Disability', 'Indigenous Struggles']],
+    ['groupAction', ['Movement News', 'Demonstrations', 'Labor Struggles', 'Squatting & Housing', 'Anti-Rep & Prisons', 'Cyberactivism']],
+    ['groupEcology', ['Eco-Anarchism', 'Animal Liberation', 'Libraries']]
+  ];
+
+  function periodArticles(items) {
+    if (!['7d', '30d'].includes(state.discover.period)) return items;
+    const newest = Math.max(...state.articles.map(article => Number(article.timestamp) || 0));
+    if (!Number.isFinite(newest) || newest <= 0) return items;
+    const days = state.discover.period === '7d' ? 7 : 30;
+    const threshold = newest - days * 24 * 60 * 60 * 1000;
+    return items.filter(article => Number(article.timestamp) >= threshold);
+  }
+
+  function allDiscoverResults() {
+    return periodArticles(core.filterArticles(state.articles, state.discover));
+  }
+
   function discoverResults() {
-    const filtered = core.filterArticles(state.articles, state.discover);
-    const hasActiveFilters = Boolean(
-      state.discover.query || state.discover.region || state.discover.topic
-    );
-    return filtered.slice(0, hasActiveFilters ? 40 : HOME_COUNT);
+    return allDiscoverResults().slice(0, state.discover.limit);
+  }
+
+  function periodButton(value, label) {
+    const active = state.discover.period === value;
+    return `<button type="button" class="${active ? 'active' : ''}" data-action="discover-period" data-value="${value}" aria-pressed="${active}">${escapeHtml(label)}</button>`;
+  }
+
+  function topicDirectoryMarkup(topics) {
+    const available = new Set(topics);
+    const grouped = new Set(TOPIC_GROUPS.flatMap(([, values]) => values));
+    const groups = TOPIC_GROUPS.map(([label, values]) => {
+      const items = values.filter(value => available.has(value));
+      if (!items.length) return '';
+      return `<section class="topic-group">
+        <h3>${escapeHtml(t(label))}</h3>
+        <div class="filter-chips filter-chips--topics">
+          ${items.map(value => filterChipMarkup('topic', value, state.discover.topic === value)).join('')}
+        </div>
+      </section>`;
+    }).join('');
+    const remaining = topics.filter(value => !grouped.has(value));
+    const remainingMarkup = remaining.length
+      ? `<section class="topic-group">
+          <h3>${escapeHtml(t('topics'))}</h3>
+          <div class="filter-chips filter-chips--topics">
+            ${remaining.map(value => filterChipMarkup('topic', value, state.discover.topic === value)).join('')}
+          </div>
+        </section>`
+      : '';
+    return `<div class="topic-directory">${groups}${remainingMarkup}</div>`;
   }
 
   function renderDiscover() {
     state.cardArticles = [];
     const results = discoverResults();
+    const total = allDiscoverResults().length;
     const regionChips = ['', ...state.facets.regions].map(value =>
       filterChipMarkup('region', value, state.discover.region === value)
     ).join('');
     const topics = [...state.facets.topics].sort((a, b) => a.localeCompare(b, state.language));
-    const topicChips = ['', ...topics].map(value =>
-      filterChipMarkup('topic', value, state.discover.topic === value)
-    ).join('');
 
     viewRoot.innerHTML = `
       ${headingMarkup(t('discover'), t('discover'), t('discoverIntro'))}
       <section class="feature-grid" aria-label="${escapeHtml(t('specialty'))}">
         ${featureCard('◷', t('events'), t('eventsText'), 'events')}
         ${featureCard('A–Z', t('lexicon'), t('lexiconText'), 'lexicon')}
-        ${featureCard('✉', t('prisoners'), t('prisonersText'), 'prisoners')}
+        ${featureCard('✉', t('prisonersShort'), t('prisonersText'), 'prisoners')}
         ${featureCard('↗', t('developments'), t('developmentsText'), 'developments')}
       </section>
+      <nav class="archive-periods" aria-label="${escapeHtml(t('allArticles'))}">
+        ${periodButton('current', t('currentPeriod'))}
+        ${periodButton('7d', t('last7Days'))}
+        ${periodButton('30d', t('last30Days'))}
+        ${periodButton('all', t('allArticles'))}
+      </nav>
       <div class="discover-controls">
         <input id="next-discover-query" type="search" value="${escapeHtml(state.discover.query)}" placeholder="${escapeHtml(t('searchPlaceholder'))}" aria-label="${escapeHtml(t('searchLabel'))}">
-        <div><span class="eyebrow">${escapeHtml(t('regions'))}</span><div class="filter-chips">${regionChips}</div></div>
-        <div><span class="eyebrow">${escapeHtml(t('topics'))}</span><div class="filter-chips filter-chips--topics">${topicChips}</div></div>
+        <section class="filter-directory">
+          <span class="eyebrow">${escapeHtml(t('regions'))}</span>
+          <div class="filter-chips filter-chips--regions">${regionChips}</div>
+        </section>
+        <section class="filter-directory">
+          <div class="filter-directory__heading">
+            <span class="eyebrow">${escapeHtml(t('topics'))}</span>
+            ${state.discover.topic ? filterChipMarkup('topic', '', false) : ''}
+          </div>
+          ${topicDirectoryMarkup(topics)}
+        </section>
       </div>
-      <div class="section-heading"><h2>${escapeHtml(t('results'))}</h2><small>${results.length}</small></div>
+      <div class="section-heading"><h2>${escapeHtml(t('results'))}</h2><small>${results.length} ${escapeHtml(t('of'))} ${total}</small></div>
       ${cardsMarkup(results)}
+      ${results.length < total ? `<div class="load-more-row"><button class="secondary-button" type="button" data-action="discover-more">${escapeHtml(t('showMore'))}</button></div>` : ''}
     `;
   }
 
@@ -1643,10 +1881,10 @@
       `${article.source} · ${dateLabel(article)}`;
     document.getElementById('next-article-title').textContent =
       translation?.title || article.title;
-    document.getElementById('next-dialog-original').href = article.link || '#';
-    document.getElementById('next-dialog-original').hidden = !article.link;
     updateDialogSave();
     updateDialogZine();
+    updateDialogRead();
+    stopArticlePodcast();
 
     document.getElementById('next-article-content').innerHTML = `
       ${article.image ? `<img class="article-lead-image" src="${escapeHtml(article.image)}" alt="" referrerpolicy="no-referrer">` : ''}
@@ -1655,8 +1893,10 @@
         <span class="tag">${escapeHtml(article.primaryRegion)}</span>
         ${article.primaryTopic ? `<span class="tag">${escapeHtml(article.primaryTopic)}</span>` : ''}
       </div>
+      ${article.link ? `<p class="article-source-link"><a href="${escapeHtml(article.link)}" target="_blank" rel="noopener noreferrer">↗ ${escapeHtml(t('original'))}</a></p>` : ''}
+      <section class="article-tool-panel" id="next-article-tool-panel" aria-live="polite" hidden></section>
       <p class="article-intro">${escapeHtml(translation?.intro || article.intro)}</p>
-      <div class="article-body">${escapeHtml(article.content || article.intro)}</div>
+      <div class="article-body">${escapeHtml(translation?.fullContent ? translation.content : (article.content || article.intro))}</div>
       ${relatedMarkup}
     `;
     if (!articleDialog.open) articleDialog.showModal();
@@ -1678,10 +1918,244 @@
     button.querySelector('span:last-child').textContent = t(added ? 'zineRemove' : 'zineAdd');
   }
 
+  function updateDialogRead() {
+    const button = document.getElementById('next-dialog-read');
+    const read = state.activeArticle ? isRead(state.activeArticle) : false;
+    button.setAttribute('aria-pressed', String(read));
+    button.querySelector('span:first-child').textContent = read ? '✓' : '○';
+    button.querySelector('span:last-child').textContent = t(read ? 'markUnread' : 'markRead');
+  }
+
+  function showArticleTool(title, body) {
+    const panel = document.getElementById('next-article-tool-panel');
+    if (!panel) return null;
+    panel.innerHTML = `
+      <header>
+        <h2>${escapeHtml(title)}</h2>
+        <button type="button" data-action="article-tool-close" aria-label="${escapeHtml(t('closeTool'))}">×</button>
+      </header>
+      <div class="article-tool-panel__body">${body}</div>
+    `;
+    panel.hidden = false;
+    panel.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    return panel;
+  }
+
+  function closeArticleTool() {
+    stopArticlePodcast();
+    const panel = document.getElementById('next-article-tool-panel');
+    if (!panel) return;
+    panel.hidden = true;
+    panel.textContent = '';
+  }
+
+  function renderArticleSummary(length = 'standard') {
+    const article = state.activeArticle;
+    if (!article || !window.WRNSummaryCore?.summarizeText) return;
+    const translation = translationFor(article);
+    const text = translation?.fullContent ? translation.content : (article.content || article.intro);
+    const summary = window.WRNSummaryCore.summarizeText(text, {
+      title: translation?.title || article.title,
+      length,
+      language: translation?.fullContent
+        ? state.language
+        : String(article.language || article.lang || state.language).toLowerCase().split(/[-_]/)[0]
+    });
+    const lengthButtons = [
+      ['short', 'summaryShort'],
+      ['standard', 'summaryStandard'],
+      ['detailed', 'summaryDetailed']
+    ].map(([value, key]) => `<button type="button" class="${length === value ? 'active' : ''}" data-action="article-summary-length" data-value="${value}" aria-pressed="${length === value}">${escapeHtml(t(key))}</button>`).join('');
+    const bullets = summary.bullets.length
+      ? `<ul>${summary.bullets.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+      : '';
+    showArticleTool(t('summary'), `
+      <div class="article-summary-lengths">${lengthButtons}</div>
+      <p class="article-summary-lead">${escapeHtml(summary.lead || article.intro)}</p>
+      ${bullets}
+      <small>${escapeHtml(t('summaryLocal'))}</small>
+    `);
+  }
+
+  function renderTranslationComparison() {
+    const article = state.activeArticle;
+    const translation = article ? translationFor(article) : null;
+    if (!article || !translation) return;
+    showArticleTool(t('translationCompare'), `
+      <div class="translation-comparison">
+        <section>
+          <h3>${escapeHtml(t('originalVersion'))}</h3>
+          <strong>${escapeHtml(article.title)}</strong>
+          <p>${escapeHtml(article.content || article.intro)}</p>
+        </section>
+        <section>
+          <h3>${escapeHtml(t('translatedVersion'))}</h3>
+          <strong>${escapeHtml(translation.title || article.title)}</strong>
+          <p>${escapeHtml(translation.fullContent ? translation.content : translation.intro)}</p>
+        </section>
+      </div>
+    `);
+  }
+
+  function splitTextForArticleSpeech(value, maxLength = 280) {
+    const text = core.text(value).replace(/https?:\/\/\S+/g, '');
+    const sentences = text.match(/[^.!?…]+[.!?…]+|[^.!?…]+$/g) || [text];
+    const chunks = [];
+    let current = '';
+    for (const sentenceValue of sentences) {
+      const sentence = sentenceValue.trim();
+      if (!sentence) continue;
+      const words = sentence.split(/\s+/);
+      for (const word of words) {
+        if (current && current.length + word.length + 1 > maxLength) {
+          chunks.push(current);
+          current = word;
+        } else {
+          current += `${current ? ' ' : ''}${word}`;
+        }
+      }
+    }
+    if (current) chunks.push(current);
+    return chunks;
+  }
+
+  function articleVoiceOptions() {
+    const voices = window.speechSynthesis?.getVoices?.() || [];
+    const prefix = articlePodcast.language.toLowerCase();
+    return voices
+      .slice()
+      .sort((a, b) => {
+        const aMatch = String(a.lang || '').toLowerCase().startsWith(prefix);
+        const bMatch = String(b.lang || '').toLowerCase().startsWith(prefix);
+        return Number(bMatch) - Number(aMatch) || Number(b.localService) - Number(a.localService) || a.name.localeCompare(b.name);
+      })
+      .map(voice => `<option value="${escapeHtml(voice.voiceURI || voice.name)}">${escapeHtml(`${voice.name} (${voice.lang})`)}</option>`)
+      .join('');
+  }
+
+  function renderArticlePodcast() {
+    const article = state.activeArticle;
+    if (!article || !('speechSynthesis' in window)) {
+      showToast(t('speechUnavailable'));
+      return;
+    }
+    stopArticlePodcast();
+    const translation = translationFor(article);
+    articlePodcast.language = translation?.fullContent
+      ? state.language
+      : String(article.language || article.lang || state.language).toLowerCase().split(/[-_]/)[0];
+    articlePodcast.chunks = splitTextForArticleSpeech(
+      `${translation?.title || article.title}. ${translation?.fullContent ? translation.content : (article.content || article.intro)}`
+    );
+    showArticleTool(t('podcast'), `
+      <p>${escapeHtml(t('deviceVoice'))}</p>
+      <div class="article-podcast-settings">
+        <label><span>${escapeHtml(t('voice'))}</span><select id="next-article-podcast-voice"><option value="">${escapeHtml(t('deviceVoice'))}</option>${articleVoiceOptions()}</select></label>
+        <label><span>${escapeHtml(t('speed'))}</span><select id="next-article-podcast-speed"><option value=".85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option></select></label>
+      </div>
+      <div class="article-podcast-controls">
+        <button type="button" class="primary-button" data-action="article-podcast-play">${escapeHtml(t('play'))}</button>
+        <button type="button" class="secondary-button" data-action="article-podcast-stop">${escapeHtml(t('stop'))}</button>
+        <span id="next-article-podcast-status">${escapeHtml(t('ready'))}</span>
+      </div>
+    `);
+  }
+
+  function updateArticlePodcastUi(status) {
+    const button = document.querySelector('[data-action="article-podcast-play"]');
+    const label = document.getElementById('next-article-podcast-status');
+    if (button) button.textContent = t(articlePodcast.playing && !articlePodcast.paused ? 'pause' : 'play');
+    if (label) {
+      const progress = articlePodcast.chunks.length
+        ? ` · ${Math.min(articlePodcast.index + 1, articlePodcast.chunks.length)}/${articlePodcast.chunks.length}`
+        : '';
+      label.textContent = `${status || t('ready')}${progress}`;
+    }
+  }
+
+  function speakArticlePodcastChunk() {
+    if (!articlePodcast.chunks.length || articlePodcast.index >= articlePodcast.chunks.length) {
+      articlePodcast.playing = false;
+      articlePodcast.paused = false;
+      updateArticlePodcastUi(t('finished'));
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(articlePodcast.chunks[articlePodcast.index]);
+    utterance.lang = articlePodcast.language;
+    utterance.rate = Number(document.getElementById('next-article-podcast-speed')?.value || 1);
+    const selectedVoice = document.getElementById('next-article-podcast-voice')?.value || '';
+    if (selectedVoice) {
+      utterance.voice = (window.speechSynthesis.getVoices() || [])
+        .find(voice => (voice.voiceURI || voice.name) === selectedVoice) || null;
+    }
+    articlePodcast.utterance = utterance;
+    articlePodcast.playing = true;
+    articlePodcast.paused = false;
+    utterance.onend = () => {
+      if (articlePodcast.utterance !== utterance) return;
+      articlePodcast.index += 1;
+      articlePodcast.utterance = null;
+      speakArticlePodcastChunk();
+    };
+    utterance.onerror = () => {
+      if (articlePodcast.utterance !== utterance) return;
+      stopArticlePodcast(false);
+      updateArticlePodcastUi(t('speechUnavailable'));
+    };
+    updateArticlePodcastUi(t('listening'));
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function toggleArticlePodcast() {
+    if (!('speechSynthesis' in window)) return showToast(t('speechUnavailable'));
+    if (articlePodcast.playing && !articlePodcast.paused) {
+      window.speechSynthesis.pause();
+      articlePodcast.paused = true;
+      updateArticlePodcastUi(t('pause'));
+      return;
+    }
+    if (articlePodcast.playing && articlePodcast.paused) {
+      window.speechSynthesis.resume();
+      articlePodcast.paused = false;
+      updateArticlePodcastUi(t('listening'));
+      return;
+    }
+    speakArticlePodcastChunk();
+  }
+
+  function stopArticlePodcast(reset = true) {
+    window.speechSynthesis?.cancel?.();
+    articlePodcast.utterance = null;
+    articlePodcast.playing = false;
+    articlePodcast.paused = false;
+    if (reset) articlePodcast.index = 0;
+    updateArticlePodcastUi(t('ready'));
+  }
+
+  async function shareOpenArticle() {
+    const article = state.activeArticle;
+    if (!article?.link) return showToast(t('shareFailed'));
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: article.title, url: article.link });
+        showToast(t('shared'));
+        return;
+      }
+      await navigator.clipboard.writeText(article.link);
+      showToast(t('linkCopied'));
+    } catch (error) {
+      if (error?.name !== 'AbortError') showToast(t('shareFailed'));
+    }
+  }
+
   async function translateOpenArticle() {
     const article = state.activeArticle;
     const button = document.getElementById('next-dialog-translate');
     if (!article || !window.WRNSharedTranslations?.request) return;
+    if (translationFor(article)?.fullContent) {
+      renderTranslationComparison();
+      return;
+    }
     button.disabled = true;
     button.setAttribute('aria-busy', 'true');
 
@@ -1695,14 +2169,16 @@
       const parsed = core.splitTranslatedTeaser(result.text);
       const translated = {
         title: parsed.title || article.title,
-        intro: parsed.intro || article.intro
+        intro: core.excerpt(parsed.intro || article.intro, 230),
+        content: parsed.intro || article.content || article.intro
       };
       storeTranslation(article, translated);
       document.getElementById('next-article-title').textContent = translated.title;
       const content = document.getElementById('next-article-content');
       content.querySelector('h1').textContent = translated.title;
       content.querySelector('.article-intro').textContent = translated.intro;
-      content.querySelector('.article-body').textContent = translated.intro;
+      content.querySelector('.article-body').textContent = translated.content;
+      renderTranslationComparison();
       showToast(t('translatedTitle'));
     } catch (error) {
       console.warn('Article translation failed', error);
@@ -1950,6 +2426,7 @@
 
       if (target.dataset.filterKind) {
         state.discover[target.dataset.filterKind] = target.dataset.filterValue;
+        state.discover.limit = 24;
         renderDiscover();
         return;
       }
@@ -1969,6 +2446,40 @@
         target.textContent = saved ? '★' : '☆';
         if (state.view === 'saved' && !saved) renderSaved();
       }
+      if (action === 'open-archive') {
+        state.discover.period = ['7d', '30d', 'all'].includes(target.dataset.period)
+          ? target.dataset.period
+          : 'current';
+        state.discover.limit = 24;
+        changeView('discover');
+      }
+      if (action === 'discover-period') {
+        state.discover.period = ['current', '7d', '30d', 'all'].includes(target.dataset.value)
+          ? target.dataset.value
+          : 'current';
+        state.discover.limit = 24;
+        renderDiscover();
+      }
+      if (action === 'discover-more') {
+        state.discover.limit += 24;
+        renderDiscover();
+      }
+      if (action === 'article-summary') renderArticleSummary();
+      if (action === 'article-summary-length') renderArticleSummary(target.dataset.value || 'standard');
+      if (action === 'article-translate') translateOpenArticle();
+      if (action === 'article-podcast') renderArticlePodcast();
+      if (action === 'article-podcast-play') toggleArticlePodcast();
+      if (action === 'article-podcast-stop') stopArticlePodcast();
+      if (action === 'article-zine' && state.activeArticle) {
+        toggleZineArticle(state.activeArticle);
+        updateDialogZine();
+      }
+      if (action === 'article-read' && state.activeArticle) {
+        toggleRead(state.activeArticle);
+        updateDialogRead();
+      }
+      if (action === 'article-share') shareOpenArticle();
+      if (action === 'article-tool-close') closeArticleTool();
       if (action === 'preferences') {
         if (menuDialog.open) menuDialog.close();
         openPreferences();
@@ -2049,6 +2560,8 @@
     document.getElementById('next-global-search').addEventListener('submit', event => {
       event.preventDefault();
       state.discover.query = searchInput.value.trim();
+      state.discover.period = 'all';
+      state.discover.limit = 24;
       searchPanel.hidden = true;
       document.getElementById('next-search-toggle').setAttribute('aria-expanded', 'false');
       changeView('discover');
@@ -2062,6 +2575,7 @@
       if (id === 'next-lexicon-query') state.lexicon.query = event.target.value;
       if (id === 'next-media-query') state.media.query = event.target.value;
       window.clearTimeout(bindEvents.searchTimer);
+      if (id === 'next-discover-query') state.discover.limit = 24;
       bindEvents.searchTimer = window.setTimeout(() => {
         if (id === 'next-event-query') renderEvents();
         else if (id === 'next-lexicon-query') renderLexicon();
@@ -2110,17 +2624,14 @@
       if (state.ui.theme === 'system') applyUiSettings();
     });
 
-    document.querySelector('[data-dialog-close]').addEventListener('click', () => articleDialog.close());
+    document.querySelector('[data-dialog-close]').addEventListener('click', () => {
+      stopArticlePodcast();
+      articleDialog.close();
+    });
     document.getElementById('next-dialog-save').addEventListener('click', () => {
       if (!state.activeArticle) return;
       toggleSaved(state.activeArticle);
       updateDialogSave();
-    });
-    document.getElementById('next-dialog-translate').addEventListener('click', translateOpenArticle);
-    document.getElementById('next-dialog-zine').addEventListener('click', () => {
-      if (!state.activeArticle) return;
-      toggleZineArticle(state.activeArticle);
-      updateDialogZine();
     });
     document.getElementById('next-save-preferences').addEventListener('click', event => {
       event.preventDefault();
@@ -2131,8 +2642,12 @@
     });
 
     articleDialog.addEventListener('click', event => {
-      if (event.target === articleDialog) articleDialog.close();
+      if (event.target === articleDialog) {
+        stopArticlePodcast();
+        articleDialog.close();
+      }
     });
+    articleDialog.addEventListener('close', () => stopArticlePodcast());
     preferencesDialog.addEventListener('click', event => {
       if (event.target === preferencesDialog) preferencesDialog.close();
     });

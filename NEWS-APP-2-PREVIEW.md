@@ -26,13 +26,14 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - zehn aktuelle, nach Quellen durchmischte Artikel als Standardansicht
 - höchstens zwei Beiträge derselben Quelle unter den ersten zehn
 - lokale Interessenwahl nach Regionen und Themen
-- Suche und Filter mit bis zu 40 Treffern nach aktiver Auswahl
+- Suche und Filter mit schrittweisem Nachladen
 - nativer Medienbereich mit getrennten Ansichten für aktuelle und informative Videos, Original-Podcasts, erzeugte Podcasts und Live-Radio
 - Podcast-Suche sowie Filter nach Region und den Kategorien Politik, Gesellschaft und Kultur
 - datensparsames Audio: Podcasts und Radios starten niemals automatisch; defekte Streams verweisen auf die Originalseite
 - kompatible gespeicherte Artikel über den bestehenden Schlüssel `wrn_bookmarks`
 - Übersetzen direkt in der Artikelübersicht für Titel und Einleitung
-- Artikelansicht mit Übersetzen, Speichern und Original öffnen
+- Artikelansicht mit kompakter Werkzeugleiste für Zusammenfassen, Übersetzungsvergleich, kostenlose Gerätestimme, Zine, Lesestatus und Teilen
+- Originalquelle als ruhiger Link im Artikel statt als großer Aktionsbutton
 - am Artikelende bis zu fünf weitere Meldungen derselben Quelle; der aktuell geöffnete Artikel ist links cyan markiert
 - neun angebotene Oberflächensprachen
 - mobile Vollbild-Artikelansicht und mindestens 44 × 44 Pixel große Bedienflächen
@@ -42,8 +43,10 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - responsive Bilder ohne Abschneiden: vollständige Darstellung im Desktop-Rahmen und auf Smartphones oberhalb des Artikels
 - vollständige Einleitungen in der Nachrichtenübersicht ohne harte Zeilenbegrenzung
 - klar getrennte Bereiche für Themen-/Regionsmarkierungen und Artikelaktionen
+- Nachrichtenarchiv mit den Zeiträumen aktuell, 7 Tage, 30 Tage und alle Artikel
+- Regionen als einheitliches Filterraster und Themen in vier redaktionellen Ressorts statt einer unstrukturierten Gesamtliste
 - erweiterte lokale Feed-Einrichtung für Regionen, Themen, bevorzugte oder ausgeblendete Quellen, beobachtete Gefangene und Entwicklungen, App-Sprache und Briefing-Länge
-- kompaktere Entdecken- und Medienauswahl mit alphabetisch geordneten Themen
+- kompaktere Entdecken- und Medienauswahl mit redaktionell geordneten Themen
 - Zine-Werkstatt im Medienbereich mit gemeinsamer lokaler Artikelliste, Gestaltung sowie Druck-/PDF-Ausgabe
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
@@ -66,10 +69,9 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 
 ## Noch nicht aus der bisherigen App übernommen
 
-- Zusammenfassen und Übersetzungsvergleich in der geöffneten Artikelansicht
-- Podcast-Erzeugung und Gerätestimme direkt aus einem Artikel
-- Teilen und Lesestatus als vollständige Artikelaktionen
+- serverseitig erzeugte MP3-Podcasts mit natürlichen Azure-Stimmen direkt aus einem Artikel; die kostenlose Gerätestimme ist bereits vorhanden
 - der erweiterte Briefing-Verlauf mit Export, Import und Rückmeldungen
+- vollständige Quellen-/Archivprüfung innerhalb der neuen Oberfläche; die bestehenden Diagnose-Seiten sind bereits verlinkt
 
 Die lokale Smartphone-Vorschau bleibt absichtlich von den produktiven
 Übersetzungs-Origins getrennt. Automatische Übersetzungen werden in einer

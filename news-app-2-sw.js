@@ -1,22 +1,23 @@
 'use strict';
 
 const CACHE_PREFIX = 'wrn-news-app-2-';
-const CACHE_NAME = `${CACHE_PREFIX}v11`;
+const CACHE_NAME = `${CACHE_PREFIX}v12`;
 const SHELL = [
   './next.html',
-  './news-app-2.css?preview=10',
+  './news-app-2.css?preview=11',
   './prisoner-solidarity.css?preview=3',
   './zine-designer.css?preview=2',
   './news-app-2-config.js?preview=3',
   './news-app-2-core.js?preview=3',
   './news-app-2-specialty.js?preview=3',
   './news-app-2-media.js?preview=4',
+  './article-summary-core.js?preview=1',
   './shared-translation-client.js?preview=3',
   './stories-core.js?preview=3',
   './lexicon-tab.js?preview=3',
   './prisoner-solidarity.js?preview=3',
   './zine-designer.js?preview=2',
-  './news-app-2.js?preview=10',
+  './news-app-2.js?preview=11',
   './wrn-logo.webp'
 ];
 const DATA_PATHS = new Set([

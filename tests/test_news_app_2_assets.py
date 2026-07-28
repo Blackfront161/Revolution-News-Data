@@ -74,7 +74,10 @@ def test_specialty_views_are_native_preview_routes():
 def test_default_lists_stay_short_and_source_balanced():
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     assert "core.balanceBySource(chosen, HOME_COUNT, 2)" in script
-    assert "hasActiveFilters ? 40 : HOME_COUNT" in script
+    assert "allDiscoverResults().slice(0, state.discover.limit)" in script
+    assert "last7Days" in script
+    assert "last30Days" in script
+    assert 'data-action="discover-more"' in script
 
 
 def test_media_sections_are_native_and_privacy_conscious():
@@ -123,7 +126,7 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert "display: block;\n  overflow: visible;" in style
     assert "linear-gradient(90deg, #050508 0 48%, #ff3158 52% 100%)" in style
     assert "-webkit-text-stroke: .6px #ff3158" in style
-    assert ".dialog-actions a {\n  border-color: var(--red);" in style
+    assert ".dialog-actions #next-dialog-translate {" in style
     assert 'id="next-source-choices"' in html
     assert 'id="next-prisoner-choices"' in html
     assert 'id="next-development-choices"' in html
@@ -138,6 +141,24 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert ".media-section-tabs button.active span {\n  color: #07080a;" in style
 
 
+def test_article_tools_and_professional_discovery_are_present():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
+    worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
+    for action in ("article-summary", "article-translate", "article-podcast", "article-zine", "article-read", "article-share"):
+        assert f'data-action="{action}"' in html
+    assert "article-summary-core.js" in html
+    assert "article-summary-core.js" in worker
+    assert "renderTranslationComparison" in script
+    assert "shareOpenArticle" in script
+    assert "toggleRead" in script
+    assert "TOPIC_GROUPS" in script
+    assert "filter-chips--regions" in style
+    assert ".archive-periods" in style
+    assert "aspect-ratio: auto;" in style
+
+
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_preview_server_can_be_exposed_to_private_lan()
@@ -148,4 +169,5 @@ if __name__ == "__main__":
     test_default_lists_stay_short_and_source_balanced()
     test_media_sections_are_native_and_privacy_conscious()
     test_menu_briefing_and_responsive_images_are_present()
+    test_article_tools_and_professional_discovery_are_present()
     print("News App 2 parallel preview assets: OK")
