@@ -441,6 +441,74 @@
     }
   };
 
+  const UI_COPY = {
+    de: {
+      menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
+      sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', briefingCreate:'Briefing erstellen',
+      briefingSetup:'Wähle in drei kurzen Schritten, was du hören oder lesen möchtest.', step:'Schritt', of:'von',
+      next:'Weiter', back:'Zurück', listen:'Anhören', stop:'Stoppen', done:'Fertig', briefingLocal:'Wird nur auf diesem Gerät zusammengestellt.',
+      briefingAmount:'Länge', briefingItems:'Meldungen', noBriefing:'Keine passenden Meldungen gefunden.',
+      speechUnavailable:'Vorlesen ist in diesem Browser nicht verfügbar.'
+    },
+    en: {
+      menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
+      sourceCheck:'Source check', selfTest:'App self-test', briefingCreate:'Create briefing',
+      briefingSetup:'Choose what you want to hear or read in three short steps.', step:'Step', of:'of',
+      next:'Next', back:'Back', listen:'Listen', stop:'Stop', done:'Done', briefingLocal:'Assembled only on this device.',
+      briefingAmount:'Length', briefingItems:'stories', noBriefing:'No matching stories found.',
+      speechUnavailable:'Read-aloud is not available in this browser.'
+    },
+    es: {
+      menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
+      sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', briefingCreate:'Crear resumen',
+      briefingSetup:'Elige en tres pasos lo que quieres escuchar o leer.', step:'Paso', of:'de', next:'Siguiente', back:'Atrás',
+      listen:'Escuchar', stop:'Detener', done:'Listo', briefingLocal:'Se crea solo en este dispositivo.',
+      briefingAmount:'Duración', briefingItems:'noticias', noBriefing:'No se encontraron noticias.', speechUnavailable:'La lectura no está disponible.'
+    },
+    fr: {
+      menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
+      sourceCheck:'Vérifier les sources', selfTest:'Autotest', briefingCreate:'Créer un briefing',
+      briefingSetup:'Choisissez en trois étapes ce que vous souhaitez écouter ou lire.', step:'Étape', of:'sur', next:'Suivant', back:'Retour',
+      listen:'Écouter', stop:'Arrêter', done:'Terminé', briefingLocal:'Assemblé uniquement sur cet appareil.',
+      briefingAmount:'Durée', briefingItems:'informations', noBriefing:'Aucune information correspondante.', speechUnavailable:'La lecture vocale est indisponible.'
+    },
+    it: {
+      menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
+      sourceCheck:'Controllo fonti', selfTest:'Autotest', briefingCreate:'Crea briefing',
+      briefingSetup:'Scegli in tre passaggi cosa ascoltare o leggere.', step:'Passaggio', of:'di', next:'Avanti', back:'Indietro',
+      listen:'Ascolta', stop:'Ferma', done:'Fatto', briefingLocal:'Creato solo su questo dispositivo.',
+      briefingAmount:'Durata', briefingItems:'notizie', noBriefing:'Nessuna notizia corrispondente.', speechUnavailable:'La lettura vocale non è disponibile.'
+    },
+    pt: {
+      menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
+      sourceCheck:'Verificar fontes', selfTest:'Autoteste', briefingCreate:'Criar briefing',
+      briefingSetup:'Escolhe em três passos o que queres ouvir ou ler.', step:'Passo', of:'de', next:'Seguinte', back:'Voltar',
+      listen:'Ouvir', stop:'Parar', done:'Concluir', briefingLocal:'Criado apenas neste dispositivo.',
+      briefingAmount:'Duração', briefingItems:'notícias', noBriefing:'Nenhuma notícia correspondente.', speechUnavailable:'A leitura em voz alta não está disponível.'
+    },
+    ru: {
+      menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
+      sourceCheck:'Проверка источников', selfTest:'Самопроверка', briefingCreate:'Создать брифинг',
+      briefingSetup:'За три шага выберите, что слушать или читать.', step:'Шаг', of:'из', next:'Далее', back:'Назад',
+      listen:'Слушать', stop:'Стоп', done:'Готово', briefingLocal:'Составляется только на этом устройстве.',
+      briefingAmount:'Длина', briefingItems:'материалов', noBriefing:'Подходящих материалов нет.', speechUnavailable:'Озвучивание недоступно.'
+    },
+    el: {
+      menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
+      sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', briefingCreate:'Δημιουργία ενημέρωσης',
+      briefingSetup:'Επιλέξτε σε τρία βήματα τι θέλετε να ακούσετε ή να διαβάσετε.', step:'Βήμα', of:'από', next:'Επόμενο', back:'Πίσω',
+      listen:'Ακρόαση', stop:'Διακοπή', done:'Τέλος', briefingLocal:'Δημιουργείται μόνο σε αυτή τη συσκευή.',
+      briefingAmount:'Διάρκεια', briefingItems:'ειδήσεις', noBriefing:'Δεν βρέθηκαν ειδήσεις.', speechUnavailable:'Η εκφώνηση δεν είναι διαθέσιμη.'
+    },
+    tr: {
+      menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
+      sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', briefingCreate:'Bülten oluştur',
+      briefingSetup:'Dinlemek veya okumak istediklerini üç adımda seç.', step:'Adım', of:'/', next:'İleri', back:'Geri',
+      listen:'Dinle', stop:'Durdur', done:'Bitti', briefingLocal:'Yalnızca bu cihazda hazırlanır.',
+      briefingAmount:'Uzunluk', briefingItems:'haber', noBriefing:'Uygun haber bulunamadı.', speechUnavailable:'Sesli okuma kullanılamıyor.'
+    }
+  };
+
   const state = {
     articles: [],
     facets: { regions: [], topics: [], sources: [] },
@@ -460,6 +528,7 @@
     generatedPodcasts: [],
     radioStations: [],
     media: { section: 'video', videoMode: 'current', query: '', region: 'all', category: 'all' },
+    briefing: { step: 1, regions: [], topics: [], language: '', amount: 5, items: [] },
     cardArticles: [],
     activeArticle: null
   };
@@ -468,6 +537,8 @@
   const loading = document.getElementById('next-loading');
   const articleDialog = document.getElementById('next-article-dialog');
   const preferencesDialog = document.getElementById('next-preferences-dialog');
+  const menuDialog = document.getElementById('next-menu-dialog');
+  const briefingDialog = document.getElementById('next-briefing-dialog');
   const searchPanel = document.getElementById('next-global-search');
   const searchInput = document.getElementById('next-search-input');
   const languageSelect = document.getElementById('next-language');
@@ -478,7 +549,9 @@
   }
 
   function t(key) {
-    return MEDIA_COPY[state.language]?.[key]
+    return UI_COPY[state.language]?.[key]
+      || UI_COPY.en[key]
+      || MEDIA_COPY[state.language]?.[key]
       || MEDIA_COPY.en[key]
       || SPECIAL_COPY[state.language]?.[key]
       || SPECIAL_COPY.en[key]
@@ -539,7 +612,16 @@
     });
     searchInput.placeholder = t('searchPlaceholder');
     document.getElementById('next-search-toggle').setAttribute('aria-label', t('menuSearch'));
+    document.getElementById('next-menu-toggle').setAttribute('aria-label', t('menuOpen'));
     document.querySelector('[data-dialog-close]').setAttribute('aria-label', t('close'));
+    document.querySelector('[data-menu-close]').setAttribute('aria-label', t('close'));
+    document.querySelector('[data-briefing-close]').setAttribute('aria-label', t('close'));
+    document.getElementById('next-menu-title').textContent = t('menu');
+    document.getElementById('next-menu-about').textContent = t('aboutProject');
+    document.getElementById('next-menu-privacy').textContent = t('privacy');
+    document.getElementById('next-menu-diagnostics-label').textContent = t('diagnostics');
+    document.getElementById('next-menu-sources').textContent = t('sourceCheck');
+    document.getElementById('next-menu-selftest').textContent = t('selfTest');
   }
 
   function translationFor(article) {
@@ -677,8 +759,9 @@
           </div>
         </div>
       </article>
-      <div class="section-heading">
+      <div class="section-heading briefing-heading">
         <div><h2>${escapeHtml(t('briefing'))}</h2><small>${escapeHtml(t('briefingHint'))}</small></div>
+        <button class="secondary-button" type="button" data-action="briefing-open">${escapeHtml(t('briefingCreate'))}</button>
       </div>
       <div class="briefing-strip">
         ${selected.slice(0, 5).map((article, index) => {
@@ -1235,6 +1318,119 @@
     }
   }
 
+  function openBriefing() {
+    state.briefing = {
+      step: 1,
+      regions: [...(state.preferences.regions || [])],
+      topics: [...(state.preferences.topics || [])],
+      language: state.language,
+      amount: 5,
+      items: []
+    };
+    renderBriefingStep();
+    briefingDialog.showModal();
+  }
+
+  function briefingStepLabel() {
+    return `${t('step')} ${state.briefing.step} ${t('of')} 3`;
+  }
+
+  function briefingLanguageOptions() {
+    const labels = {
+      de:'Deutsch', en:'English', es:'Español', fr:'Français', it:'Italiano',
+      pt:'Português', ru:'Русский', el:'Ελληνικά', tr:'Türkçe'
+    };
+    return Object.entries(labels).map(([value, label]) =>
+      `<option value="${value}"${state.briefing.language === value ? ' selected' : ''}>${escapeHtml(label)}</option>`
+    ).join('');
+  }
+
+  function collectBriefingStep() {
+    if (state.briefing.step === 1) {
+      state.briefing.regions = [...briefingDialog.querySelectorAll('input[name="briefing-region"]:checked')].map(input => input.value);
+      state.briefing.topics = [...briefingDialog.querySelectorAll('input[name="briefing-topic"]:checked')].map(input => input.value);
+    }
+    if (state.briefing.step === 2) {
+      state.briefing.language = document.getElementById('next-briefing-language')?.value || state.language;
+      state.briefing.amount = Number(briefingDialog.querySelector('input[name="briefing-amount"]:checked')?.value || 5);
+    }
+  }
+
+  function buildBriefingItems() {
+    const preferences = {
+      regions: state.briefing.regions,
+      topics: state.briefing.topics,
+      sources: [],
+      blockedSources: []
+    };
+    const candidates = state.briefing.regions.length || state.briefing.topics.length
+      ? state.articles.filter(article => core.matchesPreferences(article, preferences))
+      : state.articles;
+    state.briefing.items = core.balanceBySource(candidates, state.briefing.amount, 2);
+  }
+
+  function renderBriefingStep() {
+    document.getElementById('next-briefing-step-label').textContent = briefingStepLabel();
+    const content = document.getElementById('next-briefing-content');
+    const actions = document.getElementById('next-briefing-actions');
+
+    if (state.briefing.step === 1) {
+      const regions = new Set(state.briefing.regions);
+      const topics = new Set(state.briefing.topics);
+      content.innerHTML = `
+        <p class="media-privacy">🔒 ${escapeHtml(t('briefingLocal'))}</p>
+        <p>${escapeHtml(t('briefingSetup'))}</p>
+        <section class="briefing-section">
+          <h3>${escapeHtml(t('chooseRegions'))}</h3>
+          <div class="choice-grid">${state.facets.regions.map(value => choiceMarkup('briefing-region', value, regions.has(value))).join('')}</div>
+        </section>
+        <section class="briefing-section">
+          <h3>${escapeHtml(t('chooseTopics'))}</h3>
+          <div class="choice-grid">${state.facets.topics.slice(0, 28).map(value => choiceMarkup('briefing-topic', value, topics.has(value))).join('')}</div>
+        </section>`;
+      actions.innerHTML = `<button class="secondary-button" type="button" data-briefing-close>${escapeHtml(t('cancel'))}</button><button class="primary-button" type="button" data-action="briefing-next">${escapeHtml(t('next'))}</button>`;
+      return;
+    }
+
+    if (state.briefing.step === 2) {
+      content.innerHTML = `
+        <section class="briefing-section">
+          <h3>${escapeHtml(t('language'))}</h3>
+          <select class="briefing-language" id="next-briefing-language">${briefingLanguageOptions()}</select>
+        </section>
+        <section class="briefing-section">
+          <h3>${escapeHtml(t('briefingAmount'))}</h3>
+          <div class="briefing-lengths">
+            ${[3, 5, 8].map(amount => `<label><input type="radio" name="briefing-amount" value="${amount}"${state.briefing.amount === amount ? ' checked' : ''}><strong>${amount}</strong><span>${escapeHtml(t('briefingItems'))}</span></label>`).join('')}
+          </div>
+        </section>`;
+      actions.innerHTML = `<button class="secondary-button" type="button" data-action="briefing-back">${escapeHtml(t('back'))}</button><button class="primary-button" type="button" data-action="briefing-next">${escapeHtml(t('next'))}</button>`;
+      return;
+    }
+
+    buildBriefingItems();
+    content.innerHTML = state.briefing.items.length
+      ? `<ol class="briefing-preview">${state.briefing.items.map((article, index) => `<li><b>${index + 1}</b><div><strong>${escapeHtml(translationFor(article)?.title || article.title)}</strong><small>${escapeHtml(article.source)} · ${escapeHtml(mediaDescription(translationFor(article)?.intro || article.intro))}</small></div></li>`).join('')}</ol>`
+      : `<div class="empty-state compact"><strong>${escapeHtml(t('noBriefing'))}</strong></div>`;
+    actions.innerHTML = `<button class="secondary-button" type="button" data-action="briefing-back">${escapeHtml(t('back'))}</button><button class="secondary-button" type="button" data-action="briefing-stop">${escapeHtml(t('stop'))}</button><button class="primary-button" type="button" data-action="briefing-listen"${state.briefing.items.length ? '' : ' disabled'}>${escapeHtml(t('listen'))}</button><button class="primary-button" type="button" data-briefing-close>${escapeHtml(t('done'))}</button>`;
+  }
+
+  function speakBriefing() {
+    if (!('speechSynthesis' in window) || typeof SpeechSynthesisUtterance === 'undefined') {
+      showToast(t('speechUnavailable'));
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const speech = state.briefing.items.map((article, index) =>
+      `${index + 1}. ${translationFor(article)?.title || article.title}. ${translationFor(article)?.intro || article.intro}`
+    ).join(' ');
+    const utterance = new SpeechSynthesisUtterance(speech);
+    const languageCodes = { de:'de-DE', en:'en-US', es:'es-ES', fr:'fr-FR', it:'it-IT', pt:'pt-PT', ru:'ru-RU', el:'el-GR', tr:'tr-TR' };
+    utterance.lang = languageCodes[state.briefing.language] || state.briefing.language;
+    utterance.rate = 1;
+    window.speechSynthesis.speak(utterance);
+  }
+
   function openPreferences() {
     const selectedRegions = new Set(state.preferences.regions || []);
     const selectedTopics = new Set(state.preferences.topics || []);
@@ -1274,10 +1470,22 @@
 
   function bindEvents() {
     document.addEventListener('click', event => {
-      const target = event.target.closest('[data-view-target], [data-action], [data-filter-kind]');
+      const target = event.target.closest('[data-view-target], [data-action], [data-filter-kind], [data-menu-close], [data-briefing-close]');
       if (!target) return;
 
+      if (target.hasAttribute('data-menu-close')) {
+        menuDialog.close();
+        return;
+      }
+
+      if (target.hasAttribute('data-briefing-close')) {
+        window.speechSynthesis?.cancel?.();
+        briefingDialog.close();
+        return;
+      }
+
       if (target.dataset.viewTarget) {
+        if (menuDialog.open) menuDialog.close();
         changeView(target.dataset.viewTarget);
         return;
       }
@@ -1345,7 +1553,22 @@
         state.media.videoMode = target.dataset.value === 'information' ? 'information' : 'current';
         renderMedia();
       }
+      if (action === 'briefing-open') openBriefing();
+      if (action === 'briefing-next') {
+        collectBriefingStep();
+        state.briefing.step = Math.min(3, state.briefing.step + 1);
+        renderBriefingStep();
+      }
+      if (action === 'briefing-back') {
+        collectBriefingStep();
+        state.briefing.step = Math.max(1, state.briefing.step - 1);
+        renderBriefingStep();
+      }
+      if (action === 'briefing-listen') speakBriefing();
+      if (action === 'briefing-stop') window.speechSynthesis?.cancel?.();
     });
+
+    document.getElementById('next-menu-toggle').addEventListener('click', () => menuDialog.showModal());
 
     document.getElementById('next-search-toggle').addEventListener('click', event => {
       const open = searchPanel.hidden;
@@ -1429,6 +1652,15 @@
     });
     preferencesDialog.addEventListener('click', event => {
       if (event.target === preferencesDialog) preferencesDialog.close();
+    });
+    menuDialog.addEventListener('click', event => {
+      if (event.target === menuDialog) menuDialog.close();
+    });
+    briefingDialog.addEventListener('click', event => {
+      if (event.target === briefingDialog) {
+        window.speechSynthesis?.cancel?.();
+        briefingDialog.close();
+      }
     });
   }
 

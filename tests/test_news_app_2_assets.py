@@ -77,6 +77,22 @@ def test_media_sections_are_native_and_privacy_conscious():
     assert "news-app-2-media.js" in html
 
 
+def test_menu_briefing_and_responsive_images_are_present():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
+    assert 'id="next-menu-toggle"' in html
+    assert 'id="next-menu-dialog"' in html
+    assert 'id="next-briefing-dialog"' in html
+    assert "openBriefing" in script
+    assert "speakBriefing" in script
+    assert "speechSynthesis" in script
+    assert ".menu-dialog" in style
+    assert ".briefing-dialog" in style
+    assert "max-width: 100%" in style
+    assert "-1px -1px 0 var(--red)" in style
+
+
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_live_entry_point_is_not_rewired()
@@ -85,4 +101,5 @@ if __name__ == "__main__":
     test_specialty_views_are_native_preview_routes()
     test_default_lists_stay_short_and_source_balanced()
     test_media_sections_are_native_and_privacy_conscious()
+    test_menu_briefing_and_responsive_images_are_present()
     print("News App 2 parallel preview assets: OK")

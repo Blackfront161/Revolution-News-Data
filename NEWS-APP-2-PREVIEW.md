@@ -27,6 +27,9 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - Artikelansicht mit Übersetzen, Speichern und Original öffnen
 - neun angebotene Oberflächensprachen
 - mobile Vollbild-Artikelansicht und mindestens 44 × 44 Pixel große Bedienflächen
+- kompaktes Hamburger-Menü mit Projekthinweisen sowie einem getrennten kleinen Diagnosebereich
+- dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
+- responsive, innerhalb ihrer Karten zugeschnittene Bilder ohne seitliches Überlaufen
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
 - Gefangenen-Solidarität mit verifizierten Profilen, zugehörigen Nachrichten und privater Briefwerkstatt
