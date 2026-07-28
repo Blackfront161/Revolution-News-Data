@@ -586,6 +586,9 @@
     de: {
       menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
       sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
+      donate:'Spenden', donateKicker:'Freiwillige Unterstützung', donateTitle:'Projekt unterstützen',
+      donateBody:'Dieses unabhängige Projekt kann freiwillig unterstützt werden.',
+      donateWarning:'Wenn du fortfährst, verlässt du die App und öffnest PayPal.', donatePaypal:'Weiter zu PayPal',
       display:'Darstellung', project:'Projekt', theme:'Farbdarstellung', themeDark:'Dunkel', themeLight:'Hell',
       themeSystem:'Systemeinstellung', themeContrast:'Hoher Kontrast', fontSize:'Schriftgröße', normal:'Normal',
       large:'Groß', xlarge:'Sehr groß', density:'Artikeldarstellung', compact:'Kompakt', standard:'Standard',
@@ -608,6 +611,9 @@
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
       sourceCheck:'Source check', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
+      donate:'Donate', donateKicker:'Voluntary support', donateTitle:'Support the project',
+      donateBody:'You can voluntarily support this independent project.',
+      donateWarning:'If you continue, you will leave the app and open PayPal.', donatePaypal:'Continue to PayPal',
       display:'Appearance', project:'Project', theme:'Colour theme', themeDark:'Dark', themeLight:'Light',
       themeSystem:'System setting', themeContrast:'High contrast', fontSize:'Text size', normal:'Normal',
       large:'Large', xlarge:'Very large', density:'Article layout', compact:'Compact', standard:'Standard',
@@ -630,6 +636,9 @@
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
       sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
+      donate:'Donar', donateKicker:'Apoyo voluntario', donateTitle:'Apoyar el proyecto',
+      donateBody:'Puedes apoyar voluntariamente este proyecto independiente.',
+      donateWarning:'Si continúas, saldrás de la aplicación y abrirás PayPal.', donatePaypal:'Continuar a PayPal',
       display:'Apariencia', project:'Proyecto', theme:'Tema de color', themeDark:'Oscuro', themeLight:'Claro',
       themeSystem:'Sistema', themeContrast:'Alto contraste', fontSize:'Tamaño del texto', normal:'Normal',
       large:'Grande', xlarge:'Muy grande', density:'Vista de artículos', compact:'Compacta', standard:'Estándar',
@@ -650,6 +659,9 @@
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
       sourceCheck:'Vérifier les sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
+      donate:'Faire un don', donateKicker:'Soutien volontaire', donateTitle:'Soutenir le projet',
+      donateBody:'Vous pouvez soutenir volontairement ce projet indépendant.',
+      donateWarning:'En continuant, vous quitterez l’application et ouvrirez PayPal.', donatePaypal:'Continuer vers PayPal',
       display:'Affichage', project:'Projet', theme:'Thème de couleur', themeDark:'Sombre', themeLight:'Clair',
       themeSystem:'Système', themeContrast:'Contraste élevé', fontSize:'Taille du texte', normal:'Normale',
       large:'Grande', xlarge:'Très grande', density:'Affichage des articles', compact:'Compact', standard:'Standard',
@@ -670,6 +682,9 @@
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
       sourceCheck:'Controllo fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
+      donate:'Dona', donateKicker:'Sostegno volontario', donateTitle:'Sostieni il progetto',
+      donateBody:'Puoi sostenere volontariamente questo progetto indipendente.',
+      donateWarning:'Continuando, lascerai l’app e aprirai PayPal.', donatePaypal:'Continua su PayPal',
       display:'Aspetto', project:'Progetto', theme:'Tema colore', themeDark:'Scuro', themeLight:'Chiaro',
       themeSystem:'Sistema', themeContrast:'Contrasto elevato', fontSize:'Dimensione testo', normal:'Normale',
       large:'Grande', xlarge:'Molto grande', density:'Vista articoli', compact:'Compatta', standard:'Standard',
@@ -690,6 +705,9 @@
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
       sourceCheck:'Verificar fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
+      donate:'Doar', donateKicker:'Apoio voluntário', donateTitle:'Apoiar o projeto',
+      donateBody:'Podes apoiar voluntariamente este projeto independente.',
+      donateWarning:'Ao continuar, sairás da aplicação e abrirás o PayPal.', donatePaypal:'Continuar para o PayPal',
       display:'Aparência', project:'Projeto', theme:'Tema de cores', themeDark:'Escuro', themeLight:'Claro',
       themeSystem:'Sistema', themeContrast:'Alto contraste', fontSize:'Tamanho do texto', normal:'Normal',
       large:'Grande', xlarge:'Muito grande', density:'Vista de artigos', compact:'Compacta', standard:'Padrão',
@@ -710,6 +728,9 @@
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
       sourceCheck:'Проверка источников', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
+      donate:'Поддержать', donateKicker:'Добровольная поддержка', donateTitle:'Поддержать проект',
+      donateBody:'Вы можете добровольно поддержать этот независимый проект.',
+      donateWarning:'При продолжении вы покинете приложение и откроете PayPal.', donatePaypal:'Перейти в PayPal',
       display:'Оформление', project:'Проект', theme:'Цветовая тема', themeDark:'Тёмная', themeLight:'Светлая',
       themeSystem:'Системная', themeContrast:'Высокий контраст', fontSize:'Размер текста', normal:'Обычный',
       large:'Большой', xlarge:'Очень большой', density:'Вид статей', compact:'Компактный', standard:'Стандартный',
@@ -731,6 +752,9 @@
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
       sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
+      donate:'Δωρεά', donateKicker:'Εθελοντική υποστήριξη', donateTitle:'Υποστήριξη του έργου',
+      donateBody:'Μπορείτε να υποστηρίξετε εθελοντικά αυτό το ανεξάρτητο έργο.',
+      donateWarning:'Αν συνεχίσετε, θα φύγετε από την εφαρμογή και θα ανοίξετε το PayPal.', donatePaypal:'Συνέχεια στο PayPal',
       display:'Εμφάνιση', project:'Έργο', theme:'Χρωματικό θέμα', themeDark:'Σκούρο', themeLight:'Ανοιχτό',
       themeSystem:'Σύστημα', themeContrast:'Υψηλή αντίθεση', fontSize:'Μέγεθος κειμένου', normal:'Κανονικό',
       large:'Μεγάλο', xlarge:'Πολύ μεγάλο', density:'Προβολή άρθρων', compact:'Συμπαγής', standard:'Κανονική',
@@ -752,6 +776,9 @@
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
       sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
+      donate:'Bağış yap', donateKicker:'Gönüllü destek', donateTitle:'Projeyi destekle',
+      donateBody:'Bu bağımsız projeyi gönüllü olarak destekleyebilirsiniz.',
+      donateWarning:'Devam ederseniz uygulamadan ayrılır ve PayPal’ı açarsınız.', donatePaypal:'PayPal’a devam et',
       display:'Görünüm', project:'Proje', theme:'Renk teması', themeDark:'Koyu', themeLight:'Açık',
       themeSystem:'Sistem', themeContrast:'Yüksek kontrast', fontSize:'Metin boyutu', normal:'Normal',
       large:'Büyük', xlarge:'Çok büyük', density:'Haber görünümü', compact:'Kompakt', standard:'Standart',
@@ -810,6 +837,7 @@
   const articleDialog = document.getElementById('next-article-dialog');
   const preferencesDialog = document.getElementById('next-preferences-dialog');
   const menuDialog = document.getElementById('next-menu-dialog');
+  const donationDialog = document.getElementById('next-donation-dialog');
   const briefingDialog = document.getElementById('next-briefing-dialog');
   const searchPanel = document.getElementById('next-global-search');
   const searchInput = document.getElementById('next-search-input');
@@ -949,6 +977,7 @@
     document.getElementById('next-menu-toggle').setAttribute('aria-label', t('menuOpen'));
     document.querySelector('[data-dialog-close]').setAttribute('aria-label', t('close'));
     document.querySelector('[data-menu-close]').setAttribute('aria-label', t('close'));
+    document.querySelector('[data-donation-close]').setAttribute('aria-label', t('close'));
     document.querySelector('[data-briefing-close]').setAttribute('aria-label', t('close'));
     document.getElementById('next-menu-title').textContent = t('menu');
     document.getElementById('next-menu-display-title').textContent = t('display');
@@ -970,6 +999,13 @@
     document.getElementById('next-menu-about').textContent = t('aboutProject');
     document.getElementById('next-menu-feedback').textContent = t('feedback');
     document.getElementById('next-menu-privacy').textContent = t('privacy');
+    document.getElementById('next-menu-donate-label').textContent = t('donate');
+    document.getElementById('next-donation-kicker').textContent = t('donateKicker');
+    document.getElementById('next-donation-title').textContent = t('donateTitle');
+    document.getElementById('next-donation-body').textContent = t('donateBody');
+    document.getElementById('next-donation-warning').textContent = t('donateWarning');
+    document.getElementById('next-donation-paypal').textContent = t('donatePaypal');
+    document.getElementById('next-donation-cancel').textContent = t('cancel');
     document.getElementById('next-menu-diagnostics-label').textContent = t('diagnostics');
     document.getElementById('next-menu-sources').textContent = t('sourceCheck');
     document.getElementById('next-menu-selftest').textContent = t('selfTest');
@@ -1126,6 +1162,7 @@
           ${preferenceReasons.length ? `<small class="preference-reason">${escapeHtml(t('shownBecause'))}: ${escapeHtml(preferenceReasons.join(' · '))}</small>` : ''}
           ${translation ? `<small class="translation-note">${escapeHtml(t('translated'))}</small>` : ''}
           <div class="card-actions">
+            <button class="small-action" type="button" data-action="open" data-index="${cardIndex}">${escapeHtml(t('openArticle'))}</button>
             <button class="translate-card" type="button" data-action="translate" data-index="${cardIndex}">
               <span class="red-black-star" aria-hidden="true">★</span>
               <span>${escapeHtml(t('translate'))}</span>
@@ -2549,6 +2586,13 @@
     });
 
     document.getElementById('next-menu-toggle').addEventListener('click', () => menuDialog.showModal());
+    document.getElementById('next-menu-donate').addEventListener('click', () => {
+      menuDialog.close();
+      donationDialog.showModal();
+    });
+    document.querySelectorAll('[data-donation-close]').forEach(button => {
+      button.addEventListener('click', () => donationDialog.close());
+    });
 
     document.getElementById('next-search-toggle').addEventListener('click', event => {
       const open = searchPanel.hidden;
@@ -2653,6 +2697,9 @@
     });
     menuDialog.addEventListener('click', event => {
       if (event.target === menuDialog) menuDialog.close();
+    });
+    donationDialog.addEventListener('click', event => {
+      if (event.target === donationDialog) donationDialog.close();
     });
     briefingDialog.addEventListener('click', event => {
       if (event.target === briefingDialog) {

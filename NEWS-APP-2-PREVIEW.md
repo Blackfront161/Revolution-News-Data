@@ -41,6 +41,7 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
 - automatische Übersetzung der fünf Start-Kurzmeldungen in die App-Sprache; bereits übersetzte Meldungen werden lokal wiederverwendet
 - responsive Bilder ohne Abschneiden: vollständige Darstellung im Desktop-Rahmen und auf Smartphones oberhalb des Artikels
+- vollständige Smartphone-Bilder innerhalb des Cyan-Rot-Bildrahmens sowie dauerhaft sichtbare seitliche Verlaufsmarkierung
 - vollständige Einleitungen in der Nachrichtenübersicht ohne harte Zeilenbegrenzung
 - klar getrennte Bereiche für Themen-/Regionsmarkierungen und Artikelaktionen
 - Nachrichtenarchiv mit den Zeiträumen aktuell, 7 Tage, 30 Tage und alle Artikel
@@ -53,6 +54,9 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - Gefangenen-Solidarität mit verifizierten Profilen, zugehörigen Nachrichten und privater Briefwerkstatt
 - „Entwicklungen · Beta“ mit strengem Mehrquellenabgleich, sichtbarer Verbindungsbegründung und lokaler Beobachtungsliste
 - eigener Offline-Cache mit netzwerkbevorzugten Updates für JavaScript, CSS und Daten
+- eigener Vorschau-Header mit dem neuen WRN-Bildlogo, klarer Größenhierarchie und stabil gerenderter Smartphone-Navigation
+- identisch geformte Schaltflächen für „Artikel öffnen“ und „Übersetzen“ in allen Übersichtskarten
+- Spenden-Schaltfläche im Hamburger-Menü mit demselben ausdrücklichen PayPal-Hinweis wie in der bisherigen App
 
 ## Sichere Einführung
 
@@ -67,11 +71,24 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - produktive Freischaltung des neuen Designs
 - Änderung an Google Play, GitHub Pages oder Cloudflare
 
-## Noch nicht aus der bisherigen App übernommen
+## Funktionsabgleich mit der bisherigen App
+
+Der Abgleich vom 28. Juli 2026 zeigt: Die Vorschau deckt die zentralen
+Nachrichten-, Übersetzungs-, Zine-, Such-, Lesezeichen- und
+Personalisierungsabläufe ab, ist aber noch nicht vollständig funktionsgleich.
+
+Noch nicht oder erst teilweise übernommen:
 
 - serverseitig erzeugte MP3-Podcasts mit natürlichen Azure-Stimmen direkt aus einem Artikel; die kostenlose Gerätestimme ist bereits vorhanden
-- der erweiterte Briefing-Verlauf mit Export, Import und Rückmeldungen
-- vollständige Quellen-/Archivprüfung innerhalb der neuen Oberfläche; die bestehenden Diagnose-Seiten sind bereits verlinkt
+- globaler Audioplayer mit Weiterhören, Warteschlange, Favoriten, Zeitsprung, Schlaf-Timer und Media-Session-Steuerung
+- eigene Liste gelesener Artikel sowie Lesefortschritt und Wiederaufnahme an der letzten Position
+- Quellenprofile, Korrekturhinweise und Melden eines Übersetzungsproblems
+- erweiterte Nachrichtenfilter für Quellsprache, Herkunft, Format und Sortierung sowie die reine Schlagzeilenansicht
+- erweiterte Terminfilter, gespeicherte Terminfilter, Kalenderdatei, Karte und Routenlink
+- lokales Datenmanagement mit Export, Import und getrenntem Löschen von Lese-, Offline- und App-Daten
+- integrierter Systemstatus; Quellenprüfung und App-Selbsttest sind derzeit als eigene Diagnoseseiten verlinkt
+- vollständige, abschnittsweise Übersetzung sehr langer Artikel; die Vorschau übersetzt aktuell einen begrenzten Textblock
+- ein später geplanter Briefing-Verlauf mit Export, Import und Rückmeldungen
 
 Die lokale Smartphone-Vorschau bleibt absichtlich von den produktiven
 Übersetzungs-Origins getrennt. Automatische Übersetzungen werden in einer

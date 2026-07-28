@@ -8,7 +8,7 @@ def test_parallel_preview_assets_exist():
     for name in (
         "next.html", "news-app-2.css", "news-app-2.js", "news-app-2-core.js",
         "news-app-2-config.js", "news-app-2-specialty.js", "news-app-2-media.js",
-        "news-app-2-sw.js"
+        "news-app-2-sw.js", "wrn-logo-preview-transparent.png"
     ):
         path = ROOT / name
         assert path.exists(), f"{name} is missing"
@@ -159,6 +159,38 @@ def test_article_tools_and_professional_discovery_are_present():
     assert "aspect-ratio: auto;" in style
 
 
+def test_preview_header_cards_and_mobile_navigation_are_polished():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
+    worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
+    assert 'src="wrn-logo-preview-transparent.png"' in html
+    assert "./wrn-logo-preview-transparent.png" in worker
+    assert 'class="small-action" type="button" data-action="open"' in script
+    assert ".card-actions .translate-card,\n.card-actions .small-action {" in style
+    assert "height: calc(68px + env(safe-area-inset-bottom));" in style
+    assert "contain: layout paint;" in style
+    assert "transform: translate3d(0, 0, 0);" in style
+    assert ".news-card::before {\n    opacity: 1;" in style
+
+
+def test_preview_logo_is_transparent_and_donation_flow_matches_live_safety():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
+    logo = (ROOT / "wrn-logo-preview-transparent.png").read_bytes()
+    assert logo.startswith(b"\x89PNG\r\n\x1a\n")
+    assert logo[25] in (4, 6), "preview logo must contain an alpha channel"
+    assert 'id="next-menu-donate"' in html
+    assert 'id="next-donation-dialog"' in html
+    assert "https://www.paypal.com/ncp/payment/6FSV9FEN4X7VS" in html
+    assert 'rel="noopener noreferrer"' in html
+    assert 'referrerpolicy="no-referrer"' in html
+    assert "donationDialog.showModal()" in script
+    assert "donateWarning" in script
+    assert ".menu-shell > section > .menu-donate" in style
+
+
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_preview_server_can_be_exposed_to_private_lan()
@@ -170,4 +202,6 @@ if __name__ == "__main__":
     test_media_sections_are_native_and_privacy_conscious()
     test_menu_briefing_and_responsive_images_are_present()
     test_article_tools_and_professional_discovery_are_present()
+    test_preview_header_cards_and_mobile_navigation_are_polished()
+    test_preview_logo_is_transparent_and_donation_flow_matches_live_safety()
     print("News App 2 parallel preview assets: OK")
