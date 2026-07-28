@@ -91,6 +91,14 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert ".briefing-dialog" in style
     assert "max-width: 100%" in style
     assert "-1px -1px 0 var(--red)" in style
+    menu = html.split('id="next-menu-dialog"', 1)[1].split('</dialog>', 1)[0]
+    assert 'data-action="briefing-open"' in menu
+    assert 'data-view-target="events"' in menu
+    assert 'data-view-target="lexicon"' in menu
+    assert 'data-view-target="home"' not in menu
+    assert "ensureBriefingTranslations" in script
+    assert "data-briefing-id" in script
+    assert "<h2>${escapeHtml(t('latest'))}</h2>" in script
 
 
 if __name__ == "__main__":

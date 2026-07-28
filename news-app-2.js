@@ -444,7 +444,7 @@
   const UI_COPY = {
     de: {
       menu:'Menü', menuOpen:'Menü öffnen', aboutProject:'Über das Projekt', privacy:'Datenschutz', diagnostics:'Diagnose',
-      sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', briefingCreate:'Briefing erstellen',
+      sourceCheck:'Quellenprüfung', selfTest:'App-Selbsttest', feedback:'Feedback & neue Quellen', briefingCreate:'Briefing erstellen',
       briefingSetup:'Wähle in drei kurzen Schritten, was du hören oder lesen möchtest.', step:'Schritt', of:'von',
       next:'Weiter', back:'Zurück', listen:'Anhören', stop:'Stoppen', done:'Fertig', briefingLocal:'Wird nur auf diesem Gerät zusammengestellt.',
       briefingAmount:'Länge', briefingItems:'Meldungen', noBriefing:'Keine passenden Meldungen gefunden.',
@@ -452,7 +452,7 @@
     },
     en: {
       menu:'Menu', menuOpen:'Open menu', aboutProject:'About the project', privacy:'Privacy', diagnostics:'Diagnostics',
-      sourceCheck:'Source check', selfTest:'App self-test', briefingCreate:'Create briefing',
+      sourceCheck:'Source check', selfTest:'App self-test', feedback:'Feedback & new sources', briefingCreate:'Create briefing',
       briefingSetup:'Choose what you want to hear or read in three short steps.', step:'Step', of:'of',
       next:'Next', back:'Back', listen:'Listen', stop:'Stop', done:'Done', briefingLocal:'Assembled only on this device.',
       briefingAmount:'Length', briefingItems:'stories', noBriefing:'No matching stories found.',
@@ -460,49 +460,49 @@
     },
     es: {
       menu:'Menú', menuOpen:'Abrir menú', aboutProject:'Sobre el proyecto', privacy:'Privacidad', diagnostics:'Diagnóstico',
-      sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', briefingCreate:'Crear resumen',
+      sourceCheck:'Comprobar fuentes', selfTest:'Autoprueba', feedback:'Comentarios y nuevas fuentes', briefingCreate:'Crear resumen',
       briefingSetup:'Elige en tres pasos lo que quieres escuchar o leer.', step:'Paso', of:'de', next:'Siguiente', back:'Atrás',
       listen:'Escuchar', stop:'Detener', done:'Listo', briefingLocal:'Se crea solo en este dispositivo.',
       briefingAmount:'Duración', briefingItems:'noticias', noBriefing:'No se encontraron noticias.', speechUnavailable:'La lectura no está disponible.'
     },
     fr: {
       menu:'Menu', menuOpen:'Ouvrir le menu', aboutProject:'À propos du projet', privacy:'Confidentialité', diagnostics:'Diagnostic',
-      sourceCheck:'Vérifier les sources', selfTest:'Autotest', briefingCreate:'Créer un briefing',
+      sourceCheck:'Vérifier les sources', selfTest:'Autotest', feedback:'Commentaires et nouvelles sources', briefingCreate:'Créer un briefing',
       briefingSetup:'Choisissez en trois étapes ce que vous souhaitez écouter ou lire.', step:'Étape', of:'sur', next:'Suivant', back:'Retour',
       listen:'Écouter', stop:'Arrêter', done:'Terminé', briefingLocal:'Assemblé uniquement sur cet appareil.',
       briefingAmount:'Durée', briefingItems:'informations', noBriefing:'Aucune information correspondante.', speechUnavailable:'La lecture vocale est indisponible.'
     },
     it: {
       menu:'Menu', menuOpen:'Apri menu', aboutProject:'Il progetto', privacy:'Privacy', diagnostics:'Diagnostica',
-      sourceCheck:'Controllo fonti', selfTest:'Autotest', briefingCreate:'Crea briefing',
+      sourceCheck:'Controllo fonti', selfTest:'Autotest', feedback:'Feedback e nuove fonti', briefingCreate:'Crea briefing',
       briefingSetup:'Scegli in tre passaggi cosa ascoltare o leggere.', step:'Passaggio', of:'di', next:'Avanti', back:'Indietro',
       listen:'Ascolta', stop:'Ferma', done:'Fatto', briefingLocal:'Creato solo su questo dispositivo.',
       briefingAmount:'Durata', briefingItems:'notizie', noBriefing:'Nessuna notizia corrispondente.', speechUnavailable:'La lettura vocale non è disponibile.'
     },
     pt: {
       menu:'Menu', menuOpen:'Abrir menu', aboutProject:'Sobre o projeto', privacy:'Privacidade', diagnostics:'Diagnóstico',
-      sourceCheck:'Verificar fontes', selfTest:'Autoteste', briefingCreate:'Criar briefing',
+      sourceCheck:'Verificar fontes', selfTest:'Autoteste', feedback:'Comentários e novas fontes', briefingCreate:'Criar briefing',
       briefingSetup:'Escolhe em três passos o que queres ouvir ou ler.', step:'Passo', of:'de', next:'Seguinte', back:'Voltar',
       listen:'Ouvir', stop:'Parar', done:'Concluir', briefingLocal:'Criado apenas neste dispositivo.',
       briefingAmount:'Duração', briefingItems:'notícias', noBriefing:'Nenhuma notícia correspondente.', speechUnavailable:'A leitura em voz alta não está disponível.'
     },
     ru: {
       menu:'Меню', menuOpen:'Открыть меню', aboutProject:'О проекте', privacy:'Конфиденциальность', diagnostics:'Диагностика',
-      sourceCheck:'Проверка источников', selfTest:'Самопроверка', briefingCreate:'Создать брифинг',
+      sourceCheck:'Проверка источников', selfTest:'Самопроверка', feedback:'Отзывы и новые источники', briefingCreate:'Создать брифинг',
       briefingSetup:'За три шага выберите, что слушать или читать.', step:'Шаг', of:'из', next:'Далее', back:'Назад',
       listen:'Слушать', stop:'Стоп', done:'Готово', briefingLocal:'Составляется только на этом устройстве.',
       briefingAmount:'Длина', briefingItems:'материалов', noBriefing:'Подходящих материалов нет.', speechUnavailable:'Озвучивание недоступно.'
     },
     el: {
       menu:'Μενού', menuOpen:'Άνοιγμα μενού', aboutProject:'Σχετικά με το έργο', privacy:'Απόρρητο', diagnostics:'Διαγνωστικά',
-      sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', briefingCreate:'Δημιουργία ενημέρωσης',
+      sourceCheck:'Έλεγχος πηγών', selfTest:'Αυτοέλεγχος', feedback:'Σχόλια και νέες πηγές', briefingCreate:'Δημιουργία ενημέρωσης',
       briefingSetup:'Επιλέξτε σε τρία βήματα τι θέλετε να ακούσετε ή να διαβάσετε.', step:'Βήμα', of:'από', next:'Επόμενο', back:'Πίσω',
       listen:'Ακρόαση', stop:'Διακοπή', done:'Τέλος', briefingLocal:'Δημιουργείται μόνο σε αυτή τη συσκευή.',
       briefingAmount:'Διάρκεια', briefingItems:'ειδήσεις', noBriefing:'Δεν βρέθηκαν ειδήσεις.', speechUnavailable:'Η εκφώνηση δεν είναι διαθέσιμη.'
     },
     tr: {
       menu:'Menü', menuOpen:'Menüyü aç', aboutProject:'Proje hakkında', privacy:'Gizlilik', diagnostics:'Tanılama',
-      sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', briefingCreate:'Bülten oluştur',
+      sourceCheck:'Kaynak kontrolü', selfTest:'Uygulama testi', feedback:'Geri bildirim ve yeni kaynaklar', briefingCreate:'Bülten oluştur',
       briefingSetup:'Dinlemek veya okumak istediklerini üç adımda seç.', step:'Adım', of:'/', next:'İleri', back:'Geri',
       listen:'Dinle', stop:'Durdur', done:'Bitti', briefingLocal:'Yalnızca bu cihazda hazırlanır.',
       briefingAmount:'Uzunluk', briefingItems:'haber', noBriefing:'Uygun haber bulunamadı.', speechUnavailable:'Sesli okuma kullanılamıyor.'
@@ -542,6 +542,8 @@
   const searchPanel = document.getElementById('next-global-search');
   const searchInput = document.getElementById('next-search-input');
   const languageSelect = document.getElementById('next-language');
+  const briefingTranslationsInFlight = new Set();
+  const briefingTranslationsAttempted = new Set();
 
   function supportedLanguage(value) {
     const language = String(value || '').toLowerCase().split('-')[0];
@@ -618,6 +620,7 @@
     document.querySelector('[data-briefing-close]').setAttribute('aria-label', t('close'));
     document.getElementById('next-menu-title').textContent = t('menu');
     document.getElementById('next-menu-about').textContent = t('aboutProject');
+    document.getElementById('next-menu-feedback').textContent = t('feedback');
     document.getElementById('next-menu-privacy').textContent = t('privacy');
     document.getElementById('next-menu-diagnostics-label').textContent = t('diagnostics');
     document.getElementById('next-menu-sources').textContent = t('sourceCheck');
@@ -628,9 +631,9 @@
     return state.translations?.[state.language]?.[article.id] || null;
   }
 
-  function storeTranslation(article, translation) {
-    if (!state.translations[state.language]) state.translations[state.language] = {};
-    state.translations[state.language][article.id] = {
+  function storeTranslation(article, translation, language = state.language) {
+    if (!state.translations[language]) state.translations[language] = {};
+    state.translations[language][article.id] = {
       title: core.text(translation.title),
       intro: core.text(translation.intro),
       storedAt: new Date().toISOString()
@@ -740,7 +743,7 @@
 
     viewRoot.innerHTML = `
       <div class="meta-line"><span class="tag">${escapeHtml(t('previewNotice'))}</span></div>
-      <div class="section-heading"><h2>${escapeHtml(t('important'))}</h2><small>${escapeHtml(t('latest'))}</small></div>
+      <div class="section-heading"><h2>${escapeHtml(t('latest'))}</h2><small>${selected.length}</small></div>
       <article class="home-hero">
         ${heroImage}
         <div class="home-hero__content">
@@ -767,12 +770,63 @@
         ${selected.slice(0, 5).map((article, index) => {
           const cardIndex = state.cardArticles.push(article) - 1;
           const translation = translationFor(article);
-          return `<button class="briefing-item" type="button" data-action="open" data-index="${cardIndex}"><b>${index + 1}</b><span>${escapeHtml(translation?.title || article.title)}</span></button>`;
+          return `<button class="briefing-item" type="button" data-action="open" data-index="${cardIndex}" data-briefing-id="${escapeHtml(article.id)}"><b>${index + 1}</b><span>${escapeHtml(translation?.title || article.title)}</span></button>`;
         }).join('')}
       </div>
       <div class="section-heading"><h2>${escapeHtml(t('moreNews'))}</h2><small>${others.length}</small></div>
       ${cardsMarkup(others)}
     `;
+    void ensureBriefingTranslations(selected.slice(0, 5));
+  }
+
+  async function ensureBriefingTranslations(items) {
+    if (!window.WRNSharedTranslations?.request || !Array.isArray(items)) return;
+    const language = state.language;
+
+    for (const article of items.slice(0, 5)) {
+      if (state.language !== language) break;
+      if (!article || state.translations?.[language]?.[article.id]) continue;
+      const sourceLanguage = String(
+        article.language || article.lang || article.sprache || ''
+      ).trim().toLowerCase().split('-')[0];
+      if (sourceLanguage && sourceLanguage !== 'und' && sourceLanguage === language) continue;
+
+      const requestKey = `${language}::${article.id}`;
+      if (briefingTranslationsInFlight.has(requestKey) || briefingTranslationsAttempted.has(requestKey)) continue;
+      briefingTranslationsInFlight.add(requestKey);
+      briefingTranslationsAttempted.add(requestKey);
+      const item = [...viewRoot.querySelectorAll('.briefing-item')]
+        .find(element => element.dataset.briefingId === article.id);
+      item?.setAttribute('aria-busy', 'true');
+
+      try {
+        const result = await window.WRNSharedTranslations.request({
+          title: article.title,
+          text: article.intro || core.excerpt(article.content, 230),
+          mode: 'title_and_text'
+        });
+        if (result?.error || !result?.text) throw new Error(result?.message || 'Translation failed');
+        const parsed = core.splitTranslatedTeaser(result.text);
+        const translated = {
+          title: parsed.title || article.title,
+          intro: parsed.intro || article.intro
+        };
+        storeTranslation(article, translated, language);
+        const currentItem = [...viewRoot.querySelectorAll('.briefing-item')]
+          .find(element => element.dataset.briefingId === article.id);
+        if (currentItem && state.language === language) {
+          currentItem.querySelector('span').textContent = translated.title;
+          currentItem.removeAttribute('aria-busy');
+        }
+      } catch (error) {
+        console.warn('Automatic briefing translation failed', error);
+        const currentItem = [...viewRoot.querySelectorAll('.briefing-item')]
+          .find(element => element.dataset.briefingId === article.id);
+        currentItem?.removeAttribute('aria-busy');
+      } finally {
+        briefingTranslationsInFlight.delete(requestKey);
+      }
+    }
   }
 
   function hasPreferences() {
@@ -1253,6 +1307,24 @@
   function openArticle(article) {
     state.activeArticle = article;
     const translation = translationFor(article);
+    const related = state.articles
+      .filter(candidate => candidate.id !== article.id && candidate.source === article.source)
+      .slice(0, 5);
+    const relatedMarkup = related.length
+      ? `<section class="publisher-related">
+          <h2>${escapeHtml(t('moreNews'))} · ${escapeHtml(article.source)}</h2>
+          <div>
+            ${related.map(candidate => {
+              const index = state.cardArticles.push(candidate) - 1;
+              const candidateTranslation = translationFor(candidate);
+              return `<button type="button" data-action="open" data-index="${index}">
+                <strong>${escapeHtml(candidateTranslation?.title || candidate.title)}</strong>
+                <small>${escapeHtml(dateLabel(candidate))}</small>
+              </button>`;
+            }).join('')}
+          </div>
+        </section>`
+      : '';
     document.getElementById('next-article-source').textContent =
       `${article.source} · ${dateLabel(article)}`;
     document.getElementById('next-article-title').textContent =
@@ -1270,8 +1342,9 @@
       </div>
       <p class="article-intro">${escapeHtml(translation?.intro || article.intro)}</p>
       <div class="article-body">${escapeHtml(article.content || article.intro)}</div>
+      ${relatedMarkup}
     `;
-    articleDialog.showModal();
+    if (!articleDialog.open) articleDialog.showModal();
     document.getElementById('next-article-content').scrollTop = 0;
   }
 
@@ -1511,7 +1584,10 @@
         target.textContent = saved ? '★' : '☆';
         if (state.view === 'saved' && !saved) renderSaved();
       }
-      if (action === 'preferences') openPreferences();
+      if (action === 'preferences') {
+        if (menuDialog.open) menuDialog.close();
+        openPreferences();
+      }
       if (action === 'retry') loadData();
       if (action === 'event-period') {
         state.eventFilter.archived = target.dataset.value === 'archive';
@@ -1553,7 +1629,10 @@
         state.media.videoMode = target.dataset.value === 'information' ? 'information' : 'current';
         renderMedia();
       }
-      if (action === 'briefing-open') openBriefing();
+      if (action === 'briefing-open') {
+        if (menuDialog.open) menuDialog.close();
+        openBriefing();
+      }
       if (action === 'briefing-next') {
         collectBriefingStep();
         state.briefing.step = Math.min(3, state.briefing.step + 1);

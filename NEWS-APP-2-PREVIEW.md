@@ -25,10 +25,12 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - kompatible gespeicherte Artikel über den bestehenden Schlüssel `wrn_bookmarks`
 - Übersetzen direkt in der Artikelübersicht für Titel und Einleitung
 - Artikelansicht mit Übersetzen, Speichern und Original öffnen
+- am Artikelende bis zu fünf weitere Meldungen derselben Quelle; der aktuell geöffnete Artikel ist links cyan markiert
 - neun angebotene Oberflächensprachen
 - mobile Vollbild-Artikelansicht und mindestens 44 × 44 Pixel große Bedienflächen
-- kompaktes Hamburger-Menü mit Projekthinweisen sowie einem getrennten kleinen Diagnosebereich
+- kompaktes Hamburger-Menü ohne doppelte Hauptnavigation, dafür mit Briefing, Einstellungen, Terminen, Lexikon, Gefangenensolidarität, Entwicklungen, Projekthinweisen und kleinem Diagnosebereich
 - dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
+- automatische Übersetzung der fünf Start-Kurzmeldungen in die App-Sprache; bereits übersetzte Meldungen werden lokal wiederverwendet
 - responsive, innerhalb ihrer Karten zugeschnittene Bilder ohne seitliches Überlaufen
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads
