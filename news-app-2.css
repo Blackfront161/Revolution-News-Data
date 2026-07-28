@@ -379,11 +379,14 @@ img {
 
 .home-hero__image {
   position: relative;
+  display: grid;
   overflow: hidden;
+  padding: 8px;
   min-height: 290px;
   background:
     linear-gradient(135deg, rgba(0, 233, 244, .12), rgba(255, 54, 88, .11)),
     var(--surface-3);
+  place-items: center;
 }
 
 .home-hero__image img {
@@ -391,7 +394,7 @@ img {
   width: 100%;
   height: 100%;
   max-width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -572,12 +575,15 @@ img {
 }
 
 .news-card__image {
+  display: grid;
   overflow: hidden;
+  padding: 6px;
   min-width: 0;
   min-height: 174px;
   background:
     linear-gradient(140deg, rgba(0, 233, 244, .08), rgba(255, 54, 88, .08)),
     var(--surface-3);
+  place-items: center;
 }
 
 .news-card__image img {
@@ -585,7 +591,7 @@ img {
   width: 100%;
   height: 100%;
   max-width: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -1118,11 +1124,13 @@ dialog::backdrop {
 .article-lead-image {
   display: block;
   width: 100%;
+  height: auto;
   max-width: 100%;
-  max-height: min(52dvh, 460px);
+  max-height: min(72dvh, 720px);
   margin: 18px auto 0;
   border-radius: 16px;
-  object-fit: cover;
+  background: var(--surface-3);
+  object-fit: contain;
   object-position: center;
 }
 
@@ -1813,11 +1821,13 @@ button.feature-card {
   }
 
   .news-card {
-    grid-template-columns: minmax(0, 1fr) minmax(86px, 27vw);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .news-card__image {
+    order: -1;
     min-height: 0;
+    aspect-ratio: 16 / 9;
   }
 
   .news-card__body {

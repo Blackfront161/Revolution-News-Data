@@ -31,7 +31,7 @@ Die lokale Vorschau verwendet öffentliche Daten aus dem Repository. Übersetzun
 - sinnorientiertes Hamburger-Menü ohne doppelte Navigation: Farbdarstellung, Schriftgröße und Artikeldichte sowie getrennte Bereiche für Projekt und Diagnose
 - dreistufiger, vollständig lokaler Briefing-Assistent für Themen/Regionen, Sprache/Länge und Vorlesen
 - automatische Übersetzung der fünf Start-Kurzmeldungen in die App-Sprache; bereits übersetzte Meldungen werden lokal wiederverwendet
-- responsive, innerhalb ihrer Karten zugeschnittene Bilder ohne seitliches Überlaufen
+- responsive Bilder ohne Abschneiden: vollständige Darstellung im Desktop-Rahmen und auf Smartphones oberhalb des Artikels
 - klar getrennte Bereiche für Themen-/Regionsmarkierungen und Artikelaktionen
 - Termine mit Suche, Länderfilter, Enddatum-Logik, Archiv und zusammengefassten Wiederholungen
 - Lexikon mit mehreren Unterbereichen, Suche, 100+ Begriffen, Quellen und Downloads

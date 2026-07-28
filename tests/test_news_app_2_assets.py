@@ -104,6 +104,8 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert "article-classification" in script
     assert ':root[data-theme="light"]' in style
     assert ':root[data-font-size="xlarge"]' in style
+    assert ".news-card__image img" in style
+    assert "object-fit: contain" in style
 
 
 if __name__ == "__main__":
