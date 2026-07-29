@@ -106,6 +106,7 @@ for token in (
     assert token in release
 assert "-verify -verbose -certs" in release
 assert "-verify -strict -certs" not in release
+assert '@("cordova.js", "cordova_plugins.js")' in release
 
 print(
     "WRN 1.8.5 quality release: "
