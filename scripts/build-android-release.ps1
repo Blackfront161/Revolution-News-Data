@@ -32,7 +32,10 @@ function Get-RelativeWebFiles([string]$Root) {
     )
     Get-ChildItem -LiteralPath $Root -File | Where-Object {
         $extensions -contains $_.Extension.ToLowerInvariant() -and
-        $_.Name -notmatch "^(aggregate-errors|workflow-audit|INTEGRATION-REPORT|feature-audit)\.json$"
+        $_.Name -notmatch "^(aggregate-errors|workflow-audit|INTEGRATION-REPORT|feature-audit)\.json$" -and
+        # Capacitor creates these empty compatibility shims during sync. They
+        # are generated build files, not part of the selected Git web source.
+        $_.Name -notin @("cordova.js", "cordova_plugins.js")
     } | Sort-Object Name
 }
 
