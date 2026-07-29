@@ -697,7 +697,7 @@
       const result = await window.WRNSharedTranslations?.request?.({
         title: '',
         text: body,
-        mode: 'text',
+        mode: 'continuation',
         targetLanguage
       });
       if (!result || result.error || !String(result.text || '').trim()) throw new Error(result?.message || 'Translation failed');

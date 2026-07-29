@@ -60,11 +60,13 @@ for token in [
 
 assert "key: 'solidarity'" in navigation
 assert "WRNPrisonerSolidarity190" in navigation
-assert "prisoner-solidarity.js?v=190-solidarity-2" in index
+assert "prisoner-solidarity.js?v=190-solidarity-3" in index
 assert "prisoner-solidarity.css?v=190-solidarity-2" in index
 assert "wrn_prisoner_letter_" in module
 assert "openTranslationLanguageDialog" in module
 assert "targetLanguage" in module
+assert "mode: 'continuation'" in module
+assert "mode: 'text'" not in module
 assert "window.confirm(t.translateConfirm)" not in module
 assert "function insertStarter(dialog, profile)" in module
 assert "starterInserted" in module
