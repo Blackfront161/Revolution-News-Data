@@ -1578,10 +1578,17 @@ RADAR_API_FIELDS = ",".join((
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
+NON_IMAGE_MEDIA_EXTENSIONS = (
+    '.mp4', '.m4v', '.mov', '.webm', '.ogv',
+    '.mp3', '.m4a', '.aac', '.ogg', '.oga', '.wav', '.flac', '.m3u8',
+)
 
 def clean_image_url(url, base_url):
     if not url: return None
     full_url = urljoin(base_url, url)
+    pathname = safe_lower(urlparse(full_url).path)
+    if pathname.endswith(NON_IMAGE_MEDIA_EXTENSIONS):
+        return None
     filename = full_url.split('/')[-1].lower()
     if any(kw in filename for kw in LAYOUT_FILES): return None
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None

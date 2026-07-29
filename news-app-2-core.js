@@ -38,6 +38,20 @@
     }
   }
 
+  function safeImageUrl(value) {
+    const candidate = safeHttpUrl(value);
+    if (!candidate) return '';
+    try {
+      const pathname = new URL(candidate).pathname.toLowerCase();
+      if (/\.(?:mp4|m4v|mov|webm|ogv|mp3|m4a|aac|ogg|oga|wav|flac|m3u8)$/i.test(pathname)) {
+        return '';
+      }
+      return candidate;
+    } catch {
+      return '';
+    }
+  }
+
   function dateValue(article) {
     const timestamp = Date.parse(
       article?.pubDate || article?.date || article?.eventStart || ''
@@ -81,7 +95,7 @@
       source: text(article?.quelleName || article?.source || 'Unknown source'),
       author: text(article?.author),
       link: safeHttpUrl(article?.link),
-      image: safeHttpUrl(article?.image || article?.imageUrl),
+      image: safeImageUrl(article?.image || article?.imageUrl),
       primaryRegion,
       primaryTopic,
       secondaryTopics: Array.isArray(article?.secondaryTopics)
@@ -250,6 +264,7 @@
     normalizeArticles,
     normalizeRegion,
     safeHttpUrl,
+    safeImageUrl,
     splitTranslatedTeaser,
     stripHtml,
     text

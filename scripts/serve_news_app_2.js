@@ -68,6 +68,7 @@ const server = http.createServer((request, response) => {
 
 server.listen(port, host, () => {
   console.log(`WRN News App 2 preview: http://127.0.0.1:${port}/next.html?preview=8`);
+  console.log(`Mit aktuellen Live-Feeds: http://127.0.0.1:${port}/next.html?preview=8&data=live`);
   if (host === '0.0.0.0') {
     const addresses = Object.values(os.networkInterfaces())
       .flat()
@@ -75,6 +76,7 @@ server.listen(port, host, () => {
       .map(address => address.address);
     [...new Set(addresses)].forEach(address => {
       console.log(`Smartphone im gleichen WLAN: http://${address}:${port}/next.html?preview=8`);
+      console.log(`Smartphone mit aktuellen Feeds: http://${address}:${port}/next.html?preview=8&data=live`);
     });
   }
 });

@@ -22,6 +22,8 @@ def test_checkpoints_are_throttled_and_atomic():
     assert 'temporary = f"{path}.tmp"' in aggregate
     assert "os.replace(temporary, path)" in aggregate
     assert "save_checkpoint(force=True)" in aggregate
+    assert "NON_IMAGE_MEDIA_EXTENSIONS" in aggregate
+    assert "pathname.endswith(NON_IMAGE_MEDIA_EXTENSIONS)" in aggregate
 
 
 def test_workflow_validates_and_stages_every_browser_feed():

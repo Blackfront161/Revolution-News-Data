@@ -4,6 +4,10 @@ const assert = require('assert');
 const path = require('path');
 const core = require(path.resolve(__dirname, '..', 'news-app-2-core.js'));
 
+assert.strictEqual(core.safeImageUrl('https://example.org/photo.jpg'), 'https://example.org/photo.jpg');
+assert.strictEqual(core.safeImageUrl('https://example.org/video.mp4'), '');
+assert.strictEqual(core.safeImageUrl('https://example.org/audio.ogg?download=1'), '');
+
 const articles = core.normalizeArticles([
   {
     title: 'Newest A',

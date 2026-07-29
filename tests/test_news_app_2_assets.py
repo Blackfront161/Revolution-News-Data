@@ -22,6 +22,7 @@ def test_preview_server_can_be_exposed_to_private_lan():
     assert "argumentValue('--host')" in server
     assert "'0.0.0.0'" in server
     assert "Smartphone im gleichen WLAN" in server
+    assert "data=live" in server
 
 
 def test_live_entry_point_is_not_rewired():
@@ -53,6 +54,16 @@ def test_preview_keeps_card_translation_and_safe_metadata():
     assert "prisoner-solidarity.js" in html
     assert "serviceWorker.register('./news-app-2-sw.js'" in script
     assert "scope: './next.html'" in script
+
+
+def test_preview_can_read_current_production_feeds_without_writing_live_files():
+    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    config = (ROOT / "news-app-2-config.js").read_text(encoding="utf-8")
+    assert "https://blackfront161.github.io" in html
+    assert "WRN_PREVIEW_LIVE_DATA" in config
+    assert "dataMode: WRN_PREVIEW_LIVE_DATA ? 'live-readonly'" in config
+    assert "wrnPreviewDataUrl('news-feed.json')" in config
+    assert "wrnPreviewDataUrl('events-feed.json')" in config
 
 
 def test_preview_offline_cache_is_isolated_from_live_app():
@@ -243,6 +254,7 @@ if __name__ == "__main__":
     test_preview_server_can_be_exposed_to_private_lan()
     test_live_entry_point_is_not_rewired()
     test_preview_keeps_card_translation_and_safe_metadata()
+    test_preview_can_read_current_production_feeds_without_writing_live_files()
     test_preview_offline_cache_is_isolated_from_live_app()
     test_specialty_views_are_native_preview_routes()
     test_default_lists_stay_short_and_source_balanced()
