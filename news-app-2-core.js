@@ -229,7 +229,7 @@
 
   function splitTranslatedTeaser(value) {
     const clean = text(value);
-    const separators = [/\s+---\s+/, /\n-{3,}\n/, /\n\n+/];
+    const separators = [/\s*-{3,}\s*/, /\n\n+/];
     for (const separator of separators) {
       const parts = String(value || '').trim().split(separator);
       if (parts.length >= 2) {

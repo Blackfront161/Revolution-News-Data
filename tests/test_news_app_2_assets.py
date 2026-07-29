@@ -35,6 +35,8 @@ def test_release_entry_point_is_news_app_2_and_classic_is_preserved():
     assert "app.js" in classic
     assert "classic.html" in index
     assert "index.html" in redirect
+    assert "preview=8" in redirect
+    assert "target.searchParams.has('preview')" in redirect
     assert "news-app-2.js?release=2" in service_worker
     assert "classic.html" in service_worker
 
@@ -67,6 +69,7 @@ def test_release_uses_same_origin_feeds_and_preview_can_read_live_feeds():
     config = (ROOT / "news-app-2-config.js").read_text(encoding="utf-8")
     assert "https://blackfront161.github.io" in html
     assert "WRN_PREVIEW_LIVE_DATA" in config
+    assert "WRN_PREVIEW_PARAMETERS.has('preview')" in config
     assert "'same-origin-production'" in config
     assert "'live-readonly'" in config
     assert "wrnPreviewDataUrl('news-feed.json')" in config
@@ -151,7 +154,8 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert ':root[data-font-size="xlarge"]' in style
     assert ".news-card__image img" in style
     assert "object-fit: contain" in style
-    assert "-webkit-line-clamp" not in style
+    assert ".briefing-item span {" in style
+    assert "-webkit-line-clamp: 2;" in style
     assert "display: block;\n  overflow: visible;" in style
     assert "linear-gradient(90deg, #050508 0 48%, #ff3158 52% 100%)" in style
     assert "-webkit-text-stroke: .6px #ff3158" in style
@@ -200,8 +204,13 @@ def test_release_header_cards_and_mobile_navigation_are_polished():
     assert "height: calc(68px + env(safe-area-inset-bottom));" in style
     assert "inset: auto 0 0;" in style
     assert "contain: paint;" in style
-    assert "will-change: transform;" not in style
+    assert "transform: translate3d(0, 0, 0);" in style
+    assert "will-change: transform;" in style
     assert ".news-card::before {\n    opacity: 1;" in style
+    assert "homeServiceMarkup" in script
+    assert 'class="home-service-grid"' in script
+    assert 'data-view-target="developments"' in script
+    assert 'data-view-target="events"' in script
 
 
 def test_animal_liberation_sources_are_expanded_and_registered():

@@ -2,7 +2,10 @@
 'use strict';
 
 const WRN_PREVIEW_PARAMETERS = new URLSearchParams(window.location.search);
-const WRN_RELEASE_CHANNEL = window.location.pathname.endsWith('/next.html')
+const WRN_RELEASE_CHANNEL = (
+  window.location.pathname.endsWith('/next.html')
+  || WRN_PREVIEW_PARAMETERS.has('preview')
+)
   ? 'preview'
   : 'production';
 const WRN_PREVIEW_LIVE_DATA = WRN_RELEASE_CHANNEL === 'preview'

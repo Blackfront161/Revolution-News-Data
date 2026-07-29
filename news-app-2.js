@@ -1874,6 +1874,41 @@
       </header>`;
   }
 
+  function homeServiceMarkup() {
+    const developments = specialty
+      .developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 })
+      .slice(0, 2);
+    const upcomingEvents = release
+      .filterEvents(state.events, { archived: false })
+      .sort((first, second) => Number(first.start) - Number(second.start))
+      .slice(0, 2);
+    if (!developments.length && !upcomingEvents.length) return '';
+
+    return `
+      <section class="home-service-grid" aria-label="${escapeHtml(`${t('developments')} · ${t('events')}`)}">
+        ${developments.length ? `<article class="home-service-card">
+          <header>
+            <div><span class="eyebrow">${escapeHtml(t('beta'))}</span><h2>${escapeHtml(t('developments'))}</h2></div>
+            <button type="button" class="home-service-link" data-view-target="developments" aria-label="${escapeHtml(t('developments'))}">→</button>
+          </header>
+          <ol class="home-service-list">${developments.map(story => `<li>
+            <strong>${escapeHtml(story.title)}</strong>
+            <small>${story.itemCount} ${escapeHtml(t('storyArticles'))} · ${story.sourceCount} ${escapeHtml(t('storySources'))}</small>
+          </li>`).join('')}</ol>
+        </article>` : ''}
+        ${upcomingEvents.length ? `<article class="home-service-card">
+          <header>
+            <div><span class="eyebrow">${escapeHtml(t('events'))}</span><h2>${escapeHtml(t('eventUpcoming'))}</h2></div>
+            <button type="button" class="home-service-link" data-view-target="events" aria-label="${escapeHtml(t('eventUpcoming'))}">→</button>
+          </header>
+          <ol class="home-service-list">${upcomingEvents.map(event => `<li>
+            <strong>${escapeHtml(event.title)}</strong>
+            <small>${escapeHtml(eventWhenLabel(event))}${event.city ? ` · ${escapeHtml(event.city)}` : ''}</small>
+          </li>`).join('')}</ol>
+        </article>` : ''}
+      </section>`;
+  }
+
   function renderHome() {
     state.cardArticles = [];
     const selected = core.balanceBySource(state.articles, HOME_COUNT, 2);
@@ -1921,6 +1956,7 @@
           return `<button class="briefing-item" type="button" data-action="open" data-index="${cardIndex}" data-briefing-id="${escapeHtml(article.id)}"><b>${index + 1}</b><span>${escapeHtml(translation?.title || article.title)}</span></button>`;
         }).join('')}
       </div>
+      ${homeServiceMarkup()}
       <div class="section-heading">
         <h2>${escapeHtml(t('moreNews'))}</h2>
         <button class="section-text-action" type="button" data-action="open-archive" data-period="7d">${escapeHtml(t('archiveBrowse'))} →</button>

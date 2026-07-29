@@ -89,5 +89,9 @@ assert.deepStrictEqual(
   core.splitTranslatedTeaser('Übersetzter Titel\n---\nÜbersetzte Einleitung'),
   { title: 'Übersetzter Titel', intro: 'Übersetzte Einleitung' }
 );
+assert.deepStrictEqual(
+  core.splitTranslatedTeaser('Übersetzter Titel---Übersetzte Einleitung'),
+  { title: 'Übersetzter Titel', intro: 'Übersetzte Einleitung' }
+);
 
 console.log('News App 2 core contracts: OK');
