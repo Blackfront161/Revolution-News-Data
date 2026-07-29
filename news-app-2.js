@@ -2927,6 +2927,21 @@
           card.querySelector('.card-actions')?.before(note);
         }
         note.textContent = t('translated');
+      } else {
+        const hero = document.querySelector('.home-hero');
+        const title = hero?.querySelector('h1');
+        const intro = hero?.querySelector('.home-hero__content > p');
+        if (title) title.textContent = parsed.title || article.title;
+        if (intro) intro.textContent = parsed.intro || article.intro;
+        if (hero) {
+          let note = hero.querySelector('.translation-note');
+          if (!note) {
+            note = document.createElement('small');
+            note.className = 'translation-note';
+            hero.querySelector('.home-hero__actions')?.before(note);
+          }
+          note.textContent = t('translated');
+        }
       }
       showToast(t('translatedTitle'));
     } catch (error) {
