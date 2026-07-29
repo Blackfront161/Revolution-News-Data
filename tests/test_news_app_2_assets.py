@@ -139,7 +139,7 @@ def test_menu_briefing_and_responsive_images_are_present():
     assert "data-briefing-id" in script
     assert "targetLanguage: language" in script
     assert "hero?.querySelector('h1')" in script
-    assert "hero.querySelector('.home-hero__actions')?.before(note)" in script
+    assert "hero.querySelector('.card-actions')?.before(note)" in script
     assert "<h2>${escapeHtml(t('latest'))}</h2>" in script
     assert "UI_SETTINGS_KEY" in script
     assert "article-classification" in script

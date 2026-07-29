@@ -2938,7 +2938,7 @@
           if (!note) {
             note = document.createElement('small');
             note.className = 'translation-note';
-            hero.querySelector('.home-hero__actions')?.before(note);
+            hero.querySelector('.card-actions')?.before(note);
           }
           note.textContent = t('translated');
         }
