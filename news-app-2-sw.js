@@ -1,7 +1,7 @@
 'use strict';
 
 const CACHE_PREFIX = 'wrn-news-app-2-';
-const CACHE_NAME = `${CACHE_PREFIX}v27`;
+const CACHE_NAME = `${CACHE_PREFIX}v28`;
 const SHELL = [
   './next.html',
   './news-app-2-release-checklist.html',
@@ -21,7 +21,7 @@ const SHELL = [
   './shared-translation-client.js?preview=4',
   './stories-core.js?preview=3',
   './lexicon-tab.js?preview=3',
-  './prisoner-solidarity.js?preview=4',
+  './prisoner-solidarity.js?preview=5',
   './zine-designer.js?preview=2',
   './media-player.js?preview=1',
   './audio-tools.js?preview=1',
