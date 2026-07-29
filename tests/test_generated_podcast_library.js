@@ -17,5 +17,21 @@ assert(
   source.includes("console.warn('Generated podcast library unavailable; using static fallback'"),
   'News App 2 does not report when it uses the static generated podcast fallback'
 );
+assert(
+  !source.includes("if (!article || !('speechSynthesis' in window))"),
+  'Cloud podcast controls are still blocked when Android device speech is unavailable'
+);
+assert(
+  source.includes("const deviceSpeechAvailable = 'speechSynthesis' in window"),
+  'News App 2 does not distinguish optional device speech from cloud podcasts'
+);
+assert(
+  source.includes("? (shortText || fullText)"),
+  'Short cloud podcasts do not fall back to the article text when summarization is unavailable'
+);
+assert(
+  source.includes("core.text(error?.message)"),
+  'Cloud podcast failures do not expose a useful error in the article panel'
+);
 
-console.log('Generated podcast library loading contract: OK');
+console.log('Generated podcast loading and generation contract: OK');

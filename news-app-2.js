@@ -3227,18 +3227,19 @@
 
   function renderArticlePodcast() {
     const article = state.activeArticle;
-    if (!article || !('speechSynthesis' in window)) {
-      showToast(t('speechUnavailable'));
-      return;
-    }
+    if (!article) return;
+    const deviceSpeechAvailable = 'speechSynthesis' in window
+      && typeof window.SpeechSynthesisUtterance === 'function';
     stopArticlePodcast();
     const translation = translationFor(article);
     articlePodcast.language = translation?.fullContent
       ? state.language
       : String(article.language || article.lang || state.language).toLowerCase().split(/[-_]/)[0];
-    articlePodcast.chunks = splitTextForArticleSpeech(
-      `${translation?.title || article.title}. ${translation?.fullContent ? translation.content : (article.content || article.intro)}`
-    );
+    articlePodcast.chunks = deviceSpeechAvailable
+      ? splitTextForArticleSpeech(
+        `${translation?.title || article.title}. ${translation?.fullContent ? translation.content : (article.content || article.intro)}`
+      )
+      : [];
     const cloudVoices = {
       en: [['en-US-AriaNeural', 'Aria'], ['en-US-GuyNeural', 'Guy']],
       de: [['de-DE-KatjaNeural', 'Katja'], ['de-DE-ConradNeural', 'Conrad']],
@@ -3252,16 +3253,23 @@
     };
     const voices = cloudVoices[state.language] || cloudVoices.en;
     showArticleTool(t('podcast'), `
-      <p>${escapeHtml(t('deviceVoice'))}</p>
-      <div class="article-podcast-settings">
-        <label><span>${escapeHtml(t('voice'))}</span><select id="next-article-podcast-voice"><option value="">${escapeHtml(t('deviceVoice'))}</option>${articleVoiceOptions()}</select></label>
-        <label><span>${escapeHtml(t('speed'))}</span><select id="next-article-podcast-speed"><option value=".85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option></select></label>
-      </div>
-      <div class="article-podcast-controls">
-        <button type="button" class="primary-button" data-action="article-podcast-play">${escapeHtml(t('play'))}</button>
-        <button type="button" class="secondary-button" data-action="article-podcast-stop">${escapeHtml(t('stop'))}</button>
-        <span id="next-article-podcast-status">${escapeHtml(t('ready'))}</span>
-      </div>
+      ${deviceSpeechAvailable ? `
+        <p>${escapeHtml(t('deviceVoice'))}</p>
+        <div class="article-podcast-settings">
+          <label><span>${escapeHtml(t('voice'))}</span><select id="next-article-podcast-voice"><option value="">${escapeHtml(t('deviceVoice'))}</option>${articleVoiceOptions()}</select></label>
+          <label><span>${escapeHtml(t('speed'))}</span><select id="next-article-podcast-speed"><option value=".85">0.85×</option><option value="1" selected>1×</option><option value="1.15">1.15×</option><option value="1.3">1.3×</option></select></label>
+        </div>
+        <div class="article-podcast-controls">
+          <button type="button" class="primary-button" data-action="article-podcast-play">${escapeHtml(t('play'))}</button>
+          <button type="button" class="secondary-button" data-action="article-podcast-stop">${escapeHtml(t('stop'))}</button>
+          <span id="next-article-podcast-status">${escapeHtml(t('ready'))}</span>
+        </div>
+      ` : `
+        <div class="notice-card">
+          <strong>${escapeHtml(t('deviceVoice'))}</strong>
+          <p>${escapeHtml(t('speechUnavailable'))}</p>
+        </div>
+      `}
       <div class="podcast-cloud-options">
         <strong>${escapeHtml(t('cloudPodcast'))}</strong>
         <p>${escapeHtml(t('onlineCostNotice'))}</p>
@@ -3279,7 +3287,12 @@
     const article = state.activeArticle;
     const status = document.getElementById('next-cloud-podcast-status');
     const buttons = [...document.querySelectorAll('[data-action="article-cloud-podcast"]')];
-    if (!article || !window.WRN_CONFIG?.proxyUrl) return;
+    if (!article) return;
+    if (!window.WRN_CONFIG?.proxyUrl) {
+      if (status) status.textContent = t('podcastFailed');
+      showToast(t('podcastFailed'));
+      return;
+    }
     buttons.forEach(button => { button.disabled = true; });
     if (status) status.textContent = t('podcastGenerating');
     try {
@@ -3297,8 +3310,11 @@
         length: 'detailed',
         language: state.language
       });
+      const shortText = [shortSummary?.lead, ...(shortSummary?.bullets || [])]
+        .filter(Boolean)
+        .join('. ');
       const podcastText = mode === 'short'
-        ? [shortSummary?.lead, ...(shortSummary?.bullets || [])].filter(Boolean).join('. ')
+        ? (shortText || fullText)
         : fullText;
       const response = await fetch(window.WRN_CONFIG.proxyUrl, {
         method: 'POST',
@@ -3342,7 +3358,13 @@
     } catch (error) {
       console.warn('Cloud podcast generation failed', error);
       const currentStatus = document.getElementById('next-cloud-podcast-status');
-      if (currentStatus) currentStatus.textContent = t('podcastFailed');
+      const detail = core.excerpt(core.text(error?.message), 160);
+      if (currentStatus) {
+        currentStatus.textContent = detail
+          ? `${t('podcastFailed')} ${detail}`
+          : t('podcastFailed');
+      }
+      showToast(t('podcastFailed'));
     } finally {
       document.querySelectorAll('[data-action="article-cloud-podcast"]').forEach(button => {
         button.disabled = false;
