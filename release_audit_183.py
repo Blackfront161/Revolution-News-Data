@@ -261,7 +261,7 @@ class ReleaseAudit:
         )
 
     def check_security_policy(self) -> None:
-        index = read_text(self.root, "index.html")
+        index = read_text(self.root, "classic.html")
         match = re.search(
             r'http-equiv="Content-Security-Policy"\s+content="([^"]+)"',
             index,

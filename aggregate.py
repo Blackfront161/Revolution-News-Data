@@ -14,6 +14,29 @@ from urllib3.util import Retry
 
 # WRN 1.7.23 ENTRY SAFETY
 AGGREGATE_ENTRY_ERRORS = []
+AGGREGATE_STARTED_AT = time.monotonic()
+AGGREGATE_BUDGET_SECONDS = max(
+    300,
+    int(os.environ.get("WRN_AGGREGATE_BUDGET_SECONDS", "1980")),
+)
+AGGREGATE_STOP_RESERVE_SECONDS = max(
+    60,
+    int(os.environ.get("WRN_AGGREGATE_STOP_RESERVE_SECONDS", "120")),
+)
+CHECKPOINT_INTERVAL_SECONDS = max(
+    30,
+    int(os.environ.get("WRN_CHECKPOINT_INTERVAL_SECONDS", "240")),
+)
+_LAST_CHECKPOINT_AT = 0.0
+
+
+def aggregate_seconds_remaining():
+    elapsed = time.monotonic() - AGGREGATE_STARTED_AT
+    return max(0.0, AGGREGATE_BUDGET_SECONDS - elapsed)
+
+
+def aggregate_budget_exhausted():
+    return aggregate_seconds_remaining() <= AGGREGATE_STOP_RESERVE_SECONDS
 
 
 def safe_text(value, fallback=""):
@@ -890,6 +913,33 @@ for _wrn_source in _wrn_extra_sources_186:
     _wrn_known_source_names_186.add(safe_lower(_wrn_source.get("name")))
 # WRN SOURCE BALANCE 1.8.6 END
 
+
+def rotate_source_buckets(source_buckets):
+    """Rotate categories and sources so a timed run never starves the tail."""
+    if os.environ.get("WRN_NEWS_SOURCE_NAMES", "").strip():
+        return source_buckets
+    buckets = list(source_buckets.items())
+    if not buckets:
+        return source_buckets
+    four_hour_slot = int(time.time() // (4 * 60 * 60))
+    category_offset = four_hour_slot % len(buckets)
+    buckets = buckets[category_offset:] + buckets[:category_offset]
+    rotated = {}
+    for index, (category, sources) in enumerate(buckets):
+        rows = list(sources)
+        if rows:
+            source_offset = (four_hour_slot + index) % len(rows)
+            rows = rows[source_offset:] + rows[:source_offset]
+        rotated[category] = rows
+    print(
+        "[ZEITPLAN] Rotierende Quellenreihenfolge: "
+        f"Slot {four_hour_slot}, {sum(len(rows) for rows in rotated.values())} Quellen."
+    )
+    return rotated
+
+
+quellen = rotate_source_buckets(quellen)
+
 ARTICLE_MIN_LENGTHS = {
     safe_lower(source.get("name")): max(
         350,
@@ -1528,10 +1578,17 @@ RADAR_API_FIELDS = ",".join((
 
 LAYOUT_FILES = ['logo.png', 'logo.jpg', 'logo.svg', 'banner', 'favicon', 'sidebar', 'footer', 'avatar', 'pixel', 'nav_', 'blank.gif', 'spacer.gif']
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
+NON_IMAGE_MEDIA_EXTENSIONS = (
+    '.mp4', '.m4v', '.mov', '.webm', '.ogv',
+    '.mp3', '.m4a', '.aac', '.ogg', '.oga', '.wav', '.flac', '.m3u8',
+)
 
 def clean_image_url(url, base_url):
     if not url: return None
     full_url = urljoin(base_url, url)
+    pathname = safe_lower(urlparse(full_url).path)
+    if pathname.endswith(NON_IMAGE_MEDIA_EXTENSIONS):
+        return None
     filename = full_url.split('/')[-1].lower()
     if any(kw in filename for kw in LAYOUT_FILES): return None
     if any(kw in full_url.lower() for kw in ['/themes/', '/plugins/', '/assets/']): return None
@@ -1999,7 +2056,24 @@ except Exception as radar_error:
         )
 
 # HILFSFUNKTION: CHECKPOINTS SPEICHERN (Sicherheit gegen Abstürze)
-def save_checkpoint():
+def atomic_json_write(path, payload):
+    temporary = f"{path}.tmp"
+    with open(temporary, "w", encoding="utf-8") as output:
+        json.dump(payload, output, ensure_ascii=False, indent=2)
+        output.write("\n")
+    os.replace(temporary, path)
+
+
+def save_checkpoint(force=False):
+    global _LAST_CHECKPOINT_AT
+    now = time.monotonic()
+    if (
+        not force
+        and _LAST_CHECKPOINT_AT
+        and now - _LAST_CHECKPOINT_AT < CHECKPOINT_INTERVAL_SECONDS
+    ):
+        return False
+
     alle = list(archiv_dict.values())
     try:
         # Sortieren nach Datum
@@ -2052,16 +2126,20 @@ def save_checkpoint():
         if len(news) >= 2000:
             break
 
-    with open('news.json', 'w', encoding='utf-8') as f:
-        json.dump(news, f, ensure_ascii=False, indent=2)
-    with open('events.json', 'w', encoding='utf-8') as f:
-        json.dump(events, f, ensure_ascii=False, indent=2)
+    atomic_json_write("news.json", news)
+    atomic_json_write("events.json", events)
+    _LAST_CHECKPOINT_AT = time.monotonic()
+    print(
+        "[CHECKPOINT] "
+        f"{len(news)} Nachrichten und {len(events)} Termine atomar gespeichert."
+    )
+    return True
 
 
 if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {
     "1", "true", "yes", "on"
 }:
-    save_checkpoint()
+    save_checkpoint(force=True)
     save_aggregate_error_report()
     print(
         "\n[ERFOLG] Radar.squat wurde separat aktualisiert: "
@@ -2069,11 +2147,19 @@ if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {
     )
     raise SystemExit(0)
 
+aggregate_stopped_for_budget = False
+
 for kontinent, feeds in quellen.items():
+    if aggregate_budget_exhausted():
+        aggregate_stopped_for_budget = True
+        break
     print(f"\n--- Kategorie: {kontinent} ---")
     is_radar = (kontinent == "Radar")
     
     for feed in feeds:
+        if aggregate_budget_exhausted():
+            aggregate_stopped_for_budget = True
+            break
         if not isinstance(feed, dict):
             print(
                 "  [FEHLER] Ungültiger Quellen-Eintrag "
@@ -2122,7 +2208,10 @@ for kontinent, feeds in quellen.items():
         tiefe_scrapes_gemacht = 0
         attempted_links = set()
 
-        for entry in parsed.entries[:limit]: 
+        for entry in parsed.entries[:limit]:
+            if aggregate_budget_exhausted():
+                aggregate_stopped_for_budget = True
+                break
             try:
                 if not hasattr(entry, "get"):
                     raise TypeError(
@@ -2453,7 +2542,11 @@ for kontinent, feeds in quellen.items():
         # herausfallen. Nutze freie Abrufplätze, um auch diese Archiv-Einträge
         # schrittweise zu reparieren, statt sie dauerhaft als Anreißer zu
         # belassen.
-        if not is_radar and tiefe_scrapes_gemacht < MAX_NEUE_SCRAPES:
+        if (
+            not aggregate_stopped_for_budget
+            and not is_radar
+            and tiefe_scrapes_gemacht < MAX_NEUE_SCRAPES
+        ):
             minimum_article_length = int(
                 feed.get("minArticleTextLength", 700)
             )
@@ -2477,6 +2570,9 @@ for kontinent, feeds in quellen.items():
                 reverse=True,
             )
             for archive_link, article in repair_candidates:
+                if aggregate_budget_exhausted():
+                    aggregate_stopped_for_budget = True
+                    break
                 if tiefe_scrapes_gemacht >= MAX_NEUE_SCRAPES:
                     break
                 tiefe_scrapes_gemacht += 1
@@ -2509,6 +2605,11 @@ for kontinent, feeds in quellen.items():
         # CHECKPOINT NACH JEDER QUELLE SPEICHERN (Sichert die Daten)
         # =========================================================
         save_checkpoint()
+        if aggregate_stopped_for_budget:
+            break
+
+    if aggregate_stopped_for_budget:
+        break
 
 # SYSTEM-MELDUNG FALLS RADAR GESTÖRT IST
 if radar_count == 0:
@@ -2522,8 +2623,16 @@ if radar_count == 0:
         "content": "Die Terminkalender haben aktuell ihre Firewalls verschärft und blockieren den automatischen Abruf. Wir versuchen es beim nächsten Update-Durchlauf erneut. Bitte besuche die Seiten in der Zwischenzeit direkt über den Button unten.",
         "image": ""
     }
-    save_checkpoint()
+    save_checkpoint(force=True)
 
+if aggregate_stopped_for_budget:
+    print(
+        "\n[ZEITPLAN] Aggregation kontrolliert beendet. "
+        f"Noch {aggregate_seconds_remaining():.0f} Sekunden für Feed-Bau, "
+        "Prüfungen und Upload reserviert."
+    )
+
+save_checkpoint(force=True)
 save_aggregate_error_report()
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine gefunden! <<<")

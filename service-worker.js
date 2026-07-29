@@ -1,4 +1,4 @@
-/* World Revolution News – Offline Service Worker · asset refresh 2026-07-23 */
+/* World Revolution News – Offline Service Worker · News App 2 release 2026-07-29 */
 'use strict';
 
 const APP_CACHE = 'wrn-app-v2.0.0-action-radar';
@@ -8,6 +8,35 @@ const WRN_CACHE_PREFIX = 'wrn-';
 const APP_SHELL = [
   './',
   './index.html',
+  './next.html',
+  './classic.html',
+  './news-app-2-release-checklist.html',
+  './news-app-2-release-checklist.css?release=1',
+  './news-app-2.css?release=1',
+  './news-app-2-release.css?release=1',
+  './prisoner-solidarity.css?release=1',
+  './zine-designer.css?release=1',
+  './source-verification.css?release=1',
+  './editorial-review-ui.css?release=1',
+  './news-app-2-config.js?release=1',
+  './news-app-2-core.js?release=1',
+  './news-app-2-specialty.js?release=1',
+  './news-app-2-media.js?release=1',
+  './news-app-2-release.js?release=1',
+  './article-summary-core.js?release=1',
+  './shared-translation-client.js?release=1',
+  './stories-core.js?release=1',
+  './lexicon-tab.js?release=1',
+  './prisoner-solidarity.js?release=1',
+  './zine-designer.js?release=1',
+  './media-player.js?release=1',
+  './audio-tools.js?release=1',
+  './source-profiles.js?release=1',
+  './source-verification.js?release=1',
+  './source-health-freshness.js?release=1',
+  './editorial-review-ui.js?release=1',
+  './news-app-2.js?release=1',
+  './wrn-logo-preview-transparent.png',
   './mobile-repair.html',
   './source-check.html',
   './audio-check.html',

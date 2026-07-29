@@ -36,7 +36,7 @@ for profile in profiles:
 config = (ROOT / "config.js").read_text(encoding="utf-8")
 worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
 navigation = (ROOT / "release-1.5-nav.js").read_text(encoding="utf-8")
-index = (ROOT / "index.html").read_text(encoding="utf-8")
+index = (ROOT / "classic.html").read_text(encoding="utf-8")
 module = (ROOT / "prisoner-solidarity.js").read_text(encoding="utf-8")
 styles = (ROOT / "prisoner-solidarity.css").read_text(encoding="utf-8")
 

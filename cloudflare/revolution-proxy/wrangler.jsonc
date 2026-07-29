@@ -1,0 +1,52 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "revolution-proxy",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-27",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  },
+  "vars": {
+    "ALLOWED_ORIGINS": "https://blackfront161.github.io,https://localhost,http://localhost,capacitor://localhost,ionic://localhost",
+    "WRN_TRANSLATION_ENABLED": "true",
+    "WRN_PODCAST_GENERATION_ENABLED": "true",
+    "TRANSLATION_DAILY_LIMIT": "950",
+    "AZURE_MONTHLY_CHAR_LIMIT": "475000",
+    "PODCAST_STORAGE_LIMIT_BYTES": "9663676416"
+  },
+  "r2_buckets": [
+    {
+      "binding": "PODCAST_BUCKET",
+      "bucket_name": "worldrevnews-podcasts"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "QUOTA_COORDINATOR",
+        "class_name": "QuotaCoordinator"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "quota-v1",
+      "new_sqlite_classes": ["QuotaCoordinator"]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "TRANSLATION_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 20, "period": 60 }
+    },
+    {
+      "name": "PODCAST_RATE_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 2, "period": 60 }
+    }
+  ]
+}

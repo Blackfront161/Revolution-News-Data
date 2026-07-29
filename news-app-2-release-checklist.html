@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Release-Checkliste – World Revolution News App 2</title>
+  <meta name="theme-color" content="#05080b">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <link rel="stylesheet" href="news-app-2.css?preview=14">
+  <link rel="stylesheet" href="news-app-2-release-checklist.css?preview=1">
+</head>
+<body class="release-checklist-page">
+  <a class="skip-link" href="#release-checklist-main">Zur Checkliste springen</a>
+
+  <header class="checklist-header">
+    <div class="checklist-header__inner">
+      <a class="checklist-brand" href="next.html?preview=8" aria-label="Zurück zur News App 2">
+        <img src="wrn-logo-preview-transparent.png" alt="" width="144" height="65">
+        <span>
+          <strong>Release-Checkliste</strong>
+          <small>News App 2 · 2.0.0-rc.1</small>
+        </span>
+      </a>
+      <a class="checklist-back" href="next.html?preview=8" aria-label="Zur Vorschau">← Zur Vorschau</a>
+    </div>
+  </header>
+
+  <main id="release-checklist-main" class="checklist-main">
+    <section class="checklist-hero" aria-labelledby="checklist-title">
+      <p class="checklist-eyebrow">Stand: 29. Juli 2026</p>
+      <h1 id="checklist-title">Was für die Veröffentlichung bereit ist</h1>
+      <p class="checklist-lead">
+        Der Code- und Oberflächenkandidat ist vorbereitet. Die veröffentlichte
+        App bleibt unverändert. Vor der Freigabe sind noch klar bezeichnete
+        Tests auf einer nichtproduktiven HTTPS-Adresse und mit den neuen
+        Android- und iOS-Paketen nötig.
+      </p>
+      <div class="release-summary" aria-label="Freigabestatus">
+        <article class="release-summary__card release-summary__card--ready">
+          <span>Code &amp; Oberfläche</span>
+          <strong>RC1 bereit</strong>
+        </article>
+        <article class="release-summary__card release-summary__card--protected">
+          <span>Bisherige Live-App</span>
+          <strong>Unverändert</strong>
+        </article>
+        <article class="release-summary__card release-summary__card--open">
+          <span>Produktionsfreigabe</span>
+          <strong>Noch gesperrt</strong>
+        </article>
+      </div>
+      <p class="feed-alert">
+        <strong>Offener Fehler:</strong> Der letzte planmäßige News-Lauf wurde
+        beim 45-Minuten-Limit während der Aggregation abgebrochen. Die
+        Veröffentlichung der Feed-Dateien muss deshalb vor dem Release
+        ausfallsicher gemacht und erneut erfolgreich geprüft werden.
+      </p>
+    </section>
+
+    <nav class="checklist-jump" aria-label="Bereiche der Checkliste">
+      <a href="#schutz">Schutz</a>
+      <a href="#funktionen">Funktionen</a>
+      <a href="#darstellung">Darstellung</a>
+      <a href="#technik">Technik</a>
+      <a href="#offen">Noch offen</a>
+    </nav>
+
+    <section class="checklist-section checklist-legend" aria-labelledby="legend-title">
+      <h2 id="legend-title">So sind die Angaben zu lesen</h2>
+      <div class="legend-grid">
+        <p><span class="status-badge status-badge--passed">Bestanden</span> lokal geprüft und ohne bekannten Fehler.</p>
+        <p><span class="status-badge status-badge--integrated">Integriert</span> im RC vorhanden; ein externer End-to-End-Test ist noch nötig.</p>
+        <p><span class="status-badge status-badge--open">Offen</span> muss vor einer Veröffentlichung erledigt werden.</p>
+      </div>
+    </section>
+
+    <section class="checklist-section" id="schutz" aria-labelledby="schutz-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Sicher getrennt</p>
+        <h2 id="schutz-title">Schutz der bisherigen App</h2>
+      </div>
+      <ul class="check-list">
+        <li data-status="passed"><span><code>index.html</code> und <code>service-worker.js</code> der Live-App sind unverändert.</span></li>
+        <li data-status="passed"><span>RC1 verwendet ausschließlich <code>next.html</code> und <code>news-app-2-sw.js</code>.</span></li>
+        <li data-status="passed"><span>Der Vorschau-Cache hat einen eigenen Namen und eine eigene Version.</span></li>
+        <li data-status="passed"><span>Es wurde nichts auf GitHub Pages, Cloudflare oder Google Play veröffentlicht.</span></li>
+      </ul>
+    </section>
+
+    <section class="checklist-section" id="funktionen" aria-labelledby="funktionen-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Abgleich mit der Live-App</p>
+        <h2 id="funktionen-title">Funktionen im Release-Kandidaten</h2>
+      </div>
+
+      <div class="feature-groups">
+        <article class="feature-group">
+          <h3>Nachrichten &amp; persönlicher Feed</h3>
+          <ul class="check-list check-list--compact">
+            <li data-status="passed"><span>Startseite mit zehn durchmischten Meldungen.</span></li>
+            <li data-status="integrated"><span>„In 5 Minuten“ mit fünf Meldungen und Übersetzung in die gewählte App-Sprache.</span></li>
+            <li data-status="passed"><span>Suche, letzte 7 Tage, letzte 30 Tage und Gesamtarchiv.</span></li>
+            <li data-status="passed"><span>Regionen, redaktionell gruppierte Themen, Sprachen, Herkunft, Formate, Quellen und Sortierung.</span></li>
+            <li data-status="passed"><span>Karten-, Kompakt- und Schlagzeilenansicht.</span></li>
+            <li data-status="passed"><span>Quellen folgen oder ausblenden sowie Gefangene und Entwicklungen beobachten.</span></li>
+          </ul>
+        </article>
+
+        <article class="feature-group">
+          <h3>Artikelaktionen</h3>
+          <ul class="check-list check-list--compact">
+            <li data-status="passed"><span>Artikelansicht, vollständige Bilder und Link zum Original.</span></li>
+            <li data-status="integrated"><span>Volltextübersetzung, Übersetzungsvergleich und Fehlermeldung.</span></li>
+            <li data-status="passed"><span>Kurze, standardmäßige und ausführliche Zusammenfassung.</span></li>
+            <li data-status="passed"><span>Gerätestimme, Teilen, später lesen, gelesen markieren und Lesefortschritt.</span></li>
+            <li data-status="integrated"><span>Natürliche Podcast-Stimme; Erzeugung über den Onlinedienst muss extern geprüft werden.</span></li>
+            <li data-status="passed"><span>Zine-Auswahl, Gestaltung und PDF-/Druckausgabe.</span></li>
+          </ul>
+        </article>
+
+        <article class="feature-group">
+          <h3>Entdecken, Medien &amp; Termine</h3>
+          <ul class="check-list check-list--compact">
+            <li data-status="passed"><span>Video, Original-Podcasts, erzeugte Podcasts, Radio und Zine als Medienbereiche.</span></li>
+            <li data-status="passed"><span>Audio-Warteschlange, Favoriten, Weiterhören und Timer.</span></li>
+            <li data-status="passed"><span>Termine mit Archiv, Filtern, Umkreis, Karte, Route, Kalenderdatei und lokalen Erinnerungen.</span></li>
+            <li data-status="passed"><span>Lexikon, Quellen, Gefangenen-Solidarität und Briefwerkstatt.</span></li>
+            <li data-status="integrated"><span>Entwicklungen mit Mehrquellenabgleich bleiben wie vorgesehen als Beta gekennzeichnet.</span></li>
+          </ul>
+        </article>
+
+        <article class="feature-group">
+          <h3>Transparenz &amp; Einstellungen</h3>
+          <ul class="check-list check-list--compact">
+            <li data-status="passed"><span>Quellenprofile, Quellenprüfung und redaktionelle Prüfliste.</span></li>
+            <li data-status="passed"><span>Systemstatus, Export, Import und lokale Datenverwaltung.</span></li>
+            <li data-status="passed"><span>Spendenhinweis und Projektinformationen im Menü.</span></li>
+            <li data-status="passed"><span>Neun App-Sprachen, sechs Farbdarstellungen und Schriftvergrößerung bis 200 Prozent.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="checklist-section" id="darstellung" aria-labelledby="darstellung-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Bedienung</p>
+        <h2 id="darstellung-title">Darstellung und Smartphone-Test</h2>
+      </div>
+      <ul class="check-list">
+        <li data-status="passed"><span>Mobile Ansicht bei 390 × 844 Pixel ohne horizontalen Überlauf.</span></li>
+        <li data-status="passed"><span>Desktop-Ansicht bei 1440 × 900 Pixel ohne horizontalen Überlauf.</span></li>
+        <li data-status="passed"><span>Die untere Navigation bleibt beim Scrollen positionsstabil.</span></li>
+        <li data-status="passed"><span>Artikelbilder werden im richtigen Seitenverhältnis ohne Beschnitt dargestellt.</span></li>
+        <li data-status="passed"><span>„Artikel öffnen“ und „Übersetzen“ haben dieselbe Form und Höhe.</span></li>
+        <li data-status="passed"><span>Übersetzungsstern, Medienreiter, Header und Zine wurden an die gewünschte Gestaltung angepasst.</span></li>
+        <li data-status="passed"><span>Die visuelle Android-Smartphone-Vorschau wurde vom Nutzer geprüft.</span></li>
+        <li data-status="open"><span>Vollständiger Android- und iOS-Gerätetest einschließlich Installation, Offline-Neustart, Teilen, Erinnerung und Audiounterbrechung.</span></li>
+      </ul>
+    </section>
+
+    <section class="checklist-section" id="technik" aria-labelledby="technik-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Qualitätssicherung</p>
+        <h2 id="technik-title">Technische Prüfungen</h2>
+      </div>
+      <ul class="check-list">
+        <li data-status="passed"><span>JavaScript-Syntax sowie Core-, Spezial-, Medien- und Release-Vertragstests.</span></li>
+        <li data-status="passed"><span>Artikelaktionen, Teilen, Podcastlogik und gemeinsamer Übersetzungsclient.</span></li>
+        <li data-status="passed"><span>Assets, Content Security Policy und vollständige Vorschau-Isolation.</span></li>
+        <li data-status="passed"><span>Whitespace-/Patchprüfung und unveränderte produktive Einstiegsdateien.</span></li>
+        <li data-status="passed"><span>Eigener Service Worker ist in der Vorschau aktiv.</span></li>
+        <li data-status="open"><span>Automatische Feed-Aggregation und Veröffentlichung zuverlässig innerhalb des Zeitlimits abschließen.</span></li>
+      </ul>
+    </section>
+
+    <section class="checklist-section checklist-section--open" id="offen" aria-labelledby="offen-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Freigabesperre</p>
+        <h2 id="offen-title">Verpflichtend vor Produktion</h2>
+      </div>
+      <ol class="release-gates">
+        <li>Die Feed-Aggregation so absichern, dass ein langsamer Quellenabruf nicht den gesamten Upload verhindert; anschließend einen erfolgreichen Zeitplan-Lauf und einen aktuellen <code>feed-status.json</code> prüfen.</li>
+        <li>RC1 auf einer nichtproduktiven HTTPS-Adresse bereitstellen, die beim Übersetzungs- und Podcastdienst freigegeben ist.</li>
+        <li>Je einen kurzen und langen Artikel in alle neun Oberflächensprachen übersetzen.</li>
+        <li>Einen kurzen und einen vollständigen natürlichen Podcast erzeugen und abspielen.</li>
+        <li>Android und iOS auf echten Geräten einschließlich Installation, Offline-Neustart, Teilen, Erinnerung sowie Audio-Unterbrechung und Wiederaufnahme prüfen.</li>
+        <li>Für das neue Android App Bundle R8/Minifizierung aktivieren und den Bericht der Play Console erneut kontrollieren.</li>
+        <li>Erst nach einer getrennten Freigabe die produktiven Einstiegspunkte und den Android-Wrapper auf RC1 umstellen.</li>
+      </ol>
+      <p class="release-decision">
+        <strong>Freigabeentscheidung:</strong> RC1 ist als Code- und
+        Oberflächenkandidat bereit. Eine Veröffentlichung ist absichtlich noch
+        nicht erfolgt.
+      </p>
+    </section>
+
+    <section class="checklist-section" aria-labelledby="not-in-release-title">
+      <div class="section-heading">
+        <p class="checklist-eyebrow">Abgrenzung</p>
+        <h2 id="not-in-release-title">Bewusst nicht Teil dieses Releases</h2>
+      </div>
+      <ul class="plain-list">
+        <li>Alternative soziale Medien.</li>
+        <li>Ein späterer Briefing-Verlauf mit Export, Import und Rückmeldungen.</li>
+        <li>Weitere Zukunftsideen, die nicht Bestandteil der bisherigen Live-App waren.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="checklist-footer">
+    <p>World Revolution News · News App 2 · Release-Kandidat 2.0.0-rc.1</p>
+    <a href="next.html?preview=8">Zurück zur Vorschau</a>
+  </footer>
+</body>
+</html>

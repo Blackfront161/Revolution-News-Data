@@ -27,7 +27,7 @@ class LanguageParser(HTMLParser):
             self.in_select = False
 
 
-index = (ROOT / 'index.html').read_text(encoding='utf-8')
+index = (ROOT / 'classic.html').read_text(encoding='utf-8')
 parser = LanguageParser()
 parser.feed(index)
 assert parser.values == ['en','de','es','fr','it','pt','ru','el','tr'], parser.values
