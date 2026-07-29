@@ -8,6 +8,7 @@
   const release = window.WRNNewsApp2Release;
   if (!core || !specialty || !media || !release || window.__wrnNewsApp2Loaded) return;
   window.__wrnNewsApp2Loaded = true;
+  const isProduction = window.WRN_CONFIG?.releaseChannel === 'production';
 
   const PREFS_KEY = 'wrn_next_preferences_v1';
   const TRANSLATIONS_KEY = 'wrn_next_teaser_translations_v1';
@@ -194,7 +195,8 @@
       retry: 'Erneut versuchen', menuSearch: 'Suche öffnen', close: 'Schließen',
       selectionSaved: 'Deine Auswahl wurde lokal gespeichert.', articleSaved: 'Artikel gespeichert.',
       articleRemoved: 'Artikel entfernt.', translatedTitle: 'Übersetzter Titel und Einleitung',
-      previewNotice: 'Parallele Vorschau – die veröffentlichte App bleibt unverändert.'
+      previewNotice: 'Parallele Vorschau – die veröffentlichte App bleibt unverändert.',
+      liveNotice: 'Unabhängige Nachrichten aus Bewegungen und sozialen Kämpfen.'
     },
     en: {
       preview: 'News App 2 · Preview', language: 'Language', classic: 'Current app',
@@ -229,7 +231,8 @@
       retry: 'Try again', menuSearch: 'Open search', close: 'Close',
       selectionSaved: 'Your selection was saved locally.', articleSaved: 'Article saved.',
       articleRemoved: 'Article removed.', translatedTitle: 'Translated title and introduction',
-      previewNotice: 'Parallel preview – the published app remains unchanged.'
+      previewNotice: 'Parallel preview – the published app remains unchanged.',
+      liveNotice: 'Independent news from movements and social struggles.'
     },
     es: {
       preview:'News App 2 · Vista previa', language:'Idioma', classic:'Aplicación actual', searchLabel:'Buscar noticias', search:'Buscar',
@@ -255,7 +258,8 @@
       readOriginal:'Leer original', loadError:'No se pudieron cargar las noticias.', retry:'Intentar de nuevo',
       menuSearch:'Abrir búsqueda', close:'Cerrar', selectionSaved:'Selección guardada localmente.',
       articleSaved:'Artículo guardado.', articleRemoved:'Artículo eliminado.', translatedTitle:'Título e introducción traducidos',
-      previewNotice:'Vista previa paralela: la aplicación publicada no cambia.'
+      previewNotice:'Vista previa paralela: la aplicación publicada no cambia.',
+      liveNotice:'Noticias independientes de movimientos y luchas sociales.'
     },
     fr: {
       preview:'News App 2 · Aperçu', language:'Langue', classic:'Application actuelle', searchLabel:'Rechercher des actualités', search:'Rechercher',
@@ -281,7 +285,8 @@
       readOriginal:'Lire l’original', loadError:'Impossible de charger les actualités.', retry:'Réessayer',
       menuSearch:'Ouvrir la recherche', close:'Fermer', selectionSaved:'Sélection enregistrée localement.',
       articleSaved:'Article enregistré.', articleRemoved:'Article supprimé.', translatedTitle:'Titre et introduction traduits',
-      previewNotice:'Aperçu parallèle – l’application publiée reste inchangée.'
+      previewNotice:'Aperçu parallèle – l’application publiée reste inchangée.',
+      liveNotice:'Actualités indépendantes des mouvements et des luttes sociales.'
     },
     it: {
       preview:'News App 2 · Anteprima', language:'Lingua', classic:'App attuale', searchLabel:'Cerca notizie', search:'Cerca',
@@ -307,7 +312,8 @@
       readOriginal:'Leggi originale', loadError:'Impossibile caricare le notizie.', retry:'Riprova',
       menuSearch:'Apri ricerca', close:'Chiudi', selectionSaved:'Selezione salvata localmente.',
       articleSaved:'Articolo salvato.', articleRemoved:'Articolo rimosso.', translatedTitle:'Titolo e introduzione tradotti',
-      previewNotice:'Anteprima parallela: l’app pubblicata non cambia.'
+      previewNotice:'Anteprima parallela: l’app pubblicata non cambia.',
+      liveNotice:'Notizie indipendenti da movimenti e lotte sociali.'
     },
     pt: {
       preview:'News App 2 · Pré-visualização', language:'Idioma', classic:'Aplicação atual', searchLabel:'Pesquisar notícias', search:'Pesquisar',
@@ -333,7 +339,8 @@
       readOriginal:'Ler original', loadError:'Não foi possível carregar as notícias.', retry:'Tentar novamente',
       menuSearch:'Abrir pesquisa', close:'Fechar', selectionSaved:'Seleção guardada localmente.',
       articleSaved:'Artigo guardado.', articleRemoved:'Artigo removido.', translatedTitle:'Título e introdução traduzidos',
-      previewNotice:'Pré-visualização paralela: a aplicação publicada não muda.'
+      previewNotice:'Pré-visualização paralela: a aplicação publicada não muda.',
+      liveNotice:'Notícias independentes de movimentos e lutas sociais.'
     },
     ru: {
       preview:'News App 2 · Предпросмотр', language:'Язык', classic:'Текущее приложение', searchLabel:'Поиск новостей', search:'Поиск',
@@ -359,7 +366,8 @@
       readOriginal:'Читать оригинал', loadError:'Не удалось загрузить новости.', retry:'Повторить',
       menuSearch:'Открыть поиск', close:'Закрыть', selectionSaved:'Выбор сохранён локально.',
       articleSaved:'Статья сохранена.', articleRemoved:'Статья удалена.', translatedTitle:'Переведённые заголовок и введение',
-      previewNotice:'Параллельный предпросмотр — опубликованное приложение не меняется.'
+      previewNotice:'Параллельный предпросмотр — опубликованное приложение не меняется.',
+      liveNotice:'Независимые новости движений и социальной борьбы.'
     },
     el: {
       preview:'News App 2 · Προεπισκόπηση', language:'Γλώσσα', classic:'Τρέχουσα εφαρμογή', searchLabel:'Αναζήτηση ειδήσεων', search:'Αναζήτηση',
@@ -385,7 +393,8 @@
       readOriginal:'Ανάγνωση πρωτοτύπου', loadError:'Δεν ήταν δυνατή η φόρτωση.', retry:'Δοκιμή ξανά',
       menuSearch:'Άνοιγμα αναζήτησης', close:'Κλείσιμο', selectionSaved:'Η επιλογή αποθηκεύτηκε τοπικά.',
       articleSaved:'Το άρθρο αποθηκεύτηκε.', articleRemoved:'Το άρθρο αφαιρέθηκε.', translatedTitle:'Μεταφρασμένος τίτλος και εισαγωγή',
-      previewNotice:'Παράλληλη προεπισκόπηση — η δημοσιευμένη εφαρμογή δεν αλλάζει.'
+      previewNotice:'Παράλληλη προεπισκόπηση — η δημοσιευμένη εφαρμογή δεν αλλάζει.',
+      liveNotice:'Ανεξάρτητες ειδήσεις από κινήματα και κοινωνικούς αγώνες.'
     },
     tr: {
       preview:'News App 2 · Önizleme', language:'Dil', classic:'Mevcut uygulama', searchLabel:'Haberlerde ara', search:'Ara',
@@ -411,7 +420,8 @@
       readOriginal:'Orijinali oku', loadError:'Haberler yüklenemedi.', retry:'Tekrar dene',
       menuSearch:'Aramayı aç', close:'Kapat', selectionSaved:'Seçimin yerel olarak kaydedildi.',
       articleSaved:'Haber kaydedildi.', articleRemoved:'Haber kaldırıldı.', translatedTitle:'Çevrilmiş başlık ve giriş',
-      previewNotice:'Paralel önizleme — yayımlanmış uygulama değişmez.'
+      previewNotice:'Paralel önizleme — yayımlanmış uygulama değişmez.',
+      liveNotice:'Hareketlerden ve toplumsal mücadelelerden bağımsız haberler.'
     }
   };
 
@@ -1272,6 +1282,10 @@
   }
 
   function t(key) {
+    if (isProduction && key === 'preview') return 'World Revolution News';
+    if (isProduction && key === 'previewNotice') {
+      return COPY[state.language]?.liveNotice || COPY.en.liveNotice;
+    }
     return RELEASE_COPY[state.language]?.[key]
       || RELEASE_COPY.en[key]
       || PRODUCT_COPY[state.language]?.[key]
@@ -1647,7 +1661,7 @@
         <div><span>${escapeHtml(t('source'))}</span><strong>${state.facets.sources.length}</strong></div>
         <div><span>${escapeHtml(t('language'))}</span><strong>9</strong></div>
       </div>
-      <p class="release-note release-danger">${escapeHtml(t('previewIsolation'))}</p>`,
+      ${isProduction ? '' : `<p class="release-note release-danger">${escapeHtml(t('previewIsolation'))}</p>`}`,
       `<button type="button" class="primary-button" data-release-close>${escapeHtml(t('close'))}</button>`
     );
   }
@@ -4166,8 +4180,8 @@
   window.setInterval(checkEventReminders, 60 * 1000);
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./news-app-2-sw.js', {
-        scope: './next.html',
+      navigator.serviceWorker.register(isProduction ? './service-worker.js' : './news-app-2-sw.js', {
+        scope: isProduction ? './' : './next.html',
         updateViaCache: 'none'
       }).catch(error => console.warn('Preview offline cache unavailable', error));
     }, { once: true });

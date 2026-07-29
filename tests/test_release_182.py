@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 config = (ROOT / 'config.js').read_text(encoding='utf-8')
 worker = (ROOT / 'service-worker.js').read_text(encoding='utf-8')
-index = (ROOT / 'index.html').read_text(encoding='utf-8')
+index = (ROOT / 'classic.html').read_text(encoding='utf-8')
 aggregate = (ROOT / 'aggregate.py').read_text(encoding='utf-8')
 source_filters = (ROOT / 'source-filters.js').read_text(encoding='utf-8')
 source_verification = (ROOT / 'source-verification.js').read_text(encoding='utf-8')

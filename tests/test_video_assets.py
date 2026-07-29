@@ -11,7 +11,7 @@ def read(name: str) -> str:
 
 
 def main() -> None:
-    index = read("index.html")
+    index = read("classic.html")
     csp_match = re.search(
         r'http-equiv="Content-Security-Policy"\s+content="([^"]+)"',
         index,

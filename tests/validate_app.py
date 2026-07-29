@@ -9,6 +9,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+CLASSIC_ENTRY = ROOT / "classic.html"
 ERRORS: list[str] = []
 WARNINGS: list[str] = []
 
@@ -43,6 +44,7 @@ def warning(message: str) -> None:
 def check_required_files() -> None:
     required = [
         "index.html",
+        "classic.html",
         "styles.css",
         "config.js",
         "status-center.js",
@@ -82,7 +84,7 @@ def check_required_files() -> None:
 
 
 def check_html() -> AppHtmlParser | None:
-    path = ROOT / "index.html"
+    path = CLASSIC_ENTRY
     if not path.is_file():
         return None
     parser = AppHtmlParser()
@@ -257,9 +259,10 @@ def check_service_worker() -> None:
         return
     text = path.read_text(encoding="utf-8")
     for match in re.findall(r"['\"]\./([^'\"]+)['\"]", text):
-        if match.endswith(".json"):
+        clean = match.split("?", 1)[0]
+        if clean.endswith(".json"):
             continue
-        if not (ROOT / match).is_file():
+        if not (ROOT / clean).is_file():
             error(f"Service Worker referenziert eine fehlende Datei: {match}")
     for required_script in ["config.js", "data-control.js", "status-center.js", "utils.js", "source-profiles.js", "translation-tools.js", "accessibility.js", "media-player.js", "audio-tools.js", "stories-core.js", "briefing-2.js", "stories-timeline.js", "events.js", "reading-state.js"]:
         if required_script not in text:

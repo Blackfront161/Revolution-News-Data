@@ -25,23 +25,29 @@ def test_preview_server_can_be_exposed_to_private_lan():
     assert "data=live" in server
 
 
-def test_live_entry_point_is_not_rewired():
+def test_release_entry_point_is_news_app_2_and_classic_is_preserved():
     index = (ROOT / "index.html").read_text(encoding="utf-8")
+    classic = (ROOT / "classic.html").read_text(encoding="utf-8")
+    redirect = (ROOT / "next.html").read_text(encoding="utf-8")
     service_worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
-    assert "news-app-2.js" not in index
-    assert "news-app-2.css" not in index
-    assert "next.html" not in service_worker
+    assert "news-app-2.js?release=1" in index
+    assert "news-app-2.css?release=1" in index
+    assert "app.js" in classic
+    assert "classic.html" in index
+    assert "index.html" in redirect
+    assert "news-app-2.js?release=1" in service_worker
+    assert "classic.html" in service_worker
 
 
-def test_preview_keeps_card_translation_and_safe_metadata():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+def test_release_keeps_card_translation_and_safe_metadata():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     assert "shared-translation-client.js" in html
     assert '<script src="config.js"></script>' not in html
     assert "news-app-2-config.js" in html
     assert 'data-action="translate"' in script
     assert "title_and_text" in script
-    assert 'meta name="robots" content="noindex,nofollow"' in html
+    assert 'meta name="robots" content="index,follow"' in html
     assert "news-app-2-specialty.js" in html
     assert "news-app-2-media.js" in html
     assert "zine-designer.js" in html
@@ -52,27 +58,28 @@ def test_preview_keeps_card_translation_and_safe_metadata():
     assert "stories-core.js" in html
     assert "lexicon-tab.js" in html
     assert "prisoner-solidarity.js" in html
-    assert "serviceWorker.register('./news-app-2-sw.js'" in script
-    assert "scope: './next.html'" in script
+    assert "isProduction ? './service-worker.js' : './news-app-2-sw.js'" in script
+    assert "isProduction ? './' : './next.html'" in script
 
 
-def test_preview_can_read_current_production_feeds_without_writing_live_files():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+def test_release_uses_same_origin_feeds_and_preview_can_read_live_feeds():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     config = (ROOT / "news-app-2-config.js").read_text(encoding="utf-8")
     assert "https://blackfront161.github.io" in html
     assert "WRN_PREVIEW_LIVE_DATA" in config
-    assert "dataMode: WRN_PREVIEW_LIVE_DATA ? 'live-readonly'" in config
+    assert "'same-origin-production'" in config
+    assert "'live-readonly'" in config
     assert "wrnPreviewDataUrl('news-feed.json')" in config
     assert "wrnPreviewDataUrl('events-feed.json')" in config
 
 
-def test_preview_offline_cache_is_isolated_from_live_app():
+def test_preview_and_production_offline_caches_are_distinct():
     preview_worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
     live_worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
     assert "wrn-news-app-2-" in preview_worker
     assert "./next.html" in preview_worker
     assert "./index.html" not in preview_worker
-    assert "wrn-news-app-2-" not in live_worker
+    assert "wrn-app-v2.0.0-action-radar" in live_worker
 
 
 def test_specialty_views_are_native_preview_routes():
@@ -95,7 +102,7 @@ def test_default_lists_stay_short_and_source_balanced():
 
 def test_media_sections_are_native_and_privacy_conscious():
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     assert "renderPodcastSection" in script
     assert "renderRadioSection" in script
     assert "renderVideoSection" in script
@@ -109,7 +116,7 @@ def test_media_sections_are_native_and_privacy_conscious():
 
 
 def test_menu_briefing_and_responsive_images_are_present():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
     assert 'id="next-menu-toggle"' in html
@@ -158,7 +165,7 @@ def test_menu_briefing_and_responsive_images_are_present():
 
 
 def test_article_tools_and_professional_discovery_are_present():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
     worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
@@ -175,8 +182,8 @@ def test_article_tools_and_professional_discovery_are_present():
     assert "aspect-ratio: auto;" in style
 
 
-def test_preview_header_cards_and_mobile_navigation_are_polished():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+def test_release_header_cards_and_mobile_navigation_are_polished():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
     worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
@@ -190,8 +197,8 @@ def test_preview_header_cards_and_mobile_navigation_are_polished():
     assert ".news-card::before {\n    opacity: 1;" in style
 
 
-def test_preview_logo_is_transparent_and_donation_flow_matches_live_safety():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+def test_release_logo_is_transparent_and_donation_flow_matches_live_safety():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
     logo = (ROOT / "wrn-logo-preview-transparent.png").read_bytes()
@@ -208,7 +215,7 @@ def test_preview_logo_is_transparent_and_donation_flow_matches_live_safety():
 
 
 def test_release_candidate_restores_existing_live_capabilities():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
     helper = (ROOT / "news-app-2-release.js").read_text(encoding="utf-8")
     worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
@@ -231,8 +238,8 @@ def test_release_candidate_restores_existing_live_capabilities():
     assert "unverÃ¤ndert', 'unverändert" in script
 
 
-def test_release_checklist_is_readable_and_preview_only():
-    html = (ROOT / "next.html").read_text(encoding="utf-8")
+def test_release_checklist_is_readable_and_available():
+    html = (ROOT / "index.html").read_text(encoding="utf-8")
     checklist = (ROOT / "news-app-2-release-checklist.html").read_text(encoding="utf-8")
     style = (ROOT / "news-app-2-release-checklist.css").read_text(encoding="utf-8")
     worker = (ROOT / "news-app-2-sw.js").read_text(encoding="utf-8")
@@ -252,17 +259,17 @@ def test_release_checklist_is_readable_and_preview_only():
 if __name__ == "__main__":
     test_parallel_preview_assets_exist()
     test_preview_server_can_be_exposed_to_private_lan()
-    test_live_entry_point_is_not_rewired()
-    test_preview_keeps_card_translation_and_safe_metadata()
-    test_preview_can_read_current_production_feeds_without_writing_live_files()
-    test_preview_offline_cache_is_isolated_from_live_app()
+    test_release_entry_point_is_news_app_2_and_classic_is_preserved()
+    test_release_keeps_card_translation_and_safe_metadata()
+    test_release_uses_same_origin_feeds_and_preview_can_read_live_feeds()
+    test_preview_and_production_offline_caches_are_distinct()
     test_specialty_views_are_native_preview_routes()
     test_default_lists_stay_short_and_source_balanced()
     test_media_sections_are_native_and_privacy_conscious()
     test_menu_briefing_and_responsive_images_are_present()
     test_article_tools_and_professional_discovery_are_present()
-    test_preview_header_cards_and_mobile_navigation_are_polished()
-    test_preview_logo_is_transparent_and_donation_flow_matches_live_safety()
+    test_release_header_cards_and_mobile_navigation_are_polished()
+    test_release_logo_is_transparent_and_donation_flow_matches_live_safety()
     test_release_candidate_restores_existing_live_capabilities()
-    test_release_checklist_is_readable_and_preview_only()
+    test_release_checklist_is_readable_and_available()
     print("News App 2 parallel preview assets: OK")
