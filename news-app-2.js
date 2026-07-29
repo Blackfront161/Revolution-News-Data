@@ -4156,6 +4156,26 @@
     return response.json();
   }
 
+  async function loadGeneratedPodcasts(fallbackUrl) {
+    const proxyUrl = media.safeUrl(window.WRN_CONFIG?.proxyUrl);
+    if (proxyUrl) {
+      try {
+        const libraryUrl = new URL(proxyUrl);
+        libraryUrl.searchParams.set('action', 'podcasts.list');
+        libraryUrl.searchParams.set('limit', '100');
+        const payload = await fetchJson(libraryUrl.href);
+        if (!Array.isArray(payload?.items)) {
+          throw new Error('Generated podcast library returned an invalid response');
+        }
+        return payload.items;
+      } catch (error) {
+        console.warn('Generated podcast library unavailable; using static fallback', error);
+      }
+    }
+    const fallback = await fetchJson(fallbackUrl || 'generated-podcasts.json');
+    return Array.isArray(fallback) ? fallback : [];
+  }
+
   async function loadSpecialtyData() {
     state.lexiconSnapshot = window.WRNLexicon184?.snapshot?.() || { terms: [], sources: [] };
     const dataUrls = window.WRN_CONFIG?.dataUrls || {};
@@ -4163,7 +4183,7 @@
       fetchJson(dataUrls.events || 'events-feed.json'),
       fetchJson('prisoner-solidarity.json'),
       fetchJson(dataUrls.podcasts || 'podcasts.json'),
-      fetchJson(dataUrls.generatedPodcasts || 'generated-podcasts.json'),
+      loadGeneratedPodcasts(dataUrls.generatedPodcasts || 'generated-podcasts.json'),
       fetchJson(dataUrls.radio || 'radio-stations.json'),
       fetchJson(dataUrls.radioHealth || 'radio-health.json'),
       fetchJson(dataUrls.sourceCatalog || 'sources-registry.json')

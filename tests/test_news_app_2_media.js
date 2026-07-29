@@ -23,6 +23,25 @@ assert.strictEqual(media.canonicalRegion('Europa'), 'Europe');
 assert.strictEqual(media.canonicalRegion('DACH'), 'Europe');
 assert.strictEqual(media.canonicalRegion('Lateinamerika'), 'Latin America');
 
+const generated = media.normalizePodcast({
+  id: 'podcasts/de/short/example.mp3',
+  title: 'Generated episode',
+  source: 'Movement Radio',
+  createdAt: '2026-07-24T09:06:27.082Z',
+  expiresAt: '2026-08-23T09:06:27.082Z',
+  articleUrl: 'https://example.org/article',
+  audioUrl: 'https://example.org/generated.mp3',
+  language: 'de',
+  mode: 'short',
+  voiceLabel: 'Katja'
+});
+assert.strictEqual(generated.published, '2026-07-24T09:06:27.082Z');
+assert.strictEqual(generated.timestamp, Date.parse('2026-07-24T09:06:27.082Z'));
+assert.strictEqual(generated.episodeUrl, 'https://example.org/article');
+assert.strictEqual(generated.expiresAt, '2026-08-23T09:06:27.082Z');
+assert.strictEqual(generated.mode, 'short');
+assert.strictEqual(generated.voiceLabel, 'Katja');
+
 const radio = media.normalizeRadio({
   id: 'station',
   name: 'Free Radio',

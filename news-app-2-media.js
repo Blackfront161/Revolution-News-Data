@@ -123,20 +123,24 @@
   }
 
   function normalizePodcast(item) {
+    const published = text(item?.published || item?.createdAt);
     return {
       id: text(item?.id || `${item?.sourceName || ''}:${item?.title || ''}:${item?.published || ''}`),
       title: text(item?.title || 'Untitled'),
       description: text(item?.description),
       source: text(item?.sourceName || item?.source || 'Unknown source'),
       sourcePriority: Number(item?.sourcePriority || 0),
-      published: text(item?.published),
-      timestamp: Date.parse(item?.published || '') || 0,
+      published,
+      timestamp: Date.parse(published) || 0,
+      expiresAt: text(item?.expiresAt),
+      mode: text(item?.mode),
+      voiceLabel: text(item?.voiceLabel),
       duration: text(item?.duration),
       language: text(item?.language),
       country: text(item?.country),
       region: canonicalRegion(item?.region),
       audioUrl: safeUrl(item?.audioUrl || item?.url),
-      episodeUrl: safeUrl(item?.episodeUrl || item?.link),
+      episodeUrl: safeUrl(item?.episodeUrl || item?.link || item?.articleUrl),
       artwork: safeUrl(item?.artwork),
       topics: Array.isArray(item?.topics) ? item.topics.map(text).filter(Boolean) : [],
       categories: Array.isArray(item?.categories) ? item.categories.map(text).filter(Boolean) : [],
