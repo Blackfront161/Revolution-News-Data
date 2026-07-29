@@ -104,6 +104,8 @@ for token in (
     "Get-WebVersion", "stimmt nicht mit der Webversion",
 ):
     assert token in release
+assert "-verify -verbose -certs" in release
+assert "-verify -strict -certs" not in release
 
 print(
     "WRN 1.8.5 quality release: "

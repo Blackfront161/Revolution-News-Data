@@ -441,6 +441,8 @@
       verified:'Geprüft', reviewBy:'Erneut prüfen bis', address:'Postadresse', writeLetter:'Brief schreiben',
       relatedNews:'Zugehörige Nachrichten', noRelated:'Noch kein passender Artikel im lokalen Archiv.',
       mailRules:'Versandregeln', localOnly:'Entwürfe und persönliche Angaben bleiben auf diesem Gerät.',
+      prisonerPeople:'Gefangene', prisonerSources:'Quellen', linkedProfiles:'Verknüpfte Profile', noLinkedProfiles:'Keine direkt verknüpften Profile.',
+      sourceChecked:'Geprüft am', profilesTotal:'Profile', profilesEurope:'davon Europa',
       developmentIntro:'Mehrere Berichte über dasselbe Geschehen – streng und lokal gruppiert.',
       developmentGuard:'Nur verschiedene Quellen mit hoher inhaltlicher Übereinstimmung werden verbunden.',
       whyLinked:'Verbunden durch', confidence:'Übereinstimmung', storySources:'Quellen', storyArticles:'Berichte',
@@ -461,6 +463,8 @@
       verified:'Verified', reviewBy:'Review again by', address:'Mailing address', writeLetter:'Write a letter',
       relatedNews:'Related news', noRelated:'No matching article in the local archive yet.', mailRules:'Mail rules',
       localOnly:'Drafts and personal details remain on this device.',
+      prisonerPeople:'People', prisonerSources:'Sources', linkedProfiles:'Linked profiles', noLinkedProfiles:'No directly linked profiles.',
+      sourceChecked:'Checked on', profilesTotal:'profiles', profilesEurope:'in Europe',
       developmentIntro:'Several reports about the same event, grouped strictly and locally.',
       developmentGuard:'Only different sources with strong content overlap are linked.', whyLinked:'Linked by',
       confidence:'Match', storySources:'Sources', storyArticles:'Reports', storyTimeline:'Timeline',
@@ -471,43 +475,43 @@
       backDiscover:'Volver a Explorar', underConstruction:'En desarrollo', beta:'Beta', eventUpcoming:'Próximos eventos', eventArchive:'Archivo',
       eventSearch:'Buscar eventos', eventCountry:'País', eventAllCountries:'Todos los países', eventRepeat:'fechas agrupadas', when:'Cuándo', where:'Dónde', noEvents:'No se encontraron eventos.',
       glossaryIntro:'Explicaciones breves de términos de movimientos anarquistas, antiautoritarios y revolucionarios.', glossaryNote:'Sin pretensión de totalidad: las palabras cambian y se debaten.', glossarySearch:'Buscar términos', glossarySources:'Fuentes', meaning:'En breve', practice:'En la práctica', debate:'Perspectivas diferentes', related:'Términos relacionados', downloadJson:'Guardar glosario como JSON', sourceOpen:'Abrir fuente',
-      prisonerIntro:'Direcciones públicas verificadas y taller privado de cartas solidarias.', prisonerLimited:'Lista pequeña e incompleta; no es una valoración jurídica.', verified:'Verificado', reviewBy:'Revisar antes de', address:'Dirección postal', writeLetter:'Escribir una carta', relatedNews:'Noticias relacionadas', noRelated:'Aún no hay noticias relacionadas.', mailRules:'Normas de envío', localOnly:'Los borradores permanecen en este dispositivo.',
+      prisonerIntro:'Direcciones públicas verificadas y taller privado de cartas solidarias.', prisonerLimited:'Lista pequeña e incompleta; no es una valoración jurídica.', verified:'Verificado', reviewBy:'Revisar antes de', address:'Dirección postal', writeLetter:'Escribir una carta', relatedNews:'Noticias relacionadas', noRelated:'Aún no hay noticias relacionadas.', mailRules:'Normas de envío', localOnly:'Los borradores permanecen en este dispositivo.', prisonerPeople:'Personas', prisonerSources:'Fuentes', linkedProfiles:'Perfiles vinculados', noLinkedProfiles:'No hay perfiles vinculados directamente.', sourceChecked:'Comprobado el', profilesTotal:'perfiles', profilesEurope:'en Europa',
       developmentIntro:'Varios informes del mismo hecho, agrupados localmente con criterios estrictos.', developmentGuard:'Solo se conectan fuentes diferentes con gran coincidencia.', whyLinked:'Vinculado por', confidence:'Coincidencia', storySources:'Fuentes', storyArticles:'Informes', storyTimeline:'Cronología', noDevelopments:'No hay desarrollos suficientemente seguros.', watch:'Seguir', watching:'Siguiendo', showWatched:'Solo seguidos', showAll:'Todos'
     },
     fr: {
       backDiscover:'Retour à Découvrir', underConstruction:'En construction', beta:'Bêta', eventUpcoming:'Événements à venir', eventArchive:'Archives', eventSearch:'Rechercher des événements', eventCountry:'Pays', eventAllCountries:'Tous les pays', eventRepeat:'dates regroupées', when:'Quand', where:'Où', noEvents:'Aucun événement trouvé.',
       glossaryIntro:'Explications brèves de termes des mouvements anarchistes, anti-autoritaires et révolutionnaires.', glossaryNote:'Sans prétention d’exhaustivité : les mots évoluent et sont débattus.', glossarySearch:'Rechercher des termes', glossarySources:'Sources', meaning:'En bref', practice:'En pratique', debate:'Perspectives différentes', related:'Termes liés', downloadJson:'Enregistrer en JSON', sourceOpen:'Ouvrir la source',
-      prisonerIntro:'Adresses publiques vérifiées et atelier privé de lettres solidaires.', prisonerLimited:'Liste volontairement petite et incomplète ; pas une évaluation juridique.', verified:'Vérifié', reviewBy:'Réviser avant le', address:'Adresse postale', writeLetter:'Écrire une lettre', relatedNews:'Actualités liées', noRelated:'Aucun article lié pour le moment.', mailRules:'Règles postales', localOnly:'Les brouillons restent sur cet appareil.',
+      prisonerIntro:'Adresses publiques vérifiées et atelier privé de lettres solidaires.', prisonerLimited:'Liste volontairement petite et incomplète ; pas une évaluation juridique.', verified:'Vérifié', reviewBy:'Réviser avant le', address:'Adresse postale', writeLetter:'Écrire une lettre', relatedNews:'Actualités liées', noRelated:'Aucun article lié pour le moment.', mailRules:'Règles postales', localOnly:'Les brouillons restent sur cet appareil.', prisonerPeople:'Personnes', prisonerSources:'Sources', linkedProfiles:'Profils liés', noLinkedProfiles:'Aucun profil directement lié.', sourceChecked:'Vérifié le', profilesTotal:'profils', profilesEurope:'en Europe',
       developmentIntro:'Plusieurs rapports sur un même événement, regroupés localement avec prudence.', developmentGuard:'Seules des sources différentes fortement concordantes sont reliées.', whyLinked:'Relié par', confidence:'Correspondance', storySources:'Sources', storyArticles:'Rapports', storyTimeline:'Chronologie', noDevelopments:'Aucune évolution multisource assez fiable.', watch:'Suivre', watching:'Suivi', showWatched:'Suivis seulement', showAll:'Toutes'
     },
     it: {
       backDiscover:'Torna a Scopri', underConstruction:'In costruzione', beta:'Beta', eventUpcoming:'Prossimi eventi', eventArchive:'Archivio', eventSearch:'Cerca eventi', eventCountry:'Paese', eventAllCountries:'Tutti i paesi', eventRepeat:'date raggruppate', when:'Quando', where:'Dove', noEvents:'Nessun evento trovato.',
       glossaryIntro:'Brevi spiegazioni di termini dei movimenti anarchici, antiautoritari e rivoluzionari.', glossaryNote:'Senza pretesa di completezza: le parole cambiano e sono controverse.', glossarySearch:'Cerca termini', glossarySources:'Fonti', meaning:'In breve', practice:'Nella pratica', debate:'Prospettive diverse', related:'Termini collegati', downloadJson:'Salva come JSON', sourceOpen:'Apri fonte',
-      prisonerIntro:'Indirizzi pubblici verificati e laboratorio privato per lettere solidali.', prisonerLimited:'Elenco volutamente piccolo e incompleto; non è una valutazione legale.', verified:'Verificato', reviewBy:'Ricontrollare entro', address:'Indirizzo postale', writeLetter:'Scrivi una lettera', relatedNews:'Notizie correlate', noRelated:'Nessuna notizia correlata.', mailRules:'Regole postali', localOnly:'Le bozze restano su questo dispositivo.',
+      prisonerIntro:'Indirizzi pubblici verificati e laboratorio privato per lettere solidali.', prisonerLimited:'Elenco volutamente piccolo e incompleto; non è una valutazione legale.', verified:'Verificato', reviewBy:'Ricontrollare entro', address:'Indirizzo postale', writeLetter:'Scrivi una lettera', relatedNews:'Notizie correlate', noRelated:'Nessuna notizia correlata.', mailRules:'Regole postali', localOnly:'Le bozze restano su questo dispositivo.', prisonerPeople:'Persone', prisonerSources:'Fonti', linkedProfiles:'Profili collegati', noLinkedProfiles:'Nessun profilo collegato direttamente.', sourceChecked:'Verificato il', profilesTotal:'profili', profilesEurope:'in Europa',
       developmentIntro:'Più resoconti dello stesso evento, raggruppati localmente con criteri rigorosi.', developmentGuard:'Si collegano solo fonti diverse con forte concordanza.', whyLinked:'Collegato da', confidence:'Corrispondenza', storySources:'Fonti', storyArticles:'Resoconti', storyTimeline:'Cronologia', noDevelopments:'Nessuno sviluppo multisorgente abbastanza affidabile.', watch:'Segui', watching:'Seguito', showWatched:'Solo seguiti', showAll:'Tutti'
     },
     pt: {
       backDiscover:'Voltar a Explorar', underConstruction:'Em construção', beta:'Beta', eventUpcoming:'Próximos eventos', eventArchive:'Arquivo', eventSearch:'Pesquisar eventos', eventCountry:'País', eventAllCountries:'Todos os países', eventRepeat:'datas agrupadas', when:'Quando', where:'Onde', noEvents:'Nenhum evento encontrado.',
       glossaryIntro:'Explicações breves de termos de movimentos anarquistas, antiautoritários e revolucionários.', glossaryNote:'Sem pretensão de totalidade: as palavras mudam e são disputadas.', glossarySearch:'Pesquisar termos', glossarySources:'Fontes', meaning:'Em resumo', practice:'Na prática', debate:'Perspetivas diferentes', related:'Termos relacionados', downloadJson:'Guardar como JSON', sourceOpen:'Abrir fonte',
-      prisonerIntro:'Endereços públicos verificados e oficina privada de cartas solidárias.', prisonerLimited:'Lista deliberadamente pequena e incompleta; não é avaliação jurídica.', verified:'Verificado', reviewBy:'Rever até', address:'Endereço postal', writeLetter:'Escrever carta', relatedNews:'Notícias relacionadas', noRelated:'Ainda não há notícia relacionada.', mailRules:'Regras postais', localOnly:'Os rascunhos ficam neste dispositivo.',
+      prisonerIntro:'Endereços públicos verificados e oficina privada de cartas solidárias.', prisonerLimited:'Lista deliberadamente pequena e incompleta; não é avaliação jurídica.', verified:'Verificado', reviewBy:'Rever até', address:'Endereço postal', writeLetter:'Escrever carta', relatedNews:'Notícias relacionadas', noRelated:'Ainda não há notícia relacionada.', mailRules:'Regras postais', localOnly:'Os rascunhos ficam neste dispositivo.', prisonerPeople:'Pessoas', prisonerSources:'Fontes', linkedProfiles:'Perfis associados', noLinkedProfiles:'Nenhum perfil diretamente associado.', sourceChecked:'Verificado em', profilesTotal:'perfis', profilesEurope:'na Europa',
       developmentIntro:'Vários relatos do mesmo acontecimento, agrupados localmente com rigor.', developmentGuard:'Só fontes diferentes com forte concordância são ligadas.', whyLinked:'Ligado por', confidence:'Correspondência', storySources:'Fontes', storyArticles:'Relatos', storyTimeline:'Cronologia', noDevelopments:'Nenhum desenvolvimento multisource suficientemente fiável.', watch:'Observar', watching:'Observado', showWatched:'Só observados', showAll:'Todos'
     },
     ru: {
       backDiscover:'Назад к обзору', underConstruction:'В разработке', beta:'Бета', eventUpcoming:'Предстоящие события', eventArchive:'Архив', eventSearch:'Поиск событий', eventCountry:'Страна', eventAllCountries:'Все страны', eventRepeat:'объединённых дат', when:'Когда', where:'Где', noEvents:'События не найдены.',
       glossaryIntro:'Краткие объяснения терминов анархистских, антиавторитарных и революционных движений.', glossaryNote:'Без претензии на полноту: слова меняются и оспариваются.', glossarySearch:'Поиск терминов', glossarySources:'Источники', meaning:'Кратко', practice:'На практике', debate:'Разные взгляды', related:'Связанные термины', downloadJson:'Сохранить JSON', sourceOpen:'Открыть источник',
-      prisonerIntro:'Проверенные публичные адреса и приватная мастерская писем солидарности.', prisonerLimited:'Намеренно небольшой и неполный список; не юридическая оценка.', verified:'Проверено', reviewBy:'Проверить до', address:'Почтовый адрес', writeLetter:'Написать письмо', relatedNews:'Связанные новости', noRelated:'Связанных материалов пока нет.', mailRules:'Почтовые правила', localOnly:'Черновики остаются на устройстве.',
+      prisonerIntro:'Проверенные публичные адреса и приватная мастерская писем солидарности.', prisonerLimited:'Намеренно небольшой и неполный список; не юридическая оценка.', verified:'Проверено', reviewBy:'Проверить до', address:'Почтовый адрес', writeLetter:'Написать письмо', relatedNews:'Связанные новости', noRelated:'Связанных материалов пока нет.', mailRules:'Почтовые правила', localOnly:'Черновики остаются на устройстве.', prisonerPeople:'Люди', prisonerSources:'Источники', linkedProfiles:'Связанные профили', noLinkedProfiles:'Нет напрямую связанных профилей.', sourceChecked:'Проверено', profilesTotal:'профилей', profilesEurope:'в Европе',
       developmentIntro:'Несколько сообщений об одном событии, строго сгруппированных локально.', developmentGuard:'Связываются только разные источники с сильным совпадением.', whyLinked:'Связано по', confidence:'Совпадение', storySources:'Источники', storyArticles:'Материалы', storyTimeline:'Хронология', noDevelopments:'Нет достаточно надёжного развития из нескольких источников.', watch:'Отслеживать', watching:'Отслеживается', showWatched:'Только отслеживаемые', showAll:'Все'
     },
     el: {
       backDiscover:'Πίσω στην Ανακάλυψη', underConstruction:'Υπό ανάπτυξη', beta:'Beta', eventUpcoming:'Επερχόμενες εκδηλώσεις', eventArchive:'Αρχείο', eventSearch:'Αναζήτηση εκδηλώσεων', eventCountry:'Χώρα', eventAllCountries:'Όλες οι χώρες', eventRepeat:'ομαδοποιημένες ημερομηνίες', when:'Πότε', where:'Πού', noEvents:'Δεν βρέθηκαν εκδηλώσεις.',
       glossaryIntro:'Σύντομες εξηγήσεις όρων αναρχικών, αντιεξουσιαστικών και επαναστατικών κινημάτων.', glossaryNote:'Χωρίς αξίωση πληρότητας: οι λέξεις αλλάζουν και αμφισβητούνται.', glossarySearch:'Αναζήτηση όρων', glossarySources:'Πηγές', meaning:'Συνοπτικά', practice:'Στην πράξη', debate:'Διαφορετικές οπτικές', related:'Σχετικοί όροι', downloadJson:'Αποθήκευση JSON', sourceOpen:'Άνοιγμα πηγής',
-      prisonerIntro:'Επαληθευμένες δημόσιες διευθύνσεις και ιδιωτικό εργαστήριο επιστολών.', prisonerLimited:'Σκόπιμα μικρός και ελλιπής κατάλογος· όχι νομική αξιολόγηση.', verified:'Επαληθεύτηκε', reviewBy:'Επανέλεγχος έως', address:'Ταχυδρομική διεύθυνση', writeLetter:'Γράψτε επιστολή', relatedNews:'Σχετικές ειδήσεις', noRelated:'Δεν υπάρχει σχετικό άρθρο ακόμη.', mailRules:'Κανόνες αλληλογραφίας', localOnly:'Τα προσχέδια μένουν στη συσκευή.',
+      prisonerIntro:'Επαληθευμένες δημόσιες διευθύνσεις και ιδιωτικό εργαστήριο επιστολών.', prisonerLimited:'Σκόπιμα μικρός και ελλιπής κατάλογος· όχι νομική αξιολόγηση.', verified:'Επαληθεύτηκε', reviewBy:'Επανέλεγχος έως', address:'Ταχυδρομική διεύθυνση', writeLetter:'Γράψτε επιστολή', relatedNews:'Σχετικές ειδήσεις', noRelated:'Δεν υπάρχει σχετικό άρθρο ακόμη.', mailRules:'Κανόνες αλληλογραφίας', localOnly:'Τα προσχέδια μένουν στη συσκευή.', prisonerPeople:'Πρόσωπα', prisonerSources:'Πηγές', linkedProfiles:'Συνδεδεμένα προφίλ', noLinkedProfiles:'Δεν υπάρχουν άμεσα συνδεδεμένα προφίλ.', sourceChecked:'Ελέγχθηκε', profilesTotal:'προφίλ', profilesEurope:'στην Ευρώπη',
       developmentIntro:'Πολλαπλές αναφορές για το ίδιο γεγονός, αυστηρά ομαδοποιημένες τοπικά.', developmentGuard:'Συνδέονται μόνο διαφορετικές πηγές με ισχυρή συμφωνία.', whyLinked:'Σύνδεση μέσω', confidence:'Αντιστοίχιση', storySources:'Πηγές', storyArticles:'Αναφορές', storyTimeline:'Χρονολόγιο', noDevelopments:'Δεν υπάρχει αρκετά αξιόπιστη εξέλιξη πολλών πηγών.', watch:'Παρακολούθηση', watching:'Παρακολουθείται', showWatched:'Μόνο παρακολουθούμενα', showAll:'Όλα'
     },
     tr: {
       backDiscover:'Keşfet’e dön', underConstruction:'Yapım aşamasında', beta:'Beta', eventUpcoming:'Yaklaşan etkinlikler', eventArchive:'Arşiv', eventSearch:'Etkinlik ara', eventCountry:'Ülke', eventAllCountries:'Tüm ülkeler', eventRepeat:'birleştirilmiş tarihler', when:'Ne zaman', where:'Nerede', noEvents:'Etkinlik bulunamadı.',
       glossaryIntro:'Anarşist, otorite karşıtı ve devrimci hareket kavramlarının kısa açıklamaları.', glossaryNote:'Eksiksizlik iddiası yoktur: sözcükler değişir ve tartışılır.', glossarySearch:'Kavram ara', glossarySources:'Kaynaklar', meaning:'Kısaca', practice:'Pratikte', debate:'Farklı bakışlar', related:'İlgili kavramlar', downloadJson:'JSON kaydet', sourceOpen:'Kaynağı aç',
-      prisonerIntro:'Doğrulanmış kamusal adresler ve özel dayanışma mektubu atölyesi.', prisonerLimited:'Bilinçli olarak küçük ve eksik liste; hukuki değerlendirme değildir.', verified:'Doğrulandı', reviewBy:'Yeniden kontrol', address:'Posta adresi', writeLetter:'Mektup yaz', relatedNews:'İlgili haberler', noRelated:'Henüz ilgili haber yok.', mailRules:'Posta kuralları', localOnly:'Taslaklar bu cihazda kalır.',
+      prisonerIntro:'Doğrulanmış kamusal adresler ve özel dayanışma mektubu atölyesi.', prisonerLimited:'Bilinçli olarak küçük ve eksik liste; hukuki değerlendirme değildir.', verified:'Doğrulandı', reviewBy:'Yeniden kontrol', address:'Posta adresi', writeLetter:'Mektup yaz', relatedNews:'İlgili haberler', noRelated:'Henüz ilgili haber yok.', mailRules:'Posta kuralları', localOnly:'Taslaklar bu cihazda kalır.', prisonerPeople:'Kişiler', prisonerSources:'Kaynaklar', linkedProfiles:'Bağlı profiller', noLinkedProfiles:'Doğrudan bağlı profil yok.', sourceChecked:'Kontrol tarihi', profilesTotal:'profil', profilesEurope:'Avrupa’da',
       developmentIntro:'Aynı olay hakkındaki birden fazla haber, yerel olarak sıkı biçimde gruplanır.', developmentGuard:'Yalnızca güçlü içerik örtüşmesi olan farklı kaynaklar bağlanır.', whyLinked:'Bağlantı nedeni', confidence:'Eşleşme', storySources:'Kaynaklar', storyArticles:'Haberler', storyTimeline:'Zaman çizelgesi', noDevelopments:'Yeterince güvenilir çok kaynaklı gelişme yok.', watch:'İzle', watching:'İzleniyor', showWatched:'Yalnız izlenenler', showAll:'Tümü'
     }
   };
@@ -1233,6 +1237,7 @@
     sourceCatalog: null,
     sourceIndex: new Map(),
     prisonerData: { profiles: [], sources: [] },
+    prisoners: { section: 'people' },
     lexicon: { section: 'all', query: '' },
     lexiconSnapshot: { terms: [], sources: [] },
     developmentWatch: readJson(STORY_WATCH_KEY, []),
@@ -2551,15 +2556,67 @@
     return (profile?.mailingAddress?.lines || []).join('\n');
   }
 
+  function prisonerExternalUrl(value) {
+    const url = String(value || '').trim();
+    return /^https:\/\//i.test(url) ? url : '';
+  }
+
+  function sortedPrisonerProfiles() {
+    return [...(state.prisonerData.profiles || [])].sort((a, b) => {
+      const aEurope = a.region === 'Europe' ? 0 : 1;
+      const bEurope = b.region === 'Europe' ? 0 : 1;
+      return aEurope - bEurope
+        || String(a.country || '').localeCompare(String(b.country || ''), state.language)
+        || String(a.publicName || '').localeCompare(String(b.publicName || ''), state.language);
+    });
+  }
+
+  function prisonerSourcesMarkup(profiles) {
+    const sources = state.prisonerData.sources || [];
+    const sourceKinds = state.language === 'de'
+      ? {
+          'primary-support-group': 'Solidaritätsgruppe',
+          'letter-writing-guidance': 'Briefhinweise',
+          'support-network': 'Solidaritätsnetzwerk',
+          'official-mail-guidance': 'Offizielle Postregeln'
+        }
+      : {
+          'primary-support-group': 'Solidarity group',
+          'letter-writing-guidance': 'Letter-writing guidance',
+          'support-network': 'Support network',
+          'official-mail-guidance': 'Official mail guidance'
+        };
+    return `<div class="prisoner-source-grid">${sources.map(source => {
+      const linked = profiles.filter(profile => (profile.verification?.sourceIds || []).includes(source.id));
+      const url = prisonerExternalUrl(source.url);
+      return `<article class="prisoner-source-card">
+        <header><div><span class="eyebrow">${escapeHtml(sourceKinds[source.kind] || t('prisonerSources'))}</span><h3>${escapeHtml(source.name || source.id)}</h3></div><span class="verification-badge">${escapeHtml(t('sourceChecked'))}: ${escapeHtml(formatTimestamp(`${source.checkedAt}T12:00:00Z`, { dateOnly: true }))}</span></header>
+        <h4>${escapeHtml(t('linkedProfiles'))}</h4>
+        <div class="meta-line">${linked.length
+          ? linked.map(profile => `<span class="tag">${escapeHtml(profile.publicName)}</span>`).join('')
+          : `<span>${escapeHtml(t('noLinkedProfiles'))}</span>`}</div>
+        ${url ? `<a class="small-action prisoner-source-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">↗ ${escapeHtml(t('sourceOpen'))}</a>` : ''}
+      </article>`;
+    }).join('')}</div>`;
+  }
+
   function renderPrisoners() {
     state.cardArticles = [];
-    const profiles = state.prisonerData.profiles || [];
+    const profiles = sortedPrisonerProfiles();
+    const section = state.prisoners.section === 'sources' ? 'sources' : 'people';
+    const europeCount = profiles.filter(profile => profile.region === 'Europe').length;
     viewRoot.innerHTML = `
       ${headingMarkup(t('prisoners'), t('prisoners'), t('prisonerIntro'), specialtyBack())}
       <div class="notice-card"><strong>${escapeHtml(t('underConstruction'))}</strong><p>${escapeHtml(t('prisonerLimited'))}</p><small>🔒 ${escapeHtml(t('localOnly'))}</small></div>
-      <div class="prisoner-grid">${profiles.map(profile => {
+      <div class="special-tabs prisoner-tabs" role="tablist" aria-label="${escapeHtml(t('prisoners'))}">
+        <button type="button" role="tab" aria-selected="${section === 'people'}" class="filter-chip${section === 'people' ? ' active' : ''}" data-action="prisoner-section" data-value="people">${escapeHtml(t('prisonerPeople'))} · ${profiles.length}</button>
+        <button type="button" role="tab" aria-selected="${section === 'sources'}" class="filter-chip${section === 'sources' ? ' active' : ''}" data-action="prisoner-section" data-value="sources">${escapeHtml(t('prisonerSources'))} · ${(state.prisonerData.sources || []).length}</button>
+      </div>
+      <p class="prisoner-directory-summary"><strong>${profiles.length} ${escapeHtml(t('profilesTotal'))}</strong><span>${europeCount} ${escapeHtml(t('profilesEurope'))}</span></p>
+      ${section === 'sources' ? prisonerSourcesMarkup(profiles) : `<div class="prisoner-grid">${profiles.map(profile => {
         const current = specialty.isCurrentProfile(profile);
         const related = specialty.relatedArticles(profile, state.articles).slice(0, 3);
+        const sourceUrl = prisonerExternalUrl(profile.verification?.profileUrl);
         const relatedMarkup = related.map(article => {
           const index = state.cardArticles.push(article) - 1;
           return `<button type="button" data-action="open" data-index="${index}"><strong>${escapeHtml(article.title)}</strong><small>${escapeHtml(article.source)}</small></button>`;
@@ -2570,9 +2627,12 @@
           <div class="meta-line">${(profile.movementTags || []).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}</div>
           <details><summary>${escapeHtml(t('address'))}</summary><address>${escapeHtml(prisonerAddress(profile))}</address><p>${escapeHtml(specialty.localized(profile.mailRules?.notes, state.language))}</p></details>
           <div class="prisoner-related"><h4>${escapeHtml(t('relatedNews'))}</h4>${relatedMarkup || `<p>${escapeHtml(t('noRelated'))}</p>`}</div>
-          <button type="button" class="primary-button" data-action="letter" data-profile-id="${escapeHtml(profile.id)}"${current ? '' : ' disabled'}>✉ ${escapeHtml(t('writeLetter'))}</button>
+          <div class="prisoner-card-actions">
+            <button type="button" class="primary-button" data-action="letter" data-profile-id="${escapeHtml(profile.id)}"${current ? '' : ' disabled'}>✉ ${escapeHtml(t('writeLetter'))}</button>
+            ${sourceUrl ? `<a class="small-action prisoner-source-link" href="${escapeHtml(sourceUrl)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">↗ ${escapeHtml(t('sourceOpen'))}</a>` : ''}
+          </div>
         </article>`;
-      }).join('')}</div>
+      }).join('')}</div>`}
     `;
   }
 
@@ -3818,6 +3878,10 @@
             console.warn('Letter workshop unavailable', error);
             showToast(t('loadError'));
           });
+      }
+      if (action === 'prisoner-section') {
+        state.prisoners.section = target.dataset.value === 'sources' ? 'sources' : 'people';
+        renderPrisoners();
       }
       if (action === 'development-filter') {
         state.developmentsWatchedOnly = target.dataset.value === 'watched';

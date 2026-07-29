@@ -12,9 +12,20 @@ sources = {source["id"]: source for source in data["sources"]}
 
 assert data["schemaVersion"] == 1
 assert data["reviewWindowDays"] <= 45
-assert len(profiles) >= 5
+assert len(profiles) >= 12
+assert sum(profile.get("region") == "Europe" for profile in profiles) >= 7
 assert len({profile["id"] for profile in profiles}) == len(profiles)
-assert {"nycabc-guide-19-5", "nycabc-write", "abcf-updates"} <= set(sources)
+assert {
+    "nycabc-guide-19-5",
+    "nycabc-write",
+    "abcf-updates",
+    "prisoners-for-palestine-writing",
+    "govuk-prison-letters",
+} <= set(sources)
+
+for source in sources.values():
+    assert source["url"].startswith("https://")
+    assert date.fromisoformat(source["checkedAt"]) <= date(2026, 7, 29)
 
 for profile in profiles:
     verification = profile["verification"]
@@ -49,15 +60,19 @@ for token in [
 
 assert "key: 'solidarity'" in navigation
 assert "WRNPrisonerSolidarity190" in navigation
-assert "prisoner-solidarity.js?v=190-solidarity-1" in index
-assert "prisoner-solidarity.css?v=190-solidarity-1" in index
+assert "prisoner-solidarity.js?v=190-solidarity-2" in index
+assert "prisoner-solidarity.css?v=190-solidarity-2" in index
 assert "wrn_prisoner_letter_" in module
-assert "window.confirm(t.translateConfirm)" in module
-assert "title: '', text: body" in module
+assert "openTranslationLanguageDialog" in module
+assert "targetLanguage" in module
+assert "window.confirm(t.translateConfirm)" not in module
+assert "function insertStarter(dialog, profile)" in module
+assert "starterInserted" in module
 assert "profile.mailRules?.imagesAllowed !== true" in module
 assert "if (!profile || !isCurrent(profile)) return" in module
 assert "@media print" in styles
 assert "@media (max-width: 760px)" in styles
 assert "z-index: 1000000" in styles
+assert ".wrn-solidarity-language-dialog-190" in styles
 
 print("WRN prisoner solidarity assets: OK")

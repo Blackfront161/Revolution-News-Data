@@ -223,6 +223,17 @@
   text-transform: uppercase;
 }
 
+.wrn-solidarity-profile-sources-190 {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.wrn-solidarity-profile-sources-190 a {
+  color: #00e5ff;
+  overflow-wrap: anywhere;
+}
+
 .wrn-solidarity-profile-190 dd {
   margin: 5px 0 0;
   overflow-wrap: anywhere;
@@ -443,6 +454,65 @@ body.wrn-solidarity-workshop-open {
 .wrn-solidarity-workshop-actions-190 {
   justify-content: flex-end;
   margin: 0;
+}
+
+.wrn-solidarity-language-dialog-190 {
+  width: min(480px, calc(100% - 28px));
+  padding: 0;
+  border: 1px solid rgba(0, 229, 255, .55);
+  border-radius: 18px;
+  background: #080d12;
+  color: #f5f7fa;
+}
+
+.wrn-solidarity-language-dialog-190::backdrop {
+  background: rgba(0, 0, 0, .78);
+  backdrop-filter: blur(3px);
+}
+
+.wrn-solidarity-language-dialog-190 form {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.wrn-solidarity-language-dialog-190 h3,
+.wrn-solidarity-language-dialog-190 p {
+  margin: 0;
+}
+
+.wrn-solidarity-language-dialog-190 label {
+  display: grid;
+  gap: 8px;
+  font-weight: 800;
+}
+
+.wrn-solidarity-language-dialog-190 select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 229, 255, .45);
+  border-radius: 12px;
+  background: #111923;
+  color: #fff;
+  font: inherit;
+}
+
+.wrn-solidarity-language-dialog-190 form > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.wrn-solidarity-language-dialog-190 .primary {
+  border-color: #ff294e;
+  background: #ff294e;
+  color: #080910;
+}
+
+.wrn-solidarity-language-privacy-190 {
+  color: #abb2c1;
+  font-size: .9rem;
 }
 
 #wrn-solidarity-print-190 {
