@@ -14,6 +14,13 @@
     }
   }
 
+  function normalizedTargetLanguage(value) {
+    const language = String(value || '').trim().toLowerCase().split(/[-_]/)[0];
+    return ['de', 'en', 'es', 'fr', 'it', 'pt', 'ru', 'el', 'tr'].includes(language)
+      ? language
+      : 'en';
+  }
+
   async function sha256(value) {
     const bytes = new TextEncoder().encode(String(value || ''));
     const digest = await crypto.subtle.digest('SHA-256', bytes);
@@ -71,7 +78,7 @@
     const title = String(args.title || '').slice(0, 500);
     const text = String(args.text || '').slice(0, 6000);
     const mode = String(args.mode || 'title_and_text');
-    const language = targetLanguage();
+    const language = normalizedTargetLanguage(args.targetLanguage || targetLanguage());
     const cacheKey = await sha256(JSON.stringify({
       version: 1,
       language,

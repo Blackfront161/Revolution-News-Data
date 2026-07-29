@@ -382,6 +382,13 @@ quellen = {
         {"name": "Unoffensive Animal", "url": "https://unoffensiveanimal.is/feed/"},
         {"name": "ALF Press Office (North America)", "url": "https://animalliberationpressoffice.org/NAALPO/feed/"},
         {"name": "Hunt Saboteurs Association (UK)", "url": "https://www.huntsabs.org.uk/feed/"},
+        {"name": "ARIWA – Animal Rights Watch (Germany)", "url": "https://www.ariwa.org/feed/", "homepage": "https://www.ariwa.org/", "language": "de", "categories": ["Europe", "Animal Liberation"], "originCountry": "Germany", "originCountryCode": "DE", "originRegion": "Europe"},
+        {"name": "PETA Deutschland", "url": "https://www.peta.de/feed/", "homepage": "https://www.peta.de/", "language": "de", "categories": ["Europe", "Animal Liberation"], "originCountry": "Germany", "originCountryCode": "DE", "originRegion": "Europe"},
+        {"name": "Animal Equality Deutschland", "url": "https://animalequality.de/feed/", "homepage": "https://animalequality.de/", "language": "de", "categories": ["Europe", "Animal Liberation"], "originCountry": "Germany", "originCountryCode": "DE", "originRegion": "Europe"},
+        {"name": "Tier im Fokus (Switzerland)", "url": "https://tier-im-fokus.ch/feed/", "homepage": "https://tierimfokus.ch/", "language": "de", "categories": ["Europe", "Animal Liberation"], "originCountry": "Switzerland", "originCountryCode": "CH", "originRegion": "Europe"},
+        {"name": "L214 (France)", "url": "https://www.l214.com/feed/", "homepage": "https://www.l214.com/", "language": "fr", "categories": ["Europe", "Animal Liberation"], "originCountry": "France", "originCountryCode": "FR", "originRegion": "Europe"},
+        {"name": "269 Libération Animale (France)", "url": "https://www.269liberationanimale.fr/feed/", "homepage": "https://www.269liberationanimale.fr/", "language": "fr", "categories": ["Europe", "Animal Liberation"], "originCountry": "France", "originCountryCode": "FR", "originRegion": "Europe"},
+        {"name": "Animal Aid (UK)", "url": "https://www.animalaid.org.uk/feed/", "homepage": "https://www.animalaid.org.uk/news/", "language": "en", "categories": ["Europe", "Animal Liberation"], "originCountry": "United Kingdom", "originCountryCode": "GB", "originRegion": "Europe"},
     ],
     "Eco-Anarchism": [
         {"name": "Earth First!", "url": "https://earthfirstjournal.news/feed/"},

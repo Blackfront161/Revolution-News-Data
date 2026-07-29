@@ -30,12 +30,12 @@ def test_release_entry_point_is_news_app_2_and_classic_is_preserved():
     classic = (ROOT / "classic.html").read_text(encoding="utf-8")
     redirect = (ROOT / "next.html").read_text(encoding="utf-8")
     service_worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
-    assert "news-app-2.js?release=1" in index
-    assert "news-app-2.css?release=1" in index
+    assert "news-app-2.js?release=2" in index
+    assert "news-app-2.css?release=2" in index
     assert "app.js" in classic
     assert "classic.html" in index
     assert "index.html" in redirect
-    assert "news-app-2.js?release=1" in service_worker
+    assert "news-app-2.js?release=2" in service_worker
     assert "classic.html" in service_worker
 
 
@@ -89,6 +89,10 @@ def test_specialty_views_are_native_preview_routes():
         assert f"'{view}'" in script
     assert "WRNPrisonerSolidarity190.openWorkshop" in script
     assert "threshold: 0.5" in script
+    assert 'data-action="prisoner-section"' in script
+    assert "prisonerSourcesMarkup" in script
+    assert 'referrerpolicy="no-referrer"' in script
+    assert "sortedPrisonerProfiles" in script
 
 
 def test_default_lists_stay_short_and_source_balanced():
@@ -194,9 +198,33 @@ def test_release_header_cards_and_mobile_navigation_are_polished():
     assert 'class="small-action" type="button" data-action="open"' in script
     assert ".card-actions .translate-card,\n.card-actions .small-action {" in style
     assert "height: calc(68px + env(safe-area-inset-bottom));" in style
-    assert "contain: layout paint;" in style
-    assert "transform: translate3d(0, 0, 0);" in style
+    assert "inset: auto 0 0;" in style
+    assert "contain: paint;" in style
+    assert "will-change: transform;" not in style
     assert ".news-card::before {\n    opacity: 1;" in style
+
+
+def test_animal_liberation_sources_are_expanded_and_registered():
+    import json
+
+    aggregate = (ROOT / "aggregate.py").read_text(encoding="utf-8")
+    registry = json.loads((ROOT / "sources-registry.json").read_text(encoding="utf-8"))
+    expected = {
+        "ARIWA – Animal Rights Watch (Germany)",
+        "PETA Deutschland",
+        "Animal Equality Deutschland",
+        "Tier im Fokus (Switzerland)",
+        "L214 (France)",
+        "269 Libération Animale (France)",
+        "Animal Aid (UK)",
+    }
+    assert all(name in aggregate for name in expected)
+    by_name = {source.get("name"): source for source in registry["sources"]}
+    assert expected <= set(by_name)
+    for name in expected:
+        source = by_name[name]
+        assert "Animal Liberation" in source["categories"]
+        assert source["url"].startswith("https://")
 
 
 def test_release_logo_is_transparent_and_donation_flow_matches_live_safety():
@@ -252,7 +280,8 @@ def test_release_checklist_is_readable_and_available():
     assert 'class="release-checklist-page"' in checklist
     assert "Bestanden" in checklist
     assert "Integriert" in checklist
-    assert "Noch gesperrt" in checklist
+    assert "AAB-Abschlussprüfung" in checklist
+    assert "Noch vor dem Play-Store-Upload" in checklist
     assert "width: min(1040px, calc(100% - 32px));" in style
     assert "@media (max-width: 720px)" in style
     assert "<table" not in checklist

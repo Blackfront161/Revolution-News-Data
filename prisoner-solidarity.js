@@ -6,6 +6,17 @@
 
   const DATA_URL = './prisoner-solidarity.json';
   const STORAGE_PREFIX = 'wrn_prisoner_letter_';
+  const LETTER_LANGUAGES = Object.freeze({
+    de: 'Deutsch',
+    en: 'English',
+    es: 'Español',
+    fr: 'Français',
+    it: 'Italiano',
+    pt: 'Português',
+    ru: 'Русский',
+    el: 'Ελληνικά',
+    tr: 'Türkçe'
+  });
   const hiddenNodes = new Map();
   const state = {
     section: 'current',
@@ -45,13 +56,15 @@
       workshopTitle: 'Private letter workshop', workshopPrivacy: 'Local only: the draft and sender field are stored in this browser. Translation sends only the letter text after your confirmation—never the address or sender field.',
       recipient: 'Recipient', returnAddress: 'Your return address (optional)', salutation: 'Greeting', body: 'Letter text', closing: 'Closing',
       template: 'Insert starter', templateText: 'Hello {name},\n\nI learned about you through a prisoner-solidarity project and wanted to send a sign of support. I hope this letter reaches you well. I would like to share a small detail from life outside: \n\nIn solidarity,',
+      starterInserted: 'Starter inserted and saved locally.',
       save: 'Save locally', saved: 'Saved on this device', clear: 'Delete draft', translate: 'Translate letter text', translating: 'Translating…',
+      translationLanguage: 'Translation language', chooseTranslationLanguage: 'Choose the language for the letter text.', continueTranslation: 'Translate', cancel: 'Cancel',
       translateConfirm: 'Only the letter text will be sent to the configured translation service. Names, prison address and return address are excluded. Continue?',
       translationFailed: 'The translation could not be created.', compare: 'Original and machine translation', useTranslation: 'Use translation', machine: 'Machine translation — please review before printing.',
       image: 'Insert image', imageBlocked: 'Images are disabled because the current mail rules do not confirm that they are allowed.',
       print: 'Print / save PDF', close: 'Close', printWarning: 'Check the address and institution rules again before mailing.',
       sourceTitle: 'Sources and editorial changes', sourcePolicy: 'Only publicly shared prison addresses from trusted support groups are used. Private family, legal-team and release addresses are excluded.',
-      download: 'Download current data (JSON)', changes: 'Change log', updated: 'Dataset updated',
+      download: 'Download current data (JSON)', changes: 'Change log', updated: 'Dataset updated', usedFor: 'Linked profiles',
       rulesUnknown: 'Institution-specific enclosure rules are not confirmed. Use a plain text-only letter and verify current rules at the linked source.',
       error: 'The solidarity directory could not be loaded.'
     },
@@ -82,13 +95,15 @@
       workshopPrivacy: 'Nur lokal: Entwurf und Absenderfeld werden in diesem Browser gespeichert. Beim Übersetzen wird erst nach deiner Bestätigung ausschließlich der Brieftext übertragen – niemals Haft- oder Absenderadresse.',
       recipient: 'Empfänger*in', returnAddress: 'Deine Absenderadresse (optional)', salutation: 'Anrede', body: 'Brieftext', closing: 'Abschluss',
       template: 'Starthilfe einfügen', templateText: 'Hallo {name},\n\nich habe durch ein Gefangenen-Solidaritätsprojekt von dir erfahren und möchte dir ein Zeichen der Unterstützung senden. Ich hoffe, dieser Brief erreicht dich gut. Ich möchte dir eine kleine Beobachtung aus dem Leben draußen erzählen: \n\nIn Solidarität,',
+      starterInserted: 'Starthilfe eingefügt und lokal gespeichert.',
       save: 'Lokal speichern', saved: 'Auf diesem Gerät gespeichert', clear: 'Entwurf löschen', translate: 'Brieftext übersetzen', translating: 'Wird übersetzt…',
+      translationLanguage: 'Übersetzungssprache', chooseTranslationLanguage: 'Wähle die Sprache für den Brieftext.', continueTranslation: 'Übersetzen', cancel: 'Abbrechen',
       translateConfirm: 'Nur der Brieftext wird an den eingerichteten Übersetzungsdienst gesendet. Namen, Haftadresse und Absenderadresse bleiben ausgeschlossen. Fortfahren?',
       translationFailed: 'Die Übersetzung konnte nicht erstellt werden.', compare: 'Original und maschinelle Übersetzung', useTranslation: 'Übersetzung übernehmen', machine: 'Maschinelle Übersetzung – bitte vor dem Drucken sorgfältig prüfen.',
       image: 'Bild einfügen', imageBlocked: 'Bilder sind deaktiviert, weil die aktuellen Postregeln keine Erlaubnis bestätigen.',
       print: 'Drucken / als PDF speichern', close: 'Schließen', printWarning: 'Prüfe Adresse und Anstaltsregeln vor dem Versand noch einmal.',
       sourceTitle: 'Quellen und redaktionelle Änderungen', sourcePolicy: 'Verwendet werden nur öffentlich geteilte Haftadressen vertrauenswürdiger Solidaritätsgruppen. Private Familien-, Rechtsbeistands- und Entlassungsadressen sind ausgeschlossen.',
-      download: 'Aktuelle Daten herunterladen (JSON)', changes: 'Änderungsverlauf', updated: 'Datensatz aktualisiert',
+      download: 'Aktuelle Daten herunterladen (JSON)', changes: 'Änderungsverlauf', updated: 'Datensatz aktualisiert', usedFor: 'Verknüpfte Profile',
       rulesUnknown: 'Anstaltsspezifische Regeln für Beilagen sind nicht bestätigt. Nutze einen schlichten Textbrief und prüfe die aktuellen Regeln über die verlinkte Quelle.',
       error: 'Das Solidaritätsverzeichnis konnte nicht geladen werden.'
     },
@@ -280,6 +295,22 @@
     return (profile?.mailingAddress?.lines || []).join('\n');
   }
 
+  function sourceById(sourceId) {
+    return state.data?.sources?.find(source => source.id === sourceId) || null;
+  }
+
+  function renderProfileSourceLinks(profile, host) {
+    const sourceIds = [...new Set(profile?.verification?.sourceIds || [])];
+    sourceIds.forEach(sourceId => {
+      const source = sourceById(sourceId);
+      if (!source?.url) return;
+      host.appendChild(externalLink(source.url, source.name || sourceId));
+    });
+    if (!host.children.length && profile?.verification?.profileUrl) {
+      host.appendChild(externalLink(profile.verification.profileUrl, ui().source));
+    }
+  }
+
   async function copyAddress(profile, button) {
     if (!isCurrent(profile)) return;
     try {
@@ -359,7 +390,8 @@
       rows[1].querySelector('dt').textContent = t.birthday;
       rows[1].querySelector('dd').textContent = profile.birthday || '—';
       rows[2].querySelector('dt').textContent = t.profileSources;
-      rows[2].querySelector('dd').textContent = (profile.verification.sourceIds || []).join(', ');
+      rows[2].querySelector('dd').className = 'wrn-solidarity-profile-sources-190';
+      renderProfileSourceLinks(profile, rows[2].querySelector('dd'));
       card.appendChild(details);
       renderRelated(profile, card);
     }
@@ -367,7 +399,13 @@
   }
 
   function renderCurrent(host) {
-    const profiles = (state.data?.profiles || []).filter(isCurrent);
+    const profiles = (state.data?.profiles || [])
+      .filter(isCurrent)
+      .sort((a, b) => {
+        const regionPriority = value => value === 'Europe' ? 0 : 1;
+        return regionPriority(a.region) - regionPriority(b.region)
+          || String(a.publicName).localeCompare(String(b.publicName), lang());
+      });
     profiles.forEach(profile => host.appendChild(profileCard(profile)));
   }
 
@@ -473,9 +511,14 @@
       const card = document.createElement('article');
       const heading = document.createElement('h4');
       const meta = document.createElement('small');
+      const usedFor = document.createElement('p');
       heading.textContent = source.name;
       meta.textContent = `${source.kind} · ${t.verified}: ${formatDate(source.checkedAt)}`;
-      card.append(heading, meta, externalLink(source.url, t.source));
+      const linkedProfiles = (state.data?.profiles || [])
+        .filter(profile => profile.verification?.sourceIds?.includes(source.id))
+        .map(profile => profile.publicName);
+      usedFor.textContent = `${t.usedFor}: ${linkedProfiles.join(', ') || '—'}`;
+      card.append(heading, meta, usedFor, externalLink(source.url, t.source));
       if (source.downloadUrl) card.appendChild(externalLink(source.downloadUrl, 'PDF'));
       panel.appendChild(card);
     });
@@ -587,18 +630,78 @@
     setWorkshopStatus(ui().clear);
   }
 
-  async function translateDraft(dialog, button) {
+  function insertStarter(dialog, profile) {
+    const t = ui();
+    const lines = t.templateText
+      .replace('{name}', profile.publicName)
+      .split(/\r?\n/);
+    const nonEmpty = lines.map(line => line.trim()).filter(Boolean);
+    const salutation = dialog.querySelector('[name="salutation"]');
+    const body = dialog.querySelector('[name="body"]');
+    const closing = dialog.querySelector('[name="closing"]');
+    if (salutation && !salutation.value.trim()) salutation.value = nonEmpty[0] || '';
+    if (body) body.value = nonEmpty.slice(1, -1).join('\n\n');
+    if (closing && !closing.value.trim()) closing.value = nonEmpty.at(-1) || '';
+    body?.dispatchEvent(new Event('input', { bubbles: true }));
+    saveDraft(dialog, false);
+    setWorkshopStatus(t.starterInserted);
+    body?.focus();
+  }
+
+  function openTranslationLanguageDialog(workshop, button) {
+    const t = ui();
+    const profile = selectedProfile();
+    const dialog = document.createElement('dialog');
+    dialog.className = 'wrn-solidarity-language-dialog-190';
+    dialog.setAttribute('aria-labelledby', 'wrn-solidarity-language-title-190');
+    const languageOptions = Object.entries(LETTER_LANGUAGES)
+      .map(([code, label]) => `<option value="${code}">${label}</option>`)
+      .join('');
+    dialog.innerHTML = `
+      <form method="dialog">
+        <h3 id="wrn-solidarity-language-title-190">${t.translationLanguage}</h3>
+        <p>${t.chooseTranslationLanguage}</p>
+        <label>
+          <span>${t.translationLanguage}</span>
+          <select name="targetLanguage">${languageOptions}</select>
+        </label>
+        <p class="wrn-solidarity-language-privacy-190">🔒 ${t.translateConfirm}</p>
+        <div>
+          <button type="submit" value="cancel">${t.cancel}</button>
+          <button type="button" class="primary">${t.continueTranslation}</button>
+        </div>
+      </form>`;
+    const select = dialog.querySelector('select');
+    const preferred = profile?.languages?.find(code => LETTER_LANGUAGES[code])
+      || (LETTER_LANGUAGES[lang()] ? lang() : 'en');
+    select.value = preferred;
+    dialog.addEventListener('close', () => dialog.remove(), { once: true });
+    dialog.querySelector('.primary').addEventListener('click', () => {
+      const targetLanguage = select.value;
+      dialog.close();
+      translateDraft(workshop, button, targetLanguage);
+    });
+    workshop.appendChild(dialog);
+    dialog.showModal();
+    select.focus();
+  }
+
+  async function translateDraft(dialog, button, targetLanguage) {
     const t = ui();
     const body = dialog.querySelector('[name="body"]')?.value.trim();
     if (!body) return;
-    if (!window.confirm(t.translateConfirm)) return;
     button.disabled = true;
     button.textContent = t.translating;
     setWorkshopStatus(t.translating);
     try {
-      const result = await window.WRNSharedTranslations?.request?.({ title: '', text: body, mode: 'text' });
+      const result = await window.WRNSharedTranslations?.request?.({
+        title: '',
+        text: body,
+        mode: 'text',
+        targetLanguage
+      });
       if (!result || result.error || !String(result.text || '').trim()) throw new Error(result?.message || 'Translation failed');
-      state.translation = { original: body, translated: String(result.text).trim(), language: lang() };
+      state.translation = { original: body, translated: String(result.text).trim(), language: targetLanguage };
       renderTranslation(dialog);
       setWorkshopStatus(t.machine);
     } catch (error) {
@@ -757,10 +860,10 @@
     overlay.querySelector('[data-action="close"]').addEventListener('click', closeWorkshop);
     overlay.querySelector('[data-action="save"]').addEventListener('click', () => saveDraft(overlay));
     overlay.querySelector('[data-action="clear"]').addEventListener('click', () => clearDraft(overlay));
-    overlay.querySelector('[data-action="template"]').addEventListener('click', () => {
-      overlay.querySelector('[name="body"]').value = t.templateText.replace('{name}', profile.publicName);
+    overlay.querySelector('[data-action="template"]').addEventListener('click', () => insertStarter(overlay, profile));
+    overlay.querySelector('[data-action="translate"]').addEventListener('click', event => {
+      openTranslationLanguageDialog(overlay, event.currentTarget);
     });
-    overlay.querySelector('[data-action="translate"]').addEventListener('click', event => translateDraft(overlay, event.currentTarget));
     overlay.querySelector('[data-action="print"]').addEventListener('click', () => printLetter(overlay));
     overlay.addEventListener('keydown', event => {
       if (event.key === 'Escape') closeWorkshop();

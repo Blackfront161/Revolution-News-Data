@@ -83,6 +83,7 @@
 
 html {
   background: var(--bg);
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
@@ -90,6 +91,7 @@ body {
   margin: 0;
   min-width: 280px;
   min-height: 100vh;
+  overflow-x: clip;
   background:
     radial-gradient(circle at 8% 6%, rgba(0, 233, 244, .08), transparent 28rem),
     radial-gradient(circle at 94% 18%, rgba(255, 54, 88, .08), transparent 30rem),
@@ -1199,23 +1201,19 @@ img {
 .bottom-nav {
   position: fixed;
   z-index: 90;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  inset: auto 0 0;
   display: grid;
-  width: 100%;
-  max-width: 100vw;
-  height: calc(68px + env(safe-area-inset-bottom));
-  min-height: 68px;
+  width: auto;
+  max-width: none;
+  height: auto;
+  min-height: calc(68px + env(safe-area-inset-bottom));
   padding: 5px max(6px, env(safe-area-inset-right)) max(5px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
   border-top: 1px solid var(--border);
   background: var(--chrome-strong);
   backface-visibility: hidden;
-  contain: layout paint;
+  contain: paint;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   isolation: isolate;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
 }
 
 .bottom-nav button {
@@ -2368,6 +2366,45 @@ button.feature-card {
 .development-card > header { display: flex; align-items: start; justify-content: space-between; gap: 14px; }
 .verification-badge { flex: 0 0 auto; padding: 6px 9px; border: 1px solid var(--cyan); border-radius: 999px; color: var(--cyan); font-size: .7rem; font-weight: 800; }
 .prisoner-card.stale .verification-badge { border-color: var(--red); color: var(--red); }
+.prisoner-directory-summary {
+  display: flex;
+  margin: -6px 0 16px;
+  color: var(--muted);
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.prisoner-directory-summary strong { color: var(--text); }
+.prisoner-source-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.prisoner-source-card {
+  display: grid;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  align-content: start;
+  gap: 12px;
+}
+.prisoner-source-card > header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.prisoner-source-card h3 { margin: 6px 0 0; line-height: 1.25; }
+.prisoner-source-card h4 { margin: 2px 0 0; color: var(--soft-copy); font-size: .8rem; }
+.prisoner-source-link {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 42px;
+  padding: 8px 11px;
+  border: 1px solid var(--cyan);
+  border-radius: 10px;
+  align-items: center;
+  text-decoration: none;
+}
+.prisoner-card-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .prisoner-card details { margin: 14px 0; padding: 12px; border: 1px solid var(--border); border-radius: 12px; }
 .prisoner-card summary { color: var(--cyan); font-weight: 800; cursor: pointer; }
 .prisoner-card address { margin-top: 12px; white-space: pre-line; overflow-wrap: anywhere; }
@@ -2631,8 +2668,11 @@ button.feature-card {
   .prisoner-card,
   .development-card { grid-column: auto; }
 
+  .prisoner-source-grid { grid-template-columns: 1fr; }
+
   .prisoner-card > header,
-  .development-card > header {
+  .development-card > header,
+  .prisoner-source-card > header {
     align-items: stretch;
     flex-direction: column;
   }

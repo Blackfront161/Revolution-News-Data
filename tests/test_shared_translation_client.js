@@ -5,6 +5,7 @@ const path = require('path');
 
 let fallbackCalls = 0;
 const states = [];
+const requestBodies = [];
 
 global.CustomEvent = class CustomEvent {
   constructor(type, options = {}) {
@@ -46,17 +47,25 @@ require(path.resolve(__dirname, '..', 'shared-translation-client.js'));
   assert.strictEqual(fallbackResult.sharedFallback, true, 'fallback origin must be traceable');
   assert(states.some(state => state?.fallback === true && state?.status === 502), 'fallback state was not announced');
 
-  global.fetch = async () => ({
-    ok: true,
-    status: 200,
-    headers: { get: name => name === 'X-WRN-Shared-Cache' ? 'HIT' : '' },
-    text: async () => JSON.stringify({ text: 'Gemeinsame Übersetzung', provider: 'shared-worker' })
-  });
+  global.fetch = async (_url, options = {}) => {
+    requestBodies.push(JSON.parse(options.body));
+    return {
+      ok: true,
+      status: 200,
+      headers: { get: name => name === 'X-WRN-Shared-Cache' ? 'HIT' : '' },
+      text: async () => JSON.stringify({ text: 'Gemeinsame Übersetzung', provider: 'shared-worker' })
+    };
+  };
 
-  const sharedResult = await window.WRNSharedTranslations.request({ title: 'Title', text: 'Text' });
+  const sharedResult = await window.WRNSharedTranslations.request({
+    title: 'Title',
+    text: 'Text',
+    targetLanguage: 'fr'
+  });
   assert.strictEqual(sharedResult.error, false);
   assert.strictEqual(sharedResult.text, 'Gemeinsame Übersetzung');
   assert.strictEqual(sharedResult.cached, true);
+  assert.strictEqual(requestBodies.at(-1).targetLanguage, 'fr', 'an explicitly selected letter language must reach the service');
   assert.strictEqual(fallbackCalls, 1, 'successful shared requests must not call the fallback');
 
   console.log('Shared translation client tests passed.');

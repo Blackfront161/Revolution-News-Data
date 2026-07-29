@@ -1,4 +1,4 @@
-# News App 2 – Release-Checkliste 2.0.0-rc.1
+# News App 2 – Release-Checkliste 2.0.0
 
 Stand: 29. Juli 2026
 
@@ -6,13 +6,13 @@ Branch: `agent/news-app-2-preview`
 
 Vorschau: `next.html?preview=8`
 
-## Schutz der bisherigen App
+## Produktion und Rückfall
 
-- [x] `index.html` ist unverändert.
-- [x] `service-worker.js` ist unverändert.
-- [x] RC1 verwendet ausschließlich `next.html` und `news-app-2-sw.js`.
-- [x] Der Vorschau-Cache trägt einen eigenen Namen und eine eigene Version.
-- [x] Es wurde nichts auf GitHub Pages, Cloudflare oder Google Play veröffentlicht.
+- [x] `index.html` startet News App 2.
+- [x] `next.html` führt kontrolliert zur produktiven App.
+- [x] Die klassische Oberfläche bleibt unter `classic.html` erhalten.
+- [x] Produktions- und Vorschau-Service-Worker bleiben getrennt.
+- [x] Google Play wird erst mit dem abschließend geprüften AAB aktualisiert.
 
 ## Funktionsabgleich
 
@@ -22,8 +22,8 @@ Die mobil lesbare Fassung liegt unter
 Statusbedeutung:
 
 - **Bestanden:** lokal geprüft und ohne bekannten Fehler.
-- **Integriert:** im RC vorhanden; ein externer End-to-End-Test ist noch nötig.
-- **Offen:** muss vor einer Veröffentlichung erledigt werden.
+- **Integriert:** vorhanden; ein externer Online- oder Gerätetest ist noch nötig.
+- **Offen:** muss vor dem Play-Store-Upload erledigt werden.
 
 | Bereich | RC1 |
 |---|---|
@@ -46,7 +46,8 @@ Statusbedeutung:
 | Audio-Warteschlange, Favoriten, Weiterhören, Timer | Bestanden |
 | Termine, Archiv, Filter, Umkreis, Karte, Route, ICS | Bestanden |
 | Lexikon und Quellen | Bestanden |
-| Gefangenen-Solidarität und Briefwerkstatt | Bestanden |
+| Gefangenen-Solidarität: 12 Profile, davon 7 aus Europa | Bestanden |
+| Starthilfe, Sprachauswahl, Übersetzungsvergleich und Quellen-Reiter | Bestanden; HTTPS-Endtest der Briefübersetzung folgt |
 | Entwicklungen mit Mehrquellenabgleich | Integriert; Beta wie vorgesehen |
 | Quellenprofile und Quellenprüfung | Bestanden |
 | Redaktionelle Prüfliste | Bestanden |
@@ -76,31 +77,23 @@ Statusbedeutung:
 - [x] Artikelaktionen, Teilen, Podcast und gemeinsamer Übersetzungsclient.
 - [x] Asset-, CSP- und Vorschau-Isolationsprüfung.
 - [x] Whitespace-/Patchprüfung.
-- [x] Keine Änderung an den beiden produktiven Einstiegsdateien.
-- [x] Service Worker ist in der Vorschau aktiv.
-- [ ] Automatische Feed-Aggregation und Veröffentlichung zuverlässig innerhalb
-  des Zeitlimits abschließen. Der letzte planmäßige Lauf wurde beim
-  45-Minuten-Limit während `aggregate.py` abgebrochen.
+- [x] Sichere externe Quellenlinks ohne Referrer-Weitergabe.
+- [x] Produktiver Service Worker und Cache-Aktualisierung.
+- [x] Feed-Zeitbudget, atomare Prüfpunkte und gemeinsame Veröffentlichung von
+  `news-feed.json`, `events-feed.json` und `feed-status.json`.
+- [x] Produktiver Feed-Status vom 28. Juli 2026 meldet Erfolg.
+- [x] Sieben zusätzliche Animal-Liberation-RSS-Quellen geprüft und registriert.
 
-## Verpflichtende Prüfungen vor Produktion
+## Noch vor dem Play-Store-Upload
 
-- [ ] Die Feed-Aggregation so absichern, dass ein langsamer Quellenabruf nicht
-  den gesamten Upload verhindert; danach einen erfolgreichen Zeitplan-Lauf und
-  einen aktuellen `feed-status.json` prüfen.
-- [ ] RC1 auf einer nichtproduktiven, beim Übersetzungsdienst freigegebenen
-  HTTPS-Origin bereitstellen.
-- [ ] Dort je einen kurzen und einen langen Artikel in alle neun
-  Oberflächensprachen übersetzen.
-- [ ] Dort einen kurzen und einen vollständigen natürlichen Podcast erzeugen.
-- [ ] Einen vollständigen Smartphone-Test auf Android und iOS einschließlich
-  Installation, Offline-Neustart, Teilen, Erinnerung, Audio-Unterbrechung und
-  Wiederaufnahme durchführen.
-- [ ] Nach einer bewusst getrennten Freigabe die produktiven Einstiegspunkte
-  und den Android-Wrapper auf RC1 umstellen.
-- [ ] Für das neue Android App Bundle R8/Minifizierung aktivieren und den
-  Play-Console-Bericht erneut kontrollieren. Die gezeigte bisherige Version
-  unterstützt zwar 16-KB-Speicherseiten, ist laut Play Console aber nur
-  niedrig optimiert.
+- [ ] Briefübersetzung mit gewählter Zielsprache auf der freigegebenen
+  produktiven HTTPS-Adresse prüfen.
+- [ ] Nach erfolgreichen GitHub-Prüfungen das signierte AAB exakt aus dem
+  freigegebenen Hauptbranch bauen.
+- [ ] Signatur, R8/Minifizierung, enthaltenen Webstand, SHA-256 und Versionscode
+  10 im Buildbericht prüfen.
+- [ ] AAB zunächst in Google Play hochladen und Installation sowie
+  Offline-Neustart auf Android testen.
 
 ## Bewusst nicht Teil dieses Releases
 
@@ -110,7 +103,5 @@ Statusbedeutung:
 
 ## Freigabeentscheidung
 
-RC1 ist als Code- und Oberflächenkandidat bereit. Die Produktionsfreigabe
-bleibt absichtlich gesperrt, bis Übersetzung und natürliche Podcast-Erzeugung
-auf einer freigegebenen Test-Origin sowie das neue Android App Bundle geprüft
-wurden.
+Die Web-App ist bereit. Der Play-Store-Upload folgt erst nach bestandenem
+AAB-Bericht und anschließendem Android-Gerätetest.

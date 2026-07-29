@@ -184,6 +184,11 @@
   color: var(--text);
 }
 
+.feed-alert--passed {
+  border-left-color: var(--green);
+  background: rgba(36, 231, 130, .1);
+}
+
 .checklist-jump {
   display: flex;
   overflow-x: auto;

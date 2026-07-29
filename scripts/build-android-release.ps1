@@ -170,7 +170,7 @@ try {
     Get-RelativeWebFiles $sourceRoot | Copy-Item -Destination $webRoot -Force
 
     $copiedManifest = Get-HashManifest $webRoot
-    $preBuildDifferences = Compare-HashManifest $sourceManifest $copiedManifest
+    $preBuildDifferences = @(Compare-HashManifest $sourceManifest $copiedManifest)
     $report.preBuildDifferences = $preBuildDifferences
     if ($preBuildDifferences.Count) {
         throw "Webdateien unterscheiden sich bereits vor Capacitor Sync."
@@ -202,6 +202,10 @@ try {
     if (-not (Test-Path -LiteralPath $gradle)) {
         throw "Gradle Wrapper wurde nicht gefunden: $gradle"
     }
+    if (-not $env:JAVA_HOME) {
+        $java = Find-JavaTool "java"
+        $env:JAVA_HOME = Split-Path -Parent (Split-Path -Parent $java)
+    }
     Push-Location $androidDirectory
     try {
         & $gradle bundleRelease --no-daemon
@@ -224,7 +228,9 @@ try {
     $signArguments += @($unsignedAab, $KeyAlias)
     & $jarsigner @signArguments
     if ($LASTEXITCODE -ne 0) { throw "AAB-Signierung ist fehlgeschlagen." }
-    & $jarsigner -verify -strict -certs $finalAab | Out-Host
+    # Android upload keys are normally self-signed. Verify the archive's
+    # cryptographic signature without requiring a public PKIX certificate chain.
+    & $jarsigner -verify -verbose -certs $finalAab | Out-Host
     if ($LASTEXITCODE -ne 0) { throw "AAB-Signaturprüfung ist fehlgeschlagen." }
     $report.signatureVerified = $true
 
@@ -234,7 +240,7 @@ try {
     Expand-Archive -LiteralPath $zipCopy -DestinationPath $unpackRoot -Force
     $packagedWeb = Join-Path $unpackRoot "base\assets\public"
     $packagedManifest = Get-HashManifest $packagedWeb
-    $packagedDifferences = Compare-HashManifest $sourceManifest $packagedManifest
+    $packagedDifferences = @(Compare-HashManifest $sourceManifest $packagedManifest)
     $report.packagedDifferences = $packagedDifferences
     if ($packagedDifferences.Count) {
         throw "Die AAB enthält nicht denselben Webstand wie Git-Commit $resolvedCommit."
