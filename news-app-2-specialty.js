@@ -193,15 +193,16 @@
 
   function developmentClusters(articles, storiesCore, options = {}) {
     if (!storiesCore?.clusterStories) return [];
+    const threshold = Math.max(0.68, Number(options.threshold) || 0.68);
     const clusters = storiesCore.clusterStories(articles, {
       days: Number(options.days) || 30,
       minSources: 2,
       minItems: 2,
-      threshold: Number(options.threshold) || 0.5
+      threshold
     });
     return clusters.filter(cluster =>
       cluster.sourceCount >= 2
-      && cluster.matchConfidence >= 0.5
+      && cluster.matchConfidence >= threshold
       && Array.isArray(cluster.matchReasons)
       && cluster.matchReasons.length >= 2
     );

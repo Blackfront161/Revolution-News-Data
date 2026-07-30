@@ -625,6 +625,14 @@ img {
   line-height: 1.4;
 }
 
+.home-service-empty {
+  margin: 14px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 .briefing-item[aria-busy="true"] {
   grid-template-columns: 34px minmax(0, 1fr) 22px;
 }
@@ -2506,6 +2514,12 @@ button.feature-card {
 .watch-button { min-height: 44px; padding: 8px 12px; border: 1px solid var(--red); border-radius: 11px; background: transparent; color: var(--red); cursor: pointer; }
 .watch-button[aria-pressed="true"] { background: var(--red); color: #060709; }
 .evidence-line { display: flex; flex-wrap: wrap; margin: 13px 0; color: var(--muted); align-items: center; gap: 7px; }
+.development-tag { gap: 5px; }
+.development-tag--region { border-color: rgba(0, 233, 244, .48); }
+.development-tag--topic { border-color: rgba(255, 54, 88, .42); background: var(--red-soft); color: var(--red); }
+.assignment-details { margin: 10px 0 14px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 11px; color: var(--muted); }
+.assignment-details summary { color: var(--soft-copy); font-size: .78rem; font-weight: 800; cursor: pointer; }
+.assignment-details p { margin: 9px 0 0; font-size: .78rem; line-height: 1.45; }
 .timeline-list { margin: 0; padding: 0; list-style: none; }
 .timeline-list li { display: grid; min-width: 0; padding: 10px 0; border-top: 1px solid var(--border); grid-template-columns: 90px minmax(0, 1fr); align-items: start; gap: 10px; }
 .timeline-list time { color: var(--cyan); font-size: .76rem; }

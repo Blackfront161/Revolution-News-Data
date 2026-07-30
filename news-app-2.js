@@ -22,6 +22,16 @@
   const EVENT_REMINDERS_KEY = 'wrn_event_reminders_v2';
   const EVENT_FILTERS_KEY = 'wrn_saved_event_filters_v1';
   const HOME_COUNT = 10;
+  const DEVELOPMENT_MATCH_THRESHOLD = 0.68;
+  const EVENT_REGION_BY_COUNTRY = Object.freeze({
+    AR: 'Latin America', BR: 'Latin America', CL: 'Latin America',
+    CA: 'North America',
+    AU: 'Oceania',
+    AT: 'Europe', BE: 'Europe', CH: 'Europe', CZ: 'Europe', DE: 'Europe',
+    ES: 'Europe', FR: 'Europe', GB: 'Europe', IE: 'Europe', IT: 'Europe',
+    NL: 'Europe', PT: 'Europe', SI: 'Europe', SK: 'Europe',
+    XC: 'Global', XE: 'Global'
+  });
 
   const PRODUCT_COPY = {
     de: {
@@ -452,6 +462,8 @@
       developmentIntro:'Mehrere Berichte über dasselbe Geschehen – streng und lokal gruppiert.',
       developmentGuard:'Nur verschiedene Quellen mit hoher inhaltlicher Übereinstimmung werden verbunden.',
       whyLinked:'Verbunden durch', confidence:'Übereinstimmung', storySources:'Quellen', storyArticles:'Berichte',
+      assignmentStrength:'Zuordnungsstärke', strengthHigh:'hoch', strengthVeryHigh:'sehr hoch',
+      strengthExplanation:'Verglichen werden Titel, benannte Personen und Orte sowie prägende Formulierungen der gebündelten Artikel. Das ist keine Bewertung der Quelle oder des Wahrheitsgehalts.',
       storyTimeline:'Zeitverlauf', noDevelopments:'Aktuell gibt es keine ausreichend sichere Mehrquellen-Entwicklung.',
       watch:'Beobachten', watching:'Beobachtet', showWatched:'Nur beobachtete', showAll:'Alle Entwicklungen'
     },
@@ -474,6 +486,8 @@
       developmentIntro:'Several reports about the same event, grouped strictly and locally.',
       developmentGuard:'Only different sources with strong content overlap are linked.', whyLinked:'Linked by',
       confidence:'Match', storySources:'Sources', storyArticles:'Reports', storyTimeline:'Timeline',
+      assignmentStrength:'Assignment strength', strengthHigh:'high', strengthVeryHigh:'very high',
+      strengthExplanation:'This compares titles, named people and places, and distinctive wording across the grouped articles. It does not rate the source or truth of a report.',
       noDevelopments:'There is currently no sufficiently reliable multi-source development.',
       watch:'Watch', watching:'Watching', showWatched:'Watched only', showAll:'All developments'
     },
@@ -1238,7 +1252,7 @@
     events: [],
     eventFilter: {
       query: '', country: '', city: '', category: '', group: '', date: '',
-      archived: false, radius: 0, location: null
+      archived: false, radius: 0, location: null, regions: []
     },
     sourceCatalog: null,
     sourceIndex: new Map(),
@@ -1880,15 +1894,52 @@
       </header>`;
   }
 
+  function eventRegion(event) {
+    return EVENT_REGION_BY_COUNTRY[String(event?.country || '').toUpperCase()] || 'Global';
+  }
+
+  function eventsForRegions(items, regions) {
+    const selected = new Set((regions || []).filter(Boolean));
+    if (!selected.size) return items;
+    return items.filter(event => selected.has(eventRegion(event)));
+  }
+
+  function preferredHomeEvents() {
+    const preferredRegions = [...new Set(state.preferences.regions || [])];
+    const locationActive = Boolean(state.eventFilter.location && Number(state.eventFilter.radius));
+    let items = release.filterEvents(state.events, {
+      archived: false,
+      location: locationActive ? state.eventFilter.location : null,
+      radius: locationActive ? state.eventFilter.radius : 0
+    });
+    if (!locationActive) items = eventsForRegions(items, preferredRegions);
+    items.sort((first, second) => {
+      if (locationActive) {
+        const distance = (first.distanceKm ?? Infinity) - (second.distanceKm ?? Infinity);
+        if (distance) return distance;
+      }
+      return Number(first.start) - Number(second.start);
+    });
+    return {
+      items: items.slice(0, 2),
+      regions: locationActive ? [] : preferredRegions,
+      context: locationActive
+        ? `${t('nearMe')} · ${state.eventFilter.radius} km`
+        : preferredRegions.length
+          ? preferredRegions.join(' · ')
+          : t('allRegions')
+    };
+  }
+
   function homeServiceMarkup() {
     const developments = specialty
-      .developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 })
+      .developmentClusters(state.articles, window.WRNStoriesCore, {
+        days: 30,
+        threshold: DEVELOPMENT_MATCH_THRESHOLD
+      })
       .slice(0, 2);
-    const upcomingEvents = release
-      .filterEvents(state.events, { archived: false })
-      .sort((first, second) => Number(first.start) - Number(second.start))
-      .slice(0, 2);
-    if (!developments.length && !upcomingEvents.length) return '';
+    const homeEvents = preferredHomeEvents();
+    if (!developments.length && !state.events.length) return '';
 
     return `
       <section class="home-service-grid" aria-label="${escapeHtml(`${t('developments')} · ${t('events')}`)}">
@@ -1902,15 +1953,15 @@
             <small>${story.itemCount} ${escapeHtml(t('storyArticles'))} · ${story.sourceCount} ${escapeHtml(t('storySources'))}</small>
           </li>`).join('')}</ol>
         </article>` : ''}
-        ${upcomingEvents.length ? `<article class="home-service-card">
+        ${state.events.length ? `<article class="home-service-card">
           <header>
-            <div><span class="eyebrow">${escapeHtml(t('events'))}</span><h2>${escapeHtml(t('eventUpcoming'))}</h2></div>
-            <button type="button" class="home-service-link" data-view-target="events" aria-label="${escapeHtml(t('eventUpcoming'))}">→</button>
+            <div><span class="eyebrow">${escapeHtml(homeEvents.context)}</span><h2>${escapeHtml(t('eventUpcoming'))}</h2></div>
+            <button type="button" class="home-service-link" data-action="home-events" aria-label="${escapeHtml(t('eventUpcoming'))}">→</button>
           </header>
-          <ol class="home-service-list">${upcomingEvents.map(event => `<li>
+          ${homeEvents.items.length ? `<ol class="home-service-list">${homeEvents.items.map(event => `<li>
             <strong>${escapeHtml(event.title)}</strong>
             <small>${escapeHtml(eventWhenLabel(event))}${event.city ? ` · ${escapeHtml(event.city)}` : ''}</small>
-          </li>`).join('')}</ol>
+          </li>`).join('')}</ol>` : `<p class="home-service-empty">${escapeHtml(t('noEvents'))}</p>`}
         </article>` : ''}
       </section>`;
   }
@@ -2038,7 +2089,10 @@
     const prisoners = (state.prisonerData.profiles || []).filter(profile => prisonerIds.has(profile.id));
     const watched = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
     const developments = specialty
-      .developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 })
+      .developmentClusters(state.articles, window.WRNStoriesCore, {
+        days: 30,
+        threshold: DEVELOPMENT_MATCH_THRESHOLD
+      })
       .filter(story => watched.has(story.id));
     if (!prisoners.length && !developments.length) return '';
 
@@ -2363,12 +2417,14 @@
     const record = {
       id: `filter-${Date.now()}`,
       label: [
+        ...(state.eventFilter.regions || []),
         state.eventFilter.city,
         state.eventFilter.country,
         state.eventFilter.category,
         state.eventFilter.query
       ].filter(Boolean).join(' · ') || t('events'),
       query: state.eventFilter.query,
+      regions: [...(state.eventFilter.regions || [])],
       country: state.eventFilter.country,
       city: state.eventFilter.city,
       category: state.eventFilter.category,
@@ -2399,6 +2455,11 @@
 
   function renderEvents() {
     state.cardArticles = [];
+    const selectedRegions = state.eventFilter.regions || [];
+    const eventRegions = [...new Set([
+      ...state.events.map(eventRegion),
+      ...selectedRegions
+    ].filter(Boolean))].sort((first, second) => first.localeCompare(second, state.language));
     const countries = [...new Set(
       state.events
         .map(item => ['XC', 'XE'].includes(item.country) ? '__international__' : item.country)
@@ -2413,7 +2474,10 @@
       state.events.flatMap(item => item.categories || []).map(release.eventCategoryGroup).filter(Boolean)
     )].sort((a, b) => a.localeCompare(b));
     const groups = [...new Set(state.events.flatMap(item => item.groups || []).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-    const filtered = release.filterEvents(state.events, state.eventFilter).slice(0, 60);
+    const filtered = eventsForRegions(
+      release.filterEvents(state.events, state.eventFilter),
+      selectedRegions
+    ).slice(0, 60);
     const savedFilters = savedEventFilters();
     viewRoot.innerHTML = `
       ${headingMarkup(t('events'), t('events'), t('eventsText'), specialtyBack())}
@@ -2429,6 +2493,11 @@
         </select></label>
       </div>
       <div class="event-filter-grid">
+        <select id="next-event-region" aria-label="${escapeHtml(t('regions'))}">
+          <option value="">${escapeHtml(t('allRegions'))}</option>
+          ${selectedRegions.length > 1 ? `<option value="__preferences__" selected>${escapeHtml(t('following'))}: ${selectedRegions.map(escapeHtml).join(' · ')}</option>` : ''}
+          ${eventRegions.map(region => `<option value="${escapeHtml(region)}"${selectedRegions.length === 1 && selectedRegions[0] === region ? ' selected' : ''}>${escapeHtml(region)}</option>`).join('')}
+        </select>
         <select id="next-event-city" aria-label="${escapeHtml(t('city'))}">${selectOptions(cities, state.eventFilter.city, '', t('allCities'))}</select>
         <select id="next-event-category" aria-label="${escapeHtml(t('category'))}">${selectOptions(categories, state.eventFilter.category, '', t('allEventCategories'))}</select>
         <select id="next-event-group" aria-label="${escapeHtml(t('group'))}">${selectOptions(groups, state.eventFilter.group, '', t('allGroups'))}</select>
@@ -2503,7 +2572,10 @@
   }
 
   function renderEventRadar() {
-    const items = release.filterEvents(state.events, state.eventFilter).slice(0, 80);
+    const items = eventsForRegions(
+      release.filterEvents(state.events, state.eventFilter),
+      state.eventFilter.regions
+    ).slice(0, 80);
     const groups = new Map();
     items.forEach(event => {
       const key = [countryLabel(event.country), event.city || '—'].filter(Boolean).join(' · ');
@@ -2536,6 +2608,7 @@
     if (!record) return;
     Object.assign(state.eventFilter, {
       query: record.query || '',
+      regions: Array.isArray(record.regions) ? record.regions.filter(Boolean) : [],
       country: record.country || '',
       city: record.city || '',
       category: record.category || '',
@@ -2678,9 +2751,40 @@
     `;
   }
 
+  function developmentClassification(story) {
+    const articles = (story?.items || []).map(core.normalizeArticle);
+    const ranked = values => {
+      const counts = new Map();
+      values.filter(Boolean).forEach(value => counts.set(value, (counts.get(value) || 0) + 1));
+      return [...counts.entries()]
+        .sort((first, second) => second[1] - first[1] || first[0].localeCompare(second[0], state.language))
+        .map(([value]) => value);
+    };
+    const regions = ranked(articles.map(article => article.primaryRegion)).slice(0, 2);
+    const topics = ranked(articles.flatMap(article => [
+      article.primaryTopic,
+      ...(article.secondaryTopics || [])
+    ])).slice(0, 3);
+    return [
+      ...regions.map(value => `<span class="tag development-tag development-tag--region"><span aria-hidden="true">◎</span>${escapeHtml(value)}</span>`),
+      ...topics.map(value => `<span class="tag development-tag development-tag--topic"><span aria-hidden="true">#</span>${escapeHtml(value)}</span>`)
+    ].join('');
+  }
+
+  function developmentStrength(story) {
+    const value = Math.round((story?.matchConfidence || 0) * 100);
+    return {
+      value,
+      label: t(value >= 82 ? 'strengthVeryHigh' : 'strengthHigh')
+    };
+  }
+
   function renderDevelopments() {
     state.cardArticles = [];
-    const all = specialty.developmentClusters(state.articles, window.WRNStoriesCore, { days: 30, threshold: 0.5 });
+    const all = specialty.developmentClusters(state.articles, window.WRNStoriesCore, {
+      days: 30,
+      threshold: DEVELOPMENT_MATCH_THRESHOLD
+    });
     const watched = new Set(Array.isArray(state.developmentWatch) ? state.developmentWatch : []);
     const clusters = state.developmentsWatchedOnly ? all.filter(story => watched.has(story.id)) : all;
     viewRoot.innerHTML = `
@@ -2689,9 +2793,15 @@
       <div class="special-tabs"><button type="button" class="filter-chip${state.developmentsWatchedOnly ? '' : ' active'}" data-action="development-filter" data-value="all">${escapeHtml(t('showAll'))}</button><button type="button" class="filter-chip${state.developmentsWatchedOnly ? ' active' : ''}" data-action="development-filter" data-value="watched">${escapeHtml(t('showWatched'))}</button></div>
       ${clusters.length ? `<div class="development-grid">${clusters.map(story => {
         const isWatching = watched.has(story.id);
+        const classification = developmentClassification(story);
+        const strength = developmentStrength(story);
         return `<article class="development-card">
           <header><div><span class="eyebrow">${story.itemCount} ${escapeHtml(t('storyArticles'))} · ${story.sourceCount} ${escapeHtml(t('storySources'))}</span><h3>${escapeHtml(story.title)}</h3></div><button type="button" class="watch-button" data-action="watch-development" data-story-id="${escapeHtml(story.id)}" aria-pressed="${isWatching}">${isWatching ? '★' : '☆'} ${escapeHtml(isWatching ? t('watching') : t('watch'))}</button></header>
-          <div class="evidence-line"><strong>${escapeHtml(t('whyLinked'))}:</strong> ${(story.matchReasons || []).slice(0, 5).map(value => `<span class="tag">${escapeHtml(value)}</span>`).join('')}<span>${escapeHtml(t('confidence'))}: ${Math.round((story.matchConfidence || 0) * 100)}%</span></div>
+          <div class="evidence-line"><strong>${escapeHtml(t('regions'))} · ${escapeHtml(t('topics'))}:</strong> ${classification}</div>
+          <details class="assignment-details">
+            <summary>${escapeHtml(t('assignmentStrength'))}: ${escapeHtml(strength.label)} (${strength.value}%)</summary>
+            <p>${escapeHtml(t('strengthExplanation'))}</p>
+          </details>
           <ol class="timeline-list">${story.items.map(item => {
             const normalized = core.normalizeArticle(item);
             const index = state.cardArticles.push(normalized) - 1;
@@ -3708,7 +3818,7 @@
     const developments = specialty.developmentClusters(
       state.articles,
       window.WRNStoriesCore,
-      { days: 30, threshold: 0.5 }
+      { days: 30, threshold: DEVELOPMENT_MATCH_THRESHOLD }
     );
 
     document.getElementById('next-region-choices').innerHTML = [...state.facets.regions]
@@ -3851,6 +3961,13 @@
           : 'current';
         state.discover.limit = 24;
         changeView('discover');
+      }
+      if (action === 'home-events') {
+        state.eventFilter.archived = false;
+        state.eventFilter.regions = state.eventFilter.location
+          ? []
+          : [...new Set(state.preferences.regions || [])];
+        changeView('events');
       }
       if (action === 'discover-period') {
         state.discover.period = ['current', '7d', '30d', 'all'].includes(target.dataset.value)
@@ -4065,6 +4182,14 @@
       }
       if (event.target.id === 'next-event-country') {
         state.eventFilter.country = event.target.value;
+        renderEvents();
+      }
+      if (event.target.id === 'next-event-region') {
+        state.eventFilter.regions = event.target.value === '__preferences__'
+          ? [...new Set(state.preferences.regions || [])]
+          : event.target.value
+            ? [event.target.value]
+            : [];
         renderEvents();
       }
       const eventMap = {

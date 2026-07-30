@@ -87,11 +87,21 @@ def test_preview_and_production_offline_caches_are_distinct():
 
 def test_specialty_views_are_native_preview_routes():
     script = (ROOT / "news-app-2.js").read_text(encoding="utf-8")
+    style = (ROOT / "news-app-2.css").read_text(encoding="utf-8")
     for view in ("events", "lexicon", "prisoners", "developments"):
         assert f"render{view.capitalize()}" in script
         assert f"'{view}'" in script
     assert "WRNPrisonerSolidarity190.openWorkshop" in script
-    assert "threshold: 0.5" in script
+    assert "DEVELOPMENT_MATCH_THRESHOLD = 0.68" in script
+    assert "developmentClassification" in script
+    assert "developmentStrength" in script
+    assert "assignmentStrength" in script
+    assert "strengthExplanation" in script
+    assert "EVENT_REGION_BY_COUNTRY" in script
+    assert "preferredHomeEvents" in script
+    assert 'id="next-event-region"' in script
+    assert "development-tag--region" in style
+    assert "development-tag--topic" in style
     assert 'data-action="prisoner-section"' in script
     assert "prisonerSourcesMarkup" in script
     assert 'referrerpolicy="no-referrer"' in script
@@ -210,7 +220,7 @@ def test_release_header_cards_and_mobile_navigation_are_polished():
     assert "homeServiceMarkup" in script
     assert 'class="home-service-grid"' in script
     assert 'data-view-target="developments"' in script
-    assert 'data-view-target="events"' in script
+    assert 'data-action="home-events"' in script
     assert "window.location.protocol === 'file:'" in script
     assert "http://127.0.0.1:8765/next.html?preview=8" in script
     assert "fileModeText" in script

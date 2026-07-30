@@ -112,9 +112,10 @@ assert.strictEqual(glossary[0].displayTitle, 'Gegenseitige Hilfe');
 const clusters = specialty.developmentClusters([], {
   clusterStories: () => [
     { sourceCount: 2, matchConfidence: 0.72, matchReasons: ['place', 'person'] },
+    { sourceCount: 2, matchConfidence: 0.66, matchReasons: ['topic', 'region'] },
     { sourceCount: 2, matchConfidence: 0.3, matchReasons: ['weak'] }
   ]
 });
-assert.strictEqual(clusters.length, 1, 'weak development matches must be rejected');
+assert.strictEqual(clusters.length, 1, 'development matches below the editorial 68% floor must be rejected');
 
 console.log('News App 2 specialty contracts: OK');
