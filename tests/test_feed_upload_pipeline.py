@@ -12,6 +12,7 @@ def test_aggregator_stops_before_the_workflow_timeout():
         "aggregate_budget_exhausted()",
         "aggregate_stopped_for_budget",
         "rotate_source_buckets",
+        "WRN_SOURCE_ROTATION_HOURS",
     ):
         assert token in aggregate
 
@@ -35,10 +36,22 @@ def test_workflow_validates_and_stages_every_browser_feed():
     assert "git add news-feed.json events-feed.json feed-status.json" in workflow
     assert 'age > 3600' in workflow
     assert 'status.get("news", {}).get("feedCount") != len(news)' in workflow
+    assert 'cron: "17 */2 * * *"' in workflow
+
+
+def test_reclassifier_ignores_runtime_source_transformations():
+    from reclassify_news_categories import definitions
+
+    base, _extras, classify, regions, topics = definitions()
+    assert base
+    assert callable(classify)
+    assert regions
+    assert topics
 
 
 if __name__ == "__main__":
     test_aggregator_stops_before_the_workflow_timeout()
     test_checkpoints_are_throttled_and_atomic()
     test_workflow_validates_and_stages_every_browser_feed()
+    test_reclassifier_ignores_runtime_source_transformations()
     print("WRN feed upload pipeline: OK")

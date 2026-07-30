@@ -928,19 +928,24 @@ def rotate_source_buckets(source_buckets):
     buckets = list(source_buckets.items())
     if not buckets:
         return source_buckets
-    four_hour_slot = int(time.time() // (4 * 60 * 60))
-    category_offset = four_hour_slot % len(buckets)
+    rotation_hours = max(
+        1,
+        int(os.environ.get("WRN_SOURCE_ROTATION_HOURS", "2")),
+    )
+    rotation_slot = int(time.time() // (rotation_hours * 60 * 60))
+    category_offset = rotation_slot % len(buckets)
     buckets = buckets[category_offset:] + buckets[:category_offset]
     rotated = {}
     for index, (category, sources) in enumerate(buckets):
         rows = list(sources)
         if rows:
-            source_offset = (four_hour_slot + index) % len(rows)
+            source_offset = (rotation_slot + index) % len(rows)
             rows = rows[source_offset:] + rows[:source_offset]
         rotated[category] = rows
     print(
         "[ZEITPLAN] Rotierende Quellenreihenfolge: "
-        f"Slot {four_hour_slot}, {sum(len(rows) for rows in rotated.values())} Quellen."
+        f"{rotation_hours}-Stunden-Slot {rotation_slot}, "
+        f"{sum(len(rows) for rows in rotated.values())} Quellen."
     )
     return rotated
 

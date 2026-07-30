@@ -32,8 +32,17 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
                 for target in node.targets
                 if isinstance(target, ast.Name)
             }
-            if "quellen" in names:
-                base_sources = ast.literal_eval(node.value)
+            if "quellen" in names and not base_sources:
+                # The first assignment is the literal source catalogue. Later
+                # assignments may deliberately transform it (for example,
+                # rotating source buckets for scheduled aggregation runs) and
+                # therefore are not safe for ``ast.literal_eval``.
+                try:
+                    candidate = ast.literal_eval(node.value)
+                except (TypeError, ValueError):
+                    candidate = None
+                if isinstance(candidate, dict):
+                    base_sources = candidate
             if any(name.startswith("_wrn_extra_sources_") for name in names):
                 try:
                     value = ast.literal_eval(node.value)
@@ -62,6 +71,9 @@ def definitions() -> tuple[dict[str, list[dict[str, Any]]], list[dict[str, Any]]
             "infer_article_categories",
         }:
             selected_nodes.append(node)
+
+    if not base_sources:
+        raise RuntimeError("Keine literale Basisdefinition für 'quellen' gefunden.")
 
     namespace: dict[str, Any] = {"re": re}
     exec(
