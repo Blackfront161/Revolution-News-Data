@@ -211,6 +211,10 @@ def test_release_header_cards_and_mobile_navigation_are_polished():
     assert 'class="home-service-grid"' in script
     assert 'data-view-target="developments"' in script
     assert 'data-view-target="events"' in script
+    assert "window.location.protocol === 'file:'" in script
+    assert "http://127.0.0.1:8765/next.html?preview=8" in script
+    assert "fileModeText" in script
+    assert ".file-preview-link" in style
 
 
 def test_animal_liberation_sources_are_expanded_and_registered():

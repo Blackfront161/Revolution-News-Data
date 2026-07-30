@@ -193,6 +193,9 @@
       emptySaved: 'Noch keine Artikel gespeichert', emptySavedText: 'Tippe bei einem Artikel auf den Stern.',
       openArticle: 'Artikel öffnen', readOriginal: 'Beim Original lesen', loadError: 'Die Nachrichtendaten konnten nicht geladen werden.',
       retry: 'Erneut versuchen', menuSearch: 'Suche öffnen', close: 'Schließen',
+      fileModeTitle: 'Die Vorschau wurde als Datei geöffnet.',
+      fileModeText: 'Nachrichten-Feeds dürfen im file://-Modus nicht geladen werden. Öffne die Vorschau über den lokalen Testserver.',
+      openLocalPreview: 'Lokale Vorschau öffnen',
       selectionSaved: 'Deine Auswahl wurde lokal gespeichert.', articleSaved: 'Artikel gespeichert.',
       articleRemoved: 'Artikel entfernt.', translatedTitle: 'Übersetzter Titel und Einleitung',
       previewNotice: 'Parallele Vorschau – die veröffentlichte App bleibt unverändert.',
@@ -229,6 +232,9 @@
       emptySaved: 'No saved articles yet', emptySavedText: 'Tap the star on an article.',
       openArticle: 'Open article', readOriginal: 'Read original', loadError: 'News data could not be loaded.',
       retry: 'Try again', menuSearch: 'Open search', close: 'Close',
+      fileModeTitle: 'The preview was opened as a file.',
+      fileModeText: 'News feeds cannot be loaded in file:// mode. Open the preview through the local test server.',
+      openLocalPreview: 'Open local preview',
       selectionSaved: 'Your selection was saved locally.', articleSaved: 'Article saved.',
       articleRemoved: 'Article removed.', translatedTitle: 'Translated title and introduction',
       previewNotice: 'Parallel preview – the published app remains unchanged.',
@@ -2957,10 +2963,16 @@
   }
 
   function renderError() {
+    const fileMode = window.location.protocol === 'file:';
+    const localPreviewUrl = 'http://127.0.0.1:8765/next.html?preview=8';
     viewRoot.innerHTML = `
       <div class="empty-state">
-        <strong>${escapeHtml(t('loadError'))}</strong>
-        <button class="primary-button" type="button" data-action="retry">${escapeHtml(t('retry'))}</button>
+        <strong>${escapeHtml(t(fileMode ? 'fileModeTitle' : 'loadError'))}</strong>
+        ${fileMode
+          ? `<p>${escapeHtml(t('fileModeText'))}</p>
+            <a class="primary-button file-preview-link" href="${localPreviewUrl}">${escapeHtml(t('openLocalPreview'))}</a>
+            <small>${localPreviewUrl}</small>`
+          : `<button class="primary-button" type="button" data-action="retry">${escapeHtml(t('retry'))}</button>`}
       </div>`;
   }
 

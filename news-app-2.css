@@ -1270,6 +1270,22 @@ img {
   font-size: 1.15rem;
 }
 
+.empty-state p {
+  max-width: 620px;
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.file-preview-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.empty-state .file-preview-link + small {
+  overflow-wrap: anywhere;
+}
+
 .bottom-nav {
   position: fixed;
   z-index: 90;
