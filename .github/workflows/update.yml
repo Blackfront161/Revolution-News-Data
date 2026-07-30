@@ -2,7 +2,10 @@ name: Update News
 
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    # Zwei Stunden sind für aktuelle Nachrichten ein sinnvoller belastbarer
+    # Zwischenschritt. Der vollständige Lauf benötigt derzeit rund 35 Minuten;
+    # eine stündliche Vollaggregation könnte sich daher unnötig aufstauen.
+    - cron: "17 */2 * * *"
   workflow_dispatch:
 
 permissions:
