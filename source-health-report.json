@@ -1,16 +1,16 @@
 {
   "schemaVersion": 5,
-  "generatedAt": "2026-07-28T17:58:50.166731+00:00",
-  "freshUntil": "2026-07-29T05:58:50.166731+00:00",
+  "generatedAt": "2026-07-30T22:07:05.058929+00:00",
+  "freshUntil": "2026-07-31T10:07:05.058929+00:00",
   "refreshPolicy": {
     "workflowIntervalHours": 4,
     "freshnessWindowHours": 12,
     "expiredResultsAreNotPresentedAsCurrent": true
   },
   "summary": {
-    "total": 245,
-    "ok": 200,
-    "warning": 45,
+    "total": 252,
+    "ok": 212,
+    "warning": 40,
     "error": 0,
     "unknown": 0
   },
@@ -22,7 +22,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:27.787323+00:00",
+      "lastChecked": "2026-07-30T22:05:53.704056+00:00",
       "categories": [
         "Global"
       ],
@@ -35,8 +35,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:27.787323+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:05:53.704056+00:00"
     },
     {
       "name": "Abolition Media",
@@ -45,7 +45,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:28.750595+00:00",
+      "lastChecked": "2026-07-30T22:05:54.539010+00:00",
       "categories": [
         "Global"
       ],
@@ -58,8 +58,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:28.750595+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:05:54.539010+00:00"
     },
     {
       "name": "Anarchist Library (PL)",
@@ -68,7 +68,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:32.116491+00:00",
+      "lastChecked": "2026-07-30T22:05:56.966542+00:00",
       "categories": [
         "Libraries"
       ],
@@ -81,8 +81,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:32.116491+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:05:56.966542+00:00"
     },
     {
       "name": "Anarchist Library (TR)",
@@ -91,7 +91,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:33.019923+00:00",
+      "lastChecked": "2026-07-30T22:05:57.412284+00:00",
       "categories": [
         "Libraries"
       ],
@@ -104,8 +104,39 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:33.019923+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:05:57.412284+00:00"
+    },
+    {
+      "name": "Anarres Info",
+      "url": "https://anarresinfo.org/feed/",
+      "configuredUrl": "https://anarresinfo.org/feed/",
+      "pageUrl": "https://anarresinfo.org/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-30T22:05:58.733135+00:00",
+      "categories": [
+        "Europe",
+        "Movement News",
+        "Theory & Strategy",
+        "No War",
+        "Anticapitalism",
+        "Antifascism"
+      ],
+      "languages": [
+        "it"
+      ],
+      "originRegion": "Southern Europe",
+      "originCountry": "Italy",
+      "originCountryCode": "IT",
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='anarresinfo.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='anarresinfo.org', port=443) at 0x7fb607229070>, 'Connection to anarresinfo.org timed out. (connect timeout=8)'))",
+      "rawStatus": "warning",
+      "failureKind": "temporary_restriction",
+      "detailedState": "temporarily_restricted",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 1,
+      "lastFailureAt": "2026-07-30T22:05:58.733135+00:00",
+      "lastSuccessAt": "2026-07-28T17:57:34.200262+00:00"
     },
     {
       "name": "Antifa Bern",
@@ -114,7 +145,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:35.569092+00:00",
+      "lastChecked": "2026-07-30T22:05:59.450830+00:00",
       "categories": [
         "Antifascism"
       ],
@@ -127,8 +158,38 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:35.569092+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:05:59.450830+00:00"
+    },
+    {
+      "name": "Antifa.cz",
+      "url": "https://www.antifa.cz/rss.xml",
+      "configuredUrl": "https://www.antifa.cz/rss.xml",
+      "pageUrl": "",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-30T22:06:00.052312+00:00",
+      "categories": [
+        "Europe",
+        "Antifascism"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 404,
+      "finalUrl": "https://antifa-cz.net/rss.xml",
+      "contentType": "text/html; charset=utf-8",
+      "suspiciousRedirect": true,
+      "error": "Unerwartete Weiterleitung auf eine andere Domain; manuelle PrÃ¼fung erforderlich.",
+      "rawStatus": "error",
+      "failureKind": "suspicious_redirect",
+      "detailedState": "feed_broken_unconfirmed",
+      "consecutiveFailures": 1,
+      "consecutiveRestrictions": 0,
+      "firstFailureAt": "2026-07-30T22:06:00.052312+00:00",
+      "lastFailureAt": "2026-07-30T22:06:00.052312+00:00",
+      "lastSuccessAt": "2026-07-28T17:57:36.105737+00:00"
     },
     {
       "name": "Asylum Magazine",
@@ -137,7 +198,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:36.818295+00:00",
+      "lastChecked": "2026-07-30T22:06:01.018178+00:00",
       "categories": [
         "Radical Health & Disability"
       ],
@@ -153,8 +214,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:36.818295+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:01.018178+00:00"
     },
     {
       "name": "Athens Indymedia (GR)",
@@ -163,7 +224,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:36.828351+00:00",
+      "lastChecked": "2026-07-30T22:06:01.030296+00:00",
       "categories": [
         "Europe",
         "Demonstrations"
@@ -180,8 +241,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:36.828351+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:01.030296+00:00"
     },
     {
       "name": "Attac / CADTM Maroc",
@@ -190,7 +251,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:36.886779+00:00",
+      "lastChecked": "2026-07-30T22:06:01.114618+00:00",
       "categories": [
         "Africa"
       ],
@@ -198,13 +259,13 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='www.cadtm.org', port=443): Max retries exceeded with url: /spip.php?page=backend (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.cadtm.org', port=443) at 0x7f43d12e4950>, 'Connection to www.cadtm.org timed out. (connect timeout=8)'))",
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='www.cadtm.org', port=443): Max retries exceeded with url: /spip.php?page=backend (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.cadtm.org', port=443) at 0x7fb6072284a0>, 'Connection to www.cadtm.org timed out. (connect timeout=8)'))",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:57:36.886779+00:00",
+      "consecutiveRestrictions": 14,
+      "lastFailureAt": "2026-07-30T22:06:01.114618+00:00",
       "lastSuccessAt": "2026-07-25T21:14:40.492693+00:00"
     },
     {
@@ -214,7 +275,7 @@
       "pageUrl": "https://bianet.org/kurdi",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:37.969140+00:00",
+      "lastChecked": "2026-07-30T22:06:01.625224+00:00",
       "categories": [
         "Europe",
         "Anticolonialism",
@@ -243,8 +304,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 27,
-      "lastFailureAt": "2026-07-28T17:57:37.969140+00:00"
+      "consecutiveRestrictions": 28,
+      "lastFailureAt": "2026-07-30T22:06:01.625224+00:00"
     },
     {
       "name": "Bianet Türkçe",
@@ -253,7 +314,7 @@
       "pageUrl": "https://bianet.org/",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:38.114660+00:00",
+      "lastChecked": "2026-07-30T22:06:01.792861+00:00",
       "categories": [
         "Europe",
         "Labor Struggles",
@@ -274,8 +335,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 27,
-      "lastFailureAt": "2026-07-28T17:57:38.114660+00:00"
+      "consecutiveRestrictions": 28,
+      "lastFailureAt": "2026-07-30T22:06:01.792861+00:00"
     },
     {
       "name": "Biblioteca Anarquista (PT)",
@@ -284,7 +345,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:38.803571+00:00",
+      "lastChecked": "2026-07-30T22:06:01.838575+00:00",
       "categories": [
         "Libraries"
       ],
@@ -297,103 +358,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:38.803571+00:00"
-    },
-    {
-      "name": "Bulatlat (Indigenous)",
-      "url": "",
-      "configuredUrl": "",
-      "pageUrl": "https://www.bulatlat.com/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:57:40.553648+00:00",
-      "categories": [
-        "Indigenous Struggles",
-        "Global",
-        "Anti-Rep & Prisons",
-        "Anti-Imperialism",
-        "Asia",
-        "Eco-Anarchism",
-        "Labor Struggles",
-        "Movement News",
-        "Antisexism",
-        "Queer-Feminism"
-      ],
-      "languages": [
-        "und"
-      ],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 200,
-      "finalUrl": "https://www.bulatlat.com/",
-      "contentType": "text/html",
-      "pageOnly": true,
-      "warning": "Website geprüft und erreichbar; kein technischer Feed vorhanden.",
-      "rawStatus": "warning",
-      "failureKind": "page_only",
-      "detailedState": "website_available_without_feed",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-25T13:52:06.924969+00:00"
-    },
-    {
-      "name": "Bulatlat (Philippines)",
-      "url": "https://www.bulatlat.com/feed/",
-      "configuredUrl": "https://www.bulatlat.com/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:57:40.884384+00:00",
-      "categories": [
-        "Asia",
-        "Indigenous Struggles"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 200,
-      "finalUrl": "https://www.bulatlat.com/feed/",
-      "contentType": "text/html",
-      "feedType": "unexpected",
-      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
-      "failureKind": "website_feed_broken",
-      "detailedState": "website_reachable_feed_broken",
-      "consecutiveFailures": 1,
-      "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-07-28T17:57:40.884384+00:00",
-      "lastFailureAt": "2026-07-28T17:57:40.884384+00:00",
-      "lastSuccessAt": "2026-07-28T14:33:21.283994+00:00"
-    },
-    {
-      "name": "Critical Resistance",
-      "url": "https://criticalresistance.org/feed/",
-      "configuredUrl": "https://criticalresistance.org/feed/",
-      "pageUrl": "https://criticalresistance.org/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:57:44.772903+00:00",
-      "categories": [
-        "Anti-Rep & Prisons",
-        "Global"
-      ],
-      "languages": [
-        "und"
-      ],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='criticalresistance.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='criticalresistance.org', port=443) at 0x7f43d12e6360>, 'Connection to criticalresistance.org timed out. (connect timeout=8)'))",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 1,
-      "lastFailureAt": "2026-07-28T17:57:44.772903+00:00",
-      "lastSuccessAt": "2026-07-28T14:33:23.973982+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:01.838575+00:00"
     },
     {
       "name": "DDoSecrets",
@@ -402,7 +368,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:46.048194+00:00",
+      "lastChecked": "2026-07-30T22:06:09.257831+00:00",
       "categories": [
         "Cyberactivism"
       ],
@@ -410,13 +376,13 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='ddosecrets.com', port=443): Max retries exceeded with url: /api.php?action=featuredfeed&feed=rss (Caused by ConnectTimeoutError(<HTTPSConnection(host='ddosecrets.com', port=443) at 0x7f43d12d50a0>, 'Connection to ddosecrets.com timed out. (connect timeout=8)'))",
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='ddosecrets.com', port=443): Max retries exceeded with url: /api.php?action=featuredfeed&feed=rss (Caused by ConnectTimeoutError(<HTTPSConnection(host='ddosecrets.com', port=443) at 0x7fb607228290>, 'Connection to ddosecrets.com timed out. (connect timeout=8)'))",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:46.048194+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:09.257831+00:00"
     },
     {
       "name": "Desinformémonos",
@@ -425,7 +391,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:46.955381+00:00",
+      "lastChecked": "2026-07-30T22:06:09.712956+00:00",
       "categories": [
         "Latin America"
       ],
@@ -442,8 +408,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 18,
-      "lastFailureAt": "2026-07-28T17:57:46.955381+00:00"
+      "consecutiveRestrictions": 19,
+      "lastFailureAt": "2026-07-30T22:06:09.712956+00:00"
     },
     {
       "name": "Desmog",
@@ -452,7 +418,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:47.190208+00:00",
+      "lastChecked": "2026-07-30T22:06:09.889763+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
@@ -468,8 +434,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:47.190208+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:09.889763+00:00"
     },
     {
       "name": "Earth First!",
@@ -478,7 +444,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:48.103144+00:00",
+      "lastChecked": "2026-07-30T22:06:10.540605+00:00",
       "categories": [
         "Eco-Anarchism"
       ],
@@ -494,8 +460,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:48.103144+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:10.540605+00:00"
     },
     {
       "name": "Endnotes",
@@ -504,7 +470,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:49.159357+00:00",
+      "lastChecked": "2026-07-30T22:06:11.137126+00:00",
       "categories": [
         "Theory & Strategy"
       ],
@@ -517,42 +483,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:49.159357+00:00"
-    },
-    {
-      "name": "Evrensel",
-      "url": "https://www.evrensel.net/rss/haber.xml",
-      "configuredUrl": "https://www.evrensel.net/rss/haber.xml",
-      "pageUrl": "https://www.evrensel.net/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:57:49.858090+00:00",
-      "categories": [
-        "Europe",
-        "Labor Struggles",
-        "Anticapitalism",
-        "No War",
-        "Movement News",
-        "Anti-Rep & Prisons"
-      ],
-      "languages": [
-        "tr"
-      ],
-      "originRegion": "Türkiye",
-      "originCountry": "Türkiye",
-      "originCountryCode": "TR",
-      "httpStatus": 403,
-      "finalUrl": "https://www.evrensel.net/rss/haber.xml",
-      "contentType": "text/html; charset=UTF-8",
-      "warning": "Quelle eingeschränkt (HTTP 403).",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:57:49.858090+00:00",
-      "lastSuccessAt": "2026-07-25T21:14:53.241822+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:11.137126+00:00"
     },
     {
       "name": "Feminist Anti-War Resistance",
@@ -561,7 +493,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:52.014342+00:00",
+      "lastChecked": "2026-07-30T22:06:13.683236+00:00",
       "categories": [
         "Queer-Feminism"
       ],
@@ -574,8 +506,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:52.014342+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:13.683236+00:00"
     },
     {
       "name": "Freedom News",
@@ -584,7 +516,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:52.320400+00:00",
+      "lastChecked": "2026-07-30T22:06:14.891530+00:00",
       "categories": [
         "Europe"
       ],
@@ -602,8 +534,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:57:52.320400+00:00",
+      "consecutiveRestrictions": 14,
+      "lastFailureAt": "2026-07-30T22:06:14.891530+00:00",
       "lastSuccessAt": "2026-07-25T21:14:54.657193+00:00"
     },
     {
@@ -613,7 +545,7 @@
       "pageUrl": "https://sulbooks.com/",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:53.129766+00:00",
+      "lastChecked": "2026-07-30T22:06:15.460565+00:00",
       "categories": [
         "Global",
         "Antisexism",
@@ -641,31 +573,34 @@
       "lastSuccessAt": "2026-07-21T06:46:50.085968+00:00"
     },
     {
-      "name": "Hunt Saboteurs Association (UK)",
-      "url": "https://www.huntsabs.org.uk/feed/",
-      "configuredUrl": "https://www.huntsabs.org.uk/feed/",
-      "pageUrl": "",
+      "name": "IndigenousX (Australia)",
+      "url": "https://indigenousx.com.au/feed/",
+      "configuredUrl": "https://indigenousx.com.au/feed/",
+      "pageUrl": "https://indigenousx.com.au/",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:54.755159+00:00",
+      "lastChecked": "2026-07-30T22:06:19.229061+00:00",
       "categories": [
-        "Animal Liberation"
+        "Australia & NZ",
+        "Indigenous Struggles",
+        "Movement News",
+        "Antiracism"
       ],
       "languages": [],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
       "httpStatus": 403,
-      "finalUrl": "https://www.huntsabs.org.uk/feed/",
-      "contentType": "text/html; charset=UTF-8",
+      "finalUrl": "https://indigenousx.com.au/feed/",
+      "contentType": "text/html",
       "warning": "Quelle eingeschränkt (HTTP 403).",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:57:54.755159+00:00",
-      "lastSuccessAt": "2026-07-25T21:14:55.362949+00:00"
+      "consecutiveRestrictions": 1,
+      "lastFailureAt": "2026-07-30T22:06:19.229061+00:00",
+      "lastSuccessAt": "2026-07-28T17:57:57.164599+00:00"
     },
     {
       "name": "IWW (Global)",
@@ -674,7 +609,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:57:59.872307+00:00",
+      "lastChecked": "2026-07-30T22:06:21.656074+00:00",
       "categories": [
         "Labor Struggles"
       ],
@@ -690,8 +625,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:57:59.872307+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:21.656074+00:00"
     },
     {
       "name": "Jineolojî Academy",
@@ -700,7 +635,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:00.171324+00:00",
+      "lastChecked": "2026-07-30T22:06:21.699789+00:00",
       "categories": [
         "Antisexism"
       ],
@@ -716,43 +651,9 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:58:00.171324+00:00",
+      "consecutiveRestrictions": 14,
+      "lastFailureAt": "2026-07-30T22:06:21.699789+00:00",
       "lastSuccessAt": "2026-07-25T21:14:58.525139+00:00"
-    },
-    {
-      "name": "Karapatan (Human Rights)",
-      "url": "https://www.karapatan.org/feed/",
-      "configuredUrl": "https://www.karapatan.org/feed/",
-      "pageUrl": "https://www.karapatan.org/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:58:00.334887+00:00",
-      "categories": [
-        "Asia",
-        "Movement News",
-        "Anti-Rep & Prisons",
-        "Demonstrations"
-      ],
-      "languages": [
-        "und"
-      ],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 200,
-      "finalUrl": "https://www.karapatan.org/feed/",
-      "contentType": "text/html",
-      "feedType": "unexpected",
-      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
-      "failureKind": "website_feed_broken",
-      "detailedState": "website_reachable_feed_broken",
-      "consecutiveFailures": 1,
-      "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-07-28T17:58:00.334887+00:00",
-      "lastFailureAt": "2026-07-28T17:58:00.334887+00:00",
-      "lastSuccessAt": "2026-07-28T14:33:38.713206+00:00"
     },
     {
       "name": "Kodao Productions",
@@ -761,7 +662,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:01.029262+00:00",
+      "lastChecked": "2026-07-30T22:06:22.337641+00:00",
       "categories": [
         "Asia"
       ],
@@ -777,8 +678,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:58:01.029262+00:00",
+      "consecutiveRestrictions": 14,
+      "lastFailureAt": "2026-07-30T22:06:22.337641+00:00",
       "lastSuccessAt": "2026-07-25T21:14:59.233661+00:00"
     },
     {
@@ -788,7 +689,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:02.320098+00:00",
+      "lastChecked": "2026-07-30T22:06:23.754382+00:00",
       "categories": [
         "Asia",
         "Anticolonialism"
@@ -797,13 +698,13 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7f43d1329850>, 'Connection to lausan.hk timed out. (connect timeout=8)'))",
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7fb607527980>, 'Connection to lausan.hk timed out. (connect timeout=8)'))",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:02.320098+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:23.754382+00:00"
     },
     {
       "name": "Libreria Anarchica (IT)",
@@ -812,7 +713,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:02.708002+00:00",
+      "lastChecked": "2026-07-30T22:06:24.457813+00:00",
       "categories": [
         "Libraries"
       ],
@@ -825,8 +726,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:02.708002+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:24.457813+00:00"
     },
     {
       "name": "Mad in America",
@@ -835,7 +736,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:03.241927+00:00",
+      "lastChecked": "2026-07-30T22:06:24.788296+00:00",
       "categories": [
         "Radical Health & Disability"
       ],
@@ -851,8 +752,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:58:03.241927+00:00",
+      "consecutiveRestrictions": 14,
+      "lastFailureAt": "2026-07-30T22:06:24.788296+00:00",
       "lastSuccessAt": "2026-07-25T21:15:01.971512+00:00"
     },
     {
@@ -862,7 +763,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:05.071637+00:00",
+      "lastChecked": "2026-07-30T22:06:26.251849+00:00",
       "categories": [
         "Squatting & Housing"
       ],
@@ -875,8 +776,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:05.071637+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:26.251849+00:00"
     },
     {
       "name": "Ni Una Menos",
@@ -885,7 +786,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:06.708824+00:00",
+      "lastChecked": "2026-07-30T22:06:27.811880+00:00",
       "categories": [
         "Antisexism"
       ],
@@ -898,8 +799,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:06.708824+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:27.811880+00:00"
     },
     {
       "name": "No One Is Illegal",
@@ -908,7 +809,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:06.753227+00:00",
+      "lastChecked": "2026-07-30T22:06:27.829782+00:00",
       "categories": [
         "No Borders"
       ],
@@ -921,8 +822,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:06.753227+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:27.829782+00:00"
     },
     {
       "name": "Perspektive Online (DE)",
@@ -931,7 +832,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:10.533885+00:00",
+      "lastChecked": "2026-07-30T22:06:29.562838+00:00",
       "categories": [
         "Europe"
       ],
@@ -944,8 +845,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:10.533885+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:29.562838+00:00"
     },
     {
       "name": "RevoltLib",
@@ -954,7 +855,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:13.544327+00:00",
+      "lastChecked": "2026-07-30T22:06:33.042840+00:00",
       "categories": [
         "Libraries"
       ],
@@ -962,13 +863,13 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='revoltlib.com', port=443): Max retries exceeded with url: /feed (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='revoltlib.com', port=443): Read timed out. (read timeout=8)\"))",
+      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='revoltlib.com', port=443): Max retries exceeded with url: /feed (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1010)')))",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:13.544327+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:33.042840+00:00"
     },
     {
       "name": "Sea-Watch",
@@ -977,7 +878,7 @@
       "pageUrl": "https://sea-watch.org/",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:14.961431+00:00",
+      "lastChecked": "2026-07-30T22:06:33.729113+00:00",
       "categories": [
         "No Borders",
         "Global",
@@ -995,82 +896,9 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 17,
-      "lastFailureAt": "2026-07-28T17:58:14.961431+00:00",
+      "consecutiveRestrictions": 18,
+      "lastFailureAt": "2026-07-30T22:06:33.729113+00:00",
       "lastSuccessAt": "2026-07-25T20:52:19.774912+00:00"
-    },
-    {
-      "name": "Sicilia Libertaria",
-      "url": "https://www.sicilialibertaria.it/feed/",
-      "configuredUrl": "https://www.sicilialibertaria.it/feed/",
-      "pageUrl": "https://www.sicilialibertaria.it/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:58:15.335699+00:00",
-      "categories": [
-        "Europe",
-        "Theory & Strategy",
-        "Anticapitalism",
-        "No War",
-        "Antifascism",
-        "Movement News",
-        "Queer-Feminism",
-        "Anti-Imperialism"
-      ],
-      "languages": [
-        "it"
-      ],
-      "originRegion": "Southern Europe",
-      "originCountry": "Italy",
-      "originCountryCode": "IT",
-      "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.sicilialibertaria.it', port=443): Max retries exceeded with url: /feed/ (Caused by NewConnectionError(\"HTTPSConnection(host='www.sicilialibertaria.it', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 4,
-      "lastFailureAt": "2026-07-28T17:58:15.335699+00:00",
-      "lastSuccessAt": "2026-07-28T02:38:05.928495+00:00"
-    },
-    {
-      "name": "The Elephant (Kenya)",
-      "url": "https://www.theelephant.info/feed/",
-      "configuredUrl": "https://www.theelephant.info/feed/",
-      "pageUrl": "https://www.theelephant.info/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:58:18.798318+00:00",
-      "categories": [
-        "Africa",
-        "Eco-Anarchism",
-        "Movement News",
-        "Squatting & Housing",
-        "Antiracism",
-        "Demonstrations",
-        "Anti-Imperialism",
-        "Anticolonialism",
-        "Theory & Strategy",
-        "Labor Struggles"
-      ],
-      "languages": [
-        "en"
-      ],
-      "originRegion": "East Africa",
-      "originCountry": "Kenya",
-      "originCountryCode": "KE",
-      "httpStatus": 200,
-      "finalUrl": "https://www.theelephant.info/feed/",
-      "contentType": "text/html",
-      "feedType": "unexpected",
-      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
-      "failureKind": "website_feed_broken",
-      "detailedState": "website_reachable_feed_broken",
-      "consecutiveFailures": 1,
-      "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-07-28T17:58:18.798318+00:00",
-      "lastFailureAt": "2026-07-28T17:58:18.798318+00:00",
-      "lastSuccessAt": "2026-07-28T14:33:55.701052+00:00"
     },
     {
       "name": "Thozhilalar Koodam (India)",
@@ -1079,7 +907,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:19.757219+00:00",
+      "lastChecked": "2026-07-30T22:06:36.317308+00:00",
       "categories": [
         "Asia",
         "Labor Struggles"
@@ -1093,8 +921,40 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:19.757219+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:36.317308+00:00"
+    },
+    {
+      "name": "Tier im Fokus (Switzerland)",
+      "url": "https://tier-im-fokus.ch/feed/",
+      "configuredUrl": "https://tier-im-fokus.ch/feed/",
+      "pageUrl": "https://tierimfokus.ch/",
+      "status": "warning",
+      "ok": false,
+      "lastChecked": "2026-07-30T22:06:36.408400+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe",
+        "Demonstrations"
+      ],
+      "languages": [
+        "de"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "Switzerland",
+      "originCountryCode": "CH",
+      "httpStatus": 200,
+      "finalUrl": "https://tierimfokus.ch/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "suspiciousRedirect": true,
+      "error": "Unerwartete Weiterleitung auf eine andere Domain; manuelle PrÃ¼fung erforderlich.",
+      "rawStatus": "error",
+      "failureKind": "suspicious_redirect",
+      "detailedState": "feed_broken_unconfirmed",
+      "consecutiveFailures": 1,
+      "consecutiveRestrictions": 0,
+      "firstFailureAt": "2026-07-30T22:06:36.408400+00:00",
+      "lastFailureAt": "2026-07-30T22:06:36.408400+00:00"
     },
     {
       "name": "Transnational Institute",
@@ -1103,7 +963,7 @@
       "pageUrl": "https://www.tni.org/en",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:20.618958+00:00",
+      "lastChecked": "2026-07-30T22:06:36.748498+00:00",
       "categories": [
         "Global",
         "Anticapitalism",
@@ -1130,40 +990,13 @@
       "consecutiveRestrictions": 0
     },
     {
-      "name": "Tricontinental: Institute for Social Research",
-      "url": "https://thetricontinental.org/feed/",
-      "configuredUrl": "https://thetricontinental.org/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-07-28T17:58:21.010739+00:00",
-      "categories": [
-        "Anticapitalism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 403,
-      "finalUrl": "https://thetricontinental.org/feed/",
-      "contentType": "text/html; charset=UTF-8",
-      "warning": "Quelle eingeschränkt (HTTP 403).",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 13,
-      "lastFailureAt": "2026-07-28T17:58:21.010739+00:00",
-      "lastSuccessAt": "2026-07-25T21:15:15.147374+00:00"
-    },
-    {
       "name": "Umanita Nova (IT)",
       "url": "http://www.umanitanova.org/feed/",
       "configuredUrl": "http://www.umanitanova.org/feed/",
       "pageUrl": "https://umanitanova.org/",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:21.248181+00:00",
+      "lastChecked": "2026-07-30T22:06:37.318932+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -1184,8 +1017,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:21.248181+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:37.318932+00:00"
     },
     {
       "name": "War Resisters' International",
@@ -1194,7 +1027,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:22.537456+00:00",
+      "lastChecked": "2026-07-30T22:06:38.264916+00:00",
       "categories": [
         "No War"
       ],
@@ -1211,8 +1044,8 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 17,
-      "lastFailureAt": "2026-07-28T17:58:22.537456+00:00"
+      "consecutiveRestrictions": 18,
+      "lastFailureAt": "2026-07-30T22:06:38.264916+00:00"
     },
     {
       "name": "Zwangsräumung Verhindern (Berlin)",
@@ -1221,7 +1054,7 @@
       "pageUrl": "",
       "status": "warning",
       "ok": false,
-      "lastChecked": "2026-07-28T17:58:24.452334+00:00",
+      "lastChecked": "2026-07-30T22:06:39.662799+00:00",
       "categories": [
         "Squatting & Housing"
       ],
@@ -1229,13 +1062,42 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='zwangsraeumungverhindern.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='zwangsraeumungverhindern.org', port=443) at 0x7f43d128fb90>, 'Connection to zwangsraeumungverhindern.org timed out. (connect timeout=8)'))",
+      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='zwangsraeumungverhindern.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='zwangsraeumungverhindern.org', port=443) at 0x7fb6071d39e0>, 'Connection to zwangsraeumungverhindern.org timed out. (connect timeout=8)'))",
       "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 28,
-      "lastFailureAt": "2026-07-28T17:58:24.452334+00:00"
+      "consecutiveRestrictions": 29,
+      "lastFailureAt": "2026-07-30T22:06:39.662799+00:00"
+    },
+    {
+      "name": "269 Libération Animale (France)",
+      "url": "https://www.269liberationanimale.fr/feed/",
+      "configuredUrl": "https://www.269liberationanimale.fr/feed/",
+      "pageUrl": "https://www.269liberationanimale.fr/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:05:53.703100+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe"
+      ],
+      "languages": [
+        "fr"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "France",
+      "originCountryCode": "FR",
+      "httpStatus": 200,
+      "finalUrl": "https://www.269liberationanimale.fr/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:05:53.703100+00:00"
     },
     {
       "name": "A Las Barricadas (ES)",
@@ -1244,7 +1106,7 @@
       "pageUrl": "https://www.alasbarricadas.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.785918+00:00",
+      "lastChecked": "2026-07-30T22:05:53.703592+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -1269,7 +1131,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.785918+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.703592+00:00"
     },
     {
       "name": "A-Radio Berlin",
@@ -1278,7 +1140,7 @@
       "pageUrl": "https://www.aradio-berlin.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.787656+00:00",
+      "lastChecked": "2026-07-30T22:05:53.705612+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -1299,7 +1161,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.787656+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.705612+00:00"
     },
     {
       "name": "A.N.A. Brasil",
@@ -1308,7 +1170,7 @@
       "pageUrl": "https://noticiasanarquistas.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.789270+00:00",
+      "lastChecked": "2026-07-30T22:05:53.708232+00:00",
       "categories": [
         "Latin America",
         "Movement News",
@@ -1332,7 +1194,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.789270+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.708232+00:00"
     },
     {
       "name": "Abahlali baseMjondolo (South Africa)",
@@ -1341,7 +1203,7 @@
       "pageUrl": "https://abahlali.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.790636+00:00",
+      "lastChecked": "2026-07-30T22:05:53.709078+00:00",
       "categories": [
         "Africa",
         "Squatting & Housing",
@@ -1363,7 +1225,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.790636+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.709078+00:00"
     },
     {
       "name": "ABC Belarus",
@@ -1372,7 +1234,7 @@
       "pageUrl": "https://abc-belarus.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.791518+00:00",
+      "lastChecked": "2026-07-30T22:05:53.709824+00:00",
       "categories": [
         "Anti-Rep & Prisons",
         "Global"
@@ -1390,7 +1252,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.791518+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.709824+00:00"
     },
     {
       "name": "Abolish Frontex",
@@ -1399,7 +1261,7 @@
       "pageUrl": "https://abolishfrontex.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.792252+00:00",
+      "lastChecked": "2026-07-30T22:05:53.710242+00:00",
       "categories": [
         "No Borders",
         "Global",
@@ -1420,7 +1282,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:27.792252+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:53.710242+00:00"
     },
     {
       "name": "Abolition Journal",
@@ -1429,7 +1291,7 @@
       "pageUrl": "https://abolitionjournal.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:27.793277+00:00",
+      "lastChecked": "2026-07-30T22:05:54.125338+00:00",
       "categories": [
         "Antiracism",
         "Global",
@@ -1453,7 +1315,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:09.167736+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:27.793277+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.125338+00:00"
     },
     {
       "name": "Access Now",
@@ -1462,7 +1324,7 @@
       "pageUrl": "https://www.accessnow.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:29.025059+00:00",
+      "lastChecked": "2026-07-30T22:05:54.564713+00:00",
       "categories": [
         "Global",
         "Cyberactivism",
@@ -1485,7 +1347,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:29.025059+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.564713+00:00"
     },
     {
       "name": "Act for Freedom Now!",
@@ -1494,7 +1356,7 @@
       "pageUrl": "https://actforfree.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:29.068566+00:00",
+      "lastChecked": "2026-07-30T22:05:54.722294+00:00",
       "categories": [
         "Antifascism",
         "Global",
@@ -1520,7 +1382,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:29.068566+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.722294+00:00"
     },
     {
       "name": "Africa Is a Country",
@@ -1529,7 +1391,7 @@
       "pageUrl": "https://africasacountry.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:29.194394+00:00",
+      "lastChecked": "2026-07-30T22:05:54.733865+00:00",
       "categories": [
         "Africa",
         "Anticolonialism",
@@ -1551,7 +1413,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:29.194394+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.733865+00:00"
     },
     {
       "name": "African Arguments",
@@ -1560,13 +1422,13 @@
       "pageUrl": "https://africanarguments.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:29.659676+00:00",
+      "lastChecked": "2026-07-30T22:05:54.915386+00:00",
       "categories": [
         "Africa",
         "Anticolonialism",
         "Anti-Imperialism",
-        "Eco-Anarchism",
         "Movement News",
+        "Eco-Anarchism",
         "No War"
       ],
       "languages": [
@@ -1584,7 +1446,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:29.659676+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.915386+00:00"
     },
     {
       "name": "African Feminism",
@@ -1593,7 +1455,7 @@
       "pageUrl": "https://africanfeminism.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:29.825635+00:00",
+      "lastChecked": "2026-07-30T22:05:54.996200+00:00",
       "categories": [
         "Africa",
         "Antisexism",
@@ -1615,7 +1477,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:29.825635+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:54.996200+00:00"
     },
     {
       "name": "Agencia Tierra Viva",
@@ -1624,12 +1486,13 @@
       "pageUrl": "https://agenciatierraviva.com.ar/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.031459+00:00",
+      "lastChecked": "2026-07-30T22:05:55.138651+00:00",
       "categories": [
         "Latin America",
         "Indigenous Struggles",
         "Eco-Anarchism",
-        "Anticapitalism"
+        "Anticapitalism",
+        "Squatting & Housing"
       ],
       "languages": [
         "es"
@@ -1647,7 +1510,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:10.605853+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:30.031459+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:55.138651+00:00"
     },
     {
       "name": "Agency",
@@ -1656,7 +1519,7 @@
       "pageUrl": "https://anarchistagency.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.062434+00:00",
+      "lastChecked": "2026-07-30T22:05:55.254838+00:00",
       "categories": [
         "Global",
         "Demonstrations",
@@ -1678,7 +1541,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.062434+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:55.254838+00:00"
     },
     {
       "name": "Agenda des Luttes Rouen",
@@ -1687,7 +1550,7 @@
       "pageUrl": "https://agenda.rouen-luttes.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.064818+00:00",
+      "lastChecked": "2026-07-30T22:05:55.621352+00:00",
       "categories": [
         "Radar"
       ],
@@ -1704,7 +1567,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.064818+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:55.621352+00:00"
     },
     {
       "name": "Agência Pública",
@@ -1713,7 +1576,7 @@
       "pageUrl": "https://apublica.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.303263+00:00",
+      "lastChecked": "2026-07-30T22:05:55.794741+00:00",
       "categories": [
         "Latin America",
         "Environment",
@@ -1737,7 +1600,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.303263+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:55.794741+00:00"
     },
     {
       "name": "Akce Nolog Praha",
@@ -1746,7 +1609,7 @@
       "pageUrl": "https://akce.nolog.cz/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.368527+00:00",
+      "lastChecked": "2026-07-30T22:05:56.028594+00:00",
       "categories": [
         "Radar"
       ],
@@ -1763,7 +1626,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.368527+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.028594+00:00"
     },
     {
       "name": "Alarm Phone",
@@ -1772,7 +1635,7 @@
       "pageUrl": "https://alarmphone.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.514980+00:00",
+      "lastChecked": "2026-07-30T22:05:56.035939+00:00",
       "categories": [
         "Europe",
         "No Borders",
@@ -1795,7 +1658,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.514980+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.035939+00:00"
     },
     {
       "name": "Alerta (GR)",
@@ -1804,7 +1667,7 @@
       "pageUrl": "https://www.alerta.gr/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.628645+00:00",
+      "lastChecked": "2026-07-30T22:05:56.556138+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -1827,7 +1690,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.628645+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.556138+00:00"
     },
     {
       "name": "ALF Press Office (North America)",
@@ -1836,7 +1699,7 @@
       "pageUrl": "https://animalliberationpressoffice.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:30.789030+00:00",
+      "lastChecked": "2026-07-30T22:05:56.685089+00:00",
       "categories": [
         "Animal Liberation",
         "Global",
@@ -1857,7 +1720,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:30.789030+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.685089+00:00"
     },
     {
       "name": "ALÉ Montpellier",
@@ -1866,7 +1729,7 @@
       "pageUrl": "https://www.aleale.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:31.177252+00:00",
+      "lastChecked": "2026-07-30T22:05:56.698814+00:00",
       "categories": [
         "Radar"
       ],
@@ -1883,7 +1746,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:31.177252+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.698814+00:00"
     },
     {
       "name": "Anarchist Black Cross",
@@ -1892,7 +1755,7 @@
       "pageUrl": "https://www.abcf.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:31.424917+00:00",
+      "lastChecked": "2026-07-30T22:05:56.766276+00:00",
       "categories": [
         "Anti-Rep & Prisons",
         "Global"
@@ -1912,7 +1775,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:31.424917+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.766276+00:00"
     },
     {
       "name": "Anarchist Communist Group",
@@ -1921,7 +1784,7 @@
       "pageUrl": "https://www.anarchistcommunism.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:31.861012+00:00",
+      "lastChecked": "2026-07-30T22:05:56.771056+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -1947,7 +1810,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:31.861012+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.771056+00:00"
     },
     {
       "name": "Anarchist Federation",
@@ -1956,7 +1819,7 @@
       "pageUrl": "https://www.anarchistfederation.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:31.957922+00:00",
+      "lastChecked": "2026-07-30T22:05:56.941473+00:00",
       "categories": [
         "Global",
         "Movement News",
@@ -1977,7 +1840,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:31.957922+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:56.941473+00:00"
     },
     {
       "name": "Anarchist Library (RU)",
@@ -1986,7 +1849,7 @@
       "pageUrl": "https://ru.anarchistlibraries.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:32.138322+00:00",
+      "lastChecked": "2026-07-30T22:05:57.249673+00:00",
       "categories": [
         "Libraries",
         "Global"
@@ -2007,7 +1870,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:41.674970+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:32.138322+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:57.249673+00:00"
     },
     {
       "name": "Anarchist Library (SV)",
@@ -2016,7 +1879,7 @@
       "pageUrl": "https://www.anarkistiskabiblioteket.se/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:32.519882+00:00",
+      "lastChecked": "2026-07-30T22:05:57.390127+00:00",
       "categories": [
         "Libraries",
         "Global",
@@ -2038,7 +1901,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:41.758760+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:32.519882+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:57.390127+00:00"
     },
     {
       "name": "Anarchist News",
@@ -2047,16 +1910,13 @@
       "pageUrl": "http://anarchistnews.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:33.165481+00:00",
+      "lastChecked": "2026-07-30T22:05:57.445065+00:00",
       "categories": [
         "Global",
         "Movement News",
-        "Theory & Strategy",
-        "Anti-Rep & Prisons"
+        "Theory & Strategy"
       ],
-      "languages": [
-        "und"
-      ],
+      "languages": [],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -2069,7 +1929,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:33.165481+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:57.445065+00:00"
     },
     {
       "name": "Anarchistische Bibliothek (DE)",
@@ -2078,7 +1938,7 @@
       "pageUrl": "https://de.anarchistlibraries.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:33.328693+00:00",
+      "lastChecked": "2026-07-30T22:05:57.871589+00:00",
       "categories": [
         "Libraries",
         "Global",
@@ -2099,7 +1959,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:33.328693+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:57.871589+00:00"
     },
     {
       "name": "Anarkismo (Africa)",
@@ -2108,7 +1968,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:33.655479+00:00",
+      "lastChecked": "2026-07-30T22:05:57.881162+00:00",
       "categories": [
         "Africa"
       ],
@@ -2126,7 +1986,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T18:19:45.493280+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:33.655479+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:57.881162+00:00"
     },
     {
       "name": "Anarkismo (Gender)",
@@ -2135,7 +1995,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:33.921632+00:00",
+      "lastChecked": "2026-07-30T22:05:58.092133+00:00",
       "categories": [
         "Antisexism"
       ],
@@ -2153,7 +2013,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T18:19:45.661066+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:33.921632+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:58.092133+00:00"
     },
     {
       "name": "Anarkismo (International)",
@@ -2162,7 +2022,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:33.961143+00:00",
+      "lastChecked": "2026-07-30T22:05:58.175215+00:00",
       "categories": [
         "Global"
       ],
@@ -2180,41 +2040,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T18:19:45.743970+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:33.961143+00:00"
-    },
-    {
-      "name": "Anarres Info",
-      "url": "https://anarresinfo.org/feed/",
-      "configuredUrl": "https://anarresinfo.org/feed/",
-      "pageUrl": "https://anarresinfo.org/",
-      "status": "ok",
-      "ok": true,
-      "lastChecked": "2026-07-28T17:57:34.200262+00:00",
-      "categories": [
-        "Europe",
-        "Movement News",
-        "Theory & Strategy",
-        "No War",
-        "Anticapitalism",
-        "Antifascism"
-      ],
-      "languages": [
-        "it"
-      ],
-      "originRegion": "Southern Europe",
-      "originCountry": "Italy",
-      "originCountryCode": "IT",
-      "httpStatus": 200,
-      "finalUrl": "https://www.anarresinfo.org/feed/",
-      "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "declared-feed",
-      "rawStatus": "ok",
-      "failureKind": "available",
-      "detailedState": "recovered",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 0,
-      "lastFailureAt": "2026-07-28T14:33:12.077930+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:34.200262+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:58.175215+00:00"
     },
     {
       "name": "Anarşist Haberler",
@@ -2223,7 +2049,7 @@
       "pageUrl": "https://www.anarsisthaberler.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:34.203209+00:00",
+      "lastChecked": "2026-07-30T22:05:58.801926+00:00",
       "categories": [
         "Europe",
         "Theory & Strategy",
@@ -2246,7 +2072,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:34.203209+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:58.801926+00:00"
     },
     {
       "name": "ANF English (Kurdistan)",
@@ -2255,7 +2081,7 @@
       "pageUrl": "https://english.anf-news.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:34.314004+00:00",
+      "lastChecked": "2026-07-30T22:05:59.097727+00:00",
       "categories": [
         "Asia"
       ],
@@ -2273,7 +2099,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T21:02:45.371995+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:34.314004+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:59.097727+00:00"
     },
     {
       "name": "AngryWorkers",
@@ -2282,7 +2108,7 @@
       "pageUrl": "https://www.angryworkers.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:34.782284+00:00",
+      "lastChecked": "2026-07-30T22:05:59.137037+00:00",
       "categories": [
         "Labor Struggles",
         "Global",
@@ -2304,7 +2130,64 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:34.782284+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:59.137037+00:00"
+    },
+    {
+      "name": "Animal Aid (UK)",
+      "url": "https://www.animalaid.org.uk/feed/",
+      "configuredUrl": "https://www.animalaid.org.uk/feed/",
+      "pageUrl": "https://www.animalaid.org.uk/news/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:05:59.349872+00:00",
+      "categories": [
+        "Animal Liberation"
+      ],
+      "languages": [
+        "en"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "United Kingdom",
+      "originCountryCode": "GB",
+      "httpStatus": 200,
+      "finalUrl": "https://www.animalaid.org.uk/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:05:59.349872+00:00"
+    },
+    {
+      "name": "Animal Equality Deutschland",
+      "url": "https://animalequality.de/feed/",
+      "configuredUrl": "https://animalequality.de/feed/",
+      "pageUrl": "https://animalequality.de/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:05:59.354294+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe"
+      ],
+      "languages": [
+        "de"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "Germany",
+      "originCountryCode": "DE",
+      "httpStatus": 200,
+      "finalUrl": "https://animalequality.de/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:05:59.354294+00:00"
     },
     {
       "name": "Animal Rising",
@@ -2313,7 +2196,7 @@
       "pageUrl": "https://www.animalrising.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:35.030962+00:00",
+      "lastChecked": "2026-07-30T22:05:59.356084+00:00",
       "categories": [
         "Europe",
         "Animal Liberation",
@@ -2337,7 +2220,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:35.030962+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:59.356084+00:00"
     },
     {
       "name": "ANRed (Argentina)",
@@ -2346,7 +2229,7 @@
       "pageUrl": "https://www.anred.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:35.222535+00:00",
+      "lastChecked": "2026-07-30T22:05:59.402980+00:00",
       "categories": [
         "Latin America",
         "Movement News",
@@ -2373,7 +2256,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:15.310580+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:35.222535+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:59.402980+00:00"
     },
     {
       "name": "Antifa Infoblatt",
@@ -2382,7 +2265,7 @@
       "pageUrl": "https://antifainfoblatt.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:35.894476+00:00",
+      "lastChecked": "2026-07-30T22:05:59.547600+00:00",
       "categories": [
         "Europe",
         "Antifascism",
@@ -2402,39 +2285,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:35.894476+00:00"
-    },
-    {
-      "name": "Antifa.cz",
-      "url": "https://www.antifa.cz/feed.xml",
-      "configuredUrl": "https://www.antifa.cz/rss.xml",
-      "pageUrl": "",
-      "status": "ok",
-      "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.105737+00:00",
-      "categories": [
-        "Europe",
-        "Antifascism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 404,
-      "finalUrl": "https://www.antifa.cz/feed.xml",
-      "contentType": "text/html; charset=utf-8",
-      "previousUrl": "https://www.antifa.cz/rss.xml",
-      "replacementUrl": "https://www.antifa.cz/feed.xml",
-      "feedType": "xml",
-      "discovered": true,
-      "warning": "Verschobene Feed-Adresse gefunden; Quellenregister bleibt unverÃ¤ndert.",
-      "rawStatus": "ok",
-      "failureKind": "available",
-      "detailedState": "available",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 0,
-      "lastFailureAt": "2026-07-21T06:46:21.148320+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:36.105737+00:00"
+      "lastSuccessAt": "2026-07-30T22:05:59.547600+00:00"
     },
     {
       "name": "Antimilitarismus",
@@ -2443,7 +2294,7 @@
       "pageUrl": "https://antimilitarismus.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.268691+00:00",
+      "lastChecked": "2026-07-30T22:06:00.107235+00:00",
       "categories": [
         "No War",
         "Global",
@@ -2467,7 +2318,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:36.268691+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:00.107235+00:00"
     },
     {
       "name": "Apatris (GR)",
@@ -2476,7 +2327,7 @@
       "pageUrl": "https://apatris.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.291428+00:00",
+      "lastChecked": "2026-07-30T22:06:00.234161+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -2500,7 +2351,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:45.765604+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:36.291428+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:00.234161+00:00"
     },
     {
       "name": "APTN News",
@@ -2509,11 +2360,12 @@
       "pageUrl": "https://www.aptnnews.ca/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.523906+00:00",
+      "lastChecked": "2026-07-30T22:06:00.477864+00:00",
       "categories": [
         "Indigenous Struggles",
         "North America",
-        "Anticolonialism"
+        "Anticolonialism",
+        "Anti-Rep & Prisons"
       ],
       "languages": [
         "en"
@@ -2530,7 +2382,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:36.523906+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:00.477864+00:00"
     },
     {
       "name": "Are You Syrious?",
@@ -2539,7 +2391,7 @@
       "pageUrl": "https://medium.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.624043+00:00",
+      "lastChecked": "2026-07-30T22:06:00.644236+00:00",
       "categories": [
         "No Borders",
         "Global"
@@ -2559,7 +2411,36 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:36.624043+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:00.644236+00:00"
+    },
+    {
+      "name": "ARIWA – Animal Rights Watch (Germany)",
+      "url": "https://www.ariwa.org/feed/",
+      "configuredUrl": "https://www.ariwa.org/feed/",
+      "pageUrl": "https://www.ariwa.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:00.680131+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe"
+      ],
+      "languages": [
+        "de"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "Germany",
+      "originCountryCode": "DE",
+      "httpStatus": 200,
+      "finalUrl": "https://www.ariwa.org/feed/",
+      "contentType": "text/xml;charset=UTF-8",
+      "feedType": "xml",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:06:00.680131+00:00"
     },
     {
       "name": "Asian Labour Review",
@@ -2568,11 +2449,10 @@
       "pageUrl": "https://labourreview.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:36.798531+00:00",
+      "lastChecked": "2026-07-30T22:06:00.863627+00:00",
       "categories": [
         "Asia",
         "Anti-Imperialism",
-        "Global",
         "Labor Struggles",
         "Eco-Anarchism",
         "Demonstrations",
@@ -2590,11 +2470,11 @@
       "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
-      "detailedState": "recovered",
+      "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T14:33:14.467912+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:36.798531+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:00.863627+00:00"
     },
     {
       "name": "Autonomies",
@@ -2603,11 +2483,11 @@
       "pageUrl": "https://autonomies.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.107847+00:00",
+      "lastChecked": "2026-07-30T22:06:01.183093+00:00",
       "categories": [
         "Global",
-        "Movement News",
         "Theory & Strategy",
+        "Movement News",
         "Anticapitalism",
         "Antifascism",
         "Eco-Anarchism",
@@ -2630,7 +2510,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:17.414987+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:37.107847+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.183093+00:00"
     },
     {
       "name": "Autostraddle News",
@@ -2639,7 +2519,7 @@
       "pageUrl": "https://www.autostraddle.com/category/news/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.376853+00:00",
+      "lastChecked": "2026-07-30T22:06:01.186594+00:00",
       "categories": [
         "Queer-Feminism",
         "North America"
@@ -2660,7 +2540,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.376853+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.186594+00:00"
     },
     {
       "name": "Avispa Midia",
@@ -2669,12 +2549,11 @@
       "pageUrl": "https://avispa.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.623715+00:00",
+      "lastChecked": "2026-07-30T22:06:01.188881+00:00",
       "categories": [
         "Latin America",
         "Anticolonialism",
         "Indigenous Struggles",
-        "Global",
         "Movement News",
         "No War",
         "Demonstrations",
@@ -2696,7 +2575,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.623715+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.188881+00:00"
     },
     {
       "name": "Avtonom (RU)",
@@ -2705,7 +2584,7 @@
       "pageUrl": "https://avtonom.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.636812+00:00",
+      "lastChecked": "2026-07-30T22:06:01.347056+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -2728,7 +2607,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.636812+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.347056+00:00"
     },
     {
       "name": "AWID",
@@ -2737,7 +2616,7 @@
       "pageUrl": "https://www.awid.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.638865+00:00",
+      "lastChecked": "2026-07-30T22:06:01.458465+00:00",
       "categories": [
         "Antisexism",
         "Queer-Feminism",
@@ -2760,7 +2639,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.638865+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.458465+00:00"
     },
     {
       "name": "AWSM",
@@ -2769,7 +2648,7 @@
       "pageUrl": "https://awsm.nz/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.751119+00:00",
+      "lastChecked": "2026-07-30T22:06:01.554017+00:00",
       "categories": [
         "Australia & NZ",
         "Theory & Strategy",
@@ -2790,7 +2669,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.751119+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.554017+00:00"
     },
     {
       "name": "Barrikade (CH)",
@@ -2799,7 +2678,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:37.761347+00:00",
+      "lastChecked": "2026-07-30T22:06:01.612406+00:00",
       "categories": [
         "Europe",
         "Radar",
@@ -2819,7 +2698,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:37.761347+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.612406+00:00"
     },
     {
       "name": "Biblioteca Anarquista (ES)",
@@ -2828,7 +2707,7 @@
       "pageUrl": "https://es.anarchistlibraries.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:38.177733+00:00",
+      "lastChecked": "2026-07-30T22:06:01.829560+00:00",
       "categories": [
         "Libraries",
         "Global",
@@ -2851,7 +2730,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:50.649146+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:38.177733+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.829560+00:00"
     },
     {
       "name": "Bibliothèque Anarchiste (FR)",
@@ -2860,7 +2739,7 @@
       "pageUrl": "https://fr.anarchistlibraries.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:38.817940+00:00",
+      "lastChecked": "2026-07-30T22:06:01.962659+00:00",
       "categories": [
         "Libraries",
         "Global",
@@ -2883,7 +2762,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:51.514173+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:38.817940+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:01.962659+00:00"
     },
     {
       "name": "Black Agenda Report",
@@ -2892,7 +2771,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.041254+00:00",
+      "lastChecked": "2026-07-30T22:06:02.643088+00:00",
       "categories": [
         "Africa"
       ],
@@ -2914,7 +2793,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-24T10:44:30.099883+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:39.041254+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:02.643088+00:00"
     },
     {
       "name": "Black Rose (Anti-Colonial)",
@@ -2923,7 +2802,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.064570+00:00",
+      "lastChecked": "2026-07-30T22:06:02.959374+00:00",
       "categories": [
         "Anticolonialism"
       ],
@@ -2945,7 +2824,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:20.106162+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:39.064570+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:02.959374+00:00"
     },
     {
       "name": "Black Rose (Anti-Racism)",
@@ -2954,7 +2833,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.195895+00:00",
+      "lastChecked": "2026-07-30T22:06:03.137506+00:00",
       "categories": [
         "Antiracism"
       ],
@@ -2976,7 +2855,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:20.252663+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:39.195895+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:03.137506+00:00"
     },
     {
       "name": "Black Rose (Feminism)",
@@ -2985,7 +2864,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.375968+00:00",
+      "lastChecked": "2026-07-30T22:06:03.164340+00:00",
       "categories": [
         "Queer-Feminism"
       ],
@@ -3007,7 +2886,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:21.122852+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:39.375968+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:03.164340+00:00"
     },
     {
       "name": "Black Rose / Rosa Negra",
@@ -3016,13 +2895,13 @@
       "pageUrl": "https://www.blackrosefed.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.715065+00:00",
+      "lastChecked": "2026-07-30T22:06:03.475398+00:00",
       "categories": [
         "North America",
         "Theory & Strategy",
+        "Squatting & Housing",
         "Labor Struggles",
         "Movement News",
-        "Squatting & Housing",
         "No War"
       ],
       "languages": [
@@ -3041,7 +2920,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:21.488824+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:39.715065+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:03.475398+00:00"
     },
     {
       "name": "BOAK (RU)",
@@ -3050,7 +2929,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:39.963479+00:00",
+      "lastChecked": "2026-07-30T22:06:03.767126+00:00",
       "categories": [
         "Anti-Rep & Prisons"
       ],
@@ -3067,7 +2946,76 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:39.963479+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:03.767126+00:00"
+    },
+    {
+      "name": "Bulatlat (Indigenous)",
+      "url": "https://www.bulatlat.com/feed/",
+      "configuredUrl": "",
+      "pageUrl": "https://www.bulatlat.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:04.651436+00:00",
+      "categories": [
+        "Indigenous Struggles",
+        "Global",
+        "Asia",
+        "Anti-Rep & Prisons",
+        "Anti-Imperialism",
+        "Movement News",
+        "Cyberactivism",
+        "Eco-Anarchism",
+        "Labor Struggles",
+        "Antisexism",
+        "Queer-Feminism"
+      ],
+      "languages": [
+        "und"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "replacementUrl": "https://www.bulatlat.com/feed/",
+      "discovered": true,
+      "feedType": "declared-feed",
+      "warning": "Feed-Adresse automatisch erkannt.",
+      "httpStatus": 200,
+      "finalUrl": "https://www.bulatlat.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:06:04.651436+00:00"
+    },
+    {
+      "name": "Bulatlat (Philippines)",
+      "url": "https://www.bulatlat.com/feed/",
+      "configuredUrl": "https://www.bulatlat.com/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:05.013139+00:00",
+      "categories": [
+        "Asia",
+        "Indigenous Struggles"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://www.bulatlat.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:57:40.884384+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:05.013139+00:00"
     },
     {
       "name": "C4SS",
@@ -3076,15 +3024,15 @@
       "pageUrl": "https://c4ss.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:41.375602+00:00",
+      "lastChecked": "2026-07-30T22:06:05.394335+00:00",
       "categories": [
         "North America",
         "Movement News",
         "Anticapitalism",
+        "Theory & Strategy",
         "Labor Struggles",
         "Animal Liberation",
-        "No War",
-        "Theory & Strategy"
+        "No War"
       ],
       "languages": [
         "und"
@@ -3101,7 +3049,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:41.375602+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:05.394335+00:00"
     },
     {
       "name": "Chuang (CN)",
@@ -3110,7 +3058,7 @@
       "pageUrl": "https://chuangcn.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:42.317634+00:00",
+      "lastChecked": "2026-07-30T22:06:05.728127+00:00",
       "categories": [
         "Asia",
         "No War",
@@ -3135,7 +3083,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T21:11:31.520087+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:42.317634+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:05.728127+00:00"
     },
     {
       "name": "CNT (Spanien)",
@@ -3144,7 +3092,7 @@
       "pageUrl": "https://www.cnt.es/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:42.464169+00:00",
+      "lastChecked": "2026-07-30T22:06:05.832170+00:00",
       "categories": [
         "Labor Struggles",
         "Global",
@@ -3168,7 +3116,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:42.464169+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:05.832170+00:00"
     },
     {
       "name": "Colorlines",
@@ -3177,7 +3125,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:42.488822+00:00",
+      "lastChecked": "2026-07-30T22:06:06.237205+00:00",
       "categories": [
         "Antiracism"
       ],
@@ -3199,7 +3147,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:36.336980+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:42.488822+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:06.237205+00:00"
     },
     {
       "name": "Comunizar",
@@ -3208,11 +3156,10 @@
       "pageUrl": "https://comunizar.com.ar/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:42.752923+00:00",
+      "lastChecked": "2026-07-30T22:06:06.861135+00:00",
       "categories": [
         "Latin America",
-        "Anticapitalism",
-        "Global"
+        "Anticapitalism"
       ],
       "languages": [],
       "originRegion": "",
@@ -3228,7 +3175,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:23.779066+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:42.752923+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:06.861135+00:00"
     },
     {
       "name": "Convoca-la Barcelona",
@@ -3237,7 +3184,7 @@
       "pageUrl": "https://bcn.convoca.la/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:43.227328+00:00",
+      "lastChecked": "2026-07-30T22:06:06.939734+00:00",
       "categories": [
         "Radar"
       ],
@@ -3254,7 +3201,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:43.227328+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:06.939734+00:00"
     },
     {
       "name": "Convócala Madrid",
@@ -3263,7 +3210,7 @@
       "pageUrl": "https://mad.convoca.la/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:43.510540+00:00",
+      "lastChecked": "2026-07-30T22:06:07.386655+00:00",
       "categories": [
         "Radar"
       ],
@@ -3280,7 +3227,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:43.510540+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:07.386655+00:00"
     },
     {
       "name": "CrimethInc. (Events)",
@@ -3289,7 +3236,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:44.074440+00:00",
+      "lastChecked": "2026-07-30T22:06:07.804416+00:00",
       "categories": [
         "Radar"
       ],
@@ -3306,7 +3253,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:44.074440+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:07.804416+00:00"
     },
     {
       "name": "CrimethInc. (Global)",
@@ -3315,7 +3262,7 @@
       "pageUrl": "https://crimethinc.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:44.462243+00:00",
+      "lastChecked": "2026-07-30T22:06:07.851439+00:00",
       "categories": [
         "Global",
         "North America",
@@ -3338,7 +3285,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:44.462243+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:07.851439+00:00"
     },
     {
       "name": "CrimethInc. (Texts)",
@@ -3347,7 +3294,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:44.579424+00:00",
+      "lastChecked": "2026-07-30T22:06:08.430482+00:00",
       "categories": [
         "Theory & Strategy"
       ],
@@ -3364,7 +3311,37 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:44.579424+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:08.430482+00:00"
+    },
+    {
+      "name": "Critical Resistance",
+      "url": "https://criticalresistance.org/feed/",
+      "configuredUrl": "https://criticalresistance.org/feed/",
+      "pageUrl": "https://criticalresistance.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:08.540822+00:00",
+      "categories": [
+        "Anti-Rep & Prisons",
+        "Global"
+      ],
+      "languages": [
+        "und"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://criticalresistance.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:57:44.772903+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:08.540822+00:00"
     },
     {
       "name": "Cultural Survival",
@@ -3373,7 +3350,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:45.399023+00:00",
+      "lastChecked": "2026-07-30T22:06:08.936553+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
@@ -3395,7 +3372,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:39.950385+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:45.399023+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:08.936553+00:00"
     },
     {
       "name": "Defend Council Housing (UK)",
@@ -3404,7 +3381,7 @@
       "pageUrl": "https://defendcouncilhousing.org.uk/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:46.709569+00:00",
+      "lastChecked": "2026-07-30T22:06:09.449125+00:00",
       "categories": [
         "Squatting & Housing",
         "Global"
@@ -3423,7 +3400,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:26.019821+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:46.709569+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:09.449125+00:00"
     },
     {
       "name": "Defend the Atlanta Forest",
@@ -3432,7 +3409,7 @@
       "pageUrl": "https://defendtheatlantaforest.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:46.837252+00:00",
+      "lastChecked": "2026-07-30T22:06:09.521568+00:00",
       "categories": [
         "Eco-Anarchism",
         "Global"
@@ -3450,7 +3427,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:46.837252+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:09.521568+00:00"
     },
     {
       "name": "Democracy Now! (Global)",
@@ -3459,16 +3436,16 @@
       "pageUrl": "http://www.democracynow.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:46.891646+00:00",
+      "lastChecked": "2026-07-30T22:06:09.641683+00:00",
       "categories": [
         "No War",
         "Global",
         "Movement News",
         "No Borders",
         "Anti-Rep & Prisons",
-        "Eco-Anarchism",
         "Labor Struggles",
-        "Queer-Feminism"
+        "Queer-Feminism",
+        "Cyberactivism"
       ],
       "languages": [
         "und"
@@ -3485,7 +3462,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:46.891646+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:09.641683+00:00"
     },
     {
       "name": "Digitalcourage",
@@ -3494,7 +3471,7 @@
       "pageUrl": "https://digitalcourage.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:47.219591+00:00",
+      "lastChecked": "2026-07-30T22:06:09.964264+00:00",
       "categories": [
         "Europe",
         "Cyberactivism",
@@ -3516,7 +3493,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:47.219591+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:09.964264+00:00"
     },
     {
       "name": "Direkte Aktion (DE)",
@@ -3525,7 +3502,7 @@
       "pageUrl": "https://direkteaktion.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:47.813486+00:00",
+      "lastChecked": "2026-07-30T22:06:09.969997+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -3552,7 +3529,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:47.813486+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:09.969997+00:00"
     },
     {
       "name": "Disability Debrief",
@@ -3561,7 +3538,7 @@
       "pageUrl": "https://www.disabilitydebrief.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:47.835834+00:00",
+      "lastChecked": "2026-07-30T22:06:10.207192+00:00",
       "categories": [
         "Global",
         "Radical Health & Disability",
@@ -3585,7 +3562,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:47.835834+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.207192+00:00"
     },
     {
       "name": "Disability Visibility",
@@ -3594,11 +3571,10 @@
       "pageUrl": "https://disabilityvisibilityproject.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:47.975262+00:00",
+      "lastChecked": "2026-07-30T22:06:10.474764+00:00",
       "categories": [
         "Radical Health & Disability",
-        "Global",
-        "Movement News"
+        "Global"
       ],
       "languages": [],
       "originRegion": "",
@@ -3613,7 +3589,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:47.975262+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.474764+00:00"
     },
     {
       "name": "El Libertario",
@@ -3622,7 +3598,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:48.300433+00:00",
+      "lastChecked": "2026-07-30T22:06:10.636765+00:00",
       "categories": [
         "Latin America"
       ],
@@ -3639,7 +3615,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:48.300433+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.636765+00:00"
     },
     {
       "name": "Electronic Frontier Foundation",
@@ -3648,13 +3624,13 @@
       "pageUrl": "https://www.eff.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:48.457065+00:00",
+      "lastChecked": "2026-07-30T22:06:10.763928+00:00",
       "categories": [
         "Cyberactivism",
         "Global",
-        "No Borders",
         "Queer-Feminism",
         "Movement News",
+        "No Borders",
         "Antisexism"
       ],
       "languages": [
@@ -3672,7 +3648,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:48.457065+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.763928+00:00"
     },
     {
       "name": "Elitsha",
@@ -3681,7 +3657,7 @@
       "pageUrl": "https://elitshanews.org.za/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:48.607761+00:00",
+      "lastChecked": "2026-07-30T22:06:10.874569+00:00",
       "categories": [
         "Africa",
         "Labor Struggles",
@@ -3706,7 +3682,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:48.607761+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.874569+00:00"
     },
     {
       "name": "Ende Gelände",
@@ -3715,7 +3691,7 @@
       "pageUrl": "https://www.ende-gelaende.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:48.649596+00:00",
+      "lastChecked": "2026-07-30T22:06:10.928555+00:00",
       "categories": [
         "Eco-Anarchism",
         "Global",
@@ -3736,7 +3712,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:48.649596+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:10.928555+00:00"
     },
     {
       "name": "Enlace Zapatista (EZLN)",
@@ -3745,13 +3721,12 @@
       "pageUrl": "https://enlacezapatista.ezln.org.mx/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:49.287754+00:00",
+      "lastChecked": "2026-07-30T22:06:11.258903+00:00",
       "categories": [
         "Latin America",
         "Indigenous Struggles",
-        "Global",
-        "No War",
         "Movement News",
+        "No War",
         "No Borders",
         "Anticapitalism"
       ],
@@ -3770,7 +3745,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:49.287754+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:11.258903+00:00"
     },
     {
       "name": "Enredad.es",
@@ -3779,7 +3754,7 @@
       "pageUrl": "https://enredad.es/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:49.296850+00:00",
+      "lastChecked": "2026-07-30T22:06:12.056443+00:00",
       "categories": [
         "Radar"
       ],
@@ -3796,7 +3771,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:49.296850+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:12.056443+00:00"
     },
     {
       "name": "Equality Now",
@@ -3805,7 +3780,7 @@
       "pageUrl": "https://equalitynow.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:49.671417+00:00",
+      "lastChecked": "2026-07-30T22:06:12.146600+00:00",
       "categories": [
         "Antisexism",
         "Global",
@@ -3827,7 +3802,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:31.034407+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:49.671417+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:12.146600+00:00"
     },
     {
       "name": "European Digital Rights",
@@ -3836,7 +3811,7 @@
       "pageUrl": "https://edri.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:49.759023+00:00",
+      "lastChecked": "2026-07-30T22:06:12.458823+00:00",
       "categories": [
         "Europe",
         "Cyberactivism",
@@ -3860,7 +3835,41 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:49.759023+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:12.458823+00:00"
+    },
+    {
+      "name": "Evrensel",
+      "url": "https://www.evrensel.net/rss/haber.xml",
+      "configuredUrl": "https://www.evrensel.net/rss/haber.xml",
+      "pageUrl": "https://www.evrensel.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:12.734284+00:00",
+      "categories": [
+        "Europe",
+        "Labor Struggles",
+        "Anticapitalism",
+        "No War",
+        "Movement News",
+        "Anti-Rep & Prisons"
+      ],
+      "languages": [
+        "tr"
+      ],
+      "originRegion": "Türkiye",
+      "originCountry": "Türkiye",
+      "originCountryCode": "TR",
+      "httpStatus": 200,
+      "finalUrl": "https://www.evrensel.net/rss/haber.xml",
+      "contentType": "application/xml; charset=utf-8",
+      "feedType": "xml",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:57:49.858090+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:12.734284+00:00"
     },
     {
       "name": "Fajfa (Antifa)",
@@ -3869,7 +3878,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:49.979369+00:00",
+      "lastChecked": "2026-07-30T22:06:12.878721+00:00",
       "categories": [
         "Antifascism"
       ],
@@ -3891,7 +3900,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:47.173891+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:49.979369+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:12.878721+00:00"
     },
     {
       "name": "FAU (Deutschland)",
@@ -3900,7 +3909,7 @@
       "pageUrl": "https://www.fau.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:50.007691+00:00",
+      "lastChecked": "2026-07-30T22:06:13.136289+00:00",
       "categories": [
         "Labor Struggles",
         "Global",
@@ -3921,7 +3930,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:50.007691+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:13.136289+00:00"
     },
     {
       "name": "Fauda",
@@ -3930,7 +3939,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:50.444877+00:00",
+      "lastChecked": "2026-07-30T22:06:13.480296+00:00",
       "categories": [
         "Asia"
       ],
@@ -3952,7 +3961,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:48.361345+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:50.444877+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:13.480296+00:00"
     },
     {
       "name": "Federacja Anarchistyczna (PL)",
@@ -3961,7 +3970,7 @@
       "pageUrl": "https://federacja-anarchistyczna.pl/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:50.509097+00:00",
+      "lastChecked": "2026-07-30T22:06:13.510240+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -3981,7 +3990,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:50.509097+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:13.510240+00:00"
     },
     {
       "name": "Federation of Anarchism Era",
@@ -3990,16 +3999,14 @@
       "pageUrl": "https://asranarshism.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:51.855152+00:00",
+      "lastChecked": "2026-07-30T22:06:13.515721+00:00",
       "categories": [
         "Asia",
         "Antifascism",
-        "Demonstrations",
         "Movement News",
         "Anti-Imperialism",
         "Anticapitalism",
-        "Theory & Strategy",
-        "Anti-Rep & Prisons"
+        "Demonstrations"
       ],
       "languages": [],
       "originRegion": "",
@@ -4015,7 +4022,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:32.883677+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:51.855152+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:13.515721+00:00"
     },
     {
       "name": "Feminist Newswire",
@@ -4024,7 +4031,7 @@
       "pageUrl": "https://feminist.org/news/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:52.149770+00:00",
+      "lastChecked": "2026-07-30T22:06:14.703705+00:00",
       "categories": [
         "Antisexism",
         "Queer-Feminism",
@@ -4046,7 +4053,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:52.149770+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:14.703705+00:00"
     },
     {
       "name": "Feministische Antifa",
@@ -4055,7 +4062,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:52.250445+00:00",
+      "lastChecked": "2026-07-30T22:06:14.797765+00:00",
       "categories": [
         "Antisexism"
       ],
@@ -4072,7 +4079,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:52.250445+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:14.797765+00:00"
     },
     {
       "name": "Gancio Cisti",
@@ -4081,7 +4088,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:52.415089+00:00",
+      "lastChecked": "2026-07-30T22:06:15.170045+00:00",
       "categories": [
         "Radar"
       ],
@@ -4098,7 +4105,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:52.415089+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:15.170045+00:00"
     },
     {
       "name": "GenderIT (Technofeminism)",
@@ -4107,7 +4114,7 @@
       "pageUrl": "https://www.genderit.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:53.020023+00:00",
+      "lastChecked": "2026-07-30T22:06:15.310414+00:00",
       "categories": [
         "Queer-Feminism",
         "Global",
@@ -4130,7 +4137,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:53.020023+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:15.310414+00:00"
     },
     {
       "name": "Graswurzelrevolution",
@@ -4139,7 +4146,7 @@
       "pageUrl": "https://www.graswurzel.net/gwr/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:53.714098+00:00",
+      "lastChecked": "2026-07-30T22:06:15.680836+00:00",
       "categories": [
         "Europe",
         "No War",
@@ -4162,7 +4169,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:53.714098+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:15.680836+00:00"
     },
     {
       "name": "Green Left",
@@ -4171,16 +4178,16 @@
       "pageUrl": "https://www.greenleft.org.au/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:53.909894+00:00",
+      "lastChecked": "2026-07-30T22:06:16.032899+00:00",
       "categories": [
         "Australia & NZ",
         "Movement News",
         "Demonstrations",
-        "Labor Struggles",
         "Eco-Anarchism",
+        "Labor Struggles",
+        "Antifascism",
         "Anti-Rep & Prisons",
-        "Antiracism",
-        "Antifascism"
+        "Antiracism"
       ],
       "languages": [
         "und"
@@ -4197,7 +4204,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:53.909894+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:16.032899+00:00"
     },
     {
       "name": "Grist (Indigenous Affairs)",
@@ -4206,7 +4213,7 @@
       "pageUrl": "https://grist.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:54.080721+00:00",
+      "lastChecked": "2026-07-30T22:06:16.252322+00:00",
       "categories": [
         "Indigenous Struggles",
         "Global",
@@ -4228,7 +4235,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:54.080721+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:16.252322+00:00"
     },
     {
       "name": "Groundxero",
@@ -4237,7 +4244,7 @@
       "pageUrl": "https://www.groundxero.in/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:54.188263+00:00",
+      "lastChecked": "2026-07-30T22:06:16.524671+00:00",
       "categories": [
         "Asia",
         "Antiracism",
@@ -4247,9 +4254,7 @@
         "Eco-Anarchism",
         "Anticolonialism",
         "Anti-Rep & Prisons",
-        "Demonstrations",
-        "Antifascism",
-        "Anticapitalism"
+        "Demonstrations"
       ],
       "languages": [
         "en"
@@ -4266,7 +4271,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:54.188263+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:16.524671+00:00"
     },
     {
       "name": "Housing Action",
@@ -4275,7 +4280,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:54.719944+00:00",
+      "lastChecked": "2026-07-30T22:06:16.575870+00:00",
       "categories": [
         "Squatting & Housing"
       ],
@@ -4297,7 +4302,37 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:50.854572+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:54.719944+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:16.575870+00:00"
+    },
+    {
+      "name": "Hunt Saboteurs Association (UK)",
+      "url": "https://www.huntsabs.org.uk/feed/",
+      "configuredUrl": "https://www.huntsabs.org.uk/feed/",
+      "pageUrl": "https://www.huntsabs.org.uk/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:16.985096+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Global"
+      ],
+      "languages": [
+        "und"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://www.huntsabs.org.uk/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:57:54.755159+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:16.985096+00:00"
     },
     {
       "name": "IEN Earth",
@@ -4306,7 +4341,7 @@
       "pageUrl": "https://www.ienearth.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:55.052572+00:00",
+      "lastChecked": "2026-07-30T22:06:18.538341+00:00",
       "categories": [
         "Indigenous Struggles",
         "Global",
@@ -4328,7 +4363,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T11:07:23.898604+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:55.052572+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:18.538341+00:00"
     },
     {
       "name": "Ill Will",
@@ -4337,7 +4372,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:56.494519+00:00",
+      "lastChecked": "2026-07-30T22:06:18.556953+00:00",
       "categories": [
         "Theory & Strategy"
       ],
@@ -4359,7 +4394,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:51.610383+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:56.494519+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:18.556953+00:00"
     },
     {
       "name": "Indigenous Action",
@@ -4368,11 +4403,10 @@
       "pageUrl": "https://www.indigenousaction.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:56.790943+00:00",
+      "lastChecked": "2026-07-30T22:06:19.131775+00:00",
       "categories": [
         "North America",
         "Indigenous Struggles",
-        "Global",
         "Anticolonialism",
         "Theory & Strategy",
         "Anti-Rep & Prisons"
@@ -4390,37 +4424,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:56.790943+00:00"
-    },
-    {
-      "name": "IndigenousX (Australia)",
-      "url": "https://indigenousx.com.au/feed/",
-      "configuredUrl": "https://indigenousx.com.au/feed/",
-      "pageUrl": "https://indigenousx.com.au/",
-      "status": "ok",
-      "ok": true,
-      "lastChecked": "2026-07-28T17:57:57.164599+00:00",
-      "categories": [
-        "Australia & NZ",
-        "Indigenous Struggles",
-        "Global",
-        "Antiracism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 200,
-      "finalUrl": "https://indigenousx.com.au/feed/",
-      "contentType": "application/rss+xml; charset=UTF-8",
-      "feedType": "declared-feed",
-      "rawStatus": "ok",
-      "failureKind": "available",
-      "detailedState": "available",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 0,
-      "lastFailureAt": "2026-07-27T18:20:23.111767+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:57.164599+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:19.131775+00:00"
     },
     {
       "name": "IndigiNews",
@@ -4429,7 +4433,7 @@
       "pageUrl": "https://indiginews.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:57.514201+00:00",
+      "lastChecked": "2026-07-30T22:06:19.479501+00:00",
       "categories": [
         "Indigenous Struggles",
         "North America",
@@ -4451,7 +4455,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:57.514201+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:19.479501+00:00"
     },
     {
       "name": "Indymedia Argentina",
@@ -4460,16 +4464,16 @@
       "pageUrl": "https://argentina.indymedia.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:57.948054+00:00",
+      "lastChecked": "2026-07-30T22:06:19.923852+00:00",
       "categories": [
         "Latin America",
         "Movement News",
         "Labor Struggles",
         "No Borders",
         "No War",
-        "Anti-Rep & Prisons",
         "Antiracism",
-        "Anticapitalism"
+        "Anticapitalism",
+        "Indigenous Struggles"
       ],
       "languages": [
         "und"
@@ -4486,7 +4490,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:57.948054+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:19.923852+00:00"
     },
     {
       "name": "InfoAut",
@@ -4495,7 +4499,7 @@
       "pageUrl": "https://infoaut.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:58.303243+00:00",
+      "lastChecked": "2026-07-30T22:06:20.014603+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -4520,7 +4524,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:58.303243+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:20.014603+00:00"
     },
     {
       "name": "Infolibre (GR)",
@@ -4529,12 +4533,13 @@
       "pageUrl": "https://infolibre.gr/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:58.862621+00:00",
+      "lastChecked": "2026-07-30T22:06:20.542097+00:00",
       "categories": [
         "Europe",
         "Movement News",
         "Labor Struggles",
         "No Borders",
+        "Squatting & Housing",
         "Anti-Rep & Prisons"
       ],
       "languages": [
@@ -4553,7 +4558,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T07:35:05.431684+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:58.862621+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:20.542097+00:00"
     },
     {
       "name": "Institute of Race Relations",
@@ -4562,7 +4567,7 @@
       "pageUrl": "https://irr.org.uk/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:58.926735+00:00",
+      "lastChecked": "2026-07-30T22:06:20.830950+00:00",
       "categories": [
         "Antiracism",
         "Global",
@@ -4584,7 +4589,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-24T06:50:53.921420+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:58.926735+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:20.830950+00:00"
     },
     {
       "name": "It's Going Down",
@@ -4593,16 +4598,16 @@
       "pageUrl": "https://itsgoingdown.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:58.935991+00:00",
+      "lastChecked": "2026-07-30T22:06:21.284234+00:00",
       "categories": [
         "North America",
         "Demonstrations",
-        "Global",
         "Anti-Rep & Prisons",
         "No Borders",
         "Movement News",
         "Indigenous Struggles",
-        "Antifascism"
+        "Antifascism",
+        "Antiracism"
       ],
       "languages": [
         "und"
@@ -4619,7 +4624,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:58.935991+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:21.284234+00:00"
     },
     {
       "name": "IWA-AIT (Internationale)",
@@ -4628,7 +4633,7 @@
       "pageUrl": "https://iwa-ait.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:59.280252+00:00",
+      "lastChecked": "2026-07-30T22:06:21.370246+00:00",
       "categories": [
         "Global",
         "Movement News",
@@ -4651,7 +4656,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:57:59.280252+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:21.370246+00:00"
     },
     {
       "name": "IWOC (Incarcerated Workers)",
@@ -4660,7 +4665,7 @@
       "pageUrl": "https://incarceratedworkers.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:57:59.644451+00:00",
+      "lastChecked": "2026-07-30T22:06:21.465882+00:00",
       "categories": [
         "Anti-Rep & Prisons",
         "Global"
@@ -4679,23 +4684,52 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:43.598779+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:59.644451+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:21.465882+00:00"
+    },
+    {
+      "name": "Karapatan (Human Rights)",
+      "url": "https://www.karapatan.org/feed/",
+      "configuredUrl": "https://www.karapatan.org/feed/",
+      "pageUrl": "https://www.karapatan.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:21.810807+00:00",
+      "categories": [
+        "Asia",
+        "Movement News",
+        "Anti-Rep & Prisons",
+        "Demonstrations"
+      ],
+      "languages": [
+        "und"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://www.karapatan.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:58:00.334887+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:21.810807+00:00"
     },
     {
       "name": "Kite Line Radio",
       "url": "https://kitelineradio.noblogs.org/feed/",
       "configuredUrl": "https://kitelineradio.noblogs.org/feed/",
-      "pageUrl": "https://kitelineradio.noblogs.org/",
+      "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:00.416266+00:00",
+      "lastChecked": "2026-07-30T22:06:22.008186+00:00",
       "categories": [
-        "Anti-Rep & Prisons",
-        "Global"
+        "Anti-Rep & Prisons"
       ],
-      "languages": [
-        "und"
-      ],
+      "languages": [],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -4708,7 +4742,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:00.416266+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:22.008186+00:00"
     },
     {
       "name": "Kolektiva Media (Video)",
@@ -4717,7 +4751,7 @@
       "pageUrl": "https://kolektiva.media/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.075961+00:00",
+      "lastChecked": "2026-07-30T22:06:22.380517+00:00",
       "categories": [
         "Cyberactivism",
         "Global",
@@ -4742,7 +4776,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:55.968727+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:01.075961+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:22.380517+00:00"
     },
     {
       "name": "Kontrapolis",
@@ -4751,16 +4785,17 @@
       "pageUrl": "https://kontrapolis.info/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.157387+00:00",
+      "lastChecked": "2026-07-30T22:06:22.550705+00:00",
       "categories": [
         "Global",
-        "Antifascism",
         "Demonstrations",
-        "Europe",
         "Movement News",
+        "Antifascism",
+        "Europe",
         "Anti-Rep & Prisons",
         "Theory & Strategy",
-        "No War"
+        "No War",
+        "Anticapitalism"
       ],
       "languages": [
         "und"
@@ -4781,7 +4816,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:56.054359+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:01.157387+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:22.550705+00:00"
     },
     {
       "name": "Kontrapolis (DE)",
@@ -4790,7 +4825,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.340472+00:00",
+      "lastChecked": "2026-07-30T22:06:22.703532+00:00",
       "categories": [
         "Europe",
         "Radar",
@@ -4809,7 +4844,36 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:01.340472+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:22.703532+00:00"
+    },
+    {
+      "name": "L214 (France)",
+      "url": "https://www.l214.com/feed/",
+      "configuredUrl": "https://www.l214.com/feed/",
+      "pageUrl": "https://www.l214.com/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:23.289480+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe"
+      ],
+      "languages": [
+        "fr"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "France",
+      "originCountryCode": "FR",
+      "httpStatus": 200,
+      "finalUrl": "https://www.l214.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:06:23.289480+00:00"
     },
     {
       "name": "La Zarzamora",
@@ -4818,7 +4882,7 @@
       "pageUrl": "https://lazarzamora.cl/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.683423+00:00",
+      "lastChecked": "2026-07-30T22:06:23.327281+00:00",
       "categories": [
         "Latin America",
         "Antisexism",
@@ -4844,7 +4908,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:01.683423+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:23.327281+00:00"
     },
     {
       "name": "Labor for Palestine",
@@ -4853,7 +4917,7 @@
       "pageUrl": "https://laborforpalestine.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.760337+00:00",
+      "lastChecked": "2026-07-30T22:06:23.401261+00:00",
       "categories": [
         "No War",
         "Global",
@@ -4877,7 +4941,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:46.210146+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:01.760337+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:23.401261+00:00"
     },
     {
       "name": "Labor Notes",
@@ -4886,7 +4950,7 @@
       "pageUrl": "https://labornotes.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:01.862472+00:00",
+      "lastChecked": "2026-07-30T22:06:23.451082+00:00",
       "categories": [
         "Labor Struggles",
         "Global",
@@ -4908,7 +4972,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:01.862472+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:23.451082+00:00"
     },
     {
       "name": "LabourNet DE",
@@ -4917,16 +4981,16 @@
       "pageUrl": "https://www.labournet.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:02.183199+00:00",
+      "lastChecked": "2026-07-30T22:06:23.672458+00:00",
       "categories": [
         "Labor Struggles",
         "Global",
         "Movement News",
-        "Antifascism",
         "No War",
         "No Borders",
+        "Antifascism",
         "Squatting & Housing",
-        "Eco-Anarchism"
+        "Anti-Rep & Prisons"
       ],
       "languages": [
         "und"
@@ -4943,7 +5007,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:02.183199+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:23.672458+00:00"
     },
     {
       "name": "LaPunta Firenze",
@@ -4952,7 +5016,7 @@
       "pageUrl": "https://lapunta.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:02.278820+00:00",
+      "lastChecked": "2026-07-30T22:06:23.696369+00:00",
       "categories": [
         "Radar"
       ],
@@ -4969,7 +5033,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:02.278820+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:23.696369+00:00"
     },
     {
       "name": "Libcom (Global News)",
@@ -4978,7 +5042,7 @@
       "pageUrl": "https://libcom.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:02.543165+00:00",
+      "lastChecked": "2026-07-30T22:06:24.223662+00:00",
       "categories": [
         "Global",
         "Labor Struggles",
@@ -5006,7 +5070,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T18:20:28.347539+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:02.543165+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:24.223662+00:00"
     },
     {
       "name": "Lower Class Magazine",
@@ -5015,7 +5079,7 @@
       "pageUrl": "https://lowerclassmag.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:02.709231+00:00",
+      "lastChecked": "2026-07-30T22:06:24.466477+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -5039,7 +5103,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:02.709231+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:24.466477+00:00"
     },
     {
       "name": "Lundi Matin (FR)",
@@ -5048,7 +5112,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.099322+00:00",
+      "lastChecked": "2026-07-30T22:06:24.533094+00:00",
       "categories": [
         "Europe"
       ],
@@ -5065,7 +5129,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.099322+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:24.533094+00:00"
     },
     {
       "name": "MACG",
@@ -5074,16 +5138,16 @@
       "pageUrl": "https://melbacg.wordpress.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.119109+00:00",
+      "lastChecked": "2026-07-30T22:06:24.688415+00:00",
       "categories": [
         "Australia & NZ",
         "Anticapitalism",
         "No War",
-        "Movement News",
         "Anti-Imperialism",
         "Demonstrations",
         "Queer-Feminism",
-        "Labor Struggles"
+        "Labor Struggles",
+        "Movement News"
       ],
       "languages": [],
       "originRegion": "",
@@ -5098,7 +5162,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.119109+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:24.688415+00:00"
     },
     {
       "name": "Mada Masr (Egypt)",
@@ -5107,13 +5171,14 @@
       "pageUrl": "https://www.madamasr.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.309066+00:00",
+      "lastChecked": "2026-07-30T22:06:24.934802+00:00",
       "categories": [
         "Africa",
         "Movement News",
         "No Borders",
         "No War",
-        "Eco-Anarchism"
+        "Eco-Anarchism",
+        "Radical Health & Disability"
       ],
       "languages": [
         "und"
@@ -5130,7 +5195,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.309066+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:24.934802+00:00"
     },
     {
       "name": "Make Rojava Green Again",
@@ -5139,7 +5204,7 @@
       "pageUrl": "https://makerojavagreenagain.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.709421+00:00",
+      "lastChecked": "2026-07-30T22:06:25.334780+00:00",
       "categories": [
         "Queer-Feminism",
         "Global",
@@ -5160,7 +5225,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.709421+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:25.334780+00:00"
     },
     {
       "name": "Manila Today",
@@ -5169,14 +5234,16 @@
       "pageUrl": "https://manilatoday.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.925965+00:00",
+      "lastChecked": "2026-07-30T22:06:25.375186+00:00",
       "categories": [
         "Asia",
+        "Movement News",
         "Eco-Anarchism",
-        "Squatting & Housing",
-        "Antisexism"
+        "Squatting & Housing"
       ],
-      "languages": [],
+      "languages": [
+        "und"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -5189,7 +5256,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.925965+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:25.375186+00:00"
     },
     {
       "name": "Mapuexpress (Mapuche)",
@@ -5198,7 +5265,7 @@
       "pageUrl": "https://www.mapuexpress.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:03.954585+00:00",
+      "lastChecked": "2026-07-30T22:06:25.810562+00:00",
       "categories": [
         "Indigenous Struggles",
         "Global",
@@ -5220,7 +5287,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:03.954585+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:25.810562+00:00"
     },
     {
       "name": "Mekong Review",
@@ -5229,7 +5296,7 @@
       "pageUrl": "https://mekongreview.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:04.525314+00:00",
+      "lastChecked": "2026-07-30T22:06:26.108776+00:00",
       "categories": [
         "Asia",
         "Movement News"
@@ -5246,11 +5313,11 @@
       "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
-      "detailedState": "recovered",
+      "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T14:33:42.202332+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:04.525314+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.108776+00:00"
     },
     {
       "name": "MIA Marseille (FR)",
@@ -5259,7 +5326,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:04.849776+00:00",
+      "lastChecked": "2026-07-30T22:06:26.111820+00:00",
       "categories": [
         "Europe"
       ],
@@ -5276,7 +5343,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:04.849776+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.111820+00:00"
     },
     {
       "name": "Migrant Solidarity Network (CH)",
@@ -5285,12 +5352,12 @@
       "pageUrl": "https://migrant-solidarity-network.ch/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.075738+00:00",
+      "lastChecked": "2026-07-30T22:06:26.483104+00:00",
       "categories": [
         "No Borders",
         "Global",
-        "Demonstrations",
-        "Movement News"
+        "Movement News",
+        "Demonstrations"
       ],
       "languages": [],
       "originRegion": "",
@@ -5305,7 +5372,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.075738+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.483104+00:00"
     },
     {
       "name": "Minority Africa",
@@ -5314,7 +5381,7 @@
       "pageUrl": "https://minorityafrica.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.138353+00:00",
+      "lastChecked": "2026-07-30T22:06:26.542819+00:00",
       "categories": [
         "Africa",
         "Antisexism",
@@ -5340,7 +5407,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.138353+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.542819+00:00"
     },
     {
       "name": "Missy Magazine (DE)",
@@ -5349,7 +5416,7 @@
       "pageUrl": "https://missy-magazine.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.240060+00:00",
+      "lastChecked": "2026-07-30T22:06:26.553736+00:00",
       "categories": [
         "Antisexism",
         "Global",
@@ -5374,7 +5441,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.240060+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.553736+00:00"
     },
     {
       "name": "Monthly Review",
@@ -5383,7 +5450,7 @@
       "pageUrl": "https://monthlyreview.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.570938+00:00",
+      "lastChecked": "2026-07-30T22:06:26.902895+00:00",
       "categories": [
         "Anticapitalism",
         "Global",
@@ -5406,7 +5473,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.570938+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.902895+00:00"
     },
     {
       "name": "Montreal Antifasciste",
@@ -5415,7 +5482,7 @@
       "pageUrl": "https://montreal-antifasciste.info/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.681323+00:00",
+      "lastChecked": "2026-07-30T22:06:26.994221+00:00",
       "categories": [
         "North America",
         "Antifascism",
@@ -5434,7 +5501,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.681323+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:26.994221+00:00"
     },
     {
       "name": "Nantes Révoltée Agenda",
@@ -5443,7 +5510,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:05.787041+00:00",
+      "lastChecked": "2026-07-30T22:06:27.229351+00:00",
       "categories": [
         "Radar"
       ],
@@ -5460,7 +5527,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:05.787041+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:27.229351+00:00"
     },
     {
       "name": "Native News Online",
@@ -5469,7 +5536,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:06.017258+00:00",
+      "lastChecked": "2026-07-30T22:06:27.312727+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
@@ -5491,7 +5558,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:07.495316+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:06.017258+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:27.312727+00:00"
     },
     {
       "name": "Nawaat (Tunisia)",
@@ -5500,7 +5567,7 @@
       "pageUrl": "https://nawaat.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:06.163827+00:00",
+      "lastChecked": "2026-07-30T22:06:27.320278+00:00",
       "categories": [
         "Africa",
         "Anti-Rep & Prisons",
@@ -5524,7 +5591,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:06.163827+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:27.320278+00:00"
     },
     {
       "name": "New Bloom (TW)",
@@ -5533,16 +5600,16 @@
       "pageUrl": "https://newbloommag.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:06.538138+00:00",
+      "lastChecked": "2026-07-30T22:06:27.392354+00:00",
       "categories": [
         "Asia",
         "Movement News",
+        "Eco-Anarchism",
+        "Labor Struggles",
         "Indigenous Struggles",
         "Demonstrations",
         "Queer-Feminism",
-        "No War",
-        "Labor Struggles",
-        "Eco-Anarchism"
+        "No War"
       ],
       "languages": [
         "und"
@@ -5560,7 +5627,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:53.368899+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:06.538138+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:27.392354+00:00"
     },
     {
       "name": "Novara Media (UK)",
@@ -5569,7 +5636,7 @@
       "pageUrl": "https://novaramedia.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:07.442243+00:00",
+      "lastChecked": "2026-07-30T22:06:27.992416+00:00",
       "categories": [
         "Anticapitalism",
         "Global",
@@ -5595,7 +5662,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:07.442243+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:27.992416+00:00"
     },
     {
       "name": "Nunatsiaq News",
@@ -5604,13 +5671,14 @@
       "pageUrl": "https://nunatsiaq.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:07.636024+00:00",
+      "lastChecked": "2026-07-30T22:06:28.057683+00:00",
       "categories": [
         "Indigenous Struggles",
         "North America",
         "Anticolonialism",
-        "Eco-Anarchism",
-        "Anti-Rep & Prisons"
+        "Anti-Rep & Prisons",
+        "Squatting & Housing",
+        "Eco-Anarchism"
       ],
       "languages": [
         "en"
@@ -5628,7 +5696,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:54.749668+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:07.636024+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.057683+00:00"
     },
     {
       "name": "OmniaTV (GR)",
@@ -5637,7 +5705,7 @@
       "pageUrl": "https://omniatv.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:07.842988+00:00",
+      "lastChecked": "2026-07-30T22:06:28.194025+00:00",
       "categories": [
         "Europe",
         "Movement News",
@@ -5662,7 +5730,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:02:55.007989+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:07.842988+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.194025+00:00"
     },
     {
       "name": "Organise Magazine",
@@ -5671,7 +5739,7 @@
       "pageUrl": "https://organisemagazine.org.uk/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:07.881508+00:00",
+      "lastChecked": "2026-07-30T22:06:28.652874+00:00",
       "categories": [
         "Europe",
         "Anti-Rep & Prisons",
@@ -5699,7 +5767,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:10.229260+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:07.881508+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.652874+00:00"
     },
     {
       "name": "Overland",
@@ -5708,7 +5776,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:08.938575+00:00",
+      "lastChecked": "2026-07-30T22:06:28.715013+00:00",
       "categories": [
         "Australia & NZ"
       ],
@@ -5725,7 +5793,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:08.938575+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.715013+00:00"
     },
     {
       "name": "Palang Hitam (Indonesia)",
@@ -5734,7 +5802,7 @@
       "pageUrl": "https://palanghitam.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:09.240703+00:00",
+      "lastChecked": "2026-07-30T22:06:28.897771+00:00",
       "categories": [
         "Asia",
         "Theory & Strategy",
@@ -5756,7 +5824,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:09.240703+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.897771+00:00"
     },
     {
       "name": "Pambazuka News",
@@ -5765,7 +5833,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:09.243632+00:00",
+      "lastChecked": "2026-07-30T22:06:28.980343+00:00",
       "categories": [
         "Africa",
         "Anti-Imperialism"
@@ -5783,7 +5851,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:09.243632+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:28.980343+00:00"
     },
     {
       "name": "Paris-Luttes (Agenda FR)",
@@ -5792,7 +5860,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:10.285100+00:00",
+      "lastChecked": "2026-07-30T22:06:29.453127+00:00",
       "categories": [
         "Radar"
       ],
@@ -5814,7 +5882,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:25:35.582879+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:10.285100+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:29.453127+00:00"
     },
     {
       "name": "Paris-Luttes (FR)",
@@ -5823,7 +5891,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:10.317158+00:00",
+      "lastChecked": "2026-07-30T22:06:29.538389+00:00",
       "categories": [
         "Europe"
       ],
@@ -5840,7 +5908,36 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:10.317158+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:29.538389+00:00"
+    },
+    {
+      "name": "PETA Deutschland",
+      "url": "https://www.peta.de/feed/",
+      "configuredUrl": "https://www.peta.de/feed/",
+      "pageUrl": "https://www.peta.de/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:29.907078+00:00",
+      "categories": [
+        "Animal Liberation",
+        "Europe"
+      ],
+      "languages": [
+        "de"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "Germany",
+      "originCountryCode": "DE",
+      "httpStatus": 200,
+      "finalUrl": "https://www.peta.de/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastSuccessAt": "2026-07-30T22:06:29.907078+00:00"
     },
     {
       "name": "Pinko Magazine",
@@ -5849,7 +5946,7 @@
       "pageUrl": "https://www.pinko.online/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:10.535978+00:00",
+      "lastChecked": "2026-07-30T22:06:30.135106+00:00",
       "categories": [
         "Queer-Feminism",
         "Global",
@@ -5871,7 +5968,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:10.535978+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:30.135106+00:00"
     },
     {
       "name": "Pramen (BY)",
@@ -5880,7 +5977,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:10.575914+00:00",
+      "lastChecked": "2026-07-30T22:06:30.713297+00:00",
       "categories": [
         "Europe"
       ],
@@ -5902,7 +5999,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:13.198561+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:10.575914+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:30.713297+00:00"
     },
     {
       "name": "Pressin Kurdî",
@@ -5911,7 +6008,7 @@
       "pageUrl": "https://pressin.info/kurdi",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:10.951084+00:00",
+      "lastChecked": "2026-07-30T22:06:30.867377+00:00",
       "categories": [
         "Asia",
         "Anticolonialism",
@@ -5935,7 +6032,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:03:00.426961+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:10.951084+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:30.867377+00:00"
     },
     {
       "name": "Pueblos en Camino",
@@ -5944,7 +6041,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:11.250432+00:00",
+      "lastChecked": "2026-07-30T22:06:31.236880+00:00",
       "categories": [
         "Latin America"
       ],
@@ -5966,7 +6063,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:14.273324+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:11.250432+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:31.236880+00:00"
     },
     {
       "name": "Queer Anarchism",
@@ -5975,7 +6072,7 @@
       "pageUrl": "https://queeranarchism.tumblr.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:11.417689+00:00",
+      "lastChecked": "2026-07-30T22:06:31.770327+00:00",
       "categories": [
         "Queer-Feminism",
         "Global",
@@ -6001,7 +6098,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:11.417689+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:31.770327+00:00"
     },
     {
       "name": "Radical Socialist (India)",
@@ -6010,7 +6107,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:11.499652+00:00",
+      "lastChecked": "2026-07-30T22:06:32.039850+00:00",
       "categories": [
         "Asia"
       ],
@@ -6032,7 +6129,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:16.567425+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:11.499652+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.039850+00:00"
     },
     {
       "name": "Radikal Perspektif",
@@ -6041,7 +6138,7 @@
       "pageUrl": "https://rpkolektif.wordpress.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:11.547247+00:00",
+      "lastChecked": "2026-07-30T22:06:32.048910+00:00",
       "categories": [
         "Europe",
         "Theory & Strategy",
@@ -6064,7 +6161,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:11.547247+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.048910+00:00"
     },
     {
       "name": "Radio Dreyeckland",
@@ -6073,7 +6170,7 @@
       "pageUrl": "https://rdl.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:11.782289+00:00",
+      "lastChecked": "2026-07-30T22:06:32.121384+00:00",
       "categories": [],
       "languages": [
         "de",
@@ -6098,7 +6195,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:11.782289+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.121384+00:00"
     },
     {
       "name": "Radio Kurruf Noticias",
@@ -6107,13 +6204,14 @@
       "pageUrl": "https://radiokurruf.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:12.342753+00:00",
+      "lastChecked": "2026-07-30T22:06:32.286677+00:00",
       "categories": [
         "Latin America",
         "Indigenous Struggles",
         "Anti-Rep & Prisons",
         "Anticolonialism",
-        "Movement News"
+        "Movement News",
+        "Demonstrations"
       ],
       "languages": [
         "es"
@@ -6130,7 +6228,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:12.342753+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.286677+00:00"
     },
     {
       "name": "Rebellyon (FR)",
@@ -6139,7 +6237,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:12.982554+00:00",
+      "lastChecked": "2026-07-30T22:06:32.521497+00:00",
       "categories": [
         "Europe"
       ],
@@ -6156,7 +6254,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:12.982554+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.521497+00:00"
     },
     {
       "name": "Recht auf Stadt (Hamburg)",
@@ -6165,7 +6263,7 @@
       "pageUrl": "https://www.rechtaufstadt.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:13.128959+00:00",
+      "lastChecked": "2026-07-30T22:06:32.754277+00:00",
       "categories": [
         "Squatting & Housing",
         "Global",
@@ -6185,7 +6283,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-27T18:20:38.362881+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:13.128959+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.754277+00:00"
     },
     {
       "name": "Red Flag (Aus)",
@@ -6194,7 +6292,7 @@
       "pageUrl": "https://redflag.org.au/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:13.456305+00:00",
+      "lastChecked": "2026-07-30T22:06:32.947072+00:00",
       "categories": [
         "Australia & NZ",
         "Labor Struggles",
@@ -6220,7 +6318,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:13.456305+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:32.947072+00:00"
     },
     {
       "name": "Rhein-Main Events",
@@ -6229,7 +6327,7 @@
       "pageUrl": "https://events.rheinmain.social/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:13.570952+00:00",
+      "lastChecked": "2026-07-30T22:06:33.058202+00:00",
       "categories": [
         "Radar"
       ],
@@ -6246,7 +6344,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:13.570952+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.058202+00:00"
     },
     {
       "name": "Rheinmetall Entwaffnen",
@@ -6255,12 +6353,12 @@
       "pageUrl": "https://rheinmetallentwaffnen.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:14.114835+00:00",
+      "lastChecked": "2026-07-30T22:06:33.095870+00:00",
       "categories": [
         "No War",
         "Global",
-        "Anti-Rep & Prisons",
         "Eco-Anarchism",
+        "Anti-Rep & Prisons",
         "Movement News"
       ],
       "languages": [
@@ -6278,7 +6376,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:14.114835+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.095870+00:00"
     },
     {
       "name": "ROAPE",
@@ -6287,16 +6385,17 @@
       "pageUrl": "https://roape.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:14.150334+00:00",
+      "lastChecked": "2026-07-30T22:06:33.142471+00:00",
       "categories": [
         "Africa",
         "Anti-Imperialism",
-        "Global",
+        "Labor Struggles",
         "Movement News",
         "Anti-Rep & Prisons",
         "Anticapitalism",
         "Antiracism",
-        "No Borders"
+        "No Borders",
+        "Indigenous Struggles"
       ],
       "languages": [
         "und"
@@ -6313,7 +6412,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:14.150334+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.142471+00:00"
     },
     {
       "name": "Rojava Info Center",
@@ -6322,7 +6421,7 @@
       "pageUrl": "https://rojavainformationcenter.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:14.178711+00:00",
+      "lastChecked": "2026-07-30T22:06:33.240401+00:00",
       "categories": [
         "Asia",
         "Movement News",
@@ -6344,7 +6443,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-28T07:03:03.678165+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:14.178711+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.240401+00:00"
     },
     {
       "name": "Rote Hilfe",
@@ -6353,7 +6452,7 @@
       "pageUrl": "https://rote-hilfe.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:14.286918+00:00",
+      "lastChecked": "2026-07-30T22:06:33.411545+00:00",
       "categories": [
         "Anti-Rep & Prisons",
         "Global",
@@ -6373,7 +6472,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:14.286918+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.411545+00:00"
     },
     {
       "name": "Round Table India",
@@ -6382,7 +6481,7 @@
       "pageUrl": "https://www.roundtableindia.co.in/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:14.859539+00:00",
+      "lastChecked": "2026-07-30T22:06:33.718925+00:00",
       "categories": [
         "Asia",
         "Antiracism",
@@ -6407,7 +6506,43 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:14.859539+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:33.718925+00:00"
+    },
+    {
+      "name": "Sicilia Libertaria",
+      "url": "https://www.sicilialibertaria.it/feed/",
+      "configuredUrl": "https://www.sicilialibertaria.it/feed/",
+      "pageUrl": "https://www.sicilialibertaria.it/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:33.749083+00:00",
+      "categories": [
+        "Europe",
+        "Theory & Strategy",
+        "Anticapitalism",
+        "No War",
+        "Antifascism",
+        "Movement News",
+        "Queer-Feminism",
+        "Anti-Imperialism"
+      ],
+      "languages": [
+        "it"
+      ],
+      "originRegion": "Southern Europe",
+      "originCountry": "Italy",
+      "originCountryCode": "IT",
+      "httpStatus": 200,
+      "finalUrl": "https://www.sicilialibertaria.it/feed/",
+      "contentType": "text/xml;charset=UTF-8",
+      "feedType": "xml",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:58:15.335699+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:33.749083+00:00"
     },
     {
       "name": "Slackbastard",
@@ -6416,15 +6551,17 @@
       "pageUrl": "https://slackbastard.anarchobase.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:15.545399+00:00",
+      "lastChecked": "2026-07-30T22:06:34.269361+00:00",
       "categories": [
         "Australia & NZ",
-        "Antifascism",
         "Movement News",
+        "Antifascism",
         "Anti-Rep & Prisons",
         "Demonstrations"
       ],
-      "languages": [],
+      "languages": [
+        "und"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -6437,7 +6574,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:15.545399+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.269361+00:00"
     },
     {
       "name": "Slingshot Collective",
@@ -6446,7 +6583,7 @@
       "pageUrl": "https://slingshotcollective.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:15.669547+00:00",
+      "lastChecked": "2026-07-30T22:06:34.344573+00:00",
       "categories": [
         "Global",
         "North America",
@@ -6470,7 +6607,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:15.669547+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.344573+00:00"
     },
     {
       "name": "Solarpunk Magazine",
@@ -6479,7 +6616,7 @@
       "pageUrl": "https://solarpunkmagazine.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:15.685056+00:00",
+      "lastChecked": "2026-07-30T22:06:34.421862+00:00",
       "categories": [
         "Eco-Anarchism",
         "Global",
@@ -6500,7 +6637,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:15.685056+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.421862+00:00"
     },
     {
       "name": "Sprout Distro",
@@ -6509,7 +6646,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:15.847672+00:00",
+      "lastChecked": "2026-07-30T22:06:34.481768+00:00",
       "categories": [
         "Libraries"
       ],
@@ -6531,7 +6668,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:22.676340+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:15.847672+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.481768+00:00"
     },
     {
       "name": "Squat!net",
@@ -6540,7 +6677,7 @@
       "pageUrl": "https://de.squat.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:16.147454+00:00",
+      "lastChecked": "2026-07-30T22:06:34.561381+00:00",
       "categories": [
         "Squatting & Housing",
         "Global",
@@ -6562,7 +6699,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:16.147454+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.561381+00:00"
     },
     {
       "name": "Stop the War Coalition",
@@ -6571,7 +6708,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:16.982683+00:00",
+      "lastChecked": "2026-07-30T22:06:34.706954+00:00",
       "categories": [
         "No War"
       ],
@@ -6593,7 +6730,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:23.357827+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:16.982683+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.706954+00:00"
     },
     {
       "name": "SubMedia",
@@ -6602,11 +6739,10 @@
       "pageUrl": "https://sub.media/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:17.287236+00:00",
+      "lastChecked": "2026-07-30T22:06:34.707877+00:00",
       "categories": [
         "North America",
         "Eco-Anarchism",
-        "Global",
         "Theory & Strategy",
         "Movement News",
         "Squatting & Housing",
@@ -6627,7 +6763,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:17.287236+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.707877+00:00"
     },
     {
       "name": "Subversiones (Mexico)",
@@ -6636,7 +6772,7 @@
       "pageUrl": "https://subversiones.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:17.335651+00:00",
+      "lastChecked": "2026-07-30T22:06:34.743844+00:00",
       "categories": [
         "Latin America",
         "Movement News",
@@ -6660,7 +6796,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:17.335651+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.743844+00:00"
     },
     {
       "name": "Systemli",
@@ -6669,7 +6805,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:17.752749+00:00",
+      "lastChecked": "2026-07-30T22:06:34.778561+00:00",
       "categories": [
         "Cyberactivism"
       ],
@@ -6691,7 +6827,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:24.481489+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:17.752749+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:34.778561+00:00"
     },
     {
       "name": "Tactical Tech",
@@ -6700,7 +6836,7 @@
       "pageUrl": "https://tacticaltech.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:18.056696+00:00",
+      "lastChecked": "2026-07-30T22:06:35.113792+00:00",
       "categories": [
         "Global",
         "Cyberactivism",
@@ -6721,7 +6857,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:18.056696+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:35.113792+00:00"
     },
     {
       "name": "The Anarchist Library (EN)",
@@ -6730,7 +6866,7 @@
       "pageUrl": "https://theanarchistlibrary.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:18.108325+00:00",
+      "lastChecked": "2026-07-30T22:06:35.510176+00:00",
       "categories": [
         "Libraries",
         "Global",
@@ -6756,7 +6892,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:18.108325+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:35.510176+00:00"
     },
     {
       "name": "The Appeal",
@@ -6765,7 +6901,7 @@
       "pageUrl": "https://theappeal.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:18.445977+00:00",
+      "lastChecked": "2026-07-30T22:06:35.532038+00:00",
       "categories": [
         "North America",
         "Anti-Rep & Prisons",
@@ -6787,7 +6923,46 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:18.445977+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:35.532038+00:00"
+    },
+    {
+      "name": "The Elephant (Kenya)",
+      "url": "https://www.theelephant.info/feed/",
+      "configuredUrl": "https://www.theelephant.info/feed/",
+      "pageUrl": "https://www.theelephant.info/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:35.710431+00:00",
+      "categories": [
+        "Africa",
+        "Eco-Anarchism",
+        "Movement News",
+        "Anti-Rep & Prisons",
+        "Squatting & Housing",
+        "Antiracism",
+        "Demonstrations",
+        "Anti-Imperialism",
+        "Anticolonialism",
+        "Theory & Strategy",
+        "Labor Struggles"
+      ],
+      "languages": [
+        "en"
+      ],
+      "originRegion": "East Africa",
+      "originCountry": "Kenya",
+      "originCountryCode": "KE",
+      "httpStatus": 200,
+      "finalUrl": "https://www.theelephant.info/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:58:18.798318+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:35.710431+00:00"
     },
     {
       "name": "The Feminist Wire",
@@ -6796,7 +6971,7 @@
       "pageUrl": "https://thefeministwire.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:19.165986+00:00",
+      "lastChecked": "2026-07-30T22:06:36.025679+00:00",
       "categories": [
         "Antisexism",
         "Queer-Feminism",
@@ -6818,7 +6993,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:19.165986+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.025679+00:00"
     },
     {
       "name": "The Final Straw Radio",
@@ -6827,7 +7002,7 @@
       "pageUrl": "https://thefinalstrawradio.noblogs.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:19.217570+00:00",
+      "lastChecked": "2026-07-30T22:06:36.083427+00:00",
       "categories": [
         "Global",
         "Anti-Rep & Prisons",
@@ -6854,7 +7029,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:19.217570+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.083427+00:00"
     },
     {
       "name": "The New Inquiry",
@@ -6863,7 +7038,7 @@
       "pageUrl": "https://thenewinquiry.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:19.341697+00:00",
+      "lastChecked": "2026-07-30T22:06:36.166773+00:00",
       "categories": [
         "Anticapitalism",
         "Global",
@@ -6871,8 +7046,7 @@
         "Squatting & Housing",
         "Antiracism",
         "No War",
-        "No Borders",
-        "Antifascism"
+        "No Borders"
       ],
       "languages": [],
       "originRegion": "",
@@ -6887,7 +7061,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:19.341697+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.166773+00:00"
     },
     {
       "name": "The Polis Project (India)",
@@ -6896,7 +7070,7 @@
       "pageUrl": "https://www.thepolisproject.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:19.417876+00:00",
+      "lastChecked": "2026-07-30T22:06:36.219686+00:00",
       "categories": [
         "Asia",
         "Anti-Rep & Prisons"
@@ -6916,7 +7090,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:19.417876+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.219686+00:00"
     },
     {
       "name": "Tierbefreier",
@@ -6925,7 +7099,7 @@
       "pageUrl": "https://tierbefreier.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:19.976335+00:00",
+      "lastChecked": "2026-07-30T22:06:36.418274+00:00",
       "categories": [
         "Animal Liberation",
         "Global"
@@ -6943,7 +7117,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:19.976335+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.418274+00:00"
     },
     {
       "name": "Transgender Europe (TGEU)",
@@ -6952,7 +7126,7 @@
       "pageUrl": "https://tgeu.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:20.131434+00:00",
+      "lastChecked": "2026-07-30T22:06:36.425182+00:00",
       "categories": [
         "Queer-Feminism",
         "Global",
@@ -6974,7 +7148,38 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:20.131434+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:36.425182+00:00"
+    },
+    {
+      "name": "Tricontinental: Institute for Social Research",
+      "url": "https://thetricontinental.org/feed/",
+      "configuredUrl": "https://thetricontinental.org/feed/",
+      "pageUrl": "https://thetricontinental.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-07-30T22:06:36.938274+00:00",
+      "categories": [
+        "Anticapitalism",
+        "Global",
+        "No War"
+      ],
+      "languages": [
+        "und"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://thetricontinental.org/feed/",
+      "contentType": "text/xml",
+      "feedType": "xml",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-07-28T17:58:21.010739+00:00",
+      "lastSuccessAt": "2026-07-30T22:06:36.938274+00:00"
     },
     {
       "name": "Truthout",
@@ -6983,16 +7188,16 @@
       "pageUrl": "https://truthout.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:21.050243+00:00",
+      "lastChecked": "2026-07-30T22:06:37.139583+00:00",
       "categories": [
         "North America",
-        "No Borders",
         "Movement News",
         "No War",
-        "Anti-Rep & Prisons",
-        "Cyberactivism",
+        "No Borders",
+        "Antifascism",
         "Eco-Anarchism",
-        "Antifascism"
+        "Anti-Rep & Prisons",
+        "Queer-Feminism"
       ],
       "languages": [
         "und"
@@ -7009,7 +7214,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:21.050243+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:37.139583+00:00"
     },
     {
       "name": "Unicorn Riot",
@@ -7018,7 +7223,7 @@
       "pageUrl": "https://unicornriot.ninja/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:21.676944+00:00",
+      "lastChecked": "2026-07-30T22:06:37.321751+00:00",
       "categories": [
         "Global",
         "North America",
@@ -7026,9 +7231,9 @@
         "No Borders",
         "Queer-Feminism",
         "Movement News",
+        "Labor Struggles",
         "Anti-Rep & Prisons",
-        "Antisexism",
-        "Radical Health & Disability"
+        "Antisexism"
       ],
       "languages": [
         "und",
@@ -7046,7 +7251,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:21.676944+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:37.321751+00:00"
     },
     {
       "name": "Unoffensive Animal",
@@ -7055,7 +7260,7 @@
       "pageUrl": "https://unoffensiveanimal.is/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:21.679948+00:00",
+      "lastChecked": "2026-07-30T22:06:37.489644+00:00",
       "categories": [
         "Animal Liberation",
         "Global",
@@ -7077,7 +7282,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:21.679948+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:37.489644+00:00"
     },
     {
       "name": "Vagancio Buenos Aires",
@@ -7086,7 +7291,7 @@
       "pageUrl": "https://vagancio.partidopirata.com.ar/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:21.972565+00:00",
+      "lastChecked": "2026-07-30T22:06:37.665533+00:00",
       "categories": [
         "Radar"
       ],
@@ -7103,7 +7308,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:21.972565+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:37.665533+00:00"
     },
     {
       "name": "Waging Nonviolence",
@@ -7112,7 +7317,7 @@
       "pageUrl": "https://wagingnonviolence.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:22.497576+00:00",
+      "lastChecked": "2026-07-30T22:06:38.091448+00:00",
       "categories": [
         "Global",
         "North America",
@@ -7120,8 +7325,8 @@
         "Anti-Rep & Prisons",
         "Antiracism",
         "No War",
-        "Demonstrations",
-        "Squatting & Housing"
+        "Movement News",
+        "Demonstrations"
       ],
       "languages": [
         "und"
@@ -7138,7 +7343,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:22.497576+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.091448+00:00"
     },
     {
       "name": "Warrior Publications",
@@ -7147,7 +7352,7 @@
       "pageUrl": "https://warriorpublications.wordpress.com/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.017633+00:00",
+      "lastChecked": "2026-07-30T22:06:38.438988+00:00",
       "categories": [
         "Indigenous Struggles",
         "Global",
@@ -7168,7 +7373,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.017633+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.438988+00:00"
     },
     {
       "name": "Wildcat",
@@ -7177,7 +7382,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.028464+00:00",
+      "lastChecked": "2026-07-30T22:06:38.508099+00:00",
       "categories": [
         "Theory & Strategy"
       ],
@@ -7199,7 +7404,7 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:47:28.137713+00:00",
-      "lastSuccessAt": "2026-07-28T17:58:23.028464+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.508099+00:00"
     },
     {
       "name": "Winter Oak",
@@ -7208,7 +7413,7 @@
       "pageUrl": "https://winteroak.org.uk/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.128688+00:00",
+      "lastChecked": "2026-07-30T22:06:38.559610+00:00",
       "categories": [
         "Eco-Anarchism",
         "Global",
@@ -7231,7 +7436,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.128688+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.559610+00:00"
     },
     {
       "name": "Women Enabled International",
@@ -7240,12 +7445,11 @@
       "pageUrl": "https://womenenabled.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.134398+00:00",
+      "lastChecked": "2026-07-30T22:06:38.597915+00:00",
       "categories": [
         "Antisexism",
         "Radical Health & Disability",
-        "Global",
-        "Queer-Feminism"
+        "Global"
       ],
       "languages": [
         "en"
@@ -7262,7 +7466,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.134398+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.597915+00:00"
     },
     {
       "name": "WoMin African Alliance",
@@ -7271,7 +7475,7 @@
       "pageUrl": "https://womin.africa/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.249241+00:00",
+      "lastChecked": "2026-07-30T22:06:38.628878+00:00",
       "categories": [
         "Africa",
         "Antisexism",
@@ -7295,7 +7499,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.249241+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.628878+00:00"
     },
     {
       "name": "World BEYOND War",
@@ -7304,13 +7508,13 @@
       "pageUrl": "https://worldbeyondwar.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.254859+00:00",
+      "lastChecked": "2026-07-30T22:06:38.854232+00:00",
       "categories": [
         "No War",
         "Global",
+        "Movement News",
         "Eco-Anarchism",
-        "Demonstrations",
-        "Movement News"
+        "Demonstrations"
       ],
       "languages": [
         "und"
@@ -7327,7 +7531,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.254859+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.854232+00:00"
     },
     {
       "name": "Yeryüzü Postası",
@@ -7336,7 +7540,7 @@
       "pageUrl": "https://www.yeryuzupostasi.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.593731+00:00",
+      "lastChecked": "2026-07-30T22:06:38.976550+00:00",
       "categories": [
         "Europe",
         "Anticapitalism",
@@ -7361,7 +7565,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.593731+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:38.976550+00:00"
     },
     {
       "name": "Zabalaza",
@@ -7370,13 +7574,12 @@
       "pageUrl": "https://zabalaza.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.776955+00:00",
+      "lastChecked": "2026-07-30T22:06:39.220637+00:00",
       "categories": [
         "Africa",
         "Theory & Strategy",
         "Anticapitalism",
-        "Demonstrations",
-        "Antisexism"
+        "Demonstrations"
       ],
       "languages": [],
       "originRegion": "",
@@ -7391,7 +7594,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.776955+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:39.220637+00:00"
     },
     {
       "name": "Zabalaza Books (Africa)",
@@ -7400,15 +7603,14 @@
       "pageUrl": "https://zabalazabooks.net/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:23.918698+00:00",
+      "lastChecked": "2026-07-30T22:06:39.372641+00:00",
       "categories": [
         "Libraries",
         "Global",
         "Theory & Strategy",
         "Anticapitalism",
         "No War",
-        "Labor Struggles",
-        "Antiracism"
+        "Labor Struggles"
       ],
       "languages": [
         "und"
@@ -7425,7 +7627,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:23.918698+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:39.372641+00:00"
     },
     {
       "name": "ZNet (Global)",
@@ -7434,7 +7636,7 @@
       "pageUrl": "https://znetwork.org/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:24.065346+00:00",
+      "lastChecked": "2026-07-30T22:06:39.448555+00:00",
       "categories": [
         "Global",
         "Anticapitalism",
@@ -7442,7 +7644,8 @@
         "Demonstrations",
         "Labor Struggles",
         "Anticolonialism",
-        "No War"
+        "No War",
+        "No Borders"
       ],
       "languages": [
         "und"
@@ -7462,7 +7665,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:24.065346+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:39.448555+00:00"
     },
     {
       "name": "ZNet (International)",
@@ -7471,7 +7674,7 @@
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-07-28T17:58:24.133526+00:00",
+      "lastChecked": "2026-07-30T22:06:39.455709+00:00",
       "categories": [
         "Global",
         "Anticapitalism"
@@ -7489,7 +7692,7 @@
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastSuccessAt": "2026-07-28T17:58:24.133526+00:00"
+      "lastSuccessAt": "2026-07-30T22:06:39.455709+00:00"
     }
   ]
 }
