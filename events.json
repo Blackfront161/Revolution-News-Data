@@ -593,8 +593,8 @@
     "kontinent": "Radar",
     "categories": [
       "Global",
-      "Antifascism",
-      "Anti-Rep & Prisons"
+      "Anti-Rep & Prisons",
+      "Antifascism"
     ],
     "quelleName": "Barrikade (CH)",
     "author": "Unknown",
@@ -625,17 +625,18 @@
     "eventStart": "2026-07-16T07:46:45Z",
     "eventEnd": "2026-07-16T07:46:45Z",
     "primaryRegion": "Global",
-    "primaryTopic": "Antifascism",
+    "primaryTopic": "Anti-Rep & Prisons",
     "secondaryTopics": [
-      "Anti-Rep & Prisons"
+      "Antifascism"
     ],
-    "classificationConfidence": 0.98,
+    "classificationConfidence": 0.831,
     "classificationMethod": "content",
     "topicScores": {
-      "Antifascism": 8.15,
       "Anti-Rep & Prisons": 6.65,
+      "Antifascism": 6.65,
       "No War": 2.85,
-      "No Borders": 2.2
+      "No Borders": 2.2,
+      "Squatting & Housing": 1.5
     },
     "editorialReview": false,
     "editorialReviewReasons": []
@@ -767,9 +768,9 @@
     "topicScores": {
       "Theory & Strategy": 7.4,
       "Anti-Rep & Prisons": 4.15,
+      "Squatting & Housing": 3.7,
       "Animal Liberation": 2.85,
       "Libraries": 2.85,
-      "Squatting & Housing": 2.2,
       "Cyberactivism": 1.55
     }
   },
@@ -777,14 +778,11 @@
     "kontinent": "Radar",
     "categories": [
       "Global",
-      "Anti-Rep & Prisons",
-      "Antifascism"
+      "Anti-Rep & Prisons"
     ],
     "primaryRegion": "Global",
     "primaryTopic": "Anti-Rep & Prisons",
-    "secondaryTopics": [
-      "Antifascism"
-    ],
+    "secondaryTopics": [],
     "classificationConfidence": 0.588,
     "classificationMethod": "content",
     "editorialReview": true,
@@ -820,8 +818,8 @@
     "eventEnd": "2026-07-23T17:38:51Z",
     "topicScores": {
       "Anti-Rep & Prisons": 4.7,
-      "Antifascism": 4.35,
       "Demonstrations": 3.5,
+      "Antifascism": 2.85,
       "No War": 2.2,
       "Theory & Strategy": 2.2,
       "Antiracism": 1.55
@@ -836,7 +834,7 @@
     "primaryRegion": "Global",
     "primaryTopic": "Antifascism",
     "secondaryTopics": [],
-    "classificationConfidence": 0.98,
+    "classificationConfidence": 0.831,
     "classificationMethod": "content",
     "editorialReview": false,
     "editorialReviewReasons": [],
@@ -867,7 +865,7 @@
     "eventStart": "2026-07-23T17:56:45Z",
     "eventEnd": "2026-07-23T17:56:45Z",
     "topicScores": {
-      "Antifascism": 8.15,
+      "Antifascism": 6.65,
       "Theory & Strategy": 2.2,
       "Antiracism": 1.55,
       "Antisexism": 1.55,
@@ -6105,20 +6103,22 @@
     "kontinent": "Radar",
     "categories": [
       "Global",
-      "Antifascism",
       "Anticapitalism",
+      "Antifascism",
       "Eco-Anarchism"
     ],
     "primaryRegion": "Global",
-    "primaryTopic": "Antifascism",
+    "primaryTopic": "Anticapitalism",
     "secondaryTopics": [
-      "Anticapitalism",
+      "Antifascism",
       "Eco-Anarchism"
     ],
-    "classificationConfidence": 0.706,
+    "classificationConfidence": 0.58,
     "classificationMethod": "content",
-    "editorialReview": false,
-    "editorialReviewReasons": [],
+    "editorialReview": true,
+    "editorialReviewReasons": [
+      "low-topic-confidence"
+    ],
     "quelleName": "Barrikade (CH)",
     "author": "Unknown",
     "title": "Manifest 2.0 der Cables of Resistance",
@@ -6146,12 +6146,12 @@
     "eventStart": "2026-07-29T19:16:19Z",
     "eventEnd": "2026-07-29T19:16:19Z",
     "topicScores": {
-      "Antifascism": 5.65,
       "Anticapitalism": 4.15,
+      "Antifascism": 4.15,
       "Eco-Anarchism": 4.15,
       "Labor Struggles": 4.15,
-      "Demonstrations": 3.5,
-      "No War": 3.5
+      "Squatting & Housing": 3.7,
+      "Demonstrations": 3.5
     }
   },
   {
@@ -7473,46 +7473,6 @@
   {
     "kontinent": "Radar",
     "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "LA CASSA T HA BISOGNO DI DONAZIONI",
-    "link": "https://radar.squat.net/en/node/590842",
-    "pubDate": "2026-07-31T10:00:00Z",
-    "content": "Weitere Informationen auf der Radar.squat-Originalseite.",
-    "contentComplete": true,
-    "image": "",
-    "language": "it",
-    "languages": [
-      "it"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590842",
-    "eventUuid": "77b00567-d0c1-4bd1-896f-b1ba841fc920",
-    "eventStart": "2026-07-31T10:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "IT",
-    "eventCity": "Torino",
-    "eventVenue": "Manituana - Laboratorio Culturale Autogestito",
-    "eventAddress": "Largo Maurizio Vitale 113/a, Rossini",
-    "eventPostal": "10152",
-    "eventLatitude": "45.079910916097",
-    "eventLongitude": "7.698616126800",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://gancio.cisti.org/event/la-cassa-t-ha-bisogno-di-donazioni-2"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
       "Global",
       "Movement News"
     ],
@@ -8632,214 +8592,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Kiosk Bookshop",
-    "link": "https://radar.squat.net/en/event/rotterdam/rotterdam-alternative-events/2026-07-31/kiosk-bookshop",
-    "pubDate": "2026-07-31T12:00:00Z",
-    "content": "OPENINGS HOURS:\n\nTHURSDAY 13:00-17:00\n\nFRIDAY 14:00-20:00\n\nSATURDAY13:00-17:00\n\n\n\n\nFRIDAY KIOSK Rotterdam is a bookshop, (riso) print workshop, and Multi Tool Press. The selection hosts radical/critical theory, fiction, poetry and self-publishing practices.\n\n\n\n\nKIOSK is run by just me \n\n(Flip)\n\n, with the occasional hosting from friends and comrades. There are no jobs or internships as things move in their own rhythm.\n\nYou’re always welcome to drop by, hang out, and be part of what happens!",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/screenshot_2025-12-12_at_12-25-33_instagram.png",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "570876",
-    "eventUuid": "491c386c-81a5-4dff-a3c8-f4b5a26254f3",
-    "eventStart": "2026-07-31T12:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "NL",
-    "eventCity": "Rotterdam",
-    "eventVenue": "Pieter de Raadtstraat 35  Rotterdam Netherlands",
-    "eventAddress": "Pieter de Raadtstraat 35",
-    "eventPostal": "3033 VC",
-    "eventLatitude": "51.928763200000",
-    "eventLongitude": "4.468995200000",
-    "eventCategories": [
-      "book shop/info shop/library",
-      "discussion/presentation",
-      "work space/diy"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://kioskrotterdam.com/"
-    ],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20261231T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "CHILLGARAGE",
-    "link": "https://radar.squat.net/en/node/555549",
-    "pubDate": "2026-07-31T14:00:00Z",
-    "content": "[DE]\n\nChillgarage in der Zollgarage\n\nJeden Freitag ab 16 Uhr sind wir offen und warm, mit viel Raum zum treffen, entspannen, organisieren, basteln, spielen, Film schauen, politisieren, was trinken und auf was ihr Bock habt…\n\nJeden FREITAG 16 Uhr bis min. 20 Uhr\n\nIn der Zollgarage, nähe U6 Platz der Luftbrücke\n\nKeine Drogen, kein hart Alk, keine Nazis!\n\nkein Raum für Antisemitismus, Rassismus, Transfeindlichkeit, Homophobie, Sexismus, Ableismus und andere Formen der Diskriminierung!\n\nWenn du generell das Potse Kollektiv in der Zollgarage kennenlernen willst oder dich einbringen möchtest komm Freitag rum ab 16 Uhr oder komm zum offenen wöchentlichen Plenum jeden Dienstag um 18 Uhr!\n\n\n\n\n================================================\n\n[EN]\n\nChillgarage in Zollgarage\n\nEvery Friday from 4pm we are open and warm ! A lot of space to meet , to relaxe, to organise, to craft, to play games, to watch a movie, to talk about politics, to drink something, and more…\n\nEvery FRIDAY 4pm till at least 8pm\n\nIn Zollgarage, close to U6 Platz der Luftbrücke\n\nNo drugs, no hard alcohol, no Nazis!\n\nno room for Antisemitism, Racism, Transphobia, Homophobia, Sexism, Ableism, and other forms of Discrimination!\n\nIf you want to get to know the Potse kollektive in Zollgarage come by on Friday from 4pm or join our open weekly meeting every Tuesday at 6pm",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/chill-garage-819x1024.png",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "555549",
-    "eventUuid": "42b91ccd-0449-4799-ab33-f20bcb000688",
-    "eventStart": "2026-07-31T14:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "Columbiadamm 10 Zollgarage im alten Flughafen Tempelhof Berlin Deutschland",
-    "eventAddress": "Columbiadamm 10",
-    "eventPostal": "10965",
-    "eventLatitude": "52.483488084658",
-    "eventLongitude": "13.390242071309",
-    "eventCategories": [
-      "meeting"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://potse.squat.net/2025/11/30/chillgarage-jeden-freitag-ab-16-uhr/"
-    ],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;COUNT=40;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Snackbar is open",
-    "link": "https://radar.squat.net/en/event/rotterdam/snackbar-frieda/2026-07-31/snackbar-open",
-    "pubDate": "2026-07-31T14:00:00Z",
-    "content": "Snackbar is open! Come hang out and grab a snack between 16:00 and 20:00!\n\n\n\n\nSnackbar is open! Kom gezellig langs en pak een snack tussen 16:00 en 20:00!",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/frieda_fryday_open_flyer.png",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "561360",
-    "eventUuid": "b409772c-9408-49dd-b054-c4c88720de66",
-    "eventStart": "2026-07-31T14:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Amsterdam",
-    "eventCountry": "NL",
-    "eventCity": "Rotterdam",
-    "eventVenue": "Snackbar Frieda",
-    "eventAddress": "Bajonetstraat 49",
-    "eventPostal": "3014 ZC",
-    "eventLatitude": "51.917135600000",
-    "eventLongitude": "4.464377400000",
-    "eventCategories": [
-      "bar/cafe",
-      "food"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20261219T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Permanence info & buvette",
-    "link": "https://radar.squat.net/en/node/561778",
-    "pubDate": "2026-07-31T15:00:00Z",
-    "content": "Depuis 2018, l’équipe du Steki assure une permanence-buvette hebdomadaire. Elle a lieu tous les vendredis, de 17h à 21h (voire plus tard, selon l’ambiance et autres paramètres). Vous y trouverez, entre autres :\n\n— la bibliothèque du groupe de recherche Matrisses (voir ci-dessous)\n\n— une caisse de soutien pour la Mutuelle autogérée des Sans-papiers à Bruxelles\n\n— des « Bruxelles en mouvement » (IEB) et des « Curseurs » (Tactic)\n\n— des paquets de café « Kawaz » – sous réserve de disponibilité – en grains et moulu\n\n— un fonds croissant de documentation au sujet de réflexions et d’initiatives en cours, et/ou – sous réserve de disponibilité – des personnes disposées à en discuter : la Maison du conflit¹, l’application Hippo², la transposition belge du MHS/CLIP³ et, de manière générale, diverses considérations quant aux enjeux stratégiques de formes de résistance plus ou moins locales actuelles.\n\n\n\n\nCette permanence accompagne pour le moment, de 18h à 21h, une « table de conversation » en langue française, pour les personnes qui souhaitent pratiquer celle-ci, quel qu’en soit leur niveau de connaissance, en présence de personnes francophones**.\n\n\n\n\nC’est aussi un moment approprié pour y passer voir et, par exemple, s’inscrire aux cours de langue arabe, consulter la documentation, se réchauffer (ou se rafraîchir, selon la saison), se renseigner quant aux activités et perspectives du lieu, discuter d’une proposition d’événement ou d’atelier, soumettre une demande de mise à disposition de la salle, boire un verre et commander une pizza en face, ou juste profiter du calme (entre deux concerts dans une Vieille Chéchette bondée) en grignotant des chips...\n\n\n\n\nÀ vendredi.\n\n\n\n\n« La bibliothèque du groupe de recherche Matrisses est hébergée par le Steki sur une petite étagère, disponible pour être consultée pendant la permanence-buvette du vendredi – et autres moments d’ouverture publique.\n\n\n\n\nOn y trouve des ressources sur les mouvements et pratiques de justice transformatrice, du féminisme anticarcérale et de l’abolitionnisme pénal. Cette ressourcerie vise à partager des outils pour des prises en main collectives de conflits et violences. » \n\nhttps://matrisses.bruxxel.org\n\n \n\n\n\n\nLe Steki\n\npourdireuntruc@lesteki.be\n\nhttps://www.lesteki.be\n\nhttps://radar.squat.net/fr/lesteki",
-    "contentComplete": true,
-    "image": "",
-    "language": "fr",
-    "languages": [
-      "fr"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "561778",
-    "eventUuid": "d9d6fe02-d192-4302-850c-32fee002fa38",
-    "eventStart": "2026-07-31T15:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Brussels",
-    "eventCountry": "BE",
-    "eventCity": "Bruxelles",
-    "eventVenue": "Le Steki",
-    "eventAddress": "Rue Gustave Defnet 4-6, Saint-Gilles",
-    "eventPostal": "1060",
-    "eventLatitude": "50.828730600000",
-    "eventLongitude": "4.339109300000",
-    "eventCategories": [
-      "bar/cafe",
-      "book shop/info shop/library"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20261231T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Bibliothèque-infokiosque",
-    "link": "https://radar.squat.net/en/node/566569",
-    "pubDate": "2026-07-31T15:00:00Z",
-    "content": "Les permanences de l’infokiosque ont lieu tous les vendredis de 17h à 20h au Silure. Les perms servent à emprunter des livres, chiner dans la collection, amener de la distro, etc. Le catalogue est accessible \n\nen ligne\n\n.\n\n\n\n\nLe Silure\n\nsilure@riseup.net\n\nhttps://radar.squat.net/fr/silure\n\nhttp://www.silure-ge.net/",
-    "contentComplete": true,
-    "image": "",
-    "language": "fr",
-    "languages": [
-      "fr"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "566569",
-    "eventUuid": "a01a4a5a-9275-4bfa-a6b5-c2cd2e8ce260",
-    "eventStart": "2026-07-31T15:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Zurich",
-    "eventCountry": "CH",
-    "eventCity": "Genève",
-    "eventVenue": "Le Silure",
-    "eventAddress": "50C rue Jacques-Grosselin, Carouge",
-    "eventPostal": "1227",
-    "eventLatitude": "46.180774181955",
-    "eventLongitude": "6.137000698219",
-    "eventCategories": [
-      "book shop/info shop/library"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20261231T225959Z;WKST=MO\r\nEXDATE:20260806T220000Z,20260813T220000Z,20260820T220000Z,20260827T220000Z",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Tropenbude Bar und Garten offen",
     "link": "https://radar.squat.net/en/node/583850",
     "pubDate": "2026-07-31T15:00:00Z",
@@ -9000,130 +8752,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "📚 Tortuga - livraria e infoshop anarquista na Disgraça",
-    "link": "https://radar.squat.net/en/event/lisboa/disgraca/2026-07-31/tortuga-livraria-e-infoshop-anarquista-na-disgraca",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "📕 Tortuga is an anarchist book and info shop on the groundfloor of Disgraça.\n\nHere you find portuguese and foreign political liture, zines (on paper and digital ones), music records, the jornal mapa, art prints, solishirts and a nice space to read and enjoy 🛋☀️\n\n___________________________________________\n\n\n\n\n📙 A Tortuga é uma livraria e um infoshop anarquista situada no rés-do-chão do Disgraça.\n\nAqui encontrarás literatura política portuguesa e estrangeira, zines (em papel e digitais), discos de música, o jornal Mapa, gravuras artísticas, t-shirts solidárias e um espaço agradável para ler e desfrutar 🛋☀️\n\n\n\n\n🕰️ Horario:\n\nQua, 19h - 22h\n\nQui, 17h - 22h\n\nSex, 17h - 20h\n\n\n\n\nhttps://disgraca.com/#calendar\n\n\n\n\n___________________________________________",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/signal-2026-05-27-212546_003.jpeg",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "586083",
-    "eventUuid": "3f720a83-1840-468f-8da6-c9640d367c72",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Lisbon",
-    "eventCountry": "PT",
-    "eventCity": "Lisboa",
-    "eventVenue": "Disgraça",
-    "eventAddress": "Rua da Penha de França 217",
-    "eventPostal": "1170-182",
-    "eventLatitude": "38.722074700000",
-    "eventLongitude": "-9.129227900000",
-    "eventCategories": [
-      "book shop/info shop/library"
-    ],
-    "eventTags": [
-      "bookshop",
-      "infoshop",
-      "Disgraça",
-      "livraria",
-      "Tortuga"
-    ],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20260731T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Kostenlose rechtliche Erstberatung / Free legal counselling",
-    "link": "https://radar.squat.net/en/node/588176",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "Was?  \n\n\n\n\nKostenlose Erstberatung im Bereich \n\nMigrationsrecht \n\n(Asyl, Aufenthalt, Einbürgerung). Wir klären Deine Rechte, lesen Briefe von Ämtern oder finden passende Anwält*innen\n\n\n\n\nBitte bring ALLE Dokumente und Briefe mit. Keine Anmeldung nötig. Bei Bedarf anonym. \n\n\n\n\nWir beraten auf Deutsch & Englisch. Weitere Sprachen sind möglich.\n\n\n\n\nWann?\n\n\n\n\n\n\n\nFreitag, 10.07., 18 - 20 Uhr \n\n\n\n\nFreitag, 24.07., 18 - 20 Uhr\n\n\n\n\nFreitag, 31.07., 18 - 20 Uhr \n\n\n\n\n\n\n\nWo? \n\n\nTürrschmidtstr. 1, 10318 Berlin (Nähe S-Ostkreuz)\n\n\n\n\nIm Erdgeschoss und über eine Stufe erreichbar. Toiletten sind nicht barrierefrei.\n\n*******************************************************************\n\n\n\n\nWhat?  \n\n\nFree initial consultation on\n\n immigration law\n\n (asylum, residency, naturalization). We’ll explain your rights, review letters from government agencies, or help you find the right attorney.\n\n\n\n\nPlease bring ALL documents and letters with you. No registration required. Anonymous consultations available if needed.\n\n\n\n\nWe provide counseling in German and English. Other languages may be available.\n\n\n\n\nWhen?\n\n\n\n\n\nFriday, July 10, 6:00–8:00 p.m.\n\n\n\n\nFriday, July 24, 6:00–8:00 p.m.\n\n\n\n\nFriday, July 31, 6:00–8:00 p.m.\n\n\n\n\n\n\n\nWhere?\n\n\nTürrschmidtstr. 1, 10318 Berlin (near S-Ostkreuz)\n\n\n\n\nLocated on the ground floor and accessible via one step. Restrooms are not wheelchair accessible.",
-    "contentComplete": true,
-    "image": "",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "588176",
-    "eventUuid": "fd7a7ef5-68e3-4ece-9da6-c5150109f071",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "Kaox",
-    "eventAddress": "Türrschmidtstr. 1",
-    "eventPostal": "10317",
-    "eventLatitude": "52.502636600000",
-    "eventLongitude": "13.475856100000",
-    "eventCategories": [
-      "advice/help/office hours"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Gedenken an Bruno Schilter",
-    "link": "https://radar.squat.net/en/node/590017",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "Gedenken & Vortrag:\n\n\n\n\n \n\n\n\n\n31.07./ 18 Uhr\n\n\n\n\nRichard-Sorge-Straße 16\n\n\n\n\n10249 Berlin\n\n\n\n\n \n\n\n\n\nAm 1. August 1933 wurde der Antifaschist und Jungkommunist Bruno Schilter im SA-Keller „Keglerheim“ (heute Petersburger Straße 94) schwer mißhandelt und anschliessend mit fünf Kopfschüssen ermordet.\n\n\n\n\nAm 22. Juni 2026 wurde vor der Richard-Sorge-Straße 16, dem ehemaligen Wohnort Bruno Schilters, ein Stolperstein verlegt. Mit dem Gedenken und einen kurzen Vortrag am 31. Juli 2026 wollen wir an sein Leben, seinen antifaschistischen Widerstand und seine Ermordung erinnern. So wollen wir als Stadtteilgruppen, die bereits in der Vergangenheit gedenkpolitische Veranstaltungen organisierten, verhindern, dass ein Antifaschist, der für seinen Kampf gegen den NS ermordet wurde, vergessen bleibt.\n\n\n\n\n \n\n\n\n\nMit dem Gedenken wollen wir auch eine Gegenwart aufmerksam machen, in der rechte und rechtsoffene Läden und Räume eine Bedrohung für Antifaschist*innen und alle Menschen sind, die nicht in das rechte Weltbild passen. Auch in Friedrichshain und Umgebung kommt es immer wieder zu rassistischen, queer- und frauenfeindlichen sowie antisemitischen Vorfällen.\n\n\n\n\n \n\n\n\n\nWir wollen auf der Kundgebung auch den jahrelangen antifaschistischen Widerstand erinnern der beispielsweise dafür sorgte, dass ein Thor-Steinar-Laden nahe dem Ort, an dem Bruno Schilter mißhandelt wurde, nach kurzer Zeit schließen musste.\n\n\n\n\n \n\n\n\n\nErinnern heißt Kaempfen",
-    "contentComplete": true,
-    "image": "",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590017",
-    "eventUuid": "5461b5cc-293a-4109-a14f-01e24e6824c2",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "Stressfaktor",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "",
-    "eventLongitude": "",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Solidaritätsabend für Familiennachhzug",
     "link": "https://radar.squat.net/en/node/590841",
     "pubDate": "2026-07-31T16:00:00Z",
@@ -9161,46 +8789,6 @@
     "eventGroups": [],
     "eventPrice": "",
     "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Teatro Terápeutico",
-    "link": "https://radar.squat.net/en/node/590853",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "¿Qué trabajamos ?\n\n\n\n\n \n\n\n\n\n * La conexión con el grupo a través de la palabra y el movimiento.\n\n\n\n\n * La escucha corporal , la propia y la de las compañeras\n\n\n\n\n * La atención plena\n\n\n\n\n * Dinámicas provenientes del teatro,  arteterapia y movimiento expresivo que me\n\n\n   pondrán en contacto con los temas que necesite y quiera trabajar. \n\n\n\n\n * Juegos que me permitan alcanzar una espontaneidad a veces perdida.\n\n\n\n\n * La puesta en escena de pequeñas piezas que nacerán de la creación colectiva a\n\n\n   partir del auto-conocimiento.\n\n\n\n\n * Improvisaciones que nos pueden llevar a los géneros de comedia y drama, donde\n\n\n   ya nos desprendemos un poco de nuestro propio personaje para crear uno\n\n\n   diferente que nos divierta.\n\n\n\n\n \n\n\n\n\nSe trata de un espacio de respeto y seguro donde puedes alcanzar una mayor\n\n\nescucha, y trabajar cuestiones que te están haciendo un poco de ruido en la\n\n\nvida, y que quieres trascender, para así poder vivir mas plenamente.  El Arte de\n\n\nla actuación nos llevará a ese lugar. \n\n\n\n\nSoy actriz, egresada de la escuela de Juan Carlos Corazza, profesora de teatro\n\n\ndesde hace 20 años, impartiendo clases para adultos y niños. Me he formado en\n\n\nPCI (Proceso Corporal Integrativo) con Antonio del Olmo, he realizado los\n\n\nmódulos de  Clown Esencial con Alain Vigneau,  formada como terapeuta Gestalt en\n\n\nEquipo Centro.  \n\n\nAmo mi profesión, siento que en muchos momentos de mi Vida , el Arte y la\n\n\nActuación me han salvado, literalmente ha sido así. Te propongo este viaje desde\n\n\nla propia experiencia que he tenido en esta dirección.\n\n\n\n\nLas clases son los Viernes de 18 a 20 hrs.\n\n\n\n\nEn La Horizontal Calle Eduardo Requena 10.\n\n\nMetro Nueva Numancia.\n\n\nComenzamos el 26 de  septiembre.\n\n\nInfo e inscripción a \n\nandjulysanti@hotmail.com\n\n [\n\nandjulysanti@hotmail.com\n\n] o por\n\n\nWhatsApp o llamada al 620 337737\n\n\n\n\nTe espero !!\n\n\n\n\nAndrea Santillán Varela\n\n\n\n\nActriz, profesora de teatro y movimiento. Terapeuta Corporal. Risoterapeuta.\n\n\nAcompañamiento Gestáltico individual y grupal. (Español e Inglés)\n\n\n\n\nWeb: \n\nhttps://andreasantillanvarel.wixsite.com/somosmovimiento\n\n\n[\n\nhttps://andreasantillanvarel.wixsite.com/somosmovimiento]\n\n\n\n\nFCBK: \n\n [www.facebook.com/somosmovimientoandreasantillanvarela]\n\n\n[\n\n [www.facebook.com/somosmovimientoandreasantillanvarela]]\n\n\n\n\nISG:  \n\n [www.instagram.com/andreasantillanvarela/]\n\n\n[\n\n [www.instagram.com/andreasantillanvarela/]]",
-    "contentComplete": true,
-    "image": "",
-    "language": "es",
-    "languages": [
-      "es"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590853",
-    "eventUuid": "fe7eef3b-afe6-4da0-aad2-dff95d27c99f",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Madrid",
-    "eventCountry": "ES",
-    "eventCity": "Madrid",
-    "eventVenue": "La Horizontal",
-    "eventAddress": "Calle de Eduardo Requena 10, Puente de Vallecas",
-    "eventPostal": "28053",
-    "eventLatitude": "40.390544210552",
-    "eventLongitude": "-3.665796639838",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://mad.convoca.la/event/teatro-terapeutico-44"
-    ],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
   },
@@ -9251,46 +8839,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Critical Mass Karlsruhe",
-    "link": "https://radar.squat.net/en/event/karlsruhe/karlsunruh/2026-07-31/critical-mass-karlsruhe",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "Am Freitag, den 31. Juli 2026 fährt die Critical Mass Karlsruhe\n\n\nwieder in die Bergdörfer. Start ist um 18:00 Uhr, aufgrund von Bauarbeiten abweichend\n\n\nauf dem Berliner Platz (150 m vom Kronenplatz). Von dort führt die 23 km lange Route über die Ottostraße,\n\n\ndie Rittnertstraße, Stupferich, Palmbach und Wolfartsweier zum Durlacher\n\n\nSchlossplatz.\n\n\n\n\nZwar sind die Höhenstadtteile untereinander durch asphaltierte Feldwege miteinander\n\n\nverbunden. Bei der Anbindung an die Kernstadt klaffen aber noch zwei Lücken:\n\n\nWeder entlang der Rittnertstraße (Durlach–Thomashof) noch an der L 623 existiert\n\n\nein durchgängiges Angebot für Radfahrende.\n\n\n\n\nDer Radweg entlang der L 623 zwischen Wolfartsweier und Grünwettersbach ist seit Jahren in Planung.\n\n\nDa im Februar 2027 der Bau endlich beginnen soll, wird dies\n\n\nhoffentlich die letzte Critical Mass vor der Fertigstellung des Radwegs dort sein.\n\n\n\n\nAn der Rittnertstraße tut sich gar nichts. Außerorts steht dem Radverkehr\n\n\nein stellenweise als privater Gehweg ausgewiesener Feldweg zur Verfügung. In Durlach\n\n\nwurden die Planungen noch gar nicht begonnen.\n\n\nAngesichts der Mehrheit im Ortschaftsrat Durlach, die Radverkehrsförderung\n\n\nbekämpft, widmet sich die Stadtverwaltung lieber anderen Baustellen.\n\n\n\n\nAuf der Bergstrecke ist ein Anstieg von insgesamt 205 m Höhenmetern zu\n\n\nbewältigen. Die Steigung beträgt überwiegend nur 3 bis 4, nur auf zwei\n\n\nkurzen Teilstücken bis zu 7 Prozent.\n\n\nDie Critical Mass fährt als geschlossener Verband (§ 27\n\n\nStVO) auf der Fahrbahn. Die Geschwindigkeit bergauf richtet sich nach\n\n\nden schwächeren Teilnehmenden. Wer schneller fahren will, muss eine andere\n\n\nStrecke wählen.\n\n\n\n\nFür die Mitfahrt ist ein verkehrssicheres Fahrrad erforderlich. Bergab\n\n\nfährt der Verband bis zu 30 km/h.\n\n\n\n\nStraßenliste:\n\n\n\n\nBerliner Platz\n\n\nFritz-Erler-Straße\n\n\nLudwig-Erhard-Allee/B 10\n\n\nWolfartsweierer Straße/B 10\n\n\nOttostraße\n\n\nKilisfeldstraße\n\n\nAuer Straße\n\n\nRommelstraße\n\n\nBadener Straßer/B 3\n\n\nRittnertstraße/K 9654\n\n\nThomashofstraße/K 9654\n\n\nKarlsbader Straße/K 9653\n\n\nnamenloser Feldweg Flst. Nr. 64006, 63753\n\n\nTalstraße/L 623\n\n\nWiesenstraße/L 623\n\n\nAm Wetterbach/ L 623\n\n\nSteinkreuzstraße\n\n\nBadener Straße/B 3\n\n\nKarlsburgstraße\n\n\nSchlossplatz (Durlach)\n\n\n\n\nhttps://bikerouter.de/#map=13/48.9808/8.4366/osm-mapnik-german_style&lon...",
-    "contentComplete": true,
-    "image": "",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "583216",
-    "eventUuid": "8c73ad34-1583-40fc-8582-c12752292fe6",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Karlsruhe",
-    "eventVenue": "Karlsruhe",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "49.006870500000",
-    "eventLongitude": "8.403419500000",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://karlsunruh.org/event/402f12cd-ab63-4cbc-ad1e-ffbcc3d2b542"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Queer Poetry Slam",
     "link": "https://radar.squat.net/en/node/591077",
     "pubDate": "2026-07-31T16:00:00Z",
@@ -9320,46 +8868,6 @@
     "eventPrice": "",
     "eventExternalLinks": [
       "https://latscher.in/events/2026-07-31-queer-poetry-slam"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Werni&Finni",
-    "link": "https://radar.squat.net/en/node/591078",
-    "pubDate": "2026-07-31T16:00:00Z",
-    "content": "Wir bieten Künstler*innen einen Raum in dem sie, frei von Vita und kommerziellen Zwängen, ihre Kunst ausstellen können.\n\n\n\n\nMöchtest du auch deine Kunst ausstellen?\n\n\nKomm vorbei und/oder melde dich gerne bei uns per Email oder Instagram.\n\n\n\n\nwuf.rek147@gmail.com",
-    "contentComplete": true,
-    "image": "",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "591078",
-    "eventUuid": "316d9ea3-2e00-46bc-b9e9-d47a5b11cb2c",
-    "eventStart": "2026-07-31T16:00:00Z",
-    "eventEnd": "2026-07-31T19:30:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Dortmund",
-    "eventVenue": "Dortmund Germany",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "51.514227300000",
-    "eventLongitude": "7.465278900000",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://latscher.in/events/2026-07-31-werni-finni"
     ],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
@@ -9458,49 +8966,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Tog: Hack and Chill",
-    "link": "https://radar.squat.net/en/event/dublin/tog-hackerspace/2026-07-31/tog-hack-and-chill",
-    "pubDate": "2026-07-31T17:00:00Z",
-    "content": "We’re launching a new regular night at Tog Hackerspace, and if you’re into\n\n\ncomputer security, hardware hacking, or just the hacker mindset, you’ll want to\n\n\nbe there.\n\n\n\n\nHack and Chill is a space for folks who enjoy exploring systems, poking at\n\n\nprotocols, reverse-engineering things, flashing firmware, or just chatting about\n\n\nexploits over a cup of tea.\n\n\n\n\nWhat’s it all about?\n\n\n\n\nIt’s a chill, hacker-friendly night for messing with code, gear, networks, or\n\n\nideas. No pressure to present or perform — just a place to learn, share, and\n\n\nmaybe break a few things (ethically, of course). Think more Hackers (the movie)\n\n\nthan hot glue and 3D printing.\n\n\n\n\nWhether you’re a seasoned pentester, a hardware tinkerer with a soldering iron\n\n\nin your backpack, or just curious about the scene, come hang out.\n\n\n\n\n📅 Opening Night: Friday, 22nd August\n\n\n\n\n🕖 Time: 7:00 PM – 9:00 PM\n\n\n\n\n📍 Location: Tog Hackerspace, Unit 1B Motor City, Kylemore Road, D12 CF6V,\n\n\nDublin\n\n\n\n\nHack and Chill will run every Friday night, except for the first Friday of the\n\n\nmonth — that’s when we’ll be over at 2600 Dublin.\n\n\n\n\nSo grab your laptop, your favourite hack, or just your curiosity — and swing by.\n\n\nWe don’t bite (but we might packet-sniff your phone).",
-    "contentComplete": true,
-    "image": "",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590857",
-    "eventUuid": "fc61867d-d28b-482a-aab2-79e30f7b8321",
-    "eventStart": "2026-07-31T17:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Dublin",
-    "eventCountry": "IE",
-    "eventCity": "Dublin",
-    "eventVenue": "Tog Hackerspace",
-    "eventAddress": "Unit 1B Motor City, Kylemore Road",
-    "eventPostal": "",
-    "eventLatitude": "53.330125843205",
-    "eventLongitude": "-6.346278376330",
-    "eventCategories": [],
-    "eventTags": [
-      "DIY",
-      "hacking"
-    ],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://ainriail.org/event/tog-hack-and-chill-49"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Polyamorie-Themenabend",
     "link": "https://radar.squat.net/en/event/karlsruhe/karlsunruh/2026-07-31/polyamorie-themenabend",
     "pubDate": "2026-07-31T17:00:00Z",
@@ -9582,48 +9047,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Cinema divendres/Cine viernes",
-    "link": "https://radar.squat.net/en/node/590855",
-    "pubDate": "2026-07-31T17:30:00Z",
-    "content": "Aquí projectem pel·lícules de caire més populars, taquilleres i properes amb\n\n\nl’objectiu d’obrir a tot el barri el projecte de La Cinetika.\n\n\nEl primer divendres de mes projectem cinema infantil per a tota la família i\n\n\nl’últim divendres pel·lícules de l’àmbit nacional.\n\n\nConsulteu el blog de La Cinètika [\n\nhttps://blogs.sindominio.net/lacinetika/]\n\n o a\n\n\nl'instagram de Cinema divendres [\n\n [www.instagram.com/cinemadivendres]] per\n\n\nveure quins cicles o projeccions fan cada setmana.\n\n\n\n\nFunciona amb taquilla inversa (aporta allò que puguis o vulguis) i totis ens\n\n\nencarreguem que l'espai quedi net.\n\n\nRecordatori que La Cinètika és un espai lliure de drogues, d’alcohol i de fum. I\n\n\ntampoc es serveix menjar d’origen animal.\n\n\nNo fumis dins de l'espai, ni beguis alcohol, ni prenguis altres drogues ni\n\n\nmengis aliments d'origen animal.",
-    "contentComplete": true,
-    "image": "",
-    "language": "ca",
-    "languages": [
-      "ca"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590855",
-    "eventUuid": "affe61a1-5e59-4073-b257-c26e5745741e",
-    "eventStart": "2026-07-31T17:30:00Z",
-    "eventEnd": "2026-07-31T19:30:00Z",
-    "eventTimezone": "Europe/Madrid",
-    "eventCountry": "XC",
-    "eventCity": "Barcelona",
-    "eventVenue": "La Cinètika",
-    "eventAddress": "32, Rambla de Fabra i Puig",
-    "eventPostal": "08030",
-    "eventLatitude": "41.430304300000",
-    "eventLongitude": "2.188017000000",
-    "eventCategories": [],
-    "eventTags": [
-      "cinema"
-    ],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://bcn.convoca.la/event/cinema-divendrescine-viernes-44"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Wedding Flinta* Jam Session - unplugged!",
     "link": "https://radar.squat.net/en/node/591014",
     "pubDate": "2026-07-31T17:30:00Z",
@@ -9670,46 +9093,6 @@
     "eventPrice": "",
     "eventExternalLinks": [],
     "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Squat Safety",
-    "link": "https://radar.squat.net/en/event/london/lesnes-resistance/2026-07-31/squat-safety",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Weitere Informationen auf der Radar.squat-Originalseite.",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/img_5537.jpeg",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "562175",
-    "eventUuid": "5002a16d-9006-4b05-8a97-a7d889011105",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/London",
-    "eventCountry": "GB",
-    "eventCity": "London",
-    "eventVenue": "Lesnes estate",
-    "eventAddress": "Thamesmead",
-    "eventPostal": "",
-    "eventLatitude": "51.495060411605",
-    "eventLongitude": "0.125055277593",
-    "eventCategories": [
-      "advice/help/office hours"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=4;BYDAY=FR;COUNT=10;WKST=MO",
     "sourceHomepage": "https://radar.squat.net"
   },
   {
@@ -9799,132 +9182,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Open rehearsal",
-    "link": "https://radar.squat.net/en/node/584947",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Elke week kun je vrijblijvend meedoen. De oneven weken in Nijmegen en Deventer, de even weken in Arnhem. Laat even weten via de email.\n\n\n\n\nJoin us, we have everything to play for!",
-    "contentComplete": true,
-    "image": "",
-    "language": "nl",
-    "languages": [
-      "nl"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "584947",
-    "eventUuid": "dc69944c-143d-4398-8a05-9c9f09fe405c",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Amsterdam",
-    "eventCountry": "NL",
-    "eventCity": "Deventer",
-    "eventVenue": "Deventer Netherlands",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "",
-    "eventLongitude": "",
-    "eventCategories": [
-      "action/protest/camp",
-      "course/workshop",
-      "music/concert"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=FR;UNTIL=20261226T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Open rehearsal",
-    "link": "https://radar.squat.net/en/node/584961",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Elke week kun je vrijblijvend meedoen. De oneven weken in Nijmegen en Deventer, de even weken in Arnhem. Laat even weten via de email.\n\n\n\n\nJoin us, we have everything to play for!",
-    "contentComplete": true,
-    "image": "",
-    "language": "nl",
-    "languages": [
-      "nl"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "584961",
-    "eventUuid": "87502961-1300-488d-9ec9-d0578122c044",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Amsterdam",
-    "eventCountry": "NL",
-    "eventCity": "Nijmegen",
-    "eventVenue": "Nijmegen Netherlands",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "",
-    "eventLongitude": "",
-    "eventCategories": [
-      "action/protest/camp",
-      "course/workshop",
-      "music/concert"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=2;BYDAY=FR;UNTIL=20261226T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "SHÖCK – Punk (Bilbao, ES) und catbiteback – Feminist & Angry PunkRap (Berlin; DE)",
-    "link": "https://radar.squat.net/en/node/587859",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Concert:\n\n\n\n\nSHÖCK - Punkrock - (Bilbao)\n\n\n\n\nCAT BITE BACK - Feminist Punkrap - (Berlin)",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/6054eccd6c6242e4810462fc0edfe9c2.jpg",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "587859",
-    "eventUuid": "9aad7d0a-30e0-418e-8e51-68de3426b7df",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "CH",
-    "eventCity": "Bremgarten",
-    "eventVenue": "KuZeB",
-    "eventAddress": "Zürcherstrasse 2",
-    "eventPostal": "5620",
-    "eventLatitude": "47.350779608961",
-    "eventLongitude": "8.344770539089",
-    "eventCategories": [
-      "music/concert"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [
-      "https://www.kuzeb.ch/events#447"
-    ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "RENMIN - la cena popolare",
     "link": "https://radar.squat.net/en/node/588329",
     "pubDate": "2026-07-31T18:00:00Z",
@@ -9965,47 +9222,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Critical Mass",
-    "link": "https://radar.squat.net/en/event/london/critical-mass-london/2026-07-31/critical-mass",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "The London Mass meets at 7:00pm, on the last Friday of every month on the South Bank under Waterloo Bridge, by the British Film Institute.\n\n\n\n\n \n\n\n\n\nWHAT'S IS ALL ABOUT?\n\nCritical Mass is often described as an 'unorganised coincidence'. It happens when a lot of cyclists happen to be in the same place at the same time and decide to cycle the same way together for a while.\n\n\n\n\nWHAT'S THE PURPOSE?\n\n\"Everyday, all over the world, people are resisting the problem culture of the car by getting on their bikes and riding, instead of driving.\n\nCritical Mass is a celebration of the alternatives to cars, pollution, accidents and the loss of public spaces and freedoms.\n\nNot an organisation or group, but an idea or tactic, Critical Mass allows people to reclaim cities with their bikes, just by getting together and out-numbering the cars on the road\"\n\n\n\n\nWHAT HAPPENS ON A CRITICAL MASS?\n\nEach one is different and they follow no set route, with the direction being spontaneously chosen as people cycle along. Anyone is free to join or leave the ride as it pedals along.\n\nThe ride lasts no more than a couple of hours (depending on the weather!) and usually ends in a conveniently placed pub (or squat) for more drinks.\n\nMost all, they are peaceful, safe and fun!\n\n\n\n\nDO I NEED A BIKE?\n\nNope! Critical Mass is not just for bikes - skateboards, roller blades, wheelchairs, pogo sticks - in fact any form of non-motorised, non-polluting transport are all very welcome!",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/critical-mass-london_1.jpg",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "589226",
-    "eventUuid": "0f7ab2e3-185c-4d85-8040-ee4c1d0fa623",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/London",
-    "eventCountry": "GB",
-    "eventCity": "London",
-    "eventVenue": "South Bank",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "51.507495562754",
-    "eventLongitude": "-0.115356574647",
-    "eventCategories": [
-      "action/protest/camp",
-      "party"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=-1FR;BYMONTH=1,2,3,4,5,6,7,8,9,10,11,12;COUNT=16;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Top Queer: The Unofficial Drag Tribute",
     "link": "https://radar.squat.net/en/event/leeds/wharf-chambers/2026-07-31/top-queer-unofficial-drag-tribute",
     "pubDate": "2026-07-31T18:00:00Z",
@@ -10036,127 +9252,6 @@
     "eventExternalLinks": [
       "https://wharfchambers.org/event/top-queer-the-unofficial-drag-tribute/"
     ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Industry, Walking Korpses, Turbio Futuro",
-    "link": "https://radar.squat.net/en/node/589584",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Soli gig for the victims of the Venezuelan earthquake.\n\n\n\n\nIndustry (anarchopunk / post punk)\n\n\n\n\nWalking Korpses (post punk / industrial)\n\n\n\n\nTurbio Futuro (punk / hardcore)\n\n\n\n\nEinlass 20:00",
-    "contentComplete": true,
-    "image": "",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "589584",
-    "eventUuid": "931f5e36-85f6-43ec-aa61-b48d5c4c35eb",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "K19 Café",
-    "eventAddress": "Kreutzigerstr. 19",
-    "eventPostal": "10247",
-    "eventLatitude": "52.513101500000",
-    "eventLongitude": "13.460064600000",
-    "eventCategories": [
-      "music/concert"
-    ],
-    "eventTags": [
-      "Punk / Hardcore / Crust"
-    ],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Konzert",
-    "link": "https://radar.squat.net/en/event/berlin/stressfaktor/2026-07-31/konzert",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "The sweet kill \n\n( L.A. USA)\n\n, Cult Noir\n\n ( DARK Wave / Berlin) Gothic Rock / Darkwave",
-    "contentComplete": true,
-    "image": "",
-    "language": "en",
-    "languages": [
-      "en"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "591087",
-    "eventUuid": "786e02ca-5d2c-43b1-a7db-d8d1c6165a67",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "across the Willy Brand Haus",
-    "eventAddress": "",
-    "eventPostal": "",
-    "eventLatitude": "",
-    "eventLongitude": "",
-    "eventCategories": [],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Liberté pour El Mahdi Lyoubi et liberté pour Kolchi ! Courts métrages et discussion",
-    "link": "https://radar.squat.net/en/node/591135",
-    "pubDate": "2026-07-31T18:00:00Z",
-    "content": "Connu sous le nom de scène « Mehdi Black Wind », El Mahdi Lyoubi est un rappeur et cinéaste marocain poursuivi en justice en raison de ses chansons engagées et de ses prises de position politiques critiques à l’égard du système politique marocain.\n\n\n\n\nNous vous invitons à la projection de deux courts métrages documentaires faits par El Mahdi, suivi d’une discussion autour de la situation des prisonnièr.e.s politiques au Maroc et ailleurs.\n\n\n\n\nEl Mahdi Lyoubi a été arrêté le 13 juillet 2026, après avoir été arbitrairement empêché de quitter le Maroc depuis l’aéroport à destination de Marseille, où il réside. Il a ensuite été placé en garde à vue, interrogé et poursuivi pour une accusation particulièrement grave : outrage à une institution constitutionnelle, sur la base d’un article du Code pénal marocain qui criminalise les actes supposés de diffamation, d’injure ou d’offense dirigés contre l’État.\n\n\n\n\nLe cas de El Mahdi n’est pas un cas isolé. Aujourd’hui, les prisons marocaines comptent parmi leur détenu.e.s de nombreux.ses manifestant.es du Hirak du Rif, des manifestants de la gen Z, des journalistes, des artistes, des bloggeur.ses, ... \n\n\n\n\nDepuis Bruxelles, ville de nombreuses diasporas engagées, nous refusons de rester silencieux.se.s face aux atteintes aux libertés fondamentales. La solidarité ne connaît pas de frontières, et notre voix compte.\n\n\n\n\nFace à la montée des fascismes et de la réprenssion en Europe et ailleurs, rejoignez-nous !\n\n\n\n\nL'Arka\n\narka.hic@proton.me\n\nhttps://radar.squat.net/fr/forest/arka\n\nhttps://inventaire.io/users/arkabibli",
-    "contentComplete": true,
-    "image": "",
-    "language": "fr",
-    "languages": [
-      "fr"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "591135",
-    "eventUuid": "250d051d-8948-443e-9649-26d3eb829418",
-    "eventStart": "2026-07-31T18:00:00Z",
-    "eventEnd": "2026-07-31T18:00:00Z",
-    "eventTimezone": "Europe/Brussels",
-    "eventCountry": "BE",
-    "eventCity": "Bruxelles",
-    "eventVenue": "L’Arka",
-    "eventAddress": "52 avenue Wielemans Ceuppens, Forest",
-    "eventPostal": "",
-    "eventLatitude": "50.824407100000",
-    "eventLongitude": "4.328592100000",
-    "eventCategories": [
-      "discussion/presentation",
-      "film"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
   },
@@ -10253,86 +9348,6 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
-    "title": "Point de chute",
-    "link": "https://radar.squat.net/en/node/561619",
-    "pubDate": "2026-07-31T19:00:00Z",
-    "content": "Tous les vendredis soir, nous ouvrons le “point de chut”! Un espace de rencontre convivial : soirées jeux de société et bières locales, concerts, soirées thématiques ou rien de spécial, mais un espace pour se poser autour d’un verre dans la bonne ambiance.\n\nL’équipe Point de Chut veille à ce que la grande salle et le petit bar soient toujours au top! Ils et elles tiennent le bar les vendredi soirs, avec l’aide d’autres personnes motivées, et organisent des concerts une fois par mois. Pour faire partie de l’équipe ou juste donner un coup de main à l’occasion, écris-nous!\n\nL'Ades'if\n\nadesif@reseauades.net\n\nhttps://radar.squat.net/fr/ladesif\n\nhttp://www.reseauades.net/ladesif/",
-    "contentComplete": true,
-    "image": "",
-    "language": "fr",
-    "languages": [
-      "fr"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "561619",
-    "eventUuid": "3a8ea171-b425-4f00-8203-20f725938cec",
-    "eventStart": "2026-07-31T19:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Brussels",
-    "eventCountry": "BE",
-    "eventCity": "Bruxelles",
-    "eventVenue": "L’Ades’if",
-    "eventAddress": "71 Rue de Liedekerke - de Liedekerkestraat, Saint-Josse-ten-Noode - Sint-Joost-ten-Node",
-    "eventPostal": "1210",
-    "eventLatitude": "50.851381900000",
-    "eventLongitude": "4.375170900000",
-    "eventCategories": [
-      "bar/cafe"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20261231T225959Z;WKST=MO",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Konzert + Party",
-    "link": "https://radar.squat.net/en/node/590327",
-    "pubDate": "2026-07-31T19:00:00Z",
-    "content": "Punkkonzert mit \"Diapers\" (Punk aus Halle) und \"Spucke\" (Punk aus Hamburg). Danach Disco für Dumme mit DJ Eisen (Punk/Wave/schlechte Laune).",
-    "contentComplete": true,
-    "image": "",
-    "language": "de",
-    "languages": [
-      "de"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "590327",
-    "eventUuid": "b4f432d3-4e7a-489f-a964-30a846adb276",
-    "eventStart": "2026-07-31T19:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Berlin",
-    "eventCountry": "DE",
-    "eventCity": "Berlin",
-    "eventVenue": "Subversiv",
-    "eventAddress": "Brunnenstr. 7",
-    "eventPostal": "10119",
-    "eventLatitude": "52.531003337296",
-    "eventLongitude": "13.401035018385",
-    "eventCategories": [],
-    "eventTags": [
-      "Punk / Hardcore / Crust"
-    ],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
     "title": "Red and Black Club",
     "link": "https://radar.squat.net/en/event/london/london-solidarity-federation/2026-07-31/red-and-black-club",
     "pubDate": "2026-07-31T19:00:00Z",
@@ -10407,46 +9422,6 @@
     "eventExternalLinks": [
       "https://lapunta.org/event/cineforum-3-society-the-horror"
     ],
-    "eventRecurrence": "",
-    "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Radar"
-    ],
-    "quelleName": "Radar.squat",
-    "author": "Radar.squat",
-    "title": "Doe eens een dansje",
-    "link": "https://radar.squat.net/en/node/591331",
-    "pubDate": "2026-07-31T19:00:00Z",
-    "content": "Just a few hours of playing some songs to dance to.\n\n\n\n\nAs always free entrance.\n\n\n\n\nCash preferred.",
-    "contentComplete": true,
-    "image": "https://radar.squat.net/sites/default/files/styles/large/public/vbdansje.jpg",
-    "language": "nl",
-    "languages": [
-      "nl"
-    ],
-    "sourceType": "radar-api",
-    "eventApiId": "591331",
-    "eventUuid": "500899b0-67a4-4d94-b43c-1d29e9894030",
-    "eventStart": "2026-07-31T19:00:00Z",
-    "eventEnd": "2026-07-31T19:00:00Z",
-    "eventTimezone": "Europe/Amsterdam",
-    "eventCountry": "NL",
-    "eventCity": "Amsterdam",
-    "eventVenue": "Vondelbunker",
-    "eventAddress": "Vondelpark 8a",
-    "eventPostal": "",
-    "eventLatitude": "52.360886140119",
-    "eventLongitude": "4.876832698178",
-    "eventCategories": [
-      "music/concert"
-    ],
-    "eventTags": [],
-    "eventGroups": [],
-    "eventPrice": "",
-    "eventExternalLinks": [],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
   },
@@ -10622,101 +9597,6 @@
   {
     "kontinent": "Radar",
     "categories": [
-      "Global",
-      "Movement News"
-    ],
-    "quelleName": "Nantes Révoltée Agenda",
-    "author": "FUR44",
-    "title": "FUR44 CGT – Apéro #6 des salarié·es de la restauration",
-    "link": "https://nantes.indymedia.org/events/167216/fur44-cgt-apero-6-des-salarie%c2%b7es-de-la-restauration/",
-    "pubDate": "2026-07-31T20:15:18.786551",
-    "content": "bar, café, restaurant, fast food, hôtel… Rejoins-nous pour une discussion collective sur la canicule et tes conditions de travail ! On y parlera obligations légales, solutions dans l’immédiat et actions à mener pour l’avenir ! Mercredi 5 août – 18h Sur les bords de Loire – 4 quai François Mitterrand…",
-    "contentComplete": true,
-    "image": "",
-    "images": [],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "",
-    "sourceTags": [
-      "Apero",
-      "Cgt",
-      "FUR44",
-      "Syndicat",
-      "44000 Nantes",
-      "île de Nantes"
-    ],
-    "type": "event",
-    "sourceType": "rss-event",
-    "eventStart": "2026-07-31T20:15:18.786551",
-    "eventEnd": "2026-07-31T20:15:18.786551",
-    "primaryRegion": "Global",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "topicScores": {
-      "Labor Struggles": 2.5
-    },
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ]
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Global",
-      "Movement News"
-    ],
-    "quelleName": "Nantes Révoltée Agenda",
-    "author": "Brise-Glace",
-    "title": "AG : Apéro Géant ( 22-23 août, préparons 2027 ! ) ☀️",
-    "link": "https://nantes.indymedia.org/events/165382/ag-apero-geant-22-23-aout-preparons-2027-%e2%98%80%ef%b8%8f/",
-    "pubDate": "2026-07-31T20:15:18.787832",
-    "content": "Oyez, oyez ! Camarades de tous bords, de l’Ouest et d’ailleurs, On va poser les cartes sur la table : on adore tous refaire le monde, mais les Assemblées Générales interminables où l’on passe quatre heures à s’écharper sur une virgule de communiqué, à se positionner en force ou à se…",
-    "contentComplete": true,
-    "image": "",
-    "images": [],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "",
-    "sourceTags": [
-      "AG INTERCOLLECTIFS",
-      "Apéro Géant",
-      "convergeance des luttes",
-      "Solidarisme",
-      "44000 Nantes"
-    ],
-    "type": "event",
-    "sourceType": "rss-event",
-    "eventStart": "2026-07-31T20:15:18.787832",
-    "eventEnd": "2026-07-31T20:15:18.787832",
-    "primaryRegion": "Global",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "topicScores": {},
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ]
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
       "Radar"
     ],
     "quelleName": "Radar.squat",
@@ -10753,6 +9633,101 @@
     ],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Global",
+      "Movement News"
+    ],
+    "quelleName": "Nantes Révoltée Agenda",
+    "author": "FUR44",
+    "title": "FUR44 CGT – Apéro #6 des salarié·es de la restauration",
+    "link": "https://nantes.indymedia.org/events/167216/fur44-cgt-apero-6-des-salarie%c2%b7es-de-la-restauration/",
+    "pubDate": "2026-07-31T21:50:11.181370",
+    "content": "bar, café, restaurant, fast food, hôtel… Rejoins-nous pour une discussion collective sur la canicule et tes conditions de travail ! On y parlera obligations légales, solutions dans l’immédiat et actions à mener pour l’avenir ! Mercredi 5 août – 18h Sur les bords de Loire – 4 quai François Mitterrand…",
+    "contentComplete": true,
+    "image": "",
+    "images": [],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "",
+    "sourceTags": [
+      "Apero",
+      "Cgt",
+      "FUR44",
+      "Syndicat",
+      "44000 Nantes",
+      "île de Nantes"
+    ],
+    "type": "event",
+    "sourceType": "rss-event",
+    "eventStart": "2026-07-31T21:50:11.181370",
+    "eventEnd": "2026-07-31T21:50:11.181370",
+    "primaryRegion": "Global",
+    "primaryTopic": "Movement News",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.35,
+    "classificationMethod": "editorial-review",
+    "topicScores": {
+      "Labor Struggles": 2.5
+    },
+    "editorialReview": true,
+    "editorialReviewReasons": [
+      "low-topic-confidence",
+      "no-specific-topic-evidence"
+    ]
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Global",
+      "Movement News"
+    ],
+    "quelleName": "Nantes Révoltée Agenda",
+    "author": "Brise-Glace",
+    "title": "AG : Apéro Géant ( 22-23 août, préparons 2027 ! ) ☀️",
+    "link": "https://nantes.indymedia.org/events/165382/ag-apero-geant-22-23-aout-preparons-2027-%e2%98%80%ef%b8%8f/",
+    "pubDate": "2026-07-31T21:50:11.182603",
+    "content": "Oyez, oyez ! Camarades de tous bords, de l’Ouest et d’ailleurs, On va poser les cartes sur la table : on adore tous refaire le monde, mais les Assemblées Générales interminables où l’on passe quatre heures à s’écharper sur une virgule de communiqué, à se positionner en force ou à se…",
+    "contentComplete": true,
+    "image": "",
+    "images": [],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "",
+    "sourceTags": [
+      "AG INTERCOLLECTIFS",
+      "Apéro Géant",
+      "convergeance des luttes",
+      "Solidarisme",
+      "44000 Nantes"
+    ],
+    "type": "event",
+    "sourceType": "rss-event",
+    "eventStart": "2026-07-31T21:50:11.182603",
+    "eventEnd": "2026-07-31T21:50:11.182603",
+    "primaryRegion": "Global",
+    "primaryTopic": "Movement News",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.35,
+    "classificationMethod": "editorial-review",
+    "topicScores": {},
+    "editorialReview": true,
+    "editorialReviewReasons": [
+      "low-topic-confidence",
+      "no-specific-topic-evidence"
+    ]
   },
   {
     "kontinent": "Radar",
@@ -11743,10 +10718,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Wiesbaden",
       "Schlachthof",
       "_ical_e1a7675cb40d",
-      "_icalv_f5b63f9d"
+      "_icalv_f5b63f9d",
+      "Wiesbaden"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -12457,13 +11432,13 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Ausstellung",
-      "DerOutist",
       "Party",
-      "Elektro",
+      "Musik",
       "Raumcollage",
+      "Ausstellung",
+      "Elektro",
       "Darmstadt",
-      "Musik"
+      "DerOutist"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -14848,11 +13823,11 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Frankfurt",
       "Critical Mass",
+      "Fahrrad",
+      "Frankfurt",
       "Punk",
-      "CM",
-      "Fahrrad"
+      "CM"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -14896,10 +13871,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Anarchie",
-      "Offenes Treffen",
       "Anarchismus",
-      "Mainz"
+      "Anarchie",
+      "Mainz",
+      "Offenes Treffen"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -14944,10 +13919,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Wiesbaden",
       "_ical_a2092c17bbc5",
       "Schlachthof",
-      "_icalv_90eff780"
+      "_icalv_90eff780",
+      "Wiesbaden"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -17151,9 +16126,9 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
+      "Bingen",
       "OAT BINGELHEIM",
-      "Ingelheim",
-      "Bingen"
+      "Ingelheim"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -17199,10 +16174,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "_ical_e0ac0c0622ed",
-      "Wiesbaden",
       "_icalv_5f5535fe",
-      "Schlachthof"
+      "Schlachthof",
+      "_ical_e0ac0c0622ed",
+      "Wiesbaden"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -17747,6 +16722,52 @@
     ],
     "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Global",
+      "Movement News"
+    ],
+    "primaryRegion": "Global",
+    "primaryTopic": "Movement News",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.35,
+    "classificationMethod": "editorial-review",
+    "editorialReview": true,
+    "editorialReviewReasons": [
+      "low-topic-confidence",
+      "no-specific-topic-evidence"
+    ],
+    "quelleName": "Rhein-Main Events",
+    "author": "Unknown",
+    "title": "ENTSCHEIDUNGSFINDUNG IM KONSENS @ Oetinger Villa",
+    "link": "https://events.rheinmain.social/event/entscheidungsfindung-im-konsens",
+    "pubDate": "2026-08-03T12:00:00Z",
+    "content": "ENTSCHEIDUNGSFINDUNG IM KONSENS\n\nOetinger Villa - Kranichsteiner Str. 81, 64289 Darmstadt\n\n(Montag, 3 August 22:00)\n\nTäglich stehen wir vor der Herausforderung, Entscheidungen treffen zu müssen. Oft müssen wir dabei die Interessen von verschiedenen Menschen gegeneinander abwägen. Dafür müssen wir kommunizieren, wissen, was wir fühlen und wollen, was die anderen brauchen, worum es eigentlich geht, welche Optionen wir haben und wie wir alles unter einen Hut kriegen können.\n\nIn vielen Fällen erleichtern uns Mehrheitsentscheidungen diese Abwägungen. Dabei besteht aber immer die Gefahr, dass Minderheiten gewaltvoll übergangen werden. Wird dagegen in einem Konflikt ein Konsens herausgearbeitet, gibt es am Ende keine Widersprüche mehr und alle können hinter dem Ergebnis des Aushandlungsprozesses stehen.\n\nWir arbeiten gemeinsam heraus, in welchen Situationen wir besonders anstreben wollen, Konsens zu erreichen und mit welchen Mitteln uns das gelingen kann.\n\nVor dem Training findet im gleichen Saal eine Küche für alle (Küfa) statt\n\n, in der Menschen sich gegen Spende vegan verpflegen lassen können.\n\nInfos zu \n\nBarrieren & Zugängen\n\n findest du auf der Banden Bilden Website.\n\n[Website]\n\n\n\n\nhttps://bandenbilden.noblogs.org/events/event/entscheidungsfindung-im-konsens/\n\n—————————————————————————————\n\nEvent details\n\nQuelle: \n\nOetingervilla\n\n Automatisch importiert von \n\nesche\n\n via \n\ncal2gancio\n\n.",
+    "contentComplete": true,
+    "image": "https://events.rheinmain.social/media/a38897864bdb11e9f9904fe20b696671.jpg",
+    "images": [
+      "https://events.rheinmain.social/media/a38897864bdb11e9f9904fe20b696671.jpg"
+    ],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "https://events.rheinmain.social/",
+    "sourceTags": [
+      "_icalv_29b27b1f",
+      "_ical_c090a51c9f93",
+      "Oetingervilla",
+      "Darmstadt"
+    ],
+    "type": "event",
+    "sourceType": "rss-event",
+    "eventStart": "2026-08-03T12:00:00Z",
+    "eventEnd": "2026-08-03T12:00:00Z"
   },
   {
     "kontinent": "Radar",
@@ -19823,13 +18844,13 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "kreativfabrik",
-      "FLINTA*",
-      "_icalv_8b7b843a",
       "_ical_f743e955d716",
+      "kreativfabrik",
+      "Workshop",
+      "FLINTA*",
       "Kooperation",
       "Wiesbaden",
-      "Workshop"
+      "_icalv_8b7b843a"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -19886,10 +18907,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Frankfurt",
-      "Produktionshaus NAXOS",
+      "_icalv_c8f74955",
       "_ical_3e51036cece4",
-      "_icalv_c8f74955"
+      "Produktionshaus NAXOS",
+      "Frankfurt"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -19935,10 +18956,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "_ical_43bc6b50aff0",
-      "_icalv_cd7fcde3",
       "Oetingervilla",
-      "Darmstadt"
+      "Darmstadt",
+      "_ical_43bc6b50aff0",
+      "_icalv_cd7fcde3"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -23623,9 +22644,9 @@
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
       "Schlachthof",
-      "_ical_1a6816830c99",
       "Wiesbaden",
-      "_icalv_9125cdda"
+      "_icalv_9125cdda",
+      "_ical_1a6816830c99"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -23994,8 +23015,8 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Alzey",
-      "queer"
+      "queer",
+      "Alzey"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -27585,11 +26606,11 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "Soupkitchen",
-      "Küfa",
-      "Volxküche",
+      "Frankfurt",
       "VoKü",
-      "Frankfurt"
+      "Volxküche",
+      "Soupkitchen",
+      "Küfa"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -27736,6 +26757,52 @@
   {
     "kontinent": "Radar",
     "categories": [
+      "Global",
+      "Movement News"
+    ],
+    "primaryRegion": "Global",
+    "primaryTopic": "Movement News",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.35,
+    "classificationMethod": "editorial-review",
+    "editorialReview": true,
+    "editorialReviewReasons": [
+      "low-topic-confidence",
+      "no-specific-topic-evidence"
+    ],
+    "quelleName": "Convócala Madrid",
+    "author": "Unknown",
+    "title": "Ritmo y Percusión con Señas @ La Horizontal",
+    "link": "https://mad.convoca.la/event/ritmo-y-percusion-con-senas-45",
+    "pubDate": "2026-08-06T12:00:00Z",
+    "content": "Ritmo y Percusión con Señas\n\nLa Horizontal - Calle Eduardo Requenas, nº10, San Diego, Puente de Vallecas, Madrid, Área metropolitana de Madrid y Corredor del Henares, Comunidad de Madrid, 28053, España\n\n(jueves, 6 agosto 18:30)\n\nBienvenidos\n\nal inicio de un nuevo curso de Ritmo y Percusión con señas. Reservad vuestra plaza y nos vemos en La Horizontal. Todos los jueves a las 18:30. Calle Eduardo Requenas, 10.\n\n ¿En qué consiste el taller?\n\nPor si no lo sabías, con este taller estaremos creando música, mediante un proceso de conducción que estimula desde el minuto 1 la creatividad, el disfrute del instrumento y la improvisación con la voz y el cuerpo. Un taller dirigido a todo público, tanto si eres músico como si nunca has intentado hacer sonar un instrumento. Podrás crear música de manera colectiva, en grupo, y te sentirás arropada. \n\nLo importante es disfrutar de la música y regalarte ese tiempo de escucha interna y de escucha colectiva. Los ejercicios, haremos juegos de ritmo, probaremos diferentes instrumentos y todo el taller está conducido para ser sencillo y efectivo desde el primer momento. \n\nLas señas \n\nPara ello se usa un sistema de señas con las manos que significan cosas\n\na hacer, muy fáciles de aprender por ser intuitivas y dinámicas. Se improvisa, se juega y se crea siempre desde una mirada positiva y constructiva, dejando de lado el juicio, incorporando el error y transformándolo en música . Así que ven al taller. Prueba una clase gratuita y forma parte de la Banda de música más grande del mundo.\n\n@la\n\nenigmaticabanda @la_horizontal",
+    "contentComplete": true,
+    "image": "https://mad.convoca.la/media/3391e83650acf397bf63ec1c0450f681.jpg",
+    "images": [
+      "https://mad.convoca.la/media/3391e83650acf397bf63ec1c0450f681.jpg"
+    ],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "https://mad.convoca.la/",
+    "sourceTags": [
+      "La Horizontal",
+      "RitmoConSeñas",
+      "Taller"
+    ],
+    "type": "event",
+    "sourceType": "rss-event",
+    "eventStart": "2026-08-06T12:00:00Z",
+    "eventEnd": "2026-08-06T12:00:00Z",
+    "topicScores": {}
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
       "Radar"
     ],
     "quelleName": "Radar.squat",
@@ -27815,51 +26882,6 @@
     ],
     "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH,FR;COUNT=100;WKST=MO",
     "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Global",
-      "Movement News"
-    ],
-    "primaryRegion": "Global",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ],
-    "quelleName": "Convócala Madrid",
-    "author": "Unknown",
-    "title": "Ritmo y Percusión con Señas @ La Horizontal",
-    "link": "https://mad.convoca.la/event/ritmo-y-percusion-con-senas-45",
-    "pubDate": "2026-08-06T12:00:00Z",
-    "content": "Ritmo y Percusión con Señas\n\nLa Horizontal - Calle Eduardo Requenas, nº10, San Diego, Puente de Vallecas, Madrid, Área metropolitana de Madrid y Corredor del Henares, Comunidad de Madrid, 28053, España\n\n(jueves, 6 agosto 18:30)\n\nBienvenidos\n\nal inicio de un nuevo curso de Ritmo y Percusión con señas. Reservad vuestra plaza y nos vemos en La Horizontal. Todos los jueves a las 18:30. Calle Eduardo Requenas, 10.\n\n ¿En qué consiste el taller?\n\nPor si no lo sabías, con este taller estaremos creando música, mediante un proceso de conducción que estimula desde el minuto 1 la creatividad, el disfrute del instrumento y la improvisación con la voz y el cuerpo. Un taller dirigido a todo público, tanto si eres músico como si nunca has intentado hacer sonar un instrumento. Podrás crear música de manera colectiva, en grupo, y te sentirás arropada. \n\nLo importante es disfrutar de la música y regalarte ese tiempo de escucha interna y de escucha colectiva. Los ejercicios, haremos juegos de ritmo, probaremos diferentes instrumentos y todo el taller está conducido para ser sencillo y efectivo desde el primer momento. \n\nLas señas \n\nPara ello se usa un sistema de señas con las manos que significan cosas\n\na hacer, muy fáciles de aprender por ser intuitivas y dinámicas. Se improvisa, se juega y se crea siempre desde una mirada positiva y constructiva, dejando de lado el juicio, incorporando el error y transformándolo en música . Así que ven al taller. Prueba una clase gratuita y forma parte de la Banda de música más grande del mundo.\n\n@la\n\nenigmaticabanda @la_horizontal",
-    "contentComplete": true,
-    "image": "https://mad.convoca.la/media/3391e83650acf397bf63ec1c0450f681.jpg",
-    "images": [
-      "https://mad.convoca.la/media/3391e83650acf397bf63ec1c0450f681.jpg"
-    ],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "https://mad.convoca.la/",
-    "sourceTags": [
-      "La Horizontal",
-      "RitmoConSeñas",
-      "Taller"
-    ],
-    "type": "event",
-    "sourceType": "rss-event",
-    "eventStart": "2026-08-06T12:00:00Z",
-    "eventEnd": "2026-08-06T12:00:00Z"
   },
   {
     "kontinent": "Radar",
@@ -30562,10 +29584,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "CM",
       "Punk",
+      "CriticalMass",
       "Mainz",
-      "CriticalMass"
+      "CM"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -31237,6 +30259,48 @@
     "eventPrice": "",
     "eventExternalLinks": [],
     "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=FR;UNTIL=20260930T215959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Mercato 47",
+    "link": "https://radar.squat.net/en/node/591354",
+    "pubDate": "2026-08-07T14:00:00Z",
+    "content": "TUTTI I VENERDÌ DALLE 15.00 ALLE 19.00\n\n\n\n\nProdotti biologici, naturali, tradizionali, dall’agricoltura contadina e dai\n\n\npiccoli produttori: una spesa diversa è possibile pane, ortaggi, frutta, vini,\n\n\nformaggi, miele, pasta, cereali, conserve, cosmesi, produttori del commercio\n\n\nequo e tanto altro ancora per difenderci dall’aumento dei prezzi, per acquistare\n\n\nprodotti di qualità, per incontrare e conoscere i piccoli produttori, per non\n\n\nessere asserviti all’industria agro-alimentare e alle grandi catene di\n\n\ndistribuzioni, per il consumo critico e perche’ la spesa sia un momento di\n\n\nincontro e socialità.\n\n\n\n\nCon “Mercato 47” ci siamo proposti di realizzare un’opportunità di incontro\n\n\ndiretto, senza forme di intermediazione commerciale, tra consumatori e piccoli\n\n\nproduttori, contadini, artigiani, che siano attenti alla qualità del prodotto e\n\n\ndelle relazioni (sociali, con l’ambiente e con il territorio) che si sviluppano\n\n\ndurante il processo produttivo e di commercializzazione.\n\n\n\n\n \n\n\n\n\nCrediamo che questo sia il modo per garantire una spesa di qualità, di prodotti\n\n\ngenuini, tipici, biologici e naturali, a un prezzo inferiore rispetto a quello\n\n\npraticato dalla distribuzione commerciale, e anche per assicurare un equo\n\n\ncorrispettivo al lavoro contadino e artigianale, costretto spesso a piegarsi\n\n\nalle condizioni imposte dall’industria agro-alimentare e dalle grandi catene\n\n\ncommerciali.\n\n\n\n\n \n\n\n\n\nÈ un modo concreto di combattere il caro-prezzi, l’aumento del costo della vita,\n\n\nl’erosione dei salari da parte dell’inflazione e della progressiva riduzione\n\n\ndella spesa pubblica per i servizi sociali. È un modo per costruire dal basso\n\n\nrelazioni economiche estranee alle logiche di puro profitto, privilegiando nel\n\n\nconsumo i piccoli produttori attenti alla salvaguardia dell’ambiente, della\n\n\nbiodiversità, delle produzioni tipiche, genuine e di qualità anche per\n\n\ncontrastare l’omologazione del gusto imposta dalla grande industria\n\n\nagro-alimentare.\n\n\n\n\nÈ un modo, infine, per recuperare la dimensione popolare del mercato come\n\n\nmomento di incontro e di scambio tra le persone, con una serie di proposte di\n\n\ncontorno (degustazioni, presentazioni di prodotti, concerti, proiezioni\n\n\ncinematografiche, presentazione di libri ecc.), che facciano della nostra spesa\n\n\nsettimanale un’occasione di socialità, ma pure di ragionamento su come un mondo\n\n\ndiverso si possa costruire anche a partire dai nostri comportamenti quotidiani,\n\n\ncompreso ciò che mangiamo, che beviamo e che consumiamo.\n\n\nCrediamo che sia importante che un’esperienza come questa sia nata e si sviluppi\n\n\nin un Centro Sociale Autogestito come il Magazzino 47, luogo di sperimentazione\n\n\ndi una socialità liberata e di costruzione di pratiche politiche che, dal basso,\n\n\nsi oppongono agli assetti economici imposti dalla globalizzazione capitalista.\n\n\nRicordiamo che a “Mercato 47” potrete trovare piccoli produttori di ortaggi,\n\n\nfrutta, formaggi e salumi, farine, miele e altro ancora. Ma, poiché, vogliamo\n\n\nche per voi possa essere l’occasione della vostra spesa settimanale, “Mercato\n\n\n47” organizza anche la vendita di quei prodotti per i quali non è possibile\n\n\navere la presenza diretta dei produttori. E così troverete pane, pasta, olio,\n\n\nsalse, riso, succhi, agrumi (nella stagione invernale) tutti biologici: questi\n\n\nprodotti vengono venduti con un ricarico medio del 20% sul “prezzo sorgente”,\n\n\nche consente a “Mercato 47” di pagare le spese di gestione e a chi acquista di\n\n\noperare un significativo risparmio sul prezzo pagato per prodotti di uguale\n\n\nqualità, acquistati nei normali circuiti di distribuzione. Potrete poi trovare\n\n\nanche una vasta gamma di prodotti del commercio equo e solidale: caffè, te,\n\n\nsucchi di frutta, riso, orzo, legumi, ecc.\n\n\nRicordiamo ancora che a margine di Mercato 47 ogni venerdì sera sarà aperta\n\n\nl’enoteca, ci saranno cene a prezzi popolari e organizzeremo degustazioni,\n\n\npiccoli concerti, proiezioni di film, presentazioni di libri, dibattiti. E che\n\n\nlo spazio di Mercato 47 è aperto alle idee, alle iniziative, ai contributi di\n\n\nchi intenda proporre momenti di socialità, di cultura, di svago, e che le realtà\n\n\ncollettive possano proporsi per l’organizzazione di cene di autofinanziamento.\n\n\nPer dirla con Serge Latouche, economista francese, il mercato “e’ innanzitutto\n\n\nuno spazio di socialità specifico prima di essere un luogo di scambio di merci.\n\n\nLuogo per eccellezza della vita pubblica… occasione di incontri, luogo in cui si\n\n\nmescolano le generazioni, i sessi, le etnie diversi. La piazza di mercato appare\n\n\ncome un luogo antitetico rispetto a quello del potere ufficiale”. Anche per\n\n\nquesto, in un Centro Sociale Autogestito, si fa Mercato 47.",
+    "contentComplete": true,
+    "image": "",
+    "language": "it",
+    "languages": [
+      "it"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "591354",
+    "eventUuid": "c3564fc9-091e-4c29-b1c8-538bda943d26",
+    "eventStart": "2026-08-07T14:00:00Z",
+    "eventEnd": "2026-08-07T17:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "IT",
+    "eventCity": "Brescia",
+    "eventVenue": "CSA Magazzino 47",
+    "eventAddress": "via Industriale, 10",
+    "eventPostal": "25126",
+    "eventLatitude": "45.542515900000",
+    "eventLongitude": "10.200041500000",
+    "eventCategories": [],
+    "eventTags": [
+      "Mercato"
+    ],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://lasitua.org/event/mercato-47-196"
+    ],
+    "eventRecurrence": "",
     "sourceHomepage": "https://radar.squat.net"
   },
   {
@@ -33202,6 +32266,426 @@
     ],
     "quelleName": "Radar.squat",
     "author": "Radar.squat",
+    "title": "Stadtteilrundgang: NS-Zwangsarbeit in der Leipziger Innenstadt",
+    "link": "https://radar.squat.net/en/node/586520",
+    "pubDate": "2026-08-08T09:00:00Z",
+    "content": "mit Lilith Günther und Teresa Hirsch\n\n\n\n\nRüstungsbetriebe wie die HASAG stellen noch heute das Gesicht der NS-Zwangsarbeit in Leipzig dar – aber auch im Herzen der Stadt waren Zwangsarbeiter:innen präsent und unübersehbar. Der Stadtteilrundgang wird anhand einiger ausgewählter Orte in der Innenstadt Aspekte der nationalsozialistischen Zwangsarbeit vorstellen. Wie sah der Alltag der Zwangsarbeiter:innen aus? Wie das Verwaltungssystem, das dies organisierte? Und wie wurden die Zwangsarbeiter:innen von der deutschen Bevölkerung wahrgenommen?\n\n\n\n\nDer Rundgang ist dabei thematisch breit angelegt, beleuchtet aber hauptsächlich die Zwangsarbeit im öffentlichen Sektor: So sollen u.a. ehemalige Lager in der Innenstadt, dortige Arbeitsorte von Zwangsarbeit, aber auch die Rolle der Stadt Leipzig in den Fokus genommen werden.\n\n\n\n\nTreffpunkt: 11:00 Uhr auf dem Augustusplatz, vor dem Eingang der Universität\n\n\nTram 4, 7, 8, 10, 11, 12, 14, 15 (Augustusplatz)\n\n\nDauer: ca. 1½ Stunden, Ende am Neuen Rathaus\n\n\n\n\nDie Teilnahme ist kostenfrei und ohne Anmeldung möglich.\n\n\n\n\nhttps://www.zwangsarbeit-in-leipzig.de/de/zwangsarbeit-in-leipzig/verans...\n\n\n\n\nhttps://www.planlos-leipzig.org/events/stadtteilrundgang-ns-zwangsarbeit...",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "586520",
+    "eventUuid": "0011f1ea-0470-4c34-97eb-204eaef0fcc1",
+    "eventStart": "2026-08-08T09:00:00Z",
+    "eventEnd": "2026-08-08T10:30:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Leipzig",
+    "eventVenue": "Leipzig und Umgebung",
+    "eventAddress": "",
+    "eventPostal": "",
+    "eventLatitude": "51.358511886645",
+    "eventLongitude": "12.345478914368",
+    "eventCategories": [],
+    "eventTags": [
+      "Rundgang"
+    ],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://www.planlos-leipzig.org/events/stadtteilrundgang-ns-zwangsarbeit-in-der-leipziger-innenstadt-15/"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Scirocco - Festival without Borders",
+    "link": "https://radar.squat.net/en/node/580815",
+    "pubDate": "2026-08-08T09:00:00Z",
+    "content": "Scirocco - Festival without Borders, for freedom of movement.\n\n\n\n\nDay 2 - \n\n\n\n\nFrom 11.00 onwards: T-shirt printing - \n\n\n\n\n15.00-17.00 \n\nWorkshop: Mental Health - \n\nRefugees in Germany often live in camps or temporary shelters—isolated, under pressure, traumatized. Many are misunderstood: seen as aggressive, depressed, or “difficult to integrate.” They wait. For what? For safety, recognition, for hope. But is this hope there for everyone—or only for a few?\n\n\n\n\nLet’s talk about it: Why is life a psychological roller coaster for so many?\n\nWorkshop by: \n\nMigranos\n\n\n\n\n18.00-22.00: Concerts:  \n\nRap!fugees, Hansi24, Leonore Lilja, Mal Élevé feat. Osy Soundsystem Show\n\n\n\n\nhttps://sciroccofestival.noblogs.org/program/",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "580815",
+    "eventUuid": "b7708d69-cbcb-4f68-bfde-5254e9ea1949",
+    "eventStart": "2026-08-08T09:00:00Z",
+    "eventEnd": "2026-08-08T20:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Berlin",
+    "eventVenue": "Wagenburg Lohmühle",
+    "eventAddress": "Lohmühlenstr. 17",
+    "eventPostal": "12435",
+    "eventLatitude": "52.493726804440",
+    "eventLongitude": "13.444742140863",
+    "eventCategories": [
+      "action/protest/camp",
+      "bar/cafe",
+      "course/workshop",
+      "food",
+      "music/concert",
+      "party"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Scirocco Festival",
+    "link": "https://radar.squat.net/en/node/590099",
+    "pubDate": "2026-08-08T09:00:00Z",
+    "content": "Second day of Scirocco Festival at Lohmühle!\n\n\n\n\nScirocco is a anti-racist festival with an uncompromising stance in favor of freedom of movement. Berlin, 7th – 9th August. Hosted by ResqShip, a group that operates the sailing vessel Nadir in the mediterranean sea.\n\n\n\n\nToday there is T-Shirt-Printing from 11 am, legal advising, infotables, kenyan soli-food, cold drinks and cocktails.\n\n\n\n\n15-17 pm Workshop:\n\n\n\n\n'Let's talk about mental health' by Migranos Movement\n\n\n\n\n18-22 pm concerts:\n\n\n\n\nRap!fugees\n\n\n\n\nHansi24\n\n\n\n\nLeonore Lilja\n\n\n\n\nMal Élevé feat. Osy Soundsystem Show\n\n\n\n\nCome by and discuss, exchange and celebrate with us!\n\n\n\n\nhttps://sciroccofestival.noblogs.org/",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590099",
+    "eventUuid": "67cb4799-2516-482c-9611-4aa508ba386a",
+    "eventStart": "2026-08-08T09:00:00Z",
+    "eventEnd": "2026-08-08T20:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Berlin",
+    "eventVenue": "Wagenburg Lohmühle",
+    "eventAddress": "Lohmühlenstr. 17",
+    "eventPostal": "12435",
+    "eventLatitude": "52.493726804440",
+    "eventLongitude": "13.444742140863",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "DISTRO ALIMENTARE AL CIRCOLO ANARCHICO BONOMETTI",
+    "link": "https://radar.squat.net/en/node/590875",
+    "pubDate": "2026-08-08T09:00:00Z",
+    "content": "DUE SABATI AL MESE DALLE 11 ALLE 14\n\n\n\n\nDISTRIBUZIONE GRATUITA DI GENERI ALIMENTARI PER SCARDINARE I MECCANISMI DEL\n\n\nCAPITALE\n\n\n\n\nLa Distro è un luogo dove puoi trovare prodotti alimentari sottratti al grande\n\n\nmostro del consumismo attraverso la recupera di cibo e la ridistribuzione\n\n\ngratuita a tuttx.\n\n\n\n\nLa Distro non è un negozio di alimentari ma un momento di condivisione teso a\n\n\nformare una rete solidale di mutuo appoggio, uno spazio di resilienza collettiva\n\n\ne non un' ente fascio/catto-caritatevole che strumentalizza il bisogno per scopi\n\n\npropagandistici inscenando una distribuzione di cibo che dopo un interrogatorio\n\n\nrichiede documenti d' identità e reddito ISEE.\n\n\n\n\nLa Distro è una zona libera di complicità e solidarietà dove si combatte\n\n\nfascismo, razzismo, sessismo, omotransfobia e la violenza dello stato.\n\n\n\n\nIl capitalismo si avvale dell' inquietante pratica di sovraprodurre sfruttando\n\n\nterra, risorse, persone e animali considerando già in partenza che una larga\n\n\npercentuale del prodotto finale sarà destinata al macero.\n\n\n\n\nRecuperare e ridistribuire il cibo senza prezzo diventa perciò un atto politico,\n\n\nrestituisce valore agli alimenti sottratti che hanno subito tutte le\n\n\ncontraddizioni del capitalismo\n\n\n\n\nAlla distro NON troverai prodotti animali o derivati ma esclusivamente di\n\n\norigine vegetale in quanto questo spazio condanna la crudeltà dell' industria\n\n\nche opprime animali a scopo alimentare, farmacologico, tessile e qualunque\n\n\naltro.\n\n\n\n\nLa Distro non è un' associazione che fa assistenzialismo ma uno spazio con una\n\n\ncoscienza politica libertaria che non vede scissi i valori dell' anticapitalismo\n\n\nda quelli dell' antispecismo.\n\n\n\n\nIl sabato in via San Faustino a Brescia si tiene il mercato, luogo che\n\n\nsettimanalmente è teatro di sprechi alimentari enormi e dove spesso i\n\n\ncommercianti non permettono neanche di recuperare gli avanzi a chi li richiede.\n\n\n\n\nLa Distro vuole anche essere un' alternativa a quel momento di consumo, rendendo\n\n\nil più orizzontale possibile la condivisione di cibo e di vita.\n\n\n\n\nChi partecipa a questo progetto non è unx dipendentx in un negozio bensì\n\n\nqualcunx con cui spartire un istante di complicità solidale per abbattere la\n\n\nlogica divisoria che crea lo stato alimentando la guerra tra oppressx.\n\n\n\n\nIl mutuo appoggio affonda le sue radici nella consapevolezza che non esistono\n\n\nbarriere o differenze, ma solo legami e affinità.\n\n\n\n\nLA PACE E' DELLX OPPRESSX, LA GUERRA AGLI OPPRESSORI Ⓐ",
+    "contentComplete": true,
+    "image": "",
+    "language": "it",
+    "languages": [
+      "it"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590875",
+    "eventUuid": "2aae5310-0d7e-46d7-a4a1-36e68e6a73cc",
+    "eventStart": "2026-08-08T09:00:00Z",
+    "eventEnd": "2026-08-08T12:00:00Z",
+    "eventTimezone": "Europe/Rome",
+    "eventCountry": "IT",
+    "eventCity": "Brescia",
+    "eventVenue": "Circolo Anarchico Bonometti",
+    "eventAddress": "Via Federico Borgondio 6",
+    "eventPostal": "25122",
+    "eventLatitude": "45.541939196288",
+    "eventLongitude": "10.217772351977",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://lasitua.org/event/distro-alimentare-al-circolo-anarchico-bonometti-4"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Giveaway shop 'Delen is Helen' - Open hours",
+    "link": "https://radar.squat.net/en/event/rotterdam/rotterdam-alternative-events/2026-08-08/giveaway-shop-delen-helen-open-hours",
+    "pubDate": "2026-08-08T10:00:00Z",
+    "content": "Do you need something and don't want to buy it new? In our giveaway shop everything is free!\n\n\n\n\nDo you have things that are too nice or good to throw away? Bring them to the giveaway shop and make someone happy with them.",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/signal-2026-02-07-132335_002.jpeg",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "569136",
+    "eventUuid": "6af2a305-58ff-42ec-886b-b6ab77d68880",
+    "eventStart": "2026-08-08T10:00:00Z",
+    "eventEnd": "2026-08-08T14:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "NL",
+    "eventCity": "Rotterdam",
+    "eventVenue": "Weggeefwinkel Noord",
+    "eventAddress": "Schoterbosstraat 4",
+    "eventPostal": "",
+    "eventLatitude": "51.929594500000",
+    "eventLongitude": "4.478169000000",
+    "eventCategories": [
+      "(free) shop/market"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://wgwpodium.nl/winkel/"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20261231T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Dalston Solidarity Cafe",
+    "link": "https://radar.squat.net/en/event/london/dalston-solidarity-cafe/2026-08-08/dalston-solidarity-cafe",
+    "pubDate": "2026-08-08T10:00:00Z",
+    "content": "Dalstong Solidarity Cafe - Join us second saturday of the month between 11am and 8pm at Halk Evi, 31 - 33 Dalston Lane E8 3DF for a workshop/presentation.\n\n\n\n\nIf you would like to get involved on the day, we start cooking from 11am - the more the merrier! Feel free to bring along any food that would otherwise go to waste and get in touch if you have a food link up for us \n\n\n\n\n \n\n\n\n\n From 2pm onwards we’ll have:\n\n\n\n\n Pay-what-you-can’ food & drinks\n\n\n\n\n Infoshop: zines, books, posters, stickers & more\n\n\n\n\nFree shop & clothes swap\n\n\n\n\nFree binders donated by @genderswap_ (limited sizes available)\n\n\n\n\n \n\n\n\n\nThe space is wheelchair accessible (through Tyssen Street entrance)",
+    "contentComplete": true,
+    "image": "",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "581113",
+    "eventUuid": "fa0d8b29-07ec-4165-842a-29d8135a2948",
+    "eventStart": "2026-08-08T10:00:00Z",
+    "eventEnd": "2026-08-08T19:00:00Z",
+    "eventTimezone": "Europe/London",
+    "eventCountry": "GB",
+    "eventCity": "London",
+    "eventVenue": "31 - 33 Dalston Lane, Hackney Halkevi London United Kingdom",
+    "eventAddress": "31 - 33 Dalston Lane, Hackney",
+    "eventPostal": "E8 3DF",
+    "eventLatitude": "51.546399840414",
+    "eventLongitude": "-0.072580705285",
+    "eventCategories": [
+      "bar/cafe",
+      "book shop/info shop/library",
+      "course/workshop",
+      "discussion/presentation",
+      "food",
+      "(free) shop/market"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=+2SA;BYMONTH=1,2,3,4,5,6,7,8,9,10,11,12;UNTIL=20261220T235959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Kuna geöffnet",
+    "link": "https://radar.squat.net/en/event/karlsruhe/karlsunruh/2026-08-08/kuna-geoffnet",
+    "pubDate": "2026-08-08T10:00:00Z",
+    "content": "An jedem freien Samstag hat das KUNA geöffnet: also immer dann, wenn keine andere Veranstaltung stattfindet.\n\n\nOhne Programm und ohne Konsumzwang: Komm vorbei, spiel eine Runde, trink etwas oder genieße einfach die Zeit mit anderen. Manchmal gibt es auch Snacks oder einen Soli-Cocktail. Was am jeweiligen Samstag geplant ist, erfährst du in unserer aktuellen Instagram-Story.\n\n\nEin Ort zum Ankommen, Zusammensein oder einfach Dasein. Komm vorbei, wie du bist.\n\n\nFragen zur Barrierefreiheit? Schreib uns gern an: kontakt[at]kuna-ka.de\n\n\n\n\nKUNA is open every free Saturday: that is, whenever no other event is taking place.\n\n\nNo program and no obligation to buy anything: Drop by, play a board game, have a drink, or simply spend some time with others. Sometimes we also offer snacks or a solidarity cocktail. Check our latest Instagram story to see what's happening this Saturday.\n\n\nA place to arrive, connect, or simply be. Come as you are.\n\n\nIf you have any questions about accessibility, feel free to contact us at: kontakt[at]kuna-ka.de",
+    "contentComplete": true,
+    "image": "",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "589683",
+    "eventUuid": "b553a84d-546f-4a3c-a173-5b9b3539d0cb",
+    "eventStart": "2026-08-08T10:00:00Z",
+    "eventEnd": "2026-08-08T21:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Karlsruhe",
+    "eventVenue": "Karlsruhe",
+    "eventAddress": "",
+    "eventPostal": "",
+    "eventLatitude": "49.006870500000",
+    "eventLongitude": "8.403419500000",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://karlsunruh.org/event/826030a3-c753-4ed2-8389-4bdfb622a994"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Anarchist Breakfast Club",
+    "link": "https://radar.squat.net/en/event/london/hackney-anarchists/2026-08-08/anarchist-breakfast-club",
+    "pubDate": "2026-08-08T10:00:00Z",
+    "content": "Hackney Anarchists are back conquering bread 🍞\n\nEvery second Sunday of the month find us at the centre of Hackney downs cooking together, sharing food and discussing politics. \n\nOur food is free to share with whomever might need it or want it. Everyone is welcome, no questions asked.\n\nWe are hoping to share food and its preparation with those who want to join. Come at 11 to help us prep and cook. This is also a joyful way to have political conversations and develop mutual aid tools.\n\nThis is a shared process and everyone can get involved however they want. We also welcome ingredients, leads for food sourcing, recipe suggestions (vegan), or just your company.\n\n🍲 Abolish the bourgeoise butter bean! We feed ourselves 🏴",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/signal-2026-02-15-20-59-07-607.jpg",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "569165",
+    "eventUuid": "6cfd86e8-c0ae-4714-bbdf-bdf5e8941926",
+    "eventStart": "2026-08-08T10:00:00Z",
+    "eventEnd": "2026-08-08T10:00:00Z",
+    "eventTimezone": "Europe/Dublin",
+    "eventCountry": "GB",
+    "eventCity": "London",
+    "eventVenue": "Hackney Downs Park",
+    "eventAddress": "",
+    "eventPostal": "E5 8NP",
+    "eventLatitude": "51.554164171514",
+    "eventLongitude": "-0.060945886776",
+    "eventCategories": [
+      "book shop/info shop/library",
+      "discussion/presentation",
+      "food"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=+2SU;BYMONTH=1,2,3,4,5,6,7,8,9,10,11,12;COUNT=12;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Kiosk Bookshop",
+    "link": "https://radar.squat.net/en/event/rotterdam/rotterdam-alternative-events/2026-08-08/kiosk-bookshop",
+    "pubDate": "2026-08-08T11:00:00Z",
+    "content": "OPENINGS HOURS:\n\nTHURSDAY 13:00-17:00\n\nFRIDAY 14:00-20:00\n\nSATURDAY13:00-17:00\n\n\n\n\nFRIDAY KIOSK Rotterdam is a bookshop, (riso) print workshop, and Multi Tool Press. The selection hosts radical/critical theory, fiction, poetry and self-publishing practices.\n\n\n\n\nKIOSK is run by just me \n\n(Flip)\n\n, with the occasional hosting from friends and comrades. There are no jobs or internships as things move in their own rhythm.\n\nYou’re always welcome to drop by, hang out, and be part of what happens!",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/screenshot_2025-12-12_at_12-25-33_instagram.png",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "564876",
+    "eventUuid": "871e680d-d639-4ed5-a1ff-43efc1725341",
+    "eventStart": "2026-08-08T11:00:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "NL",
+    "eventCity": "Rotterdam",
+    "eventVenue": "Pieter de Raadtstraat 35  Rotterdam Netherlands",
+    "eventAddress": "Pieter de Raadtstraat 35",
+    "eventPostal": "3033 VC",
+    "eventLatitude": "51.928763200000",
+    "eventLongitude": "4.468995200000",
+    "eventCategories": [
+      "book shop/info shop/library",
+      "discussion/presentation",
+      "work space/diy"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://kioskrotterdam.com/"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH,SA;UNTIL=20261231T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Community Cafe & Bookshop",
+    "link": "https://radar.squat.net/en/event/brighton/cowley-club/2026-08-08/community-cafe-bookshop",
+    "pubDate": "2026-08-08T11:00:00Z",
+    "content": "We have scrummy cakes and hearty soup for sale, an always changing main dish of the day, and we offer a cup of tea for just 80p. The cafe is run wholly by volunteers for our community, and we keep the prices as low as possible, everything is 100% vegan\n\n\n\n\nThe bookshop stocks a wide range of titles covering the many aspects of activism for social change. As well as books we have magazines, a large collection of pamphlets and zines, postcards, badges and t-shirts",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/cafe.jpg",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "566031",
+    "eventUuid": "91de98c4-f980-433c-bea1-bff5aa6ede73",
+    "eventStart": "2026-08-08T11:00:00Z",
+    "eventEnd": "2026-08-08T11:00:00Z",
+    "eventTimezone": "Europe/London",
+    "eventCountry": "GB",
+    "eventCity": "Brighton",
+    "eventVenue": "Cowley Club",
+    "eventAddress": "12 London Road",
+    "eventPostal": "BN1 4JA",
+    "eventLatitude": "50.830315600000",
+    "eventLongitude": "-0.136311900000",
+    "eventCategories": [
+      "bar/cafe",
+      "book shop/info shop/library",
+      "food"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20261219T235959Z;WKST=MO\r\nEXDATE:20240503T230000Z,20240523T230000Z,20240524T230000Z,20260214T000000Z",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
     "title": "Info- und Plattenladen geöffnet 13 - 17 Uhr",
     "link": "https://radar.squat.net/en/node/585797",
     "pubDate": "2026-08-08T11:00:00Z",
@@ -33487,6 +32971,554 @@
   {
     "kontinent": "Radar",
     "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Give away shop",
+    "link": "https://radar.squat.net/en/event/amsterdam/joes-garage/2026-08-08/give-away-shop",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "In order to compensate frustrations about tedious work, waste of time, people keep buying worthless things and are not happy about it. In the meantime, mountains of waste are growing, air and water are becoming polluted. Moreover, most of our consumer goods are made in poor countries, where people have to work for wages that they can barely eat. Time for a better approach.\n\nOne way to get us and our workforce out of this vicious circle is to consume less and re-use things. Because the most beautiful things often end up in the garbage or in the attic, a place is needed to make this abundance available. And because the real value of things is often obscured by their price (or exchange value), the best method is to simply give them away.\n\nSo a give away shop is a place where nothing is for sale and everything is free. A give away shop is not a garbage dump, but a place where you can drop off what is too good to throw away and take what you need with you. In a give away shop there is always enough for everyone’s needs, but not enough for everyone’s eagerness.\n\nDo you still have something beautiful or useful left, or do you need something else? Come along, give a hand, there is so much to do with a give away shop. If you've never been been to Joe's Garage, if you're in town for the week-end, come and have a coffee and see what's going on here.\n\n\n\n\nhttps://radar.squat.net/en/amsterdam/joes-garage\n\nhttps://joesgarage.nl/weggeefwinkel",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/wgw.jpg",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "556839",
+    "eventUuid": "dabf7659-3407-4009-9be9-81c4b887e0ea",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T16:00:00Z",
+    "eventTimezone": "Europe/Amsterdam",
+    "eventCountry": "NL",
+    "eventCity": "Amsterdam",
+    "eventVenue": "Joe's Garage",
+    "eventAddress": "Pretoriusstraat 43",
+    "eventPostal": "1092 EZ",
+    "eventLatitude": "52.355588600000",
+    "eventLongitude": "4.925002300000",
+    "eventCategories": [
+      "(free) shop/market"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://joesgarage.nl/weggeefwinkel"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20261231T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Anarchistische Bibliotheek Amsterdam / Anarchist Library Amsterdam",
+    "link": "https://radar.squat.net/en/event/amsterdam/anarchist-group-amsterdam/2026-08-08/anarchistische-bibliotheek-amsterdam-anarchist",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Bij de bibliotheek van de Anarchistische Groep Amsterdam (AGA) kun je tegen een kleine borg boeken lenen. Er is keuze uit enkele honderden titels in verschillende talen (Nederlands, Engels, Turks, Spaans, Frans, Duits). De collectie omvat theoretische en praktische boeken over onderwerpen als geschiedenis, arbeid, kraken, ecologie, antifascisme & antiracisme, kunst & cultuur en gevangenisstrijd. De meeste boeken zijn geschreven door anarchisten of vanuit een anarchistisch perspectief, maar er zijn ook boeken die niet geschreven zijn door anarchisten en die ook niet expliciet over anarchisme gaan, maar vanwege de ideeën van de schrijver/-fster toch een plaats in de anarchistische bibliotheek verdienen. Ook ligt er een grote hoeveelheid onafhankelijke informatie ter inzage in de vorm van tijdschriften, zoals De As, Buiten de Orde (Vrije Bond), De Fabel van de Illegaal, De Nar, Uitbraak (ABC Gent) en Freedom.\n\n\n\n\nDe anarchistische bibliotheek is iedere \n\nzaterdag van 14 uur tot 18 uur open\n\n in Infokafee Bollox, 1e Schinkelstraat 14-16 (tel.: 0206790712).\n\n\n\n\nBoeken Lenen\n\n\n\n\nBoeken kunnen gratis worden geleend voor een periode van vier weken tegen betaling van een borg van €10,- die wordt ingehouden als het boek met schade (anders dan door lezen, bijv. waterschade) wordt teruggebracht. Telefonisch verlengen is één keer mogelijk. Bij zoek raken van het boek moet €20,- worden betaald om het boek te kunnen vervangen.\n\n\n\n\nAGA\n\n\n\n\nDe AGA is een groep mensen die samenwerken voor het creëren van oplossingen en alternatieven voor de problemen die zij tegenkomen op het werk, op school of ergens anders in de maatschappij. Uitgangspunt hierbij is het anarchisme. De AGA strijdt voor zelfbestuur en een wereld zonder uitbuiting of onderdrukking waarin geproduceerd wordt naar behoefte en niet voor winst.\n\n\n\n\nSpreekuur\n\n\n\n\nDe bibliotheek is ook de plek om in contact te komen met de AGA en ideeën uit te wisselen of gewoon een kopje koffie te komen drinken.\n\n\n\n\nAnarchistische Bibliotheek,\n\niedere zaterdag 14-18 uur\n\nInfokafee Bollox, 1e Schinkelstraat 14-16, Amsterdam\n\ntel.: 020 679 07 12\n\nAGA, postbus 16521, 1001 RA Amsterdam,\n\nemail: \n\naga@agamsterdam.org\n\n\n\n\n[ENGLISH]\n\n\n\n\nAt the library of the Anarchist Group Amsterdam (AGA) you can borrow books for a small deposit. There is a choice of several hundred titles in various languages (Dutch, English, Turkish, Spanish, French, German). The collection includes theoretical and practical books on topics such as history, labor, squatting, ecology, anti-fascism & anti-racism, art & culture and prison struggles. Most of the books are written by anarchists or from an anarchist perspective, but there are also books that are not written by anarchists nor are they explicitly about anarchism, but still deserve a place in the anarchist library because of the ideas of the author/star. There is also a large amount of independent information available for perusal in the form of magazines, such as De As, Buiten de Orde (Free Union), De Fabel van de Illegaal, De Nar, Uitbraak (ABC Ghent) and Freedom.\n\n\n\n\nThe anarchist library is open every Saturday 14:00-18:00 at Infokafee Bollox, 1st Schinkelstraat 14-16 (tel: 0206790712).\n\n\n\n\n<strong>Borrowing Books.</strong>\n\n\n\n\nBooks can be borrowed free of charge for a period of four weeks on payment of a deposit of €10, which is retained if the book is returned with damage (other than from reading, e.g. water damage). Renewal by phone is possible once. If the book is lost, €20 must be paid to replace it.\n\n\n\n\nAGA\n\n\n\n\nThe AGA is a group of people who work together to create solutions and alternatives to the problems they encounter at work, school or anywhere else in society. The starting point is anarchism. The AGA fights for self-government and a world without exploitation or oppression in which production occurs according to need and not for profit.\n\n\n\n\nConsultation hours\n\n\n\n\nThe library is also the place to get in touch with the AGA and exchange ideas or just come for a cup of coffee.\n\n\n\n\nAnarchist Library,\n\nevery Saturday 14:00-18:00\n\nInfokafee Bollox, 1e Schinkelstraat 14-16, Amsterdam\n\ntel: 020 679 07 12\n\nAGA, P.O. Box 16521, 1001 RA Amsterdam,\n\nemail: \n\naga@agamsterdam.org\n\n\n\n\nCategory: \n\n\n\n\n\n\n\nbook shop/info shop/library\n\n\n\n\n\n\n\nTopics: \n\n\n\n\n\n\n\nanarchist library\n\n\n\n\nanarchistische bibliotheek\n\n\n\n\nanarchistische groep Amsterdam. AGA\n\n\n\n\n\n\n\nPrice: \n\n\n\n\n\n\n\nfree\n\n\n\n\n\n\n\nonline: \n\nhttps://www.agamsterdam.org/anarchistische-bibliotheek/\n\nemail: \n\naga@agamsterdam.org",
+    "contentComplete": true,
+    "image": "",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "558765",
+    "eventUuid": "80f045d5-fc6e-47b5-ac9f-45245fdab626",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T16:00:00Z",
+    "eventTimezone": "Europe/Amsterdam",
+    "eventCountry": "NL",
+    "eventCity": "Amsterdam",
+    "eventVenue": "Infokafee Bollox",
+    "eventAddress": "Eerste Schinkelstraat 14-16",
+    "eventPostal": "1075TX",
+    "eventLatitude": "52.354132300000",
+    "eventLongitude": "4.854340600000",
+    "eventCategories": [
+      "bar/cafe",
+      "book shop/info shop/library"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;COUNT=52;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Permanance infoshop",
+    "link": "https://radar.squat.net/en/node/560032",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "La Luttine\n\n est un espace associatif autogéré qui sert depuis 2006 de lieu de réunion & d’activités pour différents collectifs. Nous nous trouvons au rez-de-chaussée de la Duende, immeuble anciennement squatté à l’histoire riche en péripéties. Nous partageons nos locaux avec l’atelier de sérigraphie collectif & autogéré Black Screen.\n\n\n\n\nUn info-shop a vu le jour au mois de mars 2007 et ouvre tous les samedis après-midi de 14H à 18H mais également à d’autres occasions pour des ateliers, expos, etc. Nous distribuons des fanzines, brochures, disques sortis en autoproduction ou par de petits labels (beaucoup de punk, hardcore, noise, mais aussi folk, blues, etc) dans un esprit non-profit. En effet, le but n’est pas de créer un énième espace marchand, mais de faire connaître les productions de groupes ou personnes dont la démarche nous intéresse. Nous tenons également une fanzinothèque en construction permanente, consultable tous les samedi.\n\n\n\n\nMais la Luttine est avant tout un endroit pour se retrouver, discuter, écouter des disques, lire ou boire un café!\n\n\n\n\nLa Luttine est un projet à vocation locale: notre « distro » ne fait pas de vente par correspondance et nous privilégions les discussions de vive voix aux autres moyens de communication. Pour toute question, proposition, demande, etc, passez nous voir \n\nle samedi entre\n\n \n\n14h et 18h au 91 rue Montesquieu, dans le 7e\n\n.",
+    "contentComplete": true,
+    "image": "",
+    "language": "fr",
+    "languages": [
+      "fr"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "560032",
+    "eventUuid": "07abfde0-5df3-429d-9430-8bd2d8b17b70",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T16:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "FR",
+    "eventCity": "Lyon",
+    "eventVenue": "La Luttine",
+    "eventAddress": "91 Rue Montesquieu, La Guillotière",
+    "eventPostal": "69007",
+    "eventLatitude": "45.750393200000",
+    "eventLongitude": "4.846622800000",
+    "eventCategories": [
+      "book shop/info shop/library",
+      "exhibition",
+      "meeting"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://laluttine.wordpress.com/"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20261231T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Winkelen en spullen brengen",
+    "link": "https://radar.squat.net/en/node/560802",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Weitere Informationen auf der Radar.squat-Originalseite.",
+    "contentComplete": true,
+    "image": "",
+    "language": "nl",
+    "languages": [
+      "nl"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "560802",
+    "eventUuid": "32b685f6-f88e-43b6-9d0e-28a3f0ae43ef",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "NL",
+    "eventCity": "Utrecht",
+    "eventVenue": "Weggeefwinkel Utrecht",
+    "eventAddress": "2e Daalsedijk 2a",
+    "eventPostal": "",
+    "eventLatitude": "52.097858000000",
+    "eventLongitude": "5.103355100000",
+    "eventCategories": [
+      "(free) shop/market"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://weggeefwinkelutrecht.nl/events/terugkerend-evenement-titel-van-wo-vr-za-2026-01-02/"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=WE,FR,SA;UNTIL=20270102T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Weekly tech hangout",
+    "link": "https://radar.squat.net/en/event/arf-groningen/2026-08-08/weekly-tech-hangout-0",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Come hang out at the biweekly ARF! tech skillshare. Once every two weeks we will be diving into various topics to help us all break free from Big Tech and build tech solutions that work for people, not bosses and governments. All skillshares are beginner friendly. You can also come with general tech questions since there will probably be experienced people around who can help you with all your tech problems.",
+    "contentComplete": true,
+    "image": "",
+    "language": "en",
+    "languages": [
+      "en"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "577748",
+    "eventUuid": "6bb12ca6-dfd7-45b7-b5cb-1225d8b40f42",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T12:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "NL",
+    "eventCity": "Groningen",
+    "eventVenue": "La Viola",
+    "eventAddress": "Violenstraat 2, Hortusbuurt",
+    "eventPostal": "9712 RH",
+    "eventLatitude": "53.224832736900",
+    "eventLongitude": "6.561650189025",
+    "eventCategories": [
+      "advice/help/office hours",
+      "course/workshop"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=2;COUNT=15;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Tropenbude Bar und Garten offen",
+    "link": "https://radar.squat.net/en/node/583877",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Die Tropenbude Bar und der Garten der Villa Kuriosum sind wieder geöffnet.\n\nSamstag von 14-22Uhr.\n\n\n\n\nAnsonsten gibt es Kaffee, Kuchen, Snacks, Bier, Drinks, Natur und Kultur .\n\n\n\n\nProgramm -> schaut Bitte auf unsere Website.\n\n\n\n\nKeine Hunde bitte, no dogs please - Katzengarten.\n\n\n\n\n \n\n\n\n\nVilla Kuriosum\n\n\n\n\nScheffelstr. 21\n\n\n\n\n10367 Berlin",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "583877",
+    "eventUuid": "d40bb44a-def6-4eba-9747-7487688c8d3e",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T20:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Berlin",
+    "eventVenue": "Villa Kuriosum",
+    "eventAddress": "Scheffelstr. 21",
+    "eventPostal": "10367",
+    "eventLatitude": "52.520185800000",
+    "eventLongitude": "13.473120100000",
+    "eventCategories": [
+      "bar/cafe"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://villakuriosum.net/index.php/monatsprogramm"
+    ],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;UNTIL=20261031T225959Z;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Winkelen en spullen brengen",
+    "link": "https://radar.squat.net/en/node/587685",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Weitere Informationen auf der Radar.squat-Originalseite.",
+    "contentComplete": true,
+    "image": "",
+    "language": "nl",
+    "languages": [
+      "nl"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "587685",
+    "eventUuid": "b1263f51-d243-4f3b-aded-4739c1a8a9d5",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "NL",
+    "eventCity": "Utrecht",
+    "eventVenue": "Weggeefwinkel Utrecht",
+    "eventAddress": "2e Daalsedijk 2a",
+    "eventPostal": "",
+    "eventLatitude": "52.097858000000",
+    "eventLongitude": "5.103355100000",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://weggeefwinkelutrecht.nl/events/terugkerend-evenement-titel-van-wo-vr-za-2026-08-08/"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Vlaggen voor Palestina - Noord",
+    "link": "https://radar.squat.net/en/node/587920",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Elke zaterdag staan wij met Palestijnse vlaggen bij het Buikslotermeerplein in Noord, totdat Palestina vrij is.\n\n\n\n\n Behalve het vlaggen worden er geen leuzen geroepen en is het meestal vooral veel met mensen praten. Als je geen zin hebt om te praten kan dat ook natuurlijk. Het is laagdrempelig demonstreren, je kan ook voor vijf minuten mee doen, iedereen doet wat toegankelijk voor hen is. Neem je eigen vlag mee of leen er eentje van ons. We hebben meestal ook een vlag van Congo en Sudan. Voor mensen die in Noord in de buurt wonen/werken/naar school gaan is dit een kans om lokaal contact te maken met mensen die ook voor een vrij Palestina zijn. Het gebeurt wel eens dat buren elkaar hier per ongeluk ontmoeten. Zo bouwen we bruggen! Doe je ook een keer mee? We zien je op de brug!",
+    "contentComplete": true,
+    "image": "",
+    "language": "nl",
+    "languages": [
+      "nl"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "587920",
+    "eventUuid": "738b752d-51eb-436d-9db7-98f3a1abed66",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T14:30:00Z",
+    "eventTimezone": "Europe/Amsterdam",
+    "eventCountry": "NL",
+    "eventCity": "Amsterdam",
+    "eventVenue": "Buikslotermeerplein  Amsterdam Pays-Bas",
+    "eventAddress": "Buikslotermeerplein",
+    "eventPostal": "1025 ET",
+    "eventLatitude": "52.399352310188",
+    "eventLongitude": "4.935767062868",
+    "eventCategories": [
+      "action/protest/camp",
+      "meeting"
+    ],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SA;COUNT=50;WKST=MO",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Friends for Gaza - Soli-Festival für Transaidency e.V.",
+    "link": "https://radar.squat.net/en/node/590192",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Einlass: 14:00 Uhr, Programm: 14:30 - 21:00 Uhr\n\n\n\n\nEintritt: Spende (empfohlen: € 10-15)\n\n\n\n\nLive-Musik: A.S. Fanning (solo), Adventure Team, Minifridge, David Carey, Bobo in White Wooden Houses & Iris Romen, Kitty Solaris, David Hull, Man Behind Tree/Hanemoon, Pat Carter, Tonia Reeh, Verita Vee, Drunk at Your Wedding, Marta Collica\n\n\n\n\nAußerdem: Zines from Gaza, Küfa & mehr\n\n\n\n\n_________________________\n\n\n\n\nHuman rights are for everyone!\n\n\n\n\nIn diesem Sinne haben sich befreundete Berliner Musiker*innen zusammengetan und veranstalten im wilden Garten der Villa Kuriosum in Lichtenberg ein eintägiges Festival.\n\n\n\n\nDas Programm: ein Kaleidoskop musikalischer Performances – Solo-Auftritte, Duos, Bands, von Folk und Americana über Indiepop bis Grunge –, dazu Texte/Produkte aus Gaza und regionale Küche.\n\n\n\n\nDas Ziel: Solidarität mit der palästinensischen Zivilbevölkerung und Geld sammeln für den gemeinnützigen Berliner Verein Transaidency. Transaidency e.V. leistet wichtige humanitäre Hilfe in Gaza sowie an anderen Orten wie Sudan und Libanon, versorgt dort Familien und Kinder mit Lebensmitteln, sauberem Wasser, medizinischer Hilfe und Bildungsangeboten. Die 2016 gegründete Organisation betreibt außerdem hierzulande Aufklärungs- und Dialogprojekte zu Themen wie Israel/Palästina, antimuslimischer Rassismus/Antisemitismus und palästinensische Lebenswelten.\n\n\n\n\nMenschenrechte, Empathie, gute Musik im kuriosen Garten - seid dabei!\n\n\n\n\nMehr Information zu Transaidency: \n\nhttps://transaidency.org/\n\n\n\n\nWissenswertes:\n\n\n\n\n- Kinder sind willkommen, aber wir empfehlen Kopfhörer.\n\n- Hassrede und Diskriminierung, z.B. aufgrund von Herkunft oder Religion, müssen draußen bleiben.\n\n- Hunde leider auch.\n\n- Das Gelände ist ebenerdig und es gibt eine barrierefreie Komposttoilette.\n\n- Im Fall von Regen: Die Bühne ist in einem Zelt. Notfalls ziehen wir nach drinnen.",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590192",
+    "eventUuid": "db6de9f5-acb5-422b-abe6-17d5fa27a4ba",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T19:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Berlin",
+    "eventVenue": "Villa Kuriosum",
+    "eventAddress": "Scheffelstr. 21",
+    "eventPostal": "10367",
+    "eventLatitude": "52.520185800000",
+    "eventLongitude": "13.473120100000",
+    "eventCategories": [
+      "music/concert",
+      "music/concert"
+    ],
+    "eventTags": [
+      "akustik",
+      "barrierearm",
+      "kinderfreundlich"
+    ],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Gedenken anlässlich des 4. Todestags von Mouhamed Lamine Dramé",
+    "link": "https://radar.squat.net/en/node/590294",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "Am 8. August wollen wir gemeinsam Mouhamed Lamine Dramé gedenken, der unweit des Veranstaltungsortes vor genau vier Jahren bei einem gewaltsamen Polizeieinsatz sein junges Leben verlor.\n\n\nWir wollen zeigen, dass auch vier Jahre nach den tödlichen Schüssen Mouhamed und seine Familie nicht in Vergessenheit geraten sind, dass wir weiter für Veränderung und Gerechtigkeit kämpfen. Justice for Mouhamed! Gerechtigkeit für Nejib und Andrzej! Gerechtigkeit für Ibrahima und Lorenz! Gerechtigkeit für Sammy und alle anderen durch Staatsgewalt und Rassismus Getöteten! Kraft und Solidarität für alle Angehörigen, die für Aufklärung kämpfen. Ihr seid nicht allein!\n\n\n\n\nKommt vorbei. Es gibt Kaffee und Kuchen.",
+    "contentComplete": true,
+    "image": "",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590294",
+    "eventUuid": "abee6512-9291-48a4-8392-48d96d949d9f",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Dortmund",
+    "eventVenue": "Dortmund Germany",
+    "eventAddress": "",
+    "eventPostal": "",
+    "eventLatitude": "51.514227300000",
+    "eventLongitude": "7.465278900000",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://latscher.in/events/2026-08-08-gedenken-anlaesslich-des-4-todestags-von-mouhamed-lamine-drame"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Infostand & solidarischer Gutscheintausch",
+    "link": "https://radar.squat.net/en/node/590979",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "🦝 \n\nNein zur Bezahlkarte goes\n\n \n\nScirocco - Festival without Borders \n\n🦝 \n\n\n\n\nInfotable & Voucher Exchange & T-Shirts!  \n\nFor solidarity instead of racist payment cards! \n\n🤑 PLZ BRING CASH! 🤑 \n\n\n\n\nℹ️ \n\nNein zur Bezahlkarte\n\n \n\n\n\n\nℹ️ \n\nScirocco Festival\n\n \n\n\n\n\nFor freedom of movement and solidarity!\n\nAbolish borders! Abolish Lagers! Abolish Bezahlkarte!",
+    "contentComplete": true,
+    "image": "https://radar.squat.net/sites/default/files/styles/large/public/kontrast_-_kopie.png",
+    "language": "de",
+    "languages": [
+      "de"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590979",
+    "eventUuid": "e4d1e0f0-24bc-443f-8411-737a2a3a471d",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T17:00:00Z",
+    "eventTimezone": "Europe/Berlin",
+    "eventCountry": "DE",
+    "eventCity": "Berlin",
+    "eventVenue": "Wagenburg Lohmühle",
+    "eventAddress": "Lohmühlenstr. 17",
+    "eventPostal": "12435",
+    "eventLatitude": "52.493726804440",
+    "eventLongitude": "13.444742140863",
+    "eventCategories": [
+      "action/protest/camp",
+      "advice/help/office hours",
+      "course/workshop",
+      "discussion/presentation",
+      "food",
+      "meeting",
+      "music/concert"
+    ],
+    "eventTags": [
+      "Tauschy Infostand"
+    ],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Atelier autour des hormones et de leurs injections",
+    "link": "https://radar.squat.net/en/node/591134",
+    "pubDate": "2026-08-08T12:00:00Z",
+    "content": "✦ Atelier / Discussions hormonothérapie & auto-injection ✦\n\n\n\n\nSamedi 8 août - 14h00\n\n\nAu BIB Hackerspace, 80 impasse Flouch, Montpellier.\n\n\nProches de Sabines et du Grand-M.\n\n\nLe BIB est derrière un escalier, c'est une cave donc c'est aussi assez peu aéré.\n\n\nIl y a un parking pour se garer.\n\n\n\n\nOuvert aux personnes transféminines, meufs trans et plus largement à toustes les\n\n\ndéviant·e·x·s de genre et de sexe assigné·e·x·s garçon. 🧚‍♀️✨\n\n\n\n\nUn temps pour venir partager ses questions et y répondre ensemble, que tu\n\n\nprennes des hormones depuis 40 ans ou que t'hésites encore !\n\n\n→ Comment ça marche le THS (Traitement Hormonal de Substitution) ?\n\n\n→ Comment ça marche les hormones injectables ?\n\n\n→ Est-ce que j'ai besoin d'être suivix par un médecin ?\n\n\n→ C'est quoi les risques liés aux hormones ?\n\n\n→ Quelle molécule utiliser pour enfin avoir des ailes ?\n\n\nViens on parle de tout ça !\n\n\n\n\nSi c'est possible pour toi, hésite pas à ramener de quoi boire ou manger pour\n\n\npartager 💫\n\n\n\n\nÇa sera aussi possible de passer récupérer ou déposer de l'argent dans la caisse\n\n\nde solidarité !\n\n\nSi tu veux juste avoir accès à la caisse hésite pas à passer plus vers 13h30 :))",
+    "contentComplete": true,
+    "image": "",
+    "language": "fr",
+    "languages": [
+      "fr"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "591134",
+    "eventUuid": "7430494f-99d1-42c7-ab45-3e8c7ae3f052",
+    "eventStart": "2026-08-08T12:00:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Paris",
+    "eventCountry": "FR",
+    "eventCity": "Montpellier",
+    "eventVenue": "Le BIB",
+    "eventAddress": "80 impasse Flouch",
+    "eventPostal": "34070",
+    "eventLatitude": "43.585907200000",
+    "eventLongitude": "3.852998236009",
+    "eventCategories": [],
+    "eventTags": [
+      "autonomie"
+    ],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://www.aleale.org/event/atelier-autour-des-hormones-et-de-leurs-injections"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
+      "Radar"
+    ],
+    "quelleName": "Radar.squat",
+    "author": "Radar.squat",
+    "title": "Gran Dinar de germanor de Festa Major i Cantabars de lluïment",
+    "link": "https://radar.squat.net/en/node/590931",
+    "pubDate": "2026-08-08T12:30:00Z",
+    "content": "Menú: crema de moniato freda amb gingebre i llima, pollastre a la cassola amb prunes i pastís de nous amb gelat de vainilla. Amb opció vegana. Preu: adults, 15€ socis/es, 17€ no socis/es; infants, 8€ socis/es, 10€ no socis/es. Tiquets a la venda a \n\nwww.boirabaixa.cat/festamajor\n\n fins al dijous 6 d’agost.\n\n\nTot seguit | Cantabars de lluïment.",
+    "contentComplete": true,
+    "image": "",
+    "language": "ca",
+    "languages": [
+      "ca"
+    ],
+    "sourceType": "radar-api",
+    "eventApiId": "590931",
+    "eventUuid": "f5cd1be9-0f15-48a7-a32e-c10803b68246",
+    "eventStart": "2026-08-08T12:30:00Z",
+    "eventEnd": "2026-08-08T15:00:00Z",
+    "eventTimezone": "Europe/Madrid",
+    "eventCountry": "XC",
+    "eventCity": "Manlleu",
+    "eventVenue": "Casal Popular Boira Baixa",
+    "eventAddress": "plaça Flama del Canigó 2",
+    "eventPostal": "",
+    "eventLatitude": "42.000345968216",
+    "eventLongitude": "2.283146966915",
+    "eventCategories": [],
+    "eventTags": [],
+    "eventGroups": [],
+    "eventPrice": "",
+    "eventExternalLinks": [
+      "https://boirabaixa.cat/esdeveniment/gran-dinar-de-germanor-de-festa-major/"
+    ],
+    "eventRecurrence": "",
+    "sourceHomepage": "https://radar.squat.net"
+  },
+  {
+    "kontinent": "Radar",
+    "categories": [
       "Global",
       "Movement News"
     ],
@@ -33521,9 +33553,9 @@
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
       "Frankfurt",
-      "_icalv_b96a9b6c",
+      "Produktionshaus NAXOS",
       "_ical_e1cec36815af",
-      "Produktionshaus NAXOS"
+      "_icalv_b96a9b6c"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -33706,8 +33738,8 @@
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
       "_ical_a514fbada349",
-      "_icalv_d4af575e",
       "Produktionshaus NAXOS",
+      "_icalv_d4af575e",
       "Frankfurt"
     ],
     "type": "event",
@@ -33754,10 +33786,10 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "_icalv_3b92b381",
-      "Schlachthof",
       "Wiesbaden",
-      "_ical_3ad89fc9ee47"
+      "Schlachthof",
+      "_ical_3ad89fc9ee47",
+      "_icalv_3b92b381"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -33801,13 +33833,13 @@
     "originRegion": "",
     "sourceHomepage": "https://events.rheinmain.social/",
     "sourceTags": [
-      "_ical_ec5aa974cf3c",
       "Wiesbaden",
-      "Kooperation",
+      "_icalv_4546352b",
       "Workshop",
       "FLINTA*",
-      "_icalv_4546352b",
-      "kreativfabrik"
+      "kreativfabrik",
+      "_ical_ec5aa974cf3c",
+      "Kooperation"
     ],
     "type": "event",
     "sourceType": "rss-event",
@@ -42954,50 +42986,5 @@
     ],
     "eventRecurrence": "RRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH;COUNT=50;WKST=MO",
     "sourceHomepage": "https://radar.squat.net"
-  },
-  {
-    "kontinent": "Radar",
-    "categories": [
-      "Global",
-      "Movement News"
-    ],
-    "primaryRegion": "Global",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ],
-    "quelleName": "Kontrapolis (Berlin)",
-    "author": "---",
-    "title": "Antifa-Verfahren Düsseldorf: Das gebrochene Schweigen — und jetzt?",
-    "link": "https://kontrapolis.info/18376/",
-    "pubDate": "Mon, 27 Jul 2026 06:15:24 +0000",
-    "content": "Ausgangslage: Repression, Abtauchen und U-Haft Was am Dienstag im Hochsicherheitssaal des OLG Düsseldorf passiert ist, erscheint als Versuch, nach drei Jahren der justiziellen Verfolgung, des Abtauchens und dann der Untersuchungshaft, wieder in die Rolle der aktiv Handelnden zu kommen, so wie schon Anfang 2025, als sich mehrere der Abgetauchten in einer konzertierten Aktion der Polizei stellten. Nach eineinhalb Jahren in Untersuchungshaft, […]",
-    "contentComplete": true,
-    "image": "",
-    "images": [],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "",
-    "sourceTags": [
-      "Analyse und Diskurs",
-      "Highlights",
-      "Antifaschismus",
-      "Repression",
-      "Repression und Knast"
-    ],
-    "type": "event",
-    "sourceType": "rss-event",
-    "eventStart": "Mon, 27 Jul 2026 06:15:24 +0000",
-    "eventEnd": "Mon, 27 Jul 2026 06:15:24 +0000"
   }
 ]
