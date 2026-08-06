@@ -22,6 +22,7 @@ EVENTS_SOURCE = ROOT / "events.json"
 NEWS_TARGET = ROOT / "news-feed.json"
 EVENTS_TARGET = ROOT / "events-feed.json"
 STATUS_TARGET = ROOT / "feed-status.json"
+RUN_STATUS_SOURCE = ROOT / "aggregate-run-status.json"
 CONFIG_PATH = ROOT / "config.js"
 
 NEWS_LIMIT = max(50, int(os.environ.get("WRN_NEWS_FEED_LIMIT", "500")))
@@ -45,6 +46,19 @@ NEWS_CATEGORIES = (
 CONFIG_UPDATE_ENABLED = os.environ.get("WRN_UPDATE_CONFIG", "").strip().lower() in {
     "1", "true", "yes", "on"
 }
+FEED_TARGETS = {
+    value.strip().lower()
+    for value in os.environ.get("WRN_FEED_TARGETS", "news,events,status").split(",")
+    if value.strip()
+}
+
+
+def load_dict(path: Path) -> dict[str, Any]:
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return {}
+    return data if isinstance(data, dict) else {}
 
 
 def load_list(path: Path) -> list[dict[str, Any]]:
@@ -317,16 +331,26 @@ def configured_version() -> str:
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
-    news_feed = prepare(
-        balanced_news_rows(news, limit=NEWS_LIMIT),
-        limit=NEWS_LIMIT,
-        content_limit=NEWS_CONTENT_LIMIT,
-        preserve_order=True,
+    build_news = "news" in FEED_TARGETS
+    build_events = "events" in FEED_TARGETS
+    news_feed = (
+        prepare(
+            balanced_news_rows(news, limit=NEWS_LIMIT),
+            limit=NEWS_LIMIT,
+            content_limit=NEWS_CONTENT_LIMIT,
+            preserve_order=True,
+        )
+        if build_news
+        else load_list(NEWS_TARGET)
     )
-    event_feed = prepare_events(
-        events,
-        limit=EVENT_LIMIT,
-        content_limit=EVENT_CONTENT_LIMIT,
+    event_feed = (
+        prepare_events(
+            events,
+            limit=EVENT_LIMIT,
+            content_limit=EVENT_CONTENT_LIMIT,
+        )
+        if build_events
+        else load_list(EVENTS_TARGET)
     )
 
     if not news_feed:
@@ -335,13 +359,28 @@ def main() -> int:
             "Die vorhandenen Dateien werden nicht überschrieben."
         )
 
-    news_bytes = atomic_json(NEWS_TARGET, news_feed)
-    event_bytes = atomic_json(EVENTS_TARGET, event_feed)
-    config_changed = activate_config()
+    news_bytes = (
+        atomic_json(NEWS_TARGET, news_feed)
+        if build_news
+        else NEWS_TARGET.stat().st_size
+    )
+    event_bytes = (
+        atomic_json(EVENTS_TARGET, event_feed)
+        if build_events
+        else EVENTS_TARGET.stat().st_size
+    )
+    config_changed = activate_config() if "config" in FEED_TARGETS else False
+    run_status = load_dict(RUN_STATUS_SOURCE)
+    published_at = datetime.now(timezone.utc).isoformat()
+    last_successful_fetch_at = str(
+        run_status.get("finishedAt") or published_at
+    )
 
     status = {
         "ok": True,
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "generatedAt": published_at,
+        "lastSuccessfulFetchAt": last_successful_fetch_at,
+        "lastPublishedAt": published_at,
         "version": configured_version(),
         "news": {
             "archiveCount": len(news),
@@ -356,10 +395,15 @@ def main() -> int:
             "bytes": event_bytes,
             "contentLimit": EVENT_CONTENT_LIMIT,
         },
+        "aggregation": run_status,
+        "publication": {
+            "pending": False,
+        },
         "configActivated": config_changed,
         "configUpdateEnabled": CONFIG_UPDATE_ENABLED,
     }
-    atomic_json(STATUS_TARGET, status)
+    if "status" in FEED_TARGETS:
+        atomic_json(STATUS_TARGET, status)
 
     print(
         f"[WEB-FEED] News: {len(news_feed)}/{len(news)} "
@@ -373,6 +417,7 @@ def main() -> int:
         "[WEB-FEED] config.js: "
         + ("opt-in aktualisiert" if config_changed else "geschützt / unverändert")
     )
+    print("[WEB-FEED] Ziele: " + ", ".join(sorted(FEED_TARGETS)))
     return 0
 
 

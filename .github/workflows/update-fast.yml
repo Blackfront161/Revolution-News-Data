@@ -1,0 +1,122 @@
+name: Refresh News Fast
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - aggregate.py
+      - build_web_feeds.py
+      - requirements-wrn.lock.txt
+      - .github/workflows/update-fast.yml
+  schedule:
+    # Feed-Metadaten und vorhandene Feed-Inhalte werden stündlich übernommen.
+    # Volltexte und zusätzliche Bilder ergänzt der getrennte Reparaturlauf.
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-wrn.lock.txt
+
+      - name: Abhängigkeiten installieren
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install -r requirements-wrn.lock.txt
+          python -m pip check
+
+      - name: Aktuelle Feed-Einträge parallel abrufen
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            echo "Abrufversuch ${attempt}/3"
+            if python aggregate.py; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              sleep $((attempt * 20))
+            fi
+          done
+          echo "FEHLER: Der schnelle Abruf ist nach drei Versuchen fehlgeschlagen."
+          exit 1
+        env:
+          WRN_AGGREGATE_MODE: "fast"
+          WRN_FAST_FETCH_WORKERS: "16"
+          WRN_AGGREGATE_BUDGET_SECONDS: "900"
+          WRN_AGGREGATE_STOP_RESERVE_SECONDS: "60"
+          WRN_CHECKPOINT_INTERVAL_SECONDS: "120"
+
+      - name: News-Feed und Status erzeugen
+        run: WRN_FEED_TARGETS="news,status" python build_web_feeds.py
+
+      - name: Aktualität und Datenintegrität prüfen
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          news = json.loads(Path("news-feed.json").read_text(encoding="utf-8"))
+          status = json.loads(Path("feed-status.json").read_text(encoding="utf-8"))
+          run = json.loads(Path("aggregate-run-status.json").read_text(encoding="utf-8"))
+
+          if not news or status.get("news", {}).get("feedCount") != len(news):
+              raise SystemExit("FEHLER: News-Feed ist leer oder inkonsistent.")
+          if run.get("mode") != "fast":
+              raise SystemExit("FEHLER: Falscher Aggregationsmodus.")
+          if run.get("stoppedForBudget"):
+              raise SystemExit("FEHLER: Der schnelle Abruf erreichte sein Zeitbudget.")
+          if int(run.get("sourcesWithEntries") or 0) < 20:
+              raise SystemExit("FEHLER: Zu wenige Quellen lieferten Feed-Einträge.")
+          fetched = datetime.fromisoformat(
+              str(status["lastSuccessfulFetchAt"]).replace("Z", "+00:00")
+          )
+          age = (datetime.now(timezone.utc) - fetched).total_seconds()
+          if age < 0 or age > 3600:
+              raise SystemExit(f"FEHLER: Schnellabruf ist nicht aktuell ({age:.0f} Sekunden).")
+          if status.get("publication", {}).get("pending"):
+              raise SystemExit("FEHLER: Feed-Veröffentlichung ist noch ausstehend.")
+          print(
+              f"Schnellabruf OK: {run['sourcesWithEntries']} Quellen, "
+              f"{run['newArticles']} neue Artikel."
+          )
+          PY
+
+      - name: Ergebnisse committen und pushen
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wrn-news-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add news.json news-feed.json feed-status.json
+          git add aggregate-errors.json aggregate-run-status.json
+
+          if git diff --cached --quiet; then
+            echo "Keine Datenänderungen."
+            exit 0
+          fi
+
+          git commit -m "Refresh current news feed"
+          bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"

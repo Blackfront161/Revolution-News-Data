@@ -7,14 +7,42 @@ from datetime import datetime, timezone
 from urllib.parse import urljoin, urlparse
 import os
 import re
+import sys
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+
+for stream in (sys.stdout, sys.stderr):
+    try:
+        stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
 
 
 # WRN 1.7.23 ENTRY SAFETY
 AGGREGATE_ENTRY_ERRORS = []
 AGGREGATE_STARTED_AT = time.monotonic()
+AGGREGATE_STARTED_AT_ISO = datetime.now(timezone.utc).isoformat()
+AGGREGATE_MODE = os.environ.get("WRN_AGGREGATE_MODE", "enrich").strip().lower()
+if AGGREGATE_MODE not in {"fast", "enrich", "full"}:
+    raise ValueError(f"Unbekannter WRN_AGGREGATE_MODE: {AGGREGATE_MODE}")
+FAST_MODE = AGGREGATE_MODE == "fast"
+SKIP_RADAR = FAST_MODE or os.environ.get("WRN_SKIP_RADAR", "").strip().lower() in {
+    "1", "true", "yes", "on",
+}
+AGGREGATE_METRICS = {
+    "mode": AGGREGATE_MODE,
+    "startedAt": AGGREGATE_STARTED_AT_ISO,
+    "sourcesConfigured": 0,
+    "sourcesEligible": 0,
+    "sourcesAttempted": 0,
+    "sourcesWithEntries": 0,
+    "sourcesSkippedByHealth": 0,
+    "newArticles": 0,
+    "enrichedArticles": 0,
+    "stoppedForBudget": False,
+}
 AGGREGATE_BUDGET_SECONDS = max(
     300,
     int(os.environ.get("WRN_AGGREGATE_BUDGET_SECONDS", "1980")),
@@ -102,6 +130,21 @@ def save_aggregate_error_report():
             ensure_ascii=False,
             indent=2,
         )
+
+
+def save_aggregate_run_status():
+    payload = {
+        "schemaVersion": 1,
+        **AGGREGATE_METRICS,
+        "finishedAt": datetime.now(timezone.utc).isoformat(),
+        "elapsedSeconds": round(time.monotonic() - AGGREGATE_STARTED_AT, 3),
+        "entryErrorCount": len(AGGREGATE_ENTRY_ERRORS),
+    }
+    temporary = "aggregate-run-status.json.tmp"
+    with open(temporary, "w", encoding="utf-8") as report_file:
+        json.dump(payload, report_file, ensure_ascii=False, indent=2)
+        report_file.write("\n")
+    os.replace(temporary, "aggregate-run-status.json")
 
 
 
@@ -2017,8 +2060,8 @@ def fetch_radar_events():
 
 
 try:
-    if TARGET_SOURCE_NAMES:
-        raise LookupError("targeted-news-refresh")
+    if TARGET_SOURCE_NAMES or SKIP_RADAR:
+        raise LookupError("news-only-refresh")
     radar_events, radar_metadata = fetch_radar_events()
     # Replace stale Radar/API rows on every successful run. Non-Radar event
     # feeds remain intact and are refreshed by the normal loop below.
@@ -2044,7 +2087,7 @@ try:
         f"Schweiz vollständig {radar_metadata['switzerlandReportedCount']})."
     )
 except Exception as radar_error:
-    if TARGET_SOURCE_NAMES:
+    if TARGET_SOURCE_NAMES or SKIP_RADAR:
         radar_count = sum(
             1
             for archive_item in archiv_dict.values()
@@ -2153,15 +2196,137 @@ if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {
 }:
     save_checkpoint(force=True)
     save_aggregate_error_report()
+    AGGREGATE_METRICS["stoppedForBudget"] = aggregate_budget_exhausted()
+    save_aggregate_run_status()
     print(
         "\n[ERFOLG] Radar.squat wurde separat aktualisiert: "
         f"{radar_count} strukturierte Termine."
     )
     raise SystemExit(0)
 
-aggregate_stopped_for_budget = False
+def source_key(feed):
+    return (
+        safe_lower(feed.get("name")),
+        safe_lower(feed.get("url") or feed.get("feedUrl")).rstrip("/"),
+    )
 
-for kontinent, feeds in quellen.items():
+
+def load_fast_health_index():
+    try:
+        with open("source-health.json", "r", encoding="utf-8") as source_file:
+            payload = json.load(source_file)
+    except (OSError, ValueError, TypeError):
+        return {}, {}
+    if isinstance(payload, dict):
+        rows = payload.values()
+    elif isinstance(payload, list):
+        rows = payload
+    else:
+        return {}, {}
+    by_name = {}
+    by_url = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        name = safe_lower(row.get("name"))
+        url = safe_lower(row.get("configuredUrl") or row.get("url")).rstrip("/")
+        if name:
+            by_name[name] = row
+        if url:
+            by_url[url] = row
+    return by_name, by_url
+
+
+def fast_source_is_eligible(feed, health_by_name, health_by_url):
+    name, url = source_key(feed)
+    health = health_by_url.get(url) or health_by_name.get(name)
+    if not health or health.get("ok") is True:
+        return True
+    failures = int(health.get("consecutiveFailures") or 0)
+    restrictions = int(health.get("consecutiveRestrictions") or 0)
+    permanently_broken = safe_lower(health.get("detailedState")) == "permanently_broken"
+    return not permanently_broken and max(failures, restrictions) < 3
+
+
+def fetch_fast_feed(feed):
+    response = requests.get(
+        feed.get("url") or feed.get("feedUrl"),
+        headers=HEADERS,
+        timeout=(4.0, 9.0),
+    )
+    response.raise_for_status()
+    parsed = feedparser.parse(response.content)
+    if not parsed.entries:
+        raise ValueError("Feed enthält keine Einträge.")
+    return parsed
+
+
+def prepare_fast_sources(source_buckets):
+    health_by_name, health_by_url = load_fast_health_index()
+    eligible = {}
+    configured = 0
+    skipped = 0
+    for category, feeds in source_buckets.items():
+        if category == "Radar":
+            continue
+        rows = []
+        for feed in feeds:
+            if not isinstance(feed, dict):
+                continue
+            configured += 1
+            if (
+                TARGET_SOURCE_NAMES
+                and safe_lower(feed.get("name")) not in TARGET_SOURCE_NAMES
+            ):
+                continue
+            if fast_source_is_eligible(feed, health_by_name, health_by_url):
+                rows.append(feed)
+            else:
+                skipped += 1
+        if rows:
+            eligible[category] = rows
+
+    AGGREGATE_METRICS["sourcesConfigured"] = configured
+    AGGREGATE_METRICS["sourcesEligible"] = sum(len(rows) for rows in eligible.values())
+    AGGREGATE_METRICS["sourcesSkippedByHealth"] = skipped
+    prefetched = {}
+    max_workers = max(4, min(24, int(os.environ.get("WRN_FAST_FETCH_WORKERS", "12"))))
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {
+            executor.submit(fetch_fast_feed, feed): feed
+            for feeds in eligible.values()
+            for feed in feeds
+        }
+        for future in as_completed(futures):
+            feed = futures[future]
+            try:
+                prefetched[source_key(feed)] = future.result()
+            except Exception as error:
+                print(
+                    f"  [SCHNELLABRUF] {safe_text(feed.get('name'))} "
+                    f"übersprungen: {error}"
+                )
+    print(
+        "[SCHNELLABRUF] "
+        f"{len(prefetched)} von {AGGREGATE_METRICS['sourcesEligible']} "
+        f"geeigneten Quellen parallel geladen; {skipped} wiederholt "
+        "eingeschränkte Quellen bleiben für den Reparaturlauf."
+    )
+    return eligible, prefetched
+
+
+aggregate_stopped_for_budget = False
+active_sources = quellen
+fast_feed_payloads = {}
+if FAST_MODE:
+    active_sources, fast_feed_payloads = prepare_fast_sources(quellen)
+else:
+    AGGREGATE_METRICS["sourcesConfigured"] = sum(
+        len(feeds) for category, feeds in quellen.items() if category != "Radar"
+    )
+    AGGREGATE_METRICS["sourcesEligible"] = AGGREGATE_METRICS["sourcesConfigured"]
+
+for kontinent, feeds in active_sources.items():
     if aggregate_budget_exhausted():
         aggregate_stopped_for_budget = True
         break
@@ -2188,25 +2353,30 @@ for kontinent, feeds in quellen.items():
             feed.get("name"),
             "Unbekannte Quelle",
         )
+        AGGREGATE_METRICS["sourcesAttempted"] += 1
 
         print(f"-> Portal: {feed_name}...")
         parsed = None
-        try:
-            feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-            parsed = feedparser.parse(feed_req.text)
-            if not parsed.entries:
-                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                parsed = feedparser.parse(feed_req.content)
-        except:
+        if FAST_MODE:
+            parsed = fast_feed_payloads.get(source_key(feed))
+        else:
             try:
-                feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                parsed = feedparser.parse(feed_req.content)
+                feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                parsed = feedparser.parse(feed_req.text)
+                if not parsed.entries:
+                    feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    parsed = feedparser.parse(feed_req.content)
             except:
-                pass
+                try:
+                    feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    parsed = feedparser.parse(feed_req.content)
+                except:
+                    pass
                 
         if not parsed or not parsed.entries:
             print(f"  [FEHLER] Konnte {feed_name} nicht abrufen.")
             continue
+        AGGREGATE_METRICS["sourcesWithEntries"] += 1
             
         limit = 100 if is_radar else 15
         
@@ -2255,6 +2425,14 @@ for kontinent, feeds in quellen.items():
 
                 # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
                 existing_article = archiv_dict.get(link)
+                previous_text_length = len(safe_text(
+                    existing_article.get("content") if existing_article else ""
+                ))
+                previous_image_count = len(
+                    existing_article.get("images", [])
+                    if existing_article and isinstance(existing_article.get("images"), list)
+                    else []
+                )
                 if existing_article:
                     configured_categories = feed.get("categories", [kontinent])
                     if not isinstance(configured_categories, list):
@@ -2333,7 +2511,7 @@ for kontinent, feeds in quellen.items():
                 # Pro Quelle werden neue und unvollständige bestehende
                 # Artikel gemeinsam begrenzt. So werden ältere Feed-Auszüge
                 # schrittweise repariert, ohne die Quellseite zu überlasten.
-                if not is_radar:
+                if not is_radar and not FAST_MODE:
                     if tiefe_scrapes_gemacht >= MAX_NEUE_SCRAPES:
                         continue 
                     tiefe_scrapes_gemacht += 1
@@ -2406,6 +2584,7 @@ for kontinent, feeds in quellen.items():
                 if (
                     link
                     and not is_radar
+                    and not FAST_MODE
                     and content_is_incomplete(
                         full_text,
                         minimum_article_length,
@@ -2435,7 +2614,7 @@ for kontinent, feeds in quellen.items():
                 if is_radar:
                     if clean_text == "":
                         clean_text = "Weitere Infos zum Termin auf der Originalseite."
-                elif not is_radar and "anarchist news" not in safe_lower(feed_name) and safe_lower(title) in clean_text.casefold() and len(clean_text) < len(title) + 150:
+                elif not FAST_MODE and not is_radar and "anarchist news" not in safe_lower(feed_name) and safe_lower(title) in clean_text.casefold() and len(clean_text) < len(title) + 150:
                     clean_text = "⚠️ The full text of this article is protected by the publisher's firewall. Please use the [ ORIGINAL ] button below to read it directly on their website."
                 elif not is_radar and clean_text == "":
                     clean_text = "⚠️ No text available. Please use the [ ORIGINAL ] button below."
@@ -2533,6 +2712,14 @@ for kontinent, feeds in quellen.items():
                         )
                     ],
                 }
+                if not is_radar:
+                    if not existing_article:
+                        AGGREGATE_METRICS["newArticles"] += 1
+                    elif (
+                        len(clean_text) > previous_text_length
+                        or len(image_urls) > previous_image_count
+                    ):
+                        AGGREGATE_METRICS["enrichedArticles"] += 1
                 if is_radar:
                     archiv_dict[link].update({
                         "type": "event",
@@ -2557,6 +2744,7 @@ for kontinent, feeds in quellen.items():
         if (
             not aggregate_stopped_for_budget
             and not is_radar
+            and not FAST_MODE
             and tiefe_scrapes_gemacht < MAX_NEUE_SCRAPES
         ):
             minimum_article_length = int(
@@ -2646,6 +2834,14 @@ if aggregate_stopped_for_budget:
 
 save_checkpoint(force=True)
 save_aggregate_error_report()
+AGGREGATE_METRICS["stoppedForBudget"] = aggregate_stopped_for_budget
+save_aggregate_run_status()
 
 print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine gefunden! <<<")
 print(f"\n[ERFOLG] {len(archiv_dict)} Artikel sicher im Archiv abgelegt.")
+print(
+    "[LAUFSTATUS] "
+    f"Modus {AGGREGATE_MODE}: {AGGREGATE_METRICS['newArticles']} neue, "
+    f"{AGGREGATE_METRICS['enrichedArticles']} angereicherte Artikel; "
+    f"{AGGREGATE_METRICS['sourcesWithEntries']} Quellen mit Einträgen."
+)
