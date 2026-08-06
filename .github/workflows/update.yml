@@ -2,10 +2,9 @@ name: Update News
 
 on:
   schedule:
-    # Zwei Stunden sind für aktuelle Nachrichten ein sinnvoller belastbarer
-    # Zwischenschritt. Der vollständige Lauf benötigt derzeit rund 35 Minuten;
-    # eine stündliche Vollaggregation könnte sich daher unnötig aufstauen.
-    - cron: "17 */2 * * *"
+    # Der vollständige Reparaturlauf ergänzt Volltexte, Bilder, Termine und
+    # Quellenstatus. Aktuelle Meldungen lädt ein getrennter Schnelllauf.
+    - cron: "37 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -57,6 +56,7 @@ jobs:
       - name: Nachrichten und Termine aggregieren
         run: python aggregate.py
         env:
+          WRN_AGGREGATE_MODE: "enrich"
           WRN_AGGREGATE_BUDGET_SECONDS: "1980"
           WRN_AGGREGATE_STOP_RESERVE_SECONDS: "120"
           WRN_CHECKPOINT_INTERVAL_SECONDS: "240"
@@ -82,7 +82,7 @@ jobs:
       - name: Schnelle Web-Feeds erzeugen
         run: |
           if [ -f build_web_feeds.py ]; then
-            python build_web_feeds.py
+            WRN_FEED_TARGETS="news,events,status" python build_web_feeds.py
           fi
 
       - name: Audits aktualisieren
@@ -192,6 +192,7 @@ jobs:
             source-discovery-report.json
             source-health-history.json
             source-recovery-report.json
+            aggregate-run-status.json
           )
 
           for file in "${optional_outputs[@]}"; do
