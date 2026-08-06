@@ -110,6 +110,11 @@ jobs:
           set -euo pipefail
           git config user.name "wrn-news-bot"
           git config user.email "actions@users.noreply.github.com"
+
+          # Der Nachrichten-Schnelllauf darf den separat gepflegten
+          # Terminbestand weder umsortieren noch veröffentlichen.
+          git restore -- events.json events-feed.json
+
           git add news.json news-feed.json feed-status.json
           git add aggregate-errors.json aggregate-run-status.json
 
