@@ -47,6 +47,15 @@ def test_checkpoint_sorts_mixed_feed_dates_chronologically():
     ]
 
 
+def test_feed_status_exposes_the_actual_newest_article_timestamp():
+    from build_web_feeds import newest_article_at
+
+    assert newest_article_at([
+        {"pubDate": "Thu, 06 Aug 2026 23:09:20 +0000"},
+        {"pubDate": "2026-08-08T08:55:05+00:00"},
+    ]) == "2026-08-08T08:55:05+00:00"
+
+
 def test_workflow_validates_and_stages_every_browser_feed():
     workflow = (ROOT / ".github" / "workflows" / "update.yml").read_text(
         encoding="utf-8"
@@ -76,6 +85,7 @@ if __name__ == "__main__":
     test_aggregator_stops_before_the_workflow_timeout()
     test_checkpoints_are_throttled_and_atomic()
     test_checkpoint_sorts_mixed_feed_dates_chronologically()
+    test_feed_status_exposes_the_actual_newest_article_timestamp()
     test_workflow_validates_and_stages_every_browser_feed()
     test_reclassifier_ignores_runtime_source_transformations()
     print("WRN feed upload pipeline: OK")

@@ -328,6 +328,13 @@ def configured_version() -> str:
     return match.group(1) if match else ""
 
 
+def newest_article_at(rows: list[dict[str, Any]]) -> str:
+    newest = max((date_value(item) for item in rows), default=0.0)
+    if not newest:
+        return ""
+    return datetime.fromtimestamp(newest, tz=timezone.utc).isoformat()
+
+
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
@@ -388,6 +395,7 @@ def main() -> int:
             "bytes": news_bytes,
             "contentLimit": NEWS_CONTENT_LIMIT,
             "categoryMinimum": NEWS_CATEGORY_MINIMUM,
+            "newestArticleAt": newest_article_at(news_feed),
         },
         "events": {
             "archiveCount": len(events),
