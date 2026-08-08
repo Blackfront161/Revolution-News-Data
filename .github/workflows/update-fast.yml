@@ -99,6 +99,15 @@ jobs:
           age = (datetime.now(timezone.utc) - fetched).total_seconds()
           if age < 0 or age > 3600:
               raise SystemExit(f"FEHLER: Schnellabruf ist nicht aktuell ({age:.0f} Sekunden).")
+          newest = datetime.fromisoformat(
+              str(status["news"]["newestArticleAt"]).replace("Z", "+00:00")
+          )
+          newest_age = (datetime.now(timezone.utc) - newest).total_seconds()
+          if int(run.get("newArticles") or 0) > 0 and newest_age > 30 * 3600:
+              raise SystemExit(
+                  "FEHLER: Metadaten wurden aktualisiert, aber der neueste "
+                  f"Artikel ist {newest_age / 3600:.1f} Stunden alt."
+              )
           if status.get("publication", {}).get("pending"):
               raise SystemExit("FEHLER: Feed-Veröffentlichung ist noch ausstehend.")
           print(

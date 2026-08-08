@@ -12,6 +12,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
+from build_web_feeds import date_value
 
 for stream in (sys.stdout, sys.stderr):
     try:
@@ -2130,11 +2131,10 @@ def save_checkpoint(force=False):
         return False
 
     alle = list(archiv_dict.values())
-    try:
-        # Sortieren nach Datum
-        alle.sort(key=lambda x: x.get('pubDate', ''), reverse=True)
-    except:
-        pass
+    # RSS feeds mix RFC 2822 and ISO 8601 timestamps. Sorting the raw strings
+    # orders them by weekday/text and can discard the newest articles when the
+    # archive is truncated to 2,000 rows.
+    alle.sort(key=date_value, reverse=True)
     
     events = [item for item in alle if item.get('kontinent') == 'Radar']
     try:
