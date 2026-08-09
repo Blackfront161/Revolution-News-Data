@@ -30,6 +30,9 @@ AGGREGATE_MODE = os.environ.get("WRN_AGGREGATE_MODE", "enrich").strip().lower()
 if AGGREGATE_MODE not in {"fast", "enrich", "full"}:
     raise ValueError(f"Unbekannter WRN_AGGREGATE_MODE: {AGGREGATE_MODE}")
 FAST_MODE = AGGREGATE_MODE == "fast"
+FORCE_EXISTING_ARTICLE_REFRESH = os.environ.get(
+    "WRN_FORCE_EXISTING_ARTICLE_REFRESH", ""
+).strip().lower() in {"1", "true", "yes", "on"}
 SKIP_RADAR = FAST_MODE or os.environ.get("WRN_SKIP_RADAR", "").strip().lower() in {
     "1", "true", "yes", "on",
 }
@@ -1843,6 +1846,11 @@ TARGET_SOURCE_NAMES = {
     for name in os.environ.get("WRN_NEWS_SOURCE_NAMES", "").split(",")
     if name.strip()
 }
+TARGET_ARTICLE_LINKS = {
+    link.strip()
+    for link in os.environ.get("WRN_NEWS_ARTICLE_LINKS", "").split(",")
+    if link.strip()
+}
 if "autostraddle news" in TARGET_SOURCE_NAMES:
     for archive_key, archive_item in list(archiv_dict.items()):
         if safe_lower(archive_item.get("quelleName")) == "autostraddle":
@@ -2378,7 +2386,7 @@ for kontinent, feeds in active_sources.items():
             continue
         AGGREGATE_METRICS["sourcesWithEntries"] += 1
             
-        limit = 100 if is_radar else 15
+        limit = 100 if is_radar or TARGET_ARTICLE_LINKS else 15
         
         # =========================================================
         # DAS NEUE SPEED-LIMIT (Macht den Code rasend schnell)
@@ -2387,6 +2395,8 @@ for kontinent, feeds in active_sources.items():
             1,
             int(feed.get("maxNewItems", 4)),
         )
+        if FORCE_EXISTING_ARTICLE_REFRESH:
+            MAX_NEUE_SCRAPES = limit
         tiefe_scrapes_gemacht = 0
         attempted_links = set()
 
@@ -2401,6 +2411,8 @@ for kontinent, feeds in active_sources.items():
                         "get()-Abfragen."
                     )
                 link = entry.get('link', '')
+                if TARGET_ARTICLE_LINKS and link not in TARGET_ARTICLE_LINKS:
+                    continue
                 title = safe_text(entry.get("title"), "Kein Titel")
                 entry_published = entry.get(
                     'published',
@@ -2494,9 +2506,12 @@ for kontinent, feeds in active_sources.items():
                         existing_article["sourceType"] = "rss-event"
                         radar_count += 1
                         continue
-                    if not content_is_incomplete(
-                        existing_article.get("content", ""),
-                        minimum_article_length,
+                    if (
+                        not FORCE_EXISTING_ARTICLE_REFRESH
+                        and not content_is_incomplete(
+                            existing_article.get("content", ""),
+                            minimum_article_length,
+                        )
                     ):
                         existing_article["contentComplete"] = True
                         continue
@@ -2585,9 +2600,12 @@ for kontinent, feeds in active_sources.items():
                     link
                     and not is_radar
                     and not FAST_MODE
-                    and content_is_incomplete(
-                        full_text,
-                        minimum_article_length,
+                    and (
+                        FORCE_EXISTING_ARTICLE_REFRESH
+                        or content_is_incomplete(
+                            full_text,
+                            minimum_article_length,
+                        )
                     )
                 ):
                     full_text, image_url, image_urls = (
