@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 from build_web_feeds import date_value
+from inline_text import inline_preserving_text, prefer_inline_preserving_text
 
 for stream in (sys.stdout, sys.stderr):
     try:
@@ -1723,7 +1724,7 @@ def extract_article_text(root):
     ):
         unwanted.decompose()
     paragraphs = [
-        paragraph.get_text(" ", strip=True)
+        inline_preserving_text(paragraph)
         for paragraph in root.find_all(("p", "li"))
     ]
     text_blocks = [
@@ -1794,8 +1795,7 @@ def scrape_article_page(
                     break
 
         page_text = extract_article_text(article_root)
-        if len(page_text) > len(full_text):
-            full_text = page_text
+        full_text = prefer_inline_preserving_text(full_text, page_text)
 
         waf_phrases = (
             "Please wait a moment while we ensure the security",
