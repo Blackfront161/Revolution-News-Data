@@ -32,6 +32,13 @@ for article in news:
     assert isinstance(article["secondaryTopics"], list)
     assert isinstance(article["editorialReview"], bool)
 
+aggregate = (ROOT / "aggregate.py").read_text(encoding="utf-8")
+archive_repair = aggregate.split(
+    "def repair_overbroad_archive_categories", 1
+)[1].split("def content_is_incomplete", 1)[0]
+assert "classification = classify_article(" in archive_repair
+assert "article.update(classification)" in archive_repair
+
 review = json.loads((ROOT / "editorial-review.json").read_text(encoding="utf-8"))
 assert review["count"] == len(review["items"])
 assert all(0 <= float(row["confidence"]) < 0.61 for row in review["items"])
