@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 
@@ -128,6 +129,29 @@ def stable_key(item: dict[str, Any]) -> str:
     ).strip().casefold()
 
 
+def usable_news_item(item: dict[str, Any]) -> bool:
+    """Reject broken rows that cannot work as a news card or lead story."""
+    title = clean_text(item.get("title"))
+    content = clean_text(item.get("content"))
+    link = clean_text(item.get("link"))
+    parsed_link = urlparse(link)
+    if len(title) < 4 or parsed_link.scheme not in {"http", "https"} or not parsed_link.netloc:
+        return False
+
+    normalized = content.casefold()
+    placeholder_markers = (
+        "no text available",
+        "kein text verfügbar",
+        "aucun texte disponible",
+        "sin texto disponible",
+        "nessun testo disponibile",
+        "nenhum texto disponível",
+    )
+    if len(content) < 320 and any(marker in normalized for marker in placeholder_markers):
+        return False
+    return bool(content)
+
+
 def prepare(
     rows: list[dict[str, Any]],
     *,
@@ -182,7 +206,11 @@ def balanced_news_rows(
     limit: int,
 ) -> list[dict[str, Any]]:
     """Keep the quick feed recent while guaranteeing useful category coverage."""
-    ordered = sorted(rows, key=date_value, reverse=True)
+    ordered = sorted(
+        (item for item in rows if usable_news_item(item)),
+        key=date_value,
+        reverse=True,
+    )
     selected: list[dict[str, Any]] = []
     selected_keys: set[str] = set()
 
