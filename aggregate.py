@@ -1576,12 +1576,15 @@ def repair_overbroad_archive_categories(article):
         1 for category in current if category in TOPIC_CATEGORY_PATTERNS
     )
     if topic_count >= 3:
-        article["categories"] = infer_article_categories(
+        classification = classify_article(
             article.get("title"),
             article.get("content"),
             current,
-            article.get("kontinent", "Global"),
+            article.get("primaryRegion") or article.get("kontinent", "Global"),
+            article.get("sourceTags", []),
+            article.get("originCountryCode", ""),
         )
+        article.update(classification)
     return article
 
 
