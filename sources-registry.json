@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-08-13T03:45:28.232510+00:00",
-  "sourceCount": 422,
-  "activeSourceCount": 422,
+  "generatedAt": "2026-08-13T08:37:25.760984+00:00",
+  "sourceCount": 421,
+  "activeSourceCount": 421,
   "knownLanguages": [
     "ar",
     "ca",
@@ -486,8 +486,9 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Anti-Rep & Prisons",
         "Cyberactivism",
+        "Anti-Rep & Prisons",
+        "Radical Health & Disability",
         "sources"
       ],
       "mediaType": "news",
@@ -864,11 +865,11 @@
       "categories": [
         "Latin America",
         "Movement News",
+        "No War",
         "Labor Struggles",
         "Investigative",
         "Antiracism",
         "Queer-Feminism",
-        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -1098,7 +1099,6 @@
       "categories": [
         "Europe",
         "Theory & Strategy",
-        "Labor Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -1145,8 +1145,7 @@
       "categories": [
         "Global",
         "Movement News",
-        "Demonstrations",
-        "No War",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -2182,9 +2181,9 @@
       "categories": [
         "Global",
         "Movement News",
-        "Theory & Strategy",
         "Antiracism",
         "Anticapitalism",
+        "Theory & Strategy",
         "Anti-Rep & Prisons",
         "Squatting & Housing",
         "No Borders",
@@ -2915,19 +2914,18 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Indigenous Struggles",
         "Global",
+        "Indigenous Struggles",
         "Anti-Rep & Prisons",
         "Eco-Anarchism",
-        "Asia",
-        "Movement News",
         "Anti-Imperialism",
         "No War",
-        "sources",
-        "Labor Struggles",
+        "No Borders",
         "Cyberactivism",
-        "Queer-Feminism",
-        "Antisexism"
+        "sources",
+        "Asia",
+        "Labor Struggles",
+        "Movement News"
       ],
       "mediaType": "news",
       "status": "active",
@@ -3479,8 +3477,8 @@
         "Global",
         "No War",
         "Movement News",
-        "No Borders",
         "Anti-Rep & Prisons",
+        "No Borders",
         "Antiracism",
         "Demonstrations",
         "Eco-Anarchism",
@@ -3585,30 +3583,6 @@
       "originRegion": "Europe",
       "originCountry": "Germany",
       "originCountryCode": "DE",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
-      "name": "Direkte Aktion (DE)",
-      "url": "https://direkteaktion.org/",
-      "canonicalUrl": "https://direkteaktion.org/",
-      "homepage": "https://direkteaktion.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "unknown",
-      "categories": [
-        "Europe",
-        "Movement News",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
       "origins": [
         "source-catalog.json"
       ]
@@ -4108,9 +4082,9 @@
         "Movement News",
         "Labor Struggles",
         "Eco-Anarchism",
+        "Anti-Rep & Prisons",
         "Anticapitalism",
         "No War",
-        "Anti-Rep & Prisons",
         "Squatting & Housing",
         "sources"
       ],
@@ -5760,8 +5734,8 @@
         "No War",
         "Antifascism",
         "Anticapitalism",
-        "Squatting & Housing",
         "Eco-Anarchism",
+        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -5881,10 +5855,11 @@
         "Global",
         "Movement News",
         "Anticapitalism",
+        "Radical Health & Disability",
+        "Antifascism",
         "Cyberactivism",
         "sources",
         "Labor Struggles",
-        "Radical Health & Disability",
         "Libraries",
         "No Borders",
         "No War"
@@ -8217,6 +8192,7 @@
         "Global",
         "Anti-Imperialism",
         "Anticapitalism",
+        "Africa",
         "Movement News",
         "Queer-Feminism",
         "Labor Struggles",
@@ -8834,9 +8810,9 @@
         "Anticapitalism",
         "Theory & Strategy",
         "Anti-Rep & Prisons",
+        "No Borders",
         "Cyberactivism",
         "Anticolonialism",
-        "Labor Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -9586,7 +9562,6 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
         "Global",
         "Eco-Anarchism",
         "Squatting & Housing",
@@ -10026,35 +10001,6 @@
       ]
     },
     {
-      "name": "ZNet (Global)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Anticapitalism",
-        "Eco-Anarchism",
-        "No Borders",
-        "Labor Struggles",
-        "No War",
-        "Movement News",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -10075,6 +10021,34 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "ZNet (International)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "No Borders",
+        "Movement News",
+        "Eco-Anarchism",
+        "Labor Struggles",
+        "No War",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
