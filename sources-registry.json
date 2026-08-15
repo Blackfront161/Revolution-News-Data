@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-08-15T07:43:02.984445+00:00",
+  "generatedAt": "2026-08-15T13:45:15.944672+00:00",
   "sourceCount": 416,
   "activeSourceCount": 416,
   "knownLanguages": [
@@ -565,8 +565,8 @@
       "categories": [
         "Africa",
         "Movement News",
-        "No Borders",
         "Anticolonialism",
+        "No Borders",
         "Queer-Feminism",
         "Eco-Anarchism",
         "sources"
@@ -2232,8 +2232,8 @@
         "Global",
         "Anticolonialism",
         "Latin America",
-        "Movement News",
         "Indigenous Struggles",
+        "Movement News",
         "No Borders",
         "Antifascism",
         "No War",
@@ -2863,19 +2863,18 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Indigenous Struggles",
         "Global",
-        "Asia",
+        "Indigenous Struggles",
         "Anti-Rep & Prisons",
         "Eco-Anarchism",
-        "Movement News",
         "Anti-Imperialism",
         "Queer-Feminism",
-        "sources",
         "Labor Struggles",
-        "Cyberactivism",
         "No War",
-        "Antisexism"
+        "sources",
+        "Asia",
+        "Movement News",
+        "Cyberactivism"
       ],
       "mediaType": "news",
       "status": "active",
@@ -3805,9 +3804,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Latin America",
+        "Global",
         "Indigenous Struggles",
-        "Movement News",
+        "Latin America",
         "No War",
         "sources"
       ],
@@ -4520,7 +4519,7 @@
         "Eco-Anarchism",
         "Antifascism",
         "No War",
-        "Anti-Rep & Prisons",
+        "Radical Health & Disability",
         "sources"
       ],
       "mediaType": "news",
@@ -4851,9 +4850,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Australia & NZ",
-        "Movement News",
+        "Global",
         "Indigenous Struggles",
+        "Australia & NZ",
         "sources"
       ],
       "mediaType": "news",
@@ -5347,9 +5346,8 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Cyberactivism",
         "Movement News",
-        "Theory & Strategy",
+        "Cyberactivism",
         "sources"
       ],
       "mediaType": "news",
@@ -5554,8 +5552,9 @@
         "Global",
         "No War",
         "Labor Struggles",
-        "Movement News",
         "Anti-Rep & Prisons",
+        "Anticolonialism",
+        "Movement News",
         "Demonstrations",
         "sources"
       ],
@@ -5655,8 +5654,8 @@
         "No War",
         "Antifascism",
         "Anticapitalism",
-        "Eco-Anarchism",
         "Squatting & Housing",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -5776,11 +5775,10 @@
         "Global",
         "Movement News",
         "Anticapitalism",
-        "Cyberactivism",
-        "sources",
-        "Labor Struggles",
         "Radical Health & Disability",
         "Antifascism",
+        "sources",
+        "Labor Struggles",
         "Libraries",
         "No Borders",
         "No War"
@@ -5875,8 +5873,8 @@
       "categories": [
         "Europe",
         "Movement News",
-        "No War",
         "No Borders",
+        "No War",
         "Anti-Rep & Prisons",
         "Antifascism",
         "sources"
@@ -6637,8 +6635,8 @@
         "Eco-Anarchism",
         "No War",
         "Anti-Rep & Prisons",
+        "Demonstrations",
         "Squatting & Housing",
-        "Antiracism",
         "sources"
       ],
       "mediaType": "news",
@@ -7232,6 +7230,7 @@
         "Europe",
         "Movement News",
         "Theory & Strategy",
+        "Eco-Anarchism",
         "Labor Struggles",
         "sources"
       ],
@@ -8651,12 +8650,12 @@
       "categories": [
         "Global",
         "Libraries",
+        "Anti-Rep & Prisons",
         "Anticapitalism",
         "Theory & Strategy",
-        "Anti-Rep & Prisons",
         "Labor Struggles",
         "Cyberactivism",
-        "Eco-Anarchism",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -9310,8 +9309,8 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Antifascism",
         "Eco-Anarchism",
+        "Antifascism",
         "No Borders",
         "No War",
         "sources"
@@ -9430,7 +9429,6 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "North America",
         "Eco-Anarchism",
         "Demonstrations",
         "Squatting & Housing",
@@ -9869,32 +9867,6 @@
       ]
     },
     {
-      "name": "ZNet (Global)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Anticapitalism",
-        "Movement News",
-        "No War",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -9915,6 +9887,31 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "ZNet (International)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "No War",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
