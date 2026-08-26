@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-08-25T19:45:59.750764+00:00",
+  "generatedAt": "2026-08-26T02:45:08.512221+00:00",
   "sourceCount": 409,
   "activeSourceCount": 409,
   "knownLanguages": [
@@ -1058,6 +1058,8 @@
       "categories": [
         "Global",
         "Movement News",
+        "Labor Struggles",
+        "No War",
         "sources"
       ],
       "mediaType": "news",
@@ -1404,8 +1406,6 @@
         "Europe",
         "Movement News",
         "No War",
-        "Theory & Strategy",
-        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -2122,8 +2122,8 @@
       "languageSource": "explicit",
       "categories": [
         "Latin America",
-        "Anticolonialism",
         "Indigenous Struggles",
+        "Anticolonialism",
         "Movement News",
         "Global",
         "Squatting & Housing",
@@ -2275,12 +2275,10 @@
         "Antifascism",
         "No Borders",
         "Squatting & Housing",
-        "Anti-Rep & Prisons",
         "Antiracism",
+        "Anti-Rep & Prisons",
         "Radical Health & Disability",
-        "sources",
-        "Europe",
-        "Movement News"
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -2729,17 +2727,15 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
         "Indigenous Struggles",
+        "Global",
+        "Asia",
+        "Movement News",
         "Labor Struggles",
         "Anti-Rep & Prisons",
         "No War",
         "Eco-Anarchism",
-        "Antisexism",
-        "Queer-Feminism",
-        "sources",
-        "Asia",
-        "Movement News"
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -4693,9 +4689,8 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Indigenous Struggles",
         "Australia & NZ",
+        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -5191,6 +5186,8 @@
         "Global",
         "Cyberactivism",
         "Movement News",
+        "Theory & Strategy",
+        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -5616,9 +5613,9 @@
         "Global",
         "Movement News",
         "Labor Struggles",
-        "Radical Health & Disability",
         "sources",
         "Anticapitalism",
+        "Radical Health & Disability",
         "No War",
         "Theory & Strategy",
         "Libraries",
@@ -9093,6 +9090,7 @@
         "Europe",
         "Movement News",
         "Theory & Strategy",
+        "No Borders",
         "Anti-Rep & Prisons",
         "sources"
       ],
@@ -9140,10 +9138,10 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
-        "Demonstrations",
+        "Global",
         "Antifascism",
         "Antiracism",
+        "Demonstrations",
         "Queer-Feminism",
         "Eco-Anarchism",
         "sources"
@@ -9237,8 +9235,8 @@
       "categories": [
         "North America",
         "Global",
-        "Anti-Rep & Prisons",
         "No War",
+        "Anti-Rep & Prisons",
         "Movement News",
         "Demonstrations",
         "Squatting & Housing",
@@ -9675,6 +9673,32 @@
       ]
     },
     {
+      "name": "ZNet (Global)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Anticapitalism",
+        "No War",
+        "Movement News",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -9695,31 +9719,6 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
-      ]
-    },
-    {
-      "name": "ZNet (International)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Movement News",
-        "No War",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
       ]
     },
     {
