@@ -4,7 +4,7 @@
     "url": "https://www.269liberationanimale.fr/feed/",
     "status": "error",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:40.881022+00:00",
+    "lastChecked": "2026-09-11T12:17:13.627359+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.269liberationanimale.fr/feed/",
     "contentType": "text/html",
@@ -17,18 +17,43 @@
     "rawStatus": "error",
     "detailedState": "permanently_broken",
     "failureKind": "missing_feed",
-    "consecutiveFailures": 134,
+    "consecutiveFailures": 135,
     "consecutiveRestrictions": 0,
     "firstFailureAt": "2026-08-06T15:29:29.474622+00:00",
-    "lastFailureAt": "2026-09-11T05:41:40.881022+00:00",
+    "lastFailureAt": "2026-09-11T12:17:13.627359+00:00",
     "lastSuccessAt": "2026-08-06T11:27:28.403203+00:00"
+  },
+  "antifa-cz-https-www-antifa-cz-rss-xml": {
+    "name": "Antifa.cz",
+    "url": "https://www.antifa.cz/rss.xml",
+    "status": "error",
+    "ok": false,
+    "lastChecked": "2026-09-11T12:17:22.020666+00:00",
+    "httpStatus": 404,
+    "finalUrl": "https://antifa-cz.net/rss.xml",
+    "contentType": "text/html; charset=utf-8",
+    "error": "Unerwartete Weiterleitung auf eine andere Domain; manuelle PrÃ¼fung erforderlich.",
+    "categories": [
+      "Europe",
+      "Antifascism"
+    ],
+    "configuredUrl": "https://www.antifa.cz/rss.xml",
+    "rawStatus": "error",
+    "detailedState": "permanently_broken",
+    "failureKind": "suspicious_redirect",
+    "consecutiveFailures": 4,
+    "consecutiveRestrictions": 0,
+    "firstFailureAt": "2026-09-10T17:12:27.245762+00:00",
+    "lastFailureAt": "2026-09-11T12:17:22.020666+00:00",
+    "lastSuccessAt": "2026-07-28T17:57:36.105737+00:00",
+    "suspiciousRedirect": true
   },
   "attac-cadtm-maroc-https-www-cadtm-org-spip-php-page-backend": {
     "name": "Attac / CADTM Maroc",
     "url": "https://www.cadtm.org/spip.php?page=backend",
     "status": "error",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:51.925410+00:00",
+    "lastChecked": "2026-09-11T12:17:24.596857+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.cadtm.org/spip.php?page=backend",
     "contentType": "text/html",
@@ -41,10 +66,10 @@
     "rawStatus": "warning",
     "detailedState": "permanently_broken",
     "failureKind": "website_feed_broken",
-    "consecutiveFailures": 92,
+    "consecutiveFailures": 93,
     "consecutiveRestrictions": 0,
     "firstFailureAt": "2026-08-17T08:08:03.928051+00:00",
-    "lastFailureAt": "2026-09-11T05:41:51.925410+00:00",
+    "lastFailureAt": "2026-09-11T12:17:24.596857+00:00",
     "lastSuccessAt": "2026-07-25T21:14:40.492693+00:00"
   },
   "revoltlib-https-revoltlib-com-feed": {
@@ -52,7 +77,7 @@
     "url": "https://revoltlib.com/feed",
     "status": "error",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:57.029345+00:00",
+    "lastChecked": "2026-09-11T12:18:08.828552+00:00",
     "httpStatus": 200,
     "finalUrl": "https://revoltlib.com/news.php",
     "contentType": "text/html; charset=UTF-8",
@@ -65,17 +90,17 @@
     "rawStatus": "warning",
     "detailedState": "permanently_broken",
     "failureKind": "website_feed_broken",
-    "consecutiveFailures": 17,
+    "consecutiveFailures": 18,
     "consecutiveRestrictions": 0,
     "firstFailureAt": "2026-09-06T21:17:53.549603+00:00",
-    "lastFailureAt": "2026-09-11T05:42:57.029345+00:00"
+    "lastFailureAt": "2026-09-11T12:18:08.828552+00:00"
   },
   "tier-im-fokus-switzerland-https-tier-im-fokus-ch-feed": {
     "name": "Tier im Fokus (Switzerland)",
     "url": "https://tier-im-fokus.ch/feed/",
     "status": "error",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:04.327193+00:00",
+    "lastChecked": "2026-09-11T12:18:13.380041+00:00",
     "httpStatus": 200,
     "finalUrl": "https://tierimfokus.ch/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -88,10 +113,10 @@
     "rawStatus": "error",
     "detailedState": "permanently_broken",
     "failureKind": "suspicious_redirect",
-    "consecutiveFailures": 87,
+    "consecutiveFailures": 88,
     "consecutiveRestrictions": 0,
     "firstFailureAt": "2026-08-18T13:59:35.754758+00:00",
-    "lastFailureAt": "2026-09-11T05:43:04.327193+00:00",
+    "lastFailureAt": "2026-09-11T12:18:13.380041+00:00",
     "suspiciousRedirect": true
   },
   "a-infos-global-http-www-ainfos-ca-ainfos-xml": {
@@ -99,7 +124,7 @@
     "url": "http://www.ainfos.ca/ainfos.xml",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:40.881769+00:00",
+    "lastChecked": "2026-09-11T12:17:13.629473+00:00",
     "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.ainfos.ca', port=443): Max retries exceeded with url: /ainfos.xml (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
     "categories": [
       "Global"
@@ -109,34 +134,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:40.881769+00:00"
-  },
-  "a-radio-berlin-https-www-aradio-berlin-org-feed": {
-    "name": "A-Radio Berlin",
-    "url": "https://www.aradio-berlin.org/feed/",
-    "status": "warning",
-    "ok": false,
-    "lastChecked": "2026-09-11T05:41:40.882202+00:00",
-    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='www.aradio-berlin.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.aradio-berlin.org', port=443) at 0x7f62063cd220>, 'Connection to www.aradio-berlin.org timed out. (connect timeout=8)'))",
-    "categories": [
-      "Europe"
-    ],
-    "configuredUrl": "https://www.aradio-berlin.org/feed/",
-    "rawStatus": "warning",
-    "detailedState": "temporarily_restricted",
-    "failureKind": "temporary_restriction",
-    "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:41:40.882202+00:00",
-    "lastSuccessAt": "2026-09-10T21:40:55.404428+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:13.629473+00:00"
   },
   "abolition-media-https-www-abolitionmedia-noblogs-org-feed": {
     "name": "Abolition Media",
     "url": "https://www.abolitionmedia.noblogs.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:41.822457+00:00",
+    "lastChecked": "2026-09-11T12:17:14.621144+00:00",
     "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.abolitionmedia.noblogs.org', port=443): Max retries exceeded with url: /feed/ (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.abolitionmedia.noblogs.org'. (_ssl.c:1010)\")))",
     "categories": [
       "Global"
@@ -146,15 +152,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:41.822457+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:14.621144+00:00"
   },
   "anarchist-library-pl-https-pl-theanarchistlibrary-org-feed": {
     "name": "Anarchist Library (PL)",
     "url": "https://pl.theanarchistlibrary.org/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:44.469549+00:00",
+    "lastChecked": "2026-09-11T12:17:17.779450+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pl.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pl.theanarchistlibrary.org', port=443): Failed to resolve 'pl.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Libraries"
@@ -164,15 +170,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:44.469549+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:17.779450+00:00"
   },
   "anarchist-library-tr-https-tr-theanarchistlibrary-org-feed": {
     "name": "Anarchist Library (TR)",
     "url": "https://tr.theanarchistlibrary.org/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:44.813944+00:00",
+    "lastChecked": "2026-09-11T12:17:18.363173+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tr.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='tr.theanarchistlibrary.org', port=443): Failed to resolve 'tr.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Libraries"
@@ -182,15 +188,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:44.813944+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:18.363173+00:00"
   },
   "anarchist-news-https-morss-it-https-anarchistnews-org-rss-xml": {
     "name": "Anarchist News",
     "url": "https://morss.it/https://anarchistnews.org/rss.xml",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:45.296401+00:00",
+    "lastChecked": "2026-09-11T12:17:18.468226+00:00",
     "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='morss.it', port=443): Max retries exceeded with url: /https://anarchistnews.org/rss.xml (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='morss.it', port=443): Read timed out. (read timeout=15)\"))",
     "categories": [
       "Global"
@@ -200,8 +206,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 85,
-    "lastFailureAt": "2026-09-11T05:41:45.296401+00:00",
+    "consecutiveRestrictions": 86,
+    "lastFailureAt": "2026-09-11T12:17:18.468226+00:00",
     "lastSuccessAt": "2026-08-18T19:42:00.267111+00:00"
   },
   "anarkismo-africa-http-www-anarkismo-net-backend-topic-africa": {
@@ -209,8 +215,8 @@
     "url": "http://www.anarkismo.net/backend?topic=africa",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:45.556152+00:00",
-    "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?topic=africa (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))",
+    "lastChecked": "2026-09-11T12:17:19.018371+00:00",
+    "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?topic=africa (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))",
     "categories": [
       "Africa"
     ],
@@ -219,8 +225,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:41:45.556152+00:00",
+    "consecutiveRestrictions": 2,
+    "lastFailureAt": "2026-09-11T12:17:19.018371+00:00",
     "lastSuccessAt": "2026-09-10T21:41:00.701146+00:00"
   },
   "anarkismo-gender-http-www-anarkismo-net-backend-topic-gender": {
@@ -228,7 +234,7 @@
     "url": "http://www.anarkismo.net/backend?topic=gender",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:45.910456+00:00",
+    "lastChecked": "2026-09-11T12:17:19.082162+00:00",
     "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?topic=gender (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))",
     "categories": [
       "Antisexism"
@@ -238,8 +244,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:41:45.910456+00:00",
+    "consecutiveRestrictions": 2,
+    "lastFailureAt": "2026-09-11T12:17:19.082162+00:00",
     "lastSuccessAt": "2026-09-10T21:41:01.013918+00:00"
   },
   "anarkismo-international-http-www-anarkismo-net-backend-locale-en": {
@@ -247,7 +253,7 @@
     "url": "http://www.anarkismo.net/backend?locale=en",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:46.288402+00:00",
+    "lastChecked": "2026-09-11T12:17:19.101807+00:00",
     "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.anarkismo.net', port=443): Max retries exceeded with url: /backend?locale=en (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.anarkismo.net', port=443): Read timed out. (read timeout=15)\"))",
     "categories": [
       "Global"
@@ -257,8 +263,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:41:46.288402+00:00",
+    "consecutiveRestrictions": 2,
+    "lastFailureAt": "2026-09-11T12:17:19.101807+00:00",
     "lastSuccessAt": "2026-09-10T21:41:01.030656+00:00"
   },
   "antifa-bern-https-antifa-bern-ch-feed": {
@@ -266,7 +272,7 @@
     "url": "https://antifa-bern.ch/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:49.024336+00:00",
+    "lastChecked": "2026-09-11T12:17:21.635104+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='antifa-bern.ch', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='antifa-bern.ch', port=443): Failed to resolve 'antifa-bern.ch' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Antifascism"
@@ -276,40 +282,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:49.024336+00:00"
-  },
-  "antifa-cz-https-www-antifa-cz-rss-xml": {
-    "name": "Antifa.cz",
-    "url": "https://www.antifa.cz/rss.xml",
-    "status": "warning",
-    "ok": false,
-    "lastChecked": "2026-09-11T05:41:49.613783+00:00",
-    "httpStatus": 404,
-    "finalUrl": "https://antifa-cz.net/rss.xml",
-    "contentType": "text/html; charset=utf-8",
-    "error": "Unerwartete Weiterleitung auf eine andere Domain; manuelle PrÃ¼fung erforderlich.",
-    "categories": [
-      "Europe",
-      "Antifascism"
-    ],
-    "configuredUrl": "https://www.antifa.cz/rss.xml",
-    "rawStatus": "error",
-    "detailedState": "feed_broken_unconfirmed",
-    "failureKind": "suspicious_redirect",
-    "consecutiveFailures": 3,
-    "consecutiveRestrictions": 0,
-    "firstFailureAt": "2026-09-10T17:12:27.245762+00:00",
-    "lastFailureAt": "2026-09-11T05:41:49.613783+00:00",
-    "lastSuccessAt": "2026-07-28T17:57:36.105737+00:00",
-    "suspiciousRedirect": true
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:21.635104+00:00"
   },
   "asylum-magazine-https-asylummagazine-org-feed": {
     "name": "Asylum Magazine",
     "url": "https://asylummagazine.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:51.880142+00:00",
+    "lastChecked": "2026-09-11T12:17:24.354581+00:00",
     "httpStatus": 403,
     "finalUrl": "https://asylummagazine.org/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -322,15 +303,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:51.880142+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:24.354581+00:00"
   },
   "athens-indymedia-gr-https-athens-indymedia-org-rss": {
     "name": "Athens Indymedia (GR)",
     "url": "https://athens.indymedia.org/rss/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:51.901788+00:00",
+    "lastChecked": "2026-09-11T12:17:24.415190+00:00",
     "httpStatus": 429,
     "finalUrl": "https://athens.indymedia.org/rss/",
     "contentType": "text/html",
@@ -344,15 +325,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:51.901788+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:24.415190+00:00"
   },
   "avispa-midia-https-avispa-org-feed": {
     "name": "Avispa Midia",
     "url": "https://avispa.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:53.232135+00:00",
+    "lastChecked": "2026-09-11T12:17:25.035181+00:00",
     "httpStatus": 200,
     "finalUrl": "https://avispa.org/feed/",
     "contentType": "text/html; charset=utf-8",
@@ -369,8 +350,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 50,
-    "lastFailureAt": "2026-09-11T05:41:53.232135+00:00",
+    "consecutiveRestrictions": 51,
+    "lastFailureAt": "2026-09-11T12:17:25.035181+00:00",
     "lastSuccessAt": "2026-08-28T12:40:32.043060+00:00"
   },
   "bianet-kurd-https-bianet-org-rss-kurdi": {
@@ -378,7 +359,7 @@
     "url": "https://bianet.org/rss/kurdi",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:54.371400+00:00",
+    "lastChecked": "2026-09-11T12:17:25.773739+00:00",
     "httpStatus": 403,
     "finalUrl": "https://bianet.org/rss/kurdi",
     "contentType": "text/html; charset=UTF-8",
@@ -403,15 +384,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 219,
-    "lastFailureAt": "2026-09-11T05:41:54.371400+00:00"
+    "consecutiveRestrictions": 220,
+    "lastFailureAt": "2026-09-11T12:17:25.773739+00:00"
   },
   "bianet-t-rk-e-https-bianet-org-rss-bianet": {
     "name": "Bianet Türkçe",
     "url": "https://bianet.org/rss/bianet",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:54.407311+00:00",
+    "lastChecked": "2026-09-11T12:17:26.016285+00:00",
     "httpStatus": 403,
     "finalUrl": "https://bianet.org/rss/bianet",
     "contentType": "text/html; charset=UTF-8",
@@ -428,15 +409,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 219,
-    "lastFailureAt": "2026-09-11T05:41:54.407311+00:00"
+    "consecutiveRestrictions": 220,
+    "lastFailureAt": "2026-09-11T12:17:26.016285+00:00"
   },
   "biblioteca-anarquista-pt-https-pt-theanarchistlibrary-org-feed": {
     "name": "Biblioteca Anarquista (PT)",
     "url": "https://pt.theanarchistlibrary.org/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:41:55.150052+00:00",
+    "lastChecked": "2026-09-11T12:17:26.176618+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pt.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pt.theanarchistlibrary.org', port=443): Failed to resolve 'pt.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Libraries"
@@ -446,34 +427,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:41:55.150052+00:00"
-  },
-  "black-rose-rosa-negra-https-blackrosefed-org-feed": {
-    "name": "Black Rose / Rosa Negra",
-    "url": "https://blackrosefed.org/feed/",
-    "status": "warning",
-    "ok": false,
-    "lastChecked": "2026-09-11T05:42:03.865383+00:00",
-    "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.blackrosefed.org', port=443): Max retries exceeded with url: /feed/ (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='www.blackrosefed.org', port=443): Read timed out. (read timeout=15)\"))",
-    "categories": [
-      "North America"
-    ],
-    "configuredUrl": "https://blackrosefed.org/feed/",
-    "rawStatus": "warning",
-    "detailedState": "temporarily_restricted",
-    "failureKind": "temporary_restriction",
-    "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:42:03.865383+00:00",
-    "lastSuccessAt": "2026-09-10T21:41:07.008219+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:26.176618+00:00"
   },
   "crimethinc-events-https-morss-it-https-crimethinc-com-categories-events-feed": {
     "name": "CrimethInc. (Events)",
     "url": "https://morss.it/https://crimethinc.com/categories/events/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:16.519386+00:00",
+    "lastChecked": "2026-09-11T12:17:39.257144+00:00",
     "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='morss.it', port=443): Max retries exceeded with url: /https://crimethinc.com/categories/events/feed (Caused by ReadTimeoutError(\"HTTPSConnectionPool(host='morss.it', port=443): Read timed out. (read timeout=15)\"))",
     "categories": [
       "Radar"
@@ -483,8 +445,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 85,
-    "lastFailureAt": "2026-09-11T05:42:16.519386+00:00",
+    "consecutiveRestrictions": 86,
+    "lastFailureAt": "2026-09-11T12:17:39.257144+00:00",
     "lastSuccessAt": "2026-08-18T19:42:10.675205+00:00"
   },
   "ddosecrets-https-ddosecrets-com-api-php-action-featuredfeed-feed-rss": {
@@ -492,8 +454,8 @@
     "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:18.591201+00:00",
-    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='ddosecrets.com', port=443): Max retries exceeded with url: /api.php?action=featuredfeed&feed=rss (Caused by ConnectTimeoutError(<HTTPSConnection(host='ddosecrets.com', port=443) at 0x7f62063e9160>, 'Connection to ddosecrets.com timed out. (connect timeout=8)'))",
+    "lastChecked": "2026-09-11T12:17:41.490118+00:00",
+    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='ddosecrets.com', port=443): Max retries exceeded with url: /api.php?action=featuredfeed&feed=rss (Caused by ConnectTimeoutError(<HTTPSConnection(host='ddosecrets.com', port=443) at 0x7f92e255ac00>, 'Connection to ddosecrets.com timed out. (connect timeout=8)'))",
     "categories": [
       "Cyberactivism"
     ],
@@ -502,15 +464,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:18.591201+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:41.490118+00:00"
   },
   "desinform-monos-https-desinformemonos-org-feed": {
     "name": "Desinformémonos",
     "url": "https://desinformemonos.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:20.246984+00:00",
+    "lastChecked": "2026-09-11T12:17:42.866374+00:00",
     "httpStatus": 200,
     "finalUrl": "https://desinformemonos.org/feed/",
     "contentType": "text/html; charset=utf-8",
@@ -523,15 +485,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 210,
-    "lastFailureAt": "2026-09-11T05:42:20.246984+00:00"
+    "consecutiveRestrictions": 211,
+    "lastFailureAt": "2026-09-11T12:17:42.866374+00:00"
   },
   "desmog-https-www-desmog-com-feed": {
     "name": "Desmog",
     "url": "https://www.desmog.com/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:20.374055+00:00",
+    "lastChecked": "2026-09-11T12:17:43.350317+00:00",
     "httpStatus": 403,
     "finalUrl": "https://www.desmog.com/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -544,15 +506,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:20.374055+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:43.350317+00:00"
   },
   "earth-first-https-earthfirstjournal-news-feed": {
     "name": "Earth First!",
     "url": "https://earthfirstjournal.news/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:20.615580+00:00",
+    "lastChecked": "2026-09-11T12:17:44.165897+00:00",
     "httpStatus": 520,
     "finalUrl": "https://earthfirstjournal.news/feed/",
     "contentType": "application/problem+json; charset=utf-8",
@@ -565,15 +527,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:20.615580+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:44.165897+00:00"
   },
   "endnotes-https-endnotes-org-uk-feed-xml": {
     "name": "Endnotes",
     "url": "https://endnotes.org.uk/feed.xml",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:23.411221+00:00",
+    "lastChecked": "2026-09-11T12:17:46.284996+00:00",
     "warning": "Abruffehler: HTTPSConnectionPool(host='www.endnotes.org.uk', port=443): Max retries exceeded with url: /feed.xml (Caused by ResponseError('too many 500 error responses'))",
     "categories": [
       "Theory & Strategy"
@@ -583,15 +545,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:23.411221+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:46.284996+00:00"
   },
   "feminist-anti-war-resistance-https-femagainstwar-org-feed": {
     "name": "Feminist Anti-War Resistance",
     "url": "https://femagainstwar.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:29.805678+00:00",
+    "lastChecked": "2026-09-11T12:17:51.115258+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='femagainstwar.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='femagainstwar.org', port=443): Failed to resolve 'femagainstwar.org' ([Errno -5] No address associated with hostname)\"))",
     "categories": [
       "Queer-Feminism"
@@ -601,15 +563,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:29.805678+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:51.115258+00:00"
   },
   "freedom-news-https-freedomnews-org-uk-feed": {
     "name": "Freedom News",
     "url": "https://freedomnews.org.uk/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:31.529289+00:00",
+    "lastChecked": "2026-09-11T12:17:51.746324+00:00",
     "httpStatus": 403,
     "finalUrl": "https://freedomnews.org.uk/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -622,8 +584,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 205,
-    "lastFailureAt": "2026-09-11T05:42:31.529289+00:00",
+    "consecutiveRestrictions": 206,
+    "lastFailureAt": "2026-09-11T12:17:51.746324+00:00",
     "lastSuccessAt": "2026-07-25T21:14:54.657193+00:00"
   },
   "iww-global-https-www-iww-org-feed": {
@@ -631,7 +593,7 @@
     "url": "https://www.iww.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:42.612473+00:00",
+    "lastChecked": "2026-09-11T12:17:56.117308+00:00",
     "httpStatus": 403,
     "finalUrl": "https://www.iww.org/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -644,8 +606,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 32,
-    "lastFailureAt": "2026-09-11T05:42:42.612473+00:00",
+    "consecutiveRestrictions": 33,
+    "lastFailureAt": "2026-09-11T12:17:56.117308+00:00",
     "lastSuccessAt": "2026-09-02T21:46:17.705128+00:00"
   },
   "jineoloj-academy-https-jineoloji-eu-en-feed": {
@@ -653,7 +615,7 @@
     "url": "https://jineoloji.eu/en/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:42.742324+00:00",
+    "lastChecked": "2026-09-11T12:17:56.479563+00:00",
     "httpStatus": 403,
     "finalUrl": "https://jineoloji.eu/en/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -666,8 +628,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 205,
-    "lastFailureAt": "2026-09-11T05:42:42.742324+00:00",
+    "consecutiveRestrictions": 206,
+    "lastFailureAt": "2026-09-11T12:17:56.479563+00:00",
     "lastSuccessAt": "2026-07-25T21:14:58.525139+00:00"
   },
   "kodao-productions-https-kodao-org-feed": {
@@ -675,7 +637,7 @@
     "url": "https://kodao.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:43.682176+00:00",
+    "lastChecked": "2026-09-11T12:17:57.044115+00:00",
     "httpStatus": 403,
     "finalUrl": "https://kodao.org/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -688,8 +650,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 205,
-    "lastFailureAt": "2026-09-11T05:42:43.682176+00:00",
+    "consecutiveRestrictions": 206,
+    "lastFailureAt": "2026-09-11T12:17:57.044115+00:00",
     "lastSuccessAt": "2026-07-25T21:14:59.233661+00:00"
   },
   "lausan-hk-https-lausan-hk-feed": {
@@ -697,8 +659,8 @@
     "url": "https://lausan.hk/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:45.708860+00:00",
-    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7f62064370e0>, 'Connection to lausan.hk timed out. (connect timeout=8)'))",
+    "lastChecked": "2026-09-11T12:17:58.452016+00:00",
+    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7f92e2378c20>, 'Connection to lausan.hk timed out. (connect timeout=8)'))",
     "categories": [
       "Asia",
       "Anticolonialism"
@@ -708,15 +670,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:45.708860+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:58.452016+00:00"
   },
   "libreria-anarchica-it-https-it-theanarchistlibrary-org-feed": {
     "name": "Libreria Anarchica (IT)",
     "url": "https://it.theanarchistlibrary.org/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:46.181460+00:00",
+    "lastChecked": "2026-09-11T12:17:58.841267+00:00",
     "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='it.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'it.theanarchistlibrary.org'. (_ssl.c:1010)\")))",
     "categories": [
       "Libraries"
@@ -726,15 +688,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:46.181460+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:17:58.841267+00:00"
   },
   "mad-in-america-https-www-madinamerica-com-feed": {
     "name": "Mad in America",
     "url": "https://www.madinamerica.com/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:47.047514+00:00",
+    "lastChecked": "2026-09-11T12:17:59.180756+00:00",
     "httpStatus": 403,
     "finalUrl": "https://www.madinamerica.com/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -747,8 +709,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 205,
-    "lastFailureAt": "2026-09-11T05:42:47.047514+00:00",
+    "consecutiveRestrictions": 206,
+    "lastFailureAt": "2026-09-11T12:17:59.180756+00:00",
     "lastSuccessAt": "2026-07-25T21:15:01.971512+00:00"
   },
   "mietergewerkschaft-berlin-https-mietergewerkschaft-berlin-feed": {
@@ -756,7 +718,7 @@
     "url": "https://mietergewerkschaft.berlin/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:48.437829+00:00",
+    "lastChecked": "2026-09-11T12:18:00.989606+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='mietergewerkschaft.berlin', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='mietergewerkschaft.berlin', port=443): Failed to resolve 'mietergewerkschaft.berlin' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Squatting & Housing"
@@ -766,15 +728,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:48.437829+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:00.989606+00:00"
   },
   "ni-una-menos-https-niunamenos-org-ar-feed": {
     "name": "Ni Una Menos",
     "url": "https://niunamenos.org.ar/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:49.982583+00:00",
+    "lastChecked": "2026-09-11T12:18:02.933780+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='niunamenos.org.ar', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='niunamenos.org.ar', port=443): Failed to resolve 'niunamenos.org.ar' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Antisexism"
@@ -784,15 +746,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:49.982583+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:02.933780+00:00"
   },
   "no-one-is-illegal-https-noii-van-org-feed": {
     "name": "No One Is Illegal",
     "url": "https://noii-van.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:50.243308+00:00",
+    "lastChecked": "2026-09-11T12:18:03.003705+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='noii-van.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='noii-van.org', port=443): Failed to resolve 'noii-van.org' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "No Borders"
@@ -802,15 +764,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:50.243308+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:03.003705+00:00"
   },
   "pambazuka-news-https-www-pambazuka-org-rss-xml": {
     "name": "Pambazuka News",
     "url": "https://www.pambazuka.org/rss.xml",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:52.320672+00:00",
+    "lastChecked": "2026-09-11T12:18:04.521673+00:00",
     "httpStatus": 403,
     "finalUrl": "https://www.pambazuka.org/rss.xml",
     "contentType": "text/html; charset=UTF-8",
@@ -824,8 +786,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 16,
-    "lastFailureAt": "2026-09-11T05:42:52.320672+00:00",
+    "consecutiveRestrictions": 17,
+    "lastFailureAt": "2026-09-11T12:18:04.521673+00:00",
     "lastSuccessAt": "2026-09-06T21:17:47.731336+00:00"
   },
   "perspektive-online-de-https-www-perspektive-online-de-feed": {
@@ -833,7 +795,7 @@
     "url": "https://www.perspektive-online.de/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:52.779252+00:00",
+    "lastChecked": "2026-09-11T12:18:05.036409+00:00",
     "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='www.perspektive-online.de', port=443): Max retries exceeded with url: /feed/ (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)')))",
     "categories": [
       "Europe"
@@ -843,15 +805,36 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:42:52.779252+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:05.036409+00:00"
+  },
+  "peta-deutschland-https-www-peta-de-feed": {
+    "name": "PETA Deutschland",
+    "url": "https://www.peta.de/feed/",
+    "status": "warning",
+    "ok": false,
+    "lastChecked": "2026-09-11T12:18:05.149192+00:00",
+    "warning": "Abruffehler: HTTPSConnectionPool(host='www.peta.de', port=443): Max retries exceeded with url: /feed/ (Caused by ResponseError('too many 500 error responses'))",
+    "categories": [
+      "Animal Liberation",
+      "Europe"
+    ],
+    "pageUrl": "https://www.peta.de/",
+    "configuredUrl": "https://www.peta.de/feed/",
+    "rawStatus": "warning",
+    "detailedState": "temporarily_restricted",
+    "failureKind": "temporary_restriction",
+    "consecutiveFailures": 0,
+    "consecutiveRestrictions": 1,
+    "lastFailureAt": "2026-09-11T12:18:05.149192+00:00",
+    "lastSuccessAt": "2026-09-11T05:42:52.830376+00:00"
   },
   "pressin-kurd-https-pressin-info-kurdi-rss-latest-posts": {
     "name": "Pressin Kurdî",
     "url": "https://pressin.info/kurdi/rss/latest-posts",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:42:54.339555+00:00",
+    "lastChecked": "2026-09-11T12:18:06.326500+00:00",
     "httpStatus": 403,
     "finalUrl": "https://pressin.info/kurdi/rss/latest-posts",
     "contentType": "text/html; charset=UTF-8",
@@ -867,40 +850,16 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 62,
-    "lastFailureAt": "2026-09-11T05:42:54.339555+00:00",
+    "consecutiveRestrictions": 63,
+    "lastFailureAt": "2026-09-11T12:18:06.326500+00:00",
     "lastSuccessAt": "2026-08-24T14:06:05.345967+00:00"
-  },
-  "sicilia-libertaria-https-www-sicilialibertaria-it-feed": {
-    "name": "Sicilia Libertaria",
-    "url": "https://www.sicilialibertaria.it/feed/",
-    "status": "warning",
-    "ok": false,
-    "lastChecked": "2026-09-11T05:42:59.481274+00:00",
-    "warning": "Temporäres Verbindungsproblem: HTTPSConnectionPool(host='www.sicilialibertaria.it', port=443): Max retries exceeded with url: /feed/ (Caused by NewConnectionError(\"HTTPSConnection(host='www.sicilialibertaria.it', port=443): Failed to establish a new connection: [Errno 101] Network is unreachable\"))",
-    "categories": [
-      "Europe",
-      "Theory & Strategy",
-      "Anticapitalism",
-      "No War",
-      "Antifascism"
-    ],
-    "pageUrl": "https://www.sicilialibertaria.it/",
-    "configuredUrl": "https://www.sicilialibertaria.it/feed/",
-    "rawStatus": "warning",
-    "detailedState": "temporarily_restricted",
-    "failureKind": "temporary_restriction",
-    "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:42:59.481274+00:00",
-    "lastSuccessAt": "2026-09-10T21:41:42.044743+00:00"
   },
   "thozhilalar-koodam-india-https-tnlabor-in-feed": {
     "name": "Thozhilalar Koodam (India)",
     "url": "https://tnlabor.in/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:04.269696+00:00",
+    "lastChecked": "2026-09-11T12:18:13.070191+00:00",
     "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tnlabor.in', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='tnlabor.in', port=443): Failed to resolve 'tnlabor.in' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Asia",
@@ -911,15 +870,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:43:04.269696+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:13.070191+00:00"
   },
   "transnational-institute-https-www-tni-org-en": {
     "name": "Transnational Institute",
     "url": "https://www.tni.org/en",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:05.635920+00:00",
+    "lastChecked": "2026-09-11T12:18:14.020786+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.tni.org/en",
     "contentType": "text/html; charset=utf-8",
@@ -943,7 +902,7 @@
     "url": "http://www.umanitanova.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:07.348889+00:00",
+    "lastChecked": "2026-09-11T12:18:14.590360+00:00",
     "error": "DNS-/Domainfehler: HTTPConnectionPool(host='www.umanitanova.org', port=80): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPConnection(host='www.umanitanova.org', port=80): Failed to resolve 'www.umanitanova.org' ([Errno -2] Name or service not known)\"))",
     "categories": [
       "Europe",
@@ -959,15 +918,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:43:07.348889+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:14.590360+00:00"
   },
   "vagancio-buenos-aires-https-vagancio-partidopirata-com-ar-feed-rss": {
     "name": "Vagancio Buenos Aires",
     "url": "https://vagancio.partidopirata.com.ar/feed/rss",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:08.756072+00:00",
+    "lastChecked": "2026-09-11T12:18:14.943779+00:00",
     "warning": "Abruffehler: HTTPSConnectionPool(host='vagancio.partidopirata.com.ar', port=443): Max retries exceeded with url: /feed/rss (Caused by ResponseError('too many 502 error responses'))",
     "categories": [
       "Radar"
@@ -978,8 +937,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 1,
-    "lastFailureAt": "2026-09-11T05:43:08.756072+00:00",
+    "consecutiveRestrictions": 2,
+    "lastFailureAt": "2026-09-11T12:18:14.943779+00:00",
     "lastSuccessAt": "2026-09-10T21:41:46.627556+00:00"
   },
   "war-resisters-international-https-wri-irg-org-en-feed": {
@@ -987,7 +946,7 @@
     "url": "https://wri-irg.org/en/feed",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:10.251379+00:00",
+    "lastChecked": "2026-09-11T12:18:15.533455+00:00",
     "httpStatus": 200,
     "finalUrl": "https://wri-irg.org/en/feed",
     "contentType": "text/html; charset=UTF-8",
@@ -1000,15 +959,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 209,
-    "lastFailureAt": "2026-09-11T05:43:10.251379+00:00"
+    "consecutiveRestrictions": 210,
+    "lastFailureAt": "2026-09-11T12:18:15.533455+00:00"
   },
   "znet-international-https-znetwork-org-feed": {
     "name": "ZNet (International)",
     "url": "https://znetwork.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:13.269303+00:00",
+    "lastChecked": "2026-09-11T12:18:17.355125+00:00",
     "warning": "Abruffehler: HTTPSConnectionPool(host='znetwork.org', port=443): Max retries exceeded with url: /feed/ (Caused by ResponseError('too many 502 error responses'))",
     "categories": [
       "Global",
@@ -1021,8 +980,8 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 2,
-    "lastFailureAt": "2026-09-11T05:43:13.269303+00:00",
+    "consecutiveRestrictions": 3,
+    "lastFailureAt": "2026-09-11T12:18:17.355125+00:00",
     "lastSuccessAt": "2026-09-10T17:13:15.756617+00:00"
   },
   "zwangsr-umung-verhindern-berlin-https-zwangsraeumungverhindern-org-feed": {
@@ -1030,8 +989,8 @@
     "url": "https://zwangsraeumungverhindern.org/feed/",
     "status": "warning",
     "ok": false,
-    "lastChecked": "2026-09-11T05:43:13.493546+00:00",
-    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='zwangsraeumungverhindern.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='zwangsraeumungverhindern.org', port=443) at 0x7f62061f8170>, 'Connection to zwangsraeumungverhindern.org timed out. (connect timeout=8)'))",
+    "lastChecked": "2026-09-11T12:18:17.783567+00:00",
+    "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='zwangsraeumungverhindern.org', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='zwangsraeumungverhindern.org', port=443) at 0x7f92e369f230>, 'Connection to zwangsraeumungverhindern.org timed out. (connect timeout=8)'))",
     "categories": [
       "Squatting & Housing"
     ],
@@ -1040,15 +999,15 @@
     "detailedState": "temporarily_restricted",
     "failureKind": "temporary_restriction",
     "consecutiveFailures": 0,
-    "consecutiveRestrictions": 220,
-    "lastFailureAt": "2026-09-11T05:43:13.493546+00:00"
+    "consecutiveRestrictions": 221,
+    "lastFailureAt": "2026-09-11T12:18:17.783567+00:00"
   },
   "a-las-barricadas-es-https-www-alasbarricadas-org-noticias-rss-xml": {
     "name": "A Las Barricadas (ES)",
     "url": "https://www.alasbarricadas.org/noticias/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:40.881492+00:00",
+    "lastChecked": "2026-09-11T12:17:13.627952+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.alasbarricadas.org/noticias/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -1069,14 +1028,36 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-18T19:41:55.087791+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:40.881492+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:13.627952+00:00"
+  },
+  "a-radio-berlin-https-www-aradio-berlin-org-feed": {
+    "name": "A-Radio Berlin",
+    "url": "https://www.aradio-berlin.org/feed/",
+    "status": "ok",
+    "ok": true,
+    "lastChecked": "2026-09-11T12:17:13.631426+00:00",
+    "httpStatus": 200,
+    "finalUrl": "https://www.aradio-berlin.org/feed/",
+    "contentType": "application/rss+xml; charset=UTF-8",
+    "feedType": "declared-feed",
+    "categories": [
+      "Europe"
+    ],
+    "configuredUrl": "https://www.aradio-berlin.org/feed/",
+    "rawStatus": "ok",
+    "detailedState": "recovered",
+    "failureKind": "available",
+    "consecutiveFailures": 0,
+    "consecutiveRestrictions": 0,
+    "lastFailureAt": "2026-09-11T05:41:40.882202+00:00",
+    "lastSuccessAt": "2026-09-11T12:17:13.631426+00:00"
   },
   "a-n-a-brasil-https-noticiasanarquistas-noblogs-org-feed": {
     "name": "A.N.A. Brasil",
     "url": "https://noticiasanarquistas.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:40.883326+00:00",
+    "lastChecked": "2026-09-11T12:17:13.632575+00:00",
     "httpStatus": 200,
     "finalUrl": "https://noticiasanarquistas.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1097,14 +1078,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:20.224795+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:40.883326+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:13.632575+00:00"
   },
   "abahlali-basemjondolo-south-africa-https-abahlali-org-feed": {
     "name": "Abahlali baseMjondolo (South Africa)",
     "url": "https://abahlali.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:40.886605+00:00",
+    "lastChecked": "2026-09-11T12:17:13.633265+00:00",
     "httpStatus": 200,
     "finalUrl": "https://abahlali.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1118,14 +1099,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:40.886605+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:13.633265+00:00"
   },
   "abc-belarus-https-abc-belarus-org-feed-rss2-lang-en": {
     "name": "ABC Belarus",
     "url": "https://abc-belarus.org/?feed=rss2&lang=en",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:40.887483+00:00",
+    "lastChecked": "2026-09-11T12:17:13.634233+00:00",
     "httpStatus": 200,
     "finalUrl": "https://abc-belarus.org/feed/?lang=en",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1139,14 +1120,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:40.887483+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:13.634233+00:00"
   },
   "abolish-frontex-https-abolishfrontex-org-feed": {
     "name": "Abolish Frontex",
     "url": "https://abolishfrontex.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:40.888488+00:00",
+    "lastChecked": "2026-09-11T12:17:13.635184+00:00",
     "httpStatus": 200,
     "finalUrl": "https://abolishfrontex.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1160,14 +1141,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:40.888488+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:13.635184+00:00"
   },
   "abolition-journal-https-abolitionjournal-org-feed": {
     "name": "Abolition Journal",
     "url": "https://abolitionjournal.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:41.594206+00:00",
+    "lastChecked": "2026-09-11T12:17:14.521893+00:00",
     "httpStatus": 200,
     "finalUrl": "https://abolitionjournal.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1182,14 +1163,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:35.817069+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:41.594206+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:14.521893+00:00"
   },
   "access-now-https-www-accessnow-org-feed": {
     "name": "Access Now",
     "url": "https://www.accessnow.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.267357+00:00",
+    "lastChecked": "2026-09-11T12:17:14.691097+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.accessnow.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1208,14 +1189,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:42.267357+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:14.691097+00:00"
   },
   "act-for-freedom-now-https-actforfree-noblogs-org-feed": {
     "name": "Act for Freedom Now!",
     "url": "https://actforfree.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.285729+00:00",
+    "lastChecked": "2026-09-11T12:17:14.738494+00:00",
     "httpStatus": 200,
     "finalUrl": "https://actforfree.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1234,14 +1215,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:22.175730+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:42.285729+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:14.738494+00:00"
   },
   "africa-is-a-country-https-africasacountry-com-feed": {
     "name": "Africa Is a Country",
     "url": "https://africasacountry.com/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.310301+00:00",
+    "lastChecked": "2026-09-11T12:17:15.370911+00:00",
     "httpStatus": 200,
     "finalUrl": "https://africasacountry.com/feed",
     "contentType": "application/xml",
@@ -1260,14 +1241,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:42.310301+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.370911+00:00"
   },
   "african-arguments-https-africanarguments-org-feed": {
     "name": "African Arguments",
     "url": "https://africanarguments.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.391605+00:00",
+    "lastChecked": "2026-09-11T12:17:15.646219+00:00",
     "httpStatus": 200,
     "finalUrl": "https://africanarguments.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1289,14 +1270,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:42.391605+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.646219+00:00"
   },
   "african-feminism-https-africanfeminism-com-feed": {
     "name": "African Feminism",
     "url": "https://africanfeminism.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.530679+00:00",
+    "lastChecked": "2026-09-11T12:17:15.676917+00:00",
     "httpStatus": 200,
     "finalUrl": "https://africanfeminism.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1314,14 +1295,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:42.530679+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.676917+00:00"
   },
   "agencia-tierra-viva-https-agenciatierraviva-com-ar-feed": {
     "name": "Agencia Tierra Viva",
     "url": "https://agenciatierraviva.com.ar/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.805424+00:00",
+    "lastChecked": "2026-09-11T12:17:15.871078+00:00",
     "httpStatus": 200,
     "finalUrl": "https://agenciatierraviva.com.ar/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1343,14 +1324,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-25T14:02:55.996554+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:42.805424+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.871078+00:00"
   },
   "agency-https-www-anarchistagency-com-feed": {
     "name": "Agency",
     "url": "https://www.anarchistagency.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:42.954678+00:00",
+    "lastChecked": "2026-09-11T12:17:15.888417+00:00",
     "httpStatus": 200,
     "finalUrl": "https://anarchistagency.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1365,14 +1346,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T12:07:11.047897+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:42.954678+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.888417+00:00"
   },
   "agenda-des-luttes-rouen-https-agenda-rouen-luttes-org-feed-rss": {
     "name": "Agenda des Luttes Rouen",
     "url": "https://agenda.rouen-luttes.org/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:43.009331+00:00",
+    "lastChecked": "2026-09-11T12:17:15.928053+00:00",
     "httpStatus": 200,
     "finalUrl": "https://agenda.rouen-luttes.org/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -1387,14 +1368,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:43.009331+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.928053+00:00"
   },
   "ag-ncia-p-blica-https-apublica-org-feed": {
     "name": "Agência Pública",
     "url": "https://apublica.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:43.265325+00:00",
+    "lastChecked": "2026-09-11T12:17:15.973332+00:00",
     "httpStatus": 200,
     "finalUrl": "https://apublica.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1415,14 +1396,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:43.265325+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:15.973332+00:00"
   },
   "akce-nolog-praha-https-akce-nolog-cz-feed-rss": {
     "name": "Akce Nolog Praha",
     "url": "https://akce.nolog.cz/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:43.304344+00:00",
+    "lastChecked": "2026-09-11T12:17:16.445360+00:00",
     "httpStatus": 200,
     "finalUrl": "https://akce.nolog.cz/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -1437,14 +1418,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:43.304344+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:16.445360+00:00"
   },
   "alerta-gr-https-www-alerta-gr-feed": {
     "name": "Alerta (GR)",
     "url": "https://www.alerta.gr/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:43.392135+00:00",
+    "lastChecked": "2026-09-11T12:17:16.505301+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.alerta.gr/feed",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1464,14 +1445,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-26T02:43:25.724453+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:43.392135+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:16.505301+00:00"
   },
   "alf-press-office-north-america-https-animalliberationpressoffice-org-naalpo-feed": {
     "name": "ALF Press Office (North America)",
     "url": "https://animalliberationpressoffice.org/NAALPO/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:43.698902+00:00",
+    "lastChecked": "2026-09-11T12:17:17.306189+00:00",
     "httpStatus": 200,
     "finalUrl": "https://animalliberationpressoffice.org/NAALPO/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1487,14 +1468,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:43.698902+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:17.306189+00:00"
   },
   "al-montpellier-https-www-aleale-org-feed-rss": {
     "name": "ALÉ Montpellier",
     "url": "https://www.aleale.org/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.004695+00:00",
+    "lastChecked": "2026-09-11T12:17:17.368825+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.aleale.org/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -1510,14 +1491,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-18T02:35:51.283953+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:44.004695+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:17.368825+00:00"
   },
   "anarchist-black-cross-https-www-abcf-net-feed": {
     "name": "Anarchist Black Cross",
     "url": "https://www.abcf.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.007714+00:00",
+    "lastChecked": "2026-09-11T12:17:17.645665+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.abcf.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1533,14 +1514,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:44.007714+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:17.645665+00:00"
   },
   "anarchist-communist-group-https-www-anarchistcommunism-org-feed": {
     "name": "Anarchist Communist Group",
     "url": "https://www.anarchistcommunism.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.367670+00:00",
+    "lastChecked": "2026-09-11T12:17:17.703591+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anarchistcommunism.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1554,22 +1535,21 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:44.367670+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:17.703591+00:00"
   },
   "anarchist-federation-https-www-anarchistfederation-net-feed": {
     "name": "Anarchist Federation",
     "url": "https://www.anarchistfederation.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.466669+00:00",
+    "lastChecked": "2026-09-11T12:17:17.735333+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anarchistfederation.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
     "feedType": "declared-feed",
     "categories": [
       "Global",
-      "Movement News",
-      "Queer-Feminism"
+      "Movement News"
     ],
     "pageUrl": "https://www.anarchistfederation.net/",
     "configuredUrl": "https://www.anarchistfederation.net/feed/",
@@ -1579,14 +1559,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-04T17:06:20.037800+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:44.466669+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:17.735333+00:00"
   },
   "anarchist-library-ru-https-ru-anarchistlibraries-net-feed": {
     "name": "Anarchist Library (RU)",
     "url": "https://ru.anarchistlibraries.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.480444+00:00",
+    "lastChecked": "2026-09-11T12:17:18.129932+00:00",
     "httpStatus": 200,
     "finalUrl": "https://ru.anarchistlibraries.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1604,14 +1584,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T20:24:41.674970+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:44.480444+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:18.129932+00:00"
   },
   "anarchist-library-sv-https-www-anarkistiskabiblioteket-se-feed": {
     "name": "Anarchist Library (SV)",
     "url": "https://www.anarkistiskabiblioteket.se/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:44.741237+00:00",
+    "lastChecked": "2026-09-11T12:17:18.172101+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anarkistiskabiblioteket.se/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1629,14 +1609,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T20:24:41.758760+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:44.741237+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:18.172101+00:00"
   },
   "anarchistische-bibliothek-de-https-de-anarchistlibraries-net-feed": {
     "name": "Anarchistische Bibliothek (DE)",
     "url": "https://de.anarchistlibraries.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:45.459921+00:00",
+    "lastChecked": "2026-09-11T12:17:18.928111+00:00",
     "httpStatus": 200,
     "finalUrl": "https://de.anarchistlibraries.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1650,14 +1630,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:45.459921+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:18.928111+00:00"
   },
   "anarres-info-https-anarresinfo-org-feed": {
     "name": "Anarres Info",
     "url": "https://anarresinfo.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:46.579088+00:00",
+    "lastChecked": "2026-09-11T12:17:19.368677+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anarresinfo.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1677,14 +1657,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-09T17:24:47.720028+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:46.579088+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:19.368677+00:00"
   },
   "anar-ist-haberler-https-www-anarsisthaberler-net-feed": {
     "name": "Anarşist Haberler",
     "url": "https://www.anarsisthaberler.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:46.909664+00:00",
+    "lastChecked": "2026-09-11T12:17:19.490168+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anarsisthaberler.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1705,14 +1685,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-04T17:06:22.078260+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:46.909664+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:19.490168+00:00"
   },
   "anf-english-kurdistan-https-english-anf-news-com-feed-rss": {
     "name": "ANF English (Kurdistan)",
     "url": "https://english.anf-news.com/feed.rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:47.542776+00:00",
+    "lastChecked": "2026-09-11T12:17:20.142365+00:00",
     "httpStatus": 200,
     "finalUrl": "https://english.anf-news.com/feed.rss",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1723,8 +1703,8 @@
       "Anti-Rep & Prisons",
       "Antisexism",
       "Demonstrations",
-      "Eco-Anarchism",
       "No War",
+      "Eco-Anarchism",
       "Queer-Feminism"
     ],
     "pageUrl": "https://english.anf-news.com/",
@@ -1735,14 +1715,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T21:02:45.371995+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:47.542776+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:20.142365+00:00"
   },
   "angryworkers-https-angryworkers-org-feed": {
     "name": "AngryWorkers",
     "url": "https://angryworkers.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:47.828102+00:00",
+    "lastChecked": "2026-09-11T12:17:20.182940+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.angryworkers.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1756,14 +1736,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:47.828102+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:20.182940+00:00"
   },
   "animal-aid-uk-https-www-animalaid-org-uk-feed": {
     "name": "Animal Aid (UK)",
     "url": "https://www.animalaid.org.uk/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:47.865088+00:00",
+    "lastChecked": "2026-09-11T12:17:20.397495+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.animalaid.org.uk/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1778,14 +1758,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:47.865088+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:20.397495+00:00"
   },
   "animal-equality-deutschland-https-animalequality-de-feed": {
     "name": "Animal Equality Deutschland",
     "url": "https://animalequality.de/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:48.053293+00:00",
+    "lastChecked": "2026-09-11T12:17:20.635685+00:00",
     "httpStatus": 200,
     "finalUrl": "https://animalequality.de/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1800,14 +1780,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:48.053293+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:20.635685+00:00"
   },
   "animal-rising-https-www-animalrising-org-blog-feed-xml": {
     "name": "Animal Rising",
     "url": "https://www.animalrising.org/blog-feed.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:48.333561+00:00",
+    "lastChecked": "2026-09-11T12:17:20.861850+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.animalrising.org/blog-feed.xml",
     "contentType": "text/xml; charset=UTF-8",
@@ -1825,14 +1805,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:48.333561+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:20.861850+00:00"
   },
   "anred-argentina-https-www-anred-org-feed": {
     "name": "ANRed (Argentina)",
     "url": "https://www.anred.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:48.393456+00:00",
+    "lastChecked": "2026-09-11T12:17:21.132509+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.anred.org/feed/",
     "contentType": "application/xml",
@@ -1842,10 +1822,10 @@
       "Movement News",
       "Labor Struggles",
       "Squatting & Housing",
-      "Indigenous Struggles",
       "Demonstrations",
-      "Queer-Feminism",
-      "No War"
+      "Indigenous Struggles",
+      "No War",
+      "Queer-Feminism"
     ],
     "pageUrl": "https://www.anred.org/",
     "configuredUrl": "https://www.anred.org/feed/",
@@ -1855,14 +1835,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-08T05:41:03.394711+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:48.393456+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:21.132509+00:00"
   },
   "antifa-infoblatt-https-www-antifainfoblatt-de-rss-xml": {
     "name": "Antifa Infoblatt",
     "url": "https://www.antifainfoblatt.de/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:49.142165+00:00",
+    "lastChecked": "2026-09-11T12:17:21.976915+00:00",
     "httpStatus": 200,
     "finalUrl": "https://antifainfoblatt.de/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -1878,14 +1858,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-09T08:09:28.557417+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:49.142165+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:21.976915+00:00"
   },
   "antimilitarismus-https-antimilitarismus-noblogs-org-feed": {
     "name": "Antimilitarismus",
     "url": "https://antimilitarismus.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:50.097482+00:00",
+    "lastChecked": "2026-09-11T12:17:22.443730+00:00",
     "httpStatus": 200,
     "finalUrl": "https://antimilitarismus.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1904,14 +1884,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:30.305864+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:50.097482+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:22.443730+00:00"
   },
   "apatris-gr-https-apatris-org-feed": {
     "name": "Apatris (GR)",
     "url": "https://apatris.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:50.758596+00:00",
+    "lastChecked": "2026-09-11T12:17:23.249178+00:00",
     "httpStatus": 200,
     "finalUrl": "https://apatris.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1929,14 +1909,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T20:24:45.765604+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:50.758596+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:23.249178+00:00"
   },
   "aptn-news-https-www-aptnnews-ca-feed": {
     "name": "APTN News",
     "url": "https://www.aptnnews.ca/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:51.154640+00:00",
+    "lastChecked": "2026-09-11T12:17:23.329063+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.aptnnews.ca/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1954,14 +1934,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:51.154640+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:23.329063+00:00"
   },
   "are-you-syrious-https-medium-com-feed-are-you-syrious": {
     "name": "Are You Syrious?",
     "url": "https://medium.com/feed/are-you-syrious",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:51.293374+00:00",
+    "lastChecked": "2026-09-11T12:17:23.567658+00:00",
     "httpStatus": 200,
     "finalUrl": "https://medium.com/feed/are-you-syrious",
     "contentType": "text/xml; charset=UTF-8",
@@ -1976,14 +1956,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-13T03:43:39.829960+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:51.293374+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:23.567658+00:00"
   },
   "ariwa-animal-rights-watch-germany-https-www-ariwa-org-feed": {
     "name": "ARIWA – Animal Rights Watch (Germany)",
     "url": "https://www.ariwa.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:51.562826+00:00",
+    "lastChecked": "2026-09-11T12:17:23.575388+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.ariwa.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -1999,14 +1979,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-07T05:42:25.781448+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:51.562826+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:23.575388+00:00"
   },
   "asian-labour-review-https-labourreview-org-feed": {
     "name": "Asian Labour Review",
     "url": "https://labourreview.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:51.734097+00:00",
+    "lastChecked": "2026-09-11T12:17:24.046780+00:00",
     "httpStatus": 200,
     "finalUrl": "https://labourreview.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2014,7 +1994,6 @@
     "categories": [
       "Asia",
       "Anti-Imperialism",
-      "Global",
       "Labor Struggles"
     ],
     "pageUrl": "https://labourreview.org/",
@@ -2025,14 +2004,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-08T21:54:32.587468+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:51.734097+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:24.046780+00:00"
   },
   "autonomies-https-autonomies-org-feed": {
     "name": "Autonomies",
     "url": "https://autonomies.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:52.250903+00:00",
+    "lastChecked": "2026-09-11T12:17:24.600467+00:00",
     "httpStatus": 200,
     "finalUrl": "https://autonomies.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2052,14 +2031,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:42.229671+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:52.250903+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:24.600467+00:00"
   },
   "autostraddle-news-https-www-autostraddle-com-category-news-feed": {
     "name": "Autostraddle News",
     "url": "https://www.autostraddle.com/category/news/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:53.166134+00:00",
+    "lastChecked": "2026-09-11T12:17:24.949724+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.autostraddle.com/category/news/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2077,14 +2056,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-19T07:54:48.731102+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:53.166134+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:24.949724+00:00"
   },
   "avtonom-ru-https-avtonom-org-rss-xml": {
     "name": "Avtonom (RU)",
     "url": "https://avtonom.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:53.473110+00:00",
+    "lastChecked": "2026-09-11T12:17:25.093989+00:00",
     "httpStatus": 200,
     "finalUrl": "https://avtonom.org/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2102,14 +2081,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:53.473110+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:25.093989+00:00"
   },
   "awid-https-www-awid-org-rss-xml": {
     "name": "AWID",
     "url": "https://www.awid.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:53.539931+00:00",
+    "lastChecked": "2026-09-11T12:17:25.145010+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.awid.org/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2127,14 +2106,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:53.539931+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:25.145010+00:00"
   },
   "awsm-https-awsm-nz-feed": {
     "name": "AWSM",
     "url": "https://awsm.nz/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:53.685188+00:00",
+    "lastChecked": "2026-09-11T12:17:25.296585+00:00",
     "httpStatus": 200,
     "finalUrl": "https://awsm.nz/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2151,25 +2130,26 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T23:46:44.124839+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:53.685188+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:25.296585+00:00"
   },
   "barrikade-https-publish-barrikade-info-spip-php-page-backend": {
     "name": "Barrikade",
     "url": "https://publish.barrikade.info/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:53.740144+00:00",
+    "lastChecked": "2026-09-11T12:17:25.513850+00:00",
     "httpStatus": 200,
     "finalUrl": "https://publish.barrikade.info/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
     "feedType": "xml",
     "warning": "Feed-Adresse automatisch erkannt.",
     "categories": [
-      "Europe",
+      "Global",
       "Antifascism",
       "Queer-Feminism",
       "Movement News",
       "Squatting & Housing",
+      "Europe",
       "Anti-Rep & Prisons"
     ],
     "pageUrl": "https://barrikade.info/",
@@ -2180,14 +2160,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:41:53.740144+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:25.513850+00:00"
   },
   "barrikade-ch-https-barrikade-info-spip-php-page-backend": {
     "name": "Barrikade (CH)",
     "url": "https://barrikade.info/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:54.026334+00:00",
+    "lastChecked": "2026-09-11T12:17:25.526557+00:00",
     "httpStatus": 200,
     "finalUrl": "https://publish.barrikade.info/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
@@ -2205,14 +2185,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-07T00:58:51.727766+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:54.026334+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:25.526557+00:00"
   },
   "biblioteca-anarquista-es-https-es-anarchistlibraries-net-feed": {
     "name": "Biblioteca Anarquista (ES)",
     "url": "https://es.anarchistlibraries.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:54.438800+00:00",
+    "lastChecked": "2026-09-11T12:17:26.111912+00:00",
     "httpStatus": 200,
     "finalUrl": "https://es.anarchistlibraries.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2227,14 +2207,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T20:24:50.649146+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:54.438800+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:26.111912+00:00"
   },
   "biblioth-que-anarchiste-fr-https-fr-anarchistlibraries-net-feed": {
     "name": "Bibliothèque Anarchiste (FR)",
     "url": "https://fr.anarchistlibraries.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:55.423961+00:00",
+    "lastChecked": "2026-09-11T12:17:26.959455+00:00",
     "httpStatus": 200,
     "finalUrl": "https://fr.anarchistlibraries.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2251,14 +2231,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-25T20:24:51.514173+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:55.423961+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:26.959455+00:00"
   },
   "black-agenda-report-https-www-blackagendareport-com-rss-xml": {
     "name": "Black Agenda Report",
     "url": "https://www.blackagendareport.com/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:55.544329+00:00",
+    "lastChecked": "2026-09-11T12:17:27.179376+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.blackagendareport.com/rss.xml",
     "contentType": "text/html; charset=UTF-8",
@@ -2277,14 +2257,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-05T07:15:24.821826+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:55.544329+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:27.179376+00:00"
   },
   "black-rose-anti-colonial-https-www-blackrosefed-org-feed": {
     "name": "Black Rose (Anti-Colonial)",
     "url": "https://www.blackrosefed.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:56.409436+00:00",
+    "lastChecked": "2026-09-11T12:17:27.481576+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.blackrosefed.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2303,14 +2283,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:43.638749+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:56.409436+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:27.481576+00:00"
   },
   "black-rose-anti-racism-https-www-blackrosefed-org-feed": {
     "name": "Black Rose (Anti-Racism)",
     "url": "https://www.blackrosefed.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:57.330583+00:00",
+    "lastChecked": "2026-09-11T12:17:27.484786+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.blackrosefed.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2329,14 +2309,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:43.905828+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:57.330583+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:27.484786+00:00"
   },
   "black-rose-feminism-https-www-blackrosefed-org-feed": {
     "name": "Black Rose (Feminism)",
     "url": "https://www.blackrosefed.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:41:57.472811+00:00",
+    "lastChecked": "2026-09-11T12:17:28.028351+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.blackrosefed.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2355,14 +2335,36 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:44.147253+00:00",
-    "lastSuccessAt": "2026-09-11T05:41:57.472811+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:28.028351+00:00"
+  },
+  "black-rose-rosa-negra-https-blackrosefed-org-feed": {
+    "name": "Black Rose / Rosa Negra",
+    "url": "https://blackrosefed.org/feed/",
+    "status": "ok",
+    "ok": true,
+    "lastChecked": "2026-09-11T12:17:29.213675+00:00",
+    "httpStatus": 200,
+    "finalUrl": "https://www.blackrosefed.org/feed/",
+    "contentType": "application/rss+xml; charset=UTF-8",
+    "feedType": "declared-feed",
+    "categories": [
+      "North America"
+    ],
+    "configuredUrl": "https://blackrosefed.org/feed/",
+    "rawStatus": "ok",
+    "detailedState": "recovered",
+    "failureKind": "available",
+    "consecutiveFailures": 0,
+    "consecutiveRestrictions": 0,
+    "lastFailureAt": "2026-09-11T05:42:03.865383+00:00",
+    "lastSuccessAt": "2026-09-11T12:17:29.213675+00:00"
   },
   "boak-ru-https-boak-noblogs-org-feed": {
     "name": "BOAK (RU)",
     "url": "https://boak.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:06.767353+00:00",
+    "lastChecked": "2026-09-11T12:17:36.942416+00:00",
     "httpStatus": 200,
     "finalUrl": "https://boak.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2377,14 +2379,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:35.367207+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:06.767353+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:36.942416+00:00"
   },
   "bulatlat-indigenous-https-www-bulatlat-com-feed": {
     "name": "Bulatlat (Indigenous)",
     "url": "https://www.bulatlat.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:07.740492+00:00",
+    "lastChecked": "2026-09-11T12:17:37.081364+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.bulatlat.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2393,14 +2395,14 @@
     "categories": [
       "Indigenous Struggles",
       "Global",
+      "Asia",
       "Anti-Rep & Prisons",
       "Eco-Anarchism",
-      "Asia",
+      "Movement News",
       "Queer-Feminism",
       "Anti-Imperialism",
-      "Cyberactivism",
-      "Movement News",
-      "No War"
+      "No War",
+      "Cyberactivism"
     ],
     "pageUrl": "https://www.bulatlat.com/",
     "discovered": true,
@@ -2410,14 +2412,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:07.740492+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:37.081364+00:00"
   },
   "bulatlat-philippines-https-www-bulatlat-com-feed": {
     "name": "Bulatlat (Philippines)",
     "url": "https://www.bulatlat.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:09.095849+00:00",
+    "lastChecked": "2026-09-11T12:17:37.377567+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.bulatlat.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2433,14 +2435,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-03T12:12:23.482310+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:09.095849+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:37.377567+00:00"
   },
   "c4ss-https-c4ss-org-feed": {
     "name": "C4SS",
     "url": "https://c4ss.org/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:10.002084+00:00",
+    "lastChecked": "2026-09-11T12:17:37.553241+00:00",
     "httpStatus": 200,
     "finalUrl": "https://c4ss.org/feed",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2459,14 +2461,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:10.002084+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:37.553241+00:00"
   },
   "chuang-cn-https-chuangcn-org-feed": {
     "name": "Chuang (CN)",
     "url": "https://chuangcn.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:10.912075+00:00",
+    "lastChecked": "2026-09-11T12:17:38.183499+00:00",
     "httpStatus": 200,
     "finalUrl": "https://chuangcn.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2481,14 +2483,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-10T08:47:25.370802+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:10.912075+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:38.183499+00:00"
   },
   "cnt-spanien-https-www-cnt-es-feed": {
     "name": "CNT (Spanien)",
     "url": "https://www.cnt.es/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:11.544145+00:00",
+    "lastChecked": "2026-09-11T12:17:38.188689+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.cnt.es/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2509,14 +2511,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:11.544145+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:38.188689+00:00"
   },
   "colorlines-https-colorlines-com-rss-xml": {
     "name": "Colorlines",
     "url": "https://colorlines.com/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:12.438297+00:00",
+    "lastChecked": "2026-09-11T12:17:38.312313+00:00",
     "httpStatus": 404,
     "finalUrl": "https://colorlines.com/rss.xml",
     "contentType": "text/html; charset=UTF-8",
@@ -2535,14 +2537,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:46:36.336980+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:12.438297+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:38.312313+00:00"
   },
   "comunizar-https-comunizar-com-ar-feed": {
     "name": "Comunizar",
     "url": "https://comunizar.com.ar/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:13.234080+00:00",
+    "lastChecked": "2026-09-11T12:17:38.673768+00:00",
     "httpStatus": 200,
     "finalUrl": "https://comunizar.com.ar/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2558,14 +2560,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:44.958147+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:13.234080+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:38.673768+00:00"
   },
   "convoca-la-barcelona-https-bcn-convoca-la-feed-rss": {
     "name": "Convoca-la Barcelona",
     "url": "https://bcn.convoca.la/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:15.742138+00:00",
+    "lastChecked": "2026-09-11T12:17:38.750825+00:00",
     "httpStatus": 200,
     "finalUrl": "https://bcn.convoca.la/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2581,14 +2583,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-16T13:47:49.511827+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:15.742138+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:38.750825+00:00"
   },
   "conv-cala-madrid-https-mad-convoca-la-feed-rss": {
     "name": "Convócala Madrid",
     "url": "https://mad.convoca.la/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:15.758972+00:00",
+    "lastChecked": "2026-09-11T12:17:39.186402+00:00",
     "httpStatus": 200,
     "finalUrl": "https://mad.convoca.la/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2604,24 +2606,25 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-16T13:47:51.075766+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:15.758972+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:39.186402+00:00"
   },
   "crimethinc-https-crimethinc-com-feed": {
     "name": "CrimethInc.",
     "url": "https://crimethinc.com/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:16.499783+00:00",
+    "lastChecked": "2026-09-11T12:17:39.219903+00:00",
     "httpStatus": 200,
     "finalUrl": "https://crimethinc.com/feed",
     "contentType": "application/atom+xml; charset=utf-8",
     "feedType": "declared-feed",
     "warning": "Feed-Adresse automatisch erkannt.",
     "categories": [
-      "Global",
+      "North America",
       "Anticapitalism",
       "Antifascism",
-      "Anti-Rep & Prisons"
+      "Anti-Rep & Prisons",
+      "Global"
     ],
     "pageUrl": "https://crimethinc.com/",
     "discovered": true,
@@ -2631,14 +2634,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:16.499783+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:39.219903+00:00"
   },
   "crimethinc-global-https-crimethinc-com-feed": {
     "name": "CrimethInc. (Global)",
     "url": "https://crimethinc.com/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:17.366650+00:00",
+    "lastChecked": "2026-09-11T12:17:39.688179+00:00",
     "httpStatus": 200,
     "finalUrl": "https://crimethinc.com/feed",
     "contentType": "application/atom+xml; charset=utf-8",
@@ -2654,14 +2657,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:17.366650+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:39.688179+00:00"
   },
   "crimethinc-texts-https-crimethinc-com-categories-texts-feed": {
     "name": "CrimethInc. (Texts)",
     "url": "https://crimethinc.com/categories/texts/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:17.783889+00:00",
+    "lastChecked": "2026-09-11T12:17:40.038807+00:00",
     "httpStatus": 200,
     "finalUrl": "https://crimethinc.com/categories/texts/feed",
     "contentType": "application/atom+xml; charset=utf-8",
@@ -2675,14 +2678,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:17.783889+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:40.038807+00:00"
   },
   "critical-resistance-https-criticalresistance-org-feed": {
     "name": "Critical Resistance",
     "url": "https://criticalresistance.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:17.878127+00:00",
+    "lastChecked": "2026-09-11T12:17:40.923827+00:00",
     "httpStatus": 200,
     "finalUrl": "https://criticalresistance.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2697,14 +2700,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-05T11:25:10.753475+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:17.878127+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:40.923827+00:00"
   },
   "cultural-survival-https-www-culturalsurvival-org-rss-xml": {
     "name": "Cultural Survival",
     "url": "https://www.culturalsurvival.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:18.177538+00:00",
+    "lastChecked": "2026-09-11T12:17:41.001255+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.culturalsurvival.org/rss.xml",
     "contentType": "text/html; charset=UTF-8",
@@ -2723,14 +2726,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:46:39.950385+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:18.177538+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:41.001255+00:00"
   },
   "defend-council-housing-uk-https-www-defendcouncilhousing-org-uk-feed": {
     "name": "Defend Council Housing (UK)",
     "url": "https://www.defendcouncilhousing.org.uk/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:19.003766+00:00",
+    "lastChecked": "2026-09-11T12:17:41.979996+00:00",
     "httpStatus": 200,
     "finalUrl": "https://defendcouncilhousing.org.uk/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2745,14 +2748,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:46.339749+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:19.003766+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:41.979996+00:00"
   },
   "defend-the-atlanta-forest-https-defendtheatlantaforest-org-feed": {
     "name": "Defend the Atlanta Forest",
     "url": "https://defendtheatlantaforest.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:19.329837+00:00",
+    "lastChecked": "2026-09-11T12:17:42.299936+00:00",
     "httpStatus": 200,
     "finalUrl": "https://defendtheatlantaforest.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2766,14 +2769,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:19.329837+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:42.299936+00:00"
   },
   "democracy-now-global-https-www-democracynow-org-democracynow-rss": {
     "name": "Democracy Now! (Global)",
     "url": "https://www.democracynow.org/democracynow.rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:19.600642+00:00",
+    "lastChecked": "2026-09-11T12:17:42.432067+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.democracynow.org/democracynow.rss",
     "contentType": "application/rss+xml",
@@ -2796,14 +2799,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-14T14:30:40.248379+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:19.600642+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:42.432067+00:00"
   },
   "digitalcourage-https-digitalcourage-de-rss-xml": {
     "name": "Digitalcourage",
     "url": "https://digitalcourage.de/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:20.418830+00:00",
+    "lastChecked": "2026-09-11T12:17:43.508095+00:00",
     "httpStatus": 200,
     "finalUrl": "https://digitalcourage.de/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2821,14 +2824,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:20.418830+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:43.508095+00:00"
   },
   "disability-visibility-https-disabilityvisibilityproject-com-feed": {
     "name": "Disability Visibility",
     "url": "https://disabilityvisibilityproject.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:20.578593+00:00",
+    "lastChecked": "2026-09-11T12:17:44.006669+00:00",
     "httpStatus": 200,
     "finalUrl": "https://disabilityvisibilityproject.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2842,14 +2845,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:20.578593+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:44.006669+00:00"
   },
   "el-libertario-http-periodicoellibertario-blogspot-com-feeds-posts-default": {
     "name": "El Libertario",
     "url": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:21.020808+00:00",
+    "lastChecked": "2026-09-11T12:17:44.332330+00:00",
     "httpStatus": 200,
     "finalUrl": "http://periodicoellibertario.blogspot.com/feeds/posts/default",
     "contentType": "application/atom+xml; charset=UTF-8",
@@ -2863,14 +2866,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:21.020808+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:44.332330+00:00"
   },
   "electronic-frontier-foundation-https-www-eff-org-rss-updates-xml": {
     "name": "Electronic Frontier Foundation",
     "url": "https://www.eff.org/rss/updates.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:21.208254+00:00",
+    "lastChecked": "2026-09-11T12:17:44.686910+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.eff.org/rss/updates.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2888,14 +2891,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:21.208254+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:44.686910+00:00"
   },
   "elitsha-https-elitshanews-org-za-en-feed": {
     "name": "Elitsha",
     "url": "https://elitshanews.org.za/en/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:21.505823+00:00",
+    "lastChecked": "2026-09-11T12:17:44.982517+00:00",
     "httpStatus": 200,
     "finalUrl": "https://elitshanews.org.za/en/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2916,14 +2919,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-29T07:51:48.830738+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:21.505823+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:44.982517+00:00"
   },
   "ende-gel-nde-https-www-ende-gelaende-org-feed": {
     "name": "Ende Gelände",
     "url": "https://www.ende-gelaende.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:21.537814+00:00",
+    "lastChecked": "2026-09-11T12:17:45.167721+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.ende-gelaende.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2938,14 +2941,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-10T12:18:35.798976+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:21.537814+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:45.167721+00:00"
   },
   "enlace-zapatista-ezln-https-enlacezapatista-ezln-org-mx-feed": {
     "name": "Enlace Zapatista (EZLN)",
     "url": "https://enlacezapatista.ezln.org.mx/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:24.018340+00:00",
+    "lastChecked": "2026-09-11T12:17:46.777300+00:00",
     "httpStatus": 200,
     "finalUrl": "https://enlacezapatista.ezln.org.mx/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -2953,7 +2956,7 @@
     "categories": [
       "Latin America",
       "Indigenous Struggles",
-      "Global",
+      "Movement News",
       "Cyberactivism"
     ],
     "pageUrl": "https://enlacezapatista.ezln.org.mx/",
@@ -2964,14 +2967,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-14T08:31:11.149307+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:24.018340+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:46.777300+00:00"
   },
   "enredad-es-https-enredad-es-feed-rss": {
     "name": "Enredad.es",
     "url": "https://enredad.es/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:24.426924+00:00",
+    "lastChecked": "2026-09-11T12:17:47.371339+00:00",
     "httpStatus": 200,
     "finalUrl": "https://enredad.es/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -2986,14 +2989,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:24.426924+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:47.371339+00:00"
   },
   "equality-now-https-equalitynow-org-feed": {
     "name": "Equality Now",
     "url": "https://equalitynow.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:24.915486+00:00",
+    "lastChecked": "2026-09-11T12:17:47.859531+00:00",
     "httpStatus": 200,
     "finalUrl": "https://equalitynow.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3011,14 +3014,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-11T14:32:55.768725+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:24.915486+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:47.859531+00:00"
   },
   "european-digital-rights-https-edri-org-feed": {
     "name": "European Digital Rights",
     "url": "https://edri.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:26.086242+00:00",
+    "lastChecked": "2026-09-11T12:17:48.929599+00:00",
     "httpStatus": 200,
     "finalUrl": "https://edri.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3037,14 +3040,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:26.086242+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:48.929599+00:00"
   },
   "evrensel-https-www-evrensel-net-rss-haber-xml": {
     "name": "Evrensel",
     "url": "https://www.evrensel.net/rss/haber.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:26.680986+00:00",
+    "lastChecked": "2026-09-11T12:17:49.091950+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.evrensel.net/rss/haber.xml",
     "contentType": "application/xml; charset=utf-8",
@@ -3067,14 +3070,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-28T17:57:49.858090+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:26.680986+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:49.091950+00:00"
   },
   "fajfa-antifa-https-noblogs-org-comments-feed": {
     "name": "Fajfa (Antifa)",
     "url": "https://noblogs.org/comments/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:26.732699+00:00",
+    "lastChecked": "2026-09-11T12:17:49.248491+00:00",
     "httpStatus": 200,
     "finalUrl": "https://noblogs.org/comments/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -3093,14 +3096,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:45.771362+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:26.732699+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:49.248491+00:00"
   },
   "fau-deutschland-https-www-fau-org-rss-xml": {
     "name": "FAU (Deutschland)",
     "url": "https://www.fau.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:27.383150+00:00",
+    "lastChecked": "2026-09-11T12:17:49.603912+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.fau.org/rss.xml",
     "contentType": "application/atom+xml; charset=utf-8",
@@ -3114,14 +3117,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:27.383150+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:49.603912+00:00"
   },
   "fauda-https-noblogs-org-comments-feed": {
     "name": "Fauda",
     "url": "https://noblogs.org/comments/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:27.843700+00:00",
+    "lastChecked": "2026-09-11T12:17:50.289671+00:00",
     "httpStatus": 200,
     "finalUrl": "https://noblogs.org/comments/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -3140,14 +3143,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:46.826014+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:27.843700+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:50.289671+00:00"
   },
   "federacja-anarchistyczna-pl-https-federacja-anarchistyczna-pl-feed": {
     "name": "Federacja Anarchistyczna (PL)",
     "url": "https://federacja-anarchistyczna.pl/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:28.737380+00:00",
+    "lastChecked": "2026-09-11T12:17:50.500668+00:00",
     "httpStatus": 200,
     "finalUrl": "https://federacja-anarchistyczna.pl/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3166,14 +3169,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-04T17:06:46.544566+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:28.737380+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:50.500668+00:00"
   },
   "federation-of-anarchism-era-https-asranarshism-com-feed": {
     "name": "Federation of Anarchism Era",
     "url": "https://asranarshism.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:29.712515+00:00",
+    "lastChecked": "2026-09-11T12:17:51.105157+00:00",
     "httpStatus": 200,
     "finalUrl": "https://asranarshism.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3188,14 +3191,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:49.637959+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:29.712515+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:51.105157+00:00"
   },
   "feminist-newswire-https-feminist-org-news-feed": {
     "name": "Feminist Newswire",
     "url": "https://feminist.org/news/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:30.872644+00:00",
+    "lastChecked": "2026-09-11T12:17:51.120891+00:00",
     "httpStatus": 200,
     "finalUrl": "https://feminist.org/news/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3216,14 +3219,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:30.872644+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:51.120891+00:00"
   },
   "feministische-antifa-https-fantifa-noblogs-org-feed": {
     "name": "Feministische Antifa",
     "url": "https://fantifa.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:31.073366+00:00",
+    "lastChecked": "2026-09-11T12:17:51.634108+00:00",
     "httpStatus": 200,
     "finalUrl": "https://fantifa.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3238,14 +3241,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:48.838188+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:31.073366+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:51.634108+00:00"
   },
   "gancio-cisti-https-gancio-cisti-org-feed-rss": {
     "name": "Gancio Cisti",
     "url": "https://gancio.cisti.org/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:31.686963+00:00",
+    "lastChecked": "2026-09-11T12:17:51.857369+00:00",
     "httpStatus": 200,
     "finalUrl": "https://gancio.cisti.org/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -3260,14 +3263,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-04T18:37:02.770445+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:31.686963+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:51.857369+00:00"
   },
   "genderit-technofeminism-https-www-genderit-org-rss-xml": {
     "name": "GenderIT (Technofeminism)",
     "url": "https://www.genderit.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:32.078134+00:00",
+    "lastChecked": "2026-09-11T12:17:51.930197+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.genderit.org/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -3281,14 +3284,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:32.078134+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:51.930197+00:00"
   },
   "graswurzelrevolution-https-www-graswurzel-net-gwr-feed": {
     "name": "Graswurzelrevolution",
     "url": "https://www.graswurzel.net/gwr/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:32.462898+00:00",
+    "lastChecked": "2026-09-11T12:17:52.416415+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.graswurzel.net/gwr/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3308,14 +3311,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-10T17:12:45.721695+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:32.462898+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.416415+00:00"
   },
   "green-left-https-www-greenleft-org-au-rss-xml": {
     "name": "Green Left",
     "url": "https://www.greenleft.org.au/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:32.803388+00:00",
+    "lastChecked": "2026-09-11T12:17:52.476587+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.greenleft.org.au/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -3337,14 +3340,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:32.803388+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.476587+00:00"
   },
   "grist-indigenous-affairs-https-grist-org-indigenous-feed": {
     "name": "Grist (Indigenous Affairs)",
     "url": "https://grist.org/indigenous/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:32.916433+00:00",
+    "lastChecked": "2026-09-11T12:17:52.484257+00:00",
     "httpStatus": 200,
     "finalUrl": "https://grist.org/indigenous/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3358,14 +3361,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:32.916433+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.484257+00:00"
   },
   "groundxero-https-www-groundxero-in-feed": {
     "name": "Groundxero",
     "url": "https://www.groundxero.in/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:33.129001+00:00",
+    "lastChecked": "2026-09-11T12:17:52.613507+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.groundxero.in/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3389,14 +3392,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:33.129001+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.613507+00:00"
   },
   "housing-action-https-noblogs-org-comments-feed": {
     "name": "Housing Action",
     "url": "https://noblogs.org/comments/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:33.210364+00:00",
+    "lastChecked": "2026-09-11T12:17:52.781179+00:00",
     "httpStatus": 200,
     "finalUrl": "https://noblogs.org/comments/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -3415,14 +3418,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:50.677226+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:33.210364+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.781179+00:00"
   },
   "hunt-saboteurs-association-uk-https-www-huntsabs-org-uk-feed": {
     "name": "Hunt Saboteurs Association (UK)",
     "url": "https://www.huntsabs.org.uk/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:35.051926+00:00",
+    "lastChecked": "2026-09-11T12:17:52.879832+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.huntsabs.org.uk/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3440,14 +3443,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:32:51.301985+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:35.051926+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.879832+00:00"
   },
   "ien-earth-https-www-ienearth-org-feed": {
     "name": "IEN Earth",
     "url": "https://www.ienearth.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:36.837316+00:00",
+    "lastChecked": "2026-09-11T12:17:52.927942+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.ienearth.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3464,14 +3467,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-02T12:13:21.597413+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:36.837316+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:52.927942+00:00"
   },
   "ill-will-https-illwill-com-rss-xml": {
     "name": "Ill Will",
     "url": "https://illwill.com/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:38.259394+00:00",
+    "lastChecked": "2026-09-11T12:17:53.187490+00:00",
     "httpStatus": 404,
     "finalUrl": "https://illwill.com/rss.xml",
     "contentType": "text/html; charset=utf-8",
@@ -3490,14 +3493,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:46:51.610383+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:38.259394+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:53.187490+00:00"
   },
   "indigenous-action-https-www-indigenousaction-org-feed": {
     "name": "Indigenous Action",
     "url": "https://www.indigenousaction.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:38.599788+00:00",
+    "lastChecked": "2026-09-11T12:17:53.228151+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.indigenousaction.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3513,14 +3516,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-29T07:51:58.395843+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:38.599788+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:53.228151+00:00"
   },
   "indigenousx-australia-https-indigenousx-com-au-feed": {
     "name": "IndigenousX (Australia)",
     "url": "https://indigenousx.com.au/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:38.942362+00:00",
+    "lastChecked": "2026-09-11T12:17:53.867695+00:00",
     "httpStatus": 200,
     "finalUrl": "https://indigenousx.com.au/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3536,14 +3539,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-09T21:40:32.828093+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:38.942362+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:53.867695+00:00"
   },
   "indiginews-https-indiginews-com-feed": {
     "name": "IndigiNews",
     "url": "https://indiginews.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:39.493009+00:00",
+    "lastChecked": "2026-09-11T12:17:54.104493+00:00",
     "httpStatus": 200,
     "finalUrl": "https://indiginews.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3561,14 +3564,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-11T14:33:00.851475+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:39.493009+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:54.104493+00:00"
   },
   "indymedia-argentina-https-argentina-indymedia-org-feed": {
     "name": "Indymedia Argentina",
     "url": "https://argentina.indymedia.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:39.767418+00:00",
+    "lastChecked": "2026-09-11T12:17:54.556453+00:00",
     "httpStatus": 200,
     "finalUrl": "https://argentina.indymedia.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3590,14 +3593,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:39.767418+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:54.556453+00:00"
   },
   "infoaut-https-infoaut-org-feed": {
     "name": "InfoAut",
     "url": "https://infoaut.org/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:39.967948+00:00",
+    "lastChecked": "2026-09-11T12:17:54.793040+00:00",
     "httpStatus": 200,
     "finalUrl": "https://infoaut.org/feed",
     "contentType": "application/rss+xml",
@@ -3619,14 +3622,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:39.967948+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:54.793040+00:00"
   },
   "infolibre-gr-https-infolibre-gr-feed": {
     "name": "Infolibre (GR)",
     "url": "https://infolibre.gr/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:40.475194+00:00",
+    "lastChecked": "2026-09-11T12:17:54.931354+00:00",
     "httpStatus": 200,
     "finalUrl": "https://infolibre.gr/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3649,14 +3652,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-27T07:35:05.431684+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:40.475194+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:54.931354+00:00"
   },
   "institute-of-race-relations-https-irr-org-uk-feed": {
     "name": "Institute of Race Relations",
     "url": "https://irr.org.uk/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:41.243803+00:00",
+    "lastChecked": "2026-09-11T12:17:55.474602+00:00",
     "httpStatus": 200,
     "finalUrl": "https://irr.org.uk/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3671,14 +3674,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-05T22:07:20.898555+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:41.243803+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:55.474602+00:00"
   },
   "it-s-going-down-https-itsgoingdown-org-feed": {
     "name": "It's Going Down",
     "url": "https://itsgoingdown.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:41.309803+00:00",
+    "lastChecked": "2026-09-11T12:17:55.950048+00:00",
     "httpStatus": 200,
     "finalUrl": "https://itsgoingdown.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3694,14 +3697,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-01T21:49:36.583802+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:41.309803+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:55.950048+00:00"
   },
   "iwa-ait-internationale-https-iwa-ait-org-rss-xml": {
     "name": "IWA-AIT (Internationale)",
     "url": "https://iwa-ait.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:41.489893+00:00",
+    "lastChecked": "2026-09-11T12:17:56.111968+00:00",
     "httpStatus": 200,
     "finalUrl": "https://iwa-ait.org/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -3717,14 +3720,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:41.489893+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:56.111968+00:00"
   },
   "iwoc-incarcerated-workers-https-incarceratedworkers-org-feed": {
     "name": "IWOC (Incarcerated Workers)",
     "url": "https://incarceratedworkers.org/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:42.167751+00:00",
+    "lastChecked": "2026-09-11T12:17:56.114635+00:00",
     "httpStatus": 200,
     "finalUrl": "https://incarceratedworkers.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3739,14 +3742,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T23:07:57.321941+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:42.167751+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:56.114635+00:00"
   },
   "karapatan-human-rights-https-www-karapatan-org-feed": {
     "name": "Karapatan (Human Rights)",
     "url": "https://www.karapatan.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:42.792813+00:00",
+    "lastChecked": "2026-09-11T12:17:56.639899+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.karapatan.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3761,14 +3764,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-03T12:12:39.806262+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:42.792813+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:56.639899+00:00"
   },
   "kite-line-radio-https-kitelineradio-noblogs-org-feed": {
     "name": "Kite Line Radio",
     "url": "https://kitelineradio.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:43.050483+00:00",
+    "lastChecked": "2026-09-11T12:17:56.662456+00:00",
     "httpStatus": 200,
     "finalUrl": "https://kitelineradio.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3783,14 +3786,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:40:56.593690+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:43.050483+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:56.662456+00:00"
   },
   "kolektiva-media-video-https-kolektiva-media-feeds-videos-xml-videofilter-local": {
     "name": "Kolektiva Media (Video)",
     "url": "https://kolektiva.media/feeds/videos.xml?videoFilter=local",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:43.844973+00:00",
+    "lastChecked": "2026-09-11T12:17:57.067764+00:00",
     "httpStatus": 200,
     "finalUrl": "https://kolektiva.media/feeds/videos.xml?videoFilter=local",
     "contentType": "application/xml; charset=utf-8",
@@ -3813,28 +3816,28 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:46:55.968727+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:43.844973+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.067764+00:00"
   },
   "kontrapolis-https-kontrapolis-info-feed": {
     "name": "Kontrapolis",
     "url": "https://kontrapolis.info/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:43.962098+00:00",
+    "lastChecked": "2026-09-11T12:17:57.113906+00:00",
     "httpStatus": 200,
     "finalUrl": "https://kontrapolis.info/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
     "feedType": "declared-feed",
     "warning": "Feed-Adresse automatisch erkannt.",
     "categories": [
-      "Demonstrations",
       "Global",
+      "Demonstrations",
       "Movement News",
-      "Europe",
       "Antifascism",
       "Cyberactivism",
       "Squatting & Housing",
       "No War",
+      "Europe",
       "Anti-Rep & Prisons",
       "Anticapitalism"
     ],
@@ -3847,14 +3850,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:46:56.054359+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:43.962098+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.113906+00:00"
   },
   "kontrapolis-de-https-kontrapolis-info-feed": {
     "name": "Kontrapolis (DE)",
     "url": "https://kontrapolis.info/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:44.185539+00:00",
+    "lastChecked": "2026-09-11T12:17:57.127709+00:00",
     "httpStatus": 200,
     "finalUrl": "https://kontrapolis.info/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3870,14 +3873,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:44.185539+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.127709+00:00"
   },
   "l214-france-https-www-l214-com-feed": {
     "name": "L214 (France)",
     "url": "https://www.l214.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:44.296589+00:00",
+    "lastChecked": "2026-09-11T12:17:57.385070+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.l214.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3893,14 +3896,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:44.296589+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.385070+00:00"
   },
   "la-zarzamora-https-lazarzamora-cl-feed": {
     "name": "La Zarzamora",
     "url": "https://lazarzamora.cl/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:44.627534+00:00",
+    "lastChecked": "2026-09-11T12:17:57.547831+00:00",
     "httpStatus": 200,
     "finalUrl": "https://lazarzamora.cl/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3921,14 +3924,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:44.627534+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.547831+00:00"
   },
   "labor-for-palestine-https-laborforpalestine-net-feed": {
     "name": "Labor for Palestine",
     "url": "https://laborforpalestine.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:45.241281+00:00",
+    "lastChecked": "2026-09-11T12:17:57.717174+00:00",
     "httpStatus": 200,
     "finalUrl": "https://laborforpalestine.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -3948,14 +3951,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-11T14:33:03.781749+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:45.241281+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.717174+00:00"
   },
   "labor-notes-https-labornotes-org-feed": {
     "name": "Labor Notes",
     "url": "https://labornotes.org/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:45.284715+00:00",
+    "lastChecked": "2026-09-11T12:17:57.750656+00:00",
     "httpStatus": 200,
     "finalUrl": "https://labornotes.org/feed",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -3972,14 +3975,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:45.284715+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:57.750656+00:00"
   },
   "labournet-de-https-www-labournet-de-feed": {
     "name": "LabourNet DE",
     "url": "https://www.labournet.de/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:45.434162+00:00",
+    "lastChecked": "2026-09-11T12:17:58.151525+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.labournet.de/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4001,14 +4004,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:45.434162+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:58.151525+00:00"
   },
   "lapunta-firenze-https-lapunta-org-feed-rss": {
     "name": "LaPunta Firenze",
     "url": "https://lapunta.org/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:45.587518+00:00",
+    "lastChecked": "2026-09-11T12:17:58.188327+00:00",
     "httpStatus": 200,
     "finalUrl": "https://lapunta.org/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4024,14 +4027,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-05T23:50:51.776716+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:45.587518+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:58.188327+00:00"
   },
   "libcom-global-news-https-libcom-org-news-feed": {
     "name": "Libcom (Global News)",
     "url": "https://libcom.org/news/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:45.803422+00:00",
+    "lastChecked": "2026-09-11T12:17:58.524820+00:00",
     "httpStatus": 200,
     "finalUrl": "https://libcom.org/recent/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4054,22 +4057,21 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T10:42:35.193710+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:45.803422+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:58.524820+00:00"
   },
   "lower-class-magazine-https-lowerclassmag-com-feed": {
     "name": "Lower Class Magazine",
     "url": "https://lowerclassmag.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:46.256606+00:00",
+    "lastChecked": "2026-09-11T12:17:58.949184+00:00",
     "httpStatus": 200,
     "finalUrl": "https://lowerclassmag.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
     "feedType": "declared-feed",
     "categories": [
       "Europe",
-      "No War",
-      "Movement News"
+      "No War"
     ],
     "pageUrl": "https://lowerclassmag.com/",
     "configuredUrl": "https://lowerclassmag.com/feed/",
@@ -4078,14 +4080,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:46.256606+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:58.949184+00:00"
   },
   "lundi-matin-fr-https-lundi-am-spip-php-page-backend": {
     "name": "Lundi Matin (FR)",
     "url": "https://lundi.am/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:46.267558+00:00",
+    "lastChecked": "2026-09-11T12:17:59.004166+00:00",
     "httpStatus": 200,
     "finalUrl": "https://lundi.am/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
@@ -4103,14 +4105,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:46.267558+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:59.004166+00:00"
   },
   "macg-https-melbacg-wordpress-com-feed": {
     "name": "MACG",
     "url": "https://melbacg.wordpress.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.024195+00:00",
+    "lastChecked": "2026-09-11T12:17:59.083125+00:00",
     "httpStatus": 200,
     "finalUrl": "https://melbacg.wordpress.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4124,14 +4126,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:47.024195+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:59.083125+00:00"
   },
   "mada-masr-egypt-https-madamasr-com-en-feed": {
     "name": "Mada Masr (Egypt)",
     "url": "https://madamasr.com/en/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.067058+00:00",
+    "lastChecked": "2026-09-11T12:17:59.319572+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.madamasr.com/en/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4148,14 +4150,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:47.067058+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:59.319572+00:00"
   },
   "make-rojava-green-again-https-makerojavagreenagain-org-feed": {
     "name": "Make Rojava Green Again",
     "url": "https://makerojavagreenagain.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.118478+00:00",
+    "lastChecked": "2026-09-11T12:17:59.446598+00:00",
     "httpStatus": 200,
     "finalUrl": "https://makerojavagreenagain.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4169,14 +4171,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:47.118478+00:00"
+    "lastSuccessAt": "2026-09-11T12:17:59.446598+00:00"
   },
   "manila-today-https-manilatoday-net-feed": {
     "name": "Manila Today",
     "url": "https://manilatoday.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.339686+00:00",
+    "lastChecked": "2026-09-11T12:18:00.062684+00:00",
     "httpStatus": 200,
     "finalUrl": "https://manilatoday.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4193,14 +4195,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-03T12:12:44.500610+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:47.339686+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:00.062684+00:00"
   },
   "mapuexpress-mapuche-https-www-mapuexpress-org-feed": {
     "name": "Mapuexpress (Mapuche)",
     "url": "https://www.mapuexpress.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.807181+00:00",
+    "lastChecked": "2026-09-11T12:18:00.191080+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.mapuexpress.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4217,14 +4219,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:47.807181+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:00.191080+00:00"
   },
   "mekong-review-https-mekongreview-com-feed": {
     "name": "Mekong Review",
     "url": "https://mekongreview.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:47.831580+00:00",
+    "lastChecked": "2026-09-11T12:18:00.649723+00:00",
     "httpStatus": 200,
     "finalUrl": "https://mekongreview.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4239,14 +4241,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-09T05:40:47.309422+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:47.831580+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:00.649723+00:00"
   },
   "mia-marseille-fr-https-mars-infos-org-spip-php-page-backend": {
     "name": "MIA Marseille (FR)",
     "url": "https://mars-infos.org/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:48.023811+00:00",
+    "lastChecked": "2026-09-11T12:18:00.754023+00:00",
     "httpStatus": 200,
     "finalUrl": "https://mars-infos.org/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
@@ -4267,14 +4269,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-07T00:59:20.481074+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:48.023811+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:00.754023+00:00"
   },
   "migrant-solidarity-network-ch-https-migrant-solidarity-network-ch-feed": {
     "name": "Migrant Solidarity Network (CH)",
     "url": "https://migrant-solidarity-network.ch/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:48.475234+00:00",
+    "lastChecked": "2026-09-11T12:18:01.185028+00:00",
     "httpStatus": 200,
     "finalUrl": "https://migrant-solidarity-network.ch/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4289,14 +4291,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-26T08:01:38.779899+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:48.475234+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:01.185028+00:00"
   },
   "minority-africa-https-minorityafrica-org-feed": {
     "name": "Minority Africa",
     "url": "https://minorityafrica.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:48.807014+00:00",
+    "lastChecked": "2026-09-11T12:18:01.211669+00:00",
     "httpStatus": 200,
     "finalUrl": "https://minorityafrica.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4318,14 +4320,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T23:47:23.783263+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:48.807014+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:01.211669+00:00"
   },
   "missy-magazine-de-https-missy-magazine-de-feed": {
     "name": "Missy Magazine (DE)",
     "url": "https://missy-magazine.de/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.053923+00:00",
+    "lastChecked": "2026-09-11T12:18:01.502625+00:00",
     "httpStatus": 200,
     "finalUrl": "https://missy-magazine.de/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4347,14 +4349,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-10T08:47:56.624554+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:49.053923+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:01.502625+00:00"
   },
   "monthly-review-https-monthlyreview-org-feed": {
     "name": "Monthly Review",
     "url": "https://monthlyreview.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.159737+00:00",
+    "lastChecked": "2026-09-11T12:18:01.804326+00:00",
     "httpStatus": 200,
     "finalUrl": "https://monthlyreview.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4373,14 +4375,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:49.159737+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:01.804326+00:00"
   },
   "montreal-antifasciste-https-montreal-antifasciste-info-fr-feed": {
     "name": "Montreal Antifasciste",
     "url": "https://montreal-antifasciste.info/fr/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.418009+00:00",
+    "lastChecked": "2026-09-11T12:18:02.290605+00:00",
     "httpStatus": 200,
     "finalUrl": "https://montreal-antifasciste.info/fr/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4395,14 +4397,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:49.418009+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:02.290605+00:00"
   },
   "nantes-r-volt-e-agenda-https-nantes-indymedia-org-events-feed": {
     "name": "Nantes Révoltée Agenda",
     "url": "https://nantes.indymedia.org/events/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.436512+00:00",
+    "lastChecked": "2026-09-11T12:18:02.324574+00:00",
     "httpStatus": 200,
     "finalUrl": "https://nantes.indymedia.org/events/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4417,14 +4419,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-07T00:59:21.773792+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:49.436512+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:02.324574+00:00"
   },
   "native-news-online-https-nativenewsonline-net-feed": {
     "name": "Native News Online",
     "url": "https://nativenewsonline.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.960553+00:00",
+    "lastChecked": "2026-09-11T12:18:02.647903+00:00",
     "httpStatus": 200,
     "finalUrl": "https://nativenewsonline.net/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -4443,14 +4445,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:07.495316+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:49.960553+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:02.647903+00:00"
   },
   "new-bloom-tw-https-newbloommag-net-feed": {
     "name": "New Bloom (TW)",
     "url": "https://newbloommag.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:49.970306+00:00",
+    "lastChecked": "2026-09-11T12:18:02.674411+00:00",
     "httpStatus": 200,
     "finalUrl": "https://newbloommag.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4471,14 +4473,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:33:02.833352+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:49.970306+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:02.674411+00:00"
   },
   "novara-media-uk-https-novaramedia-com-feed": {
     "name": "Novara Media (UK)",
     "url": "https://novaramedia.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:50.658377+00:00",
+    "lastChecked": "2026-09-11T12:18:03.225410+00:00",
     "httpStatus": 200,
     "finalUrl": "https://novaramedia.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4500,14 +4502,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:50.658377+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:03.225410+00:00"
   },
   "nunatsiaq-news-https-nunatsiaq-com-feed": {
     "name": "Nunatsiaq News",
     "url": "https://nunatsiaq.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:50.792926+00:00",
+    "lastChecked": "2026-09-11T12:18:03.380401+00:00",
     "httpStatus": 200,
     "finalUrl": "https://nunatsiaq.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4530,14 +4532,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T19:33:03.344524+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:50.792926+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:03.380401+00:00"
   },
   "omniatv-gr-https-omniatv-com-feed": {
     "name": "OmniaTV (GR)",
     "url": "https://omniatv.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:51.269434+00:00",
+    "lastChecked": "2026-09-11T12:18:03.396716+00:00",
     "httpStatus": 200,
     "finalUrl": "https://omniatv.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4557,14 +4559,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-28T07:02:55.007989+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:51.269434+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:03.396716+00:00"
   },
   "overland-https-overland-org-au-feed": {
     "name": "Overland",
     "url": "https://overland.org.au/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:51.517376+00:00",
+    "lastChecked": "2026-09-11T12:18:04.230688+00:00",
     "httpStatus": 200,
     "finalUrl": "https://overland.org.au/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4579,14 +4581,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-20T02:37:10.293123+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:51.517376+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:04.230688+00:00"
   },
   "palang-hitam-indonesia-https-palanghitam-noblogs-org-feed": {
     "name": "Palang Hitam (Indonesia)",
     "url": "https://palanghitam.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:51.811645+00:00",
+    "lastChecked": "2026-09-11T12:18:04.265991+00:00",
     "httpStatus": 200,
     "finalUrl": "https://palanghitam.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4601,14 +4603,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:41:05.232857+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:51.811645+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:04.265991+00:00"
   },
   "paris-luttes-agenda-fr-https-paris-luttes-info-spip-php-page-backend": {
     "name": "Paris-Luttes (Agenda FR)",
     "url": "https://paris-luttes.info/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:52.355389+00:00",
+    "lastChecked": "2026-09-11T12:18:04.732676+00:00",
     "httpStatus": 404,
     "finalUrl": "https://paris-luttes.info/spip.php?page=backend",
     "contentType": "text/html; charset=utf-8",
@@ -4627,14 +4629,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-07T13:31:04.171022+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:52.355389+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:04.732676+00:00"
   },
   "paris-luttes-fr-https-paris-luttes-info-spip-php-page-backend": {
     "name": "Paris-Luttes (FR)",
     "url": "https://paris-luttes.info/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:52.501166+00:00",
+    "lastChecked": "2026-09-11T12:18:04.761597+00:00",
     "httpStatus": 200,
     "finalUrl": "https://paris-luttes.info/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
@@ -4657,37 +4659,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-07T00:59:25.482666+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:52.501166+00:00"
-  },
-  "peta-deutschland-https-www-peta-de-feed": {
-    "name": "PETA Deutschland",
-    "url": "https://www.peta.de/feed/",
-    "status": "ok",
-    "ok": true,
-    "lastChecked": "2026-09-11T05:42:52.830376+00:00",
-    "httpStatus": 200,
-    "finalUrl": "https://www.peta.de/feed/",
-    "contentType": "application/rss+xml; charset=UTF-8",
-    "feedType": "declared-feed",
-    "categories": [
-      "Animal Liberation",
-      "Europe"
-    ],
-    "pageUrl": "https://www.peta.de/",
-    "configuredUrl": "https://www.peta.de/feed/",
-    "rawStatus": "ok",
-    "detailedState": "available",
-    "failureKind": "available",
-    "consecutiveFailures": 0,
-    "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:52.830376+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:04.761597+00:00"
   },
   "pinko-magazine-https-pinko-online-feed": {
     "name": "Pinko Magazine",
     "url": "https://pinko.online/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:53.116146+00:00",
+    "lastChecked": "2026-09-11T12:18:05.529521+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.pinko.online/rss/",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4701,14 +4680,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:53.116146+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:05.529521+00:00"
   },
   "pramen-by-https-pramen-io-ru-2016-10-rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-so": {
     "name": "Pramen (BY)",
     "url": "https://pramen.io/ru/2016/10/rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-sozdat-material-glavnaya-novosti-protesty-anarhisty-antifa-sr-26-10-2016-22-38-redaktsiya-tam-sejchas-vse-kak-v-filme-u/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:53.702617+00:00",
+    "lastChecked": "2026-09-11T12:18:05.626838+00:00",
     "httpStatus": 404,
     "finalUrl": "https://pramen.io/ru/2016/10/rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-sozdat-material-glavnaya-novosti-protesty-anarhisty-antifa-sr-26-10-2016-22-38-redaktsiya-tam-sejchas-vse-kak-v-filme-u/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -4727,14 +4706,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:13.198561+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:53.702617+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:05.626838+00:00"
   },
   "pueblos-en-camino-https-pueblosencamino-org-feed-comments-rss2": {
     "name": "Pueblos en Camino",
     "url": "https://pueblosencamino.org/?feed=comments-rss2",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:54.439307+00:00",
+    "lastChecked": "2026-09-11T12:18:06.410998+00:00",
     "httpStatus": 200,
     "finalUrl": "https://pueblosencamino.org/?feed=comments-rss2",
     "contentType": "text/html; charset=UTF-8",
@@ -4753,14 +4732,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-08T21:55:09.942828+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:54.439307+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:06.410998+00:00"
   },
   "queer-anarchism-https-queeranarchism-tumblr-com-rss": {
     "name": "Queer Anarchism",
     "url": "https://queeranarchism.tumblr.com/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:55.414445+00:00",
+    "lastChecked": "2026-09-11T12:18:06.906206+00:00",
     "httpStatus": 200,
     "finalUrl": "https://queeranarchism.tumblr.com/rss",
     "contentType": "text/xml; charset=utf-8",
@@ -4779,14 +4758,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:55.414445+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:06.906206+00:00"
   },
   "radical-socialist-india-http-radicalsocialist-in-feed": {
     "name": "Radical Socialist (India)",
     "url": "http://radicalsocialist.in/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:55.502871+00:00",
+    "lastChecked": "2026-09-11T12:18:06.941397+00:00",
     "httpStatus": 200,
     "finalUrl": "http://radicalsocialist.in/feed/",
     "contentType": "text/html; charset=UTF-8",
@@ -4805,14 +4784,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:16.567425+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:55.502871+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:06.941397+00:00"
   },
   "radikal-perspektif-https-rpkolektif-wordpress-com-feed": {
     "name": "Radikal Perspektif",
     "url": "https://rpkolektif.wordpress.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:55.568257+00:00",
+    "lastChecked": "2026-09-11T12:18:07.371246+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rpkolektif.wordpress.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4830,14 +4809,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:55.568257+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:07.371246+00:00"
   },
   "radio-dreyeckland-https-rdl-de-rss-xml": {
     "name": "Radio Dreyeckland",
     "url": "https://rdl.de/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:55.608754+00:00",
+    "lastChecked": "2026-09-11T12:18:07.518018+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rdl.de/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4851,14 +4830,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:55.608754+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:07.518018+00:00"
   },
   "radio-kurruf-noticias-https-radiokurruf-org-feed": {
     "name": "Radio Kurruf Noticias",
     "url": "https://radiokurruf.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:56.048937+00:00",
+    "lastChecked": "2026-09-11T12:18:07.658357+00:00",
     "httpStatus": 200,
     "finalUrl": "https://radiokurruf.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4879,14 +4858,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:56.048937+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:07.658357+00:00"
   },
   "rebellyon-fr-https-rebellyon-info-spip-php-page-backend": {
     "name": "Rebellyon (FR)",
     "url": "https://rebellyon.info/spip.php?page=backend",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:56.276859+00:00",
+    "lastChecked": "2026-09-11T12:18:08.159037+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rebellyon.info/spip.php?page=backend",
     "contentType": "text/xml; charset=utf-8",
@@ -4894,10 +4873,10 @@
     "categories": [
       "Europe",
       "Movement News",
-      "Antifascism",
       "Anticapitalism",
+      "Antifascism",
       "Anti-Rep & Prisons",
-      "Antiracism",
+      "Theory & Strategy",
       "Queer-Feminism",
       "Squatting & Housing"
     ],
@@ -4909,14 +4888,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-07T00:59:32.181967+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:56.276859+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:08.159037+00:00"
   },
   "recht-auf-stadt-hamburg-https-www-rechtaufstadt-net-feed": {
     "name": "Recht auf Stadt (Hamburg)",
     "url": "https://www.rechtaufstadt.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:56.708685+00:00",
+    "lastChecked": "2026-09-11T12:18:08.367328+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.rechtaufstadt.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -4931,14 +4910,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-06T11:28:22.691149+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:56.708685+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:08.367328+00:00"
   },
   "red-flag-aus-https-redflag-org-au-feed": {
     "name": "Red Flag (Aus)",
     "url": "https://redflag.org.au/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:56.713096+00:00",
+    "lastChecked": "2026-09-11T12:18:08.507628+00:00",
     "httpStatus": 200,
     "finalUrl": "https://redflag.org.au/rss/",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4946,12 +4925,11 @@
     "categories": [
       "Australia & NZ",
       "Labor Struggles",
-      "Movement News",
       "Anti-Imperialism",
+      "Movement News",
       "Anticapitalism",
       "Anti-Rep & Prisons",
-      "No War",
-      "Theory & Strategy"
+      "No War"
     ],
     "pageUrl": "https://redflag.org.au/",
     "configuredUrl": "https://redflag.org.au/feed",
@@ -4960,14 +4938,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:56.713096+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:08.507628+00:00"
   },
   "rhein-main-events-https-events-rheinmain-social-feed-rss": {
     "name": "Rhein-Main Events",
     "url": "https://events.rheinmain.social/feed/rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:57.097772+00:00",
+    "lastChecked": "2026-09-11T12:18:08.849736+00:00",
     "httpStatus": 200,
     "finalUrl": "https://events.rheinmain.social/feed/rss",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -4982,14 +4960,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:57.097772+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:08.849736+00:00"
   },
   "rheinmetall-entwaffnen-https-rheinmetallentwaffnen-noblogs-org-feed": {
     "name": "Rheinmetall Entwaffnen",
     "url": "https://rheinmetallentwaffnen.noblogs.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:57.631176+00:00",
+    "lastChecked": "2026-09-11T12:18:08.920134+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rheinmetallentwaffnen.noblogs.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5006,14 +4984,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-28T12:41:10.715007+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:57.631176+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:08.920134+00:00"
   },
   "roape-https-roape-net-feed": {
     "name": "ROAPE",
     "url": "https://roape.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:58.047003+00:00",
+    "lastChecked": "2026-09-11T12:18:09.674908+00:00",
     "httpStatus": 200,
     "finalUrl": "https://roape.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5031,14 +5009,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:58.047003+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:09.674908+00:00"
   },
   "rojava-info-center-https-rojavainformationcenter-org-feed": {
     "name": "Rojava Info Center",
     "url": "https://rojavainformationcenter.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:58.115771+00:00",
+    "lastChecked": "2026-09-11T12:18:09.685959+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rojavainformationcenter.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5055,14 +5033,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-29T07:52:24.215132+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:58.115771+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:09.685959+00:00"
   },
   "rote-hilfe-https-www-rote-hilfe-de-rss-xml": {
     "name": "Rote Hilfe",
     "url": "https://www.rote-hilfe.de/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:58.433656+00:00",
+    "lastChecked": "2026-09-11T12:18:09.853171+00:00",
     "httpStatus": 200,
     "finalUrl": "https://rote-hilfe.de/rss.xml",
     "contentType": "application/rss+xml; charset=utf-8",
@@ -5079,14 +5057,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:58.433656+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:09.853171+00:00"
   },
   "round-table-india-https-www-roundtableindia-co-in-feed": {
     "name": "Round Table India",
     "url": "https://www.roundtableindia.co.in/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:58.679368+00:00",
+    "lastChecked": "2026-09-11T12:18:09.878938+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.roundtableindia.co.in/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5107,14 +5085,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:58.679368+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:09.878938+00:00"
   },
   "sea-watch-https-sea-watch-org-feed": {
     "name": "Sea-Watch",
     "url": "https://sea-watch.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:59.432489+00:00",
+    "lastChecked": "2026-09-11T12:18:10.057822+00:00",
     "httpStatus": 200,
     "finalUrl": "https://sea-watch.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5124,19 +5102,46 @@
     ],
     "configuredUrl": "https://sea-watch.org/feed/",
     "rawStatus": "ok",
-    "detailedState": "recovered",
+    "detailedState": "available",
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-10T21:41:41.724462+00:00",
-    "lastSuccessAt": "2026-09-11T05:42:59.432489+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:10.057822+00:00"
+  },
+  "sicilia-libertaria-https-www-sicilialibertaria-it-feed": {
+    "name": "Sicilia Libertaria",
+    "url": "https://www.sicilialibertaria.it/feed/",
+    "status": "ok",
+    "ok": true,
+    "lastChecked": "2026-09-11T12:18:10.562129+00:00",
+    "httpStatus": 200,
+    "finalUrl": "https://www.sicilialibertaria.it/feed/",
+    "contentType": "text/xml;charset=UTF-8",
+    "feedType": "xml",
+    "categories": [
+      "Europe",
+      "Theory & Strategy",
+      "Anticapitalism",
+      "No War",
+      "Antifascism"
+    ],
+    "pageUrl": "https://www.sicilialibertaria.it/",
+    "configuredUrl": "https://www.sicilialibertaria.it/feed/",
+    "rawStatus": "ok",
+    "detailedState": "recovered",
+    "failureKind": "available",
+    "consecutiveFailures": 0,
+    "consecutiveRestrictions": 0,
+    "lastFailureAt": "2026-09-11T05:42:59.481274+00:00",
+    "lastSuccessAt": "2026-09-11T12:18:10.562129+00:00"
   },
   "slackbastard-https-slackbastard-anarchobase-com-feed-rss2": {
     "name": "Slackbastard",
     "url": "https://slackbastard.anarchobase.com/?feed=rss2",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:42:59.538077+00:00",
+    "lastChecked": "2026-09-11T12:18:10.879092+00:00",
     "httpStatus": 200,
     "finalUrl": "https://slackbastard.anarchobase.com/?feed=rss2",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5154,14 +5159,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:42:59.538077+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:10.879092+00:00"
   },
   "slingshot-collective-https-slingshotcollective-org-feed": {
     "name": "Slingshot Collective",
     "url": "https://slingshotcollective.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:00.015500+00:00",
+    "lastChecked": "2026-09-11T12:18:11.034963+00:00",
     "httpStatus": 200,
     "finalUrl": "https://slingshotcollective.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5178,14 +5183,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:00.015500+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.034963+00:00"
   },
   "solarpunk-magazine-https-solarpunkmagazine-com-feed": {
     "name": "Solarpunk Magazine",
     "url": "https://solarpunkmagazine.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:00.555695+00:00",
+    "lastChecked": "2026-09-11T12:18:11.139906+00:00",
     "httpStatus": 200,
     "finalUrl": "https://solarpunkmagazine.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5199,14 +5204,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:00.555695+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.139906+00:00"
   },
   "sprout-distro-https-www-sproutdistro-com-rss-xml": {
     "name": "Sprout Distro",
     "url": "https://www.sproutdistro.com/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:00.666851+00:00",
+    "lastChecked": "2026-09-11T12:18:11.261378+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.sproutdistro.com/rss.xml",
     "contentType": "text/html; charset=utf-8",
@@ -5225,14 +5230,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:22.676340+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:00.666851+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.261378+00:00"
   },
   "squat-net-https-de-squat-net-feed": {
     "name": "Squat!net",
     "url": "https://de.squat.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:01.013685+00:00",
+    "lastChecked": "2026-09-11T12:18:11.302365+00:00",
     "httpStatus": 200,
     "finalUrl": "https://de.squat.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5247,14 +5252,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-15T13:44:05.653083+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:01.013685+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.302365+00:00"
   },
   "stop-the-war-coalition-https-www-stopwar-org-uk-rss-xml": {
     "name": "Stop the War Coalition",
     "url": "https://www.stopwar.org.uk/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:01.072249+00:00",
+    "lastChecked": "2026-09-11T12:18:11.674351+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.stopwar.org.uk/rss.xml",
     "contentType": "text/html; charset=UTF-8",
@@ -5273,14 +5278,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:23.357827+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:01.072249+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.674351+00:00"
   },
   "submedia-https-sub-media-feed": {
     "name": "SubMedia",
     "url": "https://sub.media/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:01.099241+00:00",
+    "lastChecked": "2026-09-11T12:18:11.787513+00:00",
     "httpStatus": 200,
     "finalUrl": "https://sub.media/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5296,14 +5301,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-06T11:51:42.503743+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:01.099241+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.787513+00:00"
   },
   "subversiones-mexico-https-subversiones-org-feed": {
     "name": "Subversiones (Mexico)",
     "url": "https://subversiones.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:01.969989+00:00",
+    "lastChecked": "2026-09-11T12:18:11.818401+00:00",
     "httpStatus": 200,
     "finalUrl": "https://subversiones.org/feed",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5318,14 +5323,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T12:08:02.238580+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:01.969989+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.818401+00:00"
   },
   "systemli-https-www-systemli-org-index-xml": {
     "name": "Systemli",
     "url": "https://www.systemli.org/index.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:02.239896+00:00",
+    "lastChecked": "2026-09-11T12:18:11.956013+00:00",
     "httpStatus": 404,
     "finalUrl": "https://www.systemli.org/index.xml",
     "contentType": "text/html; charset=iso-8859-1",
@@ -5344,14 +5349,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-05T15:08:32.128216+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:02.239896+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:11.956013+00:00"
   },
   "tactical-tech-https-tacticaltech-org-rss-xml": {
     "name": "Tactical Tech",
     "url": "https://tacticaltech.org/rss.xml",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:03.061962+00:00",
+    "lastChecked": "2026-09-11T12:18:12.210896+00:00",
     "httpStatus": 200,
     "finalUrl": "https://tacticaltech.org/rss.xml",
     "contentType": "text/xml; charset=UTF-8",
@@ -5370,14 +5375,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:03.061962+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.210896+00:00"
   },
   "the-anarchist-library-en-https-theanarchistlibrary-org-feed": {
     "name": "The Anarchist Library (EN)",
     "url": "https://theanarchistlibrary.org/feed",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:03.510688+00:00",
+    "lastChecked": "2026-09-11T12:18:12.502798+00:00",
     "httpStatus": 200,
     "finalUrl": "https://theanarchistlibrary.org/feed",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5385,12 +5390,12 @@
     "categories": [
       "Libraries",
       "Global",
-      "Anticapitalism",
       "Theory & Strategy",
+      "Anticapitalism",
       "Anti-Rep & Prisons",
       "Demonstrations",
-      "No War",
-      "Anticolonialism"
+      "Anticolonialism",
+      "Radical Health & Disability"
     ],
     "pageUrl": "https://theanarchistlibrary.org/",
     "configuredUrl": "https://theanarchistlibrary.org/feed",
@@ -5399,14 +5404,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:03.510688+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.502798+00:00"
   },
   "the-appeal-https-theappeal-org-feed": {
     "name": "The Appeal",
     "url": "https://theappeal.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:03.690490+00:00",
+    "lastChecked": "2026-09-11T12:18:12.692428+00:00",
     "httpStatus": 200,
     "finalUrl": "https://theappeal.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5420,14 +5425,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:03.690490+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.692428+00:00"
   },
   "the-elephant-kenya-https-www-theelephant-info-feed": {
     "name": "The Elephant (Kenya)",
     "url": "https://www.theelephant.info/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:03.866678+00:00",
+    "lastChecked": "2026-09-11T12:18:12.740283+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.theelephant.info/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5446,14 +5451,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-03T12:12:57.062044+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:03.866678+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.740283+00:00"
   },
   "the-feminist-wire-https-thefeministwire-com-feed": {
     "name": "The Feminist Wire",
     "url": "https://thefeministwire.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:03.964016+00:00",
+    "lastChecked": "2026-09-11T12:18:12.774306+00:00",
     "httpStatus": 200,
     "finalUrl": "https://thefeministwire.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5472,14 +5477,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-10T08:48:08.112860+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:03.964016+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.774306+00:00"
   },
   "the-new-inquiry-https-thenewinquiry-com-feed": {
     "name": "The New Inquiry",
     "url": "https://thenewinquiry.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:04.049883+00:00",
+    "lastChecked": "2026-09-11T12:18:12.811494+00:00",
     "httpStatus": 200,
     "finalUrl": "https://thenewinquiry.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5494,14 +5499,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-02T10:42:51.788735+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:04.049883+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:12.811494+00:00"
   },
   "the-polis-project-india-https-www-thepolisproject-com-feed": {
     "name": "The Polis Project (India)",
     "url": "https://www.thepolisproject.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:04.217125+00:00",
+    "lastChecked": "2026-09-11T12:18:13.021356+00:00",
     "httpStatus": 200,
     "finalUrl": "https://thepolisproject.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5516,14 +5521,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:04.217125+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:13.021356+00:00"
   },
   "tierbefreier-https-tierbefreier-org-feed": {
     "name": "Tierbefreier",
     "url": "https://tierbefreier.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:04.865944+00:00",
+    "lastChecked": "2026-09-11T12:18:13.570721+00:00",
     "httpStatus": 200,
     "finalUrl": "https://tierbefreier.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5538,14 +5543,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-10T08:48:09.199225+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:04.865944+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:13.570721+00:00"
   },
   "transgender-europe-tgeu-https-tgeu-org-feed": {
     "name": "Transgender Europe (TGEU)",
     "url": "https://tgeu.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:05.364818+00:00",
+    "lastChecked": "2026-09-11T12:18:13.771841+00:00",
     "httpStatus": 200,
     "finalUrl": "https://tgeu.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5561,14 +5566,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:05.364818+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:13.771841+00:00"
   },
   "tricontinental-institute-for-social-research-https-thetricontinental-org-feed": {
     "name": "Tricontinental: Institute for Social Research",
     "url": "https://thetricontinental.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:06.884996+00:00",
+    "lastChecked": "2026-09-11T12:18:14.315638+00:00",
     "httpStatus": 200,
     "finalUrl": "https://thetricontinental.org/feed/",
     "contentType": "text/xml",
@@ -5587,14 +5592,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-28T17:58:21.010739+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:06.884996+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:14.315638+00:00"
   },
   "truthout-https-truthout-org-feed": {
     "name": "Truthout",
     "url": "https://truthout.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:07.117430+00:00",
+    "lastChecked": "2026-09-11T12:18:14.485457+00:00",
     "httpStatus": 200,
     "finalUrl": "https://truthout.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5616,14 +5621,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:07.117430+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:14.485457+00:00"
   },
   "unicorn-riot-https-unicornriot-ninja-feed": {
     "name": "Unicorn Riot",
     "url": "https://unicornriot.ninja/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:07.907183+00:00",
+    "lastChecked": "2026-09-11T12:18:14.679147+00:00",
     "httpStatus": 200,
     "finalUrl": "https://unicornriot.ninja/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5645,14 +5650,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:07.907183+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:14.679147+00:00"
   },
   "unoffensive-animal-https-unoffensiveanimal-is-feed": {
     "name": "Unoffensive Animal",
     "url": "https://unoffensiveanimal.is/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:08.273849+00:00",
+    "lastChecked": "2026-09-11T12:18:14.834066+00:00",
     "httpStatus": 200,
     "finalUrl": "https://unoffensiveanimal.is/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5668,14 +5673,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:08.273849+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:14.834066+00:00"
   },
   "waging-nonviolence-https-wagingnonviolence-org-feed": {
     "name": "Waging Nonviolence",
     "url": "https://wagingnonviolence.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:09.411834+00:00",
+    "lastChecked": "2026-09-11T12:18:14.967947+00:00",
     "httpStatus": 200,
     "finalUrl": "https://wagingnonviolence.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5698,14 +5703,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-22T02:35:36.416148+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:09.411834+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:14.967947+00:00"
   },
   "warrior-publications-https-warriorpublications-wordpress-com-feed": {
     "name": "Warrior Publications",
     "url": "https://warriorpublications.wordpress.com/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:10.626567+00:00",
+    "lastChecked": "2026-09-11T12:18:15.742939+00:00",
     "httpStatus": 200,
     "finalUrl": "https://warriorpublications.wordpress.com/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5719,14 +5724,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:10.626567+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:15.742939+00:00"
   },
   "wildcat-http-www-wildcat-www-de-feed-rss": {
     "name": "Wildcat",
     "url": "http://www.wildcat-www.de/feed.rss",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:10.662564+00:00",
+    "lastChecked": "2026-09-11T12:18:15.855185+00:00",
     "httpStatus": 404,
     "finalUrl": "http://www.wildcat-www.de/feed.rss",
     "contentType": "text/html; charset=iso-8859-1",
@@ -5745,14 +5750,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-07-21T06:47:28.137713+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:10.662564+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:15.855185+00:00"
   },
   "winter-oak-https-winteroak-org-uk-feed": {
     "name": "Winter Oak",
     "url": "https://winteroak.org.uk/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:10.731421+00:00",
+    "lastChecked": "2026-09-11T12:18:15.978760+00:00",
     "httpStatus": 200,
     "finalUrl": "https://winteroak.org.uk/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5770,14 +5775,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:10.731421+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:15.978760+00:00"
   },
   "women-enabled-international-https-womenenabled-org-feed": {
     "name": "Women Enabled International",
     "url": "https://womenenabled.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:10.984219+00:00",
+    "lastChecked": "2026-09-11T12:18:16.106277+00:00",
     "httpStatus": 200,
     "finalUrl": "https://womenenabled.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5794,14 +5799,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:10.984219+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:16.106277+00:00"
   },
   "womin-african-alliance-https-womin-africa-feed": {
     "name": "WoMin African Alliance",
     "url": "https://womin.africa/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:11.047230+00:00",
+    "lastChecked": "2026-09-11T12:18:16.138200+00:00",
     "httpStatus": 200,
     "finalUrl": "https://womin.africa/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5821,14 +5826,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:11.047230+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:16.138200+00:00"
   },
   "world-beyond-war-https-worldbeyondwar-org-feed": {
     "name": "World BEYOND War",
     "url": "https://worldbeyondwar.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:11.313778+00:00",
+    "lastChecked": "2026-09-11T12:18:16.209560+00:00",
     "httpStatus": 200,
     "finalUrl": "https://worldbeyondwar.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5849,14 +5854,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-09-01T12:32:02.529315+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:11.313778+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:16.209560+00:00"
   },
   "yery-z-postas-https-www-yeryuzupostasi-org-feed": {
     "name": "Yeryüzü Postası",
     "url": "https://www.yeryuzupostasi.org/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:12.869952+00:00",
+    "lastChecked": "2026-09-11T12:18:16.608166+00:00",
     "httpStatus": 200,
     "finalUrl": "https://www.yeryuzupostasi.org/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5876,14 +5881,14 @@
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
     "lastFailureAt": "2026-08-29T07:52:31.841281+00:00",
-    "lastSuccessAt": "2026-09-11T05:43:12.869952+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:16.608166+00:00"
   },
   "zabalaza-https-zabalaza-net-feed": {
     "name": "Zabalaza",
     "url": "https://zabalaza.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:13.189427+00:00",
+    "lastChecked": "2026-09-11T12:18:17.073935+00:00",
     "httpStatus": 200,
     "finalUrl": "https://zabalaza.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5897,14 +5902,14 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:13.189427+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:17.073935+00:00"
   },
   "zabalaza-books-africa-https-zabalazabooks-net-feed": {
     "name": "Zabalaza Books (Africa)",
     "url": "https://zabalazabooks.net/feed/",
     "status": "ok",
     "ok": true,
-    "lastChecked": "2026-09-11T05:43:13.225951+00:00",
+    "lastChecked": "2026-09-11T12:18:17.192177+00:00",
     "httpStatus": 200,
     "finalUrl": "https://zabalazabooks.net/feed/",
     "contentType": "application/rss+xml; charset=UTF-8",
@@ -5918,6 +5923,6 @@
     "failureKind": "available",
     "consecutiveFailures": 0,
     "consecutiveRestrictions": 0,
-    "lastSuccessAt": "2026-09-11T05:43:13.225951+00:00"
+    "lastSuccessAt": "2026-09-11T12:18:17.192177+00:00"
   }
 }
