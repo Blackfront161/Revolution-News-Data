@@ -103,6 +103,11 @@ jobs:
               str(status["news"]["newestArticleAt"]).replace("Z", "+00:00")
           )
           newest_age = (datetime.now(timezone.utc) - newest).total_seconds()
+          if newest_age < 0:
+              raise SystemExit(
+                  "FEHLER: Der Feedstatus behauptet einen zukünftigen "
+                  "neuesten Artikel."
+              )
           if int(run.get("newArticles") or 0) > 0 and newest_age > 30 * 3600:
               raise SystemExit(
                   "FEHLER: Metadaten wurden aktualisiert, aber der neueste "
@@ -137,3 +142,4 @@ jobs:
 
           git commit -m "Refresh current news feed"
           bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"
+
