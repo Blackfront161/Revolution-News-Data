@@ -9,6 +9,7 @@ on:
       - build_source_archive.py
       - scripts/validate_media_library.py
       - scripts/build_video_feed.js
+      - scripts/public_video_request.js
       - video-pipeline-core.js
       - video-sources-registry.json
       - video-editorial-seed.json
@@ -54,6 +55,7 @@ jobs:
       - name: Vorhandene Generatoren prüfen
         run: |
           node tests/test_video_pipeline.js
+          node tests/test_public_video_request.js
           python tests/test_source_archive.py
           python -m unittest discover -s tests -p test_library_catalog.py
 

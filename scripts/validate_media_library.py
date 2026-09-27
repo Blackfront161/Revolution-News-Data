@@ -35,6 +35,9 @@ def main():
     checks = health.get("networkChecks", {})
     if checks.get("checked", 0) < len(videos) or checks.get("reachable", 0) < len(videos) // 2:
         raise SystemExit("Zu wenige Video-Links waren bei der Prüfung erreichbar")
+    for result in checks.get("items", {}).get("results", []):
+        if result.get("original", {}).get("unsafe") or (result.get("embed") or {}).get("unsafe"):
+            raise SystemExit("Video-Feed enthält ein nichtöffentliches Ziel")
     if not isinstance(libraries, list) or len(libraries) < 20:
         raise SystemExit("Bibliotheksindex ist leer oder unvollständig")
     if library_health.get("itemCount") != len(libraries):

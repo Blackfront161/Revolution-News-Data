@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-27T08:04:38.397Z",
+  "generatedAt": "2026-09-27T09:43:27.774Z",
   "status": "healthy",
   "networkChecks": {
     "mode": "sources-and-items",
     "checked": 35,
     "reachable": 32,
     "failed": 3,
-    "metadataEnriched": 11,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 7,
@@ -25,7 +25,8 @@
           "url": "https://antimilitarismus.noblogs.org/",
           "ok": false,
           "status": 0,
-          "error": "fetch failed"
+          "unsafe": false,
+          "error": "connect ECONNREFUSED 185.218.207.228:443"
         },
         {
           "sourceId": "andrewism",
@@ -46,6 +47,7 @@
           "url": "https://davidgraeber.org/videos/",
           "ok": false,
           "status": 0,
+          "unsafe": false,
           "error": "timeout"
         },
         {
@@ -53,7 +55,8 @@
           "url": "https://kolektiva.media/a/submedia/video-channels",
           "ok": false,
           "status": 0,
-          "error": "timeout"
+          "unsafe": false,
+          "error": "Client network socket disconnected before secure TLS connection was established"
         },
         {
           "sourceId": "charly-d-anarchy-documentaries",
@@ -294,9 +297,9 @@
     "registrySources": 10
   },
   "coverage": {
-    "duration": 11,
-    "thumbnails": 12,
-    "subtitlesKnown": 11,
+    "duration": 12,
+    "thumbnails": 13,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -338,9 +341,9 @@
       "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
+      "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -360,7 +363,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 25,
+      "ageDays": 26,
       "ageStatus": "current",
       "status": "healthy"
     },

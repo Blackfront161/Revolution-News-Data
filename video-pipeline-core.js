@@ -51,6 +51,7 @@
     const href = safeUrl(raw);
     if (!href) return null;
     const url = new URL(href);
+    if (url.protocol !== 'https:') return null;
     const host = url.hostname.toLocaleLowerCase().replace(/^www\./, '');
     const path = url.pathname;
     if (host === 'youtu.be') {

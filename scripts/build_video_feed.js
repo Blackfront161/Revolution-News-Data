@@ -3,9 +3,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const pipeline = require('../video-pipeline-core.js');
+const { createPublicRequester, UnsafeVideoUrl } = require('./public_video_request.js');
 
 const root = path.resolve(__dirname, '..');
 const args = new Set(process.argv.slice(2));
+const requestPublicHttps = createPublicRequester();
 
 function readJson(name) {
   return JSON.parse(fs.readFileSync(path.join(root, name), 'utf8'));
@@ -16,18 +18,19 @@ function writeJson(name, value) {
 }
 
 async function checkUrl(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
-    let response = await fetch(url, { method: 'HEAD', redirect: 'follow', signal: controller.signal });
+    let response = await requestPublicHttps(url, { method: 'HEAD' });
     if ([403, 405].includes(response.status)) {
-      response = await fetch(url, { method: 'GET', redirect: 'follow', signal: controller.signal, headers: { Range: 'bytes=0-1024' } });
+      response = await requestPublicHttps(url, { method: 'GET', headers: { Range: 'bytes=0-1024' } });
     }
-    return { ok: response.ok, status: response.status, finalUrl: response.url || url };
+    return { ok: response.ok, status: response.status, finalUrl: response.url };
   } catch (error) {
-    return { ok: false, status: 0, error: error?.name === 'AbortError' ? 'timeout' : String(error?.message || error) };
-  } finally {
-    clearTimeout(timeout);
+    return {
+      ok: false,
+      status: 0,
+      unsafe: error instanceof UnsafeVideoUrl,
+      error: String(error?.message || error)
+    };
   }
 }
 
@@ -47,15 +50,13 @@ async function mapLimited(rows, limit, worker) {
 
 async function platformMetadata(item) {
   if (item.platform === 'YouTube' && item.platformId) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000);
     try {
-      const response = await fetch(item.originalUrl, {
-        signal: controller.signal,
+      const response = await requestPublicHttps(item.originalUrl, {
+        readBody: true,
         headers: { 'Accept-Language': 'en' }
       });
       if (!response.ok) return null;
-      const page = await response.text();
+      const page = response.body;
       const publishedAt = page.match(/"publishDate":"([^"]+)"/u)?.[1] || item.publishedAt;
       const durationSeconds = Number(page.match(/"lengthSeconds":"(\d+)"/u)?.[1] || 0) || item.durationSeconds;
       const availability = page.match(/"playabilityStatus":\{"status":"([^"]+)"/u)?.[1] || 'unknown';
@@ -69,21 +70,17 @@ async function platformMetadata(item) {
       };
     } catch {
       return null;
-    } finally {
-      clearTimeout(timeout);
     }
   }
   if (!['PeerTube', 'Kolektiva'].includes(item.platform) || !item.platformId) return null;
   const origin = new URL(item.originalUrl).origin;
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
   try {
     const metadataUrl = `${origin}/api/v1/videos/${encodeURIComponent(item.platformId)}`;
-    const response = await fetch(metadataUrl, { signal: controller.signal });
+    const response = await requestPublicHttps(metadataUrl, { readBody: true });
     if (!response.ok) return null;
-    const metadata = await response.json();
-    const captionsResponse = await fetch(`${metadataUrl}/captions`, { signal: controller.signal });
-    const captions = captionsResponse.ok ? await captionsResponse.json() : { data: [] };
+    const metadata = JSON.parse(response.body);
+    const captionsResponse = await requestPublicHttps(`${metadataUrl}/captions`, { readBody: true });
+    const captions = captionsResponse.ok ? JSON.parse(captionsResponse.body) : { data: [] };
     return {
       durationSeconds: Number(metadata.duration || 0) || item.durationSeconds,
       thumbnailUrl: metadata.thumbnailPath ? new URL(metadata.thumbnailPath, origin).href : item.thumbnailUrl,
@@ -95,8 +92,6 @@ async function platformMetadata(item) {
     };
   } catch {
     return null;
-  } finally {
-    clearTimeout(timeout);
   }
 }
 
