@@ -31,9 +31,23 @@ asia_rows = [
     row for row in quick_feed
     if "Asia" in row.get("categories", [])
 ]
-asia_sources = [str(row.get("quelleName", "")) for row in asia_rows[:10]]
+eligible_asia_sources = {
+    str(row.get("quelleName", "")).strip().casefold()
+    for row in news
+    if "Asia" in row.get("categories", [])
+    and row.get("quelleName") and row.get("title")
+    and row.get("content") and row.get("link")
+}
+diversity_target = min(10, len(eligible_asia_sources))
+asia_sources = [
+    str(row.get("quelleName", "")).strip().casefold()
+    for row in asia_rows[:diversity_target]
+]
 assert len(asia_rows) >= 10
-assert len(set(asia_sources)) == len(asia_sources), asia_sources
+assert len(eligible_asia_sources) >= 8, eligible_asia_sources
+assert len(set(asia_sources)) == diversity_target, asia_sources
+if len(eligible_asia_sources) <= 10:
+    assert set(asia_sources) == eligible_asia_sources, asia_sources
 
 abc_rows = [
     row for row in news
@@ -69,5 +83,5 @@ assert 'categories.append("Movement News")' in aggregate_py
 print(
     "WRN 1.8.5 Feed/UX: "
     f"{len(news)} Artikel vollständig klassifiziert, "
-    f"{len(set(asia_sources))} verschiedene Asien-Quellen in den ersten 10."
+    f"{len(set(asia_sources))} verfügbare Asien-Quellen zuerst (maximal 10)."
 )

@@ -1,0 +1,90 @@
+name: Update Media and Library
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-media-library.yml
+      - aggregate_libraries.py
+      - build_source_archive.py
+      - scripts/validate_media_library.py
+      - scripts/build_video_feed.js
+      - scripts/public_video_request.js
+      - video-pipeline-core.js
+      - video-sources-registry.json
+      - video-editorial-seed.json
+      - library-sources.json
+  schedule:
+    - cron: "23 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Latest published data laden
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Laufzeit einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: OPDS-Abhängigkeit installieren
+        run: python -m pip install "requests==2.32.3"
+
+      - name: Vorhandene Generatoren prüfen
+        run: |
+          node tests/test_video_pipeline.js
+          node tests/test_public_video_request.js
+          python tests/test_source_archive.py
+          python -m unittest discover -s tests -p test_library_catalog.py
+
+      - name: Videos aus aktuellem News-Feed erzeugen und Links prüfen
+        run: node scripts/build_video_feed.js --check-network
+
+      - name: Mehrsprachige Bibliothek aktualisieren
+        run: python aggregate_libraries.py
+        env:
+          WRN_LIBRARY_MAX_PAGES: "12"
+          WRN_LIBRARY_MAX_ITEMS: "500"
+
+      - name: Quellenarchive aus dem aktuellen News-Bestand erzeugen
+        run: python build_source_archive.py
+
+      - name: Veröffentlichung auf Datenintegrität prüfen
+        run: python scripts/validate_media_library.py
+
+      - name: Geprüfte Ausgaben veröffentlichen
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wrn-media-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add video-feed.json video-health.json library-feed.json library-health.json news-archive-manifest.json
+          git add -A news-archive
+          if git diff --cached --quiet; then
+            echo "Keine Medien- oder Bibliotheksänderungen."
+            exit 0
+          fi
+          git commit -m "Refresh media, library and source archives"
+          bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"

@@ -1,0 +1,553 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-27T09:43:27.774Z",
+  "status": "healthy",
+  "networkChecks": {
+    "mode": "sources-and-items",
+    "checked": 35,
+    "reachable": 32,
+    "failed": 3,
+    "metadataEnriched": 12,
+    "sources": {
+      "checked": 10,
+      "reachable": 7,
+      "failed": 3,
+      "results": [
+        {
+          "sourceId": "kolektiva-media-news",
+          "url": "https://kolektiva.media/",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://kolektiva.media/"
+        },
+        {
+          "sourceId": "antimilitarismus",
+          "url": "https://antimilitarismus.noblogs.org/",
+          "ok": false,
+          "status": 0,
+          "unsafe": false,
+          "error": "connect ECONNREFUSED 185.218.207.228:443"
+        },
+        {
+          "sourceId": "andrewism",
+          "url": "https://www.youtube.com/@Andrewism",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/@Andrewism"
+        },
+        {
+          "sourceId": "audible-anarchist",
+          "url": "https://www.youtube.com/channel/UCaO1QA8QL99_eb0XhJI2Fyw",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/channel/UCaO1QA8QL99_eb0XhJI2Fyw"
+        },
+        {
+          "sourceId": "david-graeber-archive",
+          "url": "https://davidgraeber.org/videos/",
+          "ok": false,
+          "status": 0,
+          "unsafe": false,
+          "error": "timeout"
+        },
+        {
+          "sourceId": "submedia",
+          "url": "https://kolektiva.media/a/submedia/video-channels",
+          "ok": false,
+          "status": 0,
+          "unsafe": false,
+          "error": "Client network socket disconnected before secure TLS connection was established"
+        },
+        {
+          "sourceId": "charly-d-anarchy-documentaries",
+          "url": "https://www.youtube.com/@charlyd1929",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/@charlyd1929"
+        },
+        {
+          "sourceId": "anarchistische-gemeinschaft-video",
+          "url": "https://www.youtube.com/@anarchistischeGemeinschaft",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/@anarchistischeGemeinschaft"
+        },
+        {
+          "sourceId": "anarchism-in-america-archive",
+          "url": "https://www.youtube.com/@forthedishwasherbabylon5985",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/@forthedishwasherbabylon5985"
+        },
+        {
+          "sourceId": "notre-histoire-anarchism",
+          "url": "https://www.youtube.com/@NotreHistoiredoc",
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://www.youtube.com/@NotreHistoiredoc"
+        }
+      ]
+    },
+    "items": {
+      "checked": 13,
+      "reachable": 13,
+      "failed": 0,
+      "embedChecked": 12,
+      "results": [
+        {
+          "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
+          "original": {
+            "url": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr"
+          }
+        },
+        {
+          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+          "original": {
+            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4"
+          },
+          "embed": null
+        },
+        {
+          "canonicalId": "youtube:efbUsgUYUCA",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=efbUsgUYUCA",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=efbUsgUYUCA"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/efbUsgUYUCA?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/efbUsgUYUCA?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:AHGl9a8BcqI",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=AHGl9a8BcqI",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=AHGl9a8BcqI"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/AHGl9a8BcqI?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/AHGl9a8BcqI?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:mOlpZzlh09s",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=mOlpZzlh09s",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=mOlpZzlh09s"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/mOlpZzlh09s?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/mOlpZzlh09s?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:nrm4gj_eDGA",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=nrm4gj_eDGA",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=nrm4gj_eDGA"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/nrm4gj_eDGA?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/nrm4gj_eDGA?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:0uNSjlCkxwA",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=0uNSjlCkxwA",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=0uNSjlCkxwA"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/0uNSjlCkxwA?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/0uNSjlCkxwA?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:tDDLFpz7pjE",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=tDDLFpz7pjE",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=tDDLFpz7pjE"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/tDDLFpz7pjE?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/tDDLFpz7pjE?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:lrTzjaXskUU",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=lrTzjaXskUU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=lrTzjaXskUU"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/lrTzjaXskUU?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/lrTzjaXskUU?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:bgmClo2LPls",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=bgmClo2LPls",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=bgmClo2LPls"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/bgmClo2LPls?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/bgmClo2LPls?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:mfEYye6TNlk",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=mfEYye6TNlk"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/mfEYye6TNlk?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/mfEYye6TNlk?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:I0UGM8zeNLw",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=I0UGM8zeNLw&t=921s",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=I0UGM8zeNLw&t=921s"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/I0UGM8zeNLw?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/I0UGM8zeNLw?rel=0"
+          }
+        },
+        {
+          "canonicalId": "youtube:o8Btb1sGRK0",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=o8Btb1sGRK0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=o8Btb1sGRK0"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
+          }
+        }
+      ]
+    }
+  },
+  "totals": {
+    "candidateCount": 13,
+    "acceptedBeforeQuota": 13,
+    "acceptedCount": 13,
+    "duplicateCount": 0,
+    "quotaRemovedCount": 0,
+    "rejectedCount": 13,
+    "registrySources": 10
+  },
+  "coverage": {
+    "duration": 12,
+    "thumbnails": 13,
+    "subtitlesKnown": 12,
+    "transcripts": 0
+  },
+  "missingMetadata": {
+    "title": 0,
+    "description": 0,
+    "source": 0,
+    "platform": 0,
+    "language": 0,
+    "region": 0,
+    "topic": 0,
+    "publishedAt": 0,
+    "originalUrl": 0
+  },
+  "byPlatform": {
+    "YouTube": 11,
+    "Direct": 1,
+    "Kolektiva": 1
+  },
+  "byLanguage": {
+    "en": 7,
+    "de": 3,
+    "und": 2,
+    "fr": 1
+  },
+  "bySource": {
+    "andrewism": 2,
+    "audible-anarchist": 2,
+    "charly-d-anarchy-documentaries": 2,
+    "anarchism-in-america-archive": 1,
+    "anarchistische-gemeinschaft-video": 1,
+    "animal-rising": 1,
+    "david-graeber-archive": 1,
+    "indymedia-argentina": 1,
+    "kolektiva-media-news": 1,
+    "notre-histoire-anarchism": 1
+  },
+  "itemHealth": [
+    {
+      "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:efbUsgUYUCA",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 26,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:AHGl9a8BcqI",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 4152,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:mOlpZzlh09s",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 3357,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:nrm4gj_eDGA",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 5184,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:0uNSjlCkxwA",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 5755,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:tDDLFpz7pjE",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 2951,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:lrTzjaXskUU",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 878,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:bgmClo2LPls",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 551,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:mfEYye6TNlk",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 3353,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:I0UGM8zeNLw",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 2951,
+      "ageStatus": "archive",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:o8Btb1sGRK0",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 360,
+      "ageStatus": "recent-archive",
+      "status": "healthy"
+    }
+  ],
+  "sources": [
+    {
+      "id": "kolektiva-media-news",
+      "name": "Kolektiva Media",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 1,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "antimilitarismus",
+      "name": "Antimilitarismus",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 0,
+      "networkStatus": "unavailable"
+    },
+    {
+      "id": "andrewism",
+      "name": "Andrewism",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 2,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "audible-anarchist",
+      "name": "Audible Anarchist",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 2,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "david-graeber-archive",
+      "name": "David Graeber video archive",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 1,
+      "networkStatus": "unavailable"
+    },
+    {
+      "id": "submedia",
+      "name": "subMedia",
+      "enabled": true,
+      "editorialStatus": "approved-existing",
+      "itemCount": 0,
+      "networkStatus": "unavailable"
+    },
+    {
+      "id": "charly-d-anarchy-documentaries",
+      "name": "Charly D – Anarchie-Dokumentationen",
+      "enabled": true,
+      "editorialStatus": "approved-curated",
+      "itemCount": 2,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "anarchistische-gemeinschaft-video",
+      "name": "anarchistische Gemeinschaft",
+      "enabled": true,
+      "editorialStatus": "approved-curated",
+      "itemCount": 1,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "anarchism-in-america-archive",
+      "name": "Anarchism in America archive",
+      "enabled": true,
+      "editorialStatus": "approved-curated",
+      "itemCount": 1,
+      "networkStatus": "reachable"
+    },
+    {
+      "id": "notre-histoire-anarchism",
+      "name": "Notre Histoire",
+      "enabled": true,
+      "editorialStatus": "approved-curated",
+      "itemCount": 1,
+      "networkStatus": "reachable"
+    }
+  ]
+}
