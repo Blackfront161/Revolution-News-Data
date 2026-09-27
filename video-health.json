@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-27T09:43:27.774Z",
-  "status": "healthy",
+  "generatedAt": "2026-09-27T10:08:51.203Z",
+  "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
     "checked": 35,
-    "reachable": 32,
-    "failed": 3,
+    "reachable": 34,
+    "failed": 1,
     "metadataEnriched": 12,
     "sources": {
       "checked": 10,
-      "reachable": 7,
-      "failed": 3,
+      "reachable": 9,
+      "failed": 1,
       "results": [
         {
           "sourceId": "kolektiva-media-news",
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 185.218.207.228:443"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -45,18 +45,16 @@
         {
           "sourceId": "david-graeber-archive",
           "url": "https://davidgraeber.org/videos/",
-          "ok": false,
-          "status": 0,
-          "unsafe": false,
-          "error": "timeout"
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://davidgraeber.org/videos/"
         },
         {
           "sourceId": "submedia",
           "url": "https://kolektiva.media/a/submedia/video-channels",
-          "ok": false,
-          "status": 0,
-          "unsafe": false,
-          "error": "Client network socket disconnected before secure TLS connection was established"
+          "ok": true,
+          "status": 200,
+          "finalUrl": "https://kolektiva.media/a/submedia/video-channels"
         },
         {
           "sourceId": "charly-d-anarchy-documentaries",
@@ -297,7 +295,7 @@
     "registrySources": 10
   },
   "coverage": {
-    "duration": 12,
+    "duration": 1,
     "thumbnails": 13,
     "subtitlesKnown": 12,
     "transcripts": 0
@@ -310,7 +308,7 @@
     "language": 0,
     "region": 0,
     "topic": 0,
-    "publishedAt": 0,
+    "publishedAt": 10,
     "originalUrl": 0
   },
   "byPlatform": {
@@ -361,111 +359,111 @@
       "canonicalId": "youtube:efbUsgUYUCA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 26,
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 4,
       "ageStatus": "current",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:AHGl9a8BcqI",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 4152,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:mOlpZzlh09s",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 3357,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:nrm4gj_eDGA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 5184,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:0uNSjlCkxwA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 5755,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:tDDLFpz7pjE",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 2951,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:lrTzjaXskUU",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 878,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:bgmClo2LPls",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 551,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 3353,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:I0UGM8zeNLw",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 2951,
-      "ageStatus": "archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:o8Btb1sGRK0",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 360,
-      "ageStatus": "recent-archive",
-      "status": "healthy"
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": null,
+      "ageStatus": "unknown",
+      "status": "attention"
     }
   ],
   "sources": [
@@ -507,7 +505,7 @@
       "enabled": true,
       "editorialStatus": "approved-existing",
       "itemCount": 1,
-      "networkStatus": "unavailable"
+      "networkStatus": "reachable"
     },
     {
       "id": "submedia",
@@ -515,7 +513,7 @@
       "enabled": true,
       "editorialStatus": "approved-existing",
       "itemCount": 0,
-      "networkStatus": "unavailable"
+      "networkStatus": "reachable"
     },
     {
       "id": "charly-d-anarchy-documentaries",
