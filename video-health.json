@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-27T21:24:54.892Z",
+  "generatedAt": "2026-09-28T05:31:17.433Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 35,
-    "reachable": 34,
+    "checked": 38,
+    "reachable": 37,
     "failed": 1,
-    "metadataEnriched": 12,
+    "metadataEnriched": 13,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 93.190.126.19:443"
+          "error": "connect ECONNREFUSED 185.218.207.228:443"
         },
         {
           "sourceId": "andrewism",
@@ -87,35 +87,35 @@
       ]
     },
     "items": {
-      "checked": 13,
-      "reachable": 13,
+      "checked": 15,
+      "reachable": 15,
       "failed": 0,
-      "embedChecked": 12,
+      "embedChecked": 13,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
+          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
           "original": {
-            "url": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr",
+            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr"
-          }
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4"
+            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4"
           },
           "embed": null
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:1tkptHmeTr9qcyari7ebRy",
+          "original": {
+            "url": "https://kolektiva.media/w/1tkptHmeTr9qcyari7ebRy",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/1tkptHmeTr9qcyari7ebRy"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/1tkptHmeTr9qcyari7ebRy",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/1tkptHmeTr9qcyari7ebRy"
+          }
         },
         {
           "canonicalId": "youtube:efbUsgUYUCA",
@@ -238,6 +238,31 @@
           }
         },
         {
+          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+          "original": {
+            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4"
+          },
+          "embed": null
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
+          "original": {
+            "url": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/1h2gZGGA6d756xow8ozNHr"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/1h2gZGGA6d756xow8ozNHr"
+          }
+        },
+        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -286,18 +311,18 @@
     }
   },
   "totals": {
-    "candidateCount": 13,
-    "acceptedBeforeQuota": 13,
-    "acceptedCount": 13,
+    "candidateCount": 15,
+    "acceptedBeforeQuota": 15,
+    "acceptedCount": 15,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 14,
+    "rejectedCount": 12,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 1,
-    "thumbnails": 13,
-    "subtitlesKnown": 12,
+    "duration": 2,
+    "thumbnails": 15,
+    "subtitlesKnown": 13,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -313,45 +338,45 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 1,
-    "Kolektiva": 1
+    "Direct": 2,
+    "Kolektiva": 2
   },
   "byLanguage": {
     "en": 7,
+    "und": 4,
     "de": 3,
-    "und": 2,
     "fr": 1
   },
   "bySource": {
     "andrewism": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "indymedia-argentina": 2,
+    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "animal-rising": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
-    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
       "originalStatus": "reachable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:1tkptHmeTr9qcyari7ebRy",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -436,6 +461,26 @@
       "status": "attention"
     },
     {
+      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/utep.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 2,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:1h2gZGGA6d756xow8ozNHr",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
@@ -472,7 +517,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 1,
+      "itemCount": 2,
       "networkStatus": "reachable"
     },
     {
