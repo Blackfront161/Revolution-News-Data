@@ -95,6 +95,16 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
         raise FileNotFoundError("aggregate.py fehlt.")
 
     original = AGGREGATE.read_text(encoding="utf-8")
+    # An additive admission must not silently replace an older feed identity
+    # merely because the registry and generated block have drifted.
+    previous_urls = {}
+    for node in ast.parse(original).body:
+        if isinstance(node, ast.Assign) and any(
+            isinstance(target, ast.Name) and target.id == "_wrn_extra_sources_182"
+            for target in node.targets
+        ):
+            previous_urls = {row["name"]: row.get("feedUrl", "")
+                             for row in ast.literal_eval(node.value)}
     source = remove_marked_block(original, START, END)
 
     for legacy_start, legacy_end in LEGACY_BLOCKS:
@@ -103,12 +113,15 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
     variable, end_line = find_source_mapping(source)
 
     approved = [
-        item for item in registry.get("sources", [])
+        dict(item) for item in registry.get("sources", [])
         if item.get("kind") == "news"
         and item.get("status") == "approved"
         and item.get("adapter") == "rss"
         and item.get("name") != "Democracy Now!"
     ]
+    for item in approved:
+        if item["name"] in previous_urls and item.get("action") != "replace_feed":
+            item["feedUrl"] = previous_urls[item["name"]]
 
     block = [
         START,
@@ -150,6 +163,9 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
         "    _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))",
         "    _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))",
         "    _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))",
+        "    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence'):",
+        "        if _wrn_field in _wrn_source:",
+        "            _wrn_existing[_wrn_field] = _wrn_source[_wrn_field]",
         END,
         "",
     ]

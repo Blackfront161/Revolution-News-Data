@@ -14,6 +14,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util import Retry
 from build_web_feeds import date_value
 from inline_text import inline_preserving_text, prefer_inline_preserving_text
+from source_import_policy import metadata_article
 
 for stream in (sys.stdout, sys.stderr):
     try:
@@ -484,7 +485,7 @@ quellen = {
 }
 # WRN MULTILINGUAL SOURCES 1.8.2 START
 # Additive and idempotent: the existing source dictionary is never replaced.
-_wrn_extra_sources_182 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}, {'name': 'Bianet Türkçe', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://bianet.org/', 'feedUrl': 'https://bianet.org/rss/bianet', 'categories': ['Europe', 'Labor Struggles', 'Antiracism', 'Queer-Feminism'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Evrensel', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://www.evrensel.net/', 'feedUrl': 'https://www.evrensel.net/rss/haber.xml', 'categories': ['Europe', 'Labor Struggles', 'Anticapitalism', 'No War'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Bianet Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://bianet.org/kurdi', 'feedUrl': 'https://bianet.org/rss/kurdi', 'categories': ['Europe', 'Anticolonialism', 'Antiracism', 'No Borders'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Pressin Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://pressin.info/kurdi', 'feedUrl': 'https://pressin.info/kurdi/rss/latest-posts', 'categories': ['Asia', 'Anticolonialism', 'Anti-Imperialism'], 'originCountry': 'Iraq', 'originCountryCode': 'IQ', 'originRegion': 'Kurdistan Region', 'status': 'approved', 'addedIn': '1.8.2'}]
+_wrn_extra_sources_182 = [{'name': 'Graswurzelrevolution', 'kind': 'news', 'adapter': 'rss', 'languages': ['de'], 'homepage': 'https://www.graswurzel.net/gwr/', 'feedUrl': 'https://www.graswurzel.net/gwr/feed/', 'categories': ['Europe', 'No War', 'Anarchism'], 'status': 'approved'}, {'name': 'Agência Pública', 'kind': 'news', 'adapter': 'rss', 'languages': ['pt'], 'homepage': 'https://apublica.org/', 'feedUrl': 'https://apublica.org/feed/', 'categories': ['Latin America', 'Environment', 'Investigative'], 'status': 'approved'}, {'name': 'Bianet Türkçe', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://bianet.org/', 'feedUrl': 'https://bianet.org/rss/bianet', 'categories': ['Europe', 'Labor Struggles', 'Antiracism', 'Queer-Feminism'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Evrensel', 'kind': 'news', 'adapter': 'rss', 'languages': ['tr'], 'homepage': 'https://www.evrensel.net/', 'feedUrl': 'https://www.evrensel.net/rss/haber.xml', 'categories': ['Europe', 'Labor Struggles', 'Anticapitalism', 'No War'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Bianet Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://bianet.org/kurdi', 'feedUrl': 'https://bianet.org/rss/kurdi', 'categories': ['Europe', 'Anticolonialism', 'Antiracism', 'No Borders'], 'originCountry': 'Türkiye', 'originCountryCode': 'TR', 'originRegion': 'Türkiye', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Pressin Kurdî', 'kind': 'news', 'adapter': 'rss', 'languages': ['ku'], 'homepage': 'https://pressin.info/kurdi', 'feedUrl': 'https://pressin.info/kurdi/rss/latest-posts', 'categories': ['Asia', 'Anticolonialism', 'Anti-Imperialism'], 'originCountry': 'Iraq', 'originCountryCode': 'IQ', 'originRegion': 'Kurdistan Region', 'status': 'approved', 'addedIn': '1.8.2'}, {'name': 'Untergrund-Blättle', 'homepage': 'https://www.xn--untergrund-blttle-2qb.ch/', 'feedUrl': 'https://www.xn--untergrund-blttle-2qb.ch/rss/aktuelle_artikel.rss', 'kind': 'news', 'languages': ['de'], 'status': 'approved', 'action': 'add', 'adapter': 'rss', 'importMode': 'metadata-only', 'originCountry': 'Schweiz', 'originCountryCode': 'CH', 'originRegion': 'Europa', 'categories': ['Europa'], 'operator': 'UB-Redaktions-Kollektiv (Selbstauskunft)', 'sourceType': 'Kritisches Online-Magazin', 'rightsReview': 'Nur Überschrift, Autor, Datum und Originalverweis. Textlizenz gilt laut Impressum bedingt; Fremdtexte und Medien gesondert prüfen.', 'reviewEvidence': ['https://www.xn--untergrund-blttle-2qb.ch/impressum/', 'https://www.xn--untergrund-blttle-2qb.ch/rss/']}]
 for _wrn_source in _wrn_extra_sources_182:
     _wrn_name = str(_wrn_source.get('name', '')).casefold()
     _wrn_url = str(_wrn_source.get('feedUrl', '')).rstrip('/').casefold()
@@ -521,6 +522,9 @@ for _wrn_source in _wrn_extra_sources_182:
     _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))
     _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))
     _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))
+    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence'):
+        if _wrn_field in _wrn_source:
+            _wrn_existing[_wrn_field] = _wrn_source[_wrn_field]
 # WRN MULTILINGUAL SOURCES 1.8.2 END
 
 # WRN SOURCE EXPANSION 1.8.5 START
@@ -2436,6 +2440,17 @@ for kontinent, feeds in active_sources.items():
             
                 # Spam rausfiltern
                 if any(bad in title_lower or bad in safe_lower(author) for bad in SPAM_BLACKLIST):
+                    continue
+
+                # Restricted sources bypass every body/image extraction and page scrape,
+                # including enrichment of an existing link. A feed is not a rights grant.
+                if feed.get("importMode") == "metadata-only":
+                    admitted = metadata_article(feed, entry, kontinent)
+                    if admitted is not None:
+                        existed = link in archiv_dict
+                        archiv_dict[link] = admitted
+                        gesehene_titel.add(title_lower)
+                        AGGREGATE_METRICS["enrichedArticles" if existed else "newArticles"] += 1
                     continue
 
                 # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)

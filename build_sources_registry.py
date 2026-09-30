@@ -402,6 +402,9 @@ def normalize_record(
         "disabled",
         "inactive",
         "removed",
+        "directory-only",
+        "needs-review",
+        "pending",
     }
 
     media_type = str(
@@ -442,6 +445,9 @@ def normalize_record(
         "mediaType": media_type,
         "status": status,
         "active": active,
+        **{field: item[field] for field in (
+            "importMode", "rightsReview", "operator", "sourceType", "reviewEvidence",
+        ) if field in item},
         "originRegion": first_geographic_value(
             item,
             ("originRegion", "geographicRegion", "region"),
@@ -496,6 +502,9 @@ def merge_record(
             target[field] = incoming[field]
 
     target["active"] = target["active"] or incoming["active"]
+    for field in ("importMode", "rightsReview", "operator", "sourceType", "reviewEvidence"):
+        if incoming.get(field):
+            target[field] = incoming[field]
 
 
 def propagate_geography_by_name(
