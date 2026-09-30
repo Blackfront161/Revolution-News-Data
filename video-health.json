@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-30T12:42:51.767Z",
+  "generatedAt": "2026-09-30T22:21:35.500Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 41,
-    "reachable": 38,
+    "checked": 40,
+    "reachable": 37,
     "failed": 3,
     "metadataEnriched": 14,
     "sources": {
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 185.218.207.228:443"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -87,8 +87,8 @@
       ]
     },
     "items": {
-      "checked": 17,
-      "reachable": 15,
+      "checked": 16,
+      "reachable": 14,
       "failed": 2,
       "embedChecked": 14,
       "results": [
@@ -114,16 +114,6 @@
             "ok": false,
             "status": 403,
             "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4"
           },
           "embed": null
         },
@@ -336,17 +326,17 @@
     }
   },
   "totals": {
-    "candidateCount": 23,
-    "acceptedBeforeQuota": 23,
-    "acceptedCount": 17,
+    "candidateCount": 21,
+    "acceptedBeforeQuota": 21,
+    "acceptedCount": 16,
     "duplicateCount": 0,
-    "quotaRemovedCount": 6,
+    "quotaRemovedCount": 5,
     "rejectedCount": 5,
     "registrySources": 10
   },
   "coverage": {
     "duration": 3,
-    "thumbnails": 17,
+    "thumbnails": 16,
     "subtitlesKnown": 14,
     "transcripts": 0
   },
@@ -363,13 +353,13 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 3,
-    "Kolektiva": 3
+    "Kolektiva": 3,
+    "Direct": 2
   },
   "byLanguage": {
     "en": 8,
-    "und": 4,
     "de": 3,
+    "und": 3,
     "fr": 1,
     "pt": 1
   },
@@ -382,7 +372,6 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
@@ -402,19 +391,9 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 2,
-      "ageStatus": "current",
-      "status": "healthy"
     },
     {
       "canonicalId": "youtube:AHGl9a8BcqI",
