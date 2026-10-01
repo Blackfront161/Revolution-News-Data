@@ -8,6 +8,11 @@
       "https://www.aradio-berlin.org/en/feed/"
     ],
     "language": "de",
+    "languages": [
+      "de",
+      "en",
+      "es"
+    ],
     "country": "DE",
     "region": "DACH",
     "license": "Originalquelle",
@@ -34,6 +39,10 @@
       "https://dissens.podigee.io/feed/mp3"
     ],
     "language": "de",
+    "languages": [
+      "de",
+      "en"
+    ],
     "country": "DE",
     "region": "DACH",
     "license": "CC BY",
@@ -250,6 +259,10 @@
       "https://de.cba.media/podcast/anarchistisches-radio/feed"
     ],
     "language": "de",
+    "languages": [
+      "de",
+      "en"
+    ],
     "country": "AT",
     "region": "DACH",
     "license": "Originalquelle",
@@ -686,7 +699,8 @@
     "episodeIdNamespace": "None",
     "feedUrls": [
       "https://rdl.de/podcasts/all"
-    ]
+    ],
+    "pageAudioFallback": false
   },
   {
     "id": "radio-ambulante",
@@ -780,6 +794,8 @@
       "zh",
       "en"
     ],
+    "enabled": false,
+    "disabledReason": "Chinesischsprachige Podcasts sind für WRN 2.1 zurückgestellt.",
     "country": "CN",
     "region": "Asia",
     "license": "Original source",

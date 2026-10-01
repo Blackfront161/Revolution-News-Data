@@ -20,7 +20,7 @@ class PodcastContentPolicyTests(unittest.TestCase):
         self.assertEqual(endpoint['episodeIdNamespace'],'None')
         rows = json.loads((ROOT/'podcasts.json').read_text(encoding='utf-8'))
         restricted=[row for row in rows if row['id'] in RULES['restrictedEpisodeIds']]
-        self.assertEqual(len(restricted),28)
+        self.assertEqual({row['id'] for row in restricted},set(RULES['restrictedEpisodeIds']))
         for row in restricted:
             self.assertEqual(row['sourceId'],RULES['canonicalSourceId'])
             self.assertEqual(row['contentPolicy'],MODE)
@@ -34,6 +34,20 @@ class PodcastContentPolicyTests(unittest.TestCase):
         self.assertEqual(row['episodeUrl'],'https://rdl.de/beitrag/test')
         self.assertFalse({'candidates','transcript','image'} & row.keys())
         self.assertFalse(metadata_only({},sources=[{'contentPolicy':MODE,'feedUrl':'invalid'}]))
+
+    def test_conflicting_language_labels_remain_unverified(self):
+        for identifier in RULES['languageConflictEpisodeIds']:
+            row=project_episode({'id':'original:'+identifier,'language':'en','languageVerified':True})
+            self.assertEqual(row['language'],'und')
+            self.assertFalse(row['languageVerified'])
+
+    def test_healthy_bounded_refresh_preserves_archive_and_revocations(self):
+        from podcast_content_policy import merge_archive_catalogs
+        old={'id':'old','sourceId':'test','title':'Older episode'}
+        gone={'id':'gone','sourceId':'test','status':'withdrawn'}
+        result=merge_archive_catalogs([[old,gone],[{'id':'new','sourceId':'test'},{'id':'gone','sourceId':'test'}]],[{'id':'test'}])
+        self.assertEqual({row['id'] for row in result},{'old','gone','new'})
+        self.assertEqual(next(row for row in result if row['id']=='gone')['status'],'withdrawn')
 
     def test_metadata_rows_have_distinct_dedup_keys(self):
         rows=[project_episode({'id':identifier}) for identifier in RULES['restrictedEpisodeIds'][:2]]
