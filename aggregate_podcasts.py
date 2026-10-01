@@ -16,7 +16,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
-from podcast_content_policy import metadata_only, project_episode, episode_key, original_url
+from podcast_content_policy import metadata_only, project_episode, episode_key, original_url, preserve_failed_sources
 
 import feedparser
 import requests
@@ -162,6 +162,8 @@ def find_audio_on_page(url: str) -> str:
 
 
 def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
+    if source.get('catalogReview', {}).get('episodeIntake') == 'hold':
+        return [], '', ['Intake on hold for identity, endpoint or episode-language review']
     candidates = [source["feedUrl"]] if source.get("feedUrl") else []
     candidates += list(source.get("feedUrls") or [])
     candidates += discover_feeds(source.get("homepage", ""))
@@ -199,6 +201,8 @@ def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
                     or (entry.get("content") or [{}])[0].get("value")
                 )
                 published = parse_date(entry)
+                if published and datetime.fromisoformat(published.replace('Z', '+00:00')) > datetime.now(timezone.utc):
+                    continue
                 duration = clean_text(entry.get("itunes_duration") or entry.get("duration"))
                 image = ""
 
@@ -409,6 +413,7 @@ def main() -> int:
 
     if items:
         output_items = items if requested_ids or fallback_only else items[:MAX_TOTAL]
+        output_items = preserve_failed_sources(output_items, previous_items, health)
         OUTPUT_FILE.write_text(
             json.dumps(output_items, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8"
