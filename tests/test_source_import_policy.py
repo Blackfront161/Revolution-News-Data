@@ -47,7 +47,7 @@ def test_actual_aggregator_short_circuits_before_body_extraction():
     # Run that branch in its real loop shape; any fallthrough attempts a scrape.
     scope = {"feed": FEED, "entry": {"title": "Headline", "link": "https://example.org/story"},
              "kontinent": "Europa", "link": "https://example.org/story", "title_lower": "headline",
-             "metadata_article": metadata_article, "archiv_dict": {}, "gesehene_titel": set(),
+             "metadata_article": metadata_article, "classify_article": lambda title, content, *_: {"primaryRegion": "Europe"} if content == "" else (_ for _ in ()).throw(AssertionError("foreign body used in classification")), "archiv_dict": {}, "gesehene_titel": set(),
              "AGGREGATE_METRICS": {"newArticles": 0, "enrichedArticles": 0}}
     exec(compile("for _ in [1]:\n" + "\n".join("    " + line for line in code.splitlines())
                  + "\n    raise AssertionError('body scrape reached')", "admission-branch", "exec"), scope)

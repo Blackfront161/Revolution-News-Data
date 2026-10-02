@@ -2447,6 +2447,10 @@ for kontinent, feeds in active_sources.items():
                 if feed.get("importMode") == "metadata-only":
                     admitted = metadata_article(feed, entry, kontinent)
                     if admitted is not None:
+                        admitted.update(classify_article(
+                            admitted["title"], "", admitted["categories"], kontinent,
+                            [], feed.get("originCountryCode", ""),
+                        ))
                         existed = link in archiv_dict
                         archiv_dict[link] = admitted
                         gesehene_titel.add(title_lower)
