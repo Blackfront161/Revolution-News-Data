@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 import re
+import sys
 import time
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
@@ -22,17 +23,65 @@ import feedparser
 import requests
 from bs4 import BeautifulSoup
 
+for stream in (sys.stdout, sys.stderr):
+    try:
+        stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
 ROOT = Path(__file__).resolve().parent
 SOURCES_FILE = ROOT / "podcast-sources.json"
 OUTPUT_FILE = ROOT / "podcasts.json"
 HEALTH_FILE = ROOT / "podcast-health.json"
 
 MAX_PER_SOURCE = 35
-MAX_TOTAL = 800
+MAX_RADIO_ARCHIVE = 600
+MAX_INDEPENDENT_ARCHIVE_PER_LANGUAGE = 240
 DEFAULT_MAX_AGE_DAYS = 730
 USER_AGENT = "WorldRevolutionNews-AudioCatalog/1.7.5 (+https://blackfront161.github.io/Revolution-News-Data/)"
 AUDIO_EXTENSIONS = (".mp3", ".m4a", ".ogg", ".oga", ".opus", ".wav", ".aac", ".flac")
 HTTPS_UPGRADE_HOSTS = {"www.freie-radios.net", "freie-radios.net"}
+TRUSTED_BINARY_AUDIO_HOSTS = {"www.freie-radios.net", "freie-radios.net"}
+
+# The catalogue supports these languages in the app.  Feeds often expose no
+# per-episode language at all, so the source language remains the safe
+# fallback.  We only override it when an episode contains a clear marker or a
+# sufficiently strong stop-word signal.  That keeps an English guest name in a
+# German episode from moving the whole episode into the English shelf.
+LANGUAGE_MARKERS = {
+    "de": (r"\b(?:auf deutsch|deutsch|deutschsprachig|german(?: language)?)\b",),
+    "en": (r"\b(?:auf englisch|englisch|in english|english(?: language)?)\b",),
+    "es": (r"\b(?:en español|spanish(?: language)?)\b",),
+    "fr": (r"\b(?:en français|french(?: language)?)\b",),
+    "it": (r"\b(?:in italiano|italian(?: language)?)\b",),
+    "pt": (r"\b(?:em português|portuguese(?: language)?)\b",),
+    "tr": (r"\b(?:türkçe|in turkish|turkish(?: language)?)\b",),
+    "el": (r"(?:στα ελληνικά|ελληνικά|in greek|greek language)",),
+    "ru": (r"(?:на русском|по-русски|in russian|russian language)",),
+    "ar": (r"\b(?:بالعربية|in arabic|arabic(?: language)?)\b",),
+    "zh": (r"(?:中文|汉语|漢語|in chinese|chinese language)",),
+}
+LANGUAGE_STOPWORDS = {
+    "de": {"aber", "auch", "auf", "aus", "bei", "das", "dass", "dem", "den", "der", "die", "ein", "eine", "für", "gegen", "ist", "mit", "nicht", "oder", "sich", "und", "von", "was", "wie", "wir", "über"},
+    "en": {"about", "after", "against", "and", "are", "but", "for", "from", "how", "into", "is", "not", "of", "on", "our", "that", "the", "their", "this", "to", "what", "with", "why"},
+    "es": {"como", "con", "contra", "de", "del", "desde", "el", "en", "es", "esta", "la", "las", "los", "más", "no", "para", "por", "que", "se", "sin", "una", "y"},
+    "fr": {"avec", "ce", "ces", "comme", "contre", "dans", "de", "des", "du", "elle", "en", "est", "et", "la", "le", "les", "mais", "ne", "pas", "pour", "que", "qui", "sur", "une"},
+    "it": {"che", "come", "con", "contro", "da", "del", "della", "di", "e", "gli", "il", "in", "la", "le", "ma", "non", "per", "più", "sono", "su", "tra", "una"},
+    "pt": {"com", "como", "contra", "da", "das", "de", "do", "dos", "e", "em", "entre", "não", "os", "para", "pela", "por", "que", "se", "sem", "uma"},
+    "tr": {"ama", "bir", "bu", "da", "de", "için", "ile", "mi", "mı", "nasıl", "ne", "olarak", "olan", "ve", "ya"},
+    "el": {"αλλά", "από", "για", "δεν", "είναι", "ένα", "η", "θα", "και", "με", "μια", "να", "οι", "που", "σε", "στη", "στο", "την", "της", "το", "των"},
+    "ru": {"без", "был", "быть", "в", "для", "его", "и", "из", "как", "к", "на", "не", "но", "о", "от", "по", "с", "что", "это"},
+}
+DISABLED_PODCAST_LANGUAGES = {"zh"}
+LANGUAGE_EVIDENCE_CONFIDENCE = {
+    "episode-metadata": 1.0,
+    "transcript-metadata": 0.98,
+    "feed-metadata": 0.95,
+    "text-marker": 0.92,
+    "script": 0.9,
+    "automatic-text": 0.82,
+    "source-fallback": 0.55,
+}
 
 session = requests.Session()
 session.headers.update({
@@ -48,6 +97,155 @@ def clean_text(value: object) -> str:
     return re.sub(r"\s+", " ", soup.get_text(" ", strip=True)).strip()
 
 
+def normalise_language(value: object) -> str:
+    """Return an app language code for common RSS language spellings."""
+    raw = str(value or "").strip().lower().replace("_", "-")
+    if not raw:
+        return ""
+    aliases = {
+        "ger": "de", "deu": "de", "german": "de",
+        "eng": "en", "english": "en",
+        "spa": "es", "spanish": "es",
+        "fra": "fr", "fre": "fr", "french": "fr",
+        "ita": "it", "italian": "it",
+        "por": "pt", "portuguese": "pt",
+        "tur": "tr", "turkish": "tr",
+        "ell": "el", "gre": "el", "greek": "el",
+        "rus": "ru", "russian": "ru",
+        "ara": "ar", "arabic": "ar",
+        "zho": "zh", "chi": "zh", "chinese": "zh",
+    }
+    primary = raw.split("-", 1)[0]
+    primary = aliases.get(primary, primary)
+    return primary if primary in {
+        "de", "en", "es", "fr", "it", "pt", "tr", "el", "ru", "ar", "zh"
+    } else ""
+
+
+def detect_episode_language_details(
+    entry,
+    title: str,
+    description: str,
+    source_default: str,
+    feed_default: str = "",
+) -> tuple[str, str]:
+    """Return the episode language and the strongest available evidence."""
+    fallback = normalise_language(source_default) or "und"
+
+    for key in (
+        "language", "dc_language", "content_language",
+        "transcript_language", "podcast_transcript_language",
+    ):
+        explicit = normalise_language(entry.get(key))
+        if explicit:
+            return explicit, "episode-metadata"
+
+    for transcript in entry.get("podcast_transcript", []) or []:
+        if not isinstance(transcript, dict):
+            continue
+        explicit = normalise_language(
+            transcript.get("language") or transcript.get("lang")
+        )
+        if explicit:
+            return explicit, "transcript-metadata"
+
+    feed_language = normalise_language(feed_default)
+    if feed_language:
+        return feed_language, "feed-metadata"
+
+    text = f"{title}\n{description}".lower()
+    for language, patterns in LANGUAGE_MARKERS.items():
+        if any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns):
+            return language, "text-marker"
+
+    # CJK and Arabic scripts are distinctive enough not to need stop words.
+    if len(re.findall(r"[\u4e00-\u9fff]", text)) >= 4:
+        return "zh", "script"
+    if len(re.findall(r"[\u0600-\u06ff]", text)) >= 6:
+        return "ar", "script"
+
+    tokens = re.findall(r"[^\W\d_]+", text, flags=re.UNICODE)
+    scores = {
+        language: sum(1 for token in tokens if token in words)
+        for language, words in LANGUAGE_STOPWORDS.items()
+    }
+    ranked = sorted(scores.items(), key=lambda item: item[1], reverse=True)
+    best_language, best_score = ranked[0]
+    runner_up = ranked[1][1]
+    if best_score >= 4 and best_score >= runner_up + 2:
+        return best_language, "automatic-text"
+    return fallback, "source-fallback"
+
+
+def detect_episode_language(
+    entry,
+    title: str,
+    description: str,
+    default: str,
+    feed_default: str = "",
+) -> str:
+    return detect_episode_language_details(
+        entry,
+        title,
+        description,
+        default,
+        feed_default,
+    )[0]
+
+
+def episode_feed_language(source: dict, parsed_feed) -> str:
+    """Use channel language only when the curated source is not multilingual."""
+    configured = {
+        normalise_language(value)
+        for value in (source.get("languages") or [source.get("language")])
+        if normalise_language(value)
+    }
+    if len(configured) > 1:
+        return ""
+    for key in ("language", "dc_language", "content_language"):
+        language = normalise_language(parsed_feed.get(key))
+        if language:
+            return language
+    return ""
+
+
+def podcast_language_allowed(value: object) -> bool:
+    return normalise_language(value) not in DISABLED_PODCAST_LANGUAGES
+
+
+def deduplicate_episodes(items: list[dict]) -> list[dict]:
+    """Prefer stable episode IDs, then resolve shared audio by source priority."""
+    by_id: dict[str, dict] = {}
+    without_id: list[dict] = []
+    for item in items:
+        episode_id = str(item.get("id") or "").strip()
+        if not episode_id:
+            without_id.append(item)
+            continue
+        existing = by_id.get(episode_id)
+        if (
+            not existing
+            or int(item.get("sourcePriority", 0))
+            > int(existing.get("sourcePriority", 0))
+        ):
+            by_id[episode_id] = item
+
+    by_audio: dict[str, dict] = {}
+    for item in [*by_id.values(), *without_id]:
+        item = project_episode(item)
+        audio_url = episode_key(item)
+        if not audio_url:
+            continue
+        existing = by_audio.get(audio_url)
+        if (
+            not existing
+            or int(item.get("sourcePriority", 0))
+            > int(existing.get("sourcePriority", 0))
+        ):
+            by_audio[audio_url] = item
+    return list(by_audio.values())
+
+
 def safe_url(value: object, base: str = "") -> str:
     if not value:
         return ""
@@ -58,6 +256,19 @@ def safe_url(value: object, base: str = "") -> str:
     if parsed.scheme == "http" and (parsed.hostname or "").lower() in HTTPS_UPGRADE_HOSTS:
         url = "https://" + url.split("://", 1)[1]
     return url
+
+
+def is_audio_candidate(value: object, content_type: object = "") -> bool:
+    if not value:
+        return False
+    typ = str(content_type or "").lower().split(";", 1)[0].strip()
+    if typ.startswith("audio/"):
+        return True
+    parsed = urlparse(str(value).strip())
+    path = parsed.path.lower()
+    if path.endswith(AUDIO_EXTENSIONS):
+        return True
+    return (parsed.hostname or "").lower() in TRUSTED_BINARY_AUDIO_HOSTS and path.endswith(".bin")
 
 
 def parse_date(entry) -> str:
@@ -84,20 +295,20 @@ def audio_from_entry(entry) -> str:
     for enc in entry.get("enclosures", []) or []:
         href = enc.get("href") or enc.get("url")
         typ = str(enc.get("type") or "").lower()
-        if href and (typ.startswith("audio/") or str(href).lower().split("?")[0].endswith(AUDIO_EXTENSIONS)):
+        if is_audio_candidate(href, typ):
             candidates.append(href)
 
     for link in entry.get("links", []) or []:
         href = link.get("href")
         typ = str(link.get("type") or "").lower()
         rel = str(link.get("rel") or "").lower()
-        if href and (rel == "enclosure" or typ.startswith("audio/")):
+        if href and rel == "enclosure" and is_audio_candidate(href, typ):
             candidates.append(href)
 
     for item in entry.get("media_content", []) or []:
         href = item.get("url")
         typ = str(item.get("type") or "").lower()
-        if href and (typ.startswith("audio/") or str(href).lower().split("?")[0].endswith(AUDIO_EXTENSIONS)):
+        if is_audio_candidate(href, typ):
             candidates.append(href)
 
     html_parts = []
@@ -112,7 +323,7 @@ def audio_from_entry(entry) -> str:
         soup = BeautifulSoup(html, "html.parser")
         for tag in soup.find_all(["audio", "source", "a"]):
             href = tag.get("src") or tag.get("href")
-            if href and str(href).lower().split("?")[0].endswith(AUDIO_EXTENSIONS):
+            if is_audio_candidate(href, tag.get("type")):
                 candidates.append(href)
 
     for candidate in candidates:
@@ -152,35 +363,71 @@ def find_audio_on_page(url: str) -> str:
             if not href:
                 continue
             absolute = safe_url(href, response.url)
-            path = urlparse(absolute).path.lower()
             typ = str(tag.get("type") or "").lower()
-            if absolute and (path.endswith(AUDIO_EXTENSIONS) or typ.startswith("audio/")):
+            if absolute and is_audio_candidate(absolute, typ):
                 return absolute
     except Exception:
         return ""
     return ""
 
 
+def source_feed_candidates(source: dict) -> list[str]:
+    """Return maintained feed URLs before slower homepage discovery.
+
+    Some sources publish a repaired canonical URL in ``feedUrl`` while keeping
+    older fallbacks in ``feedUrls``. The repaired endpoint must win, otherwise
+    a working source can be reported as broken despite valid metadata.
+    """
+
+    candidates = []
+    canonical = str(source.get("feedUrl") or "").strip()
+    if canonical:
+        candidates.append(canonical)
+    candidates.extend(source.get("feedUrls") or [])
+    candidates.extend(discover_feeds(source.get("homepage", "")))
+    return list(dict.fromkeys(candidate for candidate in candidates if candidate))
+
+
 def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
     if source.get('catalogReview', {}).get('episodeIntake') == 'hold':
+        return [], '', ['Source admission remains on hold']
+    # A reviewed archive may extend its bounded intake; the default stays 35.
+    source_limit = max(1, min(100, int(source.get('maxEpisodes', MAX_PER_SOURCE))))
+    if source.get('catalogReview', {}).get('episodeIntake') == 'hold':
         return [], '', ['Intake on hold for identity, endpoint or episode-language review']
-    candidates = [source["feedUrl"]] if source.get("feedUrl") else []
-    candidates += list(source.get("feedUrls") or [])
-    candidates += discover_feeds(source.get("homepage", ""))
+    candidates = source_feed_candidates(source)
     errors: list[str] = []
 
-    for feed_url in dict.fromkeys(candidates):
+    for feed_url in candidates:
         try:
-            response = session.get(feed_url, timeout=32)
-            response.raise_for_status()
-            parsed = feedparser.parse(response.content)
+            if source.get('languagePolicy') == 'declared-channel-only':
+                response = session.get(feed_url, timeout=32, stream=True)
+                try:
+                    response.raise_for_status()
+                    if urlparse(response.url).scheme != 'https':
+                        raise ValueError('Reviewed source redirected outside HTTPS')
+                    chunks, size = [], 0
+                    for chunk in response.iter_content(65536):
+                        size += len(chunk)
+                        if size > 4 * 1024 * 1024:
+                            raise ValueError('Reviewed feed exceeds metadata byte limit')
+                        chunks.append(chunk)
+                    feed_bytes = b''.join(chunks)
+                finally:
+                    response.close()
+            else:
+                response = session.get(feed_url, timeout=32)
+                response.raise_for_status()
+                feed_bytes = response.content
+            parsed = feedparser.parse(feed_bytes)
 
             if not parsed.entries:
                 errors.append(f"{feed_url}: keine Einträge")
                 continue
 
+            feed_language = episode_feed_language(source, parsed.feed)
             result = []
-            for entry in parsed.entries[:MAX_PER_SOURCE * 3]:
+            for entry in parsed.entries[:source_limit * 3]:
                 audio = audio_from_entry(entry)
                 episode_url = safe_url(entry.get("link") or entry.get("id") or "", feed_url)
 
@@ -218,6 +465,30 @@ def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
                         else ""
                     )
 
+                language, language_source = detect_episode_language_details(
+                    entry,
+                    title,
+                    description,
+                    source.get("language", ""),
+                    feed_language,
+                )
+                configured_languages = sorted({
+                    normalise_language(value)
+                    for value in (source.get("languages") or [source.get("language")])
+                    if normalise_language(value)
+                })
+                language_confidence = LANGUAGE_EVIDENCE_CONFIDENCE.get(
+                    language_source,
+                    0.5,
+                )
+                language_mismatch = bool(
+                    configured_languages
+                    and language not in configured_languages
+                )
+                declared_channel_language = feed_language
+                if source.get('languagePolicy') == 'declared-channel-only':
+                    language, language_source, language_confidence = 'und', 'declared-channel-unverified-episode', 0
+                    language_mismatch = False
                 guid_seed = str(entry.get("id") or entry.get("guid") or audio or episode_url)
                 result.append(project_episode({
                     "id": hashlib.sha256(f"{source.get('episodeIdNamespace', source.get('id'))}|{guid_seed}".encode()).hexdigest()[:24],
@@ -231,7 +502,15 @@ def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
                     "description": description[:4000],
                     "published": published,
                     "duration": duration,
-                    "language": source.get("language", ""),
+                    "language": language,
+                    "declaredChannelLanguage": declared_channel_language,
+                    "languageSource": language_source,
+                    "languageConfidence": language_confidence,
+                    "languageVerified": language_confidence >= 0.8,
+                    "languageReviewRequired": (
+                        language_confidence < 0.8 or language_mismatch
+                    ),
+                    "configuredLanguages": configured_languages,
                     "country": source.get("country", ""),
                     "region": source.get("region", ""),
                     "audioUrl": audio,
@@ -243,7 +522,7 @@ def source_entries(source: dict) -> tuple[list[dict], str, list[str]]:
                     "license": source.get("license", "Originalquelle"),
                 }, source))
 
-                if len(result) >= MAX_PER_SOURCE:
+                if len(result) >= source_limit:
                     break
 
             if result:
@@ -263,6 +542,36 @@ def parse_iso(value: str) -> datetime | None:
         return datetime.fromisoformat(value.replace("Z", "+00:00"))
     except Exception:
         return None
+
+
+def partitioned_catalog(items: list[dict]) -> list[dict]:
+    """Keep radio and every independent podcast language autonomous.
+
+    The browser applies the smaller presentation quotas (50 radio episodes and
+    30 independent episodes per selected language). These archive limits leave
+    enough history for source balancing without letting one language or the
+    radio pool consume another group's capacity.
+    """
+    radio: list[dict] = []
+    independent: dict[str, list[dict]] = {}
+    for item in items:
+        kind = str(item.get("sourceKind") or "independent-podcast").lower()
+        if kind in {"free-radio", "aggregator"}:
+            radio.append(item)
+            continue
+        language = str(item.get("language") or "und").lower().split("-", 1)[0]
+        independent.setdefault(language or "und", []).append(item)
+
+    selected = radio[:MAX_RADIO_ARCHIVE]
+    for language in sorted(independent):
+        selected.extend(
+            independent[language][:MAX_INDEPENDENT_ARCHIVE_PER_LANGUAGE]
+        )
+    return sorted(
+        selected,
+        key=lambda item: item.get("published") or "",
+        reverse=True,
+    )
 
 
 def main() -> int:
@@ -309,7 +618,7 @@ def main() -> int:
 
     for source in sources:
         source_id = source.get("id", source.get("name", "unknown"))
-        if source.get("enabled", True) is False:
+        if source.get("enabled", True) is False or source.get('catalogReview', {}).get('episodeIntake') == 'hold':
             health[source_id] = {
                 "name": source.get("name"),
                 "status": "disabled",
@@ -334,7 +643,10 @@ def main() -> int:
             else:
                 fresh.append(item)
 
-        selected = fresh or stale[: min(10, MAX_PER_SOURCE)]
+        selected = [
+            item for item in (fresh or stale[: min(10, MAX_PER_SOURCE)])
+            if podcast_language_allowed(item.get("language"))
+        ]
         all_items.extend(selected)
 
         latest = max(
@@ -362,18 +674,10 @@ def main() -> int:
             "language": source.get("language", ""),
         }
 
-    # Doppelte Audiodateien: die spezifischere Quelle gewinnt vor Aggregatoren.
-    unique: dict[str, dict] = {}
-    for item in all_items:
-        item = project_episode(item, sources=catalog_sources)
-        key = episode_key(item)
-        if not key:
-            continue
-        existing = unique.get(key)
-        if not existing or int(item.get("sourcePriority", 0)) > int(existing.get("sourcePriority", 0)):
-            unique[key] = item
-
-    items = list(unique.values())
+    # Stabile Episoden-IDs entfernen auch Provider-Duplikate mit wechselnden
+    # Audio-URLs. Bei gemeinsam genutzten Audiodateien gewinnt anschließend
+    # weiterhin die spezifischere Quelle vor Aggregatoren.
+    items = deduplicate_episodes(all_items)
     items.sort(key=lambda x: x.get("published") or "", reverse=True)
 
     previous_items = []
@@ -390,7 +694,11 @@ def main() -> int:
                 previous_archive = merge_archive_catalogs([previous_archive, loaded], catalog_sources)
                 previous_items = [
                     project_episode(item, sources=catalog_sources) for item in loaded
-                    if isinstance(item, dict) and episode_key(project_episode(item, sources=catalog_sources))
+                    if (
+                        isinstance(item, dict)
+                        and episode_key(project_episode(item, sources=catalog_sources))
+                        and podcast_language_allowed(item.get("language"))
+                    )
                 ]
         except Exception as exc:
             print(f"[PODCAST] bisherige Datei konnte nicht gelesen werden: {exc}")
@@ -419,7 +727,7 @@ def main() -> int:
         items = previous_items
 
     if items:
-        output_items = items if requested_ids or fallback_only else items[:MAX_TOTAL]
+        output_items = items if requested_ids or fallback_only else partitioned_catalog(items)
         output_items = preserve_failed_sources(output_items, previous_items, health)
         archive_items = merge_archive_catalogs([previous_archive, output_items], catalog_sources)
         archive_file.write_text(json.dumps(archive_items, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
