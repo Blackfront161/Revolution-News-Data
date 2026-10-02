@@ -72,7 +72,9 @@ jobs:
           WRN_CHECKPOINT_INTERVAL_SECONDS: "120"
 
       - name: News-Feed und Status erzeugen
-        run: WRN_FEED_TARGETS="news,status" python build_web_feeds.py
+        run: |
+          WRN_FEED_TARGETS="news,status" python build_web_feeds.py
+          python build_source_archive.py
 
       - name: Aktualität und Datenintegrität prüfen
         run: |
@@ -128,6 +130,7 @@ jobs:
           git restore -- events.json events-feed.json
 
           git add news.json news-feed.json feed-status.json
+          git add news-archive-manifest.json news-archive
           git add aggregate-errors.json aggregate-run-status.json
 
           if git diff --cached --quiet; then
