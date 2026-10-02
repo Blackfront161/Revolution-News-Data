@@ -1,0 +1,37 @@
+name: Check live radio streams
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 */6 * * *'
+  push:
+    branches: [main]
+    paths: [radio-stations.json, check_radio_streams.py, check_audio_sources.py, .github/workflows/check-radios.yml]
+permissions:
+  contents: write
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+jobs:
+  radio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install requests==2.32.3
+      - run: python -m unittest discover -s tests -p test_radio_streams.py
+      - run: python check_radio_streams.py
+      - shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name wrn-radio-bot
+          git config user.email actions@users.noreply.github.com
+          git add radio-health.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh dated live radio health"
+          bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"

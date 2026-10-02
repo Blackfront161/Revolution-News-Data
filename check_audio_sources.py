@@ -190,10 +190,11 @@ def test_url(
         result["detail"] = "Keine Audio-Adresse."
         return result
 
+    response = None
     try:
         response = session.get(
             url,
-            headers={"Range": "bytes=0-65535"},
+            headers={"Range": f"bytes=0-{MAX_BYTES - 1}"},
             timeout=TIMEOUT,
             allow_redirects=True,
             stream=True,
@@ -238,7 +239,8 @@ def test_url(
             or b"ftyp" in body[:32]
             or body[:2] in (b"\xff\xfb", b"\xff\xf3", b"\xff\xf2")
         )
-        if ctype.startswith("audio/") or "application/ogg" in ctype or signature:
+        html = body.lstrip().lower().startswith((b"<!doctype html", b"<html"))
+        if body and not html and (ctype.startswith("audio/") or "application/ogg" in ctype or signature):
             result["status"] = "playable"
             result["detail"] = "Audioantwort erfolgreich."
         elif body:
@@ -266,6 +268,9 @@ def test_url(
         )
         result["detail"] = message
         return result
+    finally:
+        if response is not None:
+            response.close()
 
 
 def summary(checks: list[dict[str, Any]]) -> dict[str, int]:
