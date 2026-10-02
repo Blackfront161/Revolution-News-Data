@@ -30,3 +30,10 @@ def test_archive_keeps_restricted_admission_provenance():
     assert archived["rightsReview"] == "original links only"
     assert archived["contentComplete"] is False
     assert archived["image"] == "" and archived["images"] == []
+
+
+def test_metadata_admission_always_has_canonical_region_and_topic():
+    from source_import_policy import metadata_categories
+    assert metadata_categories(["Europa"], "Europa") == ["Europe", "Movement News"]
+    assert metadata_categories(["Latin America", "Indigenous Struggles"], "Indigenous Struggles") == ["Latin America", "Indigenous Struggles"]
+    assert metadata_categories([], "Unknown") == ["Global", "Movement News"]

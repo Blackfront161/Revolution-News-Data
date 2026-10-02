@@ -23,7 +23,7 @@ CARD_FIELDS = (
     "editorialReview", "editorialReviewReasons", "quelleName", "author",
     "title", "link", "pubDate", "content", "contentComplete", "image",
     "images", "language", "languages", "originCountry", "originCountryCode",
-    "originRegion", "sourceHomepage", "sourceTags", "type", "sourceType", "importMode", "rightsReview", "importMode", "rightsReview",
+    "originRegion", "sourceHomepage", "sourceTags", "type", "sourceType", "importMode", "rightsReview",
 )
 
 

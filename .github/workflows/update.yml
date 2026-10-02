@@ -180,8 +180,8 @@ jobs:
             -delete
 
           # Exakte Phase-1J-Zeile für den vorhandenen Validator:
-          git add news-archive-manifest.json news-archive
           git add news.json events.json editorial-review.json source-catalog.json source-health.json
+          git add news-archive-manifest.json news-archive
           git add news-feed.json events-feed.json feed-status.json
 
           optional_outputs=(

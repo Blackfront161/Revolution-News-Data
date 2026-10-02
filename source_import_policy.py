@@ -2,6 +2,20 @@
 from urllib.parse import urlsplit
 
 
+REGION_ALIASES = {"Global": "Global", "Europe": "Europe", "Europa": "Europe", "Africa": "Africa", "Afrika": "Africa", "North America": "North America", "Latin America": "Latin America", "Asia": "Asia", "Asien": "Asia", "Australia & NZ": "Australia & NZ"}
+TOPICS = {"Labor Struggles", "Antifascism", "Antisexism", "Queer-Feminism", "Antiracism", "No Borders", "Anticapitalism", "Theory & Strategy", "Anticolonialism", "Anti-Imperialism", "Squatting & Housing", "Demonstrations", "Anti-Rep & Prisons", "Cyberactivism", "No War", "Animal Liberation", "Eco-Anarchism", "Indigenous Struggles", "Radical Health & Disability", "Libraries", "Movement News"}
+
+
+def metadata_categories(categories, continent):
+    values = categories if isinstance(categories, list) else []
+    result = list(dict.fromkeys(REGION_ALIASES.get(str(value), str(value)) for value in values if value))
+    if not set(REGION_ALIASES.values()).intersection(result):
+        result.insert(0, REGION_ALIASES.get(str(continent), "Global"))
+    if not TOPICS.intersection(result):
+        result.append("Movement News")
+    return result
+
+
 def metadata_article(feed, entry, continent):
     """Return a link record for an explicitly restricted source, or reject it."""
     if feed.get("importMode") != "metadata-only":
@@ -18,7 +32,7 @@ def metadata_article(feed, entry, continent):
     # This sentence is WRN-authored. Even an RSS summary may contain a full text.
     return {
         "kontinent": continent,
-        "categories": list(feed.get("categories") or [continent]),
+        "categories": metadata_categories(feed.get("categories"), continent),
         "quelleName": feed["name"],
         "author": str(entry.get("author") or "Unknown").strip(),
         "title": title,
