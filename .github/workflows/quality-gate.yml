@@ -104,6 +104,7 @@ jobs:
           node tests/test_video_pipeline.js
           node tests/test_public_video_request.js
           node tests/test_audio_tab_183.js
+          python -m unittest discover -s tests -p test_radio_streams.py
           node tests/test_shared_translation_client.js
           node tests/test_article_interactions.js
           node tests/test_article_workspace_184.js
