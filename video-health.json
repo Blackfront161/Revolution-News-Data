@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-30T12:42:51.767Z",
+  "generatedAt": "2026-10-02T05:47:04.950Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 41,
+    "checked": 40,
     "reachable": 38,
-    "failed": 3,
+    "failed": 2,
     "metadataEnriched": 14,
     "sources": {
       "checked": 10,
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 185.218.207.228:443"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -87,43 +87,33 @@
       ]
     },
     "items": {
-      "checked": 17,
+      "checked": 16,
       "reachable": 15,
-      "failed": 2,
+      "failed": 1,
       "embedChecked": 14,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:5boNxR3aHBqkiK6qhYpC32",
+          "canonicalId": "peertube:https://kolektiva.media:aquucA6Sdz548JfAbhzR6U",
           "original": {
-            "url": "https://kolektiva.media/w/5boNxR3aHBqkiK6qhYpC32",
+            "url": "https://kolektiva.media/w/aquucA6Sdz548JfAbhzR6U",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/5boNxR3aHBqkiK6qhYpC32"
+            "finalUrl": "https://kolektiva.media/w/aquucA6Sdz548JfAbhzR6U"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/5boNxR3aHBqkiK6qhYpC32",
+            "url": "https://kolektiva.media/videos/embed/aquucA6Sdz548JfAbhzR6U",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/5boNxR3aHBqkiK6qhYpC32"
+            "finalUrl": "https://kolektiva.media/videos/embed/aquucA6Sdz548JfAbhzR6U"
           }
         },
         {
-          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
+          "canonicalId": "direct:https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
           "original": {
-            "url": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4",
-            "ok": false,
-            "status": 403,
-            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4",
+            "url": "https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/09/Guada.mp4"
+            "finalUrl": "https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4"
           },
           "embed": null
         },
@@ -233,27 +223,27 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:1qa9bPasoCXK73A4XDzNGM",
+          "canonicalId": "youtube:_t4lQMTSPKw",
           "original": {
-            "url": "https://kolektiva.media/w/1qa9bPasoCXK73A4XDzNGM",
+            "url": "https://www.youtube.com/watch?v=_t4lQMTSPKw",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/1qa9bPasoCXK73A4XDzNGM"
+            "finalUrl": "https://www.youtube.com/watch?v=_t4lQMTSPKw"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/1qa9bPasoCXK73A4XDzNGM",
+            "url": "https://www.youtube-nocookie.com/embed/_t4lQMTSPKw?rel=0",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/1qa9bPasoCXK73A4XDzNGM"
+            "finalUrl": "https://www.youtube-nocookie.com/embed/_t4lQMTSPKw?rel=0"
           }
         },
         {
-          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/compressed-%ce%a0%ce%bb%ce%ac%ce%bd%ce%b1-%ce%b1%cf%83%cf%84%cf%85%ce%bd%ce%bf%ce%bc%ce%b9%ce%ba%ce%ae%cf%82-%ce%b1%cf%85%ce%b8%ce%b1%ce%b9%cf%81%ce%b5%cf%83%ce%af%ce%b1%cf%82-%ce%b1%cf%80%cf%8c-%cf%80%ce%bf%cf%81%ce%b5%ce%af%ce%b1-26-9-2026.mp4",
+          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
           "original": {
-            "url": "https://infolibre.gr/wp-content/uploads/2026/09/compressed-%CE%A0%CE%BB%CE%AC%CE%BD%CE%B1-%CE%B1%CF%83%CF%84%CF%85%CE%BD%CE%BF%CE%BC%CE%B9%CE%BA%CE%AE%CF%82-%CE%B1%CF%85%CE%B8%CE%B1%CE%B9%CF%81%CE%B5%CF%83%CE%AF%CE%B1%CF%82-%CE%B1%CF%80%CF%8C-%CF%80%CE%BF%CF%81%CE%B5%CE%AF%CE%B1-26-9-2026.mp4",
+            "url": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4",
             "ok": false,
             "status": 403,
-            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/09/compressed-%CE%A0%CE%BB%CE%AC%CE%BD%CE%B1-%CE%B1%CF%83%CF%84%CF%85%CE%BD%CE%BF%CE%BC%CE%B9%CE%BA%CE%AE%CF%82-%CE%B1%CF%85%CE%B8%CE%B1%CE%B9%CF%81%CE%B5%CF%83%CE%AF%CE%B1%CF%82-%CE%B1%CF%80%CF%8C-%CF%80%CE%BF%CF%81%CE%B5%CE%AF%CE%B1-26-9-2026.mp4"
+            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4"
           },
           "embed": null
         },
@@ -303,50 +293,50 @@
           }
         },
         {
-          "canonicalId": "youtube:iA_ViRPiFlA",
+          "canonicalId": "peertube:https://kolektiva.media:9VdvRY2otGquT5EdP2JKoK",
           "original": {
-            "url": "https://www.youtube.com/watch?v=iA_ViRPiFlA",
+            "url": "https://kolektiva.media/w/9VdvRY2otGquT5EdP2JKoK",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://www.youtube.com/watch?v=iA_ViRPiFlA"
+            "finalUrl": "https://kolektiva.media/w/9VdvRY2otGquT5EdP2JKoK"
           },
           "embed": {
-            "url": "https://www.youtube-nocookie.com/embed/iA_ViRPiFlA?rel=0",
+            "url": "https://kolektiva.media/videos/embed/9VdvRY2otGquT5EdP2JKoK",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://www.youtube-nocookie.com/embed/iA_ViRPiFlA?rel=0"
+            "finalUrl": "https://kolektiva.media/videos/embed/9VdvRY2otGquT5EdP2JKoK"
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:j5V9rhby9Lton6eK2b8op2",
+          "canonicalId": "peertube:https://kolektiva.media:1qa9bPasoCXK73A4XDzNGM",
           "original": {
-            "url": "https://kolektiva.media/w/j5V9rhby9Lton6eK2b8op2",
+            "url": "https://kolektiva.media/w/1qa9bPasoCXK73A4XDzNGM",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/j5V9rhby9Lton6eK2b8op2"
+            "finalUrl": "https://kolektiva.media/w/1qa9bPasoCXK73A4XDzNGM"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/j5V9rhby9Lton6eK2b8op2",
+            "url": "https://kolektiva.media/videos/embed/1qa9bPasoCXK73A4XDzNGM",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/j5V9rhby9Lton6eK2b8op2"
+            "finalUrl": "https://kolektiva.media/videos/embed/1qa9bPasoCXK73A4XDzNGM"
           }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 23,
-    "acceptedBeforeQuota": 23,
-    "acceptedCount": 17,
-    "duplicateCount": 0,
-    "quotaRemovedCount": 6,
-    "rejectedCount": 5,
+    "candidateCount": 20,
+    "acceptedBeforeQuota": 19,
+    "acceptedCount": 16,
+    "duplicateCount": 1,
+    "quotaRemovedCount": 3,
+    "rejectedCount": 7,
     "registrySources": 10
   },
   "coverage": {
     "duration": 3,
-    "thumbnails": 17,
+    "thumbnails": 16,
     "subtitlesKnown": 14,
     "transcripts": 0
   },
@@ -363,15 +353,14 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 3,
-    "Kolektiva": 3
+    "Kolektiva": 3,
+    "Direct": 2
   },
   "byLanguage": {
     "en": 8,
     "und": 4,
     "de": 3,
-    "fr": 1,
-    "pt": 1
+    "fr": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -382,12 +371,11 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:5boNxR3aHBqkiK6qhYpC32",
+      "canonicalId": "peertube:https://kolektiva.media:aquucA6Sdz548JfAbhzR6U",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -397,22 +385,12 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
-      "originalStatus": "blocked",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/09/guada.mp4",
+      "canonicalId": "direct:https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
       "originalStatus": "reachable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -487,22 +465,22 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:1qa9bPasoCXK73A4XDzNGM",
+      "canonicalId": "youtube:_t4lQMTSPKw",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": 0,
       "ageStatus": "current",
-      "status": "healthy"
+      "status": "attention"
     },
     {
-      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/compressed-%ce%a0%ce%bb%ce%ac%ce%bd%ce%b1-%ce%b1%cf%83%cf%84%cf%85%ce%bd%ce%bf%ce%bc%ce%b9%ce%ba%ce%ae%cf%82-%ce%b1%cf%85%ce%b8%ce%b1%ce%b9%cf%81%ce%b5%cf%83%ce%af%ce%b1%cf%82-%ce%b1%cf%80%cf%8c-%cf%80%ce%bf%cf%81%ce%b5%ce%af%ce%b1-26-9-2026.mp4",
+      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
       "originalStatus": "blocked",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -537,22 +515,22 @@
       "status": "attention"
     },
     {
-      "canonicalId": "youtube:iA_ViRPiFlA",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:j5V9rhby9Lton6eK2b8op2",
+      "canonicalId": "peertube:https://kolektiva.media:9VdvRY2otGquT5EdP2JKoK",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:1qa9bPasoCXK73A4XDzNGM",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     }

@@ -1,9 +1,9 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-09-30T16:09:54.582877+00:00",
-  "sourceCount": 409,
-  "activeSourceCount": 407,
+  "generatedAt": "2026-10-02T06:01:23.677827+00:00",
+  "sourceCount": 433,
+  "activeSourceCount": 431,
   "knownLanguages": [
     "ar",
     "ca",
@@ -166,7 +166,9 @@
       "canonicalUrl": "https://aradio-berlin.org/",
       "homepage": "https://www.aradio-berlin.org/",
       "languages": [
-        "de"
+        "de",
+        "en",
+        "es"
       ],
       "languageSource": "explicit",
       "categories": [
@@ -190,7 +192,8 @@
       "canonicalUrl": "https://de.cba.media/podcast/anarchistisches-radio/feed?limit=100",
       "homepage": "https://de.cba.media/podcast/anarchistisches-radio",
       "languages": [
-        "de"
+        "de",
+        "en"
       ],
       "languageSource": "explicit",
       "categories": [
@@ -266,6 +269,7 @@
       "languageSource": "explicit",
       "categories": [
         "Africa",
+        "Antisexism",
         "Movement News",
         "Demonstrations",
         "Antiracism",
@@ -479,12 +483,11 @@
       "categories": [
         "Africa",
         "Movement News",
-        "Labor Struggles",
         "No War",
+        "Labor Struggles",
         "Cyberactivism",
         "Antisexism",
         "Anticolonialism",
-        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -634,6 +637,7 @@
       "categories": [
         "Latin America",
         "Indigenous Struggles",
+        "Queer-Feminism",
         "Antifascism",
         "Anticapitalism",
         "sources"
@@ -731,7 +735,6 @@
         "Latin America",
         "Movement News",
         "No War",
-        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -833,6 +836,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "ALF Press Office (North America)",
+      "url": "https://animalliberationpressoffice.org/",
+      "canonicalUrl": "https://animalliberationpressoffice.org/",
+      "homepage": "https://animalliberationpressoffice.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Animal Liberation",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -984,8 +1011,8 @@
       "categories": [
         "Global",
         "Movement News",
-        "Demonstrations",
-        "Theory & Strategy",
+        "Eco-Anarchism",
+        "Anticolonialism",
         "sources"
       ],
       "mediaType": "news",
@@ -1156,6 +1183,29 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "Anarchist World This Week (3CR)",
+      "url": "https://www.3cr.org.au/anarchistworld",
+      "canonicalUrl": "https://3cr.org.au/anarchistworld",
+      "homepage": "https://www.3cr.org.au/anarchistworld",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Anarchism",
+        "Current Affairs"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Oceania",
+      "originCountry": "AU",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -1359,10 +1409,10 @@
         "Movement News",
         "Anti-Rep & Prisons",
         "Demonstrations",
-        "Labor Struggles",
+        "No War",
         "Eco-Anarchism",
-        "Queer-Feminism",
         "Antisexism",
+        "Labor Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -1551,8 +1601,8 @@
       "categories": [
         "Latin America",
         "Movement News",
-        "Demonstrations",
         "Labor Struggles",
+        "Demonstrations",
         "No Borders",
         "Eco-Anarchism",
         "Antifascism",
@@ -1774,7 +1824,7 @@
       "categories": [
         "North America",
         "Indigenous Struggles",
-        "Antiracism",
+        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -2247,6 +2297,30 @@
       ]
     },
     {
+      "name": "Açık Yeşil – Apaçık Radyo",
+      "url": "https://apacikradyo.com.tr/program/84090/kayit-arsivi",
+      "canonicalUrl": "https://apacikradyo.com.tr/program/84090/kayit-arsivi",
+      "homepage": "https://apacikradyo.com.tr/program/84090/kayit-arsivi",
+      "languages": [
+        "tr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Climate",
+        "Ecology",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "TR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Barrikade",
       "url": "https://barrikade.info/",
       "canonicalUrl": "https://barrikade.info/",
@@ -2256,15 +2330,15 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
         "Antifascism",
+        "Europe",
         "Anti-Rep & Prisons",
-        "Squatting & Housing",
         "Movement News",
+        "Global",
         "Queer-Feminism",
         "Antisexism",
+        "Squatting & Housing",
         "sources",
-        "Europe",
         "Anti-Imperialism"
       ],
       "mediaType": "news",
@@ -2656,6 +2730,30 @@
       ]
     },
     {
+      "name": "Black Rose / Rosa Negra",
+      "url": "https://www.blackrosefed.org/",
+      "canonicalUrl": "https://blackrosefed.org/",
+      "homepage": "https://www.blackrosefed.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "North America",
+        "Labor Struggles",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "BOAK (RU)",
       "url": "https://boak.noblogs.org/feed/",
       "canonicalUrl": "https://boak.noblogs.org/feed",
@@ -2687,15 +2785,17 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Indigenous Struggles",
         "Global",
-        "Asia",
-        "Movement News",
+        "Indigenous Struggles",
         "Anti-Rep & Prisons",
         "Eco-Anarchism",
         "Demonstrations",
         "No War",
+        "Antifascism",
+        "Labor Struggles",
         "sources",
+        "Asia",
+        "Movement News",
         "No Borders",
         "Radical Health & Disability",
         "Anti-Imperialism"
@@ -2780,6 +2880,54 @@
       ]
     },
     {
+      "name": "Carapatage – Radio Libertaire",
+      "url": "https://www.anarchiste.info/radio/libertaire/emission/carapatage/presentation.html",
+      "canonicalUrl": "https://anarchiste.info/radio/libertaire/emission/carapatage/presentation.html",
+      "homepage": "https://www.anarchiste.info/radio/libertaire/emission/carapatage/presentation.html",
+      "languages": [
+        "fr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Prisons",
+        "Anarchism",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "FR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
+      "name": "Chroniques rebelles – Radio Libertaire",
+      "url": "https://www.anarchiste.info/radio/libertaire/emission/chroniques-rebelles/",
+      "canonicalUrl": "https://anarchiste.info/radio/libertaire/emission/chroniques-rebelles",
+      "homepage": "https://www.anarchiste.info/radio/libertaire/emission/chroniques-rebelles/",
+      "languages": [
+        "fr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Anarchism",
+        "Europe",
+        "Politics"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "FR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Chuang (CN)",
       "url": "https://chuangcn.org/feed/",
       "canonicalUrl": "https://chuangcn.org/feed",
@@ -2859,7 +3007,6 @@
         "Movement News",
         "Anticapitalism",
         "Antifascism",
-        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -2969,6 +3116,31 @@
       ]
     },
     {
+      "name": "Contrabanda FM – Emissions especials",
+      "url": "https://podcast.contrabanda.org/",
+      "canonicalUrl": "https://podcast.contrabanda.org/",
+      "homepage": "https://podcast.contrabanda.org/",
+      "languages": [
+        "es",
+        "ca"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Free Radio",
+        "Antifascism",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "ES",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Convoca-la Barcelona",
       "url": "https://bcn.convoca.la/feed/rss",
       "canonicalUrl": "https://bcn.convoca.la/feed/rss",
@@ -3023,9 +3195,8 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Anticapitalism",
         "No War",
-        "Movement News",
+        "Anticapitalism",
         "sources",
         "Antifascism",
         "Eco-Anarchism",
@@ -3278,10 +3449,10 @@
         "No War",
         "Movement News",
         "Eco-Anarchism",
+        "Antifascism",
+        "No Borders",
         "Squatting & Housing",
-        "Anti-Rep & Prisons",
-        "Anticapitalism",
-        "Anticolonialism",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -3415,7 +3586,8 @@
       "canonicalUrl": "https://podcast.dissenspodcast.de/",
       "homepage": "https://podcast.dissenspodcast.de/",
       "languages": [
-        "de"
+        "de",
+        "en"
       ],
       "languageSource": "explicit",
       "categories": [
@@ -3560,6 +3732,7 @@
       "languageSource": "explicit",
       "categories": [
         "Africa",
+        "Radical Health & Disability",
         "Labor Struggles",
         "sources"
       ],
@@ -3650,7 +3823,7 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Latin America",
+        "Global",
         "Indigenous Struggles",
         "sources"
       ],
@@ -3851,8 +4024,8 @@
         "Movement News",
         "Labor Struggles",
         "Anti-Rep & Prisons",
-        "Eco-Anarchism",
         "Demonstrations",
+        "Eco-Anarchism",
         "No War",
         "Squatting & Housing",
         "sources"
@@ -3991,7 +4164,6 @@
       "languageSource": "explicit",
       "categories": [
         "Europe",
-        "No Borders",
         "Theory & Strategy",
         "sources"
       ],
@@ -4086,8 +4258,8 @@
         "North America",
         "Antisexism",
         "Movement News",
+        "Cyberactivism",
         "Queer-Feminism",
-        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -4235,6 +4407,30 @@
       ]
     },
     {
+      "name": "Fumaça",
+      "url": "https://fumaca.pt/",
+      "canonicalUrl": "https://fumaca.pt/",
+      "homepage": "https://fumaca.pt/",
+      "languages": [
+        "pt"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Politics",
+        "Human Rights",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "PT",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Gancio Cisti",
       "url": "https://gancio.cisti.org/feed/rss",
       "canonicalUrl": "https://gancio.cisti.org/feed/rss",
@@ -4316,6 +4512,9 @@
       "categories": [
         "Europe",
         "Movement News",
+        "No War",
+        "No Borders",
+        "Antifascism",
         "sources"
       ],
       "mediaType": "news",
@@ -4366,8 +4565,8 @@
         "Eco-Anarchism",
         "Demonstrations",
         "Squatting & Housing",
-        "No War",
         "Antiracism",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -4378,6 +4577,29 @@
       "originCountryCode": "",
       "origins": [
         "source-catalog.json"
+      ]
+    },
+    {
+      "name": "Green Left Radio (3CR) – Archive",
+      "url": "https://www.3cr.org.au/greenleftradio",
+      "canonicalUrl": "https://3cr.org.au/greenleftradio",
+      "homepage": "https://www.3cr.org.au/greenleftradio",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Social Movements",
+        "Politics"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Oceania",
+      "originCountry": "AU",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -4468,8 +4690,8 @@
         "Indigenous Struggles",
         "Labor Struggles",
         "Antifascism",
-        "Demonstrations",
         "Antisexism",
+        "Demonstrations",
         "Anticapitalism",
         "Anti-Rep & Prisons",
         "sources"
@@ -4503,6 +4725,30 @@
       "active": true,
       "originRegion": "Nordamerika",
       "originCountry": "US",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
+      "name": "Histoires d'A",
+      "url": "https://podcloud.fr/podcast/histoires-d-a",
+      "canonicalUrl": "https://podcloud.fr/podcast/histoires-d-a",
+      "homepage": "https://podcloud.fr/podcast/histoires-d-a",
+      "languages": [
+        "fr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Anarchism",
+        "Europe",
+        "Theory & Strategy"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "FR",
       "originCountryCode": "",
       "origins": [
         "podcast-sources.json"
@@ -4596,6 +4842,31 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "IEN Earth",
+      "url": "https://www.ienearth.org/",
+      "canonicalUrl": "https://ienearth.org/",
+      "homepage": "https://www.ienearth.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Indigenous Struggles",
+        "Eco-Anarchism",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -4727,6 +4998,7 @@
         "North America",
         "Indigenous Struggles",
         "Antiracism",
+        "Antifascism",
         "Eco-Anarchism",
         "sources"
       ],
@@ -4775,11 +5047,11 @@
         "Latin America",
         "Movement News",
         "Labor Struggles",
-        "Demonstrations",
         "Indigenous Struggles",
-        "Queer-Feminism",
+        "Demonstrations",
         "Antifascism",
         "No War",
+        "Anti-Rep & Prisons",
         "sources"
       ],
       "mediaType": "news",
@@ -4879,11 +5151,11 @@
       "categories": [
         "Europe",
         "Movement News",
-        "Theory & Strategy",
         "Anti-Rep & Prisons",
+        "Theory & Strategy",
         "Labor Struggles",
-        "Squatting & Housing",
         "Anticapitalism",
+        "Squatting & Housing",
         "No Borders",
         "sources"
       ],
@@ -4895,6 +5167,30 @@
       "originCountryCode": "",
       "origins": [
         "source-catalog.json"
+      ]
+    },
+    {
+      "name": "INFOWAR – Aris Chatzistefanou",
+      "url": "https://info-war.gr/",
+      "canonicalUrl": "https://info-war.gr/",
+      "homepage": "https://info-war.gr/",
+      "languages": [
+        "el"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Politics",
+        "Anti-Imperialism",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "GR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -5030,6 +5326,55 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "İklim Kuşağı Konuşuyor – Apaçık Radyo",
+      "url": "https://apacikradyo.com.tr/program/227368/kayit-arsivi",
+      "canonicalUrl": "https://apacikradyo.com.tr/program/227368/kayit-arsivi",
+      "homepage": "https://apacikradyo.com.tr/program/227368/kayit-arsivi",
+      "languages": [
+        "tr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Climate",
+        "Social Movements",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "TR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
+      "name": "Jalsa | جلسة",
+      "url": "https://www.arab-reform.net/podcast-serie/",
+      "canonicalUrl": "https://arab-reform.net/podcast-serie",
+      "homepage": "https://www.arab-reform.net/podcast-serie/",
+      "languages": [
+        "ar",
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Feminism",
+        "Climate",
+        "Anticolonialism"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "West Asia",
+      "originCountry": "LB",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -5199,9 +5544,9 @@
         "Global",
         "Cyberactivism",
         "Movement News",
-        "Labor Struggles",
         "Theory & Strategy",
-        "Radical Health & Disability",
+        "Indigenous Struggles",
+        "Labor Struggles",
         "Demonstrations",
         "sources"
       ],
@@ -5268,6 +5613,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "L'Orage",
+      "url": "https://ora-rao.org/",
+      "canonicalUrl": "https://ora-rao.org/",
+      "homepage": "https://ora-rao.org/",
+      "languages": [
+        "fr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Anarchism",
+        "North America",
+        "Social Movements"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "North America",
+      "originCountry": "CA",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -5357,6 +5726,7 @@
         "Latin America",
         "Anti-Rep & Prisons",
         "Indigenous Struggles",
+        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -5406,7 +5776,6 @@
         "Labor Struggles",
         "Movement News",
         "Anti-Rep & Prisons",
-        "Antiracism",
         "sources"
       ],
       "mediaType": "news",
@@ -5502,9 +5871,9 @@
         "Labor Struggles",
         "Movement News",
         "Squatting & Housing",
+        "No War",
         "Antifascism",
         "No Borders",
-        "No War",
         "Demonstrations",
         "sources"
       ],
@@ -5628,8 +5997,10 @@
         "Labor Struggles",
         "Anticapitalism",
         "Theory & Strategy",
+        "No Borders",
         "Anti-Rep & Prisons",
         "Libraries",
+        "Antiracism",
         "Demonstrations"
       ],
       "mediaType": "news",
@@ -5662,6 +6033,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "Live Like the World Is Dying",
+      "url": "https://live-like-the-world-is-dying.pinecast.co/",
+      "canonicalUrl": "https://live-like-the-world-is-dying.pinecast.co/",
+      "homepage": "https://live-like-the-world-is-dying.pinecast.co/",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Mutual Aid",
+        "Climate",
+        "North America"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "North America",
+      "originCountry": "US",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -5894,7 +6289,6 @@
         "Anti-Rep & Prisons",
         "Labor Struggles",
         "Radical Health & Disability",
-        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -6296,7 +6690,6 @@
       "categories": [
         "Global",
         "Anticapitalism",
-        "Anti-Imperialism",
         "sources"
       ],
       "mediaType": "news",
@@ -6330,6 +6723,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "Mudawanat | مدوّنات",
+      "url": "https://omny.fm/shows/mudawanat-1",
+      "canonicalUrl": "https://omny.fm/shows/mudawanat-1",
+      "homepage": "https://omny.fm/shows/mudawanat-1",
+      "languages": [
+        "ar"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Culture",
+        "Anticolonialism",
+        "West Asia"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "West Asia",
+      "originCountry": "LB",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -6409,8 +6826,8 @@
       "languageSource": "explicit",
       "categories": [
         "Asia",
-        "Labor Struggles",
         "Movement News",
+        "Labor Struggles",
         "Anti-Rep & Prisons",
         "Cyberactivism",
         "Eco-Anarchism",
@@ -6509,7 +6926,7 @@
         "Movement News",
         "Labor Struggles",
         "No War",
-        "No Borders",
+        "Squatting & Housing",
         "Antiracism",
         "Demonstrations",
         "sources"
@@ -6646,6 +7063,30 @@
       ]
     },
     {
+      "name": "Out of the Pan (3CR)",
+      "url": "https://www.3cr.org.au/outofthepan",
+      "canonicalUrl": "https://3cr.org.au/outofthepan",
+      "homepage": "https://www.3cr.org.au/outofthepan",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Queer",
+        "Oceania",
+        "Community"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Oceania",
+      "originCountry": "AU",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Overland",
       "url": "https://overland.org.au/feed/",
       "canonicalUrl": "https://overland.org.au/feed",
@@ -6769,11 +7210,11 @@
         "Europe",
         "Movement News",
         "Antifascism",
+        "Anti-Rep & Prisons",
         "Labor Struggles",
-        "Theory & Strategy",
         "Anticolonialism",
         "No Borders",
-        "Anti-Rep & Prisons",
+        "Theory & Strategy",
         "sources"
       ],
       "mediaType": "news",
@@ -6875,31 +7316,6 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
-      ]
-    },
-    {
-      "name": "Pinko Magazine",
-      "url": "https://www.pinko.online/",
-      "canonicalUrl": "https://pinko.online/",
-      "homepage": "https://www.pinko.online/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Movement News",
-        "Queer-Feminism",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
       ]
     },
     {
@@ -7025,6 +7441,30 @@
       ]
     },
     {
+      "name": "Queering The Air (3CR)",
+      "url": "https://www.3cr.org.au/queeringtheair",
+      "canonicalUrl": "https://3cr.org.au/queeringtheair",
+      "homepage": "https://www.3cr.org.au/queeringtheair",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Queer",
+        "Antiracism",
+        "Oceania"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Oceania",
+      "originCountry": "AU",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Querfunk",
       "url": "https://querfunk.de/",
       "canonicalUrl": "https://querfunk.de/",
@@ -7088,6 +7528,30 @@
       "originCountryCode": "TR",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "Radikal Perspektif",
+      "url": "https://rpkolektif.wordpress.com/",
+      "canonicalUrl": "https://rpkolektif.wordpress.com/",
+      "homepage": "https://rpkolektif.wordpress.com/",
+      "languages": [
+        "tr"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Europe",
+        "Labor Struggles",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "Türkiye",
+      "originCountry": "Türkiye",
+      "originCountryCode": "TR",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -7461,8 +7925,8 @@
       "languageSource": "explicit",
       "categories": [
         "Latin America",
-        "Indigenous Struggles",
         "Movement News",
+        "Indigenous Struggles",
         "Anti-Rep & Prisons",
         "Antisexism",
         "sources"
@@ -7633,6 +8097,29 @@
       ]
     },
     {
+      "name": "Rebel Steps – Archive",
+      "url": "https://rebelsteps.com/",
+      "canonicalUrl": "https://rebelsteps.com/",
+      "homepage": "https://rebelsteps.com/",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Self-organisation",
+        "Mutual Aid"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "North America",
+      "originCountry": "US",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
       "name": "Rebellyon (FR)",
       "url": "https://rebellyon.info/spip.php?page=backend",
       "canonicalUrl": "https://rebellyon.info/spip.php?page=backend",
@@ -7667,11 +8154,11 @@
         "Europe",
         "Movement News",
         "Antiracism",
-        "Theory & Strategy",
-        "Antifascism",
         "Demonstrations",
-        "Anticapitalism",
+        "Antifascism",
+        "Theory & Strategy",
         "No War",
+        "Anticapitalism",
         "sources"
       ],
       "mediaType": "news",
@@ -7741,11 +8228,11 @@
         "Australia & NZ",
         "Labor Struggles",
         "Movement News",
-        "Squatting & Housing",
         "Demonstrations",
         "Antisexism",
         "Anticapitalism",
         "Anti-Imperialism",
+        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -7756,6 +8243,30 @@
       "originCountryCode": "",
       "origins": [
         "source-catalog.json"
+      ]
+    },
+    {
+      "name": "Red Flare Podcast / 12 Rules For WHAT",
+      "url": "https://redflare.info/podcast/",
+      "canonicalUrl": "https://redflare.info/podcast",
+      "homepage": "https://redflare.info/podcast/",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Antifascism",
+        "Europe",
+        "Theory & Strategy"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "GB",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     },
     {
@@ -7904,8 +8415,7 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Anti-Imperialism",
+        "Africa",
         "Anticapitalism",
         "Labor Struggles",
         "Anticolonialism",
@@ -8029,7 +8539,6 @@
         "Asia",
         "Antisexism",
         "Movement News",
-        "Eco-Anarchism",
         "sources"
       ],
       "mediaType": "news",
@@ -8174,7 +8683,6 @@
       "categories": [
         "Australia & NZ",
         "Antifascism",
-        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -8220,9 +8728,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
-        "Movement News",
         "Global",
+        "Movement News",
+        "North America",
         "Anti-Rep & Prisons",
         "Radical Health & Disability",
         "Cyberactivism",
@@ -8324,6 +8832,29 @@
       "active": true,
       "originRegion": "Nordamerika",
       "originCountry": "CA",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
+      ]
+    },
+    {
+      "name": "Stick Together (3CR)",
+      "url": "https://www.3cr.org.au/sticktogether",
+      "canonicalUrl": "https://3cr.org.au/sticktogether",
+      "homepage": "https://www.3cr.org.au/sticktogether",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Labour",
+        "Unions"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Oceania",
+      "originCountry": "AU",
       "originCountryCode": "",
       "origins": [
         "podcast-sources.json"
@@ -8478,8 +9009,8 @@
         "Libraries",
         "Theory & Strategy",
         "Antifascism",
-        "Anti-Rep & Prisons",
         "Anticapitalism",
+        "Anti-Rep & Prisons",
         "Cyberactivism",
         "Antiracism",
         "sources"
@@ -8514,6 +9045,32 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "The Appeal",
+      "url": "https://theappeal.org/",
+      "canonicalUrl": "https://theappeal.org/",
+      "homepage": "https://theappeal.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "North America",
+        "No Borders",
+        "Anti-Rep & Prisons",
+        "Antisexism",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
@@ -8601,6 +9158,7 @@
         "Africa",
         "Movement News",
         "Anticolonialism",
+        "Anti-Rep & Prisons",
         "Antisexism",
         "Antiracism",
         "Cyberactivism",
@@ -8987,9 +9545,9 @@
         "North America",
         "Movement News",
         "No War",
+        "No Borders",
         "Eco-Anarchism",
         "Anti-Rep & Prisons",
-        "No Borders",
         "Antifascism",
         "Radical Health & Disability",
         "sources"
@@ -9038,12 +9596,12 @@
       "categories": [
         "Europe",
         "Movement News",
-        "No War",
+        "Anti-Rep & Prisons",
         "Antifascism",
         "Theory & Strategy",
-        "Anti-Rep & Prisons",
         "Anticapitalism",
-        "Eco-Anarchism",
+        "No War",
+        "Queer-Feminism",
         "sources"
       ],
       "mediaType": "news",
@@ -9091,13 +9649,13 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Antifascism",
-        "No Borders",
         "Anti-Rep & Prisons",
+        "North America",
+        "Theory & Strategy",
+        "Labor Struggles",
         "No War",
         "Movement News",
-        "Antiracism",
-        "Eco-Anarchism",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -9243,13 +9801,12 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
         "Global",
         "No War",
         "Labor Struggles",
         "Anti-Rep & Prisons",
+        "North America",
         "Movement News",
-        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -9366,8 +9923,6 @@
         "Animal Liberation",
         "Anticapitalism",
         "Antifascism",
-        "Movement News",
-        "Squatting & Housing",
         "sources"
       ],
       "mediaType": "news",
@@ -9711,32 +10266,6 @@
       ]
     },
     {
-      "name": "ZNet (Global)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Anticapitalism",
-        "Movement News",
-        "No War",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -9760,6 +10289,31 @@
       ]
     },
     {
+      "name": "ZNet (International)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "No War",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "Zwangsräumung Verhindern (Berlin)",
       "url": "https://zwangsraeumungverhindern.org/feed/",
       "canonicalUrl": "https://zwangsraeumungverhindern.org/feed",
@@ -9779,6 +10333,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "ΕΠΑΝΑΣΤΑΣΗ podcast",
+      "url": "https://marxismos.com/",
+      "canonicalUrl": "https://marxismos.com/",
+      "homepage": "https://marxismos.com/",
+      "languages": [
+        "el"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Labor Struggles",
+        "Theory & Strategy",
+        "Europe"
+      ],
+      "mediaType": "podcast",
+      "status": "active",
+      "active": true,
+      "originRegion": "Europe",
+      "originCountry": "GR",
+      "originCountryCode": "",
+      "origins": [
+        "podcast-sources.json"
       ]
     }
   ]
