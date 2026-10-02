@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T05:47:04.950Z",
+  "generatedAt": "2026-10-02T12:44:54.492Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 40,
+    "checked": 39,
     "reachable": 38,
-    "failed": 2,
+    "failed": 1,
     "metadataEnriched": 14,
     "sources": {
       "checked": 10,
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 93.190.126.19:443"
+          "error": "timeout"
         },
         {
           "sourceId": "andrewism",
@@ -87,9 +87,9 @@
       ]
     },
     "items": {
-      "checked": 16,
+      "checked": 15,
       "reachable": 15,
-      "failed": 1,
+      "failed": 0,
       "embedChecked": 14,
       "results": [
         {
@@ -238,16 +238,6 @@
           }
         },
         {
-          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
-          "original": {
-            "url": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4",
-            "ok": false,
-            "status": 403,
-            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/09/SOL-20260929-TENTS-B.mp4"
-          },
-          "embed": null
-        },
-        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -326,9 +316,9 @@
     }
   },
   "totals": {
-    "candidateCount": 20,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 16,
+    "candidateCount": 19,
+    "acceptedBeforeQuota": 18,
+    "acceptedCount": 15,
     "duplicateCount": 1,
     "quotaRemovedCount": 3,
     "rejectedCount": 7,
@@ -336,7 +326,7 @@
   },
   "coverage": {
     "duration": 3,
-    "thumbnails": 16,
+    "thumbnails": 15,
     "subtitlesKnown": 14,
     "transcripts": 0
   },
@@ -354,12 +344,12 @@
   "byPlatform": {
     "YouTube": 11,
     "Kolektiva": 3,
-    "Direct": 2
+    "Direct": 1
   },
   "byLanguage": {
     "en": 8,
-    "und": 4,
     "de": 3,
+    "und": 3,
     "fr": 1
   },
   "bySource": {
@@ -367,10 +357,10 @@
     "andrewism": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "infolibre-gr": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "infolibre-gr": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
@@ -475,16 +465,6 @@
       "status": "attention"
     },
     {
-      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/09/sol-20260929-tents-b.mp4",
-      "originalStatus": "blocked",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 2,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
@@ -520,7 +500,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
