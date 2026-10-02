@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T14:36:56.680Z",
+  "generatedAt": "2026-10-02T22:18:48.479Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 39,
-    "reachable": 38,
+    "checked": 40,
+    "reachable": 39,
     "failed": 1,
     "metadataEnriched": 14,
     "sources": {
@@ -87,11 +87,21 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 15,
+      "checked": 16,
+      "reachable": 16,
       "failed": 0,
       "embedChecked": 14,
       "results": [
+        {
+          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/30-septiembre-2026-jubilades-024.mp4",
+          "original": {
+            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/10/30-Septiembre-2026-Jubilades-024.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/10/30-Septiembre-2026-Jubilades-024.mp4"
+          },
+          "embed": null
+        },
         {
           "canonicalId": "peertube:https://kolektiva.media:hgAd6XcEkXPR3hxz9aMhC3",
           "original": {
@@ -316,9 +326,9 @@
     }
   },
   "totals": {
-    "candidateCount": 17,
-    "acceptedBeforeQuota": 16,
-    "acceptedCount": 15,
+    "candidateCount": 18,
+    "acceptedBeforeQuota": 17,
+    "acceptedCount": 16,
     "duplicateCount": 1,
     "quotaRemovedCount": 1,
     "rejectedCount": 7,
@@ -344,12 +354,12 @@
   "byPlatform": {
     "YouTube": 11,
     "Kolektiva": 3,
-    "Direct": 1
+    "Direct": 2
   },
   "byLanguage": {
     "en": 7,
+    "und": 4,
     "de": 3,
-    "und": 3,
     "fr": 1,
     "pt": 1
   },
@@ -361,10 +371,21 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "indymedia-argentina": 1,
     "infolibre-gr": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/30-septiembre-2026-jubilades-024.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "peertube:https://kolektiva.media:hgAd6XcEkXPR3hxz9aMhC3",
       "originalStatus": "reachable",
@@ -461,7 +482,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -501,7 +522,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "attention"
     },
