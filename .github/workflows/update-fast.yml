@@ -7,6 +7,9 @@ on:
     paths:
       - aggregate.py
       - build_web_feeds.py
+      - build_source_archive.py
+      - source_import_policy.py
+      - multilingual-source-registry.json
       - requirements-wrn.lock.txt
       - .github/workflows/update-fast.yml
   schedule:
