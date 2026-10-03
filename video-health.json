@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-02T22:18:48.479Z",
+  "generatedAt": "2026-10-03T05:24:35.642Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "timeout"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -308,30 +308,30 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:9VdvRY2otGquT5EdP2JKoK",
+          "canonicalId": "peertube:https://kolektiva.media:7kH7vGSjRdzh9SJh1NSr5m",
           "original": {
-            "url": "https://kolektiva.media/w/9VdvRY2otGquT5EdP2JKoK",
+            "url": "https://kolektiva.media/w/7kH7vGSjRdzh9SJh1NSr5m",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/9VdvRY2otGquT5EdP2JKoK"
+            "finalUrl": "https://kolektiva.media/w/7kH7vGSjRdzh9SJh1NSr5m"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/9VdvRY2otGquT5EdP2JKoK",
+            "url": "https://kolektiva.media/videos/embed/7kH7vGSjRdzh9SJh1NSr5m",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/9VdvRY2otGquT5EdP2JKoK"
+            "finalUrl": "https://kolektiva.media/videos/embed/7kH7vGSjRdzh9SJh1NSr5m"
           }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 18,
-    "acceptedBeforeQuota": 17,
+    "candidateCount": 17,
+    "acceptedBeforeQuota": 16,
     "acceptedCount": 16,
     "duplicateCount": 1,
-    "quotaRemovedCount": 1,
-    "rejectedCount": 7,
+    "quotaRemovedCount": 0,
+    "rejectedCount": 11,
     "registrySources": 10
   },
   "coverage": {
@@ -357,9 +357,9 @@
     "Direct": 2
   },
   "byLanguage": {
-    "en": 7,
-    "und": 4,
+    "en": 8,
     "de": 3,
+    "und": 3,
     "fr": 1,
     "pt": 1
   },
@@ -402,7 +402,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -527,12 +527,12 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:9VdvRY2otGquT5EdP2JKoK",
+      "canonicalId": "peertube:https://kolektiva.media:7kH7vGSjRdzh9SJh1NSr5m",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 3,
       "ageStatus": "current",
       "status": "healthy"
     }
