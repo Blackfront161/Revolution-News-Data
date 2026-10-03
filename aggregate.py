@@ -291,7 +291,15 @@ quellen = {
         {"name": "Fauda", "url": "https://fauda.noblogs.org/feed/"},
         {"name": "Manila Today", "url": "https://manilatoday.net/feed/"},
         {"name": "Kodao Productions", "url": "https://kodao.org/feed/"},
-        {"name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/"},
+        {
+            "name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/",
+            "homepage": "https://www.karapatan.org/", "languages": ["en"],
+            "categories": ["Asia", "Anti-Rep & Prisons", "Indigenous Struggles"],
+            "originCountry": "Philippines", "originCountryCode": "PH",
+            "originRegion": "Southeast Asia", "importMode": "metadata-only",
+            "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant.",
+            "reviewEvidence": ["https://www.karapatan.org/about/"],
+        },
         {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
     ],
     "Australia & NZ": [
