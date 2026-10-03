@@ -15,6 +15,7 @@ from urllib3.util import Retry
 from build_web_feeds import date_value
 from inline_text import inline_preserving_text, prefer_inline_preserving_text
 from source_import_policy import metadata_article
+from news_retention import retain_current_sources
 
 for stream in (sys.stdout, sys.stderr):
     try:
@@ -2204,8 +2205,12 @@ def save_checkpoint(force=False):
                 continue
             incomplete_counts[source] = count + 1
         news.append(article)
-        if len(news) >= 2000:
-            break
+
+    # Reserve a current representative before applying the total cap. Otherwise
+    # frequent publishers can erase a still-current small source at every run.
+    news = retain_current_sources(news, [feed.get('name') for feeds in quellen.values()
+        for feed in feeds if feed.get('enabled') is not False
+        and feed.get('status') not in {'withdrawn', 'revoked', 'deleted', 'disabled'}])
 
     atomic_json_write("news.json", news)
     atomic_json_write("events.json", events)
