@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-03T11:45:40.300Z",
+  "generatedAt": "2026-10-03T16:27:25.076Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 40,
-    "reachable": 39,
+    "checked": 39,
+    "reachable": 38,
     "failed": 1,
     "metadataEnriched": 14,
     "sources": {
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 93.190.126.19:443"
+          "error": "timeout"
         },
         {
           "sourceId": "andrewism",
@@ -87,8 +87,8 @@
       ]
     },
     "items": {
-      "checked": 16,
-      "reachable": 16,
+      "checked": 15,
+      "reachable": 15,
       "failed": 0,
       "embedChecked": 14,
       "results": [
@@ -114,16 +114,6 @@
             "ok": true,
             "status": 200,
             "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/10/30-Septiembre-2026-Jubilades-024.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "direct:https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
-          "original": {
-            "url": "https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4"
           },
           "embed": null
         },
@@ -326,17 +316,17 @@
     }
   },
   "totals": {
-    "candidateCount": 18,
-    "acceptedBeforeQuota": 17,
-    "acceptedCount": 16,
-    "duplicateCount": 1,
+    "candidateCount": 16,
+    "acceptedBeforeQuota": 16,
+    "acceptedCount": 15,
+    "duplicateCount": 0,
     "quotaRemovedCount": 1,
-    "rejectedCount": 19,
+    "rejectedCount": 18,
     "registrySources": 10
   },
   "coverage": {
     "duration": 3,
-    "thumbnails": 15,
+    "thumbnails": 14,
     "subtitlesKnown": 14,
     "transcripts": 0
   },
@@ -354,12 +344,12 @@
   "byPlatform": {
     "YouTube": 11,
     "Kolektiva": 3,
-    "Direct": 2
+    "Direct": 1
   },
   "byLanguage": {
     "en": 7,
     "de": 5,
-    "und": 3,
+    "und": 2,
     "fr": 1
   },
   "bySource": {
@@ -371,7 +361,6 @@
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
     "indymedia-argentina": 1,
-    "infolibre-gr": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
@@ -392,16 +381,6 @@
       "platformStatus": "unknown",
       "playabilityReason": "",
       "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://contre-attaque.net/wp-content/uploads/2026/09/signal-2026-09-29-19-51-08-466.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -521,7 +500,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -531,7 +510,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     }
