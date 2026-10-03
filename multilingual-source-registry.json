@@ -370,8 +370,7 @@
       ],
       "categories": [
         "Asia",
-        "Anti-Rep & Prisons",
-        "Indigenous Struggles"
+        "Movement News"
       ],
       "originCountry": "Philippines",
       "originCountryCode": "PH",
@@ -385,7 +384,15 @@
       "action": "enrich_only",
       "importMode": "metadata-only",
       "reviewedAt": "2026-10-03",
-      "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant."
+      "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant.",
+      "metadataTopicOverrides": {
+        "https://www.karapatan.org/5561/": {
+          "title": "Primer on Desaparecidos",
+          "topics": [
+            "Anti-Rep & Prisons"
+          ]
+        }
+      }
     }
   ]
 }

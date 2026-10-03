@@ -6,6 +6,21 @@ from podcast_content_policy import project_episode
 
 ROOT=Path(__file__).resolve().parents[1]
 
+def test_reviewed_original_links_remain_metadata_only_after_stale_refresh():
+    evidence=json.loads((ROOT/'docs/evidence/podcast-queue-repair-2026-10-03/reviewed-podcast-policy.json').read_text(encoding='utf-8'))
+    ids=set(evidence['newMetadataOnlyIds'])
+    assert len(ids)==55
+    for name in ['podcasts.json','podcast-archive.json']:
+        rows=json.loads((ROOT/name).read_text(encoding='utf-8'))
+        selected=[r for r in rows if r['id'] in ids]
+        assert {r['id'] for r in selected}==ids
+        for row in selected:
+            stale=dict(row, contentPolicy='playable', audioUrl='https://example.org/unapproved.mp3', artwork='https://example.org/unapproved.jpg', description='UNAPPROVED')
+            projected=project_episode(stale)
+            assert projected['contentPolicy']=='metadata_and_links_only'
+            assert not projected['audioUrl'] and not projected['artwork'] and not projected['description']
+            assert projected['id']==row['id'] and projected['episodeUrl']==row['episodeUrl'] and projected['published']==row['published']
+
 def test_declared_channel_language_does_not_verify_episode_or_retain_media():
     row=project_episode(dict(id='test',sourceId='3cr-anarchist-world',language='en',languageVerified=True,languageConfidence=1,audioUrl='https://example.com/a.mp3',description='Foreign text',artwork='https://example.com/image.jpg'))
     assert row['language']=='und' and row['languageVerified'] is False

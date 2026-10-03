@@ -1,5 +1,5 @@
 {
-  "observedAtUTC": "2026-10-03T14:18:11.378981+00:00",
+  "observedAtUTC": "2026-10-03T14:44:37.060021+00:00",
   "feedUrl": "https://www.karapatan.org/feed/",
   "finalUrl": "https://www.karapatan.org/feed/",
   "inputSha256": "d8cbbac031923023d4565d535a24fcdc246718842a72c7c396d25117ba156f8d",
@@ -14,8 +14,7 @@
     ],
     "categories": [
       "Asia",
-      "Anti-Rep & Prisons",
-      "Indigenous Struggles"
+      "Movement News"
     ],
     "originCountry": "Philippines",
     "originCountryCode": "PH",
@@ -29,21 +28,26 @@
     "action": "enrich_only",
     "importMode": "metadata-only",
     "reviewedAt": "2026-10-03",
-    "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant."
+    "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant.",
+    "metadataTopicOverrides": {
+      "https://www.karapatan.org/5561/": {
+        "title": "Primer on Desaparecidos",
+        "topics": [
+          "Anti-Rep & Prisons"
+        ]
+      }
+    }
   },
   "admittedMetadata": [
     {
       "kontinent": "Asia",
       "categories": [
         "Asia",
-        "Anti-Rep & Prisons",
-        "Indigenous Struggles"
+        "Anti-Rep & Prisons"
       ],
       "primaryRegion": "Asia",
       "primaryTopic": "Anti-Rep & Prisons",
-      "secondaryTopics": [
-        "Indigenous Struggles"
-      ],
+      "secondaryTopics": [],
       "classificationConfidence": 0.4,
       "classificationMethod": "source-metadata-only",
       "editorialReview": true,
@@ -74,14 +78,11 @@
       "kontinent": "Asia",
       "categories": [
         "Asia",
-        "Anti-Rep & Prisons",
-        "Indigenous Struggles"
+        "Movement News"
       ],
       "primaryRegion": "Asia",
-      "primaryTopic": "Anti-Rep & Prisons",
-      "secondaryTopics": [
-        "Indigenous Struggles"
-      ],
+      "primaryTopic": "Movement News",
+      "secondaryTopics": [],
       "classificationConfidence": 0.4,
       "classificationMethod": "source-metadata-only",
       "editorialReview": true,
@@ -112,14 +113,11 @@
       "kontinent": "Asia",
       "categories": [
         "Asia",
-        "Anti-Rep & Prisons",
-        "Indigenous Struggles"
+        "Movement News"
       ],
       "primaryRegion": "Asia",
-      "primaryTopic": "Anti-Rep & Prisons",
-      "secondaryTopics": [
-        "Indigenous Struggles"
-      ],
+      "primaryTopic": "Movement News",
+      "secondaryTopics": [],
       "classificationConfidence": 0.4,
       "classificationMethod": "source-metadata-only",
       "editorialReview": true,

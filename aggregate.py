@@ -294,11 +294,14 @@ quellen = {
         {
             "name": "Karapatan (Human Rights)", "url": "https://www.karapatan.org/feed/",
             "homepage": "https://www.karapatan.org/", "languages": ["en"],
-            "categories": ["Asia", "Anti-Rep & Prisons", "Indigenous Struggles"],
+            "categories": ["Asia", "Movement News"],
             "originCountry": "Philippines", "originCountryCode": "PH",
             "originRegion": "Southeast Asia", "importMode": "metadata-only",
             "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant.",
             "reviewEvidence": ["https://www.karapatan.org/about/"],
+            "metadataTopicOverrides": {"https://www.karapatan.org/5561/": {
+                "title": "Primer on Desaparecidos", "topics": ["Anti-Rep & Prisons"]
+            }},
         },
         {"name": "Asian Labour Review", "url": "https://labourreview.org/feed/"}
     ],
@@ -530,7 +533,7 @@ for _wrn_source in _wrn_extra_sources_182:
     _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))
     _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))
     _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))
-    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence'):
+    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence', 'metadataTopicOverrides'):
         if _wrn_field in _wrn_source:
             _wrn_existing[_wrn_field] = _wrn_source[_wrn_field]
 # WRN MULTILINGUAL SOURCES 1.8.2 END
