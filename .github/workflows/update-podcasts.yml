@@ -57,6 +57,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m json.tool podcasts.json >/dev/null
+          python -m json.tool podcast-archive.json >/dev/null
           python -m json.tool podcast-health.json >/dev/null
           python -m json.tool generated-podcasts.json >/dev/null
 
@@ -71,7 +72,7 @@ jobs:
           find . -type d -name __pycache__ -prune -exec rm -rf {} +
           find . -type f \( -name '*.pyc' -o -name '*.pyo' -o -name '*.tmp' -o -name '*.log' \) -delete
 
-          git add podcasts.json podcast-health.json generated-podcasts.json
+          git add podcasts.json podcast-archive.json podcast-health.json generated-podcasts.json
 
           if [ -e audio-health.json ]; then
             git add audio-health.json

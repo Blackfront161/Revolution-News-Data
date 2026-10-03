@@ -73,6 +73,9 @@ jobs:
 
           python -m pip check
 
+      - name: Podcast-Veröffentlichung und Archivschutz testen
+        run: python -m unittest discover -s tests -p test_podcast_workflow_publication.py
+
       - name: Alle JavaScript-Dateien prüfen
         shell: bash
         run: |
