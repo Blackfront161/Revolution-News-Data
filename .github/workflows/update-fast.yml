@@ -24,6 +24,7 @@ permissions:
 concurrency:
   group: wrn-main-write
   cancel-in-progress: false
+  queue: max
 
 jobs:
   refresh:

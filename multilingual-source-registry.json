@@ -358,6 +358,41 @@
       "importMode": "metadata-only",
       "rightsReview": "Keine Volltext- oder Medienfreigabe belegt. Nur Überschrift, Datum, Autor und Originalverweis; WRN-eigener Hinweis statt übernommener Zusammenfassung.",
       "reviewedAt": "2026-10-02"
+    },
+    {
+      "name": "Karapatan (Human Rights)",
+      "kind": "news",
+      "adapter": "rss",
+      "homepage": "https://www.karapatan.org/",
+      "feedUrl": "https://www.karapatan.org/feed/",
+      "languages": [
+        "en"
+      ],
+      "categories": [
+        "Asia",
+        "Movement News"
+      ],
+      "originCountry": "Philippines",
+      "originCountryCode": "PH",
+      "originRegion": "Southeast Asia",
+      "operator": "KARAPATAN Alliance (publisher self-description)",
+      "sourceType": "Philippine human-rights alliance; solidarity source, not labelled anarchist or Indigenous-owned",
+      "reviewEvidence": [
+        "https://www.karapatan.org/about/"
+      ],
+      "status": "approved",
+      "action": "enrich_only",
+      "importMode": "metadata-only",
+      "reviewedAt": "2026-10-03",
+      "rightsReview": "Metadata and original links only; no body, PDF or media reuse grant.",
+      "metadataTopicOverrides": {
+        "https://www.karapatan.org/5561/": {
+          "title": "Primer on Desaparecidos",
+          "topics": [
+            "Anti-Rep & Prisons"
+          ]
+        }
+      }
     }
   ]
 }

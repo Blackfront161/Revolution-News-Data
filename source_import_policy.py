@@ -30,6 +30,12 @@ def metadata_article(feed, entry, continent):
     if not title:
         return None
     categories = metadata_categories(feed.get("categories"), continent)
+    reviewed_topic = (feed.get("metadataTopicOverrides") or {}).get(link)
+    if isinstance(reviewed_topic, dict) and reviewed_topic.get("title") == title:
+        categories = metadata_categories(
+            [value for value in categories if value in REGION_ALIASES.values()]
+            + [value for value in reviewed_topic.get("topics", []) if value in TOPICS], continent
+        )
     region = next(value for value in categories if value in REGION_ALIASES.values())
     topic = next(value for value in categories if value in TOPICS)
     # This sentence is WRN-authored. Even an RSS summary may contain a full text.
