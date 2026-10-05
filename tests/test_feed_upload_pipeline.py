@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -56,6 +57,16 @@ def test_feed_status_exposes_the_actual_newest_article_timestamp():
     ]) == "2026-08-08T08:55:05+00:00"
 
 
+def test_feed_status_does_not_describe_a_scheduled_row_as_newest_article():
+    from build_web_feeds import newest_article_at
+
+    now = datetime(2026, 8, 8, 10, 0, tzinfo=timezone.utc)
+    assert newest_article_at([
+        {"pubDate": "2026-08-08T09:05:00+00:00"},
+        {"pubDate": "2026-08-09T09:05:00+00:00"},
+    ], now=now) == "2026-08-08T09:05:00+00:00"
+
+
 def test_broken_or_placeholder_news_cannot_enter_the_quick_feed():
     from build_web_feeds import balanced_news_rows, usable_news_item
 
@@ -99,6 +110,7 @@ def test_workflow_validates_and_stages_every_browser_feed():
     assert "git add news-feed.json events-feed.json feed-status.json" in workflow
     assert 'age > 3600' in fast_workflow
     assert 'status["news"]["newestArticleAt"]' in fast_workflow
+    assert "newest_age < 0" in fast_workflow
     assert "newest_age > 30 * 3600" in fast_workflow
     assert 'int(run.get("newArticles") or 0) > 0' in fast_workflow
     assert 'status.get("news", {}).get("feedCount") != len(news)' in fast_workflow
@@ -120,7 +132,9 @@ if __name__ == "__main__":
     test_checkpoints_are_throttled_and_atomic()
     test_checkpoint_sorts_mixed_feed_dates_chronologically()
     test_feed_status_exposes_the_actual_newest_article_timestamp()
+    test_feed_status_does_not_describe_a_scheduled_row_as_newest_article()
     test_broken_or_placeholder_news_cannot_enter_the_quick_feed()
     test_workflow_validates_and_stages_every_browser_feed()
     test_reclassifier_ignores_runtime_source_transformations()
     print("WRN feed upload pipeline: OK")
+
