@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T06:28:12.083Z",
+  "generatedAt": "2026-10-06T18:27:08.710Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 39,
-    "reachable": 38,
+    "checked": 38,
+    "reachable": 37,
     "failed": 1,
     "metadataEnriched": 14,
     "sources": {
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "timeout"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -87,8 +87,8 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 15,
+      "checked": 14,
+      "reachable": 14,
       "failed": 0,
       "embedChecked": 14,
       "results": [
@@ -106,16 +106,6 @@
             "status": 200,
             "finalUrl": "https://kolektiva.media/videos/embed/27peLK25zTVTE2A4Wgonha"
           }
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/30-septiembre-2026-jubilades-024.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/10/30-Septiembre-2026-Jubilades-024.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/10/30-Septiembre-2026-Jubilades-024.mp4"
-          },
-          "embed": null
         },
         {
           "canonicalId": "youtube:AHGl9a8BcqI",
@@ -316,12 +306,12 @@
     }
   },
   "totals": {
-    "candidateCount": 17,
-    "acceptedBeforeQuota": 17,
-    "acceptedCount": 15,
+    "candidateCount": 14,
+    "acceptedBeforeQuota": 14,
+    "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 2,
-    "rejectedCount": 18,
+    "quotaRemovedCount": 0,
+    "rejectedCount": 10,
     "registrySources": 10
   },
   "coverage": {
@@ -343,16 +333,14 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Kolektiva": 4,
-    "Direct": 1
+    "Kolektiva": 4
   },
   "byLanguage": {
     "en": 6,
     "de": 5,
     "ca": 1,
     "el": 1,
-    "fr": 1,
-    "und": 1
+    "fr": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -362,7 +350,6 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
@@ -372,17 +359,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/30-septiembre-2026-jubilades-024.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -462,7 +439,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -512,7 +489,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     }
