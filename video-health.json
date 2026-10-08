@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T13:38:34.195Z",
+  "generatedAt": "2026-10-08T23:25:15.379Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 32,
-    "reachable": 31,
+    "checked": 34,
+    "reachable": 33,
     "failed": 1,
-    "metadataEnriched": 11,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "connect ECONNREFUSED 93.190.126.19:443"
+          "error": "timeout"
         },
         {
           "sourceId": "andrewism",
@@ -87,24 +87,24 @@
       ]
     },
     "items": {
-      "checked": 11,
-      "reachable": 11,
+      "checked": 12,
+      "reachable": 12,
       "failed": 0,
-      "embedChecked": 11,
+      "embedChecked": 12,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
+          "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
           "original": {
-            "url": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD",
+            "url": "https://kolektiva.media/w/mSjig1mw3icp7YXRcEnVhi",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD"
+            "finalUrl": "https://kolektiva.media/w/mSjig1mw3icp7YXRcEnVhi"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD",
+            "url": "https://kolektiva.media/videos/embed/mSjig1mw3icp7YXRcEnVhi",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD"
+            "finalUrl": "https://kolektiva.media/videos/embed/mSjig1mw3icp7YXRcEnVhi"
           }
         },
         {
@@ -213,6 +213,21 @@
           }
         },
         {
+          "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
+          "original": {
+            "url": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD"
+          }
+        },
+        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -261,18 +276,18 @@
     }
   },
   "totals": {
-    "candidateCount": 11,
-    "acceptedBeforeQuota": 11,
-    "acceptedCount": 11,
+    "candidateCount": 12,
+    "acceptedBeforeQuota": 12,
+    "acceptedCount": 12,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 10,
+    "rejectedCount": 17,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 1,
-    "thumbnails": 11,
-    "subtitlesKnown": 11,
+    "duration": 2,
+    "thumbnails": 12,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -288,27 +303,28 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Kolektiva": 1
+    "Kolektiva": 2
   },
   "byLanguage": {
     "en": 6,
     "de": 3,
     "es-419": 1,
-    "fr": 1
+    "fr": 1,
+    "und": 1
   },
   "bySource": {
     "andrewism": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
+      "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -388,6 +404,16 @@
       "status": "attention"
     },
     {
+      "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
@@ -424,7 +450,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 1,
+      "itemCount": 2,
       "networkStatus": "reachable"
     },
     {
