@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-08T06:12:39.283Z",
+  "generatedAt": "2026-10-08T13:38:34.195Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "timeout"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -93,18 +93,18 @@
       "embedChecked": 11,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:27peLK25zTVTE2A4Wgonha",
+          "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
           "original": {
-            "url": "https://kolektiva.media/w/27peLK25zTVTE2A4Wgonha",
+            "url": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/27peLK25zTVTE2A4Wgonha"
+            "finalUrl": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/27peLK25zTVTE2A4Wgonha",
+            "url": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/27peLK25zTVTE2A4Wgonha"
+            "finalUrl": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD"
           }
         },
         {
@@ -293,7 +293,7 @@
   "byLanguage": {
     "en": 6,
     "de": 3,
-    "el": 1,
+    "es-419": 1,
     "fr": 1
   },
   "bySource": {
@@ -308,12 +308,12 @@
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:27peLK25zTVTE2A4Wgonha",
+      "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
