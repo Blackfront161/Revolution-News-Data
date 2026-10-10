@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-09T22:43:29.101Z",
+  "generatedAt": "2026-10-10T05:59:42.023Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
@@ -273,6 +273,21 @@
           }
         },
         {
+          "canonicalId": "peertube:https://kolektiva.media:7CdaHDcVGTGzR539ufLSqQ",
+          "original": {
+            "url": "https://kolektiva.media/w/7CdaHDcVGTGzR539ufLSqQ",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/7CdaHDcVGTGzR539ufLSqQ"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/7CdaHDcVGTGzR539ufLSqQ",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/7CdaHDcVGTGzR539ufLSqQ"
+          }
+        },
+        {
           "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
           "original": {
             "url": "https://kolektiva.media/w/mSjig1mw3icp7YXRcEnVhi",
@@ -286,31 +301,16 @@
             "status": 200,
             "finalUrl": "https://kolektiva.media/videos/embed/mSjig1mw3icp7YXRcEnVhi"
           }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
-          "original": {
-            "url": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/coaFCNVqxDXxRkkdZ8FovD"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/coaFCNVqxDXxRkkdZ8FovD"
-          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 14,
-    "acceptedBeforeQuota": 14,
+    "candidateCount": 15,
+    "acceptedBeforeQuota": 15,
     "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 0,
+    "quotaRemovedCount": 1,
     "rejectedCount": 16,
     "registrySources": 10
   },
@@ -338,10 +338,9 @@
   "byLanguage": {
     "en": 7,
     "de": 3,
+    "und": 2,
     "ar": 1,
-    "es-419": 1,
-    "fr": 1,
-    "und": 1
+    "fr": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -475,17 +474,17 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
+      "canonicalId": "peertube:https://kolektiva.media:7CdaHDcVGTGzR539ufLSqQ",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:coaFCNVqxDXxRkkdZ8FovD",
+      "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
