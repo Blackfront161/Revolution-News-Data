@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10T12:39:40.279Z",
+  "generatedAt": "2026-10-10T21:49:54.826Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
@@ -26,7 +26,7 @@
           "ok": false,
           "status": 0,
           "unsafe": false,
-          "error": "timeout"
+          "error": "connect ECONNREFUSED 93.190.126.19:443"
         },
         {
           "sourceId": "andrewism",
@@ -93,18 +93,18 @@
       "embedChecked": 14,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:kJSQJDyHtvDg8YgMdWYDQ5",
+          "canonicalId": "peertube:https://kolektiva.media:7k9spgaZ872gf2mgsFn5Qw",
           "original": {
-            "url": "https://kolektiva.media/w/kJSQJDyHtvDg8YgMdWYDQ5",
+            "url": "https://kolektiva.media/w/7k9spgaZ872gf2mgsFn5Qw",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/kJSQJDyHtvDg8YgMdWYDQ5"
+            "finalUrl": "https://kolektiva.media/w/7k9spgaZ872gf2mgsFn5Qw"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/kJSQJDyHtvDg8YgMdWYDQ5",
+            "url": "https://kolektiva.media/videos/embed/7k9spgaZ872gf2mgsFn5Qw",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/kJSQJDyHtvDg8YgMdWYDQ5"
+            "finalUrl": "https://kolektiva.media/videos/embed/7k9spgaZ872gf2mgsFn5Qw"
           }
         },
         {
@@ -213,18 +213,18 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:cR5QbuNwzhdMYgEDYQLbeU",
+          "canonicalId": "peertube:https://kolektiva.media:kJSQJDyHtvDg8YgMdWYDQ5",
           "original": {
-            "url": "https://kolektiva.media/w/cR5QbuNwzhdMYgEDYQLbeU",
+            "url": "https://kolektiva.media/w/kJSQJDyHtvDg8YgMdWYDQ5",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/cR5QbuNwzhdMYgEDYQLbeU"
+            "finalUrl": "https://kolektiva.media/w/kJSQJDyHtvDg8YgMdWYDQ5"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/cR5QbuNwzhdMYgEDYQLbeU",
+            "url": "https://kolektiva.media/videos/embed/kJSQJDyHtvDg8YgMdWYDQ5",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/cR5QbuNwzhdMYgEDYQLbeU"
+            "finalUrl": "https://kolektiva.media/videos/embed/kJSQJDyHtvDg8YgMdWYDQ5"
           }
         },
         {
@@ -273,6 +273,21 @@
           }
         },
         {
+          "canonicalId": "peertube:https://kolektiva.media:cR5QbuNwzhdMYgEDYQLbeU",
+          "original": {
+            "url": "https://kolektiva.media/w/cR5QbuNwzhdMYgEDYQLbeU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/cR5QbuNwzhdMYgEDYQLbeU"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/cR5QbuNwzhdMYgEDYQLbeU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/cR5QbuNwzhdMYgEDYQLbeU"
+          }
+        },
+        {
           "canonicalId": "peertube:https://kolektiva.media:7CdaHDcVGTGzR539ufLSqQ",
           "original": {
             "url": "https://kolektiva.media/w/7CdaHDcVGTGzR539ufLSqQ",
@@ -286,32 +301,17 @@
             "status": 200,
             "finalUrl": "https://kolektiva.media/videos/embed/7CdaHDcVGTGzR539ufLSqQ"
           }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
-          "original": {
-            "url": "https://kolektiva.media/w/mSjig1mw3icp7YXRcEnVhi",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/mSjig1mw3icp7YXRcEnVhi"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/mSjig1mw3icp7YXRcEnVhi",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/mSjig1mw3icp7YXRcEnVhi"
-          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 15,
-    "acceptedBeforeQuota": 15,
+    "candidateCount": 14,
+    "acceptedBeforeQuota": 14,
     "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 1,
-    "rejectedCount": 16,
+    "quotaRemovedCount": 0,
+    "rejectedCount": 15,
     "registrySources": 10
   },
   "coverage": {
@@ -336,11 +336,11 @@
     "Kolektiva": 4
   },
   "byLanguage": {
-    "en": 7,
+    "en": 8,
     "de": 3,
-    "und": 2,
     "ar": 1,
-    "fr": 1
+    "fr": 1,
+    "und": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -354,7 +354,7 @@
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:kJSQJDyHtvDg8YgMdWYDQ5",
+      "canonicalId": "peertube:https://kolektiva.media:7k9spgaZ872gf2mgsFn5Qw",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -434,7 +434,7 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:cR5QbuNwzhdMYgEDYQLbeU",
+      "canonicalId": "peertube:https://kolektiva.media:kJSQJDyHtvDg8YgMdWYDQ5",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -474,7 +474,7 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:7CdaHDcVGTGzR539ufLSqQ",
+      "canonicalId": "peertube:https://kolektiva.media:cR5QbuNwzhdMYgEDYQLbeU",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -484,12 +484,12 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:mSjig1mw3icp7YXRcEnVhi",
+      "canonicalId": "peertube:https://kolektiva.media:7CdaHDcVGTGzR539ufLSqQ",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     }
