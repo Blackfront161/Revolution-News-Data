@@ -132,6 +132,14 @@ def canonical_url(value: str) -> str:
     if host.startswith("www."):
         host = host[4:]
 
+    if ":" in host:
+        host = f"[{host}]"
+    try:
+        if parsed.port is not None:
+            host = f"{host}:{parsed.port}"
+    except ValueError:
+        return raw.lower().rstrip("/")
+
     path = re.sub(r"/+", "/", parsed.path or "/")
 
     if path != "/":

@@ -128,6 +128,14 @@ def canonical_url(value: Any) -> str:
     host = (parsed.hostname or "").lower()
     if host.startswith("www."):
         host = host[4:]
+
+    if ":" in host:
+        host = f"[{host}]"
+    try:
+        if parsed.port is not None:
+            host = f"{host}:{parsed.port}"
+    except ValueError:
+        return raw.lower().rstrip("/")
     path = re.sub(r"/+", "/", parsed.path or "/")
     if path != "/":
         path = path.rstrip("/")
@@ -366,6 +374,11 @@ def suspicious_redirect(original_url: Any, final_url: Any) -> bool:
     if not original or not final:
         return False
     if canonical_url(original) == canonical_url(final):
+        return False
+    # Publisher-controlled HTTPS redirect, verified 2026-10-13 against its RSS
+    # and same-publisher article links. This is an exact endpoint alias, not a
+    # domain-wide redirect exemption (query, credentials, ports and paths differ).
+    if (original, final) == ("https://antifa.cz/feed.xml", "https://antifa-cz.net/feed.xml"):
         return False
     return not same_site(unwrap_proxy_url(original), final)
 

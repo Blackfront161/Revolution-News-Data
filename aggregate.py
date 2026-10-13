@@ -182,7 +182,7 @@ quellen = {
         {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
         {"name": "Perspektive Online (DE)", "url": "https://www.perspektive-online.de/feed/"},
         {"name": "Avtonom (RU)", "url": "https://avtonom.org/rss.xml"},
-        {"name": "Pramen (BY)", "url": "https://pramen.io/feed/"},
+        {"name": "Pramen (BY)", "url": "https://pramen.io/ru/feed/", "homepage": "https://pramen.io/ru/", "languages": ["ru"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://pramen.io/", "https://pramen.io/ru/feed/"]},
         {"name": "Athens Indymedia (GR)", "url": "https://athens.indymedia.org/rss/"},
         {"name": "Apatris (GR)", "url": "https://apatris.org/feed/"},
         {"name": "Alerta (GR)", "url": "https://www.alerta.gr/feed/"},
@@ -194,7 +194,7 @@ quellen = {
         {"name": "A Las Barricadas (ES)", "url": "https://www.alasbarricadas.org/noticias/rss.xml"},
         {"name": "Umanita Nova (IT)", "url": "http://www.umanitanova.org/feed/"},
         {"name": "Federacja Anarchistyczna (PL)", "url": "https://federacja-anarchistyczna.pl/feed/"},
-        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"},
+        {"name": "Antifa.cz", "url": "https://antifa.cz/feed.xml", "homepage": "https://antifa.cz/", "languages": ["cs"], "categories": ["Europe", "Antifascism"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.antifa.cz/", "https://antifa.cz/feed.xml"]},
         {"name": "Lower Class Magazine", "url": "https://lowerclassmag.com/feed/"},
         {"name": "Anarchist Communist Group", "url": "https://www.anarchistcommunism.org/feed/"}
     ],
@@ -332,7 +332,7 @@ quellen = {
         {"name": "Barrikade", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Act for Freedom Now!", "url": "https://actforfree.noblogs.org/feed/"},
         {"name": "Fajfa (Antifa)", "url": "https://fajfa.noblogs.org/feed/"},
-        {"name": "Antifa.cz", "url": "https://www.antifa.cz/rss.xml"},
+        {"name": "Antifa.cz", "url": "https://antifa.cz/feed.xml", "homepage": "https://antifa.cz/", "languages": ["cs"], "categories": ["Europe", "Antifascism"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.antifa.cz/", "https://antifa.cz/feed.xml"]},
         {"name": "Antifa Bern", "url": "https://antifa-bern.ch/feed/"}
     ],
     "Antisexism": [
@@ -387,7 +387,7 @@ quellen = {
     "Theory & Strategy": [
         {"name": "Ill Will", "url": "https://illwill.com/feed"},
         {"name": "Endnotes", "url": "https://endnotes.org.uk/feed.xml"},
-        {"name": "Wildcat", "url": "https://www.wildcat-www.de/wildcat.rss"},
+        {"name": "Wildcat", "url": "https://www.wildcat-www.de/feed.rss", "homepage": "https://www.wildcat-www.de/", "languages": ["de"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.wildcat-www.de/", "https://www.wildcat-www.de/feed.rss"]},
         {"name": "CrimethInc. (Texts)", "url": "https://crimethinc.com/categories/texts/feed"}
     ],
     "Anticolonialism": [
@@ -483,11 +483,11 @@ quellen = {
         {"name": "The Anarchist Library (EN)", "url": "https://theanarchistlibrary.org/feed"},
         {"name": "Biblioteca Anarquista (ES)", "url": "https://es.anarchistlibraries.net/feed/"},
         {"name": "Bibliothèque Anarchiste (FR)", "url": "https://fr.anarchistlibraries.net/feed/"},
-        {"name": "Libreria Anarchica (IT)", "url": "https://it.theanarchistlibrary.org/feed"},
+        {"name": "Libreria Anarchica (IT)", "url": "https://bibliotecaanarchica.org/feed", "homepage": "https://bibliotecaanarchica.org/", "languages": ["it"], "categories": ["Global", "Libraries"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://anarchistlibraries.net/libraries", "https://bibliotecaanarchica.org/special/index"]},
         {"name": "Biblioteca Anarquista (PT)", "url": "https://pt.theanarchistlibrary.org/feed"},
         {"name": "Anarchist Library (RU)", "url": "https://ru.anarchistlibraries.net/feed/"},
-        {"name": "Anarchist Library (TR)", "url": "https://tr.theanarchistlibrary.org/feed"},
-        {"name": "Anarchist Library (PL)", "url": "https://pl.theanarchistlibrary.org/feed"},
+        {"name": "Anarchist Library (TR)", "url": "https://tr.anarchistlibraries.net/feed", "homepage": "https://tr.anarchistlibraries.net/", "languages": ["tr"], "categories": ["Global", "Libraries"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://anarchistlibraries.net/libraries", "https://tr.anarchistlibraries.net/special/index"]},
+        {"name": "Anarchist Library (PL)", "url": "https://pl.anarchistlibraries.net/feed", "homepage": "https://pl.anarchistlibraries.net/", "languages": ["pl"], "categories": ["Global", "Libraries"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://anarchistlibraries.net/libraries", "https://pl.anarchistlibraries.net/special/index"]},
         {"name": "Anarchist Library (SV)", "url": "https://www.anarkistiskabiblioteket.se/feed/"},
         {"name": "RevoltLib", "url": "https://revoltlib.com/feed"},
         {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/feed/"},
@@ -2270,7 +2270,12 @@ def load_fast_health_index():
 
 def fast_source_is_eligible(feed, health_by_name, health_by_url):
     name, url = source_key(feed)
-    health = health_by_url.get(url) or health_by_name.get(name)
+    health = health_by_url.get(url)
+    if health is None:
+        previous = health_by_name.get(name)
+        previous_url = safe_lower((previous or {}).get("configuredUrl") or (previous or {}).get("url")).rstrip("/")
+        # A failure of a retired endpoint must not disable its reviewed replacement.
+        health = previous if previous_url == url else None
     if not health or health.get("ok") is True:
         return True
     failures = int(health.get("consecutiveFailures") or 0)
@@ -2801,6 +2806,7 @@ for kontinent, feeds in active_sources.items():
             not aggregate_stopped_for_budget
             and not is_radar
             and not FAST_MODE
+            and feed.get("importMode") != "metadata-only"
             and tiefe_scrapes_gemacht < MAX_NEUE_SCRAPES
         ):
             minimum_article_length = int(

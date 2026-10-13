@@ -78,6 +78,8 @@ jobs:
 
       - name: News-Feed und Status erzeugen
         run: |
+          python build_source_catalog.py
+          python build_sources_registry.py
           WRN_FEED_TARGETS="news,status" python build_web_feeds.py
           python build_source_archive.py
 
@@ -134,7 +136,7 @@ jobs:
           # Terminbestand weder umsortieren noch veröffentlichen.
           git restore -- events.json events-feed.json
 
-          git add news.json news-feed.json feed-status.json
+          git add news.json news-feed.json feed-status.json source-catalog.json sources-registry.json
           git add news-archive-manifest.json news-archive
           git add aggregate-errors.json aggregate-run-status.json
 

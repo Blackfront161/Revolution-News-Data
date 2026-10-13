@@ -78,6 +78,15 @@ def canonical_url(value: Any) -> str:
     if host.startswith("www."):
         host = host[4:]
 
+    # A hostname-only key must not merge distinct publisher/stream ports.
+    if ":" in host:
+        host = f"[{host}]"
+    try:
+        if parsed.port is not None:
+            host = f"{host}:{parsed.port}"
+    except ValueError:
+        return raw.lower().rstrip("/")
+
     path = re.sub(r"/+", "/", parsed.path or "/")
 
     if path != "/":
