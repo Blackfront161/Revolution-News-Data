@@ -48,3 +48,18 @@ def test_publication_refreshes_registry_from_current_inputs():
         text = (ROOT / '.github/workflows' / filename).read_text(encoding='utf-8')
         assert 'python build_sources_registry.py' in text
         assert any('git add' in line and 'sources-registry.json' in line for line in text.splitlines())
+
+def test_relative_feed_links_use_verified_response_base_without_admitting_foreign_hosts():
+    import feedparser
+    from types import SimpleNamespace
+    from source_import_policy import metadata_article
+    node = next(n for n in TREE.body if isinstance(n, ast.FunctionDef) and n.name == 'fetch_fast_feed')
+    body = b'<rss version="2.0"><channel><title>News</title><item><title>Public update</title><link>/posts/update/</link></item><item><title>Foreign</title><link>//unrelated.example/post</link></item></channel></rss>'
+    response = SimpleNamespace(content=body, url='https://www.systemli.org/index.xml', raise_for_status=lambda: None)
+    scope = {'requests': SimpleNamespace(get=lambda *a, **k: response), 'HEADERS': {}, 'feedparser': feedparser}
+    exec(compile(ast.Module(body=[node], type_ignores=[]), 'aggregate.py', 'exec'), scope)
+    feed = {'name':'Systemli','url':response.url,'homepage':'https://www.systemli.org/','importMode':'metadata-only','languages':['de']}
+    entries = scope['fetch_fast_feed'](feed).entries
+    assert entries[0].link == 'https://www.systemli.org/posts/update/'
+    assert metadata_article(feed, entries[0], 'Europe')['link'] == entries[0].link
+    assert metadata_article(feed, entries[1], 'Europe') is None
