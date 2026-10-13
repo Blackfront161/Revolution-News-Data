@@ -1,12 +1,13 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-10-13T01:31:51.047998+00:00",
-  "sourceCount": 448,
-  "activeSourceCount": 446,
+  "generatedAt": "2026-10-13T02:41:53.922183+00:00",
+  "sourceCount": 451,
+  "activeSourceCount": 449,
   "knownLanguages": [
     "ar",
     "ca",
+    "cs",
     "de",
     "el",
     "en",
@@ -1140,19 +1141,26 @@
     },
     {
       "name": "Anarchist Library (PL)",
-      "url": "https://pl.theanarchistlibrary.org/feed",
-      "canonicalUrl": "https://pl.theanarchistlibrary.org/feed",
-      "homepage": "",
+      "url": "https://pl.anarchistlibraries.net/feed",
+      "canonicalUrl": "https://pl.anarchistlibraries.net/feed",
+      "homepage": "https://pl.anarchistlibraries.net/",
       "languages": [
-        "und"
+        "pl"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
+        "Global",
         "Libraries"
       ],
       "mediaType": "news",
       "status": "active",
       "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://anarchistlibraries.net/libraries",
+        "https://pl.anarchistlibraries.net/special/index"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -1255,19 +1263,26 @@
     },
     {
       "name": "Anarchist Library (TR)",
-      "url": "https://tr.theanarchistlibrary.org/feed",
-      "canonicalUrl": "https://tr.theanarchistlibrary.org/feed",
-      "homepage": "",
+      "url": "https://tr.anarchistlibraries.net/feed",
+      "canonicalUrl": "https://tr.anarchistlibraries.net/feed",
+      "homepage": "https://tr.anarchistlibraries.net/",
       "languages": [
-        "und"
+        "tr"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
+        "Global",
         "Libraries"
       ],
       "mediaType": "news",
       "status": "active",
       "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://anarchistlibraries.net/libraries",
+        "https://tr.anarchistlibraries.net/special/index"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -1834,16 +1849,46 @@
     },
     {
       "name": "Antifa.cz",
-      "url": "https://www.antifa.cz/rss.xml",
-      "canonicalUrl": "https://antifa.cz/rss.xml",
-      "homepage": "",
+      "url": "https://antifa.cz/feed.xml",
+      "canonicalUrl": "https://antifa.cz/feed.xml",
+      "homepage": "https://antifa.cz/",
       "languages": [
-        "und"
+        "cs"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Europe",
         "Antifascism"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://www.antifa.cz/",
+        "https://antifa.cz/feed.xml"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "aggregate.py"
+      ]
+    },
+    {
+      "name": "Antifa.cz",
+      "url": "https://antifa.cz/",
+      "canonicalUrl": "https://antifa.cz/",
+      "homepage": "https://antifa.cz/",
+      "languages": [
+        "cs"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Europe",
+        "Antifascism",
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -1852,7 +1897,13 @@
       "originCountry": "",
       "originCountryCode": "",
       "origins": [
-        "aggregate.py"
+        "source-catalog.json"
+      ],
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://www.antifa.cz/",
+        "https://antifa.cz/feed.xml"
       ]
     },
     {
@@ -2945,15 +2996,17 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Indigenous Struggles",
         "Global",
-        "Asia",
+        "Indigenous Struggles",
         "No War",
-        "Movement News",
         "No Borders",
         "Demonstrations",
         "Eco-Anarchism",
-        "sources"
+        "Antisexism",
+        "Antifascism",
+        "sources",
+        "Asia",
+        "Movement News"
       ],
       "mediaType": "news",
       "status": "active",
@@ -4061,8 +4114,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Latin America",
         "Indigenous Struggles",
+        "Global",
+        "Latin America",
         "Movement News",
         "sources"
       ],
@@ -5711,7 +5765,7 @@
       "languageSource": "explicit",
       "categories": [
         "Asia",
-        "Anti-Rep & Prisons",
+        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -6306,8 +6360,8 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Labor Struggles",
         "Movement News",
+        "Labor Struggles",
         "Anticapitalism",
         "sources",
         "No War",
@@ -6329,19 +6383,26 @@
     },
     {
       "name": "Libreria Anarchica (IT)",
-      "url": "https://it.theanarchistlibrary.org/feed",
-      "canonicalUrl": "https://it.theanarchistlibrary.org/feed",
-      "homepage": "",
+      "url": "https://bibliotecaanarchica.org/feed",
+      "canonicalUrl": "https://bibliotecaanarchica.org/feed",
+      "homepage": "https://bibliotecaanarchica.org/",
       "languages": [
-        "und"
+        "it"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
+        "Global",
         "Libraries"
       ],
       "mediaType": "news",
       "status": "active",
       "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://anarchistlibraries.net/libraries",
+        "https://bibliotecaanarchica.org/special/index"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
@@ -6728,7 +6789,7 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Latin America",
+        "Global",
         "Indigenous Struggles",
         "sources"
       ],
@@ -7677,15 +7738,45 @@
     },
     {
       "name": "Pramen (BY)",
-      "url": "https://pramen.io/feed/",
-      "canonicalUrl": "https://pramen.io/feed",
-      "homepage": "",
+      "url": "https://pramen.io/ru/feed/",
+      "canonicalUrl": "https://pramen.io/ru/feed",
+      "homepage": "https://pramen.io/ru/",
       "languages": [
-        "und"
+        "ru"
       ],
-      "languageSource": "unknown",
+      "languageSource": "explicit",
       "categories": [
         "Europe"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://pramen.io/",
+        "https://pramen.io/ru/feed/"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "aggregate.py"
+      ]
+    },
+    {
+      "name": "Pramen (BY)",
+      "url": "https://pramen.io/",
+      "canonicalUrl": "https://pramen.io/",
+      "homepage": "https://pramen.io/",
+      "languages": [
+        "ru"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Europe",
+        "Movement News",
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -7694,7 +7785,13 @@
       "originCountry": "",
       "originCountryCode": "",
       "origins": [
-        "aggregate.py"
+        "source-catalog.json"
+      ],
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://pramen.io/",
+        "https://pramen.io/ru/feed/"
       ]
     },
     {
@@ -7914,9 +8011,9 @@
     },
     {
       "name": "Radio Agora 105.5",
-      "url": "https://radioagora.at/",
-      "canonicalUrl": "https://radioagora.at/",
-      "homepage": "https://radioagora.at/",
+      "url": "https://www.agora.at/",
+      "canonicalUrl": "https://agora.at/",
+      "homepage": "https://www.agora.at/",
       "languages": [
         "de",
         "sl"
@@ -8092,7 +8189,7 @@
     {
       "name": "Radio Dreyeckland",
       "url": "http://www.rdl.de:8000/rdl.m3u",
-      "canonicalUrl": "http://rdl.de/rdl.m3u",
+      "canonicalUrl": "http://rdl.de:8000/rdl.m3u",
       "homepage": "https://rdl.de/",
       "languages": [
         "de",
@@ -9290,7 +9387,7 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
+        "Global",
         "Antiracism",
         "Indigenous Struggles",
         "Anticolonialism",
@@ -9995,9 +10092,9 @@
         "Europe",
         "Movement News",
         "No War",
-        "Theory & Strategy",
-        "Antifascism",
         "Anti-Rep & Prisons",
+        "Antifascism",
+        "Theory & Strategy",
         "Queer-Feminism",
         "Anticapitalism",
         "sources"
@@ -10232,8 +10329,8 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "North America",
         "Eco-Anarchism",
+        "North America",
         "Movement News",
         "Anti-Rep & Prisons",
         "Demonstrations",
@@ -10297,15 +10394,46 @@
     },
     {
       "name": "Wildcat",
-      "url": "https://www.wildcat-www.de/wildcat.rss",
-      "canonicalUrl": "https://wildcat-www.de/wildcat.rss",
-      "homepage": "",
+      "url": "https://www.wildcat-www.de/feed.rss",
+      "canonicalUrl": "https://wildcat-www.de/feed.rss",
+      "homepage": "https://www.wildcat-www.de/",
       "languages": [
         "de"
       ],
-      "languageSource": "inferred",
+      "languageSource": "explicit",
       "categories": [
         "Theory & Strategy"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://www.wildcat-www.de/",
+        "https://www.wildcat-www.de/feed.rss"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "aggregate.py"
+      ]
+    },
+    {
+      "name": "Wildcat",
+      "url": "https://www.wildcat-www.de/",
+      "canonicalUrl": "https://wildcat-www.de/",
+      "homepage": "https://www.wildcat-www.de/",
+      "languages": [
+        "de"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "Theory & Strategy",
+        "sources"
       ],
       "mediaType": "news",
       "status": "active",
@@ -10314,7 +10442,13 @@
       "originCountry": "",
       "originCountryCode": "",
       "origins": [
-        "aggregate.py"
+        "source-catalog.json"
+      ],
+      "importMode": "metadata-only",
+      "rightsReview": "unknown",
+      "reviewEvidence": [
+        "https://www.wildcat-www.de/",
+        "https://www.wildcat-www.de/feed.rss"
       ]
     },
     {

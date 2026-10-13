@@ -1,7 +1,7 @@
 {
   "schemaVersion": 5,
-  "generatedAt": "2026-10-13T01:31:24.258640+00:00",
-  "freshUntil": "2026-10-13T13:31:24.258640+00:00",
+  "generatedAt": "2026-10-13T02:48:36.375505+00:00",
+  "freshUntil": "2026-10-13T14:48:36.375505+00:00",
   "refreshPolicy": {
     "workflowIntervalHours": 4,
     "freshnessWindowHours": 12,
@@ -9,41 +9,41 @@
   },
   "summary": {
     "total": 252,
-    "ok": 194,
-    "warning": 54,
+    "ok": 198,
+    "warning": 50,
     "error": 4,
     "unknown": 0
   },
   "sources": [
     {
-      "name": "Antifa.cz",
-      "url": "https://www.antifa.cz/rss.xml",
-      "configuredUrl": "https://www.antifa.cz/rss.xml",
-      "pageUrl": "",
+      "name": "269 Libération Animale (France)",
+      "url": "https://www.269liberationanimale.fr/feed/",
+      "configuredUrl": "https://www.269liberationanimale.fr/feed/",
+      "pageUrl": "https://www.269liberationanimale.fr/",
       "status": "error",
       "ok": false,
-      "lastChecked": "2026-10-13T01:29:39.408533+00:00",
+      "lastChecked": "2026-10-13T01:29:27.271796+00:00",
       "categories": [
-        "Europe",
-        "Antifascism"
+        "Animal Liberation"
       ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
+      "languages": [
+        "fr"
+      ],
+      "originRegion": "Europe",
+      "originCountry": "France",
+      "originCountryCode": "FR",
       "httpStatus": 404,
-      "finalUrl": "https://antifa-cz.net/rss.xml",
-      "contentType": "text/html; charset=utf-8",
-      "suspiciousRedirect": true,
-      "error": "Unerwartete Weiterleitung auf eine andere Domain; manuelle PrÃ¼fung erforderlich.",
+      "finalUrl": "https://www.269liberationanimale.fr/feed/",
+      "contentType": "text/html",
+      "error": "Feed nicht gefunden (HTTP 404).",
       "rawStatus": "error",
-      "failureKind": "suspicious_redirect",
+      "failureKind": "missing_feed",
       "detailedState": "permanently_broken",
-      "consecutiveFailures": 110,
+      "consecutiveFailures": 5,
       "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-09-10T17:12:27.245762+00:00",
-      "lastFailureAt": "2026-10-13T01:29:39.408533+00:00",
-      "lastSuccessAt": "2026-07-28T17:57:36.105737+00:00"
+      "firstFailureAt": "2026-10-12T06:59:21.709254+00:00",
+      "lastFailureAt": "2026-10-13T01:29:27.271796+00:00",
+      "lastSuccessAt": "2026-08-06T11:27:28.403203+00:00"
     },
     {
       "name": "Perspektive Online (DE)",
@@ -65,10 +65,10 @@
       "contentType": "text/html; charset=utf-8",
       "feedType": "unexpected",
       "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
+      "rawStatus": "error",
       "failureKind": "website_feed_broken",
       "detailedState": "permanently_broken",
-      "consecutiveFailures": 23,
+      "consecutiveFailures": 25,
       "consecutiveRestrictions": 0,
       "firstFailureAt": "2026-10-05T15:46:15.080010+00:00",
       "lastFailureAt": "2026-10-13T01:30:35.133686+00:00"
@@ -93,10 +93,10 @@
       "contentType": "text/html",
       "feedType": "unexpected",
       "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
+      "rawStatus": "error",
       "failureKind": "website_feed_broken",
       "detailedState": "permanently_broken",
-      "consecutiveFailures": 5,
+      "consecutiveFailures": 7,
       "consecutiveRestrictions": 0,
       "firstFailureAt": "2026-10-11T14:00:34.504886+00:00",
       "lastFailureAt": "2026-10-13T01:30:37.721749+00:00",
@@ -127,40 +127,10 @@
       "rawStatus": "error",
       "failureKind": "suspicious_redirect",
       "detailedState": "permanently_broken",
-      "consecutiveFailures": 194,
+      "consecutiveFailures": 196,
       "consecutiveRestrictions": 0,
       "firstFailureAt": "2026-08-18T13:59:35.754758+00:00",
       "lastFailureAt": "2026-10-13T01:30:50.210177+00:00"
-    },
-    {
-      "name": "269 Libération Animale (France)",
-      "url": "https://www.269liberationanimale.fr/feed/",
-      "configuredUrl": "https://www.269liberationanimale.fr/feed/",
-      "pageUrl": "https://www.269liberationanimale.fr/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-13T01:29:27.271796+00:00",
-      "categories": [
-        "Animal Liberation"
-      ],
-      "languages": [
-        "fr"
-      ],
-      "originRegion": "Europe",
-      "originCountry": "France",
-      "originCountryCode": "FR",
-      "httpStatus": 404,
-      "finalUrl": "https://www.269liberationanimale.fr/feed/",
-      "contentType": "text/html",
-      "error": "Feed nicht gefunden (HTTP 404).",
-      "rawStatus": "error",
-      "failureKind": "missing_feed",
-      "detailedState": "feed_broken_unconfirmed",
-      "consecutiveFailures": 3,
-      "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-10-12T06:59:21.709254+00:00",
-      "lastFailureAt": "2026-10-13T01:29:27.271796+00:00",
-      "lastSuccessAt": "2026-08-06T11:27:28.403203+00:00"
     },
     {
       "name": "A-Infos (Global)",
@@ -182,7 +152,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:27.273544+00:00"
     },
     {
@@ -211,7 +181,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:29:27.275010+00:00",
       "lastSuccessAt": "2026-09-18T17:12:57.741702+00:00"
     },
@@ -235,7 +205,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:28.413534+00:00"
     },
     {
@@ -264,7 +234,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 3,
+      "consecutiveRestrictions": 5,
       "lastFailureAt": "2026-10-13T01:29:28.634816+00:00"
     },
     {
@@ -287,55 +257,9 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:29:28.693732+00:00",
       "lastSuccessAt": "2026-09-18T17:12:58.668998+00:00"
-    },
-    {
-      "name": "Anarchist Library (PL)",
-      "url": "https://pl.theanarchistlibrary.org/feed",
-      "configuredUrl": "https://pl.theanarchistlibrary.org/feed",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-13T01:29:32.520653+00:00",
-      "categories": [
-        "Libraries"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pl.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pl.theanarchistlibrary.org', port=443): Failed to resolve 'pl.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
-      "lastFailureAt": "2026-10-13T01:29:32.520653+00:00"
-    },
-    {
-      "name": "Anarchist Library (TR)",
-      "url": "https://tr.theanarchistlibrary.org/feed",
-      "configuredUrl": "https://tr.theanarchistlibrary.org/feed",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-13T01:29:33.545495+00:00",
-      "categories": [
-        "Libraries"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tr.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='tr.theanarchistlibrary.org', port=443): Failed to resolve 'tr.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
-      "lastFailureAt": "2026-10-13T01:29:33.545495+00:00"
     },
     {
       "name": "Anarkismo (Africa)",
@@ -357,7 +281,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 25,
+      "consecutiveRestrictions": 27,
       "lastFailureAt": "2026-10-13T01:29:34.343225+00:00",
       "lastSuccessAt": "2026-10-04T13:21:31.008973+00:00"
     },
@@ -381,7 +305,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 25,
+      "consecutiveRestrictions": 27,
       "lastFailureAt": "2026-10-13T01:29:34.426781+00:00",
       "lastSuccessAt": "2026-10-04T13:21:31.160919+00:00"
     },
@@ -405,7 +329,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 25,
+      "consecutiveRestrictions": 27,
       "lastFailureAt": "2026-10-13T01:29:35.338408+00:00",
       "lastSuccessAt": "2026-10-04T13:21:31.682947+00:00"
     },
@@ -425,11 +349,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='antifa-bern.ch', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='antifa-bern.ch', port=443): Failed to resolve 'antifa-bern.ch' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:38.521465+00:00"
     },
     {
@@ -452,7 +376,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:29:39.732655+00:00",
       "lastSuccessAt": "2026-09-18T17:13:05.057172+00:00"
     },
@@ -479,7 +403,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:41.316447+00:00"
     },
     {
@@ -506,7 +430,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:41.335476+00:00"
     },
     {
@@ -533,7 +457,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 31,
+      "consecutiveRestrictions": 33,
       "lastFailureAt": "2026-10-13T01:29:41.426656+00:00",
       "lastSuccessAt": "2026-07-25T21:14:40.492693+00:00"
     },
@@ -563,7 +487,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 157,
+      "consecutiveRestrictions": 159,
       "lastFailureAt": "2026-10-13T01:29:42.647857+00:00",
       "lastSuccessAt": "2026-08-28T12:40:32.043060+00:00"
     },
@@ -604,7 +528,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 326,
+      "consecutiveRestrictions": 328,
       "lastFailureAt": "2026-10-13T01:29:43.567554+00:00"
     },
     {
@@ -635,7 +559,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 326,
+      "consecutiveRestrictions": 328,
       "lastFailureAt": "2026-10-13T01:29:43.895938+00:00"
     },
     {
@@ -654,11 +578,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pt.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pt.theanarchistlibrary.org', port=443): Failed to resolve 'pt.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:44.027750+00:00"
     },
     {
@@ -681,7 +605,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:29:54.350892+00:00",
       "lastSuccessAt": "2026-09-18T17:13:08.465713+00:00"
     },
@@ -705,7 +629,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:57.944956+00:00"
     },
     {
@@ -728,7 +652,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 1,
+      "consecutiveRestrictions": 3,
       "lastFailureAt": "2026-10-13T01:29:58.103553+00:00",
       "lastSuccessAt": "2026-10-12T16:34:25.439220+00:00"
     },
@@ -756,7 +680,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 317,
+      "consecutiveRestrictions": 319,
       "lastFailureAt": "2026-10-13T01:29:59.002865+00:00"
     },
     {
@@ -782,7 +706,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:59.147046+00:00"
     },
     {
@@ -808,7 +732,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:29:59.531993+00:00"
     },
     {
@@ -831,7 +755,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:00.469843+00:00"
     },
     {
@@ -854,7 +778,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:02.199350+00:00",
       "lastSuccessAt": "2026-09-18T17:13:19.792493+00:00"
     },
@@ -878,7 +802,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:02.517379+00:00",
       "lastSuccessAt": "2026-09-18T17:13:20.439071+00:00"
     },
@@ -898,11 +822,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='femagainstwar.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='femagainstwar.org', port=443): Failed to resolve 'femagainstwar.org' ([Errno -5] No address associated with hostname)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:04.162904+00:00"
     },
     {
@@ -925,7 +849,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:05.157477+00:00",
       "lastSuccessAt": "2026-09-18T17:13:21.586021+00:00"
     },
@@ -954,7 +878,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 312,
+      "consecutiveRestrictions": 314,
       "lastFailureAt": "2026-10-13T01:30:05.297321+00:00",
       "lastSuccessAt": "2026-07-25T21:14:54.657193+00:00"
     },
@@ -978,7 +902,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:06.862924+00:00",
       "lastSuccessAt": "2026-09-18T17:13:22.936678+00:00"
     },
@@ -1005,7 +929,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 139,
+      "consecutiveRestrictions": 141,
       "lastFailureAt": "2026-10-13T01:30:18.568617+00:00",
       "lastSuccessAt": "2026-09-02T21:46:17.705128+00:00"
     },
@@ -1032,7 +956,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 312,
+      "consecutiveRestrictions": 314,
       "lastFailureAt": "2026-10-13T01:30:18.712835+00:00",
       "lastSuccessAt": "2026-07-25T21:14:58.525139+00:00"
     },
@@ -1056,7 +980,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:18.989783+00:00",
       "lastSuccessAt": "2026-09-18T17:13:26.126584+00:00"
     },
@@ -1081,7 +1005,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:24.549639+00:00"
     },
     {
@@ -1115,32 +1039,9 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 1,
+      "consecutiveRestrictions": 3,
       "lastFailureAt": "2026-10-13T01:30:24.899141+00:00",
       "lastSuccessAt": "2026-10-12T16:34:52.330095+00:00"
-    },
-    {
-      "name": "Libreria Anarchica (IT)",
-      "url": "https://it.theanarchistlibrary.org/feed",
-      "configuredUrl": "https://it.theanarchistlibrary.org/feed",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-13T01:30:25.253969+00:00",
-      "categories": [
-        "Libraries"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "warning": "TLS-Zertifikatsproblem: HTTPSConnectionPool(host='it.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'it.theanarchistlibrary.org'. (_ssl.c:1010)\")))",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
-      "lastFailureAt": "2026-10-13T01:30:25.253969+00:00"
     },
     {
       "name": "Mietergewerkschaft Berlin",
@@ -1158,11 +1059,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='mietergewerkschaft.berlin', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='mietergewerkschaft.berlin', port=443): Failed to resolve 'mietergewerkschaft.berlin' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:30.448380+00:00"
     },
     {
@@ -1181,11 +1082,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='niunamenos.org.ar', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='niunamenos.org.ar', port=443): Failed to resolve 'niunamenos.org.ar' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:32.405824+00:00"
     },
     {
@@ -1204,11 +1105,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='noii-van.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='noii-van.org', port=443): Failed to resolve 'noii-van.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:32.665641+00:00"
     },
     {
@@ -1231,7 +1132,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:34.087133+00:00",
       "lastSuccessAt": "2026-09-18T17:13:34.078486+00:00"
     },
@@ -1262,7 +1163,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 169,
+      "consecutiveRestrictions": 171,
       "lastFailureAt": "2026-10-13T01:30:36.686863+00:00",
       "lastSuccessAt": "2026-08-24T14:06:05.345967+00:00"
     },
@@ -1286,7 +1187,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 42,
+      "consecutiveRestrictions": 44,
       "lastFailureAt": "2026-10-13T01:30:39.473266+00:00"
     },
     {
@@ -1309,7 +1210,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 78,
+      "consecutiveRestrictions": 80,
       "lastFailureAt": "2026-10-13T01:30:39.732314+00:00",
       "lastSuccessAt": "2026-09-18T17:13:38.553554+00:00"
     },
@@ -1336,10 +1237,10 @@
       "finalUrl": "https://sea-watch.org/feed/",
       "contentType": "text/html; charset=UTF-8",
       "error": "Feed nicht gefunden (HTTP 404).",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "missing_feed",
       "detailedState": "feed_broken_unconfirmed",
-      "consecutiveFailures": 2,
+      "consecutiveFailures": 4,
       "consecutiveRestrictions": 0,
       "firstFailureAt": "2026-10-12T16:35:08.541224+00:00",
       "lastFailureAt": "2026-10-13T01:30:41.696616+00:00",
@@ -1371,7 +1272,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 2,
+      "consecutiveRestrictions": 4,
       "lastFailureAt": "2026-10-13T01:30:42.649885+00:00",
       "lastSuccessAt": "2026-10-12T07:00:37.130105+00:00"
     },
@@ -1399,7 +1300,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 74,
+      "consecutiveRestrictions": 76,
       "lastFailureAt": "2026-10-13T01:30:44.932793+00:00",
       "lastSuccessAt": "2026-09-19T16:34:33.147042+00:00"
     },
@@ -1420,11 +1321,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='tnlabor.in', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='tnlabor.in', port=443): Failed to resolve 'tnlabor.in' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:49.439952+00:00"
     },
     {
@@ -1472,9 +1373,9 @@
         "Europe",
         "Movement News",
         "No War",
-        "Theory & Strategy",
-        "Antifascism",
         "Anti-Rep & Prisons",
+        "Antifascism",
+        "Theory & Strategy",
         "Queer-Feminism",
         "Anticapitalism"
       ],
@@ -1485,11 +1386,11 @@
       "originCountry": "",
       "originCountryCode": "",
       "error": "DNS-/Domainfehler: HTTPConnectionPool(host='www.umanitanova.org', port=80): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPConnection(host='www.umanitanova.org', port=80): Failed to resolve 'www.umanitanova.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
+      "rawStatus": "warning",
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:51.969698+00:00"
     },
     {
@@ -1516,7 +1417,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 316,
+      "consecutiveRestrictions": 318,
       "lastFailureAt": "2026-10-13T01:30:54.296652+00:00"
     },
     {
@@ -1539,7 +1440,7 @@
       "failureKind": "temporary_restriction",
       "detailedState": "temporarily_restricted",
       "consecutiveFailures": 0,
-      "consecutiveRestrictions": 327,
+      "consecutiveRestrictions": 329,
       "lastFailureAt": "2026-10-13T01:30:58.688020+00:00"
     },
     {
@@ -1657,7 +1558,7 @@
       "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
-      "detailedState": "recovered",
+      "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-10-12T16:33:53.284929+00:00",
@@ -2177,6 +2078,35 @@
       "lastSuccessAt": "2026-10-13T01:29:31.986883+00:00"
     },
     {
+      "name": "Anarchist Library (PL)",
+      "url": "https://pl.anarchistlibraries.net/feed",
+      "configuredUrl": "https://pl.anarchistlibraries.net/feed",
+      "pageUrl": "https://pl.anarchistlibraries.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-13T02:44:16.687777+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "languages": [
+        "pl"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://pl.anarchistlibraries.net/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-13T01:29:32.520653+00:00",
+      "lastSuccessAt": "2026-10-13T02:44:16.687777+00:00"
+    },
+    {
       "name": "Anarchist Library (RU)",
       "url": "https://ru.anarchistlibraries.net/feed/",
       "configuredUrl": "https://ru.anarchistlibraries.net/feed/",
@@ -2236,6 +2166,35 @@
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-25T20:24:41.758760+00:00",
       "lastSuccessAt": "2026-10-13T01:29:33.464369+00:00"
+    },
+    {
+      "name": "Anarchist Library (TR)",
+      "url": "https://tr.anarchistlibraries.net/feed",
+      "configuredUrl": "https://tr.anarchistlibraries.net/feed",
+      "pageUrl": "https://tr.anarchistlibraries.net/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-13T02:44:16.688153+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "languages": [
+        "tr"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://tr.anarchistlibraries.net/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-13T01:29:33.545495+00:00",
+      "lastSuccessAt": "2026-10-13T02:44:16.688153+00:00"
     },
     {
       "name": "Anarchist News",
@@ -2577,7 +2536,7 @@
     },
     {
       "name": "antifa-frankfurt.org",
-      "url": "https://www.antifa-frankfurt.org/feed/",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://www.antifa-frankfurt.org/",
       "status": "ok",
@@ -2606,6 +2565,36 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastSuccessAt": "2026-10-13T01:29:39.291840+00:00"
+    },
+    {
+      "name": "Antifa.cz",
+      "url": "https://antifa.cz/feed.xml",
+      "configuredUrl": "https://antifa.cz/feed.xml",
+      "pageUrl": "https://antifa.cz/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-13T02:48:32.759304+00:00",
+      "categories": [
+        "Europe",
+        "Antifascism"
+      ],
+      "languages": [
+        "cs"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://antifa-cz.net/feed.xml",
+      "contentType": "text/xml; charset=utf-8",
+      "feedType": "xml",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-13T02:44:16.688153+00:00",
+      "lastSuccessAt": "2026-10-13T02:48:32.759304+00:00"
     },
     {
       "name": "Apatris (GR)",
@@ -2758,7 +2747,7 @@
     },
     {
       "name": "Autonome Antifa Freiburg",
-      "url": "https://autonome-antifa.org/spip.php?page=backend",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://autonome-antifa.org/",
       "status": "ok",
@@ -2947,7 +2936,7 @@
     },
     {
       "name": "Barrikade",
-      "url": "https://publish.barrikade.info/spip.php?page=backend",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://barrikade.info/",
       "status": "ok",
@@ -3073,7 +3062,7 @@
     },
     {
       "name": "Black Agenda Report",
-      "url": "https://www.blackagendareport.com/rss.xml",
+      "url": "https://www.blackagendareport.com/feed",
       "configuredUrl": "https://www.blackagendareport.com/feed",
       "pageUrl": "",
       "status": "ok",
@@ -3104,7 +3093,7 @@
     },
     {
       "name": "Black Rose (Anti-Colonial)",
-      "url": "https://www.blackrosefed.org/feed/",
+      "url": "https://blackrosefed.org/category/anti-colonialism/feed/",
       "configuredUrl": "https://blackrosefed.org/category/anti-colonialism/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -3135,7 +3124,7 @@
     },
     {
       "name": "Black Rose (Anti-Racism)",
-      "url": "https://www.blackrosefed.org/feed/",
+      "url": "https://blackrosefed.org/category/anti-racism/feed/",
       "configuredUrl": "https://blackrosefed.org/category/anti-racism/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -3166,7 +3155,7 @@
     },
     {
       "name": "Black Rose (Feminism)",
-      "url": "https://www.blackrosefed.org/feed/",
+      "url": "https://blackrosefed.org/category/anarcha-feminism/feed/",
       "configuredUrl": "https://blackrosefed.org/category/anarcha-feminism/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -3229,21 +3218,23 @@
     },
     {
       "name": "Bulatlat (Indigenous)",
-      "url": "https://www.bulatlat.com/feed/",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://www.bulatlat.com/",
       "status": "ok",
       "ok": true,
       "lastChecked": "2026-10-13T01:29:55.126549+00:00",
       "categories": [
-        "Indigenous Struggles",
         "Global",
-        "Asia",
+        "Indigenous Struggles",
         "No War",
-        "Movement News",
         "No Borders",
         "Demonstrations",
-        "Eco-Anarchism"
+        "Eco-Anarchism",
+        "Antisexism",
+        "Antifascism",
+        "Asia",
+        "Movement News"
       ],
       "languages": [
         "und"
@@ -3385,7 +3376,7 @@
     },
     {
       "name": "Colorlines",
-      "url": "https://colorlines.com/rss.xml",
+      "url": "https://colorlines.com/feed/",
       "configuredUrl": "https://colorlines.com/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -3500,7 +3491,7 @@
     },
     {
       "name": "CrimethInc.",
-      "url": "https://crimethinc.com/feed",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://crimethinc.com/",
       "status": "ok",
@@ -3643,7 +3634,7 @@
     },
     {
       "name": "Cultural Survival",
-      "url": "https://www.culturalsurvival.org/rss.xml",
+      "url": "https://www.culturalsurvival.org/news/rss.xml",
       "configuredUrl": "https://www.culturalsurvival.org/news/rss.xml",
       "pageUrl": "",
       "status": "ok",
@@ -3950,6 +3941,7 @@
       "categories": [
         "Latin America",
         "Indigenous Struggles",
+        "Global",
         "Movement News"
       ],
       "languages": [
@@ -4470,7 +4462,7 @@
     },
     {
       "name": "Ill Will",
-      "url": "https://illwill.com/rss.xml",
+      "url": "https://illwill.com/feed",
       "configuredUrl": "https://illwill.com/feed",
       "pageUrl": "",
       "status": "ok",
@@ -4818,8 +4810,7 @@
       "lastChecked": "2026-10-13T01:30:18.882356+00:00",
       "categories": [
         "Asia",
-        "Movement News",
-        "Anti-Rep & Prisons"
+        "Movement News"
       ],
       "languages": [
         "en"
@@ -4906,7 +4897,7 @@
     },
     {
       "name": "Kontrapolis",
-      "url": "https://kontrapolis.info/feed/",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://kontrapolis.info/",
       "status": "ok",
@@ -5167,6 +5158,35 @@
       "lastSuccessAt": "2026-10-13T01:30:24.202931+00:00"
     },
     {
+      "name": "Libreria Anarchica (IT)",
+      "url": "https://bibliotecaanarchica.org/feed",
+      "configuredUrl": "https://bibliotecaanarchica.org/feed",
+      "pageUrl": "https://bibliotecaanarchica.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-13T02:44:16.688153+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "languages": [
+        "it"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "httpStatus": 200,
+      "finalUrl": "https://bibliotecaanarchica.org/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "available",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-13T01:30:25.253969+00:00",
+      "lastSuccessAt": "2026-10-13T02:44:16.688153+00:00"
+    },
+    {
       "name": "Lower Class Magazine",
       "url": "https://lowerclassmag.com/feed/",
       "configuredUrl": "https://lowerclassmag.com/feed/",
@@ -5390,7 +5410,8 @@
       "lastChecked": "2026-10-13T01:30:29.287531+00:00",
       "categories": [
         "Indigenous Struggles",
-        "Latin America"
+        "Latin America",
+        "Global"
       ],
       "languages": [
         "es"
@@ -5651,7 +5672,7 @@
     },
     {
       "name": "Native News Online",
-      "url": "https://nativenewsonline.net/feed/",
+      "url": "https://nativenewsonline.net/?format=feed&type=rss",
       "configuredUrl": "https://nativenewsonline.net/?format=feed&type=rss",
       "pageUrl": "",
       "status": "ok",
@@ -5873,7 +5894,7 @@
     },
     {
       "name": "Paris-Luttes (Agenda FR)",
-      "url": "https://paris-luttes.info/spip.php?page=backend",
+      "url": "https://paris-luttes.info/spip.php?page=backend-agenda",
       "configuredUrl": "https://paris-luttes.info/spip.php?page=backend-agenda",
       "pageUrl": "",
       "status": "ok",
@@ -6000,38 +6021,37 @@
     },
     {
       "name": "Pramen (BY)",
-      "url": "https://pramen.io/ru/2016/10/rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-sozdat-material-glavnaya-novosti-protesty-anarhisty-antifa-sr-26-10-2016-22-38-redaktsiya-tam-sejchas-vse-kak-v-filme-u/feed/",
-      "configuredUrl": "https://pramen.io/feed/",
-      "pageUrl": "",
+      "url": "https://pramen.io/ru/feed/",
+      "configuredUrl": "https://pramen.io/ru/feed/",
+      "pageUrl": "https://pramen.io/ru/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-10-13T01:30:36.243177+00:00",
+      "lastChecked": "2026-10-13T02:44:16.688841+00:00",
       "categories": [
-        "Europe"
+        "Europe",
+        "Movement News"
       ],
-      "languages": [],
+      "languages": [
+        "ru"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "httpStatus": 404,
-      "finalUrl": "https://pramen.io/ru/2016/10/rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-sozdat-material-glavnaya-novosti-protesty-anarhisty-antifa-sr-26-10-2016-22-38-redaktsiya-tam-sejchas-vse-kak-v-filme-u/feed/",
-      "contentType": "text/html; charset=UTF-8",
-      "previousUrl": "https://pramen.io/feed/",
-      "replacementUrl": "https://pramen.io/ru/2016/10/rss-ad-v-facebook-ad-v-vkontakte-ad-v-twitter-novoe-na-sajte-o-nas-viki-kontakty-sozdat-material-glavnaya-novosti-protesty-anarhisty-antifa-sr-26-10-2016-22-38-redaktsiya-tam-sejchas-vse-kak-v-filme-u/feed/",
-      "feedType": "xml",
-      "discovered": true,
-      "warning": "Verschobene Feed-Adresse gefunden; Quellenregister bleibt unverÃ¤ndert.",
+      "httpStatus": 200,
+      "finalUrl": "https://pramen.io/ru/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-09-19T05:30:58.095267+00:00",
-      "lastSuccessAt": "2026-10-13T01:30:36.243177+00:00"
+      "lastSuccessAt": "2026-10-13T02:44:16.688841+00:00"
     },
     {
       "name": "Pueblos en Camino",
-      "url": "https://pueblosencamino.org/?feed=comments-rss2",
+      "url": "https://pueblosencamino.org/feed/",
       "configuredUrl": "https://pueblosencamino.org/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -6128,7 +6148,7 @@
     },
     {
       "name": "Radio Dreyeckland",
-      "url": "https://rdl.de/rss.xml",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://rdl.de/",
       "status": "ok",
@@ -6531,7 +6551,7 @@
     },
     {
       "name": "Sprout Distro",
-      "url": "https://www.sproutdistro.com/rss.xml",
+      "url": "https://www.sproutdistro.com/feed/",
       "configuredUrl": "https://www.sproutdistro.com/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -6562,7 +6582,7 @@
     },
     {
       "name": "Stop the War Coalition",
-      "url": "https://www.stopwar.org.uk/rss.xml",
+      "url": "https://www.stopwar.org.uk/feed/",
       "configuredUrl": "https://www.stopwar.org.uk/feed/",
       "pageUrl": "",
       "status": "ok",
@@ -6602,6 +6622,7 @@
       "categories": [
         "North America",
         "Eco-Anarchism",
+        "Global",
         "Antiracism",
         "Indigenous Struggles",
         "Anticolonialism"
@@ -6653,7 +6674,7 @@
     },
     {
       "name": "Systemli",
-      "url": "https://www.systemli.org/index.xml",
+      "url": "https://www.systemli.org/feed.xml",
       "configuredUrl": "https://www.systemli.org/feed.xml",
       "pageUrl": "",
       "status": "ok",
@@ -7212,34 +7233,34 @@
     },
     {
       "name": "Wildcat",
-      "url": "http://www.wildcat-www.de/feed.rss",
-      "configuredUrl": "https://www.wildcat-www.de/wildcat.rss",
-      "pageUrl": "",
+      "url": "https://www.wildcat-www.de/feed.rss",
+      "configuredUrl": "https://www.wildcat-www.de/feed.rss",
+      "pageUrl": "https://www.wildcat-www.de/",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-10-13T01:30:54.458828+00:00",
+      "lastChecked": "2026-10-13T02:48:32.759304+00:00",
       "categories": [
-        "Theory & Strategy"
+        "Theory & Strategy",
+        "Global",
+        "Movement News"
       ],
-      "languages": [],
+      "languages": [
+        "de"
+      ],
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "httpStatus": 404,
-      "finalUrl": "http://www.wildcat-www.de/feed.rss",
-      "contentType": "text/html; charset=iso-8859-1",
-      "previousUrl": "https://www.wildcat-www.de/wildcat.rss",
-      "replacementUrl": "http://www.wildcat-www.de/feed.rss",
-      "feedType": "xml",
-      "discovered": true,
-      "warning": "Verschobene Feed-Adresse gefunden; Quellenregister bleibt unverÃ¤ndert.",
+      "httpStatus": 200,
+      "finalUrl": "https://www.wildcat-www.de/feed.rss",
+      "contentType": "application/rss+xml",
+      "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
-      "detailedState": "available",
+      "detailedState": "recovered",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
-      "lastFailureAt": "2026-10-06T19:08:28.580781+00:00",
-      "lastSuccessAt": "2026-10-13T01:30:54.458828+00:00"
+      "lastFailureAt": "2026-10-13T02:44:40.575117+00:00",
+      "lastSuccessAt": "2026-10-13T02:48:32.759304+00:00"
     },
     {
       "name": "Winter Oak",
@@ -7453,7 +7474,7 @@
     },
     {
       "name": "ZNet (Global)",
-      "url": "https://znetwork.org/feed/",
+      "url": "",
       "configuredUrl": "",
       "pageUrl": "https://znetwork.org/",
       "status": "ok",
