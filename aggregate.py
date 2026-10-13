@@ -216,7 +216,7 @@ quellen = {
         {"name": "ROAPE", "url": "https://roape.net/feed/"},
         {"name": "Anarkismo (Africa)", "url": "http://www.anarkismo.net/backend?topic=africa"},
         {"name": "Abahlali baseMjondolo (South Africa)", "url": "https://abahlali.org/feed/"},
-        {"name": "Black Agenda Report", "url": "https://www.blackagendareport.com/feed"}
+        {"name": "Black Agenda Report", "url": "https://www.blackagendareport.com/rss.xml", "homepage": "https://www.blackagendareport.com/", "languages": ["en"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.blackagendareport.com/rss.xml", "https://www.blackagendareport.com/"]}
     ],
     "North America": [
         {"name": "It's Going Down", "url": "https://itsgoingdown.org/feed/"},
@@ -424,7 +424,7 @@ quellen = {
         {"name": "BOAK (RU)", "url": "https://boak.noblogs.org/feed/"},
     ],
     "Cyberactivism": [
-        {"name": "Systemli", "url": "https://www.systemli.org/feed.xml"},
+        {"name": "Systemli", "url": "https://www.systemli.org/index.xml", "homepage": "https://www.systemli.org/", "languages": ["de"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.systemli.org/index.xml", "https://www.systemli.org/"]},
         {"name": "DDoSecrets", "url": "https://ddosecrets.com/api.php?action=featuredfeed&feed=rss"},
         {"name": "Kolektiva Media (Video)", "url": "https://kolektiva.media/feeds/videos.xml?videoFilter=local"},
         {"name": "Electronic Frontier Foundation", "url": "https://www.eff.org/rss/updates.xml"}
@@ -434,7 +434,7 @@ quellen = {
         {"name": "Rheinmetall Entwaffnen", "url": "https://rheinmetallentwaffnen.noblogs.org/feed/"},
         {"name": "Antimilitarismus", "url": "https://antimilitarismus.noblogs.org/feed/"},
         {"name": "Democracy Now! (Global)", "url": "https://www.democracynow.org/democracynow.rss"},
-        {"name": "Stop the War Coalition", "url": "https://www.stopwar.org.uk/feed/"},
+        {"name": "Stop the War Coalition", "url": "https://www.stopwar.org.uk/rss.xml", "homepage": "https://www.stopwar.org.uk/", "languages": ["en"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.stopwar.org.uk/rss.xml", "https://www.stopwar.org.uk/"]},
         {"name": "Labor for Palestine", "url": "https://laborforpalestine.net/feed/"},
         {"name": "World BEYOND War", "url": "https://worldbeyondwar.org/feed/"}
     ],
@@ -490,7 +490,7 @@ quellen = {
         {"name": "Anarchist Library (PL)", "url": "https://pl.anarchistlibraries.net/feed", "homepage": "https://pl.anarchistlibraries.net/", "languages": ["pl"], "categories": ["Global", "Libraries"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://anarchistlibraries.net/libraries", "https://pl.anarchistlibraries.net/special/index"]},
         {"name": "Anarchist Library (SV)", "url": "https://www.anarkistiskabiblioteket.se/feed/"},
         {"name": "RevoltLib", "url": "https://revoltlib.com/feed"},
-        {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/feed/"},
+        {"name": "Sprout Distro", "url": "https://www.sproutdistro.com/rss.xml", "homepage": "https://www.sproutdistro.com/", "languages": ["en"], "importMode": "metadata-only", "rightsReview": "unknown", "reviewEvidence": ["https://www.sproutdistro.com/rss.xml", "https://www.sproutdistro.com/"]},
         {"name": "Zabalaza Books (Africa)", "url": "https://zabalazabooks.net/feed/"},
         {"name": "Libcom Library", "url": "https://libcom.org/news/feed"}
     ]
@@ -2291,7 +2291,9 @@ def fetch_fast_feed(feed):
         timeout=(4.0, 9.0),
     )
     response.raise_for_status()
-    parsed = feedparser.parse(response.content)
+    # RSS may publish relative article links. Resolve against the real HTTPS
+    # response URL; the unchanged metadata admission still checks host/scheme.
+    parsed = feedparser.parse(response.content, response_headers={"content-location": response.url})
     if not parsed.entries:
         raise ValueError("Feed enthält keine Einträge.")
     return parsed
@@ -2398,14 +2400,14 @@ for kontinent, feeds in active_sources.items():
         else:
             try:
                 feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                parsed = feedparser.parse(feed_req.text)
+                parsed = feedparser.parse(feed_req.text, response_headers={"content-location": feed_req.url})
                 if not parsed.entries:
                     feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                    parsed = feedparser.parse(feed_req.content)
+                    parsed = feedparser.parse(feed_req.content, response_headers={"content-location": feed_req.url})
             except:
                 try:
                     feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
-                    parsed = feedparser.parse(feed_req.content)
+                    parsed = feedparser.parse(feed_req.content, response_headers={"content-location": feed_req.url})
                 except:
                     pass
                 

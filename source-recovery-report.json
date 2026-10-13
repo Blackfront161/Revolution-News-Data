@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T02:48:36.371230+00:00",
+  "generatedAt": "2026-10-13T03:22:17.659470+00:00",
   "policy": {
     "automaticDeletion": false,
     "permanentFailureThreshold": 4,
@@ -8,8 +8,8 @@
     "crossDomainReplacementRequiresReview": true
   },
   "summary": {
-    "available": 196,
-    "recovered": 2,
+    "available": 198,
+    "recovered": 0,
     "temporarily_restricted": 48,
     "website_reachable_feed_broken": 0,
     "feed_broken_unconfirmed": 1,
@@ -35,12 +35,6 @@
       "configuredUrl": "",
       "replacementUrl": "https://publish.barrikade.info/spip.php?page=backend",
       "checkedAt": "2026-10-13T01:29:43.397217+00:00"
-    },
-    {
-      "name": "Black Agenda Report",
-      "configuredUrl": "https://www.blackagendareport.com/feed",
-      "replacementUrl": "https://www.blackagendareport.com/rss.xml",
-      "checkedAt": "2026-10-13T01:29:44.953650+00:00"
     },
     {
       "name": "Black Rose (Anti-Colonial)",
@@ -121,24 +115,6 @@
       "checkedAt": "2026-10-13T01:30:38.310452+00:00"
     },
     {
-      "name": "Sprout Distro",
-      "configuredUrl": "https://www.sproutdistro.com/feed/",
-      "replacementUrl": "https://www.sproutdistro.com/rss.xml",
-      "checkedAt": "2026-10-13T01:30:44.890644+00:00"
-    },
-    {
-      "name": "Stop the War Coalition",
-      "configuredUrl": "https://www.stopwar.org.uk/feed/",
-      "replacementUrl": "https://www.stopwar.org.uk/rss.xml",
-      "checkedAt": "2026-10-13T01:30:45.739076+00:00"
-    },
-    {
-      "name": "Systemli",
-      "configuredUrl": "https://www.systemli.org/feed.xml",
-      "replacementUrl": "https://www.systemli.org/index.xml",
-      "checkedAt": "2026-10-13T01:30:47.611286+00:00"
-    },
-    {
       "name": "ZNet (Global)",
       "configuredUrl": "",
       "replacementUrl": "https://znetwork.org/feed/",
@@ -151,7 +127,7 @@
       "url": "https://www.269liberationanimale.fr/feed/",
       "state": "permanently_broken",
       "failureKind": "missing_feed",
-      "consecutiveFailures": 5,
+      "consecutiveFailures": 6,
       "replacementUrl": "",
       "finalUrl": "https://www.269liberationanimale.fr/feed/"
     },
@@ -160,7 +136,7 @@
       "url": "https://www.perspektive-online.de/feed/",
       "state": "permanently_broken",
       "failureKind": "website_feed_broken",
-      "consecutiveFailures": 25,
+      "consecutiveFailures": 26,
       "replacementUrl": "",
       "finalUrl": "https://www.perspektive-online.de/"
     },
@@ -169,7 +145,7 @@
       "url": "http://www.radicalsocialist.in/index.php?format=feed&type=rss",
       "state": "permanently_broken",
       "failureKind": "website_feed_broken",
-      "consecutiveFailures": 7,
+      "consecutiveFailures": 8,
       "replacementUrl": "",
       "finalUrl": "http://www.radicalsocialist.in/cgi-sys/suspendedpage.cgi?format=feed&type=rss"
     },
@@ -178,7 +154,7 @@
       "url": "https://sea-watch.org/feed/",
       "state": "feed_broken_unconfirmed",
       "failureKind": "missing_feed",
-      "consecutiveFailures": 4,
+      "consecutiveFailures": 5,
       "replacementUrl": "",
       "finalUrl": "https://sea-watch.org/feed/"
     },
@@ -187,7 +163,7 @@
       "url": "https://tier-im-fokus.ch/feed/",
       "state": "permanently_broken",
       "failureKind": "suspicious_redirect",
-      "consecutiveFailures": 196,
+      "consecutiveFailures": 197,
       "replacementUrl": "",
       "finalUrl": "https://tierimfokus.ch/feed/"
     }
