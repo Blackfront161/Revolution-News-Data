@@ -356,8 +356,17 @@ def configured_version() -> str:
     return match.group(1) if match else ""
 
 
-def newest_article_at(rows: list[dict[str, Any]]) -> str:
-    newest = max((date_value(item) for item in rows), default=0.0)
+def newest_article_at(
+    rows: list[dict[str, Any]],
+    *,
+    now: datetime | None = None,
+) -> str:
+    """Report the newest already-published article, never a scheduled future row."""
+    cutoff = (now or datetime.now(timezone.utc)).timestamp()
+    newest = max(
+        (value for item in rows if 0.0 < (value := date_value(item)) <= cutoff),
+        default=0.0,
+    )
     if not newest:
         return ""
     return datetime.fromtimestamp(newest, tz=timezone.utc).isoformat()
@@ -459,3 +468,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
