@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-15T11:38:06.300Z",
+  "generatedAt": "2026-10-15T17:07:20.764Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 38,
-    "reachable": 37,
+    "checked": 39,
+    "reachable": 38,
     "failed": 1,
     "metadataEnriched": 14,
     "sources": {
@@ -87,11 +87,21 @@
       ]
     },
     "items": {
-      "checked": 14,
-      "reachable": 14,
+      "checked": 15,
+      "reachable": 15,
       "failed": 0,
       "embedChecked": 14,
       "results": [
+        {
+          "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261013215028_2026-10-14-habermerkezi-dr-beppe-savary-isvicreli-siyasetci-baris-icin-ocalan-ozgur-olmali-1.mp4",
+          "original": {
+            "url": "https://1649452211.rsc.cdn77.org/20261013215028_2026-10-14-habermerkezi-dr-beppe-savary-isvicreli-siyasetci-baris-icin-ocalan-ozgur-olmali-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://1649452211.rsc.cdn77.org/20261013215028_2026-10-14-habermerkezi-dr-beppe-savary-isvicreli-siyasetci-baris-icin-ocalan-ozgur-olmali-1.mp4"
+          },
+          "embed": null
+        },
         {
           "canonicalId": "peertube:https://kolektiva.media:9xtSdqFuyXS9i2C2X4Mztc",
           "original": {
@@ -306,12 +316,12 @@
     }
   },
   "totals": {
-    "candidateCount": 19,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 14,
+    "candidateCount": 17,
+    "acceptedBeforeQuota": 17,
+    "acceptedCount": 15,
     "duplicateCount": 0,
-    "quotaRemovedCount": 5,
-    "rejectedCount": 6,
+    "quotaRemovedCount": 2,
+    "rejectedCount": 7,
     "registrySources": 10
   },
   "coverage": {
@@ -333,13 +343,15 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Kolektiva": 4
+    "Kolektiva": 4,
+    "Direct": 1
   },
   "byLanguage": {
     "en": 7,
     "de": 4,
     "es-419": 1,
     "fr": 1,
+    "und": 1,
     "zxx": 1
   },
   "bySource": {
@@ -349,10 +361,21 @@
     "charly-d-anarchy-documentaries": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
+    "anf-english-kurdistan": 1,
     "david-graeber-archive": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261013215028_2026-10-14-habermerkezi-dr-beppe-savary-isvicreli-siyasetci-baris-icin-ocalan-ozgur-olmali-1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "peertube:https://kolektiva.media:9xtSdqFuyXS9i2C2X4Mztc",
       "originalStatus": "reachable",
