@@ -16,4 +16,13 @@ class RecoveredRadioCatalog(unittest.TestCase):
   for row in proof['unresolved']:self.assertIn(row['id'],{s['id'] for s in runtime},'unresolved station is retained as an original link')
   self.assertFalse(proof['playbackTested']);self.assertFalse(proof['audioSaved'])
 
+ def test_existing_zurich_station_survives_public_refresh(self):
+  for name in ['radio-sources.json','radio-stations.json']:
+   rows=json.loads((ROOT/name).read_text(encoding='utf-8'))
+   self.assertEqual(len(rows),29);self.assertEqual(len({s['id'] for s in rows}),29)
+   zurich=next(s for s in rows if s['id']=='radio-lora-zurich')
+   self.assertEqual(zurich['country'],'CH');self.assertIn('https://stream.lora.ch/lora.mp3',zurich['streamCandidates'])
+   self.assertIn('keine eigene Rundfunk-Weiterverbreitung',zurich['rightsReview'])
+   self.assertNotEqual(zurich['website'],next(s for s in rows if s['id']=='lora')['website'])
+
 if __name__=='__main__':unittest.main()

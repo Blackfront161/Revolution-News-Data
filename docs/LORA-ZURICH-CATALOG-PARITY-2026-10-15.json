@@ -1,0 +1,60 @@
+{
+  "schema": "wrn.radio-parity.v1",
+  "stationId": "radio-lora-zurich",
+  "reason": "Retain the existing reviewed App station in the public catalog so live refresh cannot remove it. Distinct from LORA Munich.",
+  "priorStationCount": 28,
+  "stationCount": 29,
+  "candidate": "https://stream.lora.ch/lora.mp3",
+  "officialEvidence": [
+    "https://www.lora.ch/",
+    "https://www.lora.ch/ueber-uns/radio-lora",
+    "https://stream.lora.ch/"
+  ],
+  "probeSha256": "16e0314bf124698bc13beeb055ec0b0b1ca4f6d512e51a7d97f0646a28433f22",
+  "transport": {
+    "checkedAt": "2026-10-15T15:19:15.435Z",
+    "strictTls": true,
+    "audioSaved": false,
+    "audioListeningPerformed": false,
+    "rows": [
+      {
+        "url": "https://www.lora.ch/",
+        "checkedAt": "2026-10-15T15:19:12.220Z",
+        "status": 200,
+        "finalUrl": "https://www.lora.ch/",
+        "contentType": "text/html;charset=utf-8",
+        "textBytes": 215306,
+        "mentionsOfficialStream": true
+      },
+      {
+        "url": "https://www.lora.ch/ueber-uns/radio-lora",
+        "checkedAt": "2026-10-15T15:19:13.096Z",
+        "status": 200,
+        "finalUrl": "https://www.lora.ch/ueber-uns/radio-lora",
+        "contentType": "text/html;charset=utf-8",
+        "textBytes": 171083,
+        "mentionsOfficialStream": true
+      },
+      {
+        "url": "https://stream.lora.ch/",
+        "checkedAt": "2026-10-15T15:19:13.349Z",
+        "status": 200,
+        "finalUrl": "https://stream.lora.ch/",
+        "contentType": "text/xml; charset=UTF-8",
+        "textBytes": 6445,
+        "mentionsOfficialStream": true
+      },
+      {
+        "url": "https://stream.lora.ch/lora.mp3",
+        "checkedAt": "2026-10-15T15:19:14.494Z",
+        "status": 200,
+        "finalUrl": "https://stream.lora.ch/lora.mp3",
+        "contentType": "audio/mpeg",
+        "receivedBytes": 1400
+      }
+    ]
+  },
+  "rightsUpgraded": false,
+  "audioSaved": false,
+  "humanListeningPerformed": false
+}
