@@ -174,10 +174,11 @@ quellen = {
         {"name": "Slingshot Collective", "url": "https://slingshotcollective.org/feed/"}
     ],
     "Europe": [
-        {"name": "Paris-Luttes (FR)", "url": "https://paris-luttes.info/spip.php?page=backend"},
-        {"name": "Lundi Matin (FR)", "url": "https://lundi.am/spip.php?page=backend"},
-        {"name": "Rebellyon (FR)", "url": "https://rebellyon.info/spip.php?page=backend"},
-        {"name": "MIA Marseille (FR)", "url": "https://mars-infos.org/spip.php?page=backend"},
+        {"name":"Basta (FR)","url":"https://basta.media/spip.php?page=backend","homepage":"https://basta.media/","language":"fr","languages":["fr"],"languageSource":"publisher-rss","categories":["Europe","Movement News","Labor Struggles"],"originRegion":"Europe","originCountry":"France","originCountryCode":"FR","geographySource":"explicit","status":"approved","importMode":"metadata-only","rightsReview":"Nur Titel, Datum, Autor und Originalverweis; keine Volltext-, Bild-, Audio- oder Videofreigabe.","reviewedAt":"2026-10-18","reviewEvidence":["https://basta.media/","https://basta.media/spip.php?page=backend"]},
+        {"name":"Paris-Luttes (FR)","url":"https://paris-luttes.info/spip.php?page=backend","homepage":"https://paris-luttes.info/","language":"fr","languages":["fr"],"languageSource":"publisher-rss","originRegion":"Europe","originCountry":"France","originCountryCode":"FR","geographySource":"explicit"},
+        {"name":"Lundi Matin (FR)","url":"https://lundi.am/spip.php?page=backend","homepage":"https://lundi.am/","language":"fr","languages":["fr"],"languageSource":"publisher-rss","originRegion":"Europe","originCountry":"France","originCountryCode":"FR","geographySource":"explicit"},
+        {"name":"Rebellyon (FR)","url":"https://rebellyon.info/spip.php?page=backend","homepage":"https://rebellyon.info/","language":"fr","languages":["fr"],"languageSource":"publisher-rss","originRegion":"Europe","originCountry":"France","originCountryCode":"FR","geographySource":"explicit"},
+        {"name":"MIA Marseille (FR)","url":"https://mars-infos.org/spip.php?page=backend","homepage":"https://mars-infos.org/","language":"fr","languages":["fr"],"languageSource":"publisher-rss","originRegion":"Europe","originCountry":"France","originCountryCode":"FR","geographySource":"explicit"},
         {"name": "Barrikade (CH)", "url": "https://barrikade.info/spip.php?page=backend"},
         {"name": "Kontrapolis (DE)", "url": "https://kontrapolis.info/feed/"},
         {"name": "Perspektive Online (DE)", "url": "https://www.perspektive-online.de/feed/"},
