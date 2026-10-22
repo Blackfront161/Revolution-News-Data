@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T04:57:37.650Z",
+  "generatedAt": "2026-10-22T12:00:43.431Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 40,
-    "reachable": 39,
+    "checked": 36,
+    "reachable": 35,
     "failed": 1,
-    "metadataEnriched": 14,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,10 +87,10 @@
       ]
     },
     "items": {
-      "checked": 16,
-      "reachable": 16,
+      "checked": 14,
+      "reachable": 14,
       "failed": 0,
-      "embedChecked": 14,
+      "embedChecked": 12,
       "results": [
         {
           "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261020214855_2026-10-20-pretoria-guney-afrikali-kadinlar-werise-muradiye-idam-cezasina-karsi-cikti_1.mp4",
@@ -291,53 +291,23 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:mXSabmDqQx8G96mScFKWEa",
-          "original": {
-            "url": "https://kolektiva.media/w/mXSabmDqQx8G96mScFKWEa",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/mXSabmDqQx8G96mScFKWEa"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/mXSabmDqQx8G96mScFKWEa",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/mXSabmDqQx8G96mScFKWEa"
-          }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:mRieCAgJrJP7rHHBsM6H4v",
-          "original": {
-            "url": "https://kolektiva.media/w/mRieCAgJrJP7rHHBsM6H4v",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/mRieCAgJrJP7rHHBsM6H4v"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/mRieCAgJrJP7rHHBsM6H4v",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/mRieCAgJrJP7rHHBsM6H4v"
-          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 19,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 16,
+    "candidateCount": 14,
+    "acceptedBeforeQuota": 14,
+    "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 3,
+    "quotaRemovedCount": 0,
     "rejectedCount": 3,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 4,
-    "thumbnails": 14,
-    "subtitlesKnown": 14,
+    "duration": 2,
+    "thumbnails": 12,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -353,21 +323,21 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Kolektiva": 4,
-    "Direct": 2
+    "Direct": 2,
+    "Kolektiva": 2
   },
   "byLanguage": {
-    "en": 10,
+    "en": 8,
     "de": 3,
     "und": 2,
     "fr": 1
   },
   "bySource": {
-    "kolektiva-media-news": 4,
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
@@ -390,7 +360,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -480,7 +450,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -513,26 +483,6 @@
       "ageDays": null,
       "ageStatus": "unknown",
       "status": "attention"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:mXSabmDqQx8G96mScFKWEa",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:mRieCAgJrJP7rHHBsM6H4v",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
     }
   ],
   "sources": [
@@ -541,7 +491,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 4,
+      "itemCount": 2,
       "networkStatus": "reachable"
     },
     {
