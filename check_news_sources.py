@@ -701,6 +701,15 @@ def finalize_result(result: dict[str, Any]) -> dict[str, Any]:
     result["ok"] = result.get("status") == "ok"
     return result
 
+def apply_discovered_response_metadata(result: dict[str, Any], candidate: dict[str, Any]) -> None:
+    """A replacement's success must not carry the retired response's metadata."""
+    for field in ("httpStatus", "contentType"):
+        result.pop(field, None)
+        if field in candidate:
+            result[field] = candidate[field]
+    result["finalUrl"] = candidate["url"]
+
+
 def check_source(source: dict[str, Any]) -> dict[str, Any]:
     source = reviewed_source(source)
     checked_at = datetime.now(timezone.utc).isoformat()
@@ -850,7 +859,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                 result["previousUrl"] = url
                 result["url"] = candidate["url"]
                 result["replacementUrl"] = candidate["url"]
-                result["finalUrl"] = candidate["url"]
+                apply_discovered_response_metadata(result, candidate)
                 result["feedType"] = candidate.get("feedType", "")
                 result["discovered"] = True
                 result["status"] = "ok"
@@ -908,7 +917,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
                 result["previousUrl"] = url
                 result["url"] = candidate["url"]
                 result["replacementUrl"] = candidate["url"]
-                result["finalUrl"] = candidate["url"]
+                apply_discovered_response_metadata(result, candidate)
                 result["feedType"] = candidate.get("feedType", "")
                 result["discovered"] = True
                 result["status"] = "ok"
@@ -1100,10 +1109,10 @@ def main() -> int:
         for source in configured_sources:
             url_key, name_key = identities(source)
             existing = (
-                checked_by_url.get(url_key)
-                or checked_by_name.get(name_key)
-                or previous_by_url.get(url_key)
+                checked_by_name.get(name_key)
                 or previous_by_name.get(name_key)
+                or checked_by_url.get(url_key)
+                or previous_by_url.get(url_key)
             )
             if existing:
                 item = {**existing}
@@ -1111,7 +1120,7 @@ def main() -> int:
                     merged_results.append(item)
                     continue
                 item["name"] = source["name"]
-                item["url"] = source.get("url", "")
+                item["url"] = existing.get("url") or source.get("url", "")
                 item["categories"] = source.get("categories", [])
                 item["languages"] = source.get("languages", [])
                 for field in (
