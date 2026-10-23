@@ -20,6 +20,7 @@ import sys
 from typing import Any
 from urllib.parse import urljoin, urlsplit, urlunsplit
 import warnings
+from source_endpoint_repairs import reviewed_source, request_url
 
 from source_recovery import (
     apply_history,
@@ -701,6 +702,7 @@ def finalize_result(result: dict[str, Any]) -> dict[str, Any]:
     return result
 
 def check_source(source: dict[str, Any]) -> dict[str, Any]:
+    source = reviewed_source(source)
     checked_at = datetime.now(timezone.utc).isoformat()
     name = source["name"]
     url = str(source.get("url", "")).strip()
@@ -723,6 +725,10 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
     }
 
     session = make_session()
+    transport_url = request_url(source)
+    if source.get('requestUrl'):
+        result['requestUrl'] = transport_url
+        result['replacementUrl'] = transport_url
 
     try:
         if not url:
@@ -786,7 +792,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
 
         try:
             response = session.get(
-                url,
+                transport_url or url,
                 timeout=(CONNECT_TIMEOUT, READ_TIMEOUT),
                 allow_redirects=True,
                 stream=True,
@@ -828,7 +834,7 @@ def check_source(source: dict[str, Any]) -> dict[str, Any]:
             "",
         )
 
-        if suspicious_redirect(url, response.url):
+        if suspicious_redirect(transport_url or url, response.url):
             result["status"] = "error"
             result["suspiciousRedirect"] = True
             result["error"] = (
@@ -1101,6 +1107,9 @@ def main() -> int:
             )
             if existing:
                 item = {**existing}
+                if name_key not in requested_names:
+                    merged_results.append(item)
+                    continue
                 item["name"] = source["name"]
                 item["url"] = source.get("url", "")
                 item["categories"] = source.get("categories", [])

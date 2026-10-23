@@ -1,7 +1,7 @@
 {
   "schemaVersion": 5,
-  "generatedAt": "2026-10-23T22:10:24.770299+00:00",
-  "freshUntil": "2026-10-24T10:10:24.770299+00:00",
+  "generatedAt": "2026-10-23T22:28:34.758903+00:00",
+  "freshUntil": "2026-10-24T10:28:34.758903+00:00",
   "refreshPolicy": {
     "workflowIntervalHours": 4,
     "freshnessWindowHours": 12,
@@ -9,9 +9,9 @@
   },
   "summary": {
     "total": 257,
-    "ok": 203,
-    "warning": 49,
-    "error": 5,
+    "ok": 209,
+    "warning": 44,
+    "error": 4,
     "unknown": 0
   },
   "sources": [
@@ -73,34 +73,6 @@
       "firstFailureAt": "2026-10-13T23:38:03.567864+00:00",
       "lastFailureAt": "2026-10-23T22:09:15.778228+00:00",
       "lastSuccessAt": "2026-10-13T15:05:00.979714+00:00"
-    },
-    {
-      "name": "Perspektive Online (DE)",
-      "url": "https://www.perspektive-online.de/feed/",
-      "configuredUrl": "https://www.perspektive-online.de/feed/",
-      "pageUrl": "",
-      "status": "error",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:42.025440+00:00",
-      "categories": [
-        "Europe"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "httpStatus": 200,
-      "finalUrl": "https://www.perspektive-online.de/",
-      "contentType": "text/html; charset=utf-8",
-      "feedType": "unexpected",
-      "warning": "Adresse erreichbar, Antwort nicht eindeutig als Feed erkannt.",
-      "rawStatus": "warning",
-      "failureKind": "website_feed_broken",
-      "detailedState": "permanently_broken",
-      "consecutiveFailures": 27,
-      "consecutiveRestrictions": 0,
-      "firstFailureAt": "2026-10-16T17:33:29.197201+00:00",
-      "lastFailureAt": "2026-10-23T22:09:42.025440+00:00"
     },
     {
       "name": "Sea-Watch",
@@ -625,29 +597,6 @@
       "lastFailureAt": "2026-10-23T22:09:16.187313+00:00"
     },
     {
-      "name": "Biblioteca Anarquista (PT)",
-      "url": "https://pt.theanarchistlibrary.org/feed",
-      "configuredUrl": "https://pt.theanarchistlibrary.org/feed",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:16.278635+00:00",
-      "categories": [
-        "Libraries"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='pt.theanarchistlibrary.org', port=443): Max retries exceeded with url: /feed (Caused by NameResolutionError(\"HTTPSConnection(host='pt.theanarchistlibrary.org', port=443): Failed to resolve 'pt.theanarchistlibrary.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:16.278635+00:00"
-    },
-    {
       "name": "BOAK (RU)",
       "url": "https://boak.noblogs.org/feed/",
       "configuredUrl": "https://boak.noblogs.org/feed/",
@@ -847,29 +796,6 @@
       "lastSuccessAt": "2026-09-18T17:13:20.439071+00:00"
     },
     {
-      "name": "Feminist Anti-War Resistance",
-      "url": "https://femagainstwar.org/feed/",
-      "configuredUrl": "https://femagainstwar.org/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:28.579069+00:00",
-      "categories": [
-        "Queer-Feminism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='femagainstwar.org', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='femagainstwar.org', port=443): Failed to resolve 'femagainstwar.org' ([Errno -5] No address associated with hostname)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:28.579069+00:00"
-    },
-    {
       "name": "Feministische Antifa",
       "url": "https://fantifa.noblogs.org/feed/",
       "configuredUrl": "https://fantifa.noblogs.org/feed/",
@@ -998,30 +924,6 @@
       "lastSuccessAt": "2026-09-18T17:13:26.126584+00:00"
     },
     {
-      "name": "Lausan (HK)",
-      "url": "https://lausan.hk/feed/",
-      "configuredUrl": "https://lausan.hk/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:35.773564+00:00",
-      "categories": [
-        "Asia",
-        "Anticolonialism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "warning": "Zeitüberschreitung: HTTPSConnectionPool(host='lausan.hk', port=443): Max retries exceeded with url: /feed/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='lausan.hk', port=443) at 0x7f97df1b7dd0>, 'Connection to lausan.hk timed out. (connect timeout=8)'))",
-      "rawStatus": "warning",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:35.773564+00:00"
-    },
-    {
       "name": "Make Rojava Green Again",
       "url": "https://makerojavagreenagain.org/feed/",
       "configuredUrl": "https://makerojavagreenagain.org/feed/",
@@ -1044,52 +946,6 @@
       "consecutiveRestrictions": 10,
       "lastFailureAt": "2026-10-23T22:09:37.080969+00:00",
       "lastSuccessAt": "2026-10-20T22:22:18.045666+00:00"
-    },
-    {
-      "name": "Mietergewerkschaft Berlin",
-      "url": "https://mietergewerkschaft.berlin/feed/",
-      "configuredUrl": "https://mietergewerkschaft.berlin/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:37.873542+00:00",
-      "categories": [
-        "Squatting & Housing"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='mietergewerkschaft.berlin', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='mietergewerkschaft.berlin', port=443): Failed to resolve 'mietergewerkschaft.berlin' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:37.873542+00:00"
-    },
-    {
-      "name": "Ni Una Menos",
-      "url": "https://niunamenos.org.ar/feed/",
-      "configuredUrl": "https://niunamenos.org.ar/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:39.389278+00:00",
-      "categories": [
-        "Antisexism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='niunamenos.org.ar', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='niunamenos.org.ar', port=443): Failed to resolve 'niunamenos.org.ar' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:39.389278+00:00"
     },
     {
       "name": "No One Is Illegal",
@@ -3055,6 +2911,35 @@
       "lastSuccessAt": "2026-10-23T22:09:16.276862+00:00"
     },
     {
+      "name": "Biblioteca Anarquista (PT)",
+      "url": "https://pt.theanarchistlibrary.org/feed",
+      "configuredUrl": "https://pt.theanarchistlibrary.org/feed",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.014731+00:00",
+      "categories": [
+        "Libraries"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://pt.anarchistlibraries.net/feed",
+      "replacementUrl": "https://pt.anarchistlibraries.net/feed",
+      "httpStatus": 200,
+      "finalUrl": "https://pt.anarchistlibraries.net/feed",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:16.278635+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.014731+00:00"
+    },
+    {
       "name": "Bibliothèque Anarchiste (FR)",
       "url": "https://fr.anarchistlibraries.net/feed/",
       "configuredUrl": "https://fr.anarchistlibraries.net/feed/",
@@ -3399,12 +3284,12 @@
     },
     {
       "name": "Colorlines",
-      "url": "https://colorlines.com/rss.xml",
+      "url": "https://colorlines.com/feed/",
       "configuredUrl": "https://colorlines.com/feed/",
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-10-23T22:09:20.160141+00:00",
+      "lastChecked": "2026-10-23T22:28:33.015754+00:00",
       "categories": [
         "Antiracism"
       ],
@@ -3412,21 +3297,19 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "httpStatus": 404,
-      "finalUrl": "https://colorlines.com/rss.xml",
-      "contentType": "text/html; charset=UTF-8",
-      "previousUrl": "https://colorlines.com/feed/",
+      "requestUrl": "https://colorlines.com/rss.xml",
       "replacementUrl": "https://colorlines.com/rss.xml",
-      "feedType": "xml",
-      "discovered": true,
-      "warning": "Verschobene Feed-Adresse gefunden; Quellenregister bleibt unverÃ¤ndert.",
+      "httpStatus": 200,
+      "finalUrl": "https://colorlines.com/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:36.336980+00:00",
-      "lastSuccessAt": "2026-10-23T22:09:20.160141+00:00"
+      "lastSuccessAt": "2026-10-23T22:28:33.015754+00:00"
     },
     {
       "name": "Comunizar",
@@ -3658,12 +3541,12 @@
     },
     {
       "name": "Cultural Survival",
-      "url": "https://www.culturalsurvival.org/rss.xml",
+      "url": "https://www.culturalsurvival.org/news/rss.xml",
       "configuredUrl": "https://www.culturalsurvival.org/news/rss.xml",
       "pageUrl": "",
       "status": "ok",
       "ok": true,
-      "lastChecked": "2026-10-23T22:09:22.962079+00:00",
+      "lastChecked": "2026-10-23T22:28:33.015754+00:00",
       "categories": [
         "Indigenous Struggles"
       ],
@@ -3671,21 +3554,19 @@
       "originRegion": "",
       "originCountry": "",
       "originCountryCode": "",
-      "httpStatus": 404,
-      "finalUrl": "https://www.culturalsurvival.org/rss.xml",
-      "contentType": "text/html; charset=UTF-8",
-      "previousUrl": "https://www.culturalsurvival.org/news/rss.xml",
+      "requestUrl": "https://www.culturalsurvival.org/rss.xml",
       "replacementUrl": "https://www.culturalsurvival.org/rss.xml",
-      "feedType": "xml",
-      "discovered": true,
-      "warning": "Verschobene Feed-Adresse gefunden; Quellenregister bleibt unverÃ¤ndert.",
+      "httpStatus": 200,
+      "finalUrl": "https://www.culturalsurvival.org/rss.xml",
+      "contentType": "application/rss+xml; charset=utf-8",
+      "feedType": "declared-feed",
       "rawStatus": "ok",
       "failureKind": "available",
       "detailedState": "available",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-07-21T06:46:39.950385+00:00",
-      "lastSuccessAt": "2026-10-23T22:09:22.962079+00:00"
+      "lastSuccessAt": "2026-10-23T22:28:33.015754+00:00"
     },
     {
       "name": "Debates Indígenas",
@@ -4226,6 +4107,35 @@
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-10-10T22:30:33.185846+00:00",
       "lastSuccessAt": "2026-10-23T22:09:28.233665+00:00"
+    },
+    {
+      "name": "Feminist Anti-War Resistance",
+      "url": "https://femagainstwar.org/feed/",
+      "configuredUrl": "https://femagainstwar.org/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.015754+00:00",
+      "categories": [
+        "Queer-Feminism"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://femantiwar.org/ru/feed/",
+      "replacementUrl": "https://femantiwar.org/ru/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://femantiwar.org/ru/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:28.579069+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.015754+00:00"
     },
     {
       "name": "Feminist Newswire",
@@ -5230,6 +5140,36 @@
       "lastSuccessAt": "2026-10-23T22:09:35.710866+00:00"
     },
     {
+      "name": "Lausan (HK)",
+      "url": "https://lausan.hk/feed/",
+      "configuredUrl": "https://lausan.hk/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.015754+00:00",
+      "categories": [
+        "Asia",
+        "Anticolonialism"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://lausancollective.com/feed/",
+      "replacementUrl": "https://lausancollective.com/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://lausancollective.com/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:35.773564+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.015754+00:00"
+    },
+    {
       "name": "Libcom (Global News)",
       "url": "https://libcom.org/news/feed",
       "configuredUrl": "https://libcom.org/news/feed",
@@ -5578,6 +5518,35 @@
       "lastSuccessAt": "2026-10-23T22:09:37.749316+00:00"
     },
     {
+      "name": "Mietergewerkschaft Berlin",
+      "url": "https://mietergewerkschaft.berlin/feed/",
+      "configuredUrl": "https://mietergewerkschaft.berlin/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.017380+00:00",
+      "categories": [
+        "Squatting & Housing"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://mg-berlin.org/feed/",
+      "replacementUrl": "https://mg-berlin.org/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://mg-berlin.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:37.873542+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.017380+00:00"
+    },
+    {
       "name": "Migrant Solidarity Network (CH)",
       "url": "https://migrant-solidarity-network.ch/feed/",
       "configuredUrl": "https://migrant-solidarity-network.ch/feed/",
@@ -5821,6 +5790,35 @@
       "lastSuccessAt": "2026-10-23T22:09:39.237551+00:00"
     },
     {
+      "name": "Ni Una Menos",
+      "url": "https://niunamenos.org.ar/feed/",
+      "configuredUrl": "https://niunamenos.org.ar/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.017380+00:00",
+      "categories": [
+        "Antisexism"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://niunamenos.ar/feed/",
+      "replacementUrl": "https://niunamenos.ar/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://niunamenos.ar/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:39.389278+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.017380+00:00"
+    },
+    {
       "name": "Novara Media (UK)",
       "url": "https://novaramedia.com/feed/",
       "configuredUrl": "https://novaramedia.com/feed/",
@@ -6016,6 +6014,35 @@
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-08-07T00:59:25.482666+00:00",
       "lastSuccessAt": "2026-10-23T22:09:41.893160+00:00"
+    },
+    {
+      "name": "Perspektive Online (DE)",
+      "url": "https://www.perspektive-online.de/feed/",
+      "configuredUrl": "https://www.perspektive-online.de/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T22:28:33.018964+00:00",
+      "categories": [
+        "Europe"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://perspektive-online.net/feed/",
+      "replacementUrl": "https://perspektive-online.net/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://perspektive-online.net/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:42.025440+00:00",
+      "lastSuccessAt": "2026-10-23T22:28:33.018964+00:00"
     },
     {
       "name": "PETA Deutschland",

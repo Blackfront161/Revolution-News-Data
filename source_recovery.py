@@ -593,6 +593,12 @@ def apply_history(
     for item in results:
         row = dict(item)
         old = _previous_for(previous, row)
+        # A targeted run also carries untouched catalog rows. Reusing their old
+        # observation must not manufacture another failure or success.
+        if (old and row.get("detailedState")
+                and parse_time(row.get("lastChecked")) == parse_time(old.get("lastChecked"))):
+            classified.append(row)
+            continue
         updated, history_row = classify_result(row, old, now=now)
         identity = source_identity(updated)
         classified.append(updated)

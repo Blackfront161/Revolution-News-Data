@@ -56,7 +56,8 @@ def test_relative_feed_links_use_verified_response_base_without_admitting_foreig
     node = next(n for n in TREE.body if isinstance(n, ast.FunctionDef) and n.name == 'fetch_fast_feed')
     body = b'<rss version="2.0"><channel><title>News</title><item><title>Public update</title><link>/posts/update/</link></item><item><title>Foreign</title><link>//unrelated.example/post</link></item></channel></rss>'
     response = SimpleNamespace(content=body, url='https://www.systemli.org/index.xml', raise_for_status=lambda: None)
-    scope = {'requests': SimpleNamespace(get=lambda *a, **k: response), 'HEADERS': {}, 'feedparser': feedparser}
+    from source_endpoint_repairs import request_url
+    scope = {'requests': SimpleNamespace(get=lambda *a, **k: response), 'HEADERS': {}, 'feedparser': feedparser, 'request_url': request_url}
     exec(compile(ast.Module(body=[node], type_ignores=[]), 'aggregate.py', 'exec'), scope)
     feed = {'name':'Systemli','url':response.url,'homepage':'https://www.systemli.org/','importMode':'metadata-only','languages':['de']}
     entries = scope['fetch_fast_feed'](feed).entries

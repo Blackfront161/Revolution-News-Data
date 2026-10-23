@@ -15,6 +15,7 @@ from urllib3.util import Retry
 from build_web_feeds import date_value
 from inline_text import inline_preserving_text, prefer_inline_preserving_text
 from source_import_policy import metadata_article
+from source_endpoint_repairs import reviewed_source, request_url
 from news_retention import retain_current_sources
 
 for stream in (sys.stdout, sys.stderr):
@@ -2281,6 +2282,8 @@ def fast_source_is_eligible(feed, health_by_name, health_by_url):
         previous_url = safe_lower((previous or {}).get("configuredUrl") or (previous or {}).get("url")).rstrip("/")
         # A failure of a retired endpoint must not disable its reviewed replacement.
         health = previous if previous_url == url else None
+    if health and feed.get('requestUrl') and health.get('requestUrl') != feed['requestUrl']:
+        health = None  # A retired endpoint's failure must not suppress its replacement.
     if not health or health.get("ok") is True:
         return True
     failures = int(health.get("consecutiveFailures") or 0)
@@ -2291,7 +2294,7 @@ def fast_source_is_eligible(feed, health_by_name, health_by_url):
 
 def fetch_fast_feed(feed):
     response = requests.get(
-        feed.get("url") or feed.get("feedUrl"),
+        request_url(feed),
         headers=HEADERS,
         timeout=(4.0, 9.0),
     )
@@ -2316,6 +2319,7 @@ def prepare_fast_sources(source_buckets):
         for feed in feeds:
             if not isinstance(feed, dict):
                 continue
+            feed = reviewed_source(feed)
             configured += 1
             if (
                 TARGET_SOURCE_NAMES
@@ -2386,6 +2390,7 @@ for kontinent, feeds in active_sources.items():
                 "übersprungen."
             )
             continue
+        feed = reviewed_source(feed)
         if (
             TARGET_SOURCE_NAMES
             and safe_lower(feed.get("name")) not in TARGET_SOURCE_NAMES
@@ -2404,14 +2409,14 @@ for kontinent, feeds in active_sources.items():
             parsed = fast_feed_payloads.get(source_key(feed))
         else:
             try:
-                feed_req = http.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                feed_req = (session if feed.get('requestUrl') else http).get(request_url(feed), headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                 parsed = feedparser.parse(feed_req.text, response_headers={"content-location": feed_req.url})
                 if not parsed.entries:
-                    feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    feed_req = session.get(request_url(feed), headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     parsed = feedparser.parse(feed_req.content, response_headers={"content-location": feed_req.url})
             except:
                 try:
-                    feed_req = session.get(feed['url'], headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
+                    feed_req = session.get(request_url(feed), headers=HEADERS, timeout=AUTONOMOUS_TIMEOUT)
                     parsed = feedparser.parse(feed_req.content, response_headers={"content-location": feed_req.url})
                 except:
                     pass
