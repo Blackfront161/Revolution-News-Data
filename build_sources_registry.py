@@ -13,6 +13,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 
 ROOT = Path(__file__).resolve().parent
+from source_endpoint_repairs import reviewed_source
 OUTPUT = ROOT / "sources-registry.json"
 
 JSON_INPUTS = (
@@ -392,6 +393,7 @@ def normalize_record(
     origin: str,
     inherited_category: str,
 ) -> dict[str, Any] | None:
+    item = reviewed_source(item)
     name = first_value(item, NAME_FIELDS)
     url = first_value(item, URL_FIELDS)
 
@@ -438,6 +440,7 @@ def normalize_record(
         "name": name,
         "url": url,
         "canonicalUrl": canonical_url(url),
+        **({'requestUrl': item['requestUrl']} if item.get('requestUrl') else {}),
         "homepage": str(
             item.get(
                 "homepage",
@@ -511,7 +514,7 @@ def merge_record(
             target[field] = incoming[field]
 
     target["active"] = target["active"] or incoming["active"]
-    for field in ("importMode", "rightsReview", "operator", "sourceType", "reviewEvidence"):
+    for field in ("requestUrl", "importMode", "rightsReview", "operator", "sourceType", "reviewEvidence"):
         if incoming.get(field):
             target[field] = incoming[field]
 
