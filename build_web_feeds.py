@@ -237,6 +237,13 @@ def balanced_news_rows(
             ).casefold()
             by_source.setdefault(source, []).append(item)
 
+        # Prefer a story actually tagged with the category over one matched only
+        # by its broad continent. Otherwise a Global story can consume the sole
+        # publisher slot while the category's cards omit that publisher.
+        for publisher_rows in by_source.values():
+            publisher_rows.sort(key=lambda item: category not in
+                                (item.get("categories") or []))
+
         result: list[dict[str, Any]] = []
         source_rows = list(by_source.values())
         depth = 0
@@ -262,7 +269,26 @@ def balanced_news_rows(
             break
         add(item)
 
-    return selected[:limit]
+    output = selected[:limit]
+    # Earlier categories may already have inserted several Asia stories from
+    # one publisher. Round-robin selection above cannot undo that overlap.
+    # Reorder only Asia's existing slots, preserving every selected article and
+    # every other slot, so its first page starts with distinct publishers.
+    slots = [index for index, item in enumerate(output)
+             if "Asia" in article_categories(item)]
+    first_by_source: dict[str, dict[str, Any]] = {}
+    remaining: list[dict[str, Any]] = []
+    for index in slots:
+        item = output[index]
+        publisher = clean_text(item.get("quelleName") or item.get("sourceName")
+                               or item.get("source") or "unknown").casefold()
+        if publisher in first_by_source:
+            remaining.append(item)
+        else:
+            first_by_source[publisher] = item
+    for index, item in zip(slots, [*first_by_source.values(), *remaining]):
+        output[index] = item
+    return output
 
 
 def prepare_events(
