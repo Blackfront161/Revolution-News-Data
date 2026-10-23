@@ -354,6 +354,8 @@ def discover_replacement_feed(
             return {
                 "url": final_url,
                 "feedType": feed_type,
+                "httpStatus": status,
+                "contentType": _response_type(response),
                 "reason": reason,
                 "requests": requests_made,
             }

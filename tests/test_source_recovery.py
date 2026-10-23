@@ -278,6 +278,8 @@ def test_same_site_html_alternate_discovery():
     assert result is not None
     assert result["url"] == alternate
     assert result["reason"] == "html-alternate"
+    assert result["httpStatus"] == 200
+    assert result["contentType"] == "application/rss+xml"
 
 
 def test_cross_domain_candidate_is_rejected():
