@@ -19,7 +19,7 @@
     "author": "Unknown",
     "title": "Olive groves of locals seized in Afrin",
     "link": "https://english.anf-news.com/rojava-syria/olive-groves-seized-in-afrin-87842",
-    "pubDate": "2026-10-23T22:32:47.596516",
+    "pubDate": "2026-10-23T22:41:34.612235",
     "content": "According to local sources, the Rajo Economic Office seized an olive grove belonging to an 80-year-old woman named Fidan Bilal.\n\n\n\n\nOn October 22, the Rajo Economic Office reportedly disregarded the law by bringing workers to Fidan Bilal’s grove and having them harvest the olives for its own benefit.\n\n\n\n\nIn the Bilbil district, the Bilbil Economic Office seized resident Ahmed Mamo’s olive grove in the village of Qestel and harvested 28 sacks of olives.\n\n\n\n\nThe Bilbil Economic Office stated that the regional director had ordered the seizure of Ahmed Mamo’s grove and prohibited him from harvesting his own olives.\n\n\n\n\nAhmed Mamo still has 140 olive trees that have yet to be harvested.",
     "contentComplete": false,
     "image": "https://english.anf-news.com/uploads/en/articles/2026/10/20261023-10b7d81cf45b-990-webp9e783c-image.jpg",
@@ -35,6 +35,83 @@
     "originRegion": "",
     "sourceHomepage": "https://english.anf-news.com/",
     "sourceTags": []
+  },
+  {
+    "kontinent": "Cyberactivism",
+    "categories": [
+      "Global",
+      "Cyberactivism"
+    ],
+    "primaryRegion": "Global",
+    "primaryTopic": "Cyberactivism",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.98,
+    "classificationMethod": "content",
+    "editorialReview": false,
+    "editorialReviewReasons": [],
+    "quelleName": "Electronic Frontier Foundation",
+    "author": "Cooper Quintin",
+    "title": "The Vulnerability Apocalypse and Why We Should Fund Open Source",
+    "link": "https://www.eff.org/deeplinks/2026/10/vulnerability-apocalypse-and-why-we-should-fund-open-source",
+    "pubDate": "Fri, 23 Oct 2026 22:36:46 +0000",
+    "content": "If you use the internet at all, you may have noticed that a large percentage of sites suddenly went down earlier this week\n\n—\n\nand all your nerdiest friends were talking about \"The Vulnerability Apocalypse” and this thing called PHP that \n\npowers nearly 70% of the websites on the internet\n\n. You may find yourself wondering: what is PHP, what just happened, what is the vulnerability apocalypse, and what do I need to do? \n\n \n\n\n\n\nTo find out what you can personally do read the \n\nfirst blog post\n\n in this series! \n\n \n\n\n\n\nWhat Is PHP? \n\n \n\n\n\n\nPHP is a programming language used mainly to create interactive websites. Facebook, Wordpress, Wikipedia, Etsy, and other major sites all use or were originally built on PHP. It is a long-established mainstay of web development. But because it is open-source, maintenance of these critical systems depends on a small number of volunteers working on this in their free time. The disaster scenario that happened this past week is the perfect example of why we need more money and people supporting open-source projects. Corporations should be contributing both.\n\n \n\n\n\n\nWhat Is the Vulnerability Apocalypse? \n\n \n\n\n\n\nCommon Vulnerabilities and Exposures (CVEs) are the way that security professionals file reports about vulnerabilities in software. The \n\nNational Vulnerability Database\n\n (NVD), run by NIST, is the official national database of CVEs. In other words, CVE reports managed by NIST are the closest thing we have to a canonical database of security vulnerabilities in software. The NVD currently has around 400,000 CVEs that have been filed and accepted since 1988. In just the month of October, 13,000 new CVEs have been submitted. This means that 3% of critical software security bugs that have ever been officially logged were found in the last month alone. And it's likely that by the end of the year over a quarter of the software vulnerabilities that have ever been found will be from 2026. \n\n \n\n\n\n\n \n\nComputer vulnerabilities reported are rising exponentially. Source: CVE Tracker\n\n\n\n\nThis research is being driven almost entirely by the cybersecurity capabilities of major AI models from companies like Anthropic, OpenAI, and Google. Historically it has been popularly assumed by cybersecurity experts that finding unknown (zero-day) exploits in any specific project and turning them into exploits was expensive. The knowledge to discover them was not widespread, and it was a hard task even for those initiated into the arcane ways of vulnerability hunting. Google even dedicated \n\nan entire team to it\n\n. \n\n \n\n\n\n\nBut now thanks to major AI models, vulnerabilities are cheap, and anyone of moderate technical skill with a few dollars and access to a frontier AI model can find vulnerabilities in a few minutes. For example, recent vulnerabilities in PHP were found with a prompt to an AI model that literally said \"\n\nfind bad vulnerabilities in PHP\n\n.\" \n\n \n\n\n\n\nWhat Happened This Week?\n\n \n\n\n\n\nIn 2024, a potentially severe vulnerability in PHP was \n\ndiscovered during an external security audit\n\n. PHP’s maintainers couldn’t agree on a solution, but more importantly, they couldn’t find a way to exploit the vulnerability. Because it didn’t seem like an active threat, they ended up deprioritizing a fix in favor of working on more urgent security issues. Then, in August 2026, security researchers working with the latest models from OpenAI and Anthropic independently discovered the vulnerability again, and another one\n\n—\n\nand now, with a way to exploit them. \n\n \n\n\n\n\nWe now know that the vulnerabilities \n\nwere so severe that they would have allowed even moderately inventive hackers to take over any website that uses PHP and then steal customer data, launch further malware attacks, spy on users, take websites offline, or launch a massive denial of service attack.\n\n[\n\n1\n\n]\n\n \n\n\n\n\nBecause of the severity of these vulnerabilities, several of the involved researchers got together with the makers of PHP to patch the vulnerabilities and disclose them in a coordinated manner. The idea was that hopefully everyone would get a chance to quietly release and then apply fixes for the vulnerabilities before the whole world found out about it.\n\n \n\n\n\n\nBut news already started to leak on October 20th. There was a \n\npost on a widely read forum\n\n “Hacker News” and other posts elsewhere. One of the researchers accidentally published a video early. Companies reported seeing active exploitation of the vulnerabilities going back as far as October 17th. On October 21st, six hours before the planned press embargo, one company, \n\nChainguard, jumped the gun and released a patch early,\n\n essentially giving anyone instructions about exactly where to find the vulnerabilities and how to weaponize them. This sent system administrators everywhere scrambling to patch their systems before they were taken over by hackers. And it’s going to take a long time to patch all these systems. At the time of this writing over 33 million websites are \n\nstill running on vulnerable versions of PHP\n\n. \n\n \n\n\n\n\nThe internet is run largely on open-source software, mostly maintained by a small handful of skilled volunteers occasionally getting a small stipend, not by major corporations and highly paid engineers. These are projects you have perhaps never heard of, like PHP, OpenSSL, and SQLite, but these programs run on nearly every computer in the world and are maintained by teams as small as one person. When a vulnerability is found in these projects, it can be devastating. \n\n \n\n\n\n\nPHP isn’t the only critical open-source software with a high severity vulnerability this week either. Other widespread open-source projects like Node.js and GitLab also had severe security bugs reported. \n\n \n\n\n\n\nThe small number of already overworked open-source maintainers are now facing a deluge of vulnerability reports, some of which are false, but many of which are very real. \n\nBurnout in open source has never been higher\n\n. \n\n \n\n\n\n\nWe Need Stronger Support for Open Source Projects\n\n\n\n\nMuch of the foundation for the modern multibillion-dollar internet industry is built on open-source products that were created and still maintained\n\n—\n\nfor free\n\n—\n\nby dedicated volunteers in their spare time. It’s an imperfect system, and it can lead to errors. \n\n \n\n\n\n\nOne of those critical, under resourced open-source products is PHP. And while vulnerabilities in PHP were privately found years ago, they were left unfixed because they didn’t seem as impactful as other bugs at the time. These same vulnerabilities were recently rediscovered and proved to be trivially exploitable by security researchers using advanced AI models. While in the middle of the widespread, global effort to correct this mistake and deploy fixes, the problem was leaked by some of the security researchers who had gotten early access to the fixes. Unfortunately, this left millions of websites, ranging from personal blogs to government sites, vulnerable to hacking that could result in data theft, malware distribution, and worse. \n\n \n\n\n\n\nOpen-source projects like PHP and others are the backbone of the entire internet. If they don’t get the resources they need, they and the internet they power, are at risk of falling apart. Corporations (whose products would not exist without these products) should be actively contributing to their maintenance.\n\n \n\n\n\n\n1. A technical analysis of the vulnerabilities is out of scope for this post and has already been \n\nwritten by the original researchers\n\n.",
+    "contentComplete": true,
+    "image": "https://www.eff.org/files/banner_library/OG-GovernmentHacking-Playpen.png",
+    "images": [
+      "https://www.eff.org/files/banner_library/OG-GovernmentHacking-Playpen.png",
+      "https://www.eff.org/files/2026/10/23/screenshot_2026-10-23_at_10.54.42_am.png"
+    ],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "",
+    "sourceTags": [
+      "Artificial Intelligence",
+      "Security",
+      "Technical Analysis"
+    ]
+  },
+  {
+    "kontinent": "Cyberactivism",
+    "categories": [
+      "Global",
+      "Cyberactivism"
+    ],
+    "primaryRegion": "Global",
+    "primaryTopic": "Cyberactivism",
+    "secondaryTopics": [],
+    "classificationConfidence": 0.98,
+    "classificationMethod": "content",
+    "editorialReview": false,
+    "editorialReviewReasons": [],
+    "quelleName": "Electronic Frontier Foundation",
+    "author": "India McKinney",
+    "title": "Computer Security Is About to Get a Lot Worse, Here’s What You Can Do",
+    "link": "https://www.eff.org/deeplinks/2026/10/computer-security-about-get-lot-worse-heres-what-you-can-do",
+    "pubDate": "Fri, 23 Oct 2026 22:36:29 +0000",
+    "content": "It is a commonly held truth among computer geeks that there is no such thing as bug free software, or a secure computer. Any piece of software that anyone actually uses \n\nwill have a security vulnerability somewhere in the code\n\n. The more complex that software is, the more likely there will be a vulnerability. Fortunately for everyone, finding severe vulnerabilities was generally considered an expensive and difficult task requiring years of training and deep knowledge of how computers and software worked. Until recently there was a steady background hum of vulnerabilities being found and patched, with major vulnerabilities that could cripple the entire internet only happening every few years. Now that is no longer the case. \n\n \n\n\n\n\nYou may have noticed your nerdiest friends freaking out about the “Vulnerability Apocalypse” this week and waving their arms in panic about something called PHP. You may have also noticed that some of your favorite websites were down for a bit. In the last two weeks of October alone, there have been multiple, potentially internet-breaking vulnerabilities reported and patched. Many of those vulnerabilities were in the open-source software that is the foundation of the vast majority of the internet. \n\n\n\n\nFor more detailed information on what happened, and why supporting open-source projects matters, \n\ncheck out our other blog\n\n.\n\n\n\n\nThis is all because frontier AI models, such as those created by OpenAI, Anthropic, and others, have made it incredibly cheap and easy to find previously unknown vulnerabilities (zero-days) in open- and closed-source code. \n\nThree percent of all software vulnerabilities ever found in history were found just in the month of October. This year alone researchers have found nearly a quarter of all software security issues which have ever been discovered.\n\n \n\n\n\n\nIf exploiting critical software is now cheaper and easier than ever, what does that mean for us as individuals and what does that mean for society as a whole? \n\nTL; DR\n\n: It’s going to get worse before it gets better. But you can protect yourself with basic digital security hygiene that is now more important than ever. \n\n \n\n\n\n\nWhat Do I Need to Do?\n\n \n\n\n\n\nThere absolutely needs to be a bigger conversation about how we got here and how to fix the systemic issues involved, including how corporations that depend on open-source code should contribute to their upkeep, and how big tech should be regulated. \n\n \n\n\n\n\nBut for now, this news is a compelling reason to tighten up your digital hygiene. \n\nA lot of computers are going to get hacked a lot more often, and unfortunately, it isn’t going to get better any time soon. \n\nThankfully, EFF has compiled a comprehensive set of security advice in \n\nour Surveillance Self-Defense guides\n\n.\n\n \n\nTo start\n\n, \n\nwe recommend making sure your browser and all applications are \n\nalways up to date\n\n with the latest patches.  \n\n \n\n\n\n\nYou should also consider installing a tracker blocking tool, like EFF’s \n\nPrivacy Badger (now on Safari),\n\n and remain vigilant for \n\nphishing attempts\n\n. Additionally, \n\ninstall a password manager\n\n and \n\nuse unique passwords\n\n for each website, so that if one site is compromised, the rest of your passwords are safe. You should also be aware that \n\ndata breaches\n\n may now be more likely, and the websites you visit may experience more attacks than usual, which means that some services may be disrupted. \n\n \n\n\n\n\nIf you host a blog or other website, make sure that either you or your hosting provider has \n\npatched\n\n this particular issue. \n\n \n\n\n\n\nFor additional tips on protecting yourself and others, head over to our \n\nSurveillance Self-Defense site\n\n. Additionally, if you’d like to support any of EFF’s open-source projects like \n\nPrivacy Badger\n\n, \n\nRayhunter\n\n, and \n\nCertbot\n\n, visit our \n\ndonate page\n\n.",
+    "contentComplete": true,
+    "image": "https://www.eff.org/files/banner_library/OG-GovernmentHacking-Playpen.png",
+    "images": [
+      "https://www.eff.org/files/banner_library/OG-GovernmentHacking-Playpen.png"
+    ],
+    "language": "und",
+    "languages": [
+      "und"
+    ],
+    "originCountry": "",
+    "originCountryCode": "",
+    "originRegion": "",
+    "sourceHomepage": "",
+    "sourceTags": [
+      "Artificial Intelligence",
+      "Security",
+      "Call To Action"
+    ]
   },
   {
     "kontinent": "Europe",
@@ -58,6 +135,7 @@
     "contentComplete": false,
     "image": "https://www.evrensel.net/images/1280/upload/dosya/367668.jpg",
     "images": [
+      "https://www.evrensel.net/images/1280/upload/dosya/367668.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/367668.jpg"
     ],
     "language": "tr",
@@ -134,6 +212,7 @@
     "image": "https://www.evrensel.net/images/1280/upload/dosya/295392.jpg",
     "images": [
       "https://www.evrensel.net/images/1280/upload/dosya/295392.jpg",
+      "https://www.evrensel.net/images/1280/upload/dosya/295392.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/295392.jpg"
     ],
     "language": "tr",
@@ -173,6 +252,7 @@
     "contentComplete": false,
     "image": "https://www.evrensel.net/images/1280/upload/dosya/367667.jpg",
     "images": [
+      "https://www.evrensel.net/images/1280/upload/dosya/367667.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/367667.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/367667.jpg"
     ],
@@ -262,6 +342,7 @@
     "contentComplete": false,
     "image": "https://www.evrensel.net/images/1280/upload/dosya/168968.jpg",
     "images": [
+      "https://www.evrensel.net/images/1280/upload/dosya/168968.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/168968.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/168968.jpg"
     ],
@@ -433,6 +514,7 @@
     "images": [
       "https://www.evrensel.net/images/1280/upload/dosya/367665.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/367665.jpg",
+      "https://www.evrensel.net/images/1280/upload/dosya/367665.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/367665.jpg"
     ],
     "language": "tr",
@@ -469,6 +551,7 @@
     "contentComplete": false,
     "image": "https://www.evrensel.net/images/1280/upload/dosya/358884.jpg",
     "images": [
+      "https://www.evrensel.net/images/1280/upload/dosya/358884.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/358884.jpg",
       "https://www.evrensel.net/images/1280/upload/dosya/358884.jpg"
     ],
@@ -8181,7 +8264,6 @@
     "originRegion": "North America",
     "sourceHomepage": "https://www.aptnnews.ca/",
     "sourceTags": [
-      "Featured",
       "National News",
       "AFN",
       "Assembly of First Nations",
@@ -10399,6 +10481,7 @@
       "https://media.indiginews.com/2026/10/Rebecca-Riley-photo-credit2-2048x1536.jpeg",
       "https://media.indiginews.com/2026/10/Aaron-Duncan-Andrew-Ford-Mike-Ford1-2048x1536.jpeg",
       "https://media.indiginews.com/2026/10/Lyza-Adoplh-Roxx-Ledoux-Doug-Mitchell-Nick-Froese-John-Redan-2048x1536.jpeg",
+      "https://media.indiginews.com/2026/10/Lyza-Adoplh-John-Redan-Nick-Froese-Roxx-Ledoux-1024x768.jpeg",
       "https://media.indiginews.com/2026/10/Lyza-Adoplh-John-Redan-Nick-Froese-Roxx-Ledoux-1024x768.jpeg",
       "https://media.indiginews.com/2026/10/Lyza-Adoplh-John-Redan-Nick-Froese-Roxx-Ledoux-1024x768.jpeg",
       "https://media.indiginews.com/2026/10/Lyza-Adoplh-John-Redan-Nick-Froese-Roxx-Ledoux-1024x768.jpeg",
@@ -91969,83 +92052,6 @@
     "originRegion": "",
     "sourceHomepage": "https://english.anf-news.com/",
     "sourceTags": []
-  },
-  {
-    "kontinent": "Asia",
-    "categories": [
-      "Asia",
-      "Movement News"
-    ],
-    "primaryRegion": "Asia",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ],
-    "quelleName": "ANF English (Kurdistan)",
-    "author": "Unknown",
-    "title": "Mother tongue, identity and collective memory",
-    "link": "https://english.anf-news.com/culture/mother-tongue-identity-and-collective-memory-87622",
-    "pubDate": "2026-10-10T13:37:19.024583",
-    "content": "The mother tongue is more than the first language through which a person begins to discover the world. It is a bridge through which identity takes shape, a sense of belonging is established and collective memory is passed down through generations. From the language in which a child begins their education to the language in which a person can express themselves when receiving healthcare, the mother tongue encompasses far more than a purely cultural debate. Restricting the use of a language, excluding it from education or denying it a place in public life undoubtedly affects an individual's relationship with themselves and society.\n\n\n\n\nPeople first learn to make sense of the world through the relationships around them. Alongside family and social relationships, language becomes part of this initial process of understanding. Sometimes, the first word a person learns is more than a means of communication; it becomes part of their connection to their family, their past and the community to which they belong.\n\n\n\n\nPsychologist Siyabend Aslan defines the mother tongue as “the first home into which a person is born when they open their eyes to the world.” Aslan spoke to ANF about the place of language in human life, saying, “Rather than simply being an ordinary tool for communicating with the outside world, it lies at the very heart of our identity, our past and our sense of belonging.”\n\n\n\n\nIdentity and collective memory\n\n\n\n\nThe mother tongue is one of the foundations on which identity is formed. Much of a person's connection to family, society, culture and the past is carried through language. Restricting the use of a language can therefore also affect a person's relationship with the community to which they feel they belong.\n\n\n\n\nAslan explained the impact of restricting a community's use of its mother tongue on individual and collective psychological well-being: “Restricting a community's use of its own mother tongue is tantamount to telling its members directly, ‘You, your ancestors and your feelings are worthless.’”\n\n\n\n\nAslan described the psychological impact of this as “linguistic trauma,” adding: “It is a profound wound that causes people to feel ashamed of their own roots and to experience a deep sense of worthlessness.”\n\n\n\n\nAlienation from one's roots\n\n\n\n\nResearcher and linguist Zana Farqînî placed the issue within a broader social context. Farqînî said, “Assimilation is not merely about banning a language or excluding it from everyday life, education and the public sphere,” and explaining that distancing different communities from their own roots is also part of this process.\n\n\n\n\nFarqînî drew attention to the relationship between language and identity, saying, “Assimilated individuals tend to assimilate into the dominant identity imposed through the dominant language and, over time, begin to feel that they belong to that identity.”\n\n\n\n\nCollective memory, in turn, gives identity its social dimension. Farqînî explained this relationship: “Language is not merely a means of communication. It is the creator, carrier and transmitter of a culture. It is the raw material of all verbal arts and forms of expression. It is the memory of society.”\n\n\n\n\nIn short, the weakening of a language affects both the possibilities for communication today and the ways in which the past is passed on.\n\n\n\n\nPassing memory down through generations\n\n\n\n\nThe continuity of collective memory depends on the transmission of language between generations. A language known by older family members but difficult for children to understand or speak can gradually disappear from everyday family life. As children become a generation that hears the language but does not use it, passing it on to the next generation becomes even more difficult.\n\n\n\n\nThis situation is also clearly evident in the case of Kurdish. Farqînî said, “Today, Kurdish is being lost between generations. The proportion of children and young people who speak Kurdish is quite low, and this proportion is declining with each passing day.”\n\n\n\n\nFarqînî said language use also varies according to age and education level: “Kurdish is spoken more frequently among older and middle-aged Kurds and those with lower levels of education. As education levels rise and age decreases, we see the opposite trend.”\n\n\n\n\nThe ability to pass a language on to the next generation is just as important as knowing it. Farqînî said, “A language that is not passed on to children has no future and is condemned to die,” and stressing the importance of using the language within the family: “Kurdish parents should at least use their own language within their families and homes.”\n\n\n\n\nThe divide that begins at the school gate\n\n\n\n\nThe most visible aspect of the mother tongue debate is education. For a child, school is the most important social environment after the family. The language used there affects not only whether the child understands the lessons, but also whether the world they know is recognised within the educational environment.\n\n\n\n\nA child who grows up speaking one language at home but begins their education in a completely different language may face an additional burden in the learning process. The child must simultaneously try to understand the language of instruction and learn the information being taught.\n\n\n\n\nUNICEF's assessments of multilingual education also emphasise the importance of children building a strong foundation for learning through a language they already know.\n\n\n\n\nAslan described this process from the perspective of a child's psychological world: “The first day of school is critically important in a child's life. It is their first major encounter with the world after leaving the safety of home.”\n\n\n\n\nHe explained the linguistic divide between home and school: “Imagine a child whose mother and father have spoken to them in their mother tongue at home and introduced them to the world through those words. But when the child enters the classroom, they encounter an unfamiliar language. In a child's world, this is nothing short of a shock.”\n\n\n\n\nAslan said that while trying to learn the language of instruction, children also spend some of the mental energy they would otherwise devote to academic content on understanding the language itself. Aslan also said, “Instead of experiencing the joy of learning new things and playing games, the child spends all their mental energy trying to understand that unfamiliar language.” He stressing that fear of making mistakes and being ridiculed can also cause children to withdraw into silence.\n\n\n\n\nThe fundamental issue, therefore, is the place given to a child's first language within the educational process.\n\n\n\n\nEducation and the sense of belonging\n\n\n\n\nWhen the language a child learns at home is also recognised at school, the distance between the family and the educational institution is reduced. Recognition of the child's language in the educational environment also increases the public visibility of that language and the community that speaks it.\n\n\n\n\nFarqînî stressed that using a language only at home and within one's immediate social circle is no longer sufficient under today's conditions. He said, “In this digital age, when formal education in the dominant language has spread to even the most remote areas, it is impossible for a language to survive solely as a spoken language.”\n\n\n\n\nFarqînî also expressed his views on the position of Kurdish in education and public life: “Kurdish must have official status, gain official recognition and be used in education, teaching, the public sphere and, in short, every area of life. This is essential for a language to survive.”\n\n\n\n\nThis assessment of Kurdish also raises a broader question: How long can a language survive if it is spoken only at home? The more a language is used in education and public life, the more it encounters new concepts, develops and finds a place in the lives of future generations.\n\n\n\n\nThe importance of language in mental health\n\n\n\n\nThe influence of the mother tongue is not limited to education. People also need language to describe their most difficult experiences. Fear, trauma, grief and anger are all experiences whose meanings in a person's mind and emotional world are closely connected to language.\n\n\n\n\nPsychologist Siyabend Aslan said there is a significant difference between expressing traumatic experiences in another language and expressing them in one's mother tongue. Aslan said, “Our emotions are imprinted without any filter on the language through which we first came to know the world, our mother tongue.”\n\n\n\n\nAslan said that a second language can sometimes create distance between a person and the pain they have experienced. “Severe abuse, grief or trauma experienced in the past can be described in a second language using detached, mechanical words, as though the suffering had been experienced by someone entirely different.”\n\n\n\n\nFor this reason, Aslan stressed the importance of people being able to express themselves in their mother tongue during psychotherapy. He said, “If we want to achieve lasting healing through psychotherapy, if we truly want to clean and heal that wound, we have to reach the person's emotional core.”\n\n\n\n\nAslan made his position clear: “This is precisely why mental health services in one's mother tongue are not a luxury or a privilege. They are an indisputable and fundamental human right.”\n\n\n\n\nBeing understood in public services\n\n\n\n\nThe importance of the mother tongue in everyday life becomes even more apparent in public services. When a person needs to explain their symptoms at a hospital, make a request at school, describe an experience at a judicial institution or communicate their needs to any public institution, language once again becomes a fundamental issue. Here, the mother tongue is no longer simply a marker of identity but a direct necessity of everyday life.\n\n\n\n\nAslan particularly emphasised this point in relation to mental health: “No one should be forced to heal the intimate wounds of their soul through interpreters, using borrowed words.”\n\n\n\n\nThe mother tongue as a collective right\n\n\n\n\nSpeaking a language at home, producing literary and artistic works, publishing and conducting academic research are important for keeping it alive. However, the ability to use a language in education and public life depends on broader social conditions.\n\n\n\n\nZana Farqînî therefore viewed language rights as something that goes beyond individual choice: “A language cannot fully overcome its current situation through individual efforts and personal struggle alone. Language is a cultural and collective right.”\n\n\n\n\nFarqînî also stressed the importance of individual efforts: “Of course, individual efforts and initiatives are not insignificant. Their work, contributions and struggles pave the way, generating both energy and synergy.”\n\n\n\n\nHis main emphasis, however, was on collective action: “What matters most is that this issue becomes a social concern and that the struggle is carried forward through the organised strength of society.”\n\n\n\n\nThis approach takes the mother tongue issue beyond the question of which language an individual chooses to speak. The ability to use a language in education, culture, science and public life requires not only individual choice but also social and institutional conditions.\n\n\n\n\nThe language of future generations\n\n\n\n\nAll these issues ultimately converge on the same point: children. A language that is not spoken at home, taught at school, recognised in public life or used in academic work gradually occupies a smaller place in children's lives.\n\n\n\n\nAs Farqînî put it, “Just as children are the future of a people, children are also the future of a language.” Intergenerational transmission is therefore not the final element of the mother tongue debate, but the fundamental factor connecting all its dimensions.\n\n\n\n\nChildren acquire a language at home, develop it at school, use it with friends, encounter it in books and enrich it with new concepts in the digital world. When they can also use that language to access public services, it becomes a natural part of everyday life. If any link in this chain is broken, the space in which the language is used becomes narrower.\n\n\n\n\nWhere does a language live?\n\n\n\n\nUltimately, the mother tongue issue cannot be reduced to the question, “Which language do we speak?” The more fundamental questions are broader: Which language can we live in? Which language do we receive our education in? Which language can we express ourselves in? Which language can we access public services in? Which language can we pass on to our children?\n\n\n\n\nThese questions are interconnected. Language is tied to identity, and identity is connected to collective memory. Memory is passed down from generation to generation. Education can either strengthen or weaken this transmission. In mental health, language becomes one of the means through which individuals can access their own experiences. In public services, it becomes one of the fundamental conditions for being understood.",
-    "contentComplete": true,
-    "image": "",
-    "images": [],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "https://english.anf-news.com/",
-    "sourceTags": [],
-    "topicScores": {
-      "Radical Health & Disability": 4.15,
-      "Eco-Anarchism": 2.85
-    }
-  },
-  {
-    "kontinent": "Asia",
-    "categories": [
-      "Asia",
-      "Movement News"
-    ],
-    "primaryRegion": "Asia",
-    "primaryTopic": "Movement News",
-    "secondaryTopics": [],
-    "classificationConfidence": 0.35,
-    "classificationMethod": "editorial-review",
-    "editorialReview": true,
-    "editorialReviewReasons": [
-      "low-topic-confidence",
-      "no-specific-topic-evidence"
-    ],
-    "quelleName": "ANF English (Kurdistan)",
-    "author": "Unknown",
-    "title": "PYD calls for unity and restraint amid tensions in Hesekê",
-    "link": "https://english.anf-news.com/rojava-syria/pyd-calls-for-unity-and-restraint-amid-tensions-in-heseke-87624",
-    "pubDate": "2026-10-10T13:37:19.017640",
-    "content": "The Democratic Union Party (PYD) issued a written statement about the provocations in Hesekê. The statement noted that Syria is going through a sensitive transitional period and called on all political and social forces to engage in dialogue, show solidarity and work to build trust.\n\n\n\n\nThe PYD stressed that the rise in hate speech and provocations in the region threatens internal peace, emphasising the need to clarify the circumstances surrounding the incidents and hold those responsible to account.\n\n\n\n\nSyria needs a democratic and pluralistic system\n\n\n\n\nThe statement noted that Syria is passing through a sensitive and important transitional period. It said that all political and social forces must fulfil their national and historical responsibilities, strengthen dialogue among all of Syria’s communities and work to build trust.\n\n\n\n\nThe statement also stressed that steps had recently been taken to make progress on implementing the 29 January Agreement. It said these steps would contribute to strengthening stability, unifying efforts and building a democratic Syria.\n\n\n\n\n‘Hate speech and provocations threaten internal peace’\n\n\n\n\nThe statement drew attention to recent security incidents and tensions in the region. It said the developments began with the death of a member of the Foca officers’ unit in Qamişlo, followed by an attack on a vehicle belonging to the security forces, the killing of Sîpan Hiznî, and incidents in Kobanê and other areas.\n\n\n\n\nThe statement said that hate speech and provocations on digital platforms had increased alongside these developments. It noted that this situation threatens internal peace, fuels tensions and creates conditions for divisions within society.\n\n\n\n\nThe PYD said it was following developments with concern and stressed the need to approach the incidents responsibly and calmly, avoiding hasty reactions.\n\n\n\n\n‘The constitutional rights of Kurds must not be defended’\n\n\n\n\nThe statement said that escalating tension between Syria’s communities not only threatens internal peace and the social fabric, but could also be exploited to return Syria to a centralised, uniform system.\n\n\n\n\nIt stated that such efforts could be aimed at obstructing the constitutional rights and legal protections of the Kurdish people, preventing all communities, particularly Kurds, from participating meaningfully in building the new Syria, and undermining the gains made under the stated objective of establishing state authority and legitimacy.\n\n\n\n\nThe statement emphasised that any attempt to impose exclusion and domination would result in losses for all Syrians. It added that such efforts would also undermine the stability and coexistence that are intended to be established.\n\n\n\n\nCall to identify and hold those responsible to account\n\n\n\n\nThe PYD called on the public not to be influenced by hate speech. The statement urged all administrative and security institutions within the Hesekê Governorate, as well as the relevant parties, to fulfil their responsibilities.\n\n\n\n\nIt said action must be taken to uncover the truth about the incidents and hold those responsible to account. It also called for measures to protect the public and maintain security and stability.\n\n\n\n\nThe PYD further called on political, social and media circles to help defuse the situation, reject provocations and put the public interest first.\n\n\n\n\n‘Preserving coexistence is a shared responsibility’\n\n\n\n\nThe statement stressed that preserving internal peace and coexistence among the region’s communities is a shared responsibility. It said that common sense, solidarity and dialogue are essential to achieving this.\n\n\n\n\nIt concluded by stating that efforts must be made to build a democratic and pluralistic Syria that respects the rights of all its citizens and guarantees their meaningful participation, enabling them to live with dignity and equality.\n\n\n\n\n\n\n\nThree injured in armed attack in Hesekê\n\nThree people were injured in an armed attack in the city of Hesekê.According to information received, three people travelling in a vehicle through the Sînaa Junction were targeted by armed indivi...\n\nANF News",
-    "contentComplete": true,
-    "image": "https://english.anf-news.com/uploads/en/articles/2026/10/20261009-20261009-20260320-20260123-20250720-5-gunluk-gundem-2022-2023-jpg3c4fe1-image-jpgbf9e8f-image-jpgf53462-image-jpg5d69e2-image-webpea770e-image.jpg",
-    "images": [
-      "https://english.anf-news.com/uploads/en/articles/2026/10/20261009-20261009-20260320-20260123-20250720-5-gunluk-gundem-2022-2023-jpg3c4fe1-image-jpgbf9e8f-image-jpgf53462-image-jpg5d69e2-image-webpea770e-image.jpg"
-    ],
-    "language": "und",
-    "languages": [
-      "und"
-    ],
-    "originCountry": "",
-    "originCountryCode": "",
-    "originRegion": "",
-    "sourceHomepage": "https://english.anf-news.com/",
-    "sourceTags": [],
-    "topicScores": {}
   },
   {
     "kontinent": "Global",
