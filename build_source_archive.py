@@ -226,6 +226,7 @@ def write_payload(path: Path, payload: Any, *, pretty: bool = False) -> None:
     path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2 if pretty else None, separators=separators) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

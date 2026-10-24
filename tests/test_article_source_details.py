@@ -57,3 +57,11 @@ def test_existing_restricted_source_policy_removes_full_archive_body_and_route()
     assert BODY not in detail['content']
     assert detail['contentComplete'] is False
     assert 'detailPath' not in bind_quick_details([quick()], chunks)[0]
+
+def test_source_payload_bytes_are_platform_independent(tmp_path):
+    from build_source_archive import write_payload
+    import json
+    target = tmp_path / 'source.json'
+    payload = [dict(content='Ελληνικά\n\nΤέλος', contentComplete=True)]
+    write_payload(target, payload)
+    assert target.read_bytes() == (json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n').encode('utf8')
