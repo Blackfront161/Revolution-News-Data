@@ -13,6 +13,8 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 from source_import_policy import restrict_existing_article
+from urllib.parse import urlsplit
+from build_web_feeds import clean_text
 
 
 ROOT = Path(__file__).resolve().parent
@@ -71,11 +73,33 @@ def source_id(name: str) -> str:
     return f"{slug or 'source'}-{digest}"
 
 
-def projected_article(article: dict[str, Any], excerpt_limit: int) -> dict[str, Any]:
+def detail_matches(quick: dict[str, Any], full: dict[str, Any]) -> bool:
+    """Bind only an existing complete App body, never infer publisher rights."""
+    if any(row.get("importMode") == "metadata-only" for row in (quick, full)):
+        return False
+    if full.get("contentComplete") is not True or quick.get("webFeedTruncated") is not True:
+        return False
+    if any(not quick.get(key) or quick.get(key) != full.get(key)
+           for key in ("link", "title", "quelleName")):
+        return False
+    try:
+        url = urlsplit(quick["link"])
+        if url.scheme != "https" or not url.hostname or url.username or url.password:
+            return False
+    except ValueError:
+        return False
+    body, excerpt = clean_text(full.get("content")), clean_text(quick.get("content"))
+    prefix = excerpt[:-2] if excerpt.endswith(" …") else excerpt
+    return bool(prefix and len(body) > len(excerpt)
+                and quick.get("webFeedOriginalLength") == len(body)
+                and body.startswith(prefix))
+
+
+def projected_article(article: dict[str, Any], excerpt_limit: int, *, retain_body: bool = False) -> dict[str, Any]:
     projected = {key: article[key] for key in CARD_FIELDS if key in article}
     content = str(projected.get("content") or "").strip()
-    projected["content"] = content[:excerpt_limit]
-    if len(content) > excerpt_limit:
+    projected["content"] = content if retain_body else content[:excerpt_limit]
+    if not retain_body and len(content) > excerpt_limit:
         projected["webFeedTruncated"] = True
         projected["webFeedOriginalLength"] = len(content)
         projected["contentComplete"] = False
@@ -128,6 +152,8 @@ def build_source_archives(
         for article in quick_feed
         if isinstance(article, dict)
     }
+    quick_rows = {stable_article_key(row): row for row in quick_feed if isinstance(row, dict)}
+    current_keys = {stable_article_key(row) for row in news if isinstance(row, dict)}
     grouped: dict[str, list[tuple[datetime, dict[str, Any]]]] = {}
     for stamp, article in dated:
         if stamp < cutoff or stamp > reference + timedelta(days=1):
@@ -139,7 +165,11 @@ def build_source_archives(
     for name in sorted(grouped, key=str.casefold):
         rows = sorted(grouped[name], key=lambda item: item[0], reverse=True)
         identifier = source_id(name)
-        projected = [projected_article(article, excerpt_limit) for _, article in rows]
+        projected = [projected_article(
+            article, excerpt_limit,
+            retain_body=(stable_article_key(article) in current_keys
+                         and detail_matches(quick_rows.get(stable_article_key(article), {}), article)),
+        ) for _, article in rows]
         chunks[identifier] = projected
         oldest = rows[-1][0]
         newest = rows[0][0]
@@ -173,6 +203,21 @@ def build_source_archives(
         "sources": sources,
     }
     return manifest, chunks
+
+
+def bind_quick_details(quick_feed: list[dict[str, Any]], chunks: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+    """Only point at the exact complete row actually written to a source package."""
+    output = []
+    for quick in quick_feed:
+        item = dict(quick)
+        item.pop("detailPath", None)
+        item.pop("detailUrl", None)
+        identifier = source_id(source_name(item))
+        matches = [row for row in chunks.get(identifier, []) if detail_matches(item, row)]
+        if len(matches) == 1:
+            item["detailPath"] = f"news-archive/{identifier}.json"
+        output.append(item)
+    return output
 
 
 def write_payload(path: Path, payload: Any, *, pretty: bool = False) -> None:
@@ -230,6 +275,14 @@ def main() -> None:
     for identifier, items in chunks.items():
         write_payload(args.output / f"{identifier}.json", items)
     write_payload(args.manifest, manifest, pretty=True)
+    write_payload(args.quick_feed, bind_quick_details(quick_feed, chunks))
+    # The detail routes change feed bytes after build_web_feeds.py wrote status.
+    if args.quick_feed.resolve() == (ROOT / "news-feed.json").resolve():
+        status_path = ROOT / "feed-status.json"
+        status = read_json(status_path, {})
+        if isinstance(status, dict) and isinstance(status.get("news"), dict):
+            status["news"]["bytes"] = args.quick_feed.stat().st_size
+            write_payload(status_path, status)
     print(
         f"[SOURCE-ARCHIVE] {manifest['itemCount']} articles, "
         f"{manifest['sourceCount']} sources, {manifest['windowDays']} days."
