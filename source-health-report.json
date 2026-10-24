@@ -1,7 +1,7 @@
 {
   "schemaVersion": 5,
-  "generatedAt": "2026-10-23T23:20:55.307844+00:00",
-  "freshUntil": "2026-10-24T11:20:55.307844+00:00",
+  "generatedAt": "2026-10-23T23:59:22.565649+00:00",
+  "freshUntil": "2026-10-24T11:59:22.565649+00:00",
   "refreshPolicy": {
     "workflowIntervalHours": 4,
     "freshnessWindowHours": 12,
@@ -9,8 +9,8 @@
   },
   "summary": {
     "total": 257,
-    "ok": 209,
-    "warning": 44,
+    "ok": 211,
+    "warning": 42,
     "error": 4,
     "unknown": 0
   },
@@ -366,29 +366,6 @@
       "consecutiveRestrictions": 67,
       "lastFailureAt": "2026-10-23T22:09:11.097555+00:00",
       "lastSuccessAt": "2026-10-04T13:21:31.682947+00:00"
-    },
-    {
-      "name": "Antifa Bern",
-      "url": "https://antifa-bern.ch/feed/",
-      "configuredUrl": "https://antifa-bern.ch/feed/",
-      "pageUrl": "",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:13.664767+00:00",
-      "categories": [
-        "Antifascism"
-      ],
-      "languages": [],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPSConnectionPool(host='antifa-bern.ch', port=443): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPSConnection(host='antifa-bern.ch', port=443): Failed to resolve 'antifa-bern.ch' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:13.664767+00:00"
     },
     {
       "name": "Antimilitarismus",
@@ -1211,34 +1188,6 @@
       "detailedState": "website_available_without_feed",
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0
-    },
-    {
-      "name": "Umanita Nova (IT)",
-      "url": "http://www.umanitanova.org/feed/",
-      "configuredUrl": "http://www.umanitanova.org/feed/",
-      "pageUrl": "https://umanitanova.org/",
-      "status": "warning",
-      "ok": false,
-      "lastChecked": "2026-10-23T22:09:55.088267+00:00",
-      "categories": [
-        "Europe",
-        "Movement News",
-        "No War",
-        "Indigenous Struggles"
-      ],
-      "languages": [
-        "it"
-      ],
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "error": "DNS-/Domainfehler: HTTPConnectionPool(host='www.umanitanova.org', port=80): Max retries exceeded with url: /feed/ (Caused by NameResolutionError(\"HTTPConnection(host='www.umanitanova.org', port=80): Failed to resolve 'www.umanitanova.org' ([Errno -2] Name or service not known)\"))",
-      "rawStatus": "error",
-      "failureKind": "temporary_restriction",
-      "detailedState": "temporarily_restricted",
-      "consecutiveFailures": 0,
-      "consecutiveRestrictions": 369,
-      "lastFailureAt": "2026-10-23T22:09:55.088267+00:00"
     },
     {
       "name": "War Resisters' International",
@@ -2383,6 +2332,35 @@
       "consecutiveRestrictions": 0,
       "lastFailureAt": "2026-09-08T05:41:03.394711+00:00",
       "lastSuccessAt": "2026-10-23T22:09:13.199591+00:00"
+    },
+    {
+      "name": "Antifa Bern",
+      "url": "https://antifa-bern.ch/feed/",
+      "configuredUrl": "https://antifa-bern.ch/feed/",
+      "pageUrl": "",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T23:59:20.884772+00:00",
+      "categories": [
+        "Antifascism"
+      ],
+      "languages": [],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://www.antifa.ch/feed/",
+      "replacementUrl": "https://www.antifa.ch/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://www.antifa.ch/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:13.664767+00:00",
+      "lastSuccessAt": "2026-10-23T23:59:20.884772+00:00"
     },
     {
       "name": "Antifa Infoblatt",
@@ -7219,6 +7197,40 @@
       "consecutiveFailures": 0,
       "consecutiveRestrictions": 0,
       "lastSuccessAt": "2026-10-23T22:09:54.934258+00:00"
+    },
+    {
+      "name": "Umanita Nova (IT)",
+      "url": "http://www.umanitanova.org/feed/",
+      "configuredUrl": "http://www.umanitanova.org/feed/",
+      "pageUrl": "https://umanitanova.org/",
+      "status": "ok",
+      "ok": true,
+      "lastChecked": "2026-10-23T23:59:20.884772+00:00",
+      "categories": [
+        "Europe",
+        "Movement News",
+        "No War",
+        "Indigenous Struggles"
+      ],
+      "languages": [
+        "it"
+      ],
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "requestUrl": "https://umanitanova.org/feed/",
+      "replacementUrl": "https://umanitanova.org/feed/",
+      "httpStatus": 200,
+      "finalUrl": "https://umanitanova.org/feed/",
+      "contentType": "application/rss+xml; charset=UTF-8",
+      "feedType": "declared-feed",
+      "rawStatus": "ok",
+      "failureKind": "available",
+      "detailedState": "recovered",
+      "consecutiveFailures": 0,
+      "consecutiveRestrictions": 0,
+      "lastFailureAt": "2026-10-23T22:09:55.088267+00:00",
+      "lastSuccessAt": "2026-10-23T23:59:20.884772+00:00"
     },
     {
       "name": "Unicorn Riot",
