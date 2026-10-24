@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T23:20:55.302224+00:00",
+  "generatedAt": "2026-10-23T23:59:22.560550+00:00",
   "policy": {
     "automaticDeletion": false,
     "permanentFailureThreshold": 4,
@@ -9,8 +9,8 @@
   },
   "summary": {
     "available": 202,
-    "recovered": 7,
-    "temporarily_restricted": 43,
+    "recovered": 9,
+    "temporarily_restricted": 41,
     "website_reachable_feed_broken": 0,
     "feed_broken_unconfirmed": 0,
     "permanently_broken": 4,
@@ -18,6 +18,12 @@
     "website_available_without_feed": 1
   },
   "replacementCandidates": [
+    {
+      "name": "Antifa Bern",
+      "configuredUrl": "https://antifa-bern.ch/feed/",
+      "replacementUrl": "https://www.antifa.ch/feed/",
+      "checkedAt": "2026-10-23T23:59:20.884772+00:00"
+    },
     {
       "name": "antifa-frankfurt.org",
       "configuredUrl": "https://www.antifa-frankfurt.org/feed/",
@@ -149,6 +155,12 @@
       "configuredUrl": "https://rdl.de/rss.xml",
       "replacementUrl": "https://rdl.de/rss.xml",
       "checkedAt": "2026-10-23T22:09:44.954212+00:00"
+    },
+    {
+      "name": "Umanita Nova (IT)",
+      "configuredUrl": "http://www.umanitanova.org/feed/",
+      "replacementUrl": "https://umanitanova.org/feed/",
+      "checkedAt": "2026-10-23T23:59:20.884772+00:00"
     },
     {
       "name": "ZNet (Global)",

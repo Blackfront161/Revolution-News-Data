@@ -6,6 +6,8 @@ new records as metadata only, preserving the original source name and key.
 from urllib.parse import urlsplit
 
 REPAIRS = {
+    'antifa-bern.ch/feed': ('https://www.antifa.ch/feed/', 'https://www.antifa.ch/', 'de'),
+    'umanitanova.org/feed': ('https://umanitanova.org/feed/', 'https://umanitanova.org/', 'it'),
     'perspektive-online.de/feed': ('https://perspektive-online.net/feed/', 'https://perspektive-online.net/', 'de'),
     'lausan.hk/feed': ('https://lausancollective.com/feed/', 'https://lausancollective.com/', 'en'),
     'mietergewerkschaft.berlin/feed': ('https://mg-berlin.org/feed/', 'https://mg-berlin.org/', 'de'),
