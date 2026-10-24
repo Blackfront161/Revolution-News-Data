@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-24T16:02:13.784Z",
+  "generatedAt": "2026-10-24T20:55:13.332Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 37,
-    "reachable": 35,
+    "checked": 42,
+    "reachable": 40,
     "failed": 2,
-    "metadataEnriched": 12,
+    "metadataEnriched": 4,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,36 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 14,
+      "checked": 18,
+      "reachable": 17,
       "failed": 1,
-      "embedChecked": 12,
+      "embedChecked": 14,
       "results": [
+        {
+          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
+          "original": {
+            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/10/Eduardo-Belliboni.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/10/Eduardo-Belliboni.mp4"
+          },
+          "embed": null
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:1szSKSnMGFJbE6zQBjiXpZ",
+          "original": {
+            "url": "https://kolektiva.media/w/1szSKSnMGFJbE6zQBjiXpZ",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/1szSKSnMGFJbE6zQBjiXpZ"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/1szSKSnMGFJbE6zQBjiXpZ",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/1szSKSnMGFJbE6zQBjiXpZ"
+          }
+        },
         {
           "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
           "original": {
@@ -101,21 +126,6 @@
             "finalUrl": "https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4"
           },
           "embed": null
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:8JRNNVzf1KBUXuAjMofQBb",
-          "original": {
-            "url": "https://kolektiva.media/w/8JRNNVzf1KBUXuAjMofQBb",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/8JRNNVzf1KBUXuAjMofQBb"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/8JRNNVzf1KBUXuAjMofQBb",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/8JRNNVzf1KBUXuAjMofQBb"
-          }
         },
         {
           "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4",
@@ -233,18 +243,18 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:cs3Yxv4AqgfWJDaZyoKPLE",
+          "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
           "original": {
-            "url": "https://kolektiva.media/w/cs3Yxv4AqgfWJDaZyoKPLE",
+            "url": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/cs3Yxv4AqgfWJDaZyoKPLE"
+            "finalUrl": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/cs3Yxv4AqgfWJDaZyoKPLE",
+            "url": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/cs3Yxv4AqgfWJDaZyoKPLE"
+            "finalUrl": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS"
           }
         },
         {
@@ -301,23 +311,53 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:8JRNNVzf1KBUXuAjMofQBb",
+          "original": {
+            "url": "https://kolektiva.media/w/8JRNNVzf1KBUXuAjMofQBb",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/8JRNNVzf1KBUXuAjMofQBb"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/8JRNNVzf1KBUXuAjMofQBb",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/8JRNNVzf1KBUXuAjMofQBb"
+          }
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:cs3Yxv4AqgfWJDaZyoKPLE",
+          "original": {
+            "url": "https://kolektiva.media/w/cs3Yxv4AqgfWJDaZyoKPLE",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/cs3Yxv4AqgfWJDaZyoKPLE"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/cs3Yxv4AqgfWJDaZyoKPLE",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/cs3Yxv4AqgfWJDaZyoKPLE"
+          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 17,
-    "acceptedBeforeQuota": 17,
-    "acceptedCount": 15,
+    "candidateCount": 20,
+    "acceptedBeforeQuota": 20,
+    "acceptedCount": 18,
     "duplicateCount": 0,
     "quotaRemovedCount": 2,
     "rejectedCount": 6,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 2,
-    "thumbnails": 14,
-    "subtitlesKnown": 12,
+    "duration": 4,
+    "thumbnails": 16,
+    "subtitlesKnown": 4,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -333,28 +373,50 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Direct": 3,
-    "Kolektiva": 2
+    "Direct": 4,
+    "Kolektiva": 4
   },
   "byLanguage": {
     "en": 8,
+    "und": 5,
     "de": 3,
-    "und": 3,
+    "el": 1,
     "fr": 1
   },
   "bySource": {
+    "kolektiva-media-news": 4,
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1,
     "slackbastard": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:1szSKSnMGFJbE6zQBjiXpZ",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
       "originalStatus": "blocked",
@@ -364,16 +426,6 @@
       "ageDays": 0,
       "ageStatus": "current",
       "status": "attention"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:8JRNNVzf1KBUXuAjMofQBb",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
     },
     {
       "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4",
@@ -389,79 +441,79 @@
       "canonicalId": "youtube:AHGl9a8BcqI",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:mOlpZzlh09s",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:nrm4gj_eDGA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:0uNSjlCkxwA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:tDDLFpz7pjE",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:lrTzjaXskUU",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:bgmClo2LPls",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:cs3Yxv4AqgfWJDaZyoKPLE",
+      "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -479,31 +531,51 @@
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:I0UGM8zeNLw",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
     },
     {
       "canonicalId": "youtube:o8Btb1sGRK0",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "attention"
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:8JRNNVzf1KBUXuAjMofQBb",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:cs3Yxv4AqgfWJDaZyoKPLE",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
     }
   ],
   "sources": [
@@ -512,7 +584,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 2,
+      "itemCount": 4,
       "networkStatus": "reachable"
     },
     {
