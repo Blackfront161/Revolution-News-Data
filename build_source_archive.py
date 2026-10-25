@@ -20,6 +20,7 @@ from build_web_feeds import clean_text
 ROOT = Path(__file__).resolve().parent
 DEFAULT_DAYS = 30
 DEFAULT_EXCERPT_LIMIT = 1400
+MAX_SOURCE_PACKAGE_BYTES = 4 * 1024 * 1024
 CARD_FIELDS = (
     "kontinent", "categories", "primaryRegion", "primaryTopic",
     "secondaryTopics", "classificationConfidence", "classificationMethod",
@@ -109,6 +110,25 @@ def projected_article(article: dict[str, Any], excerpt_limit: int, *, retain_bod
     return projected
 
 
+def retained_detail_matches(previous: dict[str, Any], current: dict[str, Any]) -> bool:
+    """Keep an already delivered full body only against the same current body."""
+    if any(row.get("importMode") == "metadata-only"
+           or row.get("contentComplete") is not True
+           or row.get("webFeedTruncated") is True for row in (previous, current)):
+        return False
+    if any(not current.get(key) or current.get(key) != previous.get(key)
+           for key in ("link", "title", "quelleName")):
+        return False
+    try:
+        url = urlsplit(current["link"])
+        if url.scheme != "https" or not url.hostname or url.username or url.password:
+            return False
+    except ValueError:
+        return False
+    body = str(current.get("content") or "").strip()
+    return bool(body and body == str(previous.get("content") or "").strip())
+
+
 def build_source_archives(
     news: list[dict[str, Any]],
     quick_feed: list[dict[str, Any]],
@@ -121,9 +141,11 @@ def build_source_archives(
     generated_at: datetime | None = None,
 ) -> tuple[dict[str, Any], dict[str, list[dict[str, Any]]]]:
     merged: dict[str, dict[str, Any]] = {}
+    previous_rows: dict[str, list[dict[str, Any]]] = {}
     for article in previous_articles or []:
         if isinstance(article, dict) and stable_article_key(article):
             merged[stable_article_key(article)] = article
+            previous_rows.setdefault(stable_article_key(article), []).append(article)
     # Current archive rows win over an older projected copy of the same item.
     for article in news:
         if isinstance(article, dict) and stable_article_key(article):
@@ -168,8 +190,13 @@ def build_source_archives(
         projected = [projected_article(
             article, excerpt_limit,
             retain_body=(stable_article_key(article) in current_keys
-                         and detail_matches(quick_rows.get(stable_article_key(article), {}), article)),
+                         and (detail_matches(quick_rows.get(stable_article_key(article), {}), article)
+                              or any(retained_detail_matches(previous, article)
+                                     for previous in previous_rows.get(stable_article_key(article), [])))),
         ) for _, article in rows]
+        package_bytes = len((json.dumps(projected, ensure_ascii=False, separators=(",", ":")) + "\n").encode("utf-8"))
+        if package_bytes > MAX_SOURCE_PACKAGE_BYTES:
+            raise ValueError(f"Source package {identifier} exceeds {MAX_SOURCE_PACKAGE_BYTES} bytes; refusing silent body truncation")
         chunks[identifier] = projected
         oldest = rows[-1][0]
         newest = rows[0][0]
