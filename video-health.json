@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T04:50:33.958Z",
+  "generatedAt": "2026-10-25T11:40:19.767Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 42,
+    "checked": 43,
     "reachable": 40,
-    "failed": 2,
-    "metadataEnriched": 14,
+    "failed": 3,
+    "metadataEnriched": 15,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -88,10 +88,25 @@
     },
     "items": {
       "checked": 18,
-      "reachable": 17,
-      "failed": 1,
-      "embedChecked": 14,
+      "reachable": 16,
+      "failed": 2,
+      "embedChecked": 15,
       "results": [
+        {
+          "canonicalId": "youtube:Xl_nKBUJuNU",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=Xl_nKBUJuNU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=Xl_nKBUJuNU"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/Xl_nKBUJuNU?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/Xl_nKBUJuNU?rel=0"
+          }
+        },
         {
           "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
           "original": {
@@ -128,12 +143,13 @@
           "embed": null
         },
         {
-          "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4",
+          "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
           "original": {
-            "url": "https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4"
+            "url": "https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
+            "ok": false,
+            "status": 0,
+            "unsafe": false,
+            "error": "DNS lookup failed: ENOTFOUND"
           },
           "embed": null
         },
@@ -258,16 +274,6 @@
           }
         },
         {
-          "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-          "original": {
-            "url": "https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4"
-          },
-          "embed": null
-        },
-        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -346,18 +352,18 @@
     }
   },
   "totals": {
-    "candidateCount": 20,
-    "acceptedBeforeQuota": 20,
+    "candidateCount": 19,
+    "acceptedBeforeQuota": 19,
     "acceptedCount": 18,
     "duplicateCount": 0,
-    "quotaRemovedCount": 2,
+    "quotaRemovedCount": 1,
     "rejectedCount": 8,
     "registrySources": 10
   },
   "coverage": {
     "duration": 4,
-    "thumbnails": 16,
-    "subtitlesKnown": 14,
+    "thumbnails": 17,
+    "subtitlesKnown": 15,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -372,31 +378,42 @@
     "originalUrl": 0
   },
   "byPlatform": {
-    "YouTube": 10,
-    "Direct": 4,
-    "Kolektiva": 4
+    "YouTube": 11,
+    "Kolektiva": 4,
+    "Direct": 3
   },
   "byLanguage": {
     "en": 8,
-    "und": 5,
+    "und": 4,
     "de": 3,
-    "el": 1,
-    "fr": 1
+    "fr": 2,
+    "el": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
     "andrewism": 2,
-    "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
+    "anf-english-kurdistan": 1,
     "david-graeber-archive": 1,
     "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1,
+    "paris-luttes-fr": 1,
     "slackbastard": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "youtube:Xl_nKBUJuNU",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
+    },
     {
       "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
       "originalStatus": "reachable",
@@ -423,19 +440,19 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "attention"
     },
     {
-      "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261020092554_2026-10-21-amed-bunyamin-seker-dbp-parti-meclisi-uyesi-baris-ve-demokratik-toplum-sureci-1.mp4",
-      "originalStatus": "reachable",
+      "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
+      "originalStatus": "unavailable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
       "ageDays": 2,
       "ageStatus": "current",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:AHGl9a8BcqI",
@@ -513,17 +530,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -563,7 +570,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -573,7 +580,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     }
