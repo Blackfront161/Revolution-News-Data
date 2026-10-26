@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T13:12:55.378Z",
+  "generatedAt": "2026-10-26T22:44:37.624Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 43,
-    "reachable": 40,
+    "checked": 45,
+    "reachable": 42,
     "failed": 3,
     "metadataEnriched": 15,
     "sources": {
@@ -87,11 +87,21 @@
       ]
     },
     "items": {
-      "checked": 18,
-      "reachable": 16,
+      "checked": 20,
+      "reachable": 18,
       "failed": 2,
       "embedChecked": 15,
       "results": [
+        {
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
+          "original": {
+            "url": "https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4"
+          },
+          "embed": null
+        },
         {
           "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
           "original": {
@@ -258,6 +268,16 @@
           }
         },
         {
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
+          "original": {
+            "url": "https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4"
+          },
+          "embed": null
+        },
+        {
           "canonicalId": "peertube:https://kolektiva.media:fMuRCaGRh5AuN4j5xP7JZc",
           "original": {
             "url": "https://kolektiva.media/w/fMuRCaGRh5AuN4j5xP7JZc",
@@ -351,9 +371,9 @@
     }
   },
   "totals": {
-    "candidateCount": 20,
-    "acceptedBeforeQuota": 20,
-    "acceptedCount": 18,
+    "candidateCount": 22,
+    "acceptedBeforeQuota": 22,
+    "acceptedCount": 20,
     "duplicateCount": 0,
     "quotaRemovedCount": 2,
     "rejectedCount": 11,
@@ -361,7 +381,7 @@
   },
   "coverage": {
     "duration": 4,
-    "thumbnails": 17,
+    "thumbnails": 19,
     "subtitlesKnown": 15,
     "transcripts": 0
   },
@@ -378,19 +398,20 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Kolektiva": 4,
-    "Direct": 3
+    "Direct": 5,
+    "Kolektiva": 4
   },
   "byLanguage": {
     "en": 8,
+    "und": 5,
     "de": 3,
-    "und": 3,
     "el": 2,
     "fr": 2
   },
   "bySource": {
     "kolektiva-media-news": 4,
     "andrewism": 2,
+    "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
     "anarchism-in-america-archive": 1,
@@ -404,12 +425,22 @@
   },
   "itemHealth": [
     {
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
       "originalStatus": "blocked",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -439,7 +470,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -524,6 +555,16 @@
       "status": "attention"
     },
     {
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "peertube:https://kolektiva.media:fMuRCaGRh5AuN4j5xP7JZc",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
@@ -569,7 +610,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
