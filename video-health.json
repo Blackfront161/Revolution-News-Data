@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T04:55:09.206Z",
+  "generatedAt": "2026-10-26T13:12:55.378Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
@@ -93,6 +93,16 @@
       "embedChecked": 15,
       "results": [
         {
+          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
+          "original": {
+            "url": "https://infolibre.gr/wp-content/uploads/2026/10/TAX-V2-signal-2026-10-24-00-38-35-923_002.mp4",
+            "ok": false,
+            "status": 403,
+            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/10/TAX-V2-signal-2026-10-24-00-38-35-923_002.mp4"
+          },
+          "embed": null
+        },
+        {
           "canonicalId": "peertube:https://kolektiva.media:7yXRzXdqmhhkJQpFvn7fNT",
           "original": {
             "url": "https://kolektiva.media/w/7yXRzXdqmhhkJQpFvn7fNT",
@@ -139,17 +149,6 @@
             "ok": false,
             "status": 403,
             "finalUrl": "https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-          "original": {
-            "url": "https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-            "ok": false,
-            "status": 0,
-            "unsafe": false,
-            "error": "DNS lookup failed: ENOTFOUND"
           },
           "embed": null
         },
@@ -352,12 +351,12 @@
     }
   },
   "totals": {
-    "candidateCount": 21,
-    "acceptedBeforeQuota": 21,
+    "candidateCount": 20,
+    "acceptedBeforeQuota": 20,
     "acceptedCount": 18,
     "duplicateCount": 0,
-    "quotaRemovedCount": 3,
-    "rejectedCount": 10,
+    "quotaRemovedCount": 2,
+    "rejectedCount": 11,
     "registrySources": 10
   },
   "coverage": {
@@ -384,10 +383,10 @@
   },
   "byLanguage": {
     "en": 8,
-    "und": 4,
     "de": 3,
-    "fr": 2,
-    "el": 1
+    "und": 3,
+    "el": 2,
+    "fr": 2
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -396,21 +395,31 @@
     "charly-d-anarchy-documentaries": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
-    "anf-english-kurdistan": 1,
     "david-graeber-archive": 1,
     "indymedia-argentina": 1,
+    "infolibre-gr": 1,
     "notre-histoire-anarchism": 1,
     "paris-luttes-fr": 1,
     "slackbastard": 1
   },
   "itemHealth": [
     {
+      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
+      "originalStatus": "blocked",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
+    },
+    {
       "canonicalId": "peertube:https://kolektiva.media:7yXRzXdqmhhkJQpFvn7fNT",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -420,7 +429,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -440,17 +449,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://1649452211.rsc.cdn77.org/20261017133358_2026-10-17-amed-rusen-yakut-rosa-kadin-dernegi-uyesi-kadin-katliamlari-ve-cezasizlik-politikasi-1.mp4",
-      "originalStatus": "unavailable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -530,7 +529,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -580,7 +579,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     }
