@@ -17,6 +17,7 @@ from inline_text import inline_preserving_text, prefer_inline_preserving_text
 from source_import_policy import metadata_article
 from source_endpoint_repairs import reviewed_source, request_url
 from news_retention import retain_current_sources
+from reviewed_article_metadata import repair_reviewed_article_metadata
 
 for stream in (sys.stdout, sys.stderr):
     try:
@@ -1590,6 +1591,7 @@ def normalize_feed_event(title, published):
 
 
 def repair_overbroad_archive_categories(article):
+    article = repair_reviewed_article_metadata(article)
     if article.get("kontinent") == "Radar":
         return article
     current = article.get("categories", [article.get("kontinent", "Global")])
@@ -1685,6 +1687,16 @@ def collect_image_urls(soup, base_url, limit=24):
     if not soup:
         return images
     for image in soup.find_all('img'):
+        # Nunatsiaq embeds Adsanity placements inside its article. They can
+        # carry wp-post-image too, so that class alone is not editorial proof.
+        if urlparse(base_url).hostname == 'nunatsiaq.com':
+            if any(
+                any('adsanity' in str(value).lower() for value in node.get('class', []))
+                or (node.name == 'a' and '/ads/' in str(node.get('href', '')))
+                for node in image.parents
+                if getattr(node, 'attrs', None) is not None
+            ):
+                continue
         width = safe_text(image.get('width'))
         height = safe_text(image.get('height'))
         if width.isdigit() and int(width) < 180:
