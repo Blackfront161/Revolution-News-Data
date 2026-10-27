@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T12:20:58.899Z",
+  "generatedAt": "2026-10-27T18:05:28.248Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 44,
-    "reachable": 41,
+    "checked": 38,
+    "reachable": 35,
     "failed": 3,
-    "metadataEnriched": 15,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,10 +87,10 @@
       ]
     },
     "items": {
-      "checked": 19,
-      "reachable": 17,
+      "checked": 16,
+      "reachable": 14,
       "failed": 2,
-      "embedChecked": 15,
+      "embedChecked": 12,
       "results": [
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
@@ -126,21 +126,6 @@
             "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/10/TAX-V2-signal-2026-10-24-00-38-35-923_002.mp4"
           },
           "embed": null
-        },
-        {
-          "canonicalId": "youtube:Xl_nKBUJuNU",
-          "original": {
-            "url": "https://www.youtube.com/watch?v=Xl_nKBUJuNU",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube.com/watch?v=Xl_nKBUJuNU"
-          },
-          "embed": {
-            "url": "https://www.youtube-nocookie.com/embed/Xl_nKBUJuNU?rel=0",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube-nocookie.com/embed/Xl_nKBUJuNU?rel=0"
-          }
         },
         {
           "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -268,18 +253,18 @@
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:7yXRzXdqmhhkJQpFvn7fNT",
+          "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
           "original": {
-            "url": "https://kolektiva.media/w/7yXRzXdqmhhkJQpFvn7fNT",
+            "url": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/7yXRzXdqmhhkJQpFvn7fNT"
+            "finalUrl": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/7yXRzXdqmhhkJQpFvn7fNT",
+            "url": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/7yXRzXdqmhhkJQpFvn7fNT"
+            "finalUrl": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS"
           }
         },
         {
@@ -326,53 +311,23 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:fMuRCaGRh5AuN4j5xP7JZc",
-          "original": {
-            "url": "https://kolektiva.media/w/fMuRCaGRh5AuN4j5xP7JZc",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/fMuRCaGRh5AuN4j5xP7JZc"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/fMuRCaGRh5AuN4j5xP7JZc",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/fMuRCaGRh5AuN4j5xP7JZc"
-          }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
-          "original": {
-            "url": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS"
-          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 19,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 19,
+    "candidateCount": 16,
+    "acceptedBeforeQuota": 16,
+    "acceptedCount": 16,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
     "rejectedCount": 9,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 4,
-    "thumbnails": 19,
-    "subtitlesKnown": 15,
+    "duration": 2,
+    "thumbnails": 16,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -387,29 +342,28 @@
     "originalUrl": 0
   },
   "byPlatform": {
-    "YouTube": 11,
+    "YouTube": 10,
     "Direct": 4,
-    "Kolektiva": 4
+    "Kolektiva": 2
   },
   "byLanguage": {
-    "en": 9,
+    "en": 7,
     "und": 4,
     "de": 3,
-    "fr": 2,
-    "el": 1
+    "el": 1,
+    "fr": 1
   },
   "bySource": {
-    "kolektiva-media-news": 4,
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
     "infolibre-gr": 1,
     "notre-histoire-anarchism": 1,
-    "paris-luttes-fr": 1,
     "slackbastard": 1
   },
   "itemHealth": [
@@ -419,7 +373,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -440,16 +394,6 @@
       "platformStatus": "unknown",
       "playabilityReason": "",
       "ageDays": 1,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "youtube:Xl_nKBUJuNU",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -539,17 +483,17 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:7yXRzXdqmhhkJQpFvn7fNT",
+      "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 3,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -582,26 +526,6 @@
       "ageDays": null,
       "ageStatus": "unknown",
       "status": "attention"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:fMuRCaGRh5AuN4j5xP7JZc",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 2,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 3,
-      "ageStatus": "current",
-      "status": "healthy"
     }
   ],
   "sources": [
@@ -610,7 +534,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 4,
+      "itemCount": 2,
       "networkStatus": "reachable"
     },
     {
