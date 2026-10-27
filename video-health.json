@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T18:05:28.248Z",
+  "generatedAt": "2026-10-27T22:20:50.550Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 38,
+    "checked": 37,
     "reachable": 35,
-    "failed": 3,
+    "failed": 2,
     "metadataEnriched": 12,
     "sources": {
       "checked": 10,
@@ -87,11 +87,26 @@
       ]
     },
     "items": {
-      "checked": 16,
+      "checked": 15,
       "reachable": 14,
-      "failed": 2,
+      "failed": 1,
       "embedChecked": 12,
       "results": [
+        {
+          "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+          "original": {
+            "url": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1"
+          }
+        },
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
           "original": {
@@ -99,31 +114,6 @@
             "ok": true,
             "status": 200,
             "finalUrl": "https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
-          "original": {
-            "url": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A"
-          }
-        },
-        {
-          "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
-          "original": {
-            "url": "https://infolibre.gr/wp-content/uploads/2026/10/TAX-V2-signal-2026-10-24-00-38-35-923_002.mp4",
-            "ok": false,
-            "status": 403,
-            "finalUrl": "https://infolibre.gr/wp-content/uploads/2026/10/TAX-V2-signal-2026-10-24-00-38-35-923_002.mp4"
           },
           "embed": null
         },
@@ -243,6 +233,21 @@
           }
         },
         {
+          "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
+          "original": {
+            "url": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A"
+          }
+        },
+        {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
           "original": {
             "url": "https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
@@ -251,21 +256,6 @@
             "finalUrl": "https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4"
           },
           "embed": null
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
-          "original": {
-            "url": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS"
-          }
         },
         {
           "canonicalId": "youtube:mfEYye6TNlk",
@@ -316,17 +306,17 @@
     }
   },
   "totals": {
-    "candidateCount": 16,
-    "acceptedBeforeQuota": 16,
-    "acceptedCount": 16,
+    "candidateCount": 15,
+    "acceptedBeforeQuota": 15,
+    "acceptedCount": 15,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 9,
+    "rejectedCount": 7,
     "registrySources": 10
   },
   "coverage": {
     "duration": 2,
-    "thumbnails": 16,
+    "thumbnails": 15,
     "subtitlesKnown": 12,
     "transcripts": 0
   },
@@ -343,14 +333,13 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Direct": 4,
+    "Direct": 3,
     "Kolektiva": 2
   },
   "byLanguage": {
-    "en": 7,
-    "und": 4,
+    "en": 8,
     "de": 3,
-    "el": 1,
+    "und": 3,
     "fr": 1
   },
   "bySource": {
@@ -362,11 +351,20 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "infolibre-gr": 1,
     "notre-histoire-anarchism": 1,
     "slackbastard": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "direct:https://video.anf-news2.com/live/firat/c389a11c_20261025174114_2026-10-25-marsilya-jineoloji-paneli-1.mp4",
       "originalStatus": "reachable",
@@ -376,26 +374,6 @@
       "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://infolibre.gr/wp-content/uploads/2026/10/tax-v2-signal-2026-10-24-00-38-35-923_002.mp4",
-      "originalStatus": "blocked",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "attention"
     },
     {
       "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -478,22 +456,22 @@
       "status": "attention"
     },
     {
-      "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
+      "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
       "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
       "playabilityReason": "",
       "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
       "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
