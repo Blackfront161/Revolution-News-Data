@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T05:13:14.610Z",
+  "generatedAt": "2026-10-27T12:20:58.899Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 45,
-    "reachable": 42,
+    "checked": 44,
+    "reachable": 41,
     "failed": 3,
     "metadataEnriched": 15,
     "sources": {
@@ -87,8 +87,8 @@
       ]
     },
     "items": {
-      "checked": 20,
-      "reachable": 18,
+      "checked": 19,
+      "reachable": 17,
       "failed": 2,
       "embedChecked": 15,
       "results": [
@@ -141,16 +141,6 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/Xl_nKBUJuNU?rel=0"
           }
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/10/Eduardo-Belliboni.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/10/Eduardo-Belliboni.mp4"
-          },
-          "embed": null
         },
         {
           "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -353,30 +343,30 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:1szSKSnMGFJbE6zQBjiXpZ",
+          "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
           "original": {
-            "url": "https://kolektiva.media/w/1szSKSnMGFJbE6zQBjiXpZ",
+            "url": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/1szSKSnMGFJbE6zQBjiXpZ"
+            "finalUrl": "https://kolektiva.media/w/wGRg1qKtoTNR9rXCsiwSmS"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/1szSKSnMGFJbE6zQBjiXpZ",
+            "url": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/1szSKSnMGFJbE6zQBjiXpZ"
+            "finalUrl": "https://kolektiva.media/videos/embed/wGRg1qKtoTNR9rXCsiwSmS"
           }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 21,
-    "acceptedBeforeQuota": 21,
-    "acceptedCount": 20,
+    "candidateCount": 19,
+    "acceptedBeforeQuota": 19,
+    "acceptedCount": 19,
     "duplicateCount": 0,
-    "quotaRemovedCount": 1,
-    "rejectedCount": 10,
+    "quotaRemovedCount": 0,
+    "rejectedCount": 9,
     "registrySources": 10
   },
   "coverage": {
@@ -398,15 +388,15 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 5,
+    "Direct": 4,
     "Kolektiva": 4
   },
   "byLanguage": {
     "en": 9,
     "und": 4,
     "de": 3,
-    "el": 2,
-    "fr": 2
+    "fr": 2,
+    "el": 1
   },
   "bySource": {
     "kolektiva-media-news": 4,
@@ -417,7 +407,6 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
     "infolibre-gr": 1,
     "notre-histoire-anarchism": 1,
     "paris-luttes-fr": 1,
@@ -440,7 +429,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -460,19 +449,9 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/10/eduardo-belliboni.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
       "ageDays": 2,
       "ageStatus": "current",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -480,7 +459,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 3,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -570,7 +549,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -610,17 +589,17 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:1szSKSnMGFJbE6zQBjiXpZ",
+      "canonicalId": "peertube:https://kolektiva.media:wGRg1qKtoTNR9rXCsiwSmS",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 3,
       "ageStatus": "current",
       "status": "healthy"
     }
