@@ -163,7 +163,7 @@ def patch_aggregate(registry: dict[str, Any]) -> bool:
         "    _wrn_existing.setdefault('originCountry', _wrn_source.get('originCountry', ''))",
         "    _wrn_existing.setdefault('originCountryCode', _wrn_source.get('originCountryCode', ''))",
         "    _wrn_existing.setdefault('originRegion', _wrn_source.get('originRegion', ''))",
-        "    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence'):",
+        "    for _wrn_field in ('importMode', 'rightsReview', 'operator', 'sourceType', 'reviewEvidence', 'metadataTopicOverrides'):",
         "        if _wrn_field in _wrn_source:",
         "            _wrn_existing[_wrn_field] = _wrn_source[_wrn_field]",
         END,

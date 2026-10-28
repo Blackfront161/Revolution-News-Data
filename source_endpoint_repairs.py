@@ -14,8 +14,15 @@ REPAIRS = {
     'niunamenos.org.ar/feed': ('https://niunamenos.ar/feed/', 'https://niunamenos.ar/', 'es'),
     'pt.theanarchistlibrary.org/feed': ('https://pt.anarchistlibraries.net/feed', 'https://pt.anarchistlibraries.net/', 'pt'),
     'femagainstwar.org/feed': ('https://femantiwar.org/ru/feed/', 'https://femantiwar.org/ru/', 'ru'),
+    'illwill.com/feed': ('https://illwill.com/feed.xml', 'https://illwill.com/', 'en'),
+    'radicalsocialist.in/index.php?format=feed&type=rss': ('https://radicalsocialist.in/feed/', 'https://radicalsocialist.in/', 'en'),
     'colorlines.com/feed': ('https://colorlines.com/rss.xml', 'https://colorlines.com/', 'en'),
     'culturalsurvival.org/news/rss.xml': ('https://www.culturalsurvival.org/rss.xml', 'https://www.culturalsurvival.org/', 'en'),
+}
+
+REPAIR_REVIEWED_AT = {
+    'illwill.com/feed': '2026-10-28',
+    'radicalsocialist.in/index.php?format=feed&type=rss': '2026-10-28',
 }
 
 
@@ -31,16 +38,17 @@ def reviewed_source(source):
     if parsed.scheme not in {'http', 'https'} or parsed.username or parsed.password:
         return result
     host = (parsed.hostname or '').lower().removeprefix('www.')
-    if port not in (None, 80, 443) or parsed.query or parsed.fragment:
+    if port not in (None, 80, 443) or parsed.fragment:
         return result
-    repair = REPAIRS.get(host + parsed.path.rstrip('/'))
+    key = host + parsed.path.rstrip('/') + ('?' + parsed.query if parsed.query else '')
+    repair = REPAIRS.get(key)
     if not repair:
         return result
     request_url, homepage, language = repair
     result.update(requestUrl=request_url, homepage=homepage, languages=[language],
                   language=language, importMode='metadata-only',
                   rightsReview='Transportadresse geprüft; nur Überschrift, Datum, Autor und Originalverweis. Keine neue Volltext- oder Medienfreigabe.',
-                  endpointReviewedAt='2026-10-24')
+                  endpointReviewedAt=REPAIR_REVIEWED_AT.get(key, '2026-10-24'))
     return result
 
 
