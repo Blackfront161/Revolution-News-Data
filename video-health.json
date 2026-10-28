@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T22:20:50.550Z",
+  "generatedAt": "2026-10-28T05:50:53.295Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 37,
-    "reachable": 35,
+    "checked": 35,
+    "reachable": 33,
     "failed": 2,
-    "metadataEnriched": 12,
+    "metadataEnriched": 11,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,10 +87,10 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 14,
+      "checked": 14,
+      "reachable": 13,
       "failed": 1,
-      "embedChecked": 12,
+      "embedChecked": 11,
       "results": [
         {
           "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
@@ -233,21 +233,6 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
-          "original": {
-            "url": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/j59X33a16yYUaZ3jEBRP7A"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/j59X33a16yYUaZ3jEBRP7A"
-          }
-        },
-        {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
           "original": {
             "url": "https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
@@ -306,18 +291,18 @@
     }
   },
   "totals": {
-    "candidateCount": 15,
-    "acceptedBeforeQuota": 15,
-    "acceptedCount": 15,
+    "candidateCount": 14,
+    "acceptedBeforeQuota": 14,
+    "acceptedCount": 14,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 7,
+    "rejectedCount": 6,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 2,
-    "thumbnails": 15,
-    "subtitlesKnown": 12,
+    "duration": 1,
+    "thumbnails": 14,
+    "subtitlesKnown": 11,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -334,10 +319,10 @@
   "byPlatform": {
     "YouTube": 10,
     "Direct": 3,
-    "Kolektiva": 2
+    "Kolektiva": 1
   },
   "byLanguage": {
-    "en": 8,
+    "en": 7,
     "de": 3,
     "und": 3,
     "fr": 1
@@ -347,10 +332,10 @@
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1,
     "slackbastard": 1
   },
@@ -456,16 +441,6 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:j59X33a16yYUaZ3jEBRP7A",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
       "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc8e17e7_20261026105003_2026-10-26-sengal-ybs-sengaldeki-entegrasyona-dair-aciklama-1.mp4",
       "originalStatus": "reachable",
       "embedStatus": "not-applicable",
@@ -512,7 +487,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 2,
+      "itemCount": 1,
       "networkStatus": "reachable"
     },
     {
