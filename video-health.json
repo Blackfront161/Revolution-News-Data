@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T05:55:25.721Z",
+  "generatedAt": "2026-10-29T13:11:38.405Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 39,
-    "reachable": 37,
+    "checked": 41,
+    "reachable": 39,
     "failed": 2,
-    "metadataEnriched": 2,
+    "metadataEnriched": 14,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,10 +87,10 @@
       ]
     },
     "items": {
-      "checked": 16,
-      "reachable": 15,
+      "checked": 17,
+      "reachable": 16,
       "failed": 1,
-      "embedChecked": 13,
+      "embedChecked": 14,
       "results": [
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/f00c9dd0_20261027140608_26-10-2026-amed-arzoxli-kad%c4%b1nlar-mucadele-kararli-topragimizi-gese-kurban-etmeyecegiz-1.mp4",
@@ -101,6 +101,21 @@
             "finalUrl": "https://video.anf-news2.com/live/firat/f00c9dd0_20261027140608_26-10-2026-amed-arzoxli-kad%C4%B1nlar-mucadele-kararli-topragimizi-gese-kurban-etmeyecegiz-1.mp4"
           },
           "embed": null
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:h32MrpVnGZHvUDTZAX8JYG",
+          "original": {
+            "url": "https://kolektiva.media/w/h32MrpVnGZHvUDTZAX8JYG",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/h32MrpVnGZHvUDTZAX8JYG"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/h32MrpVnGZHvUDTZAX8JYG",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/h32MrpVnGZHvUDTZAX8JYG"
+          }
         },
         {
           "canonicalId": "youtube:59UZpkd5XMw",
@@ -115,21 +130,6 @@
             "ok": true,
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/59UZpkd5XMw?rel=0"
-          }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:9CtQ8S1jjMn1EZ8sbr7wFH",
-          "original": {
-            "url": "https://kolektiva.media/w/9CtQ8S1jjMn1EZ8sbr7wFH",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/9CtQ8S1jjMn1EZ8sbr7wFH"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/9CtQ8S1jjMn1EZ8sbr7wFH",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/9CtQ8S1jjMn1EZ8sbr7wFH"
           }
         },
         {
@@ -258,18 +258,18 @@
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+          "canonicalId": "peertube:https://kolektiva.media:9CtQ8S1jjMn1EZ8sbr7wFH",
           "original": {
-            "url": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1",
+            "url": "https://kolektiva.media/w/9CtQ8S1jjMn1EZ8sbr7wFH",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1"
+            "finalUrl": "https://kolektiva.media/w/9CtQ8S1jjMn1EZ8sbr7wFH"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1",
+            "url": "https://kolektiva.media/videos/embed/9CtQ8S1jjMn1EZ8sbr7wFH",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1"
+            "finalUrl": "https://kolektiva.media/videos/embed/9CtQ8S1jjMn1EZ8sbr7wFH"
           }
         },
         {
@@ -316,23 +316,38 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+          "original": {
+            "url": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/33gi192eCitdsPifRLYtH1"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/33gi192eCitdsPifRLYtH1"
+          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 16,
-    "acceptedBeforeQuota": 16,
-    "acceptedCount": 16,
+    "candidateCount": 17,
+    "acceptedBeforeQuota": 17,
+    "acceptedCount": 17,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
     "rejectedCount": 3,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 2,
-    "thumbnails": 16,
-    "subtitlesKnown": 2,
+    "duration": 3,
+    "thumbnails": 17,
+    "subtitlesKnown": 14,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -349,20 +364,21 @@
   "byPlatform": {
     "YouTube": 11,
     "Direct": 3,
-    "Kolektiva": 2
+    "Kolektiva": 3
   },
   "byLanguage": {
     "en": 7,
     "und": 4,
     "de": 3,
-    "fr": 2
+    "fr": 2,
+    "pt": 1
   },
   "bySource": {
+    "kolektiva-media-news": 3,
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
@@ -382,24 +398,24 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "youtube:59UZpkd5XMw",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:9CtQ8S1jjMn1EZ8sbr7wFH",
+      "canonicalId": "peertube:https://kolektiva.media:h32MrpVnGZHvUDTZAX8JYG",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:59UZpkd5XMw",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "attention"
     },
     {
       "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -407,7 +423,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 4,
+      "ageDays": 5,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -415,71 +431,71 @@
       "canonicalId": "youtube:AHGl9a8BcqI",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:mOlpZzlh09s",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:nrm4gj_eDGA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:0uNSjlCkxwA",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:tDDLFpz7pjE",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:lrTzjaXskUU",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:bgmClo2LPls",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "direct:https://video.anf-news2.com/live/firat/90c73c27_20261025134559_2026-10-25-zurih-nazan-ustundag-sosyolog-demokratik-entegrasyon-devletle-butunlesme-degildir-1.mp4",
@@ -492,7 +508,7 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+      "canonicalId": "peertube:https://kolektiva.media:9CtQ8S1jjMn1EZ8sbr7wFH",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -505,30 +521,40 @@
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:I0UGM8zeNLw",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:o8Btb1sGRK0",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
       "ageDays": null,
       "ageStatus": "unknown",
+      "status": "attention"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:33gi192eCitdsPifRLYtH1",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
       "status": "healthy"
     }
   ],
@@ -538,7 +564,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 2,
+      "itemCount": 3,
       "networkStatus": "reachable"
     },
     {
