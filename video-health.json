@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T22:50:15.636Z",
+  "generatedAt": "2026-10-30T05:56:44.371Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 35,
-    "reachable": 33,
+    "checked": 37,
+    "reachable": 35,
     "failed": 2,
-    "metadataEnriched": 11,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,26 @@
       ]
     },
     "items": {
-      "checked": 14,
-      "reachable": 13,
+      "checked": 15,
+      "reachable": 14,
       "failed": 1,
-      "embedChecked": 11,
+      "embedChecked": 12,
       "results": [
+        {
+          "canonicalId": "peertube:https://kolektiva.media:aN8HHJmMzF63bfCggvNVQz",
+          "original": {
+            "url": "https://kolektiva.media/w/aN8HHJmMzF63bfCggvNVQz",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/aN8HHJmMzF63bfCggvNVQz"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/aN8HHJmMzF63bfCggvNVQz",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/aN8HHJmMzF63bfCggvNVQz"
+          }
+        },
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/7ec6516d_20261029095010_2026-10-29-navenda-nuceyan-murat-karayilan-peyama-ji-bo-malbaten-sehiden-sengale-1.mp4",
           "original": {
@@ -291,18 +306,18 @@
     }
   },
   "totals": {
-    "candidateCount": 15,
-    "acceptedBeforeQuota": 15,
-    "acceptedCount": 14,
+    "candidateCount": 16,
+    "acceptedBeforeQuota": 16,
+    "acceptedCount": 15,
     "duplicateCount": 0,
     "quotaRemovedCount": 1,
     "rejectedCount": 6,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 0,
-    "thumbnails": 14,
-    "subtitlesKnown": 11,
+    "duration": 1,
+    "thumbnails": 15,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -318,13 +333,15 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 3
+    "Direct": 3,
+    "Kolektiva": 1
   },
   "byLanguage": {
     "en": 6,
     "de": 3,
     "und": 3,
-    "fr": 2
+    "fr": 2,
+    "pt": 1
   },
   "bySource": {
     "andrewism": 2,
@@ -334,11 +351,22 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1,
     "paris-luttes-fr": 1,
     "slackbastard": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "peertube:https://kolektiva.media:aN8HHJmMzF63bfCggvNVQz",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "direct:https://video.anf-news2.com/live/firat/7ec6516d_20261029095010_2026-10-29-navenda-nuceyan-murat-karayilan-peyama-ji-bo-malbaten-sehiden-sengale-1.mp4",
       "originalStatus": "reachable",
@@ -486,7 +514,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 0,
+      "itemCount": 1,
       "networkStatus": "reachable"
     },
     {
