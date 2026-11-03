@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-03T01:03:39.893Z",
+  "generatedAt": "2026-11-03T14:25:31.005Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 33,
-    "reachable": 31,
+    "checked": 35,
+    "reachable": 33,
     "failed": 2,
-    "metadataEnriched": 10,
+    "metadataEnriched": 11,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,26 @@
       ]
     },
     "items": {
-      "checked": 13,
-      "reachable": 12,
+      "checked": 14,
+      "reachable": 13,
       "failed": 1,
-      "embedChecked": 10,
+      "embedChecked": 11,
       "results": [
+        {
+          "canonicalId": "peertube:https://kolektiva.media:c6rV4yp15Cbp8aZjWRRErF",
+          "original": {
+            "url": "https://kolektiva.media/w/c6rV4yp15Cbp8aZjWRRErF",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/c6rV4yp15Cbp8aZjWRRErF"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/c6rV4yp15Cbp8aZjWRRErF",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/c6rV4yp15Cbp8aZjWRRErF"
+          }
+        },
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4",
           "original": {
@@ -276,18 +291,18 @@
     }
   },
   "totals": {
-    "candidateCount": 13,
-    "acceptedBeforeQuota": 13,
-    "acceptedCount": 13,
+    "candidateCount": 14,
+    "acceptedBeforeQuota": 14,
+    "acceptedCount": 14,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
     "rejectedCount": 7,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 0,
-    "thumbnails": 12,
-    "subtitlesKnown": 10,
+    "duration": 1,
+    "thumbnails": 13,
+    "subtitlesKnown": 11,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -303,12 +318,13 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Direct": 3
+    "Direct": 3,
+    "Kolektiva": 1
   },
   "byLanguage": {
     "en": 6,
+    "und": 4,
     "de": 3,
-    "und": 3,
     "fr": 1
   },
   "bySource": {
@@ -319,10 +335,21 @@
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
+    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1,
     "slackbastard": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "peertube:https://kolektiva.media:c6rV4yp15Cbp8aZjWRRErF",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "direct:https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4",
       "originalStatus": "reachable",
@@ -339,7 +366,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 9,
+      "ageDays": 10,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -460,7 +487,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 0,
+      "itemCount": 1,
       "networkStatus": "reachable"
     },
     {
