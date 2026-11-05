@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T06:35:16.895Z",
+  "generatedAt": "2026-11-05T06:56:26.223Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 35,
-    "reachable": 33,
+    "checked": 41,
+    "reachable": 39,
     "failed": 2,
-    "metadataEnriched": 11,
+    "metadataEnriched": 14,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,35 +87,65 @@
       ]
     },
     "items": {
-      "checked": 14,
-      "reachable": 13,
+      "checked": 17,
+      "reachable": 16,
       "failed": 1,
-      "embedChecked": 11,
+      "embedChecked": 14,
       "results": [
         {
-          "canonicalId": "peertube:https://kolektiva.media:c6rV4yp15Cbp8aZjWRRErF",
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/814f1fab_20261104123621_2026-11-04-edirne-tulay-hatimogullari-dem-parti-es-genel-baskani-edirne-cezaevi-aciklama-1.mp4",
           "original": {
-            "url": "https://kolektiva.media/w/c6rV4yp15Cbp8aZjWRRErF",
+            "url": "https://video.anf-news2.com/live/firat/814f1fab_20261104123621_2026-11-04-edirne-tulay-hatimogullari-dem-parti-es-genel-baskani-edirne-cezaevi-aciklama-1.mp4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/c6rV4yp15Cbp8aZjWRRErF"
+            "finalUrl": "https://video.anf-news2.com/live/firat/814f1fab_20261104123621_2026-11-04-edirne-tulay-hatimogullari-dem-parti-es-genel-baskani-edirne-cezaevi-aciklama-1.mp4"
+          },
+          "embed": null
+        },
+        {
+          "canonicalId": "youtube:N0zc_ynRQjM",
+          "original": {
+            "url": "https://www.youtube.com/watch?v=N0zc_ynRQjM",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?v=N0zc_ynRQjM"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/c6rV4yp15Cbp8aZjWRRErF",
+            "url": "https://www.youtube-nocookie.com/embed/N0zc_ynRQjM?rel=0",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/c6rV4yp15Cbp8aZjWRRErF"
+            "finalUrl": "https://www.youtube-nocookie.com/embed/N0zc_ynRQjM?rel=0"
           }
         },
         {
-          "canonicalId": "direct:https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4",
+          "canonicalId": "youtube:qsrUYewjs80",
           "original": {
-            "url": "https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4",
+            "url": "https://youtu.be/qsrUYewjs80?si=sKNMksjKnT0igeX9",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4"
+            "finalUrl": "https://www.youtube.com/watch?si=sKNMksjKnT0igeX9&v=qsrUYewjs80&feature=youtu.be"
           },
-          "embed": null
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/qsrUYewjs80?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/qsrUYewjs80?rel=0"
+          }
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:nU5nof8GhK48vWQhh3xJrP",
+          "original": {
+            "url": "https://kolektiva.media/w/nU5nof8GhK48vWQhh3xJrP",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/nU5nof8GhK48vWQhh3xJrP"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/nU5nof8GhK48vWQhh3xJrP",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/nU5nof8GhK48vWQhh3xJrP"
+          }
         },
         {
           "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
@@ -233,14 +263,29 @@
           }
         },
         {
-          "canonicalId": "direct:https://video.anf-news2.com/live/firat/b1a51dbd_20261030235855_2026-10-30-zurih-1-kasim-dunya-kobane-gunu-icin-eylem-1.mp4",
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/079bead5_20261104154836_2026-11-04-cenevre-onder-apo-icin-ozgurluk-nobeti-bm-ofisi-onunde-69-aylinda-devam-ediyor-1.mp4",
           "original": {
-            "url": "https://video.anf-news2.com/live/firat/b1a51dbd_20261030235855_2026-10-30-zurih-1-kasim-dunya-kobane-gunu-icin-eylem-1.mp4",
+            "url": "https://video.anf-news2.com/live/firat/079bead5_20261104154836_2026-11-04-cenevre-onder-apo-icin-ozgurluk-nobeti-bm-ofisi-onunde-69-aylinda-devam-ediyor-1.mp4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://video.anf-news2.com/live/firat/b1a51dbd_20261030235855_2026-10-30-zurih-1-kasim-dunya-kobane-gunu-icin-eylem-1.mp4"
+            "finalUrl": "https://video.anf-news2.com/live/firat/079bead5_20261104154836_2026-11-04-cenevre-onder-apo-icin-ozgurluk-nobeti-bm-ofisi-onunde-69-aylinda-devam-ediyor-1.mp4"
           },
           "embed": null
+        },
+        {
+          "canonicalId": "youtube:Qf4hUueq56Y",
+          "original": {
+            "url": "https://youtu.be/Qf4hUueq56Y?si=b9BIMKEaCT_4DTNu",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube.com/watch?si=b9BIMKEaCT_4DTNu&v=Qf4hUueq56Y&feature=youtu.be"
+          },
+          "embed": {
+            "url": "https://www.youtube-nocookie.com/embed/Qf4hUueq56Y?rel=0",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://www.youtube-nocookie.com/embed/Qf4hUueq56Y?rel=0"
+          }
         },
         {
           "canonicalId": "youtube:mfEYye6TNlk",
@@ -291,18 +336,18 @@
     }
   },
   "totals": {
-    "candidateCount": 14,
-    "acceptedBeforeQuota": 14,
-    "acceptedCount": 14,
+    "candidateCount": 19,
+    "acceptedBeforeQuota": 19,
+    "acceptedCount": 17,
     "duplicateCount": 0,
-    "quotaRemovedCount": 0,
-    "rejectedCount": 7,
+    "quotaRemovedCount": 2,
+    "rejectedCount": 9,
     "registrySources": 10
   },
   "coverage": {
     "duration": 1,
-    "thumbnails": 13,
-    "subtitlesKnown": 11,
+    "thumbnails": 15,
+    "subtitlesKnown": 14,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -317,46 +362,70 @@
     "originalUrl": 0
   },
   "byPlatform": {
-    "YouTube": 10,
+    "YouTube": 13,
     "Direct": 3,
     "Kolektiva": 1
   },
   "byLanguage": {
     "en": 6,
-    "und": 4,
+    "und": 5,
     "de": 3,
-    "fr": 1
+    "es": 1,
+    "fr": 1,
+    "zxx": 1
   },
   "bySource": {
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "federacja-anarchistyczna-pl": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
     "kolektiva-media-news": 1,
+    "la-zarzamora": 1,
     "notre-histoire-anarchism": 1,
     "slackbastard": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "peertube:https://kolektiva.media:c6rV4yp15Cbp8aZjWRRErF",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://video.anf-news2.com/live/firat/b62c3f26_20261031121003_2026-10-31-ankara-hikmet-kilinc-ipek-er-annesi-kadinlar-yan-yana-gelecegi-konusuyor-konferansi-cagri-1.mp4",
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/814f1fab_20261104123621_2026-11-04-edirne-tulay-hatimogullari-dem-parti-es-genel-baskani-edirne-cezaevi-aciklama-1.mp4",
       "originalStatus": "reachable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:N0zc_ynRQjM",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
+    },
+    {
+      "canonicalId": "youtube:qsrUYewjs80",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:nU5nof8GhK48vWQhh3xJrP",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -366,7 +435,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 10,
+      "ageDays": 11,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -435,20 +504,30 @@
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "playabilityReason": "Private video",
       "ageDays": null,
       "ageStatus": "unknown",
       "status": "attention"
     },
     {
-      "canonicalId": "direct:https://video.anf-news2.com/live/firat/b1a51dbd_20261030235855_2026-10-30-zurih-1-kasim-dunya-kobane-gunu-icin-eylem-1.mp4",
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/079bead5_20261104154836_2026-11-04-cenevre-onder-apo-icin-ozgurluk-nobeti-bm-ofisi-onunde-69-aylinda-devam-ediyor-1.mp4",
       "originalStatus": "reachable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
+    },
+    {
+      "canonicalId": "youtube:Qf4hUueq56Y",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "LOGIN_REQUIRED",
+      "playabilityReason": "Sign in to confirm you’re not a bot",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:mfEYye6TNlk",
