@@ -2487,6 +2487,17 @@ for kontinent, feeds in active_sources.items():
                 if any(bad in title_lower or bad in safe_lower(author) for bad in SPAM_BLACKLIST):
                     continue
 
+                existing_article = archiv_dict.get(link)
+                # A publisher may expose the same URL in news and agenda RSS.
+                # Never mutate a retained news record through the agenda lane:
+                # checkpoint routing uses kontinent, while clients use type.
+                if (
+                    is_radar
+                    and existing_article
+                    and existing_article.get("kontinent") != "Radar"
+                ):
+                    continue
+
                 # Restricted sources bypass every body/image extraction and page scrape,
                 # including enrichment of an existing link. A feed is not a rights grant.
                 if feed.get("importMode") == "metadata-only":
@@ -2503,7 +2514,6 @@ for kontinent, feeds in active_sources.items():
                     continue
 
                 # IST DER ARTIKEL SCHON BEKANNT? (Ultraschnell überspringen!)
-                existing_article = archiv_dict.get(link)
                 previous_text_length = len(safe_text(
                     existing_article.get("content") if existing_article else ""
                 ))
