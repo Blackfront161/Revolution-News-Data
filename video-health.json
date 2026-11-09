@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T06:45:42.257Z",
+  "generatedAt": "2026-11-09T22:27:52.165Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 40,
+    "checked": 39,
     "reachable": 38,
-    "failed": 2,
+    "failed": 1,
     "metadataEnriched": 13,
     "sources": {
       "checked": 10,
@@ -87,9 +87,9 @@
       ]
     },
     "items": {
-      "checked": 17,
+      "checked": 16,
       "reachable": 16,
-      "failed": 1,
+      "failed": 0,
       "embedChecked": 13,
       "results": [
         {
@@ -141,16 +141,6 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/N0zc_ynRQjM?rel=0"
           }
-        },
-        {
-          "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
-          "original": {
-            "url": "https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
-            "ok": false,
-            "status": 403,
-            "finalUrl": "https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4"
-          },
-          "embed": null
         },
         {
           "canonicalId": "youtube:AHGl9a8BcqI",
@@ -331,9 +321,9 @@
     }
   },
   "totals": {
-    "candidateCount": 19,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 17,
+    "candidateCount": 18,
+    "acceptedBeforeQuota": 18,
+    "acceptedCount": 16,
     "duplicateCount": 0,
     "quotaRemovedCount": 2,
     "rejectedCount": 8,
@@ -341,7 +331,7 @@
   },
   "coverage": {
     "duration": 2,
-    "thumbnails": 16,
+    "thumbnails": 15,
     "subtitlesKnown": 13,
     "transcripts": 0
   },
@@ -358,12 +348,12 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 4,
+    "Direct": 3,
     "Kolektiva": 2
   },
   "byLanguage": {
     "en": 6,
-    "und": 6,
+    "und": 5,
     "de": 3,
     "es": 1,
     "fr": 1
@@ -379,8 +369,7 @@
     "david-graeber-archive": 1,
     "indymedia-argentina": 1,
     "la-zarzamora": 1,
-    "notre-histoire-anarchism": 1,
-    "slackbastard": 1
+    "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
@@ -399,7 +388,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -409,7 +398,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 4,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -419,17 +408,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 4,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://slackbastard.anarchobase.com/wp-content/uploads/2026/10/jamesf.mp4",
-      "originalStatus": "blocked",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 15,
+      "ageDays": 5,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -509,7 +488,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -519,7 +498,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
