@@ -314,8 +314,9 @@ def bind_quick_details(quick_feed: list[dict[str, Any]], chunks: dict[str, list[
             item.pop(field, None)
         identifier = source_id(source_name(item))
         matches = []
-        source_rows = chunks.get(detail_index_id(source_name(item)), chunks.get(identifier, []))
-        for row in source_rows:
+        if detail_index_id(source_name(item)) in chunks:
+            identifier = detail_index_id(source_name(item))
+        for row in chunks.get(identifier, []):
             path = row.get("detailPath", "")
             if DETAIL_PATH.fullmatch(path):
                 candidates = chunks.get(path.removeprefix("news-archive/").removesuffix(".json"), [])

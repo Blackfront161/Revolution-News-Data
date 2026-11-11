@@ -282,3 +282,18 @@ def test_malformed_source_policy_refuses_all_output_changes(tmp_path, monkeypatc
     with pytest.raises(ValueError, match='Invalid source policies'):
         b.main()
     assert outputs(tmp_path) == before
+
+
+def test_inline_body_inside_v2_index_binds_to_the_v2_path():
+    rows = [article(i) for i in range(5)]
+    short = article(99, 'x' * 1000)
+    card = dict(short, content='x' * 500, contentComplete=False,
+                webFeedTruncated=True, webFeedOriginalLength=1000)
+    cards = [quick(row) for row in rows] + [card]
+    _, chunks = b.build_source_archives(rows + [short], cards, generated_at=NOW)
+    assert b.source_id(NAME) not in chunks
+    index = chunks[b.detail_index_id(NAME)]
+    assert next(row for row in index if row['link'] == short['link'])['content'] == short['content']
+    bound = b.bind_quick_details([card], chunks)[0]
+    assert bound['detailPath'] == f'news-archive/{b.detail_index_id(NAME)}.json'
+    assert 'detailRevision' not in bound

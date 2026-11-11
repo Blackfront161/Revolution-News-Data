@@ -14,6 +14,12 @@ limit, complete long article bodies move into immutable, one-article JSON lists:
 news-archive/details/<sha256>.json
 ```
 
+Externalized sources receive a distinct manifest `source.id` and index basename
+ending in `-details-v2`. The explicit `legacyId` is the previous v1 identity.
+This prevents older readers from overwriting their IDB, fetch-key and URL-keyed
+full-text caches with a compact index. It does not authorize substitution of an
+old body as a new revision.
+
 The digest covers the exact UTF-8 bytes of compact JSON plus the final LF. The
 index card has `contentComplete: false`, `webFeedTruncated: true`, the original
 cleaned text length, and matching `detailPath`, `detailRevision`, and `detailUrl`.
@@ -52,7 +58,8 @@ Deploy compatible App and Website readers before enabling this builder in the
 production data workflow. Readers must verify exact revision bytes and identity,
 try approved archive mirrors, and cache verified details under revision-specific
 keys. Cache quota/write failures must not replace a valid downloaded response
-with stale data or an empty successful JSON list. A source may return to its v1 identity only when the entire retained list fits
+with stale data or an empty successful JSON list. A source may return to its
+v1 identity only when the entire retained list fits
 with its admitted complete bodies inline again. Old v1 datasets must not be
 overwritten by the new excerpt-only index cache.
 
