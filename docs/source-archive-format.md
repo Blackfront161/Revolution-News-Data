@@ -40,6 +40,10 @@ when it leaves `news.json`. Current canonical records override older revisions.
 Incomplete records are not promoted to complete text. This change cannot
 recover content that was already absent or truncated before the repair.
 
+An empty canonical `news.json` is rejected by the production command before any
+output changes. Removal from a bounded, non-empty index still retains eligible
+previous articles.
+
 Previous index files and referenced details are checked before any outputs are
 changed. Detail digest, article identity, publication date, length, and excerpt
 must match. Missing or corrupt details stop the build rather than silently

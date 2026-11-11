@@ -397,6 +397,8 @@ def main() -> None:
     args = parser.parse_args()
 
     news = read_article_list(args.news, "news.json")
+    if not news:
+        raise ValueError("news.json is empty; refusing archive changes")
     quick_feed = read_article_list(args.quick_feed, "quick feed")
 
     previous_manifest = read_json(args.manifest, {})

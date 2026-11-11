@@ -87,11 +87,13 @@ def outputs(root):
 def test_serialized_rollover_retains_every_full_body_then_expires(tmp_path, monkeypatch):
     rows = setup_cli(tmp_path, monkeypatch)
     b.main()
-    b.write_payload(tmp_path / 'news.json', [])
+    unrelated = dict(article(99, 'Unrelated new article'), quelleName='Another source')
+    b.write_payload(tmp_path / 'news.json', [unrelated])
     b.write_payload(tmp_path / 'news-feed.json', [])
     b.main()
     actual = b.read_previous_archives(tmp_path / 'news-archive')
-    assert {r['link']: r['content'] for r in actual} == {r['link']: r['content'] for r in rows}
+    assert {r['link']: r['content'] for r in actual if r['quelleName'] == NAME} == {r['link']: r['content'] for r in rows}
+    assert unrelated in actual
     # Explicit expiry, not removal from the bounded current-news index.
     class Later(datetime):
         @classmethod
@@ -146,7 +148,8 @@ def test_current_changes_cannot_restore_stale_text(tmp_path, monkeypatch):
 def test_policy_applies_to_retained_detail_files(tmp_path, monkeypatch, mode):
     rows = setup_cli(tmp_path, monkeypatch)
     b.main()
-    b.write_payload(tmp_path / 'news.json', [])
+    unrelated = dict(article(99, 'Unrelated new article'), quelleName='Another source')
+    b.write_payload(tmp_path / 'news.json', [unrelated])
     b.write_payload(tmp_path / 'news-feed.json', [])
     policy = dict(name=NAME, homepage='https://example.org/', categories=['Global'], languages=['en'])
     if mode == 'withdrawn':
@@ -157,7 +160,7 @@ def test_policy_applies_to_retained_detail_files(tmp_path, monkeypatch, mode):
         policy.update(status='disabled', enabled=False)
     b.write_payload(tmp_path / 'multilingual-source-registry.json', {'sources': [policy]})
     b.main()
-    retained = b.read_previous_archives(tmp_path / 'news-archive')
+    retained = [r for r in b.read_previous_archives(tmp_path / 'news-archive') if r['quelleName'] == NAME]
     if mode == 'technical-pause':
         assert {r['link']: r['content'] for r in retained} == {r['link']: r['content'] for r in rows}
     else:
@@ -182,7 +185,8 @@ def test_single_oversized_article_still_fails_without_touching_outputs(tmp_path,
 def test_quick_feed_tombstone_wins_over_old_complete_body(tmp_path, monkeypatch):
     rows = setup_cli(tmp_path, monkeypatch)
     b.main()
-    b.write_payload(tmp_path / 'news.json', [])
+    unrelated = dict(article(99, 'Unrelated new article'), quelleName='Another source')
+    b.write_payload(tmp_path / 'news.json', [unrelated])
     b.write_payload(tmp_path / 'news-feed.json', [dict(quick(rows[0]), status='withdrawn')])
     b.main()
     retained = b.read_previous_archives(tmp_path / 'news-archive')
@@ -209,7 +213,8 @@ def test_incomplete_previous_detail_reference_is_never_demoted(tmp_path, monkeyp
 def test_index_restriction_cannot_be_undone_by_hydration(tmp_path, monkeypatch, restriction):
     rows = setup_cli(tmp_path, monkeypatch)
     b.main()
-    b.write_payload(tmp_path / 'news.json', [])
+    unrelated = dict(article(99, 'Unrelated new article'), quelleName='Another source')
+    b.write_payload(tmp_path / 'news.json', [unrelated])
     b.write_payload(tmp_path / 'news-feed.json', [])
     index = tmp_path / 'news-archive' / f'{b.detail_index_id(NAME)}.json'
     cards = json.loads(index.read_text())
@@ -297,3 +302,13 @@ def test_inline_body_inside_v2_index_binds_to_the_v2_path():
     bound = b.bind_quick_details([card], chunks)[0]
     assert bound['detailPath'] == f'news-archive/{b.detail_index_id(NAME)}.json'
     assert 'detailRevision' not in bound
+
+
+def test_empty_canonical_news_refuses_all_output_changes(tmp_path, monkeypatch):
+    setup_cli(tmp_path, monkeypatch)
+    b.main()
+    b.write_payload(tmp_path / 'news.json', [])
+    before = outputs(tmp_path)
+    with pytest.raises(ValueError, match='news.json is empty; refusing archive changes'):
+        b.main()
+    assert outputs(tmp_path) == before
