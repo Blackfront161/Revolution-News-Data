@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T06:35:53.009Z",
+  "generatedAt": "2026-11-11T19:41:02.992Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 38,
-    "reachable": 37,
+    "checked": 36,
+    "reachable": 35,
     "failed": 1,
-    "metadataEnriched": 13,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,21 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 15,
+      "checked": 14,
+      "reachable": 14,
       "failed": 0,
-      "embedChecked": 13,
+      "embedChecked": 12,
       "results": [
+        {
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/2ff679a0_20261111095750_2026-11-11-habermerkezi-siyar-sevger-yrk-komutanligi-uyesi-nirxandin-1.mp4",
+          "original": {
+            "url": "https://video.anf-news2.com/live/firat/2ff679a0_20261111095750_2026-11-11-habermerkezi-siyar-sevger-yrk-komutanligi-uyesi-nirxandin-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/2ff679a0_20261111095750_2026-11-11-habermerkezi-siyar-sevger-yrk-komutanligi-uyesi-nirxandin-1.mp4"
+          },
+          "embed": null
+        },
         {
           "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
           "original": {
@@ -106,41 +116,6 @@
             "status": 200,
             "finalUrl": "https://kolektiva.media/videos/embed/47E85unUrYfYucJ2wryZzc"
           }
-        },
-        {
-          "canonicalId": "youtube:8t3NoHl-55Y",
-          "original": {
-            "url": "https://www.youtube.com/watch?v=8t3NoHl-55Y",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube.com/watch?v=8t3NoHl-55Y"
-          },
-          "embed": {
-            "url": "https://www.youtube-nocookie.com/embed/8t3NoHl-55Y?rel=0",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube-nocookie.com/embed/8t3NoHl-55Y?rel=0"
-          }
-        },
-        {
-          "canonicalId": "direct:https://video.anf-news2.com/live/firat/0a66ee8f_20261110152022_2026-11-10-izmir-tulay-hatimogullari-dem-parti-es-genel-baskani-habas-is-cinayeti-aciklama-1.mp4",
-          "original": {
-            "url": "https://video.anf-news2.com/live/firat/0a66ee8f_20261110152022_2026-11-10-izmir-tulay-hatimogullari-dem-parti-es-genel-baskani-habas-is-cinayeti-aciklama-1.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://video.anf-news2.com/live/firat/0a66ee8f_20261110152022_2026-11-10-izmir-tulay-hatimogullari-dem-parti-es-genel-baskani-habas-is-cinayeti-aciklama-1.mp4"
-          },
-          "embed": null
-        },
-        {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/11/intimidacion-policial.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/11/Intimidacion-policial.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/11/Intimidacion-policial.mp4"
-          },
-          "embed": null
         },
         {
           "canonicalId": "youtube:AHGl9a8BcqI",
@@ -248,6 +223,16 @@
           }
         },
         {
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/6a4204e4_20261110234226_2026-11-11-amed-filiz-bayram_mehmet-emin-kilic_seniha-yolay-sehit-aileleri-sehit-anma_1.mp4",
+          "original": {
+            "url": "https://video.anf-news2.com/live/firat/6a4204e4_20261110234226_2026-11-11-amed-filiz-bayram_mehmet-emin-kilic_seniha-yolay-sehit-aileleri-sehit-anma_1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/6a4204e4_20261110234226_2026-11-11-amed-filiz-bayram_mehmet-emin-kilic_seniha-yolay-sehit-aileleri-sehit-anma_1.mp4"
+          },
+          "embed": null
+        },
+        {
           "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
           "original": {
             "url": "https://kolektiva.media/w/jZgi1meU9959vvUge9wFuW",
@@ -311,18 +296,18 @@
     }
   },
   "totals": {
-    "candidateCount": 15,
-    "acceptedBeforeQuota": 15,
-    "acceptedCount": 15,
+    "candidateCount": 16,
+    "acceptedBeforeQuota": 16,
+    "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 0,
-    "rejectedCount": 9,
+    "quotaRemovedCount": 2,
+    "rejectedCount": 8,
     "registrySources": 10
   },
   "coverage": {
     "duration": 2,
     "thumbnails": 14,
-    "subtitlesKnown": 13,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -337,32 +322,40 @@
     "originalUrl": 0
   },
   "byPlatform": {
-    "YouTube": 11,
+    "YouTube": 10,
     "Direct": 2,
     "Kolektiva": 2
   },
   "byLanguage": {
     "en": 6,
     "de": 3,
-    "und": 3,
+    "und": 2,
     "fr": 1,
     "pt": 1,
     "zxx": 1
   },
   "bySource": {
     "andrewism": 2,
+    "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
     "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
-    "anarchist-federation": 1,
     "anarchistische-gemeinschaft-video": 1,
-    "anf-english-kurdistan": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/2ff679a0_20261111095750_2026-11-11-habermerkezi-siyar-sevger-yrk-komutanligi-uyesi-nirxandin-1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
     {
       "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
       "originalStatus": "reachable",
@@ -370,36 +363,6 @@
       "platformStatus": "OK",
       "playabilityReason": "",
       "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "youtube:8t3NoHl-55Y",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "LIVE_STREAM_OFFLINE",
-      "playabilityReason": "This live event will begin in 3 hours.",
-      "ageDays": 5,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://video.anf-news2.com/live/firat/0a66ee8f_20261110152022_2026-11-10-izmir-tulay-hatimogullari-dem-parti-es-genel-baskani-habas-is-cinayeti-aciklama-1.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/11/intimidacion-policial.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
-      "ageDays": 5,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -474,12 +437,22 @@
       "status": "attention"
     },
     {
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/6a4204e4_20261110234226_2026-11-11-amed-filiz-bayram_mehmet-emin-kilic_seniha-yolay-sehit-aileleri-sehit-anma_1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
