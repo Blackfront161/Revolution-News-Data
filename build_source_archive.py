@@ -22,6 +22,7 @@ DEFAULT_DAYS = 30
 DEFAULT_EXCERPT_LIMIT = 1400
 MAX_SOURCE_PACKAGE_BYTES = 4 * 1024 * 1024
 PUBLIC_ARCHIVE_BASE = "https://blackfront161.github.io/Revolution-News-Data/"
+DETAIL_INDEX_SUFFIX = "-details-v2"
 DETAIL_PATH = re.compile(r"news-archive/details/([0-9a-f]{64})\.json\Z")
 CARD_FIELDS = (
     "kontinent", "categories", "primaryRegion", "primaryTopic",
@@ -74,6 +75,11 @@ def source_id(name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", ascii_name.casefold()).strip("-")[:54]
     digest = hashlib.sha256(name.casefold().encode("utf-8")).hexdigest()[:8]
     return f"{slug or 'source'}-{digest}"
+
+
+def detail_index_id(name: str) -> str:
+    """A distinct identity also protects older IDB and URL-keyed caches."""
+    return source_id(name) + DETAIL_INDEX_SUFFIX
 
 
 def detail_matches(quick: dict[str, Any], full: dict[str, Any]) -> bool:
@@ -204,6 +210,9 @@ def build_source_archives(
         if len(payload_bytes(projected)) > MAX_SOURCE_PACKAGE_BYTES:
             projected, details = split_source_details(projected, excerpt_limit)
             chunks.update(details)
+            # Legacy clients key their durable cache by manifest source.id.
+            # A card-only index must not overwrite a cached v1 full-text list.
+            identifier = detail_index_id(name)
         assert_package_size(identifier, projected)
         chunks[identifier] = projected
         oldest = rows[-1][0]
@@ -215,6 +224,7 @@ def build_source_archives(
         )
         sources.append({
             "id": identifier,
+            **({"legacyId": source_id(name)} if identifier != source_id(name) else {}),
             "name": name,
             "path": f"news-archive/{identifier}.json",
             "itemCount": len(rows),
@@ -304,7 +314,8 @@ def bind_quick_details(quick_feed: list[dict[str, Any]], chunks: dict[str, list[
             item.pop(field, None)
         identifier = source_id(source_name(item))
         matches = []
-        for row in chunks.get(identifier, []):
+        source_rows = chunks.get(detail_index_id(source_name(item)), chunks.get(identifier, []))
+        for row in source_rows:
             path = row.get("detailPath", "")
             if DETAIL_PATH.fullmatch(path):
                 candidates = chunks.get(path.removeprefix("news-archive/").removesuffix(".json"), [])
@@ -396,7 +407,9 @@ def main() -> None:
     previous_articles = read_previous_archives(args.output)
     registry = json.loads((ROOT / "multilingual-source-registry.json").read_text(encoding="utf-8"))
     source_policies = registry.get("sources") if isinstance(registry, dict) else None
-    if not isinstance(source_policies, list) or any(not isinstance(row, dict) for row in source_policies):
+    if not isinstance(source_policies, list) or any(
+            not isinstance(row, dict) or not isinstance(row.get("name"), str)
+            or not row["name"].strip() for row in source_policies):
         raise ValueError("Invalid source policies; refusing archive changes")
     withdrawn_keys = explicit_withdrawal_keys(news, previous_articles, quick_feed)
     quick_feed = bind_quick_details(quick_feed, {}, source_policies=source_policies,

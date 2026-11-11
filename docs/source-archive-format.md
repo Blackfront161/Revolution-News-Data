@@ -52,7 +52,8 @@ Deploy compatible App and Website readers before enabling this builder in the
 production data workflow. Readers must verify exact revision bytes and identity,
 try approved archive mirrors, and cache verified details under revision-specific
 keys. Cache quota/write failures must not replace a valid downloaded response
-with stale data or an empty successful JSON list. Old v1 datasets must not be
+with stale data or an empty successful JSON list. A source may return to its v1 identity only when the entire retained list fits
+with its admitted complete bodies inline again. Old v1 datasets must not be
 overwritten by the new excerpt-only index cache.
 
 Regression suite:

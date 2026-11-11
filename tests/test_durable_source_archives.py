@@ -41,7 +41,11 @@ def test_more_than_eight_mib_is_split_losslessly_for_every_source():
         rows = [dict(article(i), quelleName=name) for i in range(10)]
         assert len(b.payload_bytes(rows)) > 8 * 1024 * 1024
         manifest, chunks = b.build_source_archives(rows, [quick(r) for r in rows], generated_at=NOW)
-        cards = chunks[b.source_id(name)]
+        cards = chunks[b.detail_index_id(name)]
+        assert manifest["sources"][0]["id"] == b.detail_index_id(name)
+        assert manifest["sources"][0]["legacyId"] == b.source_id(name)
+        assert manifest["sources"][0]["path"] == f"news-archive/{b.detail_index_id(name)}.json"
+        assert b.detail_index_id(name) != b.source_id(name)
         assert manifest['schemaVersion'] == 1 and manifest['itemCount'] == len(rows)
         assert len(cards) == len(rows)
         assert all(len(b.payload_bytes(group)) <= 4 * 1024 * 1024 for group in chunks.values())
@@ -104,7 +108,7 @@ def test_corrupt_previous_data_refuses_all_output_changes(tmp_path, monkeypatch,
     setup_cli(tmp_path, monkeypatch)
     b.main()
     archive = tmp_path / 'news-archive'
-    index = archive / f'{b.source_id(NAME)}.json'
+    index = archive / f'{b.detail_index_id(NAME)}.json'
     cards = json.loads(index.read_text())
     target = archive / 'details' / (cards[0]['detailRevision'] + '.json')
     if broken == 'missing':
@@ -191,7 +195,7 @@ def test_quick_feed_tombstone_wins_over_old_complete_body(tmp_path, monkeypatch)
 def test_incomplete_previous_detail_reference_is_never_demoted(tmp_path, monkeypatch, field):
     setup_cli(tmp_path, monkeypatch)
     b.main()
-    index = tmp_path / 'news-archive' / f'{b.source_id(NAME)}.json'
+    index = tmp_path / 'news-archive' / f'{b.detail_index_id(NAME)}.json'
     cards = json.loads(index.read_text())
     del cards[0][field]
     b.write_payload(index, cards)
@@ -207,7 +211,7 @@ def test_index_restriction_cannot_be_undone_by_hydration(tmp_path, monkeypatch, 
     b.main()
     b.write_payload(tmp_path / 'news.json', [])
     b.write_payload(tmp_path / 'news-feed.json', [])
-    index = tmp_path / 'news-archive' / f'{b.source_id(NAME)}.json'
+    index = tmp_path / 'news-archive' / f'{b.detail_index_id(NAME)}.json'
     cards = json.loads(index.read_text())
     previous_detail = tmp_path / cards[0]['detailPath']
     cards[0].update(restriction)
@@ -237,7 +241,7 @@ def test_row_level_metadata_only_drops_all_secondary_content_fields():
 def test_detail_date_must_match_the_retained_index(tmp_path, monkeypatch, date):
     setup_cli(tmp_path, monkeypatch)
     b.main()
-    index = tmp_path / 'news-archive' / f'{b.source_id(NAME)}.json'
+    index = tmp_path / 'news-archive' / f'{b.detail_index_id(NAME)}.json'
     cards = json.loads(index.read_text())
     old = tmp_path / cards[0]['detailPath']
     full = json.loads(old.read_text())
@@ -250,5 +254,31 @@ def test_detail_date_must_match_the_retained_index(tmp_path, monkeypatch, date):
     b.write_payload(index, cards)
     before = outputs(tmp_path)
     with pytest.raises(ValueError, match='revision mismatch'):
+        b.main()
+    assert outputs(tmp_path) == before
+
+
+def test_source_identity_returns_to_v1_only_with_full_inline_bodies():
+    rows = [article(i) for i in range(5)]
+    manifest, chunks = b.build_source_archives(rows, [quick(r) for r in rows], generated_at=NOW)
+    cards = chunks[b.detail_index_id(NAME)]
+    hydrated = [resolved(chunks, card) for card in cards]
+    # Simulate expiry of four items. The remaining old body must be inline,
+    # never a compact excerpt replacing an old v1 cache entry.
+    kept = hydrated[:1]
+    manifest, chunks = b.build_source_archives([], [], previous_articles=kept, generated_at=NOW)
+    assert manifest['sources'][0]['id'] == b.source_id(NAME)
+    assert list(chunks) == [b.source_id(NAME)]
+    assert chunks[b.source_id(NAME)][0]['content'] == kept[0]['content']
+    assert chunks[b.source_id(NAME)][0]['contentComplete'] is True
+
+
+@pytest.mark.parametrize('bad_policy', [{}, {'name': ''}, {'name': 9}, {'importMode': 'metadata-only'}])
+def test_malformed_source_policy_refuses_all_output_changes(tmp_path, monkeypatch, bad_policy):
+    setup_cli(tmp_path, monkeypatch)
+    b.main()
+    b.write_payload(tmp_path / 'multilingual-source-registry.json', {'sources': [bad_policy]})
+    before = outputs(tmp_path)
+    with pytest.raises(ValueError, match='Invalid source policies'):
         b.main()
     assert outputs(tmp_path) == before
