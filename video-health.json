@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T19:41:02.992Z",
+  "generatedAt": "2026-11-12T07:19:43.343Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 36,
-    "reachable": 35,
+    "checked": 38,
+    "reachable": 37,
     "failed": 1,
-    "metadataEnriched": 12,
+    "metadataEnriched": 13,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,10 +87,10 @@
       ]
     },
     "items": {
-      "checked": 14,
-      "reachable": 14,
+      "checked": 15,
+      "reachable": 15,
       "failed": 0,
-      "embedChecked": 12,
+      "embedChecked": 13,
       "results": [
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/2ff679a0_20261111095750_2026-11-11-habermerkezi-siyar-sevger-yrk-komutanligi-uyesi-nirxandin-1.mp4",
@@ -103,18 +103,18 @@
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
+          "canonicalId": "peertube:https://kolektiva.media:1upErLbwxSXc8uaxK3RayP",
           "original": {
-            "url": "https://kolektiva.media/w/47E85unUrYfYucJ2wryZzc",
+            "url": "https://kolektiva.media/w/1upErLbwxSXc8uaxK3RayP",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/47E85unUrYfYucJ2wryZzc"
+            "finalUrl": "https://kolektiva.media/w/1upErLbwxSXc8uaxK3RayP"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/47E85unUrYfYucJ2wryZzc",
+            "url": "https://kolektiva.media/videos/embed/1upErLbwxSXc8uaxK3RayP",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/47E85unUrYfYucJ2wryZzc"
+            "finalUrl": "https://kolektiva.media/videos/embed/1upErLbwxSXc8uaxK3RayP"
           }
         },
         {
@@ -233,18 +233,18 @@
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
+          "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
           "original": {
-            "url": "https://kolektiva.media/w/jZgi1meU9959vvUge9wFuW",
+            "url": "https://kolektiva.media/w/47E85unUrYfYucJ2wryZzc",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/jZgi1meU9959vvUge9wFuW"
+            "finalUrl": "https://kolektiva.media/w/47E85unUrYfYucJ2wryZzc"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/jZgi1meU9959vvUge9wFuW",
+            "url": "https://kolektiva.media/videos/embed/47E85unUrYfYucJ2wryZzc",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/jZgi1meU9959vvUge9wFuW"
+            "finalUrl": "https://kolektiva.media/videos/embed/47E85unUrYfYucJ2wryZzc"
           }
         },
         {
@@ -291,23 +291,38 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
+          "original": {
+            "url": "https://kolektiva.media/w/jZgi1meU9959vvUge9wFuW",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/jZgi1meU9959vvUge9wFuW"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/jZgi1meU9959vvUge9wFuW",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/jZgi1meU9959vvUge9wFuW"
+          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 16,
-    "acceptedBeforeQuota": 16,
-    "acceptedCount": 14,
+    "candidateCount": 17,
+    "acceptedBeforeQuota": 17,
+    "acceptedCount": 15,
     "duplicateCount": 0,
     "quotaRemovedCount": 2,
-    "rejectedCount": 8,
+    "rejectedCount": 6,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 2,
-    "thumbnails": 14,
-    "subtitlesKnown": 12,
+    "duration": 3,
+    "thumbnails": 15,
+    "subtitlesKnown": 13,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -323,23 +338,23 @@
   },
   "byPlatform": {
     "YouTube": 10,
-    "Direct": 2,
-    "Kolektiva": 2
+    "Kolektiva": 3,
+    "Direct": 2
   },
   "byLanguage": {
     "en": 6,
     "de": 3,
-    "und": 2,
+    "und": 3,
     "fr": 1,
     "pt": 1,
     "zxx": 1
   },
   "bySource": {
+    "kolektiva-media-news": 3,
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "david-graeber-archive": 1,
@@ -357,7 +372,7 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
+      "canonicalId": "peertube:https://kolektiva.media:1upErLbwxSXc8uaxK3RayP",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -447,7 +462,7 @@
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
+      "canonicalId": "peertube:https://kolektiva.media:47E85unUrYfYucJ2wryZzc",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
@@ -485,6 +500,16 @@
       "ageDays": null,
       "ageStatus": "unknown",
       "status": "attention"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:jZgi1meU9959vvUge9wFuW",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 1,
+      "ageStatus": "current",
+      "status": "healthy"
     }
   ],
   "sources": [
@@ -493,7 +518,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 2,
+      "itemCount": 3,
       "networkStatus": "reachable"
     },
     {
