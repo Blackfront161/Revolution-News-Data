@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-11-11T20:24:02.453407+00:00",
+  "generatedAt": "2026-11-12T01:30:07.485803+00:00",
   "sourceCount": 482,
   "activeSourceCount": 480,
   "knownLanguages": [
@@ -1317,7 +1317,9 @@
       "categories": [
         "Global",
         "Movement News",
-        "Labor Struggles",
+        "No War",
+        "No Borders",
+        "Demonstrations",
         "sources"
       ],
       "mediaType": "news",
@@ -2112,7 +2114,6 @@
       "categories": [
         "Europe",
         "Movement News",
-        "Antifascism",
         "sources"
       ],
       "mediaType": "news",
@@ -3252,17 +3253,17 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Indigenous Struggles",
         "Global",
+        "Indigenous Struggles",
         "Eco-Anarchism",
-        "Asia",
-        "Movement News",
         "No War",
         "Anti-Imperialism",
+        "Cyberactivism",
         "Anti-Rep & Prisons",
         "sources",
-        "Demonstrations",
-        "Cyberactivism"
+        "Asia",
+        "Movement News",
+        "Demonstrations"
       ],
       "mediaType": "news",
       "status": "active",
@@ -3645,8 +3646,7 @@
         "North America",
         "sources",
         "No War",
-        "Antiracism",
-        "Anticapitalism"
+        "Antiracism"
       ],
       "mediaType": "news",
       "status": "active",
@@ -4052,8 +4052,8 @@
         "No War",
         "Movement News",
         "No Borders",
-        "Antifascism",
         "Anti-Rep & Prisons",
+        "Antifascism",
         "Queer-Feminism",
         "sources"
       ],
@@ -4454,10 +4454,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Latin America",
+        "Global",
         "Indigenous Struggles",
-        "Movement News",
-        "Queer-Feminism",
+        "Latin America",
         "sources"
       ],
       "mediaType": "news",
@@ -6369,6 +6368,7 @@
         "Global",
         "Cyberactivism",
         "Movement News",
+        "Animal Liberation",
         "Anticapitalism",
         "sources"
       ],
@@ -6392,16 +6392,15 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
         "Demonstrations",
+        "Global",
+        "Europe",
         "Anti-Rep & Prisons",
         "Movement News",
         "Antifascism",
         "No War",
         "Queer-Feminism",
-        "Antisexism",
         "sources",
-        "Europe",
         "Anticapitalism"
       ],
       "mediaType": "news",
@@ -6916,10 +6915,10 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Libraries",
-        "sources",
-        "Labor Struggles",
         "Movement News",
+        "Libraries",
+        "Labor Struggles",
+        "sources",
         "Demonstrations",
         "Antisexism",
         "Anticapitalism",
@@ -7973,7 +7972,7 @@
         "No War",
         "Anti-Rep & Prisons",
         "Demonstrations",
-        "Antifascism",
+        "Antiracism",
         "sources"
       ],
       "mediaType": "news",
@@ -10265,8 +10264,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
+        "Global",
         "Movement News",
+        "North America",
         "sources"
       ],
       "mediaType": "news",
@@ -11205,11 +11205,11 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Antifascism",
         "No Borders",
         "Anti-Rep & Prisons",
         "Labor Struggles",
         "Eco-Anarchism",
+        "Antifascism",
         "Cyberactivism",
         "sources"
       ],
@@ -11389,8 +11389,8 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "North America",
         "Global",
+        "North America",
         "Movement News",
         "Demonstrations",
         "Labor Struggles",
@@ -11860,31 +11860,6 @@
       ]
     },
     {
-      "name": "ZNet (Global)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Movement News",
-        "Anticapitalism",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
-      ]
-    },
-    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -11905,6 +11880,30 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
+      ]
+    },
+    {
+      "name": "ZNet (International)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
       ]
     },
     {
