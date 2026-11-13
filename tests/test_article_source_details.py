@@ -45,7 +45,7 @@ def test_incomplete_and_metadata_only_bodies_stay_unadmitted():
 
 def test_archived_excerpt_is_not_promoted_to_complete_body():
     row = quick()
-    _, chunks = build_source_archives([], [row], previous_articles=[FULL], generated_at=NOW)
+    _, chunks = build_source_archives([], [row], previous_articles=[dict(FULL, content=BODY[:1400], contentComplete=False, webFeedTruncated=True)], generated_at=NOW)
     assert 'detailPath' not in bind_quick_details([row], chunks)[0]
     assert chunks[source_id(FULL['quelleName'])][0]['contentComplete'] is False
 
@@ -106,7 +106,11 @@ def test_retention_requires_exact_current_identity_full_body_and_https():
         _, chunks = build_source_archives([current], [], previous_articles=[previous], generated_at=NOW)
         detail = next(row for rows in chunks.values() for row in rows if row['link'] == current['link'])
         assert detail['contentComplete'] is False
-        assert len(detail['content']) == 1400
+        if change.get('importMode') == 'metadata-only':
+            assert 'Αρχή' not in detail['content']
+            assert detail['importMode'] == 'metadata-only'
+        else:
+            assert len(detail['content']) == 1400
 
 
 def test_old_excerpt_or_incomplete_row_never_authorizes_retention():
