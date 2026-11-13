@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "version": "1.8.2",
-  "generatedAt": "2026-11-13T07:46:10.352974+00:00",
+  "generatedAt": "2026-11-13T07:51:14.040664+00:00",
   "sourceCount": 485,
   "activeSourceCount": 483,
   "knownLanguages": [
@@ -1344,6 +1344,8 @@
         "Global",
         "Movement News",
         "Theory & Strategy",
+        "Anti-Rep & Prisons",
+        "No Borders",
         "sources"
       ],
       "mediaType": "news",
@@ -2115,6 +2117,7 @@
       "categories": [
         "Europe",
         "Movement News",
+        "Antifascism",
         "sources"
       ],
       "mediaType": "news",
@@ -3256,15 +3259,15 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
         "Indigenous Struggles",
+        "Global",
         "Eco-Anarchism",
+        "Asia",
+        "Movement News",
         "No War",
         "Anti-Imperialism",
         "Anti-Rep & Prisons",
         "sources",
-        "Asia",
-        "Movement News",
         "Cyberactivism",
         "Demonstrations"
       ],
@@ -4461,8 +4464,9 @@
       "languageSource": "explicit",
       "categories": [
         "Indigenous Struggles",
-        "Global",
         "Latin America",
+        "Global",
+        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -5716,9 +5720,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Indigenous Struggles",
+        "Australia & NZ",
         "Queer-Feminism",
+        "Indigenous Struggles",
         "sources"
       ],
       "mediaType": "news",
@@ -5844,7 +5848,7 @@
         "Queer-Feminism",
         "Antifascism",
         "Demonstrations",
-        "Indigenous Struggles",
+        "Antisexism",
         "sources"
       ],
       "mediaType": "news",
@@ -6455,8 +6459,8 @@
       "categories": [
         "Demonstrations",
         "Global",
-        "Anti-Rep & Prisons",
         "Movement News",
+        "Anti-Rep & Prisons",
         "Europe",
         "Antifascism",
         "No War",
@@ -6868,6 +6872,31 @@
       ]
     },
     {
+      "name": "Lausan",
+      "url": "https://lausancollective.com/",
+      "canonicalUrl": "https://lausancollective.com/",
+      "homepage": "https://lausancollective.com/",
+      "languages": [
+        "en"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "Anticolonialism",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "Lausan (HK)",
       "url": "https://lausan.hk/feed/",
       "canonicalUrl": "https://lausan.hk/feed",
@@ -6891,30 +6920,6 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
-      ]
-    },
-    {
-      "name": "Lausan (HK)",
-      "url": "https://lausancollective.com/",
-      "canonicalUrl": "https://lausancollective.com/",
-      "homepage": "https://lausancollective.com/",
-      "languages": [
-        "en"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Asia",
-        "Movement News",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
       ]
     },
     {
@@ -6977,10 +6982,10 @@
       "languageSource": "explicit",
       "categories": [
         "Global",
-        "Movement News",
         "Libraries",
-        "Labor Struggles",
         "sources",
+        "Labor Struggles",
+        "Movement News",
         "Demonstrations",
         "Antisexism",
         "Anticapitalism",
@@ -9836,8 +9841,7 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Anti-Imperialism",
+        "Africa",
         "Movement News",
         "Eco-Anarchism",
         "Anticapitalism",
@@ -10101,9 +10105,9 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Movement News",
         "North America",
+        "Movement News",
+        "Global",
         "Anti-Rep & Prisons",
         "No Borders",
         "Indigenous Struggles",
@@ -10325,9 +10329,8 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
-        "Movement News",
         "North America",
+        "Movement News",
         "sources"
       ],
       "mediaType": "news",
@@ -11450,8 +11453,8 @@
       ],
       "languageSource": "explicit",
       "categories": [
-        "Global",
         "North America",
+        "Global",
         "Movement News",
         "Demonstrations",
         "Labor Struggles",
@@ -11946,6 +11949,31 @@
       ]
     },
     {
+      "name": "ZNet (Global)",
+      "url": "https://znetwork.org/",
+      "canonicalUrl": "https://znetwork.org/",
+      "homepage": "https://znetwork.org/",
+      "languages": [
+        "und"
+      ],
+      "languageSource": "explicit",
+      "categories": [
+        "Global",
+        "Movement News",
+        "Anticapitalism",
+        "sources"
+      ],
+      "mediaType": "news",
+      "status": "active",
+      "active": true,
+      "originRegion": "",
+      "originCountry": "",
+      "originCountryCode": "",
+      "origins": [
+        "source-catalog.json"
+      ]
+    },
+    {
       "name": "ZNet (International)",
       "url": "https://znetwork.org/feed/",
       "canonicalUrl": "https://znetwork.org/feed",
@@ -11966,30 +11994,6 @@
       "originCountryCode": "",
       "origins": [
         "aggregate.py"
-      ]
-    },
-    {
-      "name": "ZNet (International)",
-      "url": "https://znetwork.org/",
-      "canonicalUrl": "https://znetwork.org/",
-      "homepage": "https://znetwork.org/",
-      "languages": [
-        "und"
-      ],
-      "languageSource": "explicit",
-      "categories": [
-        "Global",
-        "Movement News",
-        "sources"
-      ],
-      "mediaType": "news",
-      "status": "active",
-      "active": true,
-      "originRegion": "",
-      "originCountry": "",
-      "originCountryCode": "",
-      "origins": [
-        "source-catalog.json"
       ]
     },
     {
