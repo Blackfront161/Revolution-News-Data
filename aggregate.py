@@ -17,6 +17,11 @@ from inline_text import inline_preserving_text, prefer_inline_preserving_text
 from source_import_policy import metadata_article
 from source_endpoint_repairs import reviewed_source, request_url
 from news_retention import retain_current_sources
+from duplicate_feed_ownership import duplicate_ownership_skip
+from news_archive_capture import (capture_news_archive, read_capture_policies,
+                                  load_capture_for_aggregation, public_capture_rows)
+from reviewed_article_identity import (canonicalize_reviewed_articles, canonicalize_reviewed_link,
+                                       ReviewedArticleIdentityError)
 from reviewed_article_metadata import repair_reviewed_article_metadata
 
 for stream in (sys.stdout, sys.stderr):
@@ -49,6 +54,7 @@ AGGREGATE_METRICS = {
     "sourcesWithEntries": 0,
     "sourcesSkippedByHealth": 0,
     "newArticles": 0,
+    "duplicateOwnershipSkips": 0,
     "enrichedArticles": 0,
     "stoppedForBudget": False,
 }
@@ -1859,6 +1865,7 @@ def scrape_article_page(
 # 1. ARCHIV LADEN (Das clevere Gedächtnis, das nie vergisst)
 # =================================================================
 archiv_dict = {}
+_loaded_archive_rows = []
 gesehene_titel = set()
 
 try:
@@ -1866,16 +1873,34 @@ try:
         if not os.path.exists(archive_file):
             continue
         with open(archive_file, 'r', encoding='utf-8') as f:
-            alter_stand = json.load(f)
+            alter_stand = canonicalize_reviewed_articles(json.load(f))
             for art in alter_stand:
                 # Nachrichten und Termine werden getrennt veröffentlicht, aber
                 # für Deduplizierung gemeinsam in den Arbeitsspeicher geladen.
                 if "link" in art:
+                    _loaded_archive_rows.append(art)
                     archiv_dict[art['link']] = art
                     titel_clean = art.get('title', '').lower().strip()
                     gesehene_titel.add(titel_clean)
+except ReviewedArticleIdentityError:
+    raise
 except Exception as e:
     print("Starte mit leerem Archiv (Erster Durchlauf).")
+
+# Apply reviewed aliases outside the broad load-recovery handler: an identity
+# conflict must stop, never be reinterpreted as an empty first-run archive.
+archiv_dict = {row['link']: row for row in canonicalize_reviewed_articles(_loaded_archive_rows)}
+_capture_rows = load_capture_for_aggregation(
+    "news-archive-capture.json",
+    [row for row in archiv_dict.values() if row.get("kontinent") != "Radar"],
+    read_capture_policies("multilingual-source-registry.json")
+    + [feed for feeds in quellen.values() for feed in feeds],
+)
+# Capture restrictions and retained full bodies outrank a stale bounded list.
+_events_only = {key: row for key, row in archiv_dict.items() if row.get("kontinent") == "Radar"}
+archiv_dict = {row["link"]: row for row in _capture_rows}
+archiv_dict.update(_events_only)
+gesehene_titel = {row.get("title", "").lower().strip() for row in archiv_dict.values()}
 
 radar_count = 0 
 TARGET_SOURCE_NAMES = {
@@ -2201,8 +2226,7 @@ def save_checkpoint(force=False):
 
     # Von abgeschnittenen Vorschautexten bleiben pro Quelle nur die aktuellsten
     # Einträge. So verdrängen Feeds mit ständigem „Read more“ keine Volltexte.
-    incomplete_counts = {}
-    news = []
+    classified_news = []
     for article in news_candidates:
         source = str(article.get('quelleName') or 'Unbekannte Quelle')
         minimum_length = ARTICLE_MIN_LENGTHS.get(
@@ -2217,7 +2241,22 @@ def save_checkpoint(force=False):
             )
         )
         article['contentComplete'] = not incomplete
-        if incomplete:
+        classified_news.append(article)
+
+    # Durable producer input is secured before either incomplete-source pruning
+    # or the 2,000-item quick archive cap. Missing/corrupt capture fails closed;
+    # its initial seed must be supplied by the reviewed bootstrap, not a retry.
+    captured_news = capture_news_archive(
+        classified_news,
+        "news-archive-capture.json",
+        read_capture_policies("multilingual-source-registry.json")
+        + [feed for feeds in quellen.values() for feed in feeds],
+    )
+    incomplete_counts = {}
+    news = []
+    for article in public_capture_rows(captured_news):
+        source = str(article.get('quelleName') or 'Unbekannte Quelle')
+        if article['contentComplete'] is False:
             count = incomplete_counts.get(source, 0)
             if count >= incomplete_limit_for_source(source):
                 continue
@@ -2463,13 +2502,16 @@ for kontinent, feeds in active_sources.items():
                         "get()-Abfragen."
                     )
                 link = entry.get('link', '')
-                if TARGET_ARTICLE_LINKS and link not in TARGET_ARTICLE_LINKS:
-                    continue
+                original_link = link
                 title = safe_text(entry.get("title"), "Kein Titel")
                 entry_published = entry.get(
                     'published',
                     entry.get('updated', datetime.now().isoformat()),
                 )
+                if not is_radar:
+                    link = canonicalize_reviewed_link(link, feed_name, title, entry_published)
+                if TARGET_ARTICLE_LINKS and not ({link, original_link} & TARGET_ARTICLE_LINKS):
+                    continue
                 event_start = ""
                 if is_radar:
                     title, event_start = normalize_feed_event(
@@ -2485,6 +2527,15 @@ for kontinent, feeds in active_sources.items():
             
                 # Spam rausfiltern
                 if any(bad in title_lower or bad in safe_lower(author) for bad in SPAM_BLACKLIST):
+                    continue
+
+                # The same configured feed can occur under two editorial buckets.
+                # Reject its second delivery, never reassign an existing URL's owner.
+                if not is_radar and duplicate_ownership_skip(
+                    archiv_dict.get(link), feed_name,
+                    [source for sources in quellen.values() for source in sources], link,
+                ):
+                    AGGREGATE_METRICS["duplicateOwnershipSkips"] += 1
                     continue
 
                 # Restricted sources bypass every body/image extraction and page scrape,
@@ -2814,6 +2865,8 @@ for kontinent, feeds in active_sources.items():
                     })
                 gesehene_titel.add(title_lower)
                 if is_radar: radar_count += 1
+            except ReviewedArticleIdentityError:
+                raise
             except Exception as entry_error:
                 log_feed_entry_error(
                     feed_name,

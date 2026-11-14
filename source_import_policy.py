@@ -69,13 +69,50 @@ def metadata_article(feed, entry, continent):
     }
 
 
+def article_is_withdrawn(article):
+    """Explicit withdrawal signals, never a technical fetch failure."""
+    return article.get("status") in {"withdrawn", "revoked", "deleted"} or article.get("deleted") is True
+
+
 def restrict_existing_article(article, source_policies):
     """Apply a newly reviewed restricted source policy to old archive rows too."""
     name = str(article.get("quelleName") or article.get("source") or article.get("sourceName") or "").strip().casefold()
-    feeds = [feed for feed in source_policies or []
-             if str(feed.get("name") or "").strip().casefold() == name
-             and feed.get("status") == "approved" and feed.get("importMode") == "metadata-only"]
+    matching = [feed for feed in source_policies or []
+                if name and str(feed.get("name") or "").strip().casefold() == name]
+    if article_is_withdrawn(article) or any(article_is_withdrawn(feed) for feed in matching):
+        return None
+    # Directory/disabled import policies do not admit an article body or card.
+    # A disabled fetch status alone remains a technical pause, not a withdrawal.
+    if any(policy.get("importMode") not in (None, "", "fulltext", "metadata-only", "directory-only", "disabled")
+           for policy in [article] + matching):
+        raise ValueError("Unknown article import policy; refusing archive changes")
+    if any(policy.get("status") == "directory-only"
+           or policy.get("importMode") in ("directory-only", "disabled")
+           for policy in [article] + matching):
+        return None
+    feeds = [dict(feed, importMode="metadata-only") for feed in matching
+             if feed.get("importMode") == "metadata-only"
+             or feed.get("contentPolicy") == "metadata_and_links_only"]
     if not feeds:
+        if (article.get("importMode") == "metadata-only"
+                or article.get("contentPolicy") == "metadata_and_links_only"):
+            # A row-level restriction also wins without a matching registry row.
+            try:
+                parsed = urlsplit(str(article.get("link") or ""))
+            except ValueError:
+                return None
+            feed = {key: article[key] for key in (
+                "categories", "languages", "originCountry", "originCountryCode",
+                "originRegion", "rightsReview") if key in article}
+            feed.update(name=article.get("quelleName") or article.get("source") or "Unknown source",
+                        homepage=article.get("sourceHomepage") or f"{parsed.scheme}://{parsed.netloc}/",
+                        importMode="metadata-only")
+            entry = {"title": article.get("title"), "link": article.get("link"),
+                     "published": article.get("pubDate"), "author": article.get("author")}
+            restricted = metadata_article(feed, entry, article.get("kontinent") or "Global")
+            if restricted is not None and article.get("id"):
+                restricted["id"] = article["id"]
+            return restricted
         return article
     entry = {"title": article.get("title"), "link": article.get("link"),
              "published": article.get("pubDate"), "author": article.get("author")}

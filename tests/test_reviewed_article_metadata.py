@@ -91,3 +91,63 @@ def test_nunatsiaq_advertising_containers_do_not_enter_article_image_candidates(
     # The publisher-specific rule must not silently filter another publisher.
     other = ns['collect_image_urls'](BeautifulSoup(html, 'html.parser'), 'https://example.org/story/')
     assert 'https://example.org/ad.gif' in other
+
+
+SOFT_HYPHEN_ROW = {
+    "link": "https://perspektive-online.net/2026/11/arrow-3-im-allgaeu-gefahr-fuer-die-trinkwasserversorgung/",
+    "quelleName": "Perspektive Online (DE)",
+    "pubDate": "Thu, 12 Nov 2026 12:30:27 +0000",
+    "title": "Arrow 3 im Allgäu: Gefahr für die Trinkwasser\u00adversorgung?",
+    "importMode": "metadata-only", "contentComplete": False,
+    "content": "Existing exact metadata body \u00ad stays untouched.",
+    "author": "unchanged", "image": "", "images": [],
+}
+
+
+def test_exact_reviewed_soft_hyphen_changes_only_title():
+    before = deepcopy(SOFT_HYPHEN_ROW)
+    result = repair_reviewed_article_metadata(deepcopy(before))
+    assert result["title"] == "Arrow 3 im Allgäu: Gefahr für die Trinkwasserversorgung?"
+    assert {k: v for k, v in result.items() if k != "title"} == {k: v for k, v in before.items() if k != "title"}
+    assert repair_reviewed_article_metadata(deepcopy(result)) == result
+
+
+def test_soft_hyphen_correction_rejects_every_unverified_variant():
+    variants = [
+        {"link": SOFT_HYPHEN_ROW["link"] + "?x=1"},
+        {"link": SOFT_HYPHEN_ROW["link"].replace("https:", "http:")},
+        {"quelleName": "Other source"},
+        {"pubDate": "Thu, 12 Nov 2026 12:30:28 +0000"},
+        {"pubDate": "2026-11-12T12:30:27Z"},
+        {"title": SOFT_HYPHEN_ROW["title"] + " "},
+        {"title": "Other \u00ad title"},
+        {"importMode": "fulltext"}, {"importMode": None},
+        {"contentComplete": True}, {"contentComplete": None}, {"contentComplete": 0},
+    ]
+    for changes in variants:
+        row = dict(SOFT_HYPHEN_ROW, **changes)
+        assert repair_reviewed_article_metadata(deepcopy(row)) == row
+    for missing in ["link", "quelleName", "pubDate", "title", "importMode", "contentComplete"]:
+        row = deepcopy(SOFT_HYPHEN_ROW)
+        del row[missing]
+        assert repair_reviewed_article_metadata(deepcopy(row)) == row
+
+
+def test_reviewed_title_enters_strict_capture_without_relaxing_identity():
+    from datetime import datetime, timezone
+    import pytest
+    from news_archive_capture import merge_capture_rows
+    incoming = deepcopy(SOFT_HYPHEN_ROW)
+    previous = deepcopy(incoming)
+    previous['title'] = previous['title'].replace('\u00ad', '')
+    policies = [{'name': previous['quelleName'], 'importMode': 'metadata-only'}]
+    now = datetime(2026, 11, 14, tzinfo=timezone.utc)
+    with pytest.raises(ValueError, match='identity changed'):
+        merge_capture_rows([previous], [incoming], policies, now=now)
+    repaired = repair_reviewed_article_metadata(deepcopy(incoming))
+    result = merge_capture_rows([previous], [repaired], policies, now=now)
+    assert len(result) == 1 and result[0]['title'] == previous['title']
+    for changes in [{'title': incoming['title'] + ' other'}, {'pubDate': 'Thu, 12 Nov 2026 12:31:27 +0000'}, {'quelleName': 'Other publisher'}]:
+        unverified = repair_reviewed_article_metadata(dict(incoming, **changes))
+        with pytest.raises(ValueError, match='identity changed'):
+            merge_capture_rows([previous], [unverified], policies, now=now)

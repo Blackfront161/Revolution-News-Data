@@ -26,6 +26,18 @@ def repair_reviewed_article_metadata(article):
     2026-10-27. Its English html/@lang describes the site chrome, not this
     Inuktitut article. No body, byline, date, ID or source policy is replaced.
     """
+    # Exact metadata-only RSS presentation correction verified 2026-11-14.
+    # U+00AD was added inside one word; URL/source/date and all other fields
+    # bind to the retained article. This is not general title normalization.
+    if (
+        article.get("link") == "https://perspektive-online.net/2026/11/arrow-3-im-allgaeu-gefahr-fuer-die-trinkwasserversorgung/"
+        and article.get("quelleName") == "Perspektive Online (DE)"
+        and article.get("pubDate") == "Thu, 12 Nov 2026 12:30:27 +0000"
+        and article.get("title") == "Arrow 3 im Allgäu: Gefahr für die Trinkwasser\u00adversorgung?"
+        and article.get("importMode") == "metadata-only"
+        and article.get("contentComplete") is False
+    ):
+        article["title"] = "Arrow 3 im Allgäu: Gefahr für die Trinkwasserversorgung?"
     try:
         url = urlsplit(str(article.get("link") or ""))
     except ValueError:
