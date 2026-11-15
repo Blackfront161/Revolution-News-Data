@@ -93,3 +93,142 @@ def test_cli_missing_archive_seed_fails_before_any_write():
         assert fixture.snapshot() == before
     finally:
         fixture.doCleanups()
+
+
+class ClassificationSyncTests(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        from pathlib import Path
+        from news_archive_capture import capture_news_archive
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.path = Path(self.temp.name) / 'capture.json'
+        self.now = datetime.now(timezone.utc)
+        self.row = dict(link='https://example.org/a', title='Exact article',
+                        quelleName='Example', pubDate=self.now.isoformat(),
+                        content='Full exact body', contentComplete=True,
+                        categories=['Europe'], primaryRegion='Europe', primaryTopic='Movement News',
+                        secondaryTopics=[], classificationConfidence=0.3,
+                        classificationMethod='old', editorialReview=True,
+                        editorialReviewReasons=['old'])
+        self.other = dict(self.row, link='https://example.org/outside', title='Outside index')
+        capture_news_archive([self.row, self.other], self.path, [], allow_initialize=True)
+
+    def sync(self, rows, policies=None):
+        from news_archive_capture import sync_capture_classification
+        return sync_capture_classification(rows, self.path, [] if policies is None else policies)
+
+    def test_only_classifier_fields_update_and_idempotence(self):
+        from news_archive_capture import capture_news_archive, read_capture, public_capture_rows
+        updated = dict(self.row, content='A newer full body')
+        capture_news_archive([updated], self.path, [])
+        before = read_capture(self.path)
+        history = next(r[HISTORY] for r in before if r['link'] == updated['link'])
+        current = dict(updated, classificationConfidence=0.9, classificationMethod='new',
+                       editorialReview=False, editorialReviewReasons=[])
+        result = self.sync([current])
+        actual = next(r for r in result if r['link'] == current['link'])
+        self.assertEqual(actual[HISTORY], history)
+        self.assertEqual(public_capture_rows([actual])[0], current)
+        self.assertEqual(next(r for r in result if r['link'] == self.other['link']), self.other)
+        raw = self.path.read_bytes()
+        self.sync([current])
+        self.assertEqual(self.path.read_bytes(), raw)
+
+    def test_non_classifier_changes_fail_before_write(self):
+        changes = {'link': 'https://example.org/other', 'title': 'Other', 'quelleName': 'Other',
+                   'pubDate': (self.now + timedelta(seconds=1)).isoformat(),
+                   'content': 'Other body', 'contentComplete': False, 'webFeedTruncated': True,
+                   'author': 'Unexpected', 'importMode': 'metadata-only', 'rightsReview': 'other',
+                   'image': 'https://example.org/image.jpg'}
+        before = self.path.read_bytes()
+        for field, value in changes.items():
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.sync([dict(self.row, **{field: value})])
+            self.assertEqual(self.path.read_bytes(), before)
+        # JSON bool and numeric flags must not compare equal by Python coercion.
+        with self.assertRaises(ValueError):
+            self.sync([dict(self.row, contentComplete=1)])
+        self.assertEqual(self.path.read_bytes(), before)
+
+    def test_policy_restrictions_cannot_be_bypassed(self):
+        before = self.path.read_bytes()
+        for policy in [dict(name='Example', importMode='disabled'),
+                       dict(name='Example', importMode='metadata-only', homepage='https://example.org')]:
+            with self.assertRaises(ValueError): self.sync([self.row], [policy])
+            self.assertEqual(self.path.read_bytes(), before)
+
+    def test_metadata_policy_classification_has_priority(self):
+        from news_archive_capture import capture_news_archive, public_capture_rows
+        from source_import_policy import restrict_existing_article
+        policy = dict(name='Example', status='approved', importMode='metadata-only',
+                      homepage='https://example.org', categories=['Europe', 'Movement News'])
+        admitted = restrict_existing_article(self.row, [policy])
+        capture_news_archive([admitted], self.path, [policy])
+        classified = dict(admitted, classificationConfidence=0.99,
+                          classificationMethod='classifier', editorialReview=False,
+                          editorialReviewReasons=[], primaryTopic='No War')
+        result = self.sync([classified], [policy])
+        actual = next(r for r in result if r['link'] == admitted['link'])
+        self.assertEqual(public_capture_rows([actual])[0], restrict_existing_article(classified, [policy]))
+        self.assertFalse(actual['contentComplete'])
+        self.assertNotEqual(actual['content'], self.row['content'])
+
+    def test_duplicate_invalid_and_provenance_inputs_fail_atomically(self):
+        before = self.path.read_bytes()
+        cases = [[self.row, self.row], [dict(self.row, editorialReview='yes')],
+                 [dict(self.row, classificationConfidence=float('nan'))],
+                 [dict(self.row, categories='Europe')], [dict(self.row, capturePreviousRevisions=[])]]
+        missing = dict(self.row); missing.pop('classificationMethod'); cases.append([missing])
+        for rows in cases:
+            with self.assertRaises(ValueError): self.sync(rows)
+            self.assertEqual(self.path.read_bytes(), before)
+
+    def test_classification_growth_keeps_capture_byte_limit(self):
+        from unittest.mock import patch
+        before = self.path.read_bytes()
+        changed = dict(self.row, editorialReviewReasons=['x' * 2000])
+        with patch('news_archive_capture.MAX_CAPTURE_BYTES', len(before) + 50):
+            with self.assertRaisesRegex(ValueError, 'byte limit'):
+                self.sync([changed])
+        self.assertEqual(self.path.read_bytes(), before)
+
+    def test_no_implicit_bootstrap(self):
+        self.path.unlink()
+        with self.assertRaisesRegex(ValueError, 'explicit bootstrap'): self.sync([self.row])
+        self.assertFalse(self.path.exists())
+
+
+def test_classification_survives_builder_and_verify():
+    from test_v1_bridge import BridgeTests
+    from news_archive_capture import sync_capture_classification, CLASSIFICATION_FIELDS
+    fixture = BridgeTests(); fixture.setUp()
+    try:
+        rows = fixture.read('news.json')
+        for row in rows:
+            row.update(categories=['Europe', 'Labor Struggles'], primaryRegion='Europe',
+                       primaryTopic='Labor Struggles', secondaryTopics=[], classificationConfidence=0.91,
+                       classificationMethod='post-aggregation-classifier', editorialReview=False,
+                       editorialReviewReasons=[])
+        fixture.put('news.json', rows)
+        sync_capture_classification(rows, fixture.root / 'news-archive-capture.json', [])
+        from build_web_feeds import prepare
+        fixture.put('news-feed.json', prepare(rows[:500], limit=500, content_limit=4500, preserve_order=True))
+        fixture.run_builder(); fixture.run_builder(verify=True)
+        for name, actual in [('news', fixture.read('news.json')),
+                             ('quick', fixture.read('news-feed.json')),
+                             ('archive', fixture.all_active())]:
+            by_link = {row['link']: row for row in actual}
+            for original in rows:
+                if original['link'] not in by_link: continue
+                assert all(by_link[original['link']].get(field) == original[field]
+                           for field in CLASSIFICATION_FIELDS), (name, original['link'])
+    finally:
+        fixture.doCleanups()
+
+
+def test_classification_sync_workflow_order():
+    from pathlib import Path
+    workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/update.yml').read_text()
+    assert workflow.index('python reclassify_news_categories.py') < workflow.index('sync_capture_classification(')
+    assert workflow.index('sync_capture_classification(') < workflow.index('WRN_FEED_TARGETS="news,events,status"')

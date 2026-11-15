@@ -108,6 +108,16 @@ jobs:
         run: |
           if [ -f reclassify_news_categories.py ]; then
             python reclassify_news_categories.py
+            python - <<'PY_CLASSIFICATION'
+          import json
+          from pathlib import Path
+          from news_archive_capture import read_capture_policies, sync_capture_classification
+          sync_capture_classification(
+              json.loads(Path("news.json").read_text(encoding="utf-8")),
+              Path("news-archive-capture.json"),
+              read_capture_policies(Path("multilingual-source-registry.json")),
+          )
+          PY_CLASSIFICATION
           fi
 
       - name: Schnelle Web-Feeds erzeugen

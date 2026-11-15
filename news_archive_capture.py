@@ -275,6 +275,12 @@ def capture_news_archive(rows, path, source_policies, *, now=None, allow_initial
     path = Path(path)
     previous = read_capture(path, allow_bootstrap=allow_initialize)
     captured = merge_capture_rows(previous, rows, source_policies, now=now)
+    return _write_capture(path, captured)
+
+
+def _write_capture(path, captured):
+    """Atomically persist a fully prevalidated bounded capture."""
+    path = Path(path)
     payload = (json.dumps(captured, ensure_ascii=False, separators=(",", ":"), allow_nan=False) + "\n").encode("utf-8")
     if len(payload) > MAX_CAPTURE_BYTES:
         raise ValueError("Capture exceeds byte limit; refusing checkpoint")
@@ -296,3 +302,69 @@ def capture_news_archive(rows, path, source_policies, *, now=None, allow_initial
         if os.path.exists(temporary):
             os.unlink(temporary)
     return captured
+
+
+CLASSIFICATION_FIELDS = frozenset({
+    "categories", "primaryRegion", "primaryTopic", "secondaryTopics",
+    "classificationConfidence", "classificationMethod", "editorialReview",
+    "editorialReviewReasons",
+})
+
+
+def sync_capture_classification(rows, path, source_policies):
+    """Persist only classifier output against an otherwise byte-exact public row.
+
+    This is not capture ingestion or a policy/identity repair. Run after the
+    existing classifier, before generating quick feeds and source archives.
+    Outside-index records, provenance history and retention are left untouched.
+    A policy or any non-classification change requires the normal producer path.
+    """
+    _validate_policies(source_policies)
+    captured = read_capture(path)
+    if not isinstance(rows, list) or len(rows) > MAX_CAPTURE_ROWS:
+        raise ValueError("Invalid classification input")
+    lookup = {row["link"]: row for row in captured}
+    seen = set()
+    updates = {}
+
+    def without_classification(row):
+        return {key: value for key, value in row.items()
+                if key not in CLASSIFICATION_FIELDS and key not in {HISTORY, WITHDRAWN_AT}}
+
+    def exact(value):
+        return json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False,
+                          separators=(",", ":"))
+
+    for row in rows:
+        _validate_row(row)
+        if any(key in row for key in (HISTORY, WITHDRAWN_AT)):
+            raise ValueError("Classification input cannot supply capture provenance")
+        key = row["link"]
+        if key in seen:
+            raise ValueError("Duplicate classification identity")
+        seen.add(key)
+        prior = lookup.get(key)
+        if prior is None or article_is_withdrawn(prior) or article_is_withdrawn(row):
+            raise ValueError("Classification input lacks an active captured identity")
+        if exact(without_classification(row)) != exact(without_classification(prior)):
+            raise ValueError("Classification changed a non-classification field")
+        admitted = restrict_existing_article(row, source_policies)
+        if admitted is None or exact(without_classification(admitted)) != exact(without_classification(prior)):
+            raise ValueError("Classification sync cannot enact a pending source policy change")
+        if not CLASSIFICATION_FIELDS.issubset(row):
+            raise ValueError("Incomplete classification output")
+        if (any(not isinstance(row[field], list) or any(not isinstance(v, str) for v in row[field])
+                for field in ("categories", "secondaryTopics", "editorialReviewReasons"))
+                or any(not isinstance(row[field], str) or not row[field]
+                       for field in ("primaryRegion", "primaryTopic", "classificationMethod"))
+                or type(row["editorialReview"]) is not bool
+                or type(row["classificationConfidence"]) not in (int, float)
+                or not 0 <= row["classificationConfidence"] <= 1):
+            raise ValueError("Invalid classification output")
+        # Restricted metadata records retain the policy's classification/review
+        # contract; reclassification is not a source-policy override.
+        updates[key] = {**prior, **{field: admitted[field] for field in CLASSIFICATION_FIELDS}}
+    result = [updates.get(row["link"], row) for row in captured]
+    # All inputs have passed before any output is touched. No expiration,
+    # canonicalization, body merge, history update or implicit initialization.
+    return _write_capture(path, result)

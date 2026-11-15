@@ -20,7 +20,48 @@ jobs:
       - name: Repository auschecken
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
+
+      # The legacy combined importer cannot publish a coherent bridge generation.
+      # Keep normal news/media workflows running; fail before any source mutation.
+      - name: Legacy-Quellenmerge gegen aktive Bridge absichern
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == "refs/heads/main" ]]
+          python - <<'PY_BRIDGE_GUARD'
+          import json
+          from pathlib import Path
+          message = ("Der kombinierte manuelle Quellenimport unterstützt die aktive "
+                     "Archiv-Bridge noch nicht. Quellenänderungen separat prüfen; "
+                     "keine Quellen- oder Nachrichtendaten wurden verändert.")
+          capture = Path("news-archive-capture.json")
+          if capture.exists() or capture.is_symlink():
+              raise SystemExit(message)
+          manifest_path = Path("news-archive-manifest.json")
+          archive = Path("news-archive")
+          if manifest_path.is_symlink() or archive.is_symlink():
+              raise SystemExit("Archivbasis nicht sicher prüfbar; Quellenmerge gestoppt.")
+          try:
+              manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+              sources = manifest["sources"]
+              if not isinstance(sources, list) or not sources or any(not isinstance(s, dict) for s in sources):
+                  raise ValueError("Invalid archive sources")
+          except (OSError, ValueError, TypeError, KeyError) as error:
+              raise SystemExit("Archivbasis nicht sicher prüfbar; Quellenmerge gestoppt.") from error
+          if any(str(s.get("id", "")).endswith("-bridge-v1")
+                 or str(s.get("path", "")).endswith("-bridge-v1.json")
+                 or any(key in s for key in ("legacyId", "legacyPath", "legacyPackageSha256"))
+                 for s in sources):
+              raise SystemExit(message)
+          if (not archive.is_dir() or (archive / "details").exists()
+                  or (archive / "details").is_symlink()
+                  or any(archive.glob("bridge-detail-*"))
+                  or any(archive.glob("*-bridge-v1*"))):
+              raise SystemExit(message)
+          print("Legacybasis ohne Capture/Bridge bestätigt; manueller Quellenmerge darf fortfahren.")
+          PY_BRIDGE_GUARD
 
       - name: Python einrichten
         uses: actions/setup-python@v5

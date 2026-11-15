@@ -123,7 +123,7 @@ consumer check still need the actual application bundle or Ailyeen. No emulator,
 ADB/device operation, signing, app release or public activation is part of these
 private tests. Permanent reader rollout remains the durable solution.
 
-## Recovery artifact and quota gate
+## Recovery artifact and operational limits
 
 Both prepared workflows validate and hash-bind the exact post-aggregation capture
 and current source policy to their checked-out base, triggering workflow SHA,
@@ -139,9 +139,11 @@ A failed aggregate can produce a valid partial checkpoint; the receipt makes no
 freshness claim. A policy-nonconforming checkpoint is not uploaded, not silently
 sanitized. Runner loss/cancellation and artifact quota remain best-effort failure
 boundaries; the artifact cannot guarantee rescue after a runner is already gone.
-No upload or storage allocation has occurred during this review. Available Actions
-storage and expected recurring volume must be checked before activation; an upload
-failure must not be bypassed to restart publication.
+A small CI-report artifact uploaded successfully, but this is not a capture-recovery
+capacity test or a guarantee of future 64 MiB availability. Successful publication
+does not depend on that artifact: capture is in the data commit. Known storage
+limits and expected failed-run volume must be considered; a recovery upload failure
+remains a failure and never bypasses a publication or integrity check.
 
 ## Two observed producer re-entry defects
 
@@ -154,3 +156,47 @@ other: the incoming duplicate is skipped and counted, without changing the store
 row or admitting another body. Different feeds, missing/ambiguous configurations
 and unrelated sources do not qualify. No publisher-wide alias or rights expansion
 is introduced.
+
+
+## Writer ownership during the transition
+
+Only the two regular news workflows may publish a coupled capture/news/quick-feed/
+source-archive generation. The media/library workflow reads the current archive
+for validation but does not regenerate or stage news/archive/capture files. It
+stages exactly its four media/library outputs; pre-staged foreign changes and an
+unexpected dirty worktree remain fatal rather than being swept into a commit.
+
+The legacy manual combined multilingual-source import is not bridge-aware. It
+checks latest main and stops before dependency installation or any mutation if
+capture exists (including a broken/symlink path), the manifest advertises a bridge,
+or a bridge/detail namespace is present. A valid legacy basis can proceed. This
+protective transition restriction affects only that combined manual importer;
+normal news, media, podcast and radio workflows continue. Source-policy changes
+must be prepared separately and reviewed with their complete derived data contract.
+Manual tools such as scripts/refresh-reviewed-karapatan.py must not be run as an
+unreviewed publication shortcut against an active bridge.
+
+The full news workflow's existing classifier runs after aggregation. A bounded
+sync copies only its eight classification fields into matching capture records,
+before quick-feed/archive generation. All other public fields, including identity,
+date, body and completeness flags, must match exactly. Current source policy wins
+over raw classifier output for restricted metadata-only records. History and
+outside-index records are untouched; malformed or divergent input fails before
+any checkpoint write.
+
+## Bootstrap and compatible producer fallback
+
+This code-only draft contains no bootstrap seed. Merging it alone cannot start a
+news fetch: the explicit capture preflight fails. Bind a reviewed union seed and
+all historical restorations to a fresh, stable main before an ordered code/seed
+handover. Drain old queued writers/deployments; the data CAS helper protects only
+the single data child commit after generation, not arbitrary code integration.
+
+After activation, do not revert only the producer to the old archive generator:
+it does not understand capture/details and would reintroduce truncation. The first
+safe incident response is to stop affected writers while retaining the last
+complete verified compatible data generation, capture and required detail files.
+Any data rollback needs current policy/withdrawal checks and must preserve URLs
+still used by clients. New detail files must be publicly readable on Pages before
+claiming source-view hydration works; Raw/Pages propagation is not an atomic
+cross-origin deployment. Existing inline full texts stay inline throughout.
