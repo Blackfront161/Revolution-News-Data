@@ -73,6 +73,11 @@ jobs:
 
           python -m pip check
 
+      - name: Archivpakete, Volltexterhalt und Rücknahmen testen
+        run: |
+          python -m pip install -r requirements-test.txt
+          PYTHONPATH=. python -m pytest -q tests/test_durable_source_archives.py tests/test_article_source_details.py tests/test_source_archive.py tests/test_source_import_policy.py tests/test_news_retention.py
+
       - name: Podcast-Veröffentlichung und Archivschutz testen
         run: python -m unittest discover -s tests -p test_podcast_workflow_publication.py
 

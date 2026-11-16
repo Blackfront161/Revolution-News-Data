@@ -69,13 +69,38 @@ def metadata_article(feed, entry, continent):
     }
 
 
+def article_is_withdrawn(article):
+    """Explicit withdrawal signals, never a technical fetch failure."""
+    return article.get("status") in {"withdrawn", "revoked", "deleted"} or article.get("deleted") is True
+
+
 def restrict_existing_article(article, source_policies):
     """Apply a newly reviewed restricted source policy to old archive rows too."""
     name = str(article.get("quelleName") or article.get("source") or article.get("sourceName") or "").strip().casefold()
-    feeds = [feed for feed in source_policies or []
-             if str(feed.get("name") or "").strip().casefold() == name
-             and feed.get("status") == "approved" and feed.get("importMode") == "metadata-only"]
+    matching = [feed for feed in source_policies or []
+                if name and str(feed.get("name") or "").strip().casefold() == name]
+    if article_is_withdrawn(article) or any(article_is_withdrawn(feed) for feed in matching):
+        return None
+    feeds = [feed for feed in matching if feed.get("importMode") == "metadata-only"]
     if not feeds:
+        if article.get("importMode") == "metadata-only":
+            # A row-level restriction also wins without a matching registry row.
+            try:
+                parsed = urlsplit(str(article.get("link") or ""))
+            except ValueError:
+                return None
+            feed = {key: article[key] for key in (
+                "categories", "languages", "originCountry", "originCountryCode",
+                "originRegion", "rightsReview") if key in article}
+            feed.update(name=article.get("quelleName") or article.get("source") or "Unknown source",
+                        homepage=article.get("sourceHomepage") or f"{parsed.scheme}://{parsed.netloc}/",
+                        importMode="metadata-only")
+            entry = {"title": article.get("title"), "link": article.get("link"),
+                     "published": article.get("pubDate"), "author": article.get("author")}
+            restricted = metadata_article(feed, entry, article.get("kontinent") or "Global")
+            if restricted is not None and article.get("id"):
+                restricted["id"] = article["id"]
+            return restricted
         return article
     entry = {"title": article.get("title"), "link": article.get("link"),
              "published": article.get("pubDate"), "author": article.get("author")}
