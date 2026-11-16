@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Dedicated structured calendar writer. No imports or writes to the news pipeline."""
 from __future__ import annotations
-import argparse, concurrent.futures, hashlib, html, json, os, re, tempfile
+import argparse, concurrent.futures, hashlib, html, json, os, re, tempfile, shutil, subprocess
 import urllib.parse, urllib.request
 from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
@@ -53,6 +53,101 @@ def atomic_json(path,data):
         os.replace(tmp,path)
     finally:
         if os.path.exists(tmp): os.unlink(tmp)
+
+
+CALENDAR_OUTPUTS=("calendar-source-cache.json","events.json","events-feed.json","calendar-status.json","feed-status.json","calendar-generation.json")
+JOURNAL=".calendar-transaction.json"
+
+def byte_hash(data):return hashlib.sha256(data).hexdigest()
+
+def json_bytes(data):
+    return (json.dumps(data,ensure_ascii=False,indent=2)+"\n").encode("utf-8")
+
+def install_calendar_file(path,data):
+    handle,tmp=tempfile.mkstemp(prefix=path.name+".",suffix=".tmp",dir=path.parent)
+    try:
+        with os.fdopen(handle,"wb") as stream:
+            stream.write(data);stream.flush();os.fsync(stream.fileno())
+        os.replace(tmp,path)
+    finally:
+        if os.path.exists(tmp):os.unlink(tmp)
+
+def recover_calendar_transaction(root):
+    journal_path=root/JOURNAL
+    if not journal_path.exists():return False
+    journal=json.loads(journal_path.read_text(encoding="utf-8"))
+    if journal.get("schema")!="wrn.calendar-transaction.v1":raise ValueError("Invalid calendar recovery journal")
+    backup=root/journal["backupDirectory"]
+    if backup.parent.resolve()!=root.resolve() or not backup.name.startswith(".calendar-backup-"):
+        raise ValueError("Calendar backup outside output root")
+    for name,entry in journal["previous"].items():
+        if name not in CALENDAR_OUTPUTS:raise ValueError("Unexpected recovery path")
+        target=root/name
+        if entry["existed"]:
+            data=(backup/name).read_bytes()
+            if byte_hash(data)!=entry["sha256"]:raise ValueError("Calendar backup hash mismatch")
+            install_calendar_file(target,data)
+        elif target.exists():target.unlink()
+    journal_path.unlink()
+    shutil.rmtree(backup)
+    return True
+
+def commit_calendar_generation(root,outputs):
+    if any(name not in CALENDAR_OUTPUTS for name in outputs):raise ValueError("Unknown calendar output")
+    recover_calendar_transaction(root)
+    backup=Path(tempfile.mkdtemp(prefix=".calendar-backup-",dir=root))
+    previous={}
+    for name in outputs:
+        target=root/name
+        if target.exists():
+            data=target.read_bytes()
+            with (backup/name).open("wb") as stream:
+                stream.write(data);stream.flush();os.fsync(stream.fileno())
+            previous[name]={"existed":True,"sha256":byte_hash(data)}
+        else:previous[name]={"existed":False}
+    # The journal exists BEFORE the first production-file replacement.
+    atomic_json(root/JOURNAL,{"schema":"wrn.calendar-transaction.v1","backupDirectory":backup.name,"previous":previous})
+    try:
+        for name,data in outputs.items():install_calendar_file(root/name,data)
+        verify_calendar_generation(root,allow_pending=True)
+    except Exception:
+        recover_calendar_transaction(root)
+        raise
+    # A hard process interruption leaves the journal; news always recovers it.
+    (root/JOURNAL).unlink()
+    shutil.rmtree(backup)
+
+def verify_calendar_generation(root,*,allow_pending=False):
+    if (root/JOURNAL).exists() and not allow_pending:
+        raise RuntimeError("Pending calendar transaction; recovery required before publication")
+    marker_path=root/"calendar-generation.json"
+    if not marker_path.exists():
+        # Before first migration there may be a legitimate untouched v1 bundle.
+        status=read_json(root/"calendar-status.json",{})
+        if status.get("schema")=="wrn.calendar-status.v2":raise ValueError("v2 calendar has no generation marker")
+        return {"legacy":True}
+    marker=read_json(marker_path,{})
+    if marker.get("schema")!="wrn.calendar-generation.v1":raise ValueError("Invalid calendar generation marker")
+    expected={"calendar-source-cache.json","events.json","events-feed.json","calendar-status.json"}
+    if set(marker.get("files",{}))!=expected:raise ValueError("Incomplete calendar generation manifest")
+    for name,digest in marker["files"].items():
+        if not (root/name).exists() or byte_hash((root/name).read_bytes())!=digest:
+            raise ValueError("Mixed calendar generation: "+name)
+    status=read_json(root/"calendar-status.json",{})
+    feed_status=read_json(root/"feed-status.json",{})
+    if feed_status:
+        for key in ["revision","archiveCount","feedCount"]:
+            if feed_status.get("events",{}).get(key)!=status.get(key):
+                raise ValueError("Calendar status section does not match generation: "+key)
+        for key,value in marker.get("eventStatus",{}).items():
+            if feed_status.get("events",{}).get(key)!=value:
+                raise ValueError("Mixed calendar events status generation: "+key)
+    return marker
+
+def guard_before_news_commit(root):
+    """Recover partial calendar writes before other news status generation."""
+    recover_calendar_transaction(root)
+    return verify_calendar_generation(root)
 
 def read_json(path,default):
     if not path.exists(): return default
@@ -362,23 +457,29 @@ def duplicate_key(row):
 def deduplicate(rows):
     groups=[]
     for row in rows:
-        keys={duplicate_key(row)}
+        keys={("id",row["eventOccurrenceId"]),duplicate_key(row)}
         address=norm(row.get("eventAddress"));venue=norm(row.get("eventVenue"))
         if address and venue:
             keys.add(("exact-place",norm(row["title"]),row["eventStart"],venue,address))
-        matches=[g for g in groups if g["keys"] & keys]
+        matches=[]
+        for group in groups:
+            common=group["keys"] & keys
+            explicit=any(key[0] in ["id","origin"] for key in common)
+            if common and (explicit or row.get("eventSourceId") not in group["sourceIds"]):
+                matches.append(group)
         aliases=set(row.get("eventAliases",[]));winner=dict(row)
+        source_ids={row.get("eventSourceId")}
         for g in matches:
-            keys |= g["keys"];aliases.update(g["row"].get("eventAliases",[]))
+            keys |= g["keys"];aliases.update(g["row"].get("eventAliases",[]));source_ids |= g["sourceIds"]
             winner=dict(preferred_record(g["row"],winner))
             groups.remove(g)
         winner["eventAliases"]=sorted(aliases)
-        groups.append({"keys":keys,"row":winner})
+        groups.append({"keys":keys,"row":winner,"sourceIds":source_ids})
     return sorted([g["row"] for g in groups],key=lambda r:(r.get("eventStart",""),r["eventOccurrenceId"]))
 
 
 def validate_against_known_tombstones(rows,previous):
-    dead_rows=[r for r in previous if r.get("eventSchemaVersion")==2 and r.get("eventStatus") in ["deleted","cancelled"]]
+    dead_rows=[r for r in [*previous,*rows] if r.get("eventSchemaVersion")==2 and r.get("eventStatus") in ["deleted","cancelled"]]
     result=[]
     def keys(r):
         out={duplicate_key(r)}
@@ -390,9 +491,20 @@ def validate_against_known_tombstones(rows,previous):
         blocked=None
         for dead in dead_rows:
             same_identity=row["eventOccurrenceId"]==dead["eventOccurrenceId"]
-            if not same_identity and not (keys(row)&keys(dead)):continue
+            common=keys(row)&keys(dead)
+            explicit_origin=any(key[0]=="origin" for key in common)
+            cross_source=row.get("eventSourceId")!=dead.get("eventSourceId")
+            if not same_identity and not (common and (explicit_origin or cross_source)):continue
             if same_identity and row.get("eventReinstatedFromSnapshot"):continue
-            if not publisher_allows_reinstatement(dead,row):
+            if publisher_allows_reinstatement(dead,row):
+                dead_material=parse_instant(dead.get("eventRecordUpdatedAt"))
+                active_material=parse_instant(row.get("eventRecordUpdatedAt"))
+                if dead_material and active_material and active_material<=dead_material:
+                    # A later publisher revision has just been verified across
+                    # this alias group. Emit a later material active revision.
+                    row=dict(row)
+                    row["eventRecordUpdatedAt"]=stamp(dead_material+timedelta(microseconds=1))
+            else:
                 blocked=dict(dead)
                 blocked["eventAliases"]=sorted(set(dead.get("eventAliases",[])+row.get("eventAliases",[])))
                 break
@@ -424,7 +536,9 @@ def collect(source,now,evidence=None,replay=None):
             if hashlib.sha256(data).hexdigest()!=record["sha256"]:raise ValueError("research-hash-mismatch")
             payload=json.loads(data);checked=record["checkedAt"]
             new,rejected=gancio_events(source,payload,checked)
-            status.update(checkedAt=checked,rawCount=len(payload),complete=len(payload)<PAGE_SIZE,state="ok" if len(payload)<PAGE_SIZE else "partial",rejected=rejected,replay=True)
+            complete=len(payload)<PAGE_SIZE and not rejected
+            status.update(checkedAt=checked,rawCount=len(payload),complete=complete,
+                state="ok" if complete else "partial",rejected=rejected,replay=True)
             return new,status
         if replay is not None:raise ValueError("no-replay-for-this-adapter")
         if source["kind"]=="gancio":
@@ -469,6 +583,7 @@ def collect(source,now,evidence=None,replay=None):
 
 def refresh(root,now=None,evidence=None,replay=None):
     now=now or datetime.now(UTC)
+    recover_calendar_transaction(root)
     registry=read_json(root/"calendar-sources.json",{})["sources"]
     previous=read_json(root/"events.json",[])
     # Keep independent source histories so exact federated deduplication never
@@ -488,8 +603,14 @@ def refresh(root,now=None,evidence=None,replay=None):
             snapshots[source["id"]]=merge_source(grouped.get(source["id"],[]),new,status["complete"],now)
     successful=sum(s["state"]!="failed" for s in statuses)
     if not successful:raise RuntimeError("All calendar sources failed; no published files changed")
-    rows=deduplicate(validate_against_known_tombstones(
-        [r for source_rows in snapshots.values() for r in source_rows],previous))
+    validated=validate_against_known_tombstones(
+        [r for source_rows in snapshots.values() for r in source_rows],previous)
+    validated_active={r["eventOccurrenceId"]:r for r in validated if r.get("eventStatus")=="scheduled"}
+    for source_rows in snapshots.values():
+        for row in source_rows:
+            if row["eventOccurrenceId"] in validated_active:
+                row["eventRecordUpdatedAt"]=validated_active[row["eventOccurrenceId"]]["eventRecordUpdatedAt"]
+    rows=deduplicate(validated)
     # Publish every eligible row; feed cap is explicitly separate, tombstones reserved.
     active_rows=[r for r in rows if r.get("eventStatus")=="scheduled"]
     tombstones=[r for r in rows if r.get("eventStatus")!="scheduled"]
@@ -502,26 +623,41 @@ def refresh(root,now=None,evidence=None,replay=None):
         "scheduledCount":len(active_rows),"tombstoneCount":len(tombstones),
         "legacyQuarantined":sum(r.get("eventSchemaVersion")!=2 for r in previous if isinstance(r,dict)),
         "note":"Successful fetch verifies source data, not independent real-world organiser confirmation."}
-    if not active_rows and any(r.get("eventStatus")=="scheduled" for r in previous):
-        raise RuntimeError("Empty active candidate; review required, no files changed")
-    atomic_json(root/"calendar-source-cache.json",{
+    # A complete batch can legitimately cancel/remove every active event.
+    # merge_source retained last-good rows for partial/failed sources already;
+    # all-source failure was rejected above. Never suppress valid tombstones
+    # merely because no active row remains.
+    outputs={}
+    outputs["calendar-source-cache.json"]=json_bytes({
         "schema":"wrn.calendar-source-cache.v2","generatedAt":stamp(now),"sources":snapshots})
-    atomic_json(root/"events.json",rows)
-    atomic_json(root/"events-feed.json",feed)
-    atomic_json(root/"calendar-status.json",status)
+    outputs["events.json"]=json_bytes(rows)
+    outputs["events-feed.json"]=json_bytes(feed)
+    outputs["calendar-status.json"]=json_bytes(status)
     feed_status=read_json(root/"feed-status.json",{})
     if feed_status:
-        # Preserve every news timestamp/revision and all unrelated status data.
         feed_status["events"]={"revision":revision,"archiveCount":len(rows),"feedCount":len(feed),
-            "bytes":(root/"events-feed.json").stat().st_size,"lastSuccessfulFetchAt":stamp(now),
+            "bytes":len(outputs["events-feed.json"]),"lastSuccessfulFetchAt":stamp(now),
             "sourceState":status["state"],"authoritativeCompleteSnapshot":False}
-        atomic_json(root/"feed-status.json",feed_status)
+        outputs["feed-status.json"]=json_bytes(feed_status)
+    outputs["calendar-generation.json"]=json_bytes({
+        "schema":"wrn.calendar-generation.v1","revision":revision,
+        "eventStatus":{key:feed_status["events"][key] for key in
+            ["revision","archiveCount","feedCount","bytes","lastSuccessfulFetchAt","sourceState"]} if feed_status else {},
+        "files":{name:byte_hash(data) for name,data in outputs.items() if name!="feed-status.json"}})
+    commit_calendar_generation(root,outputs)
     return status
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--root",type=Path,default=Path(__file__).resolve().parent)
     parser.add_argument("--evidence-dir",type=Path);parser.add_argument("--replay-research",type=Path)
+    parser.add_argument("--recover-only",action="store_true")
+    parser.add_argument("--verify-generation",action="store_true")
     args=parser.parse_args()
+    if args.recover_only:
+        recover_calendar_transaction(args.root);return
+    if args.verify_generation:
+        if (args.root/JOURNAL).exists():raise RuntimeError("Pending calendar transaction; recover before committing")
+        verify_calendar_generation(args.root);return
     if args.evidence_dir:args.evidence_dir.mkdir(parents=True,exist_ok=True)
     status=refresh(args.root,evidence=args.evidence_dir,replay=args.replay_research)
     print(json.dumps({k:v for k,v in status.items() if k!="sources"},ensure_ascii=False))
