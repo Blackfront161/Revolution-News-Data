@@ -1,4 +1,4 @@
-# WRN structured calendar contract v2 — 2026-11-16
+# WRN structured calendar contract v2 — R2 · 2026-11-16
 
 Private review candidate. No publication or scheduled run is implied.
 
@@ -33,7 +33,7 @@ Pipeline validation before emitting a new active material revision:
 - An internal missing-from-complete-upcoming-snapshot tombstone may be withdrawn after that SAME native occurrence genuinely reappears in a later successful snapshot; eventReinstatedFromSnapshot marks this distinct case.
 - An unchanged recheck never bumps eventRecordUpdatedAt. Per-source histories preserve suppressed federation aliases across deduplication.
 
-Explicit and inferred tombstones are retained in BOTH routes for at least 30 days and through the original scheduled occurrence date plus 30 days. Disappearance becomes deleted, not an assertion of cancellation, only after a complete successful source snapshot; eventRemovalReason records the reason. Network errors, repeated/truncated pages, the page cap and any parser rejection make that source partial and forbid absence-based deletions. A failed source keeps its last verified rows and original eventCheckedAt. All-source failure writes no published files.
+Explicit and inferred tombstones are retained in BOTH routes for at least 30 days and through the original scheduled occurrence date plus 30 days. Disappearance becomes deleted, not an assertion of cancellation, only after a complete successful source snapshot; eventRemovalReason records the reason. Network errors, repeated/truncated pages, the page cap and any parser rejection make that source partial and forbid absence-based deletions. A failed source keeps its last verified rows and original eventCheckedAt. All-source failure publishes no new generation; a pending transaction is recovered first.
 
 ## Dates and series
 
@@ -52,3 +52,24 @@ Proposed dedicated hourly schedule: minute 23 UTC. The job checks out current ma
 Only calendar outputs and the events section of feed-status.json change. Existing news timestamps/revisions are preserved. New source response hashes and URLs are logged in calendar-status.json. No paid service, secret, additional artifact storage or TLS/bot workaround is introduced.
 
 Independent review is still required. Private original-response probes and replay tests are not proof of an active scheduled GitHub run or live publication. The public feed still held five old rows at the recorded 16 November check.
+
+
+
+## R2 transactional publication and current-batch validation
+
+Replay and live parser rejection have identical completeness rules: any rejected row makes the source partial and forbids absence-based deletion.
+
+Publisher validation includes tombstones from BOTH the previous published snapshot and the current incoming batch. A newly observed stale active alias cannot override a new cancellation merely because its local capture revision is later. A strictly later publisher-confirmed active update may reinstate; if necessary the pipeline emits a strictly later material revision and persists it in the source cache before consumer deduplication.
+
+Outputs are one recoverable generation: calendar-source-cache.json, events.json, events-feed.json, calendar-status.json, the events section of feed-status.json when present, and calendar-generation.json. A durable backup and .calendar-transaction.json journal are written before any production-file replacement. Ordinary write errors restore exact prior bytes; an interrupted process leaves the journal for recovery before further publication. calendar-generation.json is written last and binds hashes of the four calendar data/status/cache files. Consumers need not fetch this pipeline publication certificate.
+
+The full news workflow immediately invokes --recover-only after the calendar step, before rebuilding news status. BOTH commit paths invoke --verify-generation before staging any files. Pending journals, mixed hashes and mismatched status revision/counts block publication even if event counts are unchanged. A recoverable calendar failure therefore preserves the old calendar and lets news continue. If recovery itself cannot restore/verify files, the gate fails closed; no claim is made that news can safely commit through an unrecoverable filesystem failure.
+
+Journal/backup files are never staged. Crash tests include per-file ordinary exceptions, BaseException simulation and actual child-process os._exit termination with recovery in a separate process. These prove tested process-interruption paths, not power-loss or hardware durability.
+
+
+Distinct native IDs within a single publisher are not merged merely because title, start and place match. The exact-place heuristic is cross-publisher only; an explicit canonical origin or the same occurrence ID can still prove identity. Replacing/removing one native ID must not cancel a different native occurrence merely through shared display fields.
+
+A valid batch that cancels/removes the last active event is published with zero active rows and its retained tombstones. Last-good retention for partial sources and the all-source-failure abort provide the failure safeguard; zero active rows alone is not treated as a failure.
+
+The generation certificate also binds the calendar-specific feed-status fields (revision, counts, bytes, source state and last successful fetch), while allowing unrelated news metadata to advance.
