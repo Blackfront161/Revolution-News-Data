@@ -1,0 +1,42 @@
+name: Refresh Structured Calendar
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wrn-main-write
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  calendar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Calendar regression tests
+        run: python -m unittest discover -s tests -p test_calendar_pipeline.py -v
+      - name: Fetch structured event occurrences
+        run: python update_calendar.py --evidence-dir calendar-fetch-evidence
+      - name: Commit calendar outputs only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "wrn-calendar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add events.json events-feed.json calendar-status.json calendar-source-cache.json
+          if [ -f feed-status.json ]; then git add feed-status.json; fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Refresh structured calendar occurrences"
+          git push origin HEAD:main
