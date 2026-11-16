@@ -1,4 +1,4 @@
-import unittest,copy,sys,json,tempfile,ast
+import unittest,copy,sys,json,tempfile,ast,subprocess
 from pathlib import Path
 from datetime import datetime,timezone,timedelta
 from unittest.mock import patch
@@ -70,7 +70,7 @@ class CalendarTests(unittest.TestCase):
         rows=c.deduplicate([a,b])
         self.assertEqual(len(rows),1);self.assertEqual(len(rows[0]["eventAliases"]),2)
     def test_tombstone_wins_over_active_duplicate(self):
-        a=event();b=c.tombstone(event("2"),NOW,"test")
+        a=event();b=c.tombstone(event("2"),NOW,"test");b["eventSourceId"]="other"
         self.assertEqual(c.deduplicate([a,b])[0]["eventStatus"],"deleted")
         self.assertEqual(c.deduplicate([b,a])[0]["eventStatus"],"deleted")
     def test_no_global_title_only_dedup(self):
@@ -137,7 +137,7 @@ class CalendarTests(unittest.TestCase):
         self.assertTrue(restored["eventReinstatedFromSnapshot"])
     def test_ap_and_plain_duplicate_merge(self):
         a=event();a["eventCanonicalOrigin"]="https://origin.example/event/a"
-        b=event("2")
+        b=event("2");b["eventSourceId"]="other"
         self.assertEqual(len(c.deduplicate([a,b])),1)
     def test_radar_multidate_array_position_not_identity(self):
         raw={"result":{"1":{"title":"Series","date_time":[{"value":1795000000},{"value":1796000000}]}}}
@@ -239,4 +239,191 @@ class CalendarTests(unittest.TestCase):
         old=event();new=event(start="2026-11-19T19:00:00Z")
         result=c.merge_source([old],[new],True,NOW)[0]
         self.assertGreater(c.parse_instant(result["eventRecordUpdatedAt"]),c.parse_instant(old["eventRecordUpdatedAt"]))
+
+    def test_replay_parser_rejection_never_claims_complete_or_deletes_old(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);data=json.dumps([{"id":1,"title":"No explicit time","slug":"bad"}]).encode()
+            (p/"source.json").write_bytes(data)
+            (p/"gancio-api-health.json").write_text(json.dumps([{"baseUrl":SOURCE["url"],"rawFile":"source.json","sha256":hashlib.sha256(data).hexdigest(),"checkedAt":c.stamp(NOW)}]))
+            rows,status=c.collect(SOURCE,NOW,replay=p)
+            self.assertEqual(rows,[]);self.assertEqual(len(status["rejected"]),1)
+            self.assertFalse(status["complete"]);self.assertEqual(status["state"],"partial")
+            self.assertEqual(c.merge_source([event()],rows,status["complete"],NOW),[event()])
+    def test_current_batch_new_cancellation_blocks_stale_later_captured_alias(self):
+        dead=event(raw={"status":"cancelled","updatedAt":"2026-11-15T10:00:00Z"})
+        active=event("copy",raw={"status":"scheduled","updatedAt":"2026-11-14T10:00:00Z"})
+        active["eventSourceId"]="copy";active["eventRecordUpdatedAt"]=c.stamp(NOW+timedelta(minutes=1))
+        for row in [dead,active]:row["eventCanonicalOrigin"]="https://origin.example/event/1"
+        for rows in [[dead,active],[active,dead]]:
+            result=c.deduplicate(c.validate_against_known_tombstones(rows,[]))
+            self.assertEqual(len(result),1);self.assertEqual(result[0]["eventStatus"],"cancelled")
+    def test_current_batch_later_publisher_reinstates_even_if_dead_captured_later(self):
+        dead=event(raw={"status":"cancelled","updatedAt":"2026-11-14T10:00:00Z"})
+        active=event("copy",raw={"status":"scheduled","updatedAt":"2026-11-15T10:00:00Z"})
+        dead["eventRecordUpdatedAt"]=c.stamp(NOW+timedelta(minutes=1))
+        for row in [dead,active]:row["eventCanonicalOrigin"]="https://origin.example/event/1"
+        for rows in [[dead,active],[active,dead]]:
+            result=c.deduplicate(c.validate_against_known_tombstones(rows,[]))
+            self.assertEqual(result[0]["eventStatus"],"scheduled")
+            self.assertGreater(c.parse_instant(result[0]["eventRecordUpdatedAt"]),c.parse_instant(dead["eventRecordUpdatedAt"]))
+    def _seed_transaction(self,p):
+        (p/"calendar-sources.json").write_text(json.dumps({"sources":[SOURCE]}))
+        (p/"feed-status.json").write_text(json.dumps({"news":{"revision":"keep-news"},"events":{}}))
+        (p/"news.json").write_bytes(b'[{"news":"old"}]')
+        with patch.object(c,"collect",return_value=([event()],{"sourceId":"test","state":"ok","complete":True})):
+            c.refresh(p,NOW)
+        return {name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS}
+    def test_every_output_write_exception_before_and_after_rolls_back_and_news_continues(self):
+        cases=0
+        for selected in c.CALENDAR_OUTPUTS:
+            for phase in ["before","after"]:
+                with self.subTest(file=selected,phase=phase),tempfile.TemporaryDirectory() as d:
+                    p=Path(d);before=self._seed_transaction(p);real=c.install_calendar_file;fired=[False]
+                    def fault(path,data):
+                        hit=path.name==selected and not fired[0]
+                        if hit and phase=="before":fired[0]=True;raise OSError("injected before output write")
+                        real(path,data)
+                        if hit and phase=="after":fired[0]=True;raise OSError("injected after output write")
+                    with patch.object(c,"collect",return_value=([event(start="2026-11-19T19:00:00Z")],{"sourceId":"test","state":"ok","complete":True})),patch.object(c,"install_calendar_file",side_effect=fault):
+                        with self.assertRaises(OSError):c.refresh(p,NOW)
+                    self.assertTrue(fired[0]);self.assertFalse((p/c.JOURNAL).exists())
+                    self.assertEqual(before,{name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS})
+                    self.assertEqual(len(json.loads((p/"events.json").read_text())),1)
+                    c.guard_before_news_commit(p)
+                    (p/"news.json").write_bytes(b'[{"news":"new"}]')
+                    self.assertEqual((p/"news.json").read_bytes(),b'[{"news":"new"}]')
+                    cases+=1
+        self.assertEqual(cases,12)
+    def test_every_output_hard_interruption_before_and_after_is_recovered_before_news(self):
+        class ProcessInterrupted(BaseException):pass
+        cases=0
+        for selected in c.CALENDAR_OUTPUTS:
+            for phase in ["before","after"]:
+                with self.subTest(file=selected,phase=phase),tempfile.TemporaryDirectory() as d:
+                    p=Path(d);before=self._seed_transaction(p);real=c.install_calendar_file
+                    def crash(path,data):
+                        if path.name==selected and phase=="before":raise ProcessInterrupted()
+                        real(path,data)
+                        if path.name==selected and phase=="after":raise ProcessInterrupted()
+                    with patch.object(c,"collect",return_value=([event(start="2026-11-19T19:00:00Z")],{"sourceId":"test","state":"ok","complete":True})),patch.object(c,"install_calendar_file",side_effect=crash):
+                        with self.assertRaises(ProcessInterrupted):c.refresh(p,NOW)
+                    self.assertTrue((p/c.JOURNAL).exists())
+                    with self.assertRaises(RuntimeError):c.verify_calendar_generation(p)
+                    c.guard_before_news_commit(p)
+                    self.assertFalse((p/c.JOURNAL).exists())
+                    self.assertEqual(before,{name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS})
+                    (p/"news.json").write_bytes(b'[{"news":"continues"}]')
+                    self.assertTrue((p/"news.json").exists());cases+=1
+        self.assertEqual(cases,12)
+    def test_equal_count_mixed_generation_is_rejected_by_hash(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            rows=json.loads((p/"events.json").read_text())
+            self.assertEqual(len(rows),1);rows[0]["title"]="Different generation, same count"
+            (p/"events.json").write_text(json.dumps(rows))
+            with self.assertRaises(ValueError):c.verify_calendar_generation(p)
+    def test_news_workflow_recovers_before_builder_and_verifies_before_staging(self):
+        s=(Path(__file__).resolve().parents[1]/".github/workflows/update.yml").read_text()
+        self.assertLess(s.index("--recover-only"),s.index('WRN_FEED_TARGETS="news,status"'))
+        self.assertLess(s.index("--verify-generation"),s.index("git add news.json"))
+        self.assertIn("continue-on-error: true",s)
+
+    def test_real_process_exit_each_write_recovers_exact_generation_and_news_continues(self):
+        child = """
+import sys,os,json
+from pathlib import Path
+from datetime import datetime,timezone
+import update_calendar as c
+root=Path(sys.argv[1]);selected=sys.argv[2];phase=sys.argv[3]
+now=datetime(2026,11,16,8,tzinfo=timezone.utc)
+source={"id":"test","name":"Test","kind":"gancio","url":"https://example.org","enabled":True}
+row=c.make_event(source,"1","Changed","https://example.org/event/a","2026-11-19T19:00:00Z",raw={"place":{"name":"Venue","address":"1 Explicit Street"}},checked=c.stamp(now))
+c.collect=lambda *args:([row],{"sourceId":"test","state":"ok","complete":True})
+real=c.install_calendar_file
+def crash(path,data):
+ if path.name==selected and phase=="before":os._exit(73)
+ real(path,data)
+ if path.name==selected and phase=="after":os._exit(73)
+c.install_calendar_file=crash
+c.refresh(root,now)
+"""
+        module_root=Path(__file__).resolve().parents[1]
+        cases=0
+        for selected in c.CALENDAR_OUTPUTS:
+            for phase in ["before","after"]:
+                with self.subTest(file=selected,phase=phase),tempfile.TemporaryDirectory() as d:
+                    p=Path(d);before=self._seed_transaction(p)
+                    crashed=subprocess.run([sys.executable,"-B","-c",child,str(p),selected,phase],cwd=module_root,capture_output=True)
+                    self.assertEqual(crashed.returncode,73,crashed.stderr)
+                    self.assertTrue((p/c.JOURNAL).exists())
+                    with self.assertRaises(RuntimeError):c.verify_calendar_generation(p)
+                    recovered=subprocess.run([sys.executable,"-B",str(module_root/"update_calendar.py"),"--root",str(p),"--recover-only"],cwd=module_root,capture_output=True)
+                    self.assertEqual(recovered.returncode,0,recovered.stderr)
+                    self.assertEqual(before,{name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS})
+                    c.verify_calendar_generation(p)
+                    (p/"news.json").write_bytes(b'[{"news":"continues after actual process exit"}]')
+                    self.assertIn(b"continues",(p/"news.json").read_bytes())
+                    cases+=1
+        self.assertEqual(cases,12)
+
+    def test_same_count_same_revision_wrong_status_timestamp_is_rejected(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            state=json.loads((p/"feed-status.json").read_text())
+            state["events"]["lastSuccessfulFetchAt"]="2000-01-01T00:00:00Z"
+            (p/"feed-status.json").write_text(json.dumps(state))
+            with self.assertRaises(ValueError):c.verify_calendar_generation(p)
+    def test_local_git_news_commit_after_calendar_failure_has_no_partial_calendar(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);before=self._seed_transaction(p)
+            def git(*args):
+                r=subprocess.run(["git",*args],cwd=p,capture_output=True)
+                self.assertEqual(r.returncode,0,r.stderr)
+                return r.stdout
+            git("init","-q");git("config","user.name","Calendar Transaction Test");git("config","user.email","test@example.invalid")
+            git("add",".");git("commit","-q","-m","Baseline")
+            real=c.install_calendar_file;fired=[False]
+            def fail_after_feed(path,data):
+                real(path,data)
+                if path.name=="events-feed.json" and not fired[0]:
+                    fired[0]=True;raise OSError("injected partial generation")
+            with patch.object(c,"collect",return_value=([event(start="2026-11-19T19:00:00Z")],{"sourceId":"test","state":"ok","complete":True})),patch.object(c,"install_calendar_file",side_effect=fail_after_feed):
+                with self.assertRaises(OSError):c.refresh(p,NOW)
+            c.guard_before_news_commit(p)
+            (p/"news.json").write_bytes(b'[{"news":"new"}]')
+            state=json.loads((p/"feed-status.json").read_text());state["news"]["revision"]="new-news"
+            (p/"feed-status.json").write_text(json.dumps(state))
+            c.verify_calendar_generation(p)
+            git("add","news.json",*c.CALENDAR_OUTPUTS)
+            staged=set(git("diff","--cached","--name-only").decode().splitlines())
+            self.assertEqual(staged,{"news.json","feed-status.json"})
+            git("commit","-q","-m","Publish news after recovered calendar failure")
+            for name,data in before.items():
+                if name!="feed-status.json":self.assertEqual(git("show","HEAD:"+name),data)
+
+    def test_distinct_native_ids_within_same_source_are_not_heuristically_collapsed(self):
+        a=event("1");b=event("2")
+        self.assertEqual(len(c.deduplicate([a,b])),2)
+    def test_new_native_id_does_not_inherit_same_source_missing_id_deletion(self):
+        dead=c.tombstone(event("old"),NOW,"missing-from-complete-upcoming-snapshot")
+        new=event("new")
+        result=c.deduplicate(c.validate_against_known_tombstones([dead,new],[dead]))
+        self.assertEqual({r["eventOccurrenceId"]:r["eventStatus"] for r in result},{"test:old":"deleted","test:new":"scheduled"})
+    def test_valid_cancellation_of_last_active_event_is_published(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            with patch.object(c,"collect",return_value=([event(raw={"status":"cancelled"})],{"sourceId":"test","state":"ok","complete":True})):
+                status=c.refresh(p,NOW)
+            self.assertEqual(status["scheduledCount"],0)
+            self.assertEqual(json.loads((p/"events-feed.json").read_text())[0]["eventStatus"],"cancelled")
+            c.verify_calendar_generation(p)
+    def test_complete_removal_of_last_active_event_is_published(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            with patch.object(c,"collect",return_value=([],{"sourceId":"test","state":"ok","complete":True})):
+                status=c.refresh(p,NOW)
+            self.assertEqual(status["scheduledCount"],0)
+            self.assertEqual(json.loads((p/"events-feed.json").read_text())[0]["eventStatus"],"deleted")
+            c.verify_calendar_generation(p)
 if __name__=="__main__":unittest.main()
