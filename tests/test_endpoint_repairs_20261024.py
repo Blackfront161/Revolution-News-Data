@@ -13,7 +13,7 @@ class EndpointRepairs(unittest.TestCase):
         self.assertEqual(history['sources'], next_history['sources'])
     def test_reviewed_alias_preserves_identity_and_restricts_import(self):
         for old,(new,home,language) in REPAIRS.items():
-            source={'name':'Example','url':'https://'+old+'/','importMode':'fulltext'}
+            source={'name':'Example','url':'https://'+old+('' if '?' in old else '/'),'importMode':'fulltext'}
             repaired=reviewed_source(source)
             self.assertEqual(repaired['url'],source['url'])
             self.assertEqual(request_url(source),new)

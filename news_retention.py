@@ -1,9 +1,11 @@
 """Bound current news without letting high-volume feeds erase small sources."""
 from datetime import datetime, timezone
 from build_web_feeds import date_value, stable_key, usable_news_item
+from reviewed_article_identity import canonicalize_reviewed_articles
 
 
 def retain_current_sources(rows, source_names, limit=2000, now=None, days=30):
+    rows = canonicalize_reviewed_articles(rows)
     if limit < 1:
         return []
     reference = (now or datetime.now(timezone.utc)).timestamp()

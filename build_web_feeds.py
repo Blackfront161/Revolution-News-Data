@@ -15,6 +15,7 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+from reviewed_article_identity import canonicalize_reviewed_articles
 
 ROOT = Path(__file__).resolve().parent
 
@@ -390,7 +391,7 @@ def newest_article_at(rows: list[dict[str, Any]]) -> str:
 
 
 def main() -> int:
-    news = load_list(NEWS_SOURCE)
+    news = canonicalize_reviewed_articles(load_list(NEWS_SOURCE))
     events = load_list(EVENTS_SOURCE)
     build_news = "news" in FEED_TARGETS
     build_events = "events" in FEED_TARGETS

@@ -45,7 +45,7 @@ def test_incomplete_and_metadata_only_bodies_stay_unadmitted():
 
 def test_archived_excerpt_is_not_promoted_to_complete_body():
     row = quick()
-    _, chunks = build_source_archives([], [row], previous_articles=[FULL], generated_at=NOW)
+    _, chunks = build_source_archives([], [row], previous_articles=[dict(FULL, content=BODY[:1400], contentComplete=False, webFeedTruncated=True)], generated_at=NOW)
     assert 'detailPath' not in bind_quick_details([row], chunks)[0]
     assert chunks[source_id(FULL['quelleName'])][0]['contentComplete'] is False
 
@@ -71,10 +71,17 @@ def test_two_serialized_builds_keep_full_body_after_quick_feed_rollover(tmp_path
     import json
     import sys
     import build_source_archive as builder
+    from news_archive_capture import capture_news_archive
     from datetime import timedelta
     current = dict(FULL, pubDate=datetime.now(timezone.utc).isoformat())
     news_path, quick_path = tmp_path / 'news.json', tmp_path / 'news-feed.json'
     manifest_path, archive = tmp_path / 'manifest.json', tmp_path / 'archive'
+    monkeypatch.setattr(builder, 'ROOT', tmp_path)
+    builder.write_payload(tmp_path/'multilingual-source-registry.json', {'sources':[]})
+    builder.write_payload(tmp_path/'feed-status.json', {'news':{}})
+    initial_manifest,_ = builder.build_source_archives([],[],generated_at=datetime.now(timezone.utc))
+    builder.write_payload(manifest_path, initial_manifest)
+    capture_news_archive([current],tmp_path/'news-archive-capture.json',[],allow_initialize=True)
     builder.write_payload(news_path, [current])
     builder.write_payload(quick_path, [quick(current)])
     monkeypatch.setattr(sys, 'argv', ['build_source_archive.py', '--news', str(news_path),
@@ -84,18 +91,20 @@ def test_two_serialized_builds_keep_full_body_after_quick_feed_rollover(tmp_path
     path = archive / f'{source_id(current["quelleName"])}.json'
     delivered = json.loads(path.read_text(encoding='utf-8'))
     assert delivered[0]['content'] == BODY and delivered[0]['contentComplete'] is True
-    builder.write_payload(quick_path, [])
+    unrelated=dict(current,link='https://example.org/unrelated',title='Other news',quelleName='Other source',content='New complete short text.')
+    capture_news_archive([unrelated],tmp_path/'news-archive-capture.json',[])
+    builder.write_payload(news_path,[unrelated])
+    builder.write_payload(quick_path,[unrelated])
     builder.main()
     assert json.loads(path.read_text(encoding='utf-8')) == delivered
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
-    assert manifest['quickIndexCount'] == 0
+    assert next(s for s in manifest['sources'] if s['name']==current['quelleName'])['quickIndexCount'] == 0
     assert delivered[0]['content'].endswith('ΤΕΛΙΚΗ ΠΑΡΑΓΡΑΦΟΣ.')
 
 
-def test_retention_requires_exact_current_identity_full_body_and_https():
-    changes = [dict(title='Changed'), dict(quelleName='Other source'),
-               dict(link='http://example.org/article'), dict(link='https://user:pass@example.org/article'),
-               dict(content=BODY + 'Changed'), dict(contentComplete=False),
+def test_canonical_retention_requires_complete_unrestricted_body_and_https():
+    changes = [dict(link='http://example.org/article'), dict(link='https://user:pass@example.org/article'),
+               dict(contentComplete=False),
                dict(importMode='metadata-only'), dict(webFeedTruncated=True)]
     for change in changes:
         current = dict(FULL, **change)
@@ -106,15 +115,20 @@ def test_retention_requires_exact_current_identity_full_body_and_https():
         _, chunks = build_source_archives([current], [], previous_articles=[previous], generated_at=NOW)
         detail = next(row for rows in chunks.values() for row in rows if row['link'] == current['link'])
         assert detail['contentComplete'] is False
-        assert len(detail['content']) == 1400
+        if change.get('importMode') == 'metadata-only':
+            assert 'Αρχή' not in detail['content']
+            assert detail['importMode'] == 'metadata-only'
+        else:
+            assert len(detail['content']) == 1400
 
 
-def test_old_excerpt_or_incomplete_row_never_authorizes_retention():
+def test_complete_current_body_is_not_lost_because_previous_row_was_incomplete():
     for previous in [dict(FULL, content=BODY[:1400], contentComplete=False,
                           webFeedTruncated=True, webFeedOriginalLength=len(BODY)),
                      dict(FULL, contentComplete=False), dict(FULL, importMode='metadata-only')]:
         _, chunks = build_source_archives([FULL], [], previous_articles=[previous], generated_at=NOW)
-        assert chunks[source_id(FULL['quelleName'])][0]['contentComplete'] is False
+        assert chunks[source_id(FULL['quelleName'])][0]['contentComplete'] is True
+        assert chunks[source_id(FULL['quelleName'])][0]['content'] == BODY
 
 
 def test_new_restriction_overrides_previously_delivered_full_body():

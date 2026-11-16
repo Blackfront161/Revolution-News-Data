@@ -37,18 +37,34 @@ def test_actual_checkpoint_uses_source_retention_before_atomic_publication(tmp_p
     large=[row('Frequent',i/10000,str(i)) for i in range(2100)]
     small=row('Reviewed',15,'original-only',importMode='metadata-only',contentComplete=False,image='',images=[])
     outputs={}
+    from news_archive_capture import capture_news_archive, read_capture, public_capture_rows
+    capture_path=tmp_path/'news-archive-capture.json'
+    # Explicit bootstrap and the same test clock; not an implicit empty reset.
+    capture_news_archive([],capture_path,[],now=NOW,allow_initialize=True)
+    captured_calls=[]
+    def capture_checkpoint(rows,path,policies):
+        captured_calls.append(len(rows))
+        return capture_news_archive(rows,capture_path,policies,now=NOW)
     namespace={'_LAST_CHECKPOINT_AT':0,'CHECKPOINT_INTERVAL_SECONDS':30,'time':time,
         'archiv_dict':{r['link']:r for r in large+[small]},'date_value':__import__('build_web_feeds').date_value,
         'repair_overbroad_archive_categories':lambda r:r,'ARTICLE_MIN_LENGTHS':{},'safe_lower':lambda s:s.lower(),
         'content_is_incomplete':lambda *args:True,'incomplete_limit_for_source':lambda source:3000,
         'retain_current_sources':lambda rows,names:retain_current_sources(rows,names,now=NOW),
+        'capture_news_archive':capture_checkpoint,'read_capture_policies':lambda path:[],
+        'public_capture_rows':public_capture_rows,
         'quellen':{'Asia':[{'name':'Reviewed'},{'name':'Frequent'}]},
         'atomic_json_write':lambda name,rows:outputs.update({name:rows})}
     exec(compile(ast.Module(body=[checkpoint],type_ignores=[]),str(source),'exec'),namespace)
     assert namespace['save_checkpoint'](force=True)
     assert len(outputs['news.json'])==2000
-    assert next(r for r in outputs['news.json'] if r['quelleName']=='Reviewed')==small
+    assert captured_calls==[2101] and len(read_capture(capture_path))==2101
+    from source_import_policy import restrict_existing_article
+    admitted_small=restrict_existing_article(small,[{'name':'Reviewed'},{'name':'Frequent'}])
+    assert next(r for r in outputs['news.json'] if r['quelleName']=='Reviewed')==admitted_small
+    assert all(admitted_small[key]==small[key] for key in ('link','title','quelleName','pubDate'))
+    assert admitted_small['contentComplete'] is False and admitted_small['importMode']=='metadata-only'
     namespace['archiv_dict']={r['link']:r for r in outputs['news.json']}
     previous=outputs['news.json']
     assert namespace['save_checkpoint'](force=True)
     assert outputs['news.json']==previous
+    assert len(read_capture(capture_path))==2101

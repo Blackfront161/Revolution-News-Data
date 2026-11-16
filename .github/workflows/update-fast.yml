@@ -7,6 +7,11 @@ on:
     paths:
       - aggregate.py
       - news_retention.py
+      - news_archive_capture.py
+      - duplicate_feed_ownership.py
+      - reviewed_article_identity.py
+      - wrn-bridge-safe-push.sh
+      - prepare_capture_recovery.py
       - reviewed_article_metadata.py
       - build_web_feeds.py
       - build_source_archive.py
@@ -34,6 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 22
 
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+
     steps:
       - name: Repository auschecken
         uses: actions/checkout@v4
@@ -43,12 +51,34 @@ jobs:
           ref: main
           fetch-depth: 0
 
+      - name: Unveränderliche Erzeugungsbasis festhalten
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF" == "refs/heads/main" ]]
+          base="$(git rev-parse --verify 'HEAD^{commit}')"
+          [[ "$base" =~ ^[a-f0-9]{40}$ ]]
+          printf 'WRN_BRIDGE_BASE_SHA=%s\n' "$base" >> "$GITHUB_ENV"
+
       - name: Python einrichten
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: requirements-wrn.lock.txt
+
+      - name: Vorhandene verlustfreie Capturebasis prüfen
+        run: |
+          python - <<'PY_CAPTURE'
+          from pathlib import Path
+          from datetime import datetime, timezone
+          from news_archive_capture import read_capture, read_capture_policies
+          from build_source_archive import read_manifest, read_previous_archives, validate_capture_archive_coverage
+          capture = read_capture(Path("news-archive-capture.json"))
+          policies = read_capture_policies(Path("multilingual-source-registry.json"))
+          previous = read_previous_archives(Path("news-archive"), read_manifest(Path("news-archive-manifest.json")))
+          validate_capture_archive_coverage(capture, previous, policies, datetime.now(timezone.utc))
+          PY_CAPTURE
 
       - name: Abhängigkeiten installieren
         run: |
@@ -57,6 +87,7 @@ jobs:
           python -m pip check
 
       - name: Aktuelle Feed-Einträge parallel abrufen
+        id: aggregate
         shell: bash
         run: |
           set -euo pipefail
@@ -98,6 +129,8 @@ jobs:
 
           if not news or status.get("news", {}).get("feedCount") != len(news):
               raise SystemExit("FEHLER: News-Feed ist leer oder inkonsistent.")
+          if not status.get("ok") or status.get("news", {}).get("bytes") != Path("news-feed.json").stat().st_size:
+              raise SystemExit("FEHLER: Feed-Status oder Bytebindung ungültig.")
           if run.get("mode") != "fast":
               raise SystemExit("FEHLER: Falscher Aggregationsmodus.")
           if run.get("stoppedForBudget"):
@@ -127,6 +160,9 @@ jobs:
           )
           PY
 
+      - name: Bridge-Volltexte und veröffentlichbare Generation prüfen
+        run: python build_source_archive.py --verify-only --require-fresh
+
       - name: Ergebnisse committen und pushen
         shell: bash
         run: |
@@ -139,7 +175,7 @@ jobs:
           git restore -- events.json events-feed.json
 
           git add news.json news-feed.json feed-status.json source-catalog.json sources-registry.json
-          git add news-archive-manifest.json news-archive
+          git add news-archive-manifest.json news-archive news-archive-capture.json
           git add aggregate-errors.json aggregate-run-status.json
 
           if git diff --cached --quiet; then
@@ -148,4 +184,42 @@ jobs:
           fi
 
           git commit -m "Refresh current news feed"
-          bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"
+          bash wrn-bridge-safe-push.sh main "$WRN_BRIDGE_BASE_SHA"
+
+      # Success persists capture in the data commit. Failure-only recovery is best
+      # effort; cancellation, runner loss or artifact quota may prevent retention.
+      - name: Validierte Capture-Rettung ohne Veröffentlichung vorbereiten
+        id: capture_recovery_prepare
+        if: ${{ always() && failure() && (steps.aggregate.outcome == 'success' || steps.aggregate.outcome == 'failure') }}
+        run: |
+          python prepare_capture_recovery.py \
+            --output "$RUNNER_TEMP/wrn-capture-recovery-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT-$GITHUB_JOB" \
+            --aggregation-outcome "$AGGREGATION_OUTCOME"
+        env:
+          AGGREGATION_OUTCOME: ${{ steps.aggregate.outcome }}
+
+      - name: Recovery-only Capture sichern
+        id: capture_recovery_upload
+        if: ${{ always() && steps.capture_recovery_prepare.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: wrn-capture-recovery-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}
+          path: ${{ runner.temp }}/wrn-capture-recovery-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}/
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
+
+      - name: Bestätigte Recovery-ID und Digest prüfen
+        id: capture_recovery_confirm
+        if: ${{ always() && steps.capture_recovery_upload.outcome == 'success' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$ARTIFACT_ID" =~ ^[1-9][0-9]*$ ]]
+          [[ "$ARTIFACT_DIGEST" =~ ^[a-f0-9]{64}$ ]]
+          printf 'Recovery-only artifact %s, SHA256 %s; keine automatische Wiederherstellung.\n' "$ARTIFACT_ID" "$ARTIFACT_DIGEST"
+        env:
+          ARTIFACT_ID: ${{ steps.capture_recovery_upload.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.capture_recovery_upload.outputs.artifact-digest }}

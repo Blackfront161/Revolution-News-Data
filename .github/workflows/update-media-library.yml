@@ -6,7 +6,6 @@ on:
     paths:
       - .github/workflows/update-media-library.yml
       - aggregate_libraries.py
-      - build_source_archive.py
       - scripts/validate_media_library.py
       - scripts/build_video_feed.js
       - scripts/public_video_request.js
@@ -69,9 +68,6 @@ jobs:
           WRN_LIBRARY_MAX_PAGES: "12"
           WRN_LIBRARY_MAX_ITEMS: "500"
 
-      - name: Quellenarchive aus dem aktuellen News-Bestand erzeugen
-        run: python build_source_archive.py
-
       - name: Veröffentlichung auf Datenintegrität prüfen
         run: python scripts/validate_media_library.py
 
@@ -81,11 +77,14 @@ jobs:
           set -euo pipefail
           git config user.name "wrn-media-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add video-feed.json video-health.json library-feed.json library-health.json news-archive-manifest.json
-          git add -A news-archive
+          if ! git diff --cached --quiet; then
+            echo "FEHLER: Unerwartet vorgemerkte Änderungen vor der Medienveröffentlichung."
+            exit 1
+          fi
+          git add video-feed.json video-health.json library-feed.json library-health.json
           if git diff --cached --quiet; then
             echo "Keine Medien- oder Bibliotheksänderungen."
             exit 0
           fi
-          git commit -m "Refresh media, library and source archives"
+          git commit -m "Refresh media and library"
           bash wrn-safe-push.sh "${GITHUB_REF_NAME:-main}"
