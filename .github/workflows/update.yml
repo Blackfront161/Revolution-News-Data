@@ -67,6 +67,10 @@ jobs:
         continue-on-error: true  # A calendar outage must not stop news publication.
         run: python update_calendar.py
 
+      - name: Unterbrochene Kalendertransaktion vor Newsfortsetzung zurückrollen
+        if: always()
+        run: python update_calendar.py --recover-only
+
       - name: Quellenkatalog erzeugen
         run: |
           python build_source_catalog.py
@@ -174,6 +178,8 @@ jobs:
         run: |
           set -euo pipefail
 
+          python update_calendar.py --verify-generation
+
           git config user.name "wrn-news-bot"
           git config user.email "actions@users.noreply.github.com"
 
@@ -193,6 +199,7 @@ jobs:
           git add news-feed.json events-feed.json feed-status.json
           if [ -f calendar-status.json ]; then git add calendar-status.json; fi
           if [ -f calendar-source-cache.json ]; then git add calendar-source-cache.json; fi
+          if [ -f calendar-generation.json ]; then git add calendar-generation.json; fi
 
           optional_outputs=(
             source-health-report.json
