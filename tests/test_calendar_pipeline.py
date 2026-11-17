@@ -99,11 +99,11 @@ class CalendarTests(unittest.TestCase):
     def test_all_failed_has_no_writes(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d);(p/"calendar-sources.json").write_text(json.dumps({"sources":[SOURCE]}))
-            old=b'[{"sentinel":true}]';(p/"events.json").write_bytes(old)
+            old=b'[{"sentinel":true}]';(p/"events-v2.json").write_bytes(old)
             with patch.object(c,"collect",return_value=([],{"state":"failed","complete":False})):
                 with self.assertRaises(RuntimeError):c.refresh(p,NOW)
-            self.assertEqual((p/"events.json").read_bytes(),old)
-            self.assertFalse((p/"events-feed.json").exists())
+            self.assertEqual((p/"events-v2.json").read_bytes(),old)
+            self.assertFalse((p/"events-v2-feed.json").exists())
     def test_news_files_not_changed(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d);(p/"calendar-sources.json").write_text(json.dumps({"sources":[SOURCE]}))
@@ -185,13 +185,13 @@ class CalendarTests(unittest.TestCase):
             with patch.object(c,"collect",side_effect=fake):c.refresh(p,NOW)
             cache=json.loads((p/"calendar-source-cache.json").read_text())
             self.assertEqual(set(cache["sources"]),{"test","other"})
-            self.assertEqual(len(json.loads((p/"events.json").read_text())),1)
+            self.assertEqual(len(json.loads((p/"events-v2.json").read_text())),1)
 
     def test_news_checkpoint_never_writes_calendar(self):
         tree=ast.parse((Path(__file__).resolve().parents[1]/"aggregate.py").read_text())
         for node in ast.walk(tree):
             if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id=="atomic_json_write" and node.args and isinstance(node.args[0],ast.Constant):
-                self.assertNotIn(node.args[0].value,["events.json","events-feed.json","calendar-status.json","calendar-source-cache.json"])
+                self.assertNotIn(node.args[0].value,["events.json","events-feed.json","events-v2.json","events-v2-feed.json","calendar-status.json","calendar-source-cache.json"])
     def test_legacy_normalizer_never_guesses_date(self):
         source=(Path(__file__).resolve().parents[1]/"aggregate.py").read_text()
         tree=ast.parse(source);function=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=="normalize_feed_event")
@@ -289,12 +289,12 @@ class CalendarTests(unittest.TestCase):
                         with self.assertRaises(OSError):c.refresh(p,NOW)
                     self.assertTrue(fired[0]);self.assertFalse((p/c.JOURNAL).exists())
                     self.assertEqual(before,{name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS})
-                    self.assertEqual(len(json.loads((p/"events.json").read_text())),1)
+                    self.assertEqual(len(json.loads((p/"events-v2.json").read_text())),1)
                     c.guard_before_news_commit(p)
                     (p/"news.json").write_bytes(b'[{"news":"new"}]')
                     self.assertEqual((p/"news.json").read_bytes(),b'[{"news":"new"}]')
                     cases+=1
-        self.assertEqual(cases,12)
+        self.assertEqual(cases,len(c.CALENDAR_OUTPUTS)*2)
     def test_every_output_hard_interruption_before_and_after_is_recovered_before_news(self):
         class ProcessInterrupted(BaseException):pass
         cases=0
@@ -315,13 +315,13 @@ class CalendarTests(unittest.TestCase):
                     self.assertEqual(before,{name:(p/name).read_bytes() for name in c.CALENDAR_OUTPUTS})
                     (p/"news.json").write_bytes(b'[{"news":"continues"}]')
                     self.assertTrue((p/"news.json").exists());cases+=1
-        self.assertEqual(cases,12)
+        self.assertEqual(cases,len(c.CALENDAR_OUTPUTS)*2)
     def test_equal_count_mixed_generation_is_rejected_by_hash(self):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d);self._seed_transaction(p)
-            rows=json.loads((p/"events.json").read_text())
+            rows=json.loads((p/"events-v2.json").read_text())
             self.assertEqual(len(rows),1);rows[0]["title"]="Different generation, same count"
-            (p/"events.json").write_text(json.dumps(rows))
+            (p/"events-v2.json").write_text(json.dumps(rows))
             with self.assertRaises(ValueError):c.verify_calendar_generation(p)
     def test_news_workflow_recovers_before_builder_and_verifies_before_staging(self):
         s=(Path(__file__).resolve().parents[1]/".github/workflows/update.yml").read_text()
@@ -365,7 +365,7 @@ c.refresh(root,now)
                     (p/"news.json").write_bytes(b'[{"news":"continues after actual process exit"}]')
                     self.assertIn(b"continues",(p/"news.json").read_bytes())
                     cases+=1
-        self.assertEqual(cases,12)
+        self.assertEqual(cases,len(c.CALENDAR_OUTPUTS)*2)
 
     def test_same_count_same_revision_wrong_status_timestamp_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
@@ -416,7 +416,7 @@ c.refresh(root,now)
             with patch.object(c,"collect",return_value=([event(raw={"status":"cancelled"})],{"sourceId":"test","state":"ok","complete":True})):
                 status=c.refresh(p,NOW)
             self.assertEqual(status["scheduledCount"],0)
-            self.assertEqual(json.loads((p/"events-feed.json").read_text())[0]["eventStatus"],"cancelled")
+            self.assertEqual(json.loads((p/"events-v2-feed.json").read_text())[0]["eventStatus"],"cancelled")
             c.verify_calendar_generation(p)
     def test_complete_removal_of_last_active_event_is_published(self):
         with tempfile.TemporaryDirectory() as d:
@@ -424,6 +424,148 @@ c.refresh(root,now)
             with patch.object(c,"collect",return_value=([],{"sourceId":"test","state":"ok","complete":True})):
                 status=c.refresh(p,NOW)
             self.assertEqual(status["scheduledCount"],0)
-            self.assertEqual(json.loads((p/"events-feed.json").read_text())[0]["eventStatus"],"deleted")
+            self.assertEqual(json.loads((p/"events-v2-feed.json").read_text())[0]["eventStatus"],"deleted")
             c.verify_calendar_generation(p)
+
+    def test_material_revision_millisecond_boundaries_and_carry(self):
+        cases=[
+          ("2026-11-16T08:00:00.000001Z","2026-11-16T08:00:00.000999Z","2026-11-16T08:00:00.001Z"),
+          ("2026-11-16T08:00:00.000999Z","2026-11-16T08:00:00.001000Z","2026-11-16T08:00:00.001Z"),
+          ("2026-11-16T08:00:00.999999Z","2026-11-16T08:00:00.999999Z","2026-11-16T08:00:01.000Z"),
+          ("2026-11-16T23:59:59.999999Z","2026-11-16T23:59:59.999999Z","2026-11-17T00:00:00.000Z"),
+          ("2026-11-16T08:00:00.005Z","2026-11-16T07:59:59.999999Z","2026-11-16T08:00:00.006Z")]
+        for old,new,expected in cases:
+            with self.subTest(old=old,new=new):self.assertEqual(c.next_material_revision(old,new),expected)
+    def test_material_same_millisecond_semantic_change_advances_full_millisecond(self):
+        old=event();old["eventRecordUpdatedAt"]="2026-11-16T08:00:00.000001Z"
+        new=event();new["title"]="Changed";new["eventRecordUpdatedAt"]="2026-11-16T08:00:00.000999Z"
+        row=c.merge_source([old],[new],True,NOW)[0]
+        self.assertEqual(row["eventRecordUpdatedAt"],"2026-11-16T08:00:00.001Z")
+    def test_publisher_microsecond_value_is_not_rewritten(self):
+        value="2026-11-15T10:00:00.000123Z"
+        row=event(raw={"updatedAt":value})
+        self.assertEqual(row["eventUpdated"],value)
+        self.assertEqual(row["updatedAt"],value)
+        self.assertRegex(row["eventRecordUpdatedAt"],r"\.\d{3}Z$")
+    def test_unchanged_normalized_recheck_material_bytes_stay_identical(self):
+        old=event();new=event();new["eventCheckedAt"]="2026-11-16T08:00:00.000999Z"
+        row=c.merge_source([old],[new],True,NOW)[0]
+        self.assertEqual(row["eventRecordUpdatedAt"].encode(),old["eventRecordUpdatedAt"].encode())
+    def test_legacy_microsecond_material_tie_matches_js_resolution(self):
+        dead=event(raw={"status":"cancelled"});active=event()
+        dead["eventRecordUpdatedAt"]="2026-11-16T08:00:00.000001Z"
+        active["eventRecordUpdatedAt"]="2026-11-16T08:00:00.000999Z"
+        self.assertIs(c.preferred_record(dead,active),dead)
+        self.assertIs(c.preferred_record(active,dead),dead)
+    def test_publisher_fallback_submillisecond_tie_remains_cancelled(self):
+        dead=event(raw={"status":"cancelled","updatedAt":"2026-11-15T10:00:00.000001Z"})
+        active=event(raw={"status":"scheduled","updatedAt":"2026-11-15T10:00:00.000999Z"})
+        del dead["eventRecordUpdatedAt"];del active["eventRecordUpdatedAt"]
+        self.assertIs(c.preferred_record(dead,active),dead)
+    def test_verified_alias_group_material_revision_persists_after_rescan(self):
+        other={**SOURCE,"id":"other"}
+        dead=event(raw={"status":"cancelled","updatedAt":"2026-11-14T10:00:00Z"})
+        active=c.make_event(other,"1","Title","https://example.org/event/a","2026-11-18T19:00:00+01:00",raw={"status":"scheduled","updatedAt":"2026-11-13T10:00:00Z","place":{"name":"Venue","address":"1 Explicit Street"}},checked="2026-11-16T08:00:00.000999Z")
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);(p/"calendar-sources.json").write_text(json.dumps({"sources":[SOURCE,other]}))
+            def collect(source,*args):return ([copy.deepcopy(dead)] if source["id"]=="test" else [copy.deepcopy(active)]),{"sourceId":source["id"],"state":"ok","complete":True}
+            with patch.object(c,"collect",side_effect=collect):c.refresh(p,NOW)
+            first=json.loads((p/"events-v2.json").read_text())[0]
+            self.assertEqual(first["eventStatus"],"cancelled")
+            self.assertGreater(c.material_instant(first["eventRecordUpdatedAt"]),c.material_instant(active["eventRecordUpdatedAt"]))
+            with patch.object(c,"collect",side_effect=collect):c.refresh(p,NOW)
+            second=json.loads((p/"events-v2.json").read_text())[0]
+            self.assertEqual(first["eventRecordUpdatedAt"],second["eventRecordUpdatedAt"])
+            self.assertEqual(set(second["eventAliases"]),{"test:1","other:1"})
+    def test_calendar_push_paths_trigger_code_not_data_self_commits(self):
+        import fnmatch
+        source=(Path(__file__).resolve().parents[1]/".github/workflows/update-calendar.yml").read_text()
+        section=source[source.index("  push:"):source.index("  schedule:")]
+        self.assertIn("      - main",section)
+        declared=[line.strip()[2:] for line in section.splitlines() if line.strip().startswith("- ") and line.strip()!="- main"]
+        self.assertEqual(set(declared),{"update_calendar.py","calendar-sources.json",".github/workflows/update-calendar.yml"})
+        self.assertFalse(any(fnmatch.fnmatch(output,pattern) for output in c.CALENDAR_OUTPUTS for pattern in declared))
+
+    def test_legacy_routes_exclude_cancellation_but_v2_retains_full_tombstone(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            dead=event(raw={"status":"cancelled","updatedAt":"2026-11-15T10:00:00Z"})
+            with patch.object(c,"collect",return_value=([dead],{"sourceId":"test","state":"ok","complete":True})):
+                state=c.refresh(p,NOW)
+            self.assertEqual(json.loads((p/"events.json").read_text()),[])
+            self.assertEqual(json.loads((p/"events-feed.json").read_text()),[])
+            full=json.loads((p/"events-v2.json").read_text())
+            self.assertEqual(full[0]["eventStatus"],"cancelled")
+            self.assertEqual(full[0]["eventStart"],dead["eventStart"])
+            status=json.loads((p/"feed-status.json").read_text())
+            self.assertEqual(status["events"]["archiveCount"],0)
+            self.assertEqual(status["events"]["feedCount"],0)
+            self.assertEqual(status["calendarV2"]["archiveCount"],1)
+            self.assertEqual(status["calendarV2"]["feedCount"],1)
+            c.verify_calendar_generation(p)
+    def test_legacy_routes_exclude_deleted_rows(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            with patch.object(c,"collect",return_value=([],{"sourceId":"test","state":"ok","complete":True})):
+                c.refresh(p,NOW)
+            self.assertEqual(json.loads((p/"events.json").read_text()),[])
+            self.assertEqual(json.loads((p/"events-v2-feed.json").read_text())[0]["eventStatus"],"deleted")
+    def test_both_route_generations_and_status_sections_are_hash_bound(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            marker=json.loads((p/"calendar-generation.json").read_text())
+            self.assertEqual(set(marker["files"]),{"calendar-source-cache.json","events-v2.json","events-v2-feed.json","events.json","events-feed.json","calendar-status.json"})
+            status=json.loads((p/"feed-status.json").read_text())
+            status["calendarV2"]["lastSuccessfulFetchAt"]="2000-01-01T00:00:00Z"
+            (p/"feed-status.json").write_text(json.dumps(status))
+            with self.assertRaises(ValueError):c.verify_calendar_generation(p)
+    def test_v2_previous_tombstone_survives_source_cache_loss_and_stale_active_fetch(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            dead=event(raw={"status":"cancelled","updatedAt":"2026-11-15T10:00:00Z"})
+            with patch.object(c,"collect",return_value=([dead],{"sourceId":"test","state":"ok","complete":True})):
+                c.refresh(p,NOW)
+            previous=json.loads((p/"events-v2.json").read_text())[0]
+            (p/"calendar-source-cache.json").unlink()
+            stale=event(raw={"status":"scheduled","updatedAt":"2026-11-14T10:00:00Z"})
+            with patch.object(c,"collect",return_value=([stale],{"sourceId":"test","state":"ok","complete":True})):
+                c.refresh(p,NOW)
+            row=json.loads((p/"events-v2.json").read_text())[0]
+            self.assertEqual(row["eventStatus"],"cancelled")
+            self.assertEqual(row["eventRecordUpdatedAt"],previous["eventRecordUpdatedAt"])
+            self.assertEqual(row["eventAliases"],previous["eventAliases"])
+            self.assertEqual(row["eventStart"],previous["eventStart"])
+            self.assertEqual(json.loads((p/"events.json").read_text()),[])
+    def test_legacy_default_feed_builder_cannot_emit_tombstones(self):
+        from build_web_feeds import prepare_events
+        future=(datetime.now(timezone.utc)+timedelta(days=2)).isoformat()
+        active=event("active",start=future)
+        dead=event("dead",start=future,raw={"status":"cancelled"})
+        deleted=c.tombstone(event("deleted",start=future),datetime.now(timezone.utc),"test")
+        rows=prepare_events([active,dead,deleted],limit=1000,content_limit=2800)
+        self.assertEqual([r["eventOccurrenceId"] for r in rows],[active["eventOccurrenceId"]])
+    def test_status_builder_keeps_v2_section_without_touching_news_metadata(self):
+        from build_web_feeds import calendar_status_sections
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            status=json.loads((p/"calendar-status.json").read_text())
+            sections=calendar_status_sections(status,(p/"events-feed.json").stat().st_size,(p/"events-v2-feed.json").stat().st_size)
+            stored=json.loads((p/"feed-status.json").read_text())
+            self.assertEqual(sections["events"],stored["events"])
+            self.assertEqual(sections["calendarV2"],stored["calendarV2"])
+            self.assertEqual(stored["news"]["revision"],"keep-news")
+    def test_v2_previous_route_prevents_legacy_active_projection_from_losing_alias_cancellation(self):
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);self._seed_transaction(p)
+            dead=event(raw={"status":"cancelled","updatedAt":"2026-11-15T10:00:00Z"})
+            dead["eventAliases"]=["test:1","remote:9"]
+            with patch.object(c,"collect",return_value=([dead],{"sourceId":"test","state":"ok","complete":True})):
+                c.refresh(p,NOW)
+            (p/"calendar-source-cache.json").unlink()
+            with patch.object(c,"collect",return_value=([],{"sourceId":"test","state":"partial","complete":False})):
+                c.refresh(p,NOW)
+            previous=json.loads((p/"events-v2.json").read_text())[0]
+            self.assertEqual(set(previous["eventAliases"]),{"test:1","remote:9"})
+            self.assertEqual(previous["eventStatus"],"cancelled")
+            self.assertTrue(c.current_event(previous,NOW))
 if __name__=="__main__":unittest.main()
