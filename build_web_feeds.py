@@ -14,7 +14,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
-from update_calendar import current_event, deduplicate
+from update_calendar import current_event, deduplicate, calendar_status_sections
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -293,12 +293,10 @@ def balanced_news_rows(
 
 
 def prepare_events(rows, *, limit, content_limit):
-    """Only verified concrete occurrences; no publication-date fallback."""
+    """Legacy route is scheduled-only; full tombstones live on versioned v2 routes."""
     now = datetime.now(timezone.utc)
-    eligible = deduplicate([dict(row) for row in rows if current_event(row, now)])
-    tombstones = [row for row in eligible if row.get("eventStatus") != "scheduled"]
-    active = [row for row in eligible if row.get("eventStatus") == "scheduled"]
-    return deduplicate(active[:limit] + tombstones)
+    return deduplicate([dict(row) for row in rows
+        if current_event(row, now) and row.get("eventStatus") == "scheduled"])[:limit]
 
 
 def atomic_json(path: Path, data: Any) -> int:
@@ -437,6 +435,11 @@ def main() -> int:
         "configActivated": config_changed,
         "configUpdateEnabled": CONFIG_UPDATE_ENABLED,
     }
+    if calendar_status.get("routes", {}).get("archive") == "events-v2.json":
+        sections = calendar_status_sections(
+            calendar_status, event_bytes, (ROOT / "events-v2-feed.json").stat().st_size)
+        status["events"].update(sections["events"])
+        status["calendarV2"] = sections["calendarV2"]
     if "status" in FEED_TARGETS:
         atomic_json(STATUS_TARGET, status)
 
