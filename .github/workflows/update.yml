@@ -200,6 +200,8 @@ jobs:
           if [ -f calendar-status.json ]; then git add calendar-status.json; fi
           if [ -f calendar-source-cache.json ]; then git add calendar-source-cache.json; fi
           if [ -f calendar-generation.json ]; then git add calendar-generation.json; fi
+          if [ -f events-v2.json ]; then git add events-v2.json; fi
+          if [ -f events-v2-feed.json ]; then git add events-v2-feed.json; fi
 
           optional_outputs=(
             source-health-report.json
