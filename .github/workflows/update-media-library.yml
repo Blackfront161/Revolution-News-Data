@@ -8,6 +8,8 @@ on:
       - aggregate_libraries.py
       - build_source_archive.py
       - scripts/validate_media_library.py
+      - scripts/validate_source_archive_publication.py
+      - tests/test_media_archive_publication.py
       - scripts/build_video_feed.js
       - scripts/public_video_request.js
       - video-pipeline-core.js
@@ -58,6 +60,7 @@ jobs:
           node tests/test_video_pipeline.js
           node tests/test_public_video_request.js
           python tests/test_source_archive.py
+          python -m unittest discover -s tests -p test_media_archive_publication.py -v
           python -m unittest discover -s tests -p test_library_catalog.py
 
       - name: Videos aus aktuellem News-Feed erzeugen und Links prüfen
@@ -73,7 +76,9 @@ jobs:
         run: python build_source_archive.py
 
       - name: Veröffentlichung auf Datenintegrität prüfen
-        run: python scripts/validate_media_library.py
+        run: |
+          python scripts/validate_media_library.py
+          python scripts/validate_source_archive_publication.py
 
       - name: Geprüfte Ausgaben veröffentlichen
         shell: bash
@@ -81,7 +86,8 @@ jobs:
           set -euo pipefail
           git config user.name "wrn-media-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add video-feed.json video-health.json library-feed.json library-health.json news-archive-manifest.json
+          # The source-archive builder also binds quick-feed detail paths and news.bytes.
+          git add video-feed.json video-health.json library-feed.json library-health.json news-archive-manifest.json news-feed.json feed-status.json
           git add -A news-archive
           if git diff --cached --quiet; then
             echo "Keine Medien- oder Bibliotheksänderungen."
