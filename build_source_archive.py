@@ -20,7 +20,9 @@ from build_web_feeds import clean_text
 ROOT = Path(__file__).resolve().parent
 DEFAULT_DAYS = 30
 DEFAULT_EXCERPT_LIMIT = 1400
-MAX_SOURCE_PACKAGE_BYTES = 4 * 1024 * 1024
+# Legacy readers require one flat JSON array per source. Preserve admitted bodies
+# within a bounded 8 MiB UTF-8 payload; oversized sources still fail closed.
+MAX_SOURCE_PACKAGE_BYTES = 8 * 1024 * 1024
 CARD_FIELDS = (
     "kontinent", "categories", "primaryRegion", "primaryTopic",
     "secondaryTopics", "classificationConfidence", "classificationMethod",
