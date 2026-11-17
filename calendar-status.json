@@ -4,23 +4,23 @@
   "authoritativeCompleteSnapshot": false,
   "minimumEventSchemaVersion": 2,
   "legacyUpcomingPolicy": "quarantine-v1",
-  "generatedAt": "2026-11-17T08:57:20.575066Z",
-  "revision": "84d55b66506d786b848f1d66c583882aaca577b73ea461ada54d3a82e66e8ca9",
+  "generatedAt": "2026-11-17T16:58:19.176256Z",
+  "revision": "8b8e5bbf0a378863fc06988acfdef41301546f9d68d62e29e557cb32e46835d2",
   "state": "partial",
   "sources": [
     {
       "sourceId": "gancio:agenda.arree.bzh",
       "url": "https://agenda.arree.bzh",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:26.952379Z",
+      "checkedAt": "2026-11-17T16:58:25.545542Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://agenda.arree.bzh/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agenda.arree.bzh/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agenda.arree.bzh/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agenda.arree.bzh/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.952379Z",
+          "checkedAt": "2026-11-17T16:58:25.545542Z",
           "bytes": 5766,
           "sha256": "209d8baddb4a0fe00e14e63a23a87bf7e2b0ae36b633058ab9690e27dcbc1963"
         }
@@ -31,7 +31,7 @@
       "sourceId": "gancio:agenda.henares.org",
       "url": "https://agenda.henares.org",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:26.459532Z",
+      "checkedAt": "2026-11-17T16:58:24.992409Z",
       "state": "partial",
       "rejected": [
         {
@@ -41,12 +41,12 @@
       ],
       "receipts": [
         {
-          "url": "https://agenda.henares.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agenda.henares.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agenda.henares.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agenda.henares.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.459532Z",
-          "bytes": 16865,
-          "sha256": "710f36d94837be4eb2d174151a7b641853f6c856c9e0a14cd06088eb9b2f3d9f"
+          "checkedAt": "2026-11-17T16:58:24.992409Z",
+          "bytes": 16850,
+          "sha256": "b68a8fde9390299b99104eb48231c487fa3c95c14e5a38fefcee9546ed7e9d0f"
         }
       ],
       "rawCount": 28
@@ -55,34 +55,34 @@
       "sourceId": "gancio:agenda.reteappenninica.it",
       "url": "https://agenda.reteappenninica.it",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.413134Z",
+      "checkedAt": "2026-11-17T16:58:21.983441Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://agenda.reteappenninica.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agenda.reteappenninica.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agenda.reteappenninica.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agenda.reteappenninica.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.413134Z",
-          "bytes": 5730,
-          "sha256": "61579d5a670f4f0c6ffd72b443f2b625e5f8da4918ae47ca09f173cb9dfbd86c"
+          "checkedAt": "2026-11-17T16:58:21.983441Z",
+          "bytes": 6802,
+          "sha256": "5f51fc28dc18663ad75aefc8b182c095482fb472a70959ef77137c08528dcdd8"
         }
       ],
-      "rawCount": 10
+      "rawCount": 12
     },
     {
       "sourceId": "gancio:agenda.rouen-luttes.org",
       "url": "https://agenda.rouen-luttes.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:26.918793Z",
+      "checkedAt": "2026-11-17T16:58:25.542951Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://agenda.rouen-luttes.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agenda.rouen-luttes.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agenda.rouen-luttes.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agenda.rouen-luttes.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.918793Z",
+          "checkedAt": "2026-11-17T16:58:25.542951Z",
           "bytes": 3001,
           "sha256": "44ad1f8066e37e15165056435f1a9e93a9cdf448033e13617ba93d5ebd2c0902"
         }
@@ -93,15 +93,15 @@
       "sourceId": "gancio:agenda.subterrania.es",
       "url": "https://agenda.subterrania.es",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:32.119623Z",
+      "checkedAt": "2026-11-17T16:58:30.724569Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://agenda.subterrania.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agenda.subterrania.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agenda.subterrania.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agenda.subterrania.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:32.119623Z",
+          "checkedAt": "2026-11-17T16:58:30.724569Z",
           "bytes": 1196,
           "sha256": "24957c49f48be21e06e9c24f3f5040904d0f29fa3c549383c52616b41e9a6120"
         }
@@ -112,7 +112,7 @@
       "sourceId": "gancio:agendamilitantloiret.emancipe.org",
       "url": "https://agendamilitantloiret.emancipe.org",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:31.535778Z",
+      "checkedAt": "2026-11-17T16:58:30.153219Z",
       "state": "partial",
       "rejected": [
         {
@@ -130,31 +130,31 @@
       ],
       "receipts": [
         {
-          "url": "https://agendamilitantloiret.emancipe.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://agendamilitantloiret.emancipe.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://agendamilitantloiret.emancipe.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://agendamilitantloiret.emancipe.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.535778Z",
-          "bytes": 37422,
-          "sha256": "abab22ae4b6ae4f37c86e06c76384dcc7e0af2fdf8367038a7c53343125f4c69"
+          "checkedAt": "2026-11-17T16:58:30.153219Z",
+          "bytes": 39441,
+          "sha256": "6f0fd80f6f7978cc4d4ad6651f3ba159ffcea3b2c9be281352837b386a1a2c14"
         }
       ],
-      "rawCount": 68
+      "rawCount": 72
     },
     {
       "sourceId": "gancio:akce.nolog.cz",
       "url": "https://akce.nolog.cz",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:31.985959Z",
+      "checkedAt": "2026-11-17T16:58:30.452539Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://akce.nolog.cz/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://akce.nolog.cz/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://akce.nolog.cz/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://akce.nolog.cz/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.985959Z",
-          "bytes": 31026,
-          "sha256": "ac3439d546038a6a1fb722b259483617e6b6150a12f91437ca1ca51c98c7860d"
+          "checkedAt": "2026-11-17T16:58:30.452539Z",
+          "bytes": 30966,
+          "sha256": "87fbbc25d9b486a6f85942045ef2af418623bf29bc42c00cfccf0ca911562edb"
         }
       ],
       "rawCount": 55
@@ -163,15 +163,15 @@
       "sourceId": "gancio:autonoma.red",
       "url": "https://autonoma.red",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:31.861969Z",
+      "checkedAt": "2026-11-17T16:58:30.753315Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://autonoma.red/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://autonoma.red/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://autonoma.red/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://autonoma.red/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.861969Z",
+          "checkedAt": "2026-11-17T16:58:30.753315Z",
           "bytes": 1262,
           "sha256": "19d0dc9e255b4eb73637cdca98da471fb11ec686b2322c7c149dcee7630c0a27"
         }
@@ -182,26 +182,26 @@
       "sourceId": "gancio:balotta.org",
       "url": "https://balotta.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:22.488036Z",
+      "checkedAt": "2026-11-17T16:58:20.343774Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://balotta.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://balotta.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://balotta.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://balotta.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:22.488036Z",
-          "bytes": 29943,
-          "sha256": "fe1c22e35e536b09c966799fd6b9fca7b68c6a1057bc2f37c1b7606088deb3c1"
+          "checkedAt": "2026-11-17T16:58:20.343774Z",
+          "bytes": 31444,
+          "sha256": "7c1766de9761e02d34395a6a9f7302c53cb71d94fcee8dcfff7e2b1df47af5b8"
         }
       ],
-      "rawCount": 57
+      "rawCount": 59
     },
     {
       "sourceId": "gancio:bcn.convoca.la",
       "url": "https://bcn.convoca.la",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:25.640993Z",
+      "checkedAt": "2026-11-17T16:58:24.156526Z",
       "state": "partial",
       "rejected": [
         {
@@ -223,59 +223,59 @@
       ],
       "receipts": [
         {
-          "url": "https://bcn.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://bcn.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://bcn.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://bcn.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.640993Z",
-          "bytes": 97015,
-          "sha256": "80e0746185393d2374954c9c982a2a7cfb6bbd4c4c1b767d31cde9d37c269d96"
+          "checkedAt": "2026-11-17T16:58:24.156526Z",
+          "bytes": 99178,
+          "sha256": "eca820244708d4a3ae321b1217c99bb43f13615bbd10318b65d5b3b91f8dae29"
         }
       ],
-      "rawCount": 157
+      "rawCount": 161
     },
     {
       "sourceId": "gancio:berlin.askapunk.de",
       "url": "https://berlin.askapunk.de",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:29.034450Z",
+      "checkedAt": "2026-11-17T16:58:27.672615Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://berlin.askapunk.de/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://berlin.askapunk.de/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://berlin.askapunk.de/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://berlin.askapunk.de/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:29.034450Z",
-          "bytes": 39555,
-          "sha256": "1caa7c019e61df75798bd2cbf73ce266ee97bd192f01b5c51329b3b943461062"
+          "checkedAt": "2026-11-17T16:58:27.672615Z",
+          "bytes": 44314,
+          "sha256": "7050eddb880501e882f9af2aacfc90ad42db2585f0123b91fe821e91f1da97b3"
         }
       ],
-      "rawCount": 72
+      "rawCount": 80
     },
     {
       "sourceId": "gancio:botep.org",
       "url": "https://botep.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:24.482096Z",
+      "checkedAt": "2026-11-17T16:58:22.685171Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://botep.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://botep.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://botep.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://botep.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:24.482096Z",
-          "bytes": 30227,
-          "sha256": "dce8084348c64254c532567ffb66738d1dea5b6802eacd9493b1726461831b30"
+          "checkedAt": "2026-11-17T16:58:22.685171Z",
+          "bytes": 29810,
+          "sha256": "cf2de649c15eb5f5f0d6666a2c309ab0c59d0096d34e6ec5db2d1ed8e451b5aa"
         }
       ],
-      "rawCount": 59
+      "rawCount": 58
     },
     {
       "sourceId": "gancio:burgos.convoca.la",
       "url": "https://burgos.convoca.la",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:25.194523Z",
+      "checkedAt": "2026-11-17T16:58:24.591602Z",
       "state": "partial",
       "rejected": [
         {
@@ -285,10 +285,10 @@
       ],
       "receipts": [
         {
-          "url": "https://burgos.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://burgos.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://burgos.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://burgos.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.194523Z",
+          "checkedAt": "2026-11-17T16:58:24.591602Z",
           "bytes": 1419,
           "sha256": "f6fb582e115ba3bd18b6456220afaf9c8cc41ca040e1091a4eaa81d850770cc4"
         }
@@ -299,15 +299,15 @@
       "sourceId": "gancio:calendari.cc",
       "url": "https://calendari.cc",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:27.760707Z",
+      "checkedAt": "2026-11-17T16:58:26.258468Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://calendari.cc/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://calendari.cc/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://calendari.cc/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://calendari.cc/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.760707Z",
+          "checkedAt": "2026-11-17T16:58:26.258468Z",
           "bytes": 26702,
           "sha256": "90e15c8ec0a0e04df8926a2cfc3fead32c6ce17be3a8b45d505414ebb187807f"
         }
@@ -318,15 +318,15 @@
       "sourceId": "gancio:calendario.extinctionrebellion.es",
       "url": "https://calendario.extinctionrebellion.es",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:28.612556Z",
+      "checkedAt": "2026-11-17T16:58:27.016534Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://calendario.extinctionrebellion.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://calendario.extinctionrebellion.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://calendario.extinctionrebellion.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://calendario.extinctionrebellion.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:28.612556Z",
+          "checkedAt": "2026-11-17T16:58:27.016534Z",
           "bytes": 1643,
           "sha256": "a3983410a5831a24c60de5957be7c9e40b208d1a44269bd2751eb46678ed8d49"
         }
@@ -337,15 +337,15 @@
       "sourceId": "gancio:camifa.net",
       "url": "https://camifa.net",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.686124Z",
+      "checkedAt": "2026-11-17T16:58:21.975307Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://camifa.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://camifa.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://camifa.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://camifa.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.686124Z",
+          "checkedAt": "2026-11-17T16:58:21.975307Z",
           "bytes": 32698,
           "sha256": "adc19e847a6d57ec515677599a5c67b89b93aeea2a6d407dbc06831238e08f5b"
         }
@@ -356,15 +356,15 @@
       "sourceId": "gancio:castello.convoca.la",
       "url": "https://castello.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:30.507292Z",
+      "checkedAt": "2026-11-17T16:58:28.374829Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://castello.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://castello.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://castello.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://castello.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.507292Z",
+          "checkedAt": "2026-11-17T16:58:28.374829Z",
           "bytes": 3190,
           "sha256": "bc7accadebe127a45c6eb61326bab69d5ab6bcccb99faf8f9c8a041a33f8c063"
         }
@@ -375,7 +375,7 @@
       "sourceId": "gancio:devent.cz",
       "url": "https://devent.cz",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:31.166302Z",
+      "checkedAt": "2026-11-17T16:58:29.562820Z",
       "state": "partial",
       "rejected": [
         {
@@ -389,29 +389,29 @@
       ],
       "receipts": [
         {
-          "url": "https://devent.cz/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://devent.cz/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://devent.cz/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://devent.cz/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.166302Z",
-          "bytes": 35045,
-          "sha256": "7fb2f52aee542cb9e34b041f05bbdebcb4755af1823f9a3b6d781169fe653311"
+          "checkedAt": "2026-11-17T16:58:29.562820Z",
+          "bytes": 35666,
+          "sha256": "35fe834e2067e9d778ded4694a33b17a40db958bf21c876ec677531f08852a02"
         }
       ],
-      "rawCount": 56
+      "rawCount": 57
     },
     {
       "sourceId": "gancio:eif.convoca.la",
       "url": "https://eif.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:25.786917Z",
+      "checkedAt": "2026-11-17T16:58:24.188862Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://eif.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://eif.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://eif.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://eif.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.786917Z",
+          "checkedAt": "2026-11-17T16:58:24.188862Z",
           "bytes": 4829,
           "sha256": "295a1fc918e019c3230f623780339a07e2dc45f5893c1735a66cc55f3131d2b3"
         }
@@ -422,7 +422,7 @@
       "sourceId": "gancio:enredad.es",
       "url": "https://enredad.es",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:27.044352Z",
+      "checkedAt": "2026-11-17T16:58:25.438908Z",
       "state": "partial",
       "rejected": [
         {
@@ -440,10 +440,10 @@
       ],
       "receipts": [
         {
-          "url": "https://enredad.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://enredad.es/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://enredad.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://enredad.es/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.044352Z",
+          "checkedAt": "2026-11-17T16:58:25.438908Z",
           "bytes": 134252,
           "sha256": "50abcd886b125387c10b2c116032b3a70fa450e818b7acf46b833c7210043849"
         }
@@ -454,7 +454,7 @@
       "sourceId": "gancio:eventos.coletivos.org",
       "url": "https://eventos.coletivos.org",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:28.773810Z",
+      "checkedAt": "2026-11-17T16:58:27.280141Z",
       "state": "partial",
       "rejected": [
         {
@@ -468,29 +468,29 @@
       ],
       "receipts": [
         {
-          "url": "https://eventos.coletivos.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://eventos.coletivos.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://eventos.coletivos.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://eventos.coletivos.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:28.773810Z",
-          "bytes": 48314,
-          "sha256": "36ecce3d8aa6893b060fb488a15c24308da3cd11cdf507d33e351bc39a193158"
+          "checkedAt": "2026-11-17T16:58:27.280141Z",
+          "bytes": 48884,
+          "sha256": "e92f701fdc5168035f8acbea3a99e2d0e0b907767ced784623d39ac3e5d23d66"
         }
       ],
-      "rawCount": 90
+      "rawCount": 91
     },
     {
       "sourceId": "gancio:eventos.lhc.net.br",
       "url": "https://eventos.lhc.net.br",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:28.634732Z",
+      "checkedAt": "2026-11-17T16:58:27.112866Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://eventos.lhc.net.br/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://eventos.lhc.net.br/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://eventos.lhc.net.br/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://eventos.lhc.net.br/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:28.634732Z",
+          "checkedAt": "2026-11-17T16:58:27.112866Z",
           "bytes": 4979,
           "sha256": "077209a0ae3eb25081781f2a7b18bc073224a680739fee3e6ecabf9b885f572c"
         }
@@ -501,17 +501,17 @@
       "sourceId": "gancio:eventosmurcia.org",
       "url": "https://eventosmurcia.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:26.253408Z",
+      "checkedAt": "2026-11-17T16:58:24.641635Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://eventosmurcia.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://eventosmurcia.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://eventosmurcia.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://eventosmurcia.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.253408Z",
+          "checkedAt": "2026-11-17T16:58:24.641635Z",
           "bytes": 15625,
-          "sha256": "019b3f5ca1817a53ada885233577aba9734e61c886215aa3ab73b8d6f5a4f28d"
+          "sha256": "3552508a4473717e080038188db7b0208cd4526a2a47fef4d0332a4343302aba"
         }
       ],
       "rawCount": 21
@@ -520,15 +520,15 @@
       "sourceId": "gancio:events.rheinmain.social",
       "url": "https://events.rheinmain.social",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:27.540387Z",
+      "checkedAt": "2026-11-17T16:58:26.146955Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://events.rheinmain.social/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://events.rheinmain.social/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://events.rheinmain.social/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://events.rheinmain.social/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.540387Z",
+          "checkedAt": "2026-11-17T16:58:26.146955Z",
           "bytes": 81540,
           "sha256": "a92c8dd9cb931f15b8c63ae4cfb313d5d3025135f714618f724d81959055bea5"
         }
@@ -539,26 +539,26 @@
       "sourceId": "gancio:flyinghigh-bonn.org",
       "url": "https://flyinghigh-bonn.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:28.008040Z",
+      "checkedAt": "2026-11-17T16:58:26.338455Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://flyinghigh-bonn.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://flyinghigh-bonn.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://flyinghigh-bonn.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://flyinghigh-bonn.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:28.008040Z",
-          "bytes": 41538,
-          "sha256": "4fecae66b51ec62f6625b560a6b22868a24cb29cdec7554e54fd65f4edd58ed4"
+          "checkedAt": "2026-11-17T16:58:26.338455Z",
+          "bytes": 39649,
+          "sha256": "8031380e901913248d7e97ab80be7ca8b52c87dd0d0e61a03e68981f3b335b8a"
         }
       ],
-      "rawCount": 75
+      "rawCount": 72
     },
     {
       "sourceId": "gancio:gancio.cisti.org",
       "url": "https://gancio.cisti.org",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:22.342217Z",
+      "checkedAt": "2026-11-17T16:58:21.265701Z",
       "state": "partial",
       "rejected": [
         {
@@ -568,21 +568,21 @@
       ],
       "receipts": [
         {
-          "url": "https://gancio.cisti.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://gancio.cisti.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://gancio.cisti.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://gancio.cisti.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:22.342217Z",
-          "bytes": 34311,
-          "sha256": "2d96ef8377034d33233416b03002642f40bf198f064405f9c3a55a47297cd903"
+          "checkedAt": "2026-11-17T16:58:21.265701Z",
+          "bytes": 34721,
+          "sha256": "04db1b823eba63931b7473c89a2a64e8cfa6bc5c5eeff4029e3bfd49874c5d76"
         }
       ],
-      "rawCount": 64
+      "rawCount": 65
     },
     {
       "sourceId": "gancio:gancio.daghe.xyz",
       "url": "https://gancio.daghe.xyz",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:22.863605Z",
+      "checkedAt": "2026-11-17T16:58:21.667282Z",
       "state": "partial",
       "rejected": [
         {
@@ -592,10 +592,10 @@
       ],
       "receipts": [
         {
-          "url": "https://gancio.daghe.xyz/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://gancio.daghe.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://gancio.daghe.xyz/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://gancio.daghe.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:22.863605Z",
+          "checkedAt": "2026-11-17T16:58:21.667282Z",
           "bytes": 25955,
           "sha256": "94f92dc4218e06ec6bbf1ac5571375af5cd60715e89bd0d8e6e97b750a4b58d6"
         }
@@ -606,15 +606,15 @@
       "sourceId": "gancio:gancio.graz.events",
       "url": "https://gancio.graz.events",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:28.025628Z",
+      "checkedAt": "2026-11-17T16:58:26.632884Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://gancio.graz.events/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://gancio.graz.events/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://gancio.graz.events/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://gancio.graz.events/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:28.025628Z",
+          "checkedAt": "2026-11-17T16:58:26.632884Z",
           "bytes": 7483,
           "sha256": "5d33bf29d44a2c8c5de0279c9afaba121f3791f6db4552cc31838eb312e42ebc"
         }
@@ -625,34 +625,34 @@
       "sourceId": "gancio:gancio.invegendo.org",
       "url": "https://gancio.invegendo.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:24.660363Z",
+      "checkedAt": "2026-11-17T16:58:22.524645Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://gancio.invegendo.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://gancio.invegendo.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://gancio.invegendo.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://gancio.invegendo.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:24.660363Z",
-          "bytes": 2,
-          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+          "checkedAt": "2026-11-17T16:58:22.524645Z",
+          "bytes": 9511,
+          "sha256": "76198acae587913f32cc1511cf4cb1450be1b2279a1166b572a6f3f804556919"
         }
       ],
-      "rawCount": 0
+      "rawCount": 17
     },
     {
       "sourceId": "gancio:hacker.convoca.la",
       "url": "https://hacker.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:30.353373Z",
+      "checkedAt": "2026-11-17T16:58:29.298541Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://hacker.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://hacker.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://hacker.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://hacker.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.353373Z",
+          "checkedAt": "2026-11-17T16:58:29.298541Z",
           "bytes": 2735,
           "sha256": "7be2b2d17d43aa6feab849c7b1938ff2101bdd618248f1d5a5dc6b2333b4e2e7"
         }
@@ -663,7 +663,7 @@
       "sourceId": "gancio:infoates.cat",
       "url": "https://infoates.cat",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:27.251328Z",
+      "checkedAt": "2026-11-17T16:58:25.784936Z",
       "state": "failed",
       "rejected": [],
       "receipts": [],
@@ -673,26 +673,26 @@
       "sourceId": "gancio:jamme.la",
       "url": "https://jamme.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.054814Z",
+      "checkedAt": "2026-11-17T16:58:21.939445Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://jamme.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://jamme.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://jamme.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://jamme.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.054814Z",
-          "bytes": 9881,
-          "sha256": "fb749331ba22f0095777176b9341902acb46e12946092a43f1ddb7addb7c311c"
+          "checkedAt": "2026-11-17T16:58:21.939445Z",
+          "bytes": 11041,
+          "sha256": "6dbffe60e0f6f383e09f70f6b92e25bc3a9b1732f96f601a80338360507a841e"
         }
       ],
-      "rawCount": 19
+      "rawCount": 21
     },
     {
       "sourceId": "gancio:keepkarlsruheboring.org",
       "url": "https://keepkarlsruheboring.org",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:30.228509Z",
+      "checkedAt": "2026-11-17T16:58:28.742387Z",
       "state": "partial",
       "rejected": [
         {
@@ -714,29 +714,29 @@
       ],
       "receipts": [
         {
-          "url": "https://keepkarlsruheboring.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://keepkarlsruheboring.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://keepkarlsruheboring.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://keepkarlsruheboring.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.228509Z",
-          "bytes": 90810,
-          "sha256": "fd70ab74d9f2dcee84e2ce19ba3655977108c78e9f92fde4ad86abc0037bc891"
+          "checkedAt": "2026-11-17T16:58:28.742387Z",
+          "bytes": 91497,
+          "sha256": "5dcad7edf03158816a6dc6d64cc6d8c1048d1577e23ab2a8a4c3e5f435cccee6"
         }
       ],
-      "rawCount": 152
+      "rawCount": 153
     },
     {
       "sourceId": "gancio:koledar.kompot.si",
       "url": "https://koledar.kompot.si",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:29.632058Z",
+      "checkedAt": "2026-11-17T16:58:27.795426Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://koledar.kompot.si/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://koledar.kompot.si/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://koledar.kompot.si/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://koledar.kompot.si/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:29.632058Z",
+          "checkedAt": "2026-11-17T16:58:27.795426Z",
           "bytes": 12937,
           "sha256": "a193b136413e23dff6195eea6840598e2e2868c26749a3458c0be931513f3e38"
         }
@@ -747,15 +747,15 @@
       "sourceId": "gancio:lakelogaztetxea.net",
       "url": "https://lakelogaztetxea.net",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:30.978209Z",
+      "checkedAt": "2026-11-17T16:58:30.519588Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://lakelogaztetxea.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://lakelogaztetxea.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://lakelogaztetxea.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://lakelogaztetxea.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.978209Z",
+          "checkedAt": "2026-11-17T16:58:30.519588Z",
           "bytes": 3308,
           "sha256": "c554d175783ea4260a63d1e11210ba2433e867bbc3e0d9a4312fae29d49118ec"
         }
@@ -766,7 +766,7 @@
       "sourceId": "gancio:lamanifestive.fr",
       "url": "https://lamanifestive.fr",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:26.859506Z",
+      "checkedAt": "2026-11-17T16:58:25.300802Z",
       "state": "partial",
       "rejected": [
         {
@@ -776,67 +776,67 @@
       ],
       "receipts": [
         {
-          "url": "https://lamanifestive.fr/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://lamanifestive.fr/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://lamanifestive.fr/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://lamanifestive.fr/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.859506Z",
-          "bytes": 22131,
-          "sha256": "597b4478e7bc26568ad6914d07ef7ec6edf35ec0ac4d14c9b8abd416631ad7c1"
+          "checkedAt": "2026-11-17T16:58:25.300802Z",
+          "bytes": 21584,
+          "sha256": "449ab88c20527ba0ee83c3af4e4ea77d683d6b091806cd9aa66afbe3bab9438c"
         }
       ],
-      "rawCount": 36
+      "rawCount": 35
     },
     {
       "sourceId": "gancio:lapunta.org",
       "url": "https://lapunta.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:21.862600Z",
+      "checkedAt": "2026-11-17T16:58:20.746521Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://lapunta.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://lapunta.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://lapunta.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://lapunta.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:21.862600Z",
-          "bytes": 49033,
-          "sha256": "a353554c8af92ff875c281d722df966ab87eeab59f6489c3bda89ae8175ce6ce"
+          "checkedAt": "2026-11-17T16:58:20.746521Z",
+          "bytes": 50653,
+          "sha256": "beedb796d857390bb9016b19f71654bdeadb173793ac15145c8600b5e7dce574"
         }
       ],
-      "rawCount": 78
+      "rawCount": 80
     },
     {
       "sourceId": "gancio:lasitua.org",
       "url": "https://lasitua.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:21.729439Z",
+      "checkedAt": "2026-11-17T16:58:20.509352Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://lasitua.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://lasitua.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://lasitua.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://lasitua.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:21.729439Z",
-          "bytes": 13916,
-          "sha256": "82e8e7c5421c06fdf384bf33ff50d0ac99a5035ac1c2059fe45d8dea547466c5"
+          "checkedAt": "2026-11-17T16:58:20.509352Z",
+          "bytes": 16234,
+          "sha256": "c7eb5f833d88d0791774a456439a9896b779fb67848e82d0619a85264770de5d"
         }
       ],
-      "rawCount": 27
+      "rawCount": 31
     },
     {
       "sourceId": "gancio:lucitr.one",
       "url": "https://lucitr.one",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:25.121617Z",
+      "checkedAt": "2026-11-17T16:58:23.182093Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://lucitr.one/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://lucitr.one/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://lucitr.one/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://lucitr.one/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.121617Z",
+          "checkedAt": "2026-11-17T16:58:23.182093Z",
           "bytes": 1905,
           "sha256": "34f7a6d8d0b84d2dcd5c11de76fa78f140bcf08962d0cd79e121bba282154ff0"
         }
@@ -847,26 +847,26 @@
       "sourceId": "gancio:mad.convoca.la",
       "url": "https://mad.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:26.198454Z",
+      "checkedAt": "2026-11-17T16:58:24.550842Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://mad.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://mad.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://mad.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://mad.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.198454Z",
-          "bytes": 67408,
-          "sha256": "0f43ea0d6ebd51b6232a7b7a6b759f3acc7caa985f06294686a6a2015a9ad8f4"
+          "checkedAt": "2026-11-17T16:58:24.550842Z",
+          "bytes": 66867,
+          "sha256": "6f75eb5ffc8e898e84b0a4d7834343e41c1f8eac469cb33ee04ac14dc545a0b4"
         }
       ],
-      "rawCount": 112
+      "rawCount": 111
     },
     {
       "sourceId": "gancio:mallorca.convoca.la",
       "url": "https://mallorca.convoca.la",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:25.975807Z",
+      "checkedAt": "2026-11-17T16:58:24.283310Z",
       "state": "partial",
       "rejected": [
         {
@@ -876,10 +876,10 @@
       ],
       "receipts": [
         {
-          "url": "https://mallorca.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://mallorca.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://mallorca.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://mallorca.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.975807Z",
+          "checkedAt": "2026-11-17T16:58:24.283310Z",
           "bytes": 12041,
           "sha256": "ff67e657afa3159d70b955a5571a3d2f9af62f02591e642b7c84bb7fcbdc9858"
         }
@@ -890,15 +890,15 @@
       "sourceId": "gancio:meh.convoca.la",
       "url": "https://meh.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:25.192929Z",
+      "checkedAt": "2026-11-17T16:58:23.407332Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://meh.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://meh.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://meh.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://meh.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.192929Z",
+          "checkedAt": "2026-11-17T16:58:23.407332Z",
           "bytes": 5509,
           "sha256": "b9d53b0f33762e476a389d84bf3006a30b7a55bd0307099e9b3815b8431cd031"
         }
@@ -909,34 +909,34 @@
       "sourceId": "gancio:mlg.convoca.la",
       "url": "https://mlg.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:30.809814Z",
+      "checkedAt": "2026-11-17T16:58:29.237707Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://mlg.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://mlg.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://mlg.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://mlg.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.809814Z",
-          "bytes": 8211,
-          "sha256": "3ea08bfdfd0843a8066bbe0d12b9da136815615026d3ad92a217cc6578f9f31f"
+          "checkedAt": "2026-11-17T16:58:29.237707Z",
+          "bytes": 9620,
+          "sha256": "02aeca16b666e207049834067c31c1c2b31cff62edb43120acc39c7f93eae761"
         }
       ],
-      "rawCount": 17
+      "rawCount": 20
     },
     {
       "sourceId": "gancio:montreal.askapunk.net",
       "url": "https://montreal.askapunk.net",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:27.892690Z",
+      "checkedAt": "2026-11-17T16:58:26.526625Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://montreal.askapunk.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://montreal.askapunk.net/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://montreal.askapunk.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://montreal.askapunk.net/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.892690Z",
+          "checkedAt": "2026-11-17T16:58:26.526625Z",
           "bytes": 23857,
           "sha256": "75bee88725ad8d94498f0191fe974f4378a50a30dea955635da315a80f3b2ab1"
         }
@@ -947,7 +947,7 @@
       "sourceId": "gancio:offbeat.amsterdam",
       "url": "https://offbeat.amsterdam",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:35.108646Z",
+      "checkedAt": "2026-11-17T16:58:34.431128Z",
       "state": "partial",
       "rejected": [
         {
@@ -1009,80 +1009,80 @@
       ],
       "receipts": [
         {
-          "url": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:30.057613Z",
-          "bytes": 298637,
-          "sha256": "7fb09c53615b1a9a0c925588c3333812124d1a7a282512c1de7acda5f68a23bd"
+          "checkedAt": "2026-11-17T16:58:28.608221Z",
+          "bytes": 298377,
+          "sha256": "1197649d0308efac8cb077d43631a4dc4c948f72d7ae5998514f44ebcec1c0ac"
         },
         {
-          "url": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=1&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=1&show_recurrent=true&show_multidate=true",
+          "url": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=1&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=1&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.607118Z",
-          "bytes": 305046,
-          "sha256": "6d4ff620e5057539a3d36635a23e90c58e3c30380673c95863ded67c71ba41b9"
+          "checkedAt": "2026-11-17T16:58:30.006527Z",
+          "bytes": 305244,
+          "sha256": "58ab337f6796b4ec0128d4ab41176e0803d491ff831839862475972798d219cd"
         },
         {
-          "url": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=2&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=2&show_recurrent=true&show_multidate=true",
+          "url": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=2&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=2&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:32.760251Z",
-          "bytes": 302454,
-          "sha256": "d4dfdccb67518ac7d4814b86fd01c39dac81506b98dfe971ff218f1891df3063"
+          "checkedAt": "2026-11-17T16:58:31.573229Z",
+          "bytes": 302305,
+          "sha256": "d2cc950263c3f0783f9b215a8f0dc6f6306cb25749696a6b41b4fef58fd2ca82"
         },
         {
-          "url": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=3&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=3&show_recurrent=true&show_multidate=true",
+          "url": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=3&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=3&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:34.194266Z",
-          "bytes": 292559,
-          "sha256": "90452dad5d8b0e8a721aee397a928c4fae0330b827e8bd03fbb12737e5d636e8"
+          "checkedAt": "2026-11-17T16:58:33.152335Z",
+          "bytes": 292583,
+          "sha256": "67ccd4acfeeb0d1ba8dcd309aa6626416086a691365bc4b074bbe3761d68efda"
         },
         {
-          "url": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=4&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794301040&end=1805273840&max=500&page=4&show_recurrent=true&show_multidate=true",
+          "url": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=4&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://offbeat.amsterdam/api/events?start=1794329899&end=1805302699&max=500&page=4&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:35.108646Z",
-          "bytes": 167346,
-          "sha256": "7be321faf4b499995312b6917d63b8bf464abd5fc5d8f5321dd74b352ac0b86f"
+          "checkedAt": "2026-11-17T16:58:34.431128Z",
+          "bytes": 164379,
+          "sha256": "16c93ecbd8281304d6131863372cf237029313f9aa0d08cb8909d29f9b801910"
         }
       ],
-      "rawCount": 2287
+      "rawCount": 2282
     },
     {
       "sourceId": "gancio:puntello.org",
       "url": "https://puntello.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:21.915233Z",
+      "checkedAt": "2026-11-17T16:58:20.624535Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://puntello.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://puntello.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://puntello.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://puntello.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:21.915233Z",
-          "bytes": 37405,
-          "sha256": "957c1f76140e3c80f359b8332424f08056dbfd28e6b3bcc406e71567dd3b7090"
+          "checkedAt": "2026-11-17T16:58:20.624535Z",
+          "bytes": 37881,
+          "sha256": "145ac79e74dc236c2757171b66cca444c3859c2513dd3dd1c274bbd38264bbba"
         }
       ],
-      "rawCount": 67
+      "rawCount": 68
     },
     {
       "sourceId": "gancio:rebaltela.org",
       "url": "https://rebaltela.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.529229Z",
+      "checkedAt": "2026-11-17T16:58:22.153156Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://rebaltela.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://rebaltela.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://rebaltela.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://rebaltela.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.529229Z",
+          "checkedAt": "2026-11-17T16:58:22.153156Z",
           "bytes": 14712,
           "sha256": "7ec527ffc75242b7f977ec5a4c661fecd350c52dc92abf39fd9d0ddd15e6dcdf"
         }
@@ -1093,15 +1093,15 @@
       "sourceId": "gancio:rezonek.fr",
       "url": "https://rezonek.fr",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:31.618452Z",
+      "checkedAt": "2026-11-17T16:58:30.109094Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://rezonek.fr/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://rezonek.fr/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://rezonek.fr/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://rezonek.fr/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:31.618452Z",
+          "checkedAt": "2026-11-17T16:58:30.109094Z",
           "bytes": 3423,
           "sha256": "5a34fe690bfa4e365599566058b4ee4d6e7f9a9ec475bd2be75cacc84acae53a"
         }
@@ -1112,26 +1112,22 @@
       "sourceId": "gancio:roma.convoca.la",
       "url": "https://roma.convoca.la",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:24.469380Z",
+      "checkedAt": "2026-11-17T16:58:23.096833Z",
       "state": "partial",
       "rejected": [
         {
           "nativeId": 2964,
           "reason": "long-range-needs-occurrence-review"
-        },
-        {
-          "nativeId": 3049,
-          "reason": "long-range-needs-occurrence-review"
         }
       ],
       "receipts": [
         {
-          "url": "https://roma.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://roma.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://roma.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://roma.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:24.469380Z",
-          "bytes": 33903,
-          "sha256": "5bd16711560f1f68a758336c1532ce710bc20a65165033c58a11a4e9394ca105"
+          "checkedAt": "2026-11-17T16:58:23.096833Z",
+          "bytes": 33915,
+          "sha256": "ca8f477e2015280cb7d8b17968096eb19e5cea9fa560c8ba396a3738aad004a9"
         }
       ],
       "rawCount": 61
@@ -1140,15 +1136,15 @@
       "sourceId": "gancio:sabina.convoca.la",
       "url": "https://sabina.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:24.511211Z",
+      "checkedAt": "2026-11-17T16:58:23.407847Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://sabina.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://sabina.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://sabina.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://sabina.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:24.511211Z",
+          "checkedAt": "2026-11-17T16:58:23.407847Z",
           "bytes": 1362,
           "sha256": "dbabd494e24d4c7f39f3c35799b907e194f4b88b8bd1523540cd98b8b16b075b"
         }
@@ -1159,15 +1155,15 @@
       "sourceId": "gancio:sapratza.in",
       "url": "https://sapratza.in",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:21.230922Z",
+      "checkedAt": "2026-11-17T16:58:19.856507Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://sapratza.in/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://sapratza.in/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://sapratza.in/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://sapratza.in/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:21.230922Z",
+          "checkedAt": "2026-11-17T16:58:19.856507Z",
           "bytes": 5298,
           "sha256": "7302aae2a63071bb3ba8522d63910a7967451555a7c7afc06abd8caea9cf6d5e"
         }
@@ -1178,15 +1174,15 @@
       "sourceId": "gancio:sciamsciam.org",
       "url": "https://sciamsciam.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:24.107023Z",
+      "checkedAt": "2026-11-17T16:58:22.680774Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://sciamsciam.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://sciamsciam.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://sciamsciam.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://sciamsciam.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:24.107023Z",
+          "checkedAt": "2026-11-17T16:58:22.680774Z",
           "bytes": 507,
           "sha256": "1e0f8798ef720ef62abfbbec29207ba19a7723c6dea2f46f95413c01550fe673"
         }
@@ -1197,15 +1193,15 @@
       "sourceId": "gancio:scruscio.org",
       "url": "https://scruscio.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.949979Z",
+      "checkedAt": "2026-11-17T16:58:22.467836Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://scruscio.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://scruscio.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://scruscio.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://scruscio.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.949979Z",
+          "checkedAt": "2026-11-17T16:58:22.467836Z",
           "bytes": 1404,
           "sha256": "49b27fd7d77c944eeefd625746fe7c55c0106ca9dc14268c8d877c549459be7e"
         }
@@ -1216,15 +1212,15 @@
       "sourceId": "gancio:tramuntana.convoca.la",
       "url": "https://tramuntana.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:26.103765Z",
+      "checkedAt": "2026-11-17T16:58:24.220424Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://tramuntana.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://tramuntana.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://tramuntana.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://tramuntana.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:26.103765Z",
+          "checkedAt": "2026-11-17T16:58:24.220424Z",
           "bytes": 3071,
           "sha256": "48d1c0ee41e639eb53b357b55cc1621b2934c8a8fa08d56e71a61d98277feed6"
         }
@@ -1235,7 +1231,7 @@
       "sourceId": "gancio:vagancio.partidopirata.com.ar",
       "url": "https://vagancio.partidopirata.com.ar",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:29.751674Z",
+      "checkedAt": "2026-11-17T16:58:28.454596Z",
       "state": "partial",
       "rejected": [
         {
@@ -1245,48 +1241,48 @@
       ],
       "receipts": [
         {
-          "url": "https://vagancio.partidopirata.com.ar/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://vagancio.partidopirata.com.ar/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://vagancio.partidopirata.com.ar/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://vagancio.partidopirata.com.ar/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:29.751674Z",
-          "bytes": 32719,
-          "sha256": "d1b4779c0bec28ce091fa9e1b83d217cbfabd5f893ae476b2264324e7924218e"
+          "checkedAt": "2026-11-17T16:58:28.454596Z",
+          "bytes": 33300,
+          "sha256": "76577fde7dfb946082884fdebc0e97d9eb31757f387c811a920d240df07961c1"
         }
       ],
-      "rawCount": 56
+      "rawCount": 57
     },
     {
       "sourceId": "gancio:www.aleale.org",
       "url": "https://www.aleale.org",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:27.249642Z",
+      "checkedAt": "2026-11-17T16:58:25.780339Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://www.aleale.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://www.aleale.org/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://www.aleale.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://www.aleale.org/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.249642Z",
-          "bytes": 39824,
-          "sha256": "946d17ee7a60a21dfc3a063ecde85fdd3f7539a73d65e025615af10bbd4544e2"
+          "checkedAt": "2026-11-17T16:58:25.780339Z",
+          "bytes": 40431,
+          "sha256": "68d4e13160328c9c494410736fdef9ab901135705024954cc90c360b6879fb9f"
         }
       ],
-      "rawCount": 67
+      "rawCount": 68
     },
     {
       "sourceId": "gancio:www.attoppa.it",
       "url": "https://www.attoppa.it",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.089563Z",
+      "checkedAt": "2026-11-17T16:58:21.676971Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://www.attoppa.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://www.attoppa.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://www.attoppa.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://www.attoppa.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.089563Z",
+          "checkedAt": "2026-11-17T16:58:21.676971Z",
           "bytes": 681,
           "sha256": "8b340811c9319ba8c71ae54f5a88981759c2f33dc4550ada8f5a7de8232489b1"
         }
@@ -1297,34 +1293,34 @@
       "sourceId": "gancio:www.bilbi.info",
       "url": "https://www.bilbi.info",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:27.722498Z",
+      "checkedAt": "2026-11-17T16:58:26.292415Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://www.bilbi.info/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://www.bilbi.info/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://www.bilbi.info/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://www.bilbi.info/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:27.722498Z",
-          "bytes": 26198,
-          "sha256": "4be76a7497d82f15016395c37f76c5e61d394059327316c0afc6c8764c241911"
+          "checkedAt": "2026-11-17T16:58:26.292415Z",
+          "bytes": 26970,
+          "sha256": "b7283b0c33a8f3faf662877e7b7757394e15cb307f823a18b05c3861b114d8c0"
         }
       ],
-      "rawCount": 54
+      "rawCount": 55
     },
     {
       "sourceId": "gancio:www.fuorinellanebbia.it",
       "url": "https://www.fuorinellanebbia.it",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:23.103154Z",
+      "checkedAt": "2026-11-17T16:58:21.483736Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://www.fuorinellanebbia.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://www.fuorinellanebbia.it/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://www.fuorinellanebbia.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://www.fuorinellanebbia.it/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:23.103154Z",
+          "checkedAt": "2026-11-17T16:58:21.483736Z",
           "bytes": 10203,
           "sha256": "f9f6dd2627169b54e74e0c6b16a1aa9c0ce5250e572eda750379b9f7f06243cf"
         }
@@ -1335,15 +1331,15 @@
       "sourceId": "gancio:zgz.convoca.la",
       "url": "https://zgz.convoca.la",
       "complete": true,
-      "checkedAt": "2026-11-17T08:57:25.894197Z",
+      "checkedAt": "2026-11-17T16:58:25.197806Z",
       "state": "ok",
       "rejected": [],
       "receipts": [
         {
-          "url": "https://zgz.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
-          "finalUrl": "https://zgz.convoca.la/api/events?start=1794301040&end=1805273840&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "url": "https://zgz.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
+          "finalUrl": "https://zgz.convoca.la/api/events?start=1794329899&end=1805302699&max=500&page=0&show_recurrent=true&show_multidate=true",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:25.894197Z",
+          "checkedAt": "2026-11-17T16:58:25.197806Z",
           "bytes": 13281,
           "sha256": "da54ac80f0424984fde73009be386ba947a95af0f92431c3e073b204ee504f82"
         }
@@ -1354,7 +1350,7 @@
       "sourceId": "ikuwo",
       "url": "https://ikuwo.de/veranstaltungen/",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:32.985413Z",
+      "checkedAt": "2026-11-17T16:58:31.722463Z",
       "state": "partial",
       "rejected": [],
       "receipts": [
@@ -1362,9 +1358,9 @@
           "url": "https://ikuwo.de/veranstaltungen/",
           "finalUrl": "https://ikuwo.de/veranstaltungen/",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:32.985413Z",
-          "bytes": 75447,
-          "sha256": "554b19ceabcc981df38dd2aac8efae27147d1506941a2f9b6d681dc32502d9d4"
+          "checkedAt": "2026-11-17T16:58:31.722463Z",
+          "bytes": 75523,
+          "sha256": "85014f42d1bafc73792b5e1e866f2e058dec9759deda97ab60d6f86c35a188e8"
         }
       ]
     },
@@ -1372,7 +1368,7 @@
       "sourceId": "radar",
       "url": "https://radar.squat.net/api/1.2/search/events.json",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:31.987656Z",
+      "checkedAt": "2026-11-17T16:58:30.725821Z",
       "state": "failed",
       "rejected": [],
       "receipts": [],
@@ -1382,7 +1378,7 @@
       "sourceId": "zinn",
       "url": "https://www.zinnbookfair.org/",
       "complete": false,
-      "checkedAt": "2026-11-17T08:57:32.153996Z",
+      "checkedAt": "2026-11-17T16:58:30.838729Z",
       "state": "partial",
       "rejected": [],
       "receipts": [
@@ -1390,7 +1386,7 @@
           "url": "https://www.zinnbookfair.org/",
           "finalUrl": "https://www.zinnbookfair.org/",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:32.084771Z",
+          "checkedAt": "2026-11-17T16:58:30.738694Z",
           "bytes": 41742,
           "sha256": "e34fccfec160b33e8758c5e32275bcb9e4e7b1493be8b0c841caa4468e8325ef"
         },
@@ -1398,16 +1394,16 @@
           "url": "https://www.zinnbookfair.org/panels",
           "finalUrl": "https://www.zinnbookfair.org/panels",
           "status": 200,
-          "checkedAt": "2026-11-17T08:57:32.153996Z",
+          "checkedAt": "2026-11-17T16:58:30.838729Z",
           "bytes": 134337,
           "sha256": "bcc1fd447817d39216e3e490c4221c0f14b7e3dc018f7c60db4d3b6a8a8f5cf5"
         }
       ]
     }
   ],
-  "archiveCount": 3327,
+  "archiveCount": 3372,
   "feedCount": 2000,
-  "scheduledCount": 3327,
+  "scheduledCount": 3372,
   "tombstoneCount": 0,
   "routes": {
     "archive": "events-v2.json",
@@ -1416,7 +1412,7 @@
     "legacyFeed": "events-feed.json"
   },
   "legacy": {
-    "archiveCount": 3327,
+    "archiveCount": 3372,
     "feedCount": 2000,
     "policy": "scheduled-only-no-tombstones"
   },
