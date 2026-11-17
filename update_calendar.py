@@ -29,6 +29,23 @@ def parse_instant(value):
         return dt.astimezone(UTC)
     except (ValueError,TypeError,OverflowError,OSError): return None
 
+
+def material_instant(value):
+    dt=value if isinstance(value,datetime) else parse_instant(value)
+    if dt is None or dt.tzinfo is None:return None
+    dt=dt.astimezone(UTC)
+    return dt.replace(microsecond=(dt.microsecond//1000)*1000)
+
+def material_stamp(value):
+    dt=material_instant(value)
+    return dt.isoformat(timespec="milliseconds").replace("+00:00","Z") if dt else ""
+
+def next_material_revision(previous,candidate):
+    old=material_instant(previous)
+    new=material_instant(candidate) or material_instant(datetime.now(UTC))
+    if old is not None and new<=old:new=old+timedelta(milliseconds=1)
+    return material_stamp(new)
+
 def text(value):
     if value is None: return ""
     return html.unescape(re.sub("<[^>]+>"," ",str(value))).strip()
@@ -55,7 +72,7 @@ def atomic_json(path,data):
         if os.path.exists(tmp): os.unlink(tmp)
 
 
-CALENDAR_OUTPUTS=("calendar-source-cache.json","events.json","events-feed.json","calendar-status.json","feed-status.json","calendar-generation.json")
+CALENDAR_OUTPUTS=("calendar-source-cache.json","events-v2.json","events-v2-feed.json","events.json","events-feed.json","calendar-status.json","feed-status.json","calendar-generation.json")
 JOURNAL=".calendar-transaction.json"
 
 def byte_hash(data):return hashlib.sha256(data).hexdigest()
@@ -78,7 +95,7 @@ def recover_calendar_transaction(root):
     journal=json.loads(journal_path.read_text(encoding="utf-8"))
     if journal.get("schema")!="wrn.calendar-transaction.v1":raise ValueError("Invalid calendar recovery journal")
     backup=root/journal["backupDirectory"]
-    if backup.parent.resolve()!=root.resolve() or not backup.name.startswith(".calendar-backup-"):
+    if backup.resolve().parent!=root.resolve() or not backup.name.startswith(".calendar-backup-"):
         raise ValueError("Calendar backup outside output root")
     for name,entry in journal["previous"].items():
         if name not in CALENDAR_OUTPUTS:raise ValueError("Unexpected recovery path")
@@ -115,7 +132,18 @@ def commit_calendar_generation(root,outputs):
         raise
     # A hard process interruption leaves the journal; news always recovers it.
     (root/JOURNAL).unlink()
+    if backup.resolve().parent!=root.resolve() or not backup.name.startswith(".calendar-backup-"):
+        raise ValueError("Calendar cleanup target outside output root")
     shutil.rmtree(backup)
+
+
+def calendar_status_sections(status,legacy_bytes,v2_bytes):
+    common={"revision":status["revision"],"lastSuccessfulFetchAt":status["generatedAt"],
+        "sourceState":status["state"],"authoritativeCompleteSnapshot":False}
+    legacy={**common,"archiveCount":status["legacy"]["archiveCount"],
+        "feedCount":status["legacy"]["feedCount"],"bytes":legacy_bytes}
+    v2={**common,"archiveCount":status["archiveCount"],"feedCount":status["feedCount"],"bytes":v2_bytes}
+    return {"events":legacy,"calendarV2":v2}
 
 def verify_calendar_generation(root,*,allow_pending=False):
     if (root/JOURNAL).exists() and not allow_pending:
@@ -128,7 +156,7 @@ def verify_calendar_generation(root,*,allow_pending=False):
         return {"legacy":True}
     marker=read_json(marker_path,{})
     if marker.get("schema")!="wrn.calendar-generation.v1":raise ValueError("Invalid calendar generation marker")
-    expected={"calendar-source-cache.json","events.json","events-feed.json","calendar-status.json"}
+    expected={"calendar-source-cache.json","events-v2.json","events-v2-feed.json","events.json","events-feed.json","calendar-status.json"}
     if set(marker.get("files",{}))!=expected:raise ValueError("Incomplete calendar generation manifest")
     for name,digest in marker["files"].items():
         if not (root/name).exists() or byte_hash((root/name).read_bytes())!=digest:
@@ -136,12 +164,16 @@ def verify_calendar_generation(root,*,allow_pending=False):
     status=read_json(root/"calendar-status.json",{})
     feed_status=read_json(root/"feed-status.json",{})
     if feed_status:
-        for key in ["revision","archiveCount","feedCount"]:
-            if feed_status.get("events",{}).get(key)!=status.get(key):
-                raise ValueError("Calendar status section does not match generation: "+key)
-        for key,value in marker.get("eventStatus",{}).items():
-            if feed_status.get("events",{}).get(key)!=value:
-                raise ValueError("Mixed calendar events status generation: "+key)
+        sections=calendar_status_sections(status,
+            (root/"events-feed.json").stat().st_size,(root/"events-v2-feed.json").stat().st_size)
+        for section in ["events","calendarV2"]:
+            for key,value in sections[section].items():
+                if feed_status.get(section,{}).get(key)!=value:
+                    raise ValueError("Mixed calendar status generation: "+section+"."+key)
+        for section,certificate in [("events","eventStatus"),("calendarV2","calendarV2Status")]:
+            for key,value in marker.get(certificate,{}).items():
+                if feed_status.get(section,{}).get(key)!=value:
+                    raise ValueError("Calendar status certificate mismatch: "+section+"."+key)
     return marker
 
 def guard_before_news_commit(root):
@@ -211,7 +243,7 @@ def make_event(source,native_id,title,url,start,end="",raw=None,checked=None):
         "eventRecurrence":"","eventStatus":status,"eventStatusInferred":inferred,
         "cancelled":status=="cancelled","deleted":status=="deleted",
         "eventUpdated":stamp(updated) if updated else "","updatedAt":stamp(updated) if updated else "",
-        "eventCheckedAt":checked,"calendarGenerationAt":checked,"eventRecordUpdatedAt":checked,
+        "eventCheckedAt":checked,"calendarGenerationAt":checked,"eventRecordUpdatedAt":material_stamp(checked),
         "eventCanonicalOrigin":safe_url(raw.get("ap_id")),"eventAliases":[ident],
         "eventEvidenceUrl":source["url"],"eventDateEvidence":"structured-publisher-start",
     }
@@ -380,7 +412,7 @@ def current_event(row,now):
 
 def tombstone(row,now,reason):
     row=dict(row);row.update(eventStatus="deleted",deleted=True,cancelled=False,
-        eventTombstoneAt=stamp(now),eventRecordUpdatedAt=stamp(now),eventCheckedAt=stamp(now),
+        eventTombstoneAt=material_stamp(now),eventRecordUpdatedAt=next_material_revision(row.get("eventRecordUpdatedAt"),now),eventCheckedAt=stamp(now),
         calendarGenerationAt=stamp(now),eventRemovalReason=reason)
     return row
 
@@ -396,16 +428,16 @@ def publisher_allows_reinstatement(dead,active):
 
 def preferred_record(a,b):
     """Consumer contract: material revision first, publisher fallback, dead on ties."""
-    a_material=parse_instant(a.get("eventRecordUpdatedAt"))
-    b_material=parse_instant(b.get("eventRecordUpdatedAt"))
+    a_material=material_instant(a.get("eventRecordUpdatedAt"))
+    b_material=material_instant(b.get("eventRecordUpdatedAt"))
     a_dead=a.get("eventStatus") in ["deleted","cancelled"]
     b_dead=b.get("eventStatus") in ["deleted","cancelled"]
     if a_material and b_material:
         if a_material!=b_material:return a if a_material>b_material else b
         if a_dead!=b_dead:return a if a_dead else b
     else:
-        a_publisher=parse_instant(a.get("eventUpdated") or a.get("updatedAt"))
-        b_publisher=parse_instant(b.get("eventUpdated") or b.get("updatedAt"))
+        a_publisher=material_instant(a.get("eventUpdated") or a.get("updatedAt"))
+        b_publisher=material_instant(b.get("eventUpdated") or b.get("updatedAt"))
         if a_publisher and b_publisher and a_publisher!=b_publisher:
             return a if a_publisher>b_publisher else b
         if a_dead!=b_dead:return a if a_dead else b
@@ -427,16 +459,18 @@ def merge_source(previous,new,complete,now):
             if reappeared:
                 row=dict(row);row["eventReinstatedFromSnapshot"]=True
             elif not publisher_allows_reinstatement(prior,row):row=prior
+        if prior:
+            row=dict(row)
+            row["eventAliases"]=sorted(set(row.get("eventAliases",[])+prior.get("eventAliases",[])))
         if prior and semantic_signature(row)==semantic_signature(prior):
-            row=dict(row);row["eventRecordUpdatedAt"]=prior.get("eventRecordUpdatedAt") or prior.get("eventCheckedAt")
+            row=dict(row);row["eventRecordUpdatedAt"]=material_stamp(prior.get("eventRecordUpdatedAt") or prior.get("eventCheckedAt"))
             if prior.get("eventTombstoneAt"):row["eventTombstoneAt"]=prior["eventTombstoneAt"]
         elif prior:
             # Local material revisions are strictly monotonic for semantic
             # changes, even when publisher timestamps have coarse precision.
-            previous_revision=parse_instant(prior.get("eventRecordUpdatedAt"))
-            candidate_revision=parse_instant(row.get("eventRecordUpdatedAt"))
-            if previous_revision and candidate_revision and candidate_revision<=previous_revision:
-                row=dict(row);row["eventRecordUpdatedAt"]=stamp(previous_revision+timedelta(microseconds=1))
+            row=dict(row)
+            row["eventRecordUpdatedAt"]=next_material_revision(
+                prior.get("eventRecordUpdatedAt"),row.get("eventRecordUpdatedAt"))
         output.append(row)
     for ident,row in old.items():
         if ident in incoming:continue
@@ -497,15 +531,19 @@ def validate_against_known_tombstones(rows,previous):
             if not same_identity and not (common and (explicit_origin or cross_source)):continue
             if same_identity and row.get("eventReinstatedFromSnapshot"):continue
             if publisher_allows_reinstatement(dead,row):
-                dead_material=parse_instant(dead.get("eventRecordUpdatedAt"))
-                active_material=parse_instant(row.get("eventRecordUpdatedAt"))
+                dead_material=material_instant(dead.get("eventRecordUpdatedAt"))
+                active_material=material_instant(row.get("eventRecordUpdatedAt"))
                 if dead_material and active_material and active_material<=dead_material:
                     # A later publisher revision has just been verified across
                     # this alias group. Emit a later material active revision.
                     row=dict(row)
-                    row["eventRecordUpdatedAt"]=stamp(dead_material+timedelta(microseconds=1))
+                    row["eventRecordUpdatedAt"]=next_material_revision(dead_material,active_material)
             else:
                 blocked=dict(dead)
+                dead_material=material_instant(dead.get("eventRecordUpdatedAt"))
+                active_material=material_instant(row.get("eventRecordUpdatedAt"))
+                if dead_material and active_material and dead_material<=active_material:
+                    blocked["eventRecordUpdatedAt"]=next_material_revision(active_material,dead_material)
                 blocked["eventAliases"]=sorted(set(dead.get("eventAliases",[])+row.get("eventAliases",[])))
                 break
         result.append(blocked or row)
@@ -585,7 +623,9 @@ def refresh(root,now=None,evidence=None,replay=None):
     now=now or datetime.now(UTC)
     recover_calendar_transaction(root)
     registry=read_json(root/"calendar-sources.json",{})["sources"]
-    previous=read_json(root/"events.json",[])
+    # Versioned full v2 history includes tombstones; legacy routes are active-only.
+    previous=read_json(root/"events-v2.json",None)
+    if previous is None:previous=read_json(root/"events.json",[])
     # Keep independent source histories so exact federated deduplication never
     # resets a suppressed alias's material revision at the next successful poll.
     cache=read_json(root/"calendar-source-cache.json",{})
@@ -605,22 +645,37 @@ def refresh(root,now=None,evidence=None,replay=None):
     if not successful:raise RuntimeError("All calendar sources failed; no published files changed")
     validated=validate_against_known_tombstones(
         [r for source_rows in snapshots.values() for r in source_rows],previous)
-    validated_active={r["eventOccurrenceId"]:r for r in validated if r.get("eventStatus")=="scheduled"}
+    validated_revisions={}
+    for row in validated:
+        ident=row["eventOccurrenceId"]
+        if ident not in validated_revisions:
+            validated_revisions[ident]=dict(row)
+        else:
+            previous_version=validated_revisions[ident]
+            winner=dict(preferred_record(previous_version,row))
+            winner["eventAliases"]=sorted(set(previous_version.get("eventAliases",[])+row.get("eventAliases",[])))
+            validated_revisions[ident]=winner
     for source_rows in snapshots.values():
         for row in source_rows:
-            if row["eventOccurrenceId"] in validated_active:
-                row["eventRecordUpdatedAt"]=validated_active[row["eventOccurrenceId"]]["eventRecordUpdatedAt"]
+            winner=validated_revisions.get(row["eventOccurrenceId"])
+            if winner is not None:
+                row["eventRecordUpdatedAt"]=material_stamp(winner["eventRecordUpdatedAt"])
+                row["eventAliases"]=sorted(set(row.get("eventAliases",[])+winner.get("eventAliases",[])))
     rows=deduplicate(validated)
     # Publish every eligible row; feed cap is explicitly separate, tombstones reserved.
     active_rows=[r for r in rows if r.get("eventStatus")=="scheduled"]
     tombstones=[r for r in rows if r.get("eventStatus")!="scheduled"]
-    feed=deduplicate(active_rows[:2000]+tombstones)
+    legacy_feed=active_rows[:2000]
+    feed=deduplicate(legacy_feed+tombstones)
     revision=hashlib.sha256(json.dumps(rows,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
     status={"schema":"wrn.calendar-status.v2","snapshotScope":"configured-sources-120-day-window",
         "authoritativeCompleteSnapshot":False,"minimumEventSchemaVersion":2,"legacyUpcomingPolicy":"quarantine-v1","generatedAt":stamp(now),"revision":revision,
         "state":"ok" if all(s["state"]=="ok" for s in statuses) else "partial",
         "sources":sorted(statuses,key=lambda s:s["sourceId"]),"archiveCount":len(rows),"feedCount":len(feed),
         "scheduledCount":len(active_rows),"tombstoneCount":len(tombstones),
+        "routes":{"archive":"events-v2.json","feed":"events-v2-feed.json",
+            "legacyArchive":"events.json","legacyFeed":"events-feed.json"},
+        "legacy":{"archiveCount":len(active_rows),"feedCount":len(legacy_feed),"policy":"scheduled-only-no-tombstones"},
         "legacyQuarantined":sum(r.get("eventSchemaVersion")!=2 for r in previous if isinstance(r,dict)),
         "note":"Successful fetch verifies source data, not independent real-world organiser confirmation."}
     # A complete batch can legitimately cancel/remove every active event.
@@ -630,18 +685,21 @@ def refresh(root,now=None,evidence=None,replay=None):
     outputs={}
     outputs["calendar-source-cache.json"]=json_bytes({
         "schema":"wrn.calendar-source-cache.v2","generatedAt":stamp(now),"sources":snapshots})
-    outputs["events.json"]=json_bytes(rows)
-    outputs["events-feed.json"]=json_bytes(feed)
+    outputs["events-v2.json"]=json_bytes(rows)
+    outputs["events-v2-feed.json"]=json_bytes(feed)
+    outputs["events.json"]=json_bytes(active_rows)
+    outputs["events-feed.json"]=json_bytes(legacy_feed)
     outputs["calendar-status.json"]=json_bytes(status)
     feed_status=read_json(root/"feed-status.json",{})
     if feed_status:
-        feed_status["events"]={"revision":revision,"archiveCount":len(rows),"feedCount":len(feed),
-            "bytes":len(outputs["events-feed.json"]),"lastSuccessfulFetchAt":stamp(now),
-            "sourceState":status["state"],"authoritativeCompleteSnapshot":False}
+        feed_status.update(calendar_status_sections(status,
+            len(outputs["events-feed.json"]),len(outputs["events-v2-feed.json"])))
         outputs["feed-status.json"]=json_bytes(feed_status)
     outputs["calendar-generation.json"]=json_bytes({
         "schema":"wrn.calendar-generation.v1","revision":revision,
         "eventStatus":{key:feed_status["events"][key] for key in
+            ["revision","archiveCount","feedCount","bytes","lastSuccessfulFetchAt","sourceState"]} if feed_status else {},
+        "calendarV2Status":{key:feed_status["calendarV2"][key] for key in
             ["revision","archiveCount","feedCount","bytes","lastSuccessfulFetchAt","sourceState"]} if feed_status else {},
         "files":{name:byte_hash(data) for name,data in outputs.items() if name!="feed-status.json"}})
     commit_calendar_generation(root,outputs)
