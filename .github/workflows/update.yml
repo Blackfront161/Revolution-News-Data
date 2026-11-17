@@ -24,6 +24,7 @@ jobs:
       - name: Repository auschecken
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Python einrichten
@@ -54,13 +55,21 @@ jobs:
 
       # Phase 1J: Diese drei Befehle werden vom bestehenden App-Validator
       # ausdrücklich erwartet.
-      - name: Nachrichten und Termine aggregieren
+      - name: Nachrichten aggregieren
         run: python aggregate.py
         env:
           WRN_AGGREGATE_MODE: "enrich"
           WRN_AGGREGATE_BUDGET_SECONDS: "1980"
           WRN_AGGREGATE_STOP_RESERVE_SECONDS: "120"
           WRN_CHECKPOINT_INTERVAL_SECONDS: "240"
+
+      - name: Strukturierte Kalender aktualisieren
+        continue-on-error: true  # A calendar outage must not stop news publication.
+        run: python update_calendar.py
+
+      - name: Unterbrochene Kalendertransaktion vor Newsfortsetzung zurückrollen
+        if: always()
+        run: python update_calendar.py --recover-only
 
       - name: Quellenkatalog erzeugen
         run: |
@@ -85,7 +94,7 @@ jobs:
       - name: Schnelle Web-Feeds erzeugen
         run: |
           if [ -f build_web_feeds.py ]; then
-            WRN_FEED_TARGETS="news,events,status" python build_web_feeds.py
+            WRN_FEED_TARGETS="news,status" python build_web_feeds.py
           fi
           python build_source_archive.py
 
@@ -169,6 +178,8 @@ jobs:
         run: |
           set -euo pipefail
 
+          python update_calendar.py --verify-generation
+
           git config user.name "wrn-news-bot"
           git config user.email "actions@users.noreply.github.com"
 
@@ -186,6 +197,11 @@ jobs:
           git add news.json events.json editorial-review.json source-catalog.json sources-registry.json source-health.json
           git add news-archive-manifest.json news-archive
           git add news-feed.json events-feed.json feed-status.json
+          if [ -f calendar-status.json ]; then git add calendar-status.json; fi
+          if [ -f calendar-source-cache.json ]; then git add calendar-source-cache.json; fi
+          if [ -f calendar-generation.json ]; then git add calendar-generation.json; fi
+          if [ -f events-v2.json ]; then git add events-v2.json; fi
+          if [ -f events-v2-feed.json ]; then git add events-v2-feed.json; fi
 
           optional_outputs=(
             source-health-report.json

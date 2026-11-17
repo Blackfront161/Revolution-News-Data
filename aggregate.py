@@ -37,9 +37,7 @@ FAST_MODE = AGGREGATE_MODE == "fast"
 FORCE_EXISTING_ARTICLE_REFRESH = os.environ.get(
     "WRN_FORCE_EXISTING_ARTICLE_REFRESH", ""
 ).strip().lower() in {"1", "true", "yes", "on"}
-SKIP_RADAR = FAST_MODE or os.environ.get("WRN_SKIP_RADAR", "").strip().lower() in {
-    "1", "true", "yes", "on",
-}
+SKIP_RADAR = True  # Dedicated update_calendar.py owns structured event data.
 AGGREGATE_METRICS = {
     "mode": AGGREGATE_MODE,
     "startedAt": AGGREGATE_STARTED_AT_ISO,
@@ -1577,17 +1575,9 @@ GANCIO_EVENT_DATE_RE = re.compile(
 
 
 def normalize_feed_event(title, published):
+    # Compatibility helper: publication dates never certify an event start.
     clean_title = safe_text(title, "Termin ohne Titel")
-    match = GANCIO_EVENT_DATE_RE.match(clean_title)
-    if not match:
-        return clean_title, safe_text(
-            published,
-            datetime.now().isoformat(),
-        )
-    return (
-        GANCIO_EVENT_DATE_RE.sub("", clean_title).strip() or clean_title,
-        f"{match.group('date')}T12:00:00Z",
-    )
+    return GANCIO_EVENT_DATE_RE.sub("", clean_title).strip() or clean_title, ""
 
 
 def repair_overbroad_archive_categories(article):
@@ -1862,7 +1852,7 @@ archiv_dict = {}
 gesehene_titel = set()
 
 try:
-    for archive_file in ('news.json', 'events.json'):
+    for archive_file in ('news.json',):
         if not os.path.exists(archive_file):
             continue
         with open(archive_file, 'r', encoding='utf-8') as f:
@@ -2231,27 +2221,18 @@ def save_checkpoint(force=False):
         and feed.get('status') not in {'withdrawn', 'revoked', 'deleted', 'disabled'}])
 
     atomic_json_write("news.json", news)
-    atomic_json_write("events.json", events)
+    # events.json belongs exclusively to update_calendar.py.
     _LAST_CHECKPOINT_AT = time.monotonic()
     print(
         "[CHECKPOINT] "
-        f"{len(news)} Nachrichten und {len(events)} Termine atomar gespeichert."
+        f"{len(news)} Nachrichten atomar gespeichert; Kalender separat verwaltet."
     )
     return True
 
 
-if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {
-    "1", "true", "yes", "on"
-}:
-    save_checkpoint(force=True)
-    save_aggregate_error_report()
-    AGGREGATE_METRICS["stoppedForBudget"] = aggregate_budget_exhausted()
-    save_aggregate_run_status()
-    print(
-        "\n[ERFOLG] Radar.squat wurde separat aktualisiert: "
-        f"{radar_count} strukturierte Termine."
-    )
-    raise SystemExit(0)
+if os.environ.get("WRN_RADAR_ONLY", "").strip().lower() in {"1", "true", "yes", "on"}:
+    raise SystemExit("Calendar-only entry point: python update_calendar.py")
+
 
 def source_key(feed):
     return (
@@ -2391,6 +2372,8 @@ for kontinent, feeds in active_sources.items():
         break
     print(f"\n--- Kategorie: {kontinent} ---")
     is_radar = (kontinent == "Radar")
+    if is_radar:
+        continue  # Calendar feeds must not be interpreted as news/publication dates.
     
     for feed in feeds:
         if aggregate_budget_exhausted():
@@ -2923,7 +2906,7 @@ save_aggregate_error_report()
 AGGREGATE_METRICS["stoppedForBudget"] = aggregate_stopped_for_budget
 save_aggregate_run_status()
 
-print(f"\n>>> ERFOLG: Es wurden {radar_count} Radar-Termine gefunden! <<<")
+print("\n[NEWS] Kalender werden separat mit update_calendar.py aktualisiert.")
 print(f"\n[ERFOLG] {len(archiv_dict)} Artikel sicher im Archiv abgelegt.")
 print(
     "[LAUFSTATUS] "

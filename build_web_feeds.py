@@ -14,6 +14,7 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
+from update_calendar import current_event, deduplicate, calendar_status_sections
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
@@ -291,45 +292,11 @@ def balanced_news_rows(
     return output
 
 
-def prepare_events(
-    rows: list[dict[str, Any]],
-    *,
-    limit: int,
-    content_limit: int,
-) -> list[dict[str, Any]]:
-    """Publish only usable current events, nearest event first."""
-    now = datetime.now(timezone.utc).timestamp()
-    current = [
-        item for item in rows
-        if date_value({
-            "eventStart": item.get("eventEnd")
-            or item.get("eventStart")
-            or item.get("pubDate")
-        }) >= now - (2 * 60 * 60)
-    ]
-    ordered = sorted(current, key=date_value)
-    output: list[dict[str, Any]] = []
-    seen: set[str] = set()
-
-    for source in ordered:
-        key = stable_key(source)
-        if key and key in seen:
-            continue
-        if key:
-            seen.add(key)
-
-        item = dict(source)
-        content, truncated = shorten(item.get("content"), content_limit)
-        item["content"] = content
-        if truncated:
-            item["contentComplete"] = False
-            item["webFeedTruncated"] = True
-            item["webFeedOriginalLength"] = len(clean_text(source.get("content")))
-        output.append(item)
-        if len(output) >= limit:
-            break
-
-    return output
+def prepare_events(rows, *, limit, content_limit):
+    """Legacy route is scheduled-only; full tombstones live on versioned v2 routes."""
+    now = datetime.now(timezone.utc)
+    return deduplicate([dict(row) for row in rows
+        if current_event(row, now) and row.get("eventStatus") == "scheduled"])[:limit]
 
 
 def atomic_json(path: Path, data: Any) -> int:
@@ -392,6 +359,7 @@ def newest_article_at(rows: list[dict[str, Any]]) -> str:
 def main() -> int:
     news = load_list(NEWS_SOURCE)
     events = load_list(EVENTS_SOURCE)
+    calendar_status = load_dict(ROOT / "calendar-status.json")
     build_news = "news" in FEED_TARGETS
     build_events = "events" in FEED_TARGETS
     news_feed = (
@@ -452,6 +420,9 @@ def main() -> int:
             "newestArticleAt": newest_article_at(news_feed),
         },
         "events": {
+            "revision": calendar_status.get("revision", ""),
+            "lastSuccessfulFetchAt": calendar_status.get("generatedAt", ""),
+            "sourceState": calendar_status.get("state", "unknown"),
             "archiveCount": len(events),
             "feedCount": len(event_feed),
             "bytes": event_bytes,
@@ -464,6 +435,11 @@ def main() -> int:
         "configActivated": config_changed,
         "configUpdateEnabled": CONFIG_UPDATE_ENABLED,
     }
+    if calendar_status.get("routes", {}).get("archive") == "events-v2.json":
+        sections = calendar_status_sections(
+            calendar_status, event_bytes, (ROOT / "events-v2-feed.json").stat().st_size)
+        status["events"].update(sections["events"])
+        status["calendarV2"] = sections["calendarV2"]
     if "status" in FEED_TARGETS:
         atomic_json(STATUS_TARGET, status)
 
