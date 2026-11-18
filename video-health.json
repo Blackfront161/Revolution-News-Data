@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-18T07:37:44.745Z",
+  "generatedAt": "2026-11-18T20:39:07.910Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 43,
-    "reachable": 42,
+    "checked": 42,
+    "reachable": 41,
     "failed": 1,
     "metadataEnriched": 15,
     "sources": {
@@ -87,8 +87,8 @@
       ]
     },
     "items": {
-      "checked": 18,
-      "reachable": 18,
+      "checked": 17,
+      "reachable": 17,
       "failed": 0,
       "embedChecked": 15,
       "results": [
@@ -278,16 +278,6 @@
           }
         },
         {
-          "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/11/explosion-gas-remedios-escalada.mp4",
-          "original": {
-            "url": "https://argentina.indymedia.org/wp-content/uploads/2026/11/explosion-gas-remedios-escalada.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://argentina.indymedia.org/wp-content/uploads/2026/11/explosion-gas-remedios-escalada.mp4"
-          },
-          "embed": null
-        },
-        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -351,17 +341,17 @@
     }
   },
   "totals": {
-    "candidateCount": 18,
-    "acceptedBeforeQuota": 18,
-    "acceptedCount": 18,
+    "candidateCount": 17,
+    "acceptedBeforeQuota": 17,
+    "acceptedCount": 17,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 7,
+    "rejectedCount": 8,
     "registrySources": 10
   },
   "coverage": {
     "duration": 3,
-    "thumbnails": 17,
+    "thumbnails": 16,
     "subtitlesKnown": 15,
     "transcripts": 0
   },
@@ -378,14 +368,14 @@
   },
   "byPlatform": {
     "YouTube": 12,
-    "Direct": 3,
-    "Kolektiva": 3
+    "Kolektiva": 3,
+    "Direct": 2
   },
   "byLanguage": {
     "en": 7,
     "de": 3,
-    "und": 3,
     "fr": 2,
+    "und": 2,
     "el": 1,
     "es": 1,
     "pt": 1
@@ -395,13 +385,13 @@
     "andrewism": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "indymedia-argentina": 2,
     "alerta-gr": 1,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "anf-english-kurdistan": 1,
     "animal-rising": 1,
     "david-graeber-archive": 1,
+    "indymedia-argentina": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
@@ -421,7 +411,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -431,7 +421,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -451,7 +441,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -531,16 +521,6 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "direct:https://argentina.indymedia.org/wp-content/uploads/2026/11/explosion-gas-remedios-escalada.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
       "ageDays": 2,
       "ageStatus": "current",
       "status": "healthy"
@@ -581,7 +561,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 3,
+      "ageDays": 4,
       "ageStatus": "current",
       "status": "healthy"
     }
