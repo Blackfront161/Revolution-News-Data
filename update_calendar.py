@@ -619,6 +619,16 @@ def collect(source,now,evidence=None,replay=None):
         status.update(state="partial" if rows else "failed",error=type(e).__name__+": "+str(e))
     return rows,status
 
+def absence_allows_removal(source,status):
+    """Known incomplete Gancio list is not evidence of deletion."""
+    if not status.get("complete"): return False
+    # Rebaltela's short, clean API page omitted a still-listed publisher
+    # occurrence in the 2026-11-19 calendar generation. Keep listing
+    # completeness distinct from authority to infer a deletion.
+    return (source.get("id"),source.get("kind"),source.get("url")) != (
+        "gancio:rebaltela.org","gancio","https://rebaltela.org",
+    )
+
 def refresh(root,now=None,evidence=None,replay=None):
     now=now or datetime.now(UTC)
     recover_calendar_transaction(root)
@@ -640,7 +650,8 @@ def refresh(root,now=None,evidence=None,replay=None):
         work={pool.submit(collect,s,now,evidence,replay):s for s in active}
         for future in concurrent.futures.as_completed(work):
             source=work[future];new,status=future.result();statuses.append(status)
-            snapshots[source["id"]]=merge_source(grouped.get(source["id"],[]),new,status["complete"],now)
+            status["absenceAllowsRemoval"]=absence_allows_removal(source,status)
+            snapshots[source["id"]]=merge_source(grouped.get(source["id"],[]),new,status["absenceAllowsRemoval"],now)
     successful=sum(s["state"]!="failed" for s in statuses)
     if not successful:raise RuntimeError("All calendar sources failed; no published files changed")
     validated=validate_against_known_tombstones(
