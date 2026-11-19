@@ -248,6 +248,28 @@ def make_event(source,native_id,title,url,start,end="",raw=None,checked=None):
         "eventEvidenceUrl":source["url"],"eventDateEvidence":"structured-publisher-start",
     }
 
+def reviewed_venue_location(source, raw):
+    """Fill missing location only for an exact, independently reviewed venue tuple.
+
+    Evidence: https://haus-mainusch.de/contact/ checked 2026-11-19;
+    publisher https://events.rheinmain.social/api/events?max=2 place.id=72.
+    Venue explicitly states Mainz, Germany. No domain/address parsing or geocoding.
+    Existing publisher fields take precedence; conflicting pairs are never mixed.
+    """
+    place=raw.get("place")
+    if not isinstance(place,dict): return raw
+    if (source.get("id"),source.get("url"),place.get("id"),place.get("name"),place.get("address")) != (
+        "gancio:events.rheinmain.social","https://events.rheinmain.social",72,
+        "Haus Mainusch","Staudingerweg 23, 55128 Mainz"):
+        return raw
+    if place.get("city") not in (None,"","Mainz") or place.get("countryCode") not in (None,"","DE"):
+        return raw
+    if place.get("city")=="Mainz" and place.get("countryCode")=="DE": return raw
+    enriched=dict(place)
+    if not enriched.get("city"): enriched["city"]="Mainz"
+    if not enriched.get("countryCode"): enriched["countryCode"]="DE"
+    return {**raw,"place":enriched}
+
 def gancio_events(source,rows,checked):
     if not isinstance(rows,list): raise ValueError("Gancio payload is not a list")
     result=[]; rejected=[]
@@ -256,6 +278,7 @@ def gancio_events(source,rows,checked):
             if not isinstance(raw,dict): raise ValueError("non-object-row")
             # Real children already have distinct ids/start_datetime; no RRULE expansion.
             if raw.get("rrule") or raw.get("recurrent_rule"): raise ValueError("unexpanded-recurrence")
+            raw=reviewed_venue_location(source,raw)
             slug=urllib.parse.quote(str(raw.get("slug") or raw.get("id") or ""),safe="-")
             url=source["url"].rstrip("/")+"/event/"+slug
             result.append(make_event(source,raw.get("id"),raw.get("title"),url,raw.get("start_datetime"),raw.get("end_datetime"),raw,checked))
