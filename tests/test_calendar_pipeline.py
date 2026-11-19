@@ -11,6 +11,25 @@ def event(ident="1",**kwargs):
     raw.update(kwargs.pop("raw",{}))
     return c.make_event(SOURCE,ident,"Title","https://example.org/event/a",kwargs.pop("start","2026-11-18T19:00:00+01:00"),kwargs.pop("end",""),raw,c.stamp(NOW))
 class CalendarTests(unittest.TestCase):
+    def test_persisted_reappearance_marker_cannot_override_explicit_cancellation(self):
+        active=event();active["eventReinstatedFromSnapshot"]=True
+        active["eventRecordUpdatedAt"]="2026-11-17T11:00:00Z"
+        dead=event(raw={"status":"cancelled"})
+        dead["eventRecordUpdatedAt"]="2026-11-17T10:00:00Z"
+        result=c.validate_against_known_tombstones([active],[dead])[0]
+        self.assertEqual(result["eventStatus"],"cancelled")
+        self.assertGreater(c.parse_instant(result["eventRecordUpdatedAt"]),c.parse_instant(active["eventRecordUpdatedAt"]))
+    def test_persisted_reappearance_marker_cannot_override_later_inferred_removal(self):
+        active=event();active["eventReinstatedFromSnapshot"]=True
+        for checked in ["2026-11-16T08:00:00Z","2026-11-17T08:00:00Z","bad"]:
+            active["eventCheckedAt"]=checked
+            dead=c.tombstone(event(),NOW+timedelta(days=1),"missing-from-complete-upcoming-snapshot")
+            self.assertEqual(c.validate_against_known_tombstones([active],[dead])[0]["eventStatus"],"deleted")
+    def test_reappearance_marker_cannot_override_review_expiry(self):
+        active=event();active["eventReinstatedFromSnapshot"]=True
+        active["eventCheckedAt"]="2026-11-18T08:00:00Z"
+        dead=c.tombstone(event(),NOW,"review-validity-expired")
+        self.assertEqual(c.validate_against_known_tombstones([active],[dead])[0]["eventStatus"],"deleted")
     def test_publication_is_not_event_start(self):
         with self.assertRaises(ValueError): c.make_event(SOURCE,"1","A","https://example.org/a","",raw={"published":"2026-12-01T10:00:00Z"})
     def test_rejects_offsetless_time(self):

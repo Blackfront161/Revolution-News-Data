@@ -529,7 +529,14 @@ def validate_against_known_tombstones(rows,previous):
             explicit_origin=any(key[0]=="origin" for key in common)
             cross_source=row.get("eventSourceId")!=dead.get("eventSourceId")
             if not same_identity and not (common and (explicit_origin or cross_source)):continue
-            if same_identity and row.get("eventReinstatedFromSnapshot"):continue
+            # A persisted reappearance marker is not blanket permission to
+            # override a later removal or an explicit organiser cancellation.
+            if (same_identity and row.get("eventReinstatedFromSnapshot")
+                and dead.get("eventStatus")=="deleted"
+                and dead.get("eventRemovalReason")=="missing-from-complete-upcoming-snapshot"
+                and parse_instant(row.get("eventCheckedAt"))
+                and parse_instant(dead.get("eventTombstoneAt"))
+                and parse_instant(row["eventCheckedAt"])>parse_instant(dead["eventTombstoneAt"])):continue
             if publisher_allows_reinstatement(dead,row):
                 dead_material=material_instant(dead.get("eventRecordUpdatedAt"))
                 active_material=material_instant(row.get("eventRecordUpdatedAt"))
