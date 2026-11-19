@@ -248,6 +248,41 @@ def make_event(source,native_id,title,url,start,end="",raw=None,checked=None):
         "eventEvidenceUrl":source["url"],"eventDateEvidence":"structured-publisher-start",
     }
 
+def reviewed_venue_location(source, raw):
+    """Fill missing location only for an exact, independently reviewed venue tuple.
+
+    Evidence: https://haus-mainusch.de/contact/ checked 2026-11-19;
+    publisher https://events.rheinmain.social/api/events?max=2 place.id=72.
+    Venue explicitly states Mainz, Germany. No domain/address parsing or geocoding.
+    Existing publisher fields take precedence; conflicting pairs are never mixed.
+    """
+    place=raw.get("place")
+    if not isinstance(place,dict): return raw
+    # Reviewed 2026-11-19; exact publisher tuple plus independent venue evidence.
+    # See tests/venue-extension-evidence.md. No fuzzy address or domain fallback.
+    # Require an actual integer ID; bool/float/string coercion is not evidence.
+    if type(place.get("id")) is not int: return raw
+    key=(source.get("id"),source.get("url"),place.get("id"),place.get("name"),place.get("address"))
+    reviewed=(
+        ('gancio:events.rheinmain.social', 'https://events.rheinmain.social', 72, 'Haus Mainusch', 'Staudingerweg 23, 55128 Mainz', 'Mainz', 'DE'),
+        ('gancio:offbeat.amsterdam', 'https://offbeat.amsterdam', 21, 'Paradiso', 'Weteringschans 6, 1017 SG Amsterdam', 'Amsterdam', 'NL'),
+        ('gancio:offbeat.amsterdam', 'https://offbeat.amsterdam', 20, 'Melkweg', 'Lijnbaansgracht 234A, 1017 PH Amsterdam', 'Amsterdam', 'NL'),
+        ('gancio:offbeat.amsterdam', 'https://offbeat.amsterdam', 16, 'NieuwLand', 'Pieter Nieuwlandstraat 93, 1093 XN Amsterdam', 'Amsterdam', 'NL'),
+        ('gancio:offbeat.amsterdam', 'https://offbeat.amsterdam', 53, 'Tolhuistuin', 'IJpromenade 2, 1031 KT Amsterdam', 'Amsterdam', 'NL'),
+        ('gancio:offbeat.amsterdam', 'https://offbeat.amsterdam', 10, 'Vrankrijk', 'Spuistraat 216, 1012 VT Amsterdam', 'Amsterdam', 'NL'),
+        ('gancio:flyinghigh-bonn.org', 'https://flyinghigh-bonn.org', 9, 'Kult 41', 'Hochstadenring 41, 53119 Bonn', 'Bonn', 'DE'),
+    )
+    match=next((item for item in reviewed if key==item[:5]),None)
+    if match is None: return raw
+    city,country=match[5:]
+    if place.get("city") not in (None,"",city) or place.get("countryCode") not in (None,"",country):
+        return raw
+    if place.get("city")==city and place.get("countryCode")==country: return raw
+    enriched=dict(place)
+    if not enriched.get("city"): enriched["city"]=city
+    if not enriched.get("countryCode"): enriched["countryCode"]=country
+    return {**raw,"place":enriched}
+
 def gancio_events(source,rows,checked):
     if not isinstance(rows,list): raise ValueError("Gancio payload is not a list")
     result=[]; rejected=[]
@@ -256,6 +291,7 @@ def gancio_events(source,rows,checked):
             if not isinstance(raw,dict): raise ValueError("non-object-row")
             # Real children already have distinct ids/start_datetime; no RRULE expansion.
             if raw.get("rrule") or raw.get("recurrent_rule"): raise ValueError("unexpanded-recurrence")
+            raw=reviewed_venue_location(source,raw)
             slug=urllib.parse.quote(str(raw.get("slug") or raw.get("id") or ""),safe="-")
             url=source["url"].rstrip("/")+"/event/"+slug
             result.append(make_event(source,raw.get("id"),raw.get("title"),url,raw.get("start_datetime"),raw.get("end_datetime"),raw,checked))
