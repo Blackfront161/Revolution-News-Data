@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-20T07:25:38.946Z",
+  "generatedAt": "2026-11-20T20:28:51.883Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 47,
-    "reachable": 46,
-    "failed": 1,
-    "metadataEnriched": 18,
+    "checked": 39,
+    "reachable": 37,
+    "failed": 2,
+    "metadataEnriched": 14,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,21 @@
       ]
     },
     "items": {
-      "checked": 19,
-      "reachable": 19,
-      "failed": 0,
-      "embedChecked": 18,
+      "checked": 15,
+      "reachable": 14,
+      "failed": 1,
+      "embedChecked": 14,
       "results": [
+        {
+          "canonicalId": "direct:https://rojnews.video/upload/videos/2026/11/w9xhyjdvqahxehneccqm_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
+          "original": {
+            "url": "https://rojnews.video/upload/videos/2026/11/w9XHyjDvqAHxEhNecCQM_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
+            "ok": false,
+            "status": 403,
+            "finalUrl": "https://rojnews.video/upload/videos/2026/11/w9XHyjDvqAHxEhNecCQM_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4"
+          },
+          "embed": null
+        },
         {
           "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
           "original": {
@@ -123,16 +133,6 @@
           }
         },
         {
-          "canonicalId": "direct:https://www.alerta.gr/wp-content/uploads/2026/11/v-e-l-o-c-i-t-y-antireport-17-11-2026-tonight%ef%bc%9a-the-moment-a-riot-cop%e2%80%94from-the-larges.mp4",
-          "original": {
-            "url": "https://www.alerta.gr/wp-content/uploads/2026/11/v-e-l-o-c-i-t-y-antireport-17-11-2026-Tonight%EF%BC%9A-the-moment-a-riot-cop%E2%80%94from-the-larges.mp4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.alerta.gr/wp-content/uploads/2026/11/v-e-l-o-c-i-t-y-antireport-17-11-2026-Tonight%EF%BC%9A-the-moment-a-riot-cop%E2%80%94from-the-larges.mp4"
-          },
-          "embed": null
-        },
-        {
           "canonicalId": "youtube:efbUsgUYUCA",
           "original": {
             "url": "https://www.youtube.com/watch?v=efbUsgUYUCA",
@@ -145,21 +145,6 @@
             "ok": true,
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/efbUsgUYUCA?rel=0"
-          }
-        },
-        {
-          "canonicalId": "youtube:bUjk9rptWXI",
-          "original": {
-            "url": "https://www.youtube.com/watch?v=bUjk9rptWXI",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube.com/watch?v=bUjk9rptWXI"
-          },
-          "embed": {
-            "url": "https://www.youtube-nocookie.com/embed/bUjk9rptWXI?rel=0",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://www.youtube-nocookie.com/embed/bUjk9rptWXI?rel=0"
           }
         },
         {
@@ -268,21 +253,6 @@
           }
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:wK5tUrj9pvCnyzVWWnnDb4",
-          "original": {
-            "url": "https://kolektiva.media/w/wK5tUrj9pvCnyzVWWnnDb4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/wK5tUrj9pvCnyzVWWnnDb4"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/wK5tUrj9pvCnyzVWWnnDb4",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/wK5tUrj9pvCnyzVWWnnDb4"
-          }
-        },
-        {
           "canonicalId": "youtube:xdYY-5WHIE0",
           "original": {
             "url": "https://www.youtube.com/watch?v=xdYY-5WHIE0",
@@ -341,53 +311,23 @@
             "status": 200,
             "finalUrl": "https://www.youtube-nocookie.com/embed/o8Btb1sGRK0?rel=0"
           }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:a2Yfh3dr79iF3WszBjWE8q",
-          "original": {
-            "url": "https://kolektiva.media/w/a2Yfh3dr79iF3WszBjWE8q",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/a2Yfh3dr79iF3WszBjWE8q"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/a2Yfh3dr79iF3WszBjWE8q",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/a2Yfh3dr79iF3WszBjWE8q"
-          }
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:vvTGcYP4ZoqQcQXEykJBk5",
-          "original": {
-            "url": "https://kolektiva.media/w/vvTGcYP4ZoqQcQXEykJBk5",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/vvTGcYP4ZoqQcQXEykJBk5"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/vvTGcYP4ZoqQcQXEykJBk5",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/vvTGcYP4ZoqQcQXEykJBk5"
-          }
         }
       ]
     }
   },
   "totals": {
-    "candidateCount": 19,
-    "acceptedBeforeQuota": 19,
-    "acceptedCount": 19,
+    "candidateCount": 15,
+    "acceptedBeforeQuota": 15,
+    "acceptedCount": 15,
     "duplicateCount": 0,
     "quotaRemovedCount": 0,
-    "rejectedCount": 8,
+    "rejectedCount": 9,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 4,
-    "thumbnails": 19,
-    "subtitlesKnown": 18,
+    "duration": 1,
+    "thumbnails": 15,
+    "subtitlesKnown": 14,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -402,41 +342,47 @@
     "originalUrl": 0
   },
   "byPlatform": {
-    "YouTube": 14,
-    "Kolektiva": 4,
-    "Direct": 1
+    "YouTube": 13,
+    "Direct": 1,
+    "Kolektiva": 1
   },
   "byLanguage": {
     "en": 7,
-    "und": 5,
+    "und": 4,
     "de": 3,
-    "el": 1,
-    "es": 1,
-    "fr": 1,
-    "pt": 1
+    "fr": 1
   },
   "bySource": {
-    "kolektiva-media-news": 4,
     "andrewism": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
     "electronic-frontier-foundation": 2,
-    "alerta-gr": 1,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
+    "anf-english-kurdistan": 1,
     "animal-rising": 1,
     "david-graeber-archive": 1,
-    "indymedia-argentina": 1,
+    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
+    {
+      "canonicalId": "direct:https://rojnews.video/upload/videos/2026/11/w9xhyjdvqahxehneccqm_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
+      "originalStatus": "blocked",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "attention"
+    },
     {
       "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 0,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -446,32 +392,12 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "direct:https://www.alerta.gr/wp-content/uploads/2026/11/v-e-l-o-c-i-t-y-antireport-17-11-2026-tonight%ef%bc%9a-the-moment-a-riot-cop%e2%80%94from-the-larges.mp4",
-      "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
-      "playabilityReason": "",
       "ageDays": 2,
       "ageStatus": "current",
-      "status": "healthy"
+      "status": "attention"
     },
     {
       "canonicalId": "youtube:efbUsgUYUCA",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "LOGIN_REQUIRED",
-      "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 3,
-      "ageStatus": "current",
-      "status": "attention"
-    },
-    {
-      "canonicalId": "youtube:bUjk9rptWXI",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
@@ -551,22 +477,12 @@
       "status": "attention"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:wK5tUrj9pvCnyzVWWnnDb4",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
       "canonicalId": "youtube:xdYY-5WHIE0",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 1,
+      "ageDays": 2,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -599,26 +515,6 @@
       "ageDays": null,
       "ageStatus": "unknown",
       "status": "attention"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:a2Yfh3dr79iF3WszBjWE8q",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:vvTGcYP4ZoqQcQXEykJBk5",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 1,
-      "ageStatus": "current",
-      "status": "healthy"
     }
   ],
   "sources": [
@@ -627,7 +523,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 4,
+      "itemCount": 1,
       "networkStatus": "reachable"
     },
     {
