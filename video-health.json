@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-21T07:18:12.857Z",
+  "generatedAt": "2026-11-21T19:23:21.836Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 35,
-    "reachable": 33,
-    "failed": 2,
-    "metadataEnriched": 12,
+    "checked": 38,
+    "reachable": 37,
+    "failed": 1,
+    "metadataEnriched": 13,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,34 +87,34 @@
       ]
     },
     "items": {
-      "checked": 13,
-      "reachable": 12,
-      "failed": 1,
-      "embedChecked": 12,
+      "checked": 15,
+      "reachable": 15,
+      "failed": 0,
+      "embedChecked": 13,
       "results": [
         {
-          "canonicalId": "direct:https://rojnews.video/upload/videos/2026/11/w9xhyjdvqahxehneccqm_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc17a848_20261121134205_2026-11-21-ankara-tulay-hatimogullari-dem-parti-es-genel-baskani-adalet-bakanligi-eylem-1.mp4",
           "original": {
-            "url": "https://rojnews.video/upload/videos/2026/11/w9XHyjDvqAHxEhNecCQM_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
-            "ok": false,
-            "status": 403,
-            "finalUrl": "https://rojnews.video/upload/videos/2026/11/w9XHyjDvqAHxEhNecCQM_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4"
+            "url": "https://video.anf-news2.com/live/firat/fc17a848_20261121134205_2026-11-21-ankara-tulay-hatimogullari-dem-parti-es-genel-baskani-adalet-bakanligi-eylem-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/fc17a848_20261121134205_2026-11-21-ankara-tulay-hatimogullari-dem-parti-es-genel-baskani-adalet-bakanligi-eylem-1.mp4"
           },
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
+          "canonicalId": "peertube:https://kolektiva.media:hqWeF2V1JBd8ZiEEeAEUC4",
           "original": {
-            "url": "https://kolektiva.media/w/s237wwoCK7QCvQpEco5XpU",
+            "url": "https://kolektiva.media/w/hqWeF2V1JBd8ZiEEeAEUC4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/w/s237wwoCK7QCvQpEco5XpU"
+            "finalUrl": "https://kolektiva.media/w/hqWeF2V1JBd8ZiEEeAEUC4"
           },
           "embed": {
-            "url": "https://kolektiva.media/videos/embed/s237wwoCK7QCvQpEco5XpU",
+            "url": "https://kolektiva.media/videos/embed/hqWeF2V1JBd8ZiEEeAEUC4",
             "ok": true,
             "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/s237wwoCK7QCvQpEco5XpU"
+            "finalUrl": "https://kolektiva.media/videos/embed/hqWeF2V1JBd8ZiEEeAEUC4"
           }
         },
         {
@@ -238,6 +238,31 @@
           }
         },
         {
+          "canonicalId": "direct:https://video.anf-news2.com/live/firat/52fd77b2_20261121150622_2026-11-21-cenevre-sehid-seyid-evran-anisina-basin-dijital-komunu-kuruldu-1.mp4",
+          "original": {
+            "url": "https://video.anf-news2.com/live/firat/52fd77b2_20261121150622_2026-11-21-cenevre-sehid-seyid-evran-anisina-basin-dijital-komunu-kuruldu-1.mp4",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://video.anf-news2.com/live/firat/52fd77b2_20261121150622_2026-11-21-cenevre-sehid-seyid-evran-anisina-basin-dijital-komunu-kuruldu-1.mp4"
+          },
+          "embed": null
+        },
+        {
+          "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
+          "original": {
+            "url": "https://kolektiva.media/w/s237wwoCK7QCvQpEco5XpU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/s237wwoCK7QCvQpEco5XpU"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/s237wwoCK7QCvQpEco5XpU",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/s237wwoCK7QCvQpEco5XpU"
+          }
+        },
+        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -286,18 +311,18 @@
     }
   },
   "totals": {
-    "candidateCount": 13,
-    "acceptedBeforeQuota": 13,
-    "acceptedCount": 13,
+    "candidateCount": 16,
+    "acceptedBeforeQuota": 16,
+    "acceptedCount": 15,
     "duplicateCount": 0,
-    "quotaRemovedCount": 0,
-    "rejectedCount": 8,
+    "quotaRemovedCount": 1,
+    "rejectedCount": 6,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 1,
+    "duration": 2,
     "thumbnails": 13,
-    "subtitlesKnown": 12,
+    "subtitlesKnown": 13,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -313,45 +338,45 @@
   },
   "byPlatform": {
     "YouTube": 11,
-    "Direct": 1,
-    "Kolektiva": 1
+    "Direct": 2,
+    "Kolektiva": 2
   },
   "byLanguage": {
-    "en": 7,
+    "en": 8,
     "de": 3,
-    "und": 2,
+    "und": 3,
     "fr": 1
   },
   "bySource": {
     "andrewism": 2,
+    "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
+    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
-    "anf-english-kurdistan": 1,
     "animal-rising": 1,
     "david-graeber-archive": 1,
-    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "direct:https://rojnews.video/upload/videos/2026/11/w9xhyjdvqahxehneccqm_20_5c6c0282c82d8f10f993c5ab1d3a7e1e_video_1080p_converted.mp4",
-      "originalStatus": "blocked",
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/fc17a848_20261121134205_2026-11-21-ankara-tulay-hatimogullari-dem-parti-es-genel-baskani-adalet-bakanligi-eylem-1.mp4",
+      "originalStatus": "reachable",
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
       "ageDays": 0,
       "ageStatus": "current",
-      "status": "attention"
+      "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
+      "canonicalId": "peertube:https://kolektiva.media:hqWeF2V1JBd8ZiEEeAEUC4",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
       "platformStatus": "OK",
       "playabilityReason": "",
-      "ageDays": 1,
+      "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -436,6 +461,26 @@
       "status": "attention"
     },
     {
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/52fd77b2_20261121150622_2026-11-21-cenevre-sehid-seyid-evran-anisina-basin-dijital-komunu-kuruldu-1.mp4",
+      "originalStatus": "reachable",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
+      "playabilityReason": "",
+      "ageDays": 0,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
+      "canonicalId": "peertube:https://kolektiva.media:s237wwoCK7QCvQpEco5XpU",
+      "originalStatus": "reachable",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
+      "playabilityReason": "",
+      "ageDays": 2,
+      "ageStatus": "current",
+      "status": "healthy"
+    },
+    {
       "canonicalId": "youtube:mfEYye6TNlk",
       "originalStatus": "reachable",
       "embedStatus": "embeddable",
@@ -472,7 +517,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 1,
+      "itemCount": 2,
       "networkStatus": "reachable"
     },
     {
