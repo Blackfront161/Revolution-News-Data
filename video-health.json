@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-24T10:00:27.737Z",
+  "generatedAt": "2026-11-24T22:32:14.182Z",
   "status": "attention",
   "networkChecks": {
     "mode": "sources-and-items",
-    "checked": 38,
-    "reachable": 37,
+    "checked": 36,
+    "reachable": 35,
     "failed": 1,
-    "metadataEnriched": 13,
+    "metadataEnriched": 12,
     "sources": {
       "checked": 10,
       "reachable": 9,
@@ -87,11 +87,26 @@
       ]
     },
     "items": {
-      "checked": 15,
-      "reachable": 15,
+      "checked": 14,
+      "reachable": 14,
       "failed": 0,
-      "embedChecked": 13,
+      "embedChecked": 12,
       "results": [
+        {
+          "canonicalId": "peertube:https://kolektiva.media:9w5z7VkGaPjrQ49uqL3Qji",
+          "original": {
+            "url": "https://kolektiva.media/w/9w5z7VkGaPjrQ49uqL3Qji",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/w/9w5z7VkGaPjrQ49uqL3Qji"
+          },
+          "embed": {
+            "url": "https://kolektiva.media/videos/embed/9w5z7VkGaPjrQ49uqL3Qji",
+            "ok": true,
+            "status": 200,
+            "finalUrl": "https://kolektiva.media/videos/embed/9w5z7VkGaPjrQ49uqL3Qji"
+          }
+        },
         {
           "canonicalId": "direct:https://video.anf-news2.com/live/firat/54921811_20261119103421_2026-11-21-behdinan-bahar-goyi-gerilaya-yja-star-bi-avabuna-pkk-hebuna-xwe-naskir-1.mp4",
           "original": {
@@ -101,21 +116,6 @@
             "finalUrl": "https://video.anf-news2.com/live/firat/54921811_20261119103421_2026-11-21-behdinan-bahar-goyi-gerilaya-yja-star-bi-avabuna-pkk-hebuna-xwe-naskir-1.mp4"
           },
           "embed": null
-        },
-        {
-          "canonicalId": "peertube:https://kolektiva.media:hnjjh5LY1esWMG18kFxs8B",
-          "original": {
-            "url": "https://kolektiva.media/w/hnjjh5LY1esWMG18kFxs8B",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/hnjjh5LY1esWMG18kFxs8B"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/hnjjh5LY1esWMG18kFxs8B",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/hnjjh5LY1esWMG18kFxs8B"
-          }
         },
         {
           "canonicalId": "youtube:efbUsgUYUCA",
@@ -248,21 +248,6 @@
           "embed": null
         },
         {
-          "canonicalId": "peertube:https://kolektiva.media:sCdo1ZuNMSk9kRLBuzZwvg",
-          "original": {
-            "url": "https://kolektiva.media/w/sCdo1ZuNMSk9kRLBuzZwvg",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/w/sCdo1ZuNMSk9kRLBuzZwvg"
-          },
-          "embed": {
-            "url": "https://kolektiva.media/videos/embed/sCdo1ZuNMSk9kRLBuzZwvg",
-            "ok": true,
-            "status": 200,
-            "finalUrl": "https://kolektiva.media/videos/embed/sCdo1ZuNMSk9kRLBuzZwvg"
-          }
-        },
-        {
           "canonicalId": "youtube:mfEYye6TNlk",
           "original": {
             "url": "https://www.youtube.com/watch?v=mfEYye6TNlk",
@@ -311,18 +296,18 @@
     }
   },
   "totals": {
-    "candidateCount": 25,
-    "acceptedBeforeQuota": 25,
-    "acceptedCount": 15,
+    "candidateCount": 21,
+    "acceptedBeforeQuota": 21,
+    "acceptedCount": 14,
     "duplicateCount": 0,
-    "quotaRemovedCount": 10,
-    "rejectedCount": 3,
+    "quotaRemovedCount": 7,
+    "rejectedCount": 4,
     "registrySources": 10
   },
   "coverage": {
-    "duration": 2,
-    "thumbnails": 15,
-    "subtitlesKnown": 13,
+    "duration": 1,
+    "thumbnails": 14,
+    "subtitlesKnown": 12,
     "transcripts": 0
   },
   "missingMetadata": {
@@ -339,43 +324,43 @@
   "byPlatform": {
     "YouTube": 11,
     "Direct": 2,
-    "Kolektiva": 2
+    "Kolektiva": 1
   },
   "byLanguage": {
     "en": 7,
     "de": 3,
-    "pt": 2,
     "und": 2,
-    "fr": 1
+    "fr": 1,
+    "pt": 1
   },
   "bySource": {
     "andrewism": 2,
     "anf-english-kurdistan": 2,
     "audible-anarchist": 2,
     "charly-d-anarchy-documentaries": 2,
-    "kolektiva-media-news": 2,
     "anarchism-in-america-archive": 1,
     "anarchistische-gemeinschaft-video": 1,
     "animal-rising": 1,
     "david-graeber-archive": 1,
+    "kolektiva-media-news": 1,
     "notre-histoire-anarchism": 1
   },
   "itemHealth": [
     {
-      "canonicalId": "direct:https://video.anf-news2.com/live/firat/54921811_20261119103421_2026-11-21-behdinan-bahar-goyi-gerilaya-yja-star-bi-avabuna-pkk-hebuna-xwe-naskir-1.mp4",
+      "canonicalId": "peertube:https://kolektiva.media:9w5z7VkGaPjrQ49uqL3Qji",
       "originalStatus": "reachable",
-      "embedStatus": "not-applicable",
-      "platformStatus": "unknown",
+      "embedStatus": "embeddable",
+      "platformStatus": "OK",
       "playabilityReason": "",
       "ageDays": 0,
       "ageStatus": "current",
       "status": "healthy"
     },
     {
-      "canonicalId": "peertube:https://kolektiva.media:hnjjh5LY1esWMG18kFxs8B",
+      "canonicalId": "direct:https://video.anf-news2.com/live/firat/54921811_20261119103421_2026-11-21-behdinan-bahar-goyi-gerilaya-yja-star-bi-avabuna-pkk-hebuna-xwe-naskir-1.mp4",
       "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
+      "embedStatus": "not-applicable",
+      "platformStatus": "unknown",
       "playabilityReason": "",
       "ageDays": 1,
       "ageStatus": "current",
@@ -387,7 +372,7 @@
       "embedStatus": "embeddable",
       "platformStatus": "LOGIN_REQUIRED",
       "playabilityReason": "Sign in to confirm you’re not a bot",
-      "ageDays": 7,
+      "ageDays": 8,
       "ageStatus": "current",
       "status": "attention"
     },
@@ -467,17 +452,7 @@
       "embedStatus": "not-applicable",
       "platformStatus": "unknown",
       "playabilityReason": "",
-      "ageDays": 0,
-      "ageStatus": "current",
-      "status": "healthy"
-    },
-    {
-      "canonicalId": "peertube:https://kolektiva.media:sCdo1ZuNMSk9kRLBuzZwvg",
-      "originalStatus": "reachable",
-      "embedStatus": "embeddable",
-      "platformStatus": "OK",
-      "playabilityReason": "",
-      "ageDays": 2,
+      "ageDays": 1,
       "ageStatus": "current",
       "status": "healthy"
     },
@@ -518,7 +493,7 @@
       "name": "Kolektiva Media",
       "enabled": true,
       "editorialStatus": "approved-existing",
-      "itemCount": 2,
+      "itemCount": 1,
       "networkStatus": "reachable"
     },
     {
