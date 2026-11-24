@@ -1,0 +1,72 @@
+name: WRN Social Media Publish
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: Draft number shown in the WRN preview
+        required: true
+        type: choice
+        options: ['1', '2', '3']
+      review_code:
+        description: Review code from the current live-feed preview
+        required: true
+        type: string
+      platform:
+        description: Publish one draft to one platform
+        required: true
+        type: choice
+        options: [mastodon, bluesky]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wrn-social-delivery
+  cancel-in-progress: false
+
+jobs:
+  review:
+    if: github.repository == 'Blackfront161/Revolution-News-Data' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - name: Verify the selected draft against the live feed
+        env:
+          WRN_DRAFT: ${{ inputs.draft }}
+          WRN_REVIEW_CODE: ${{ inputs.review_code }}
+          WRN_PLATFORM: ${{ inputs.platform }}
+        run: node scripts/social-preview/publish.mjs --verify >> "$GITHUB_STEP_SUMMARY"
+
+  publish:
+    needs: review
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: wrn-social-production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - name: Install the locked AT Protocol SDK
+        if: inputs.platform == 'bluesky'
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix scripts/social-preview
+      - name: Send the approved draft
+        env:
+          WRN_DRAFT: ${{ inputs.draft }}
+          WRN_REVIEW_CODE: ${{ inputs.review_code }}
+          WRN_PLATFORM: ${{ inputs.platform }}
+          WRN_MASTODON_TOKEN: ${{ inputs.platform == 'mastodon' && secrets.WRN_MASTODON_TOKEN || '' }}
+          WRN_BLUESKY_OAUTH_SESSION: ${{ inputs.platform == 'bluesky' && secrets.WRN_BLUESKY_OAUTH_SESSION || '' }}
+          WRN_LEDGER_TOKEN: ${{ github.token }}
+        run: node scripts/social-preview/publish.mjs >> "$GITHUB_STEP_SUMMARY"

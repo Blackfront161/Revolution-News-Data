@@ -1,0 +1,39 @@
+name: WRN Social Media Preview
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/social-*.yml'
+      - 'scripts/social-preview/**'
+  workflow_dispatch:
+    inputs:
+      feed:
+        description: Use the pilot snapshot or match the selection against the current public feed
+        type: choice
+        options: [snapshot, live]
+        default: snapshot
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+      - name: Install the locked AT Protocol SDK for transport tests
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix scripts/social-preview
+      - name: Check post formats and delivery safeguards
+        run: node --test scripts/social-preview/*.test.mjs
+      - name: Render draft posts
+        env:
+          WRN_PREVIEW_FEED: ${{ inputs.feed || 'snapshot' }}
+        run: |
+          node scripts/social-preview/preview.mjs --feed "$WRN_PREVIEW_FEED" --check-links > "$RUNNER_TEMP/wrn-social-preview.md"
+          cat "$RUNNER_TEMP/wrn-social-preview.md" >> "$GITHUB_STEP_SUMMARY"
